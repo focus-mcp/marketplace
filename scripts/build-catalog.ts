@@ -178,6 +178,7 @@ export async function buildCatalog(options: BuildCatalogOptions): Promise<BuildC
   };
 
   const schema = await readJson<Record<string, unknown>>(schemaPath);
+  /* v8 ignore next 6 -- ESM/CJS interop fallbacks for default exports, env-dependent */
   // biome-ignore lint/suspicious/noExplicitAny: Ajv2020 default export typing mismatch in NodeNext ESM
   const AjvCtor = (Ajv2020 as any).default ?? Ajv2020;
   const ajv = new AjvCtor({ allErrors: true, strict: false });
@@ -188,7 +189,8 @@ export async function buildCatalog(options: BuildCatalogOptions): Promise<BuildC
   const ok = validate(catalog);
   const errors = ok
     ? []
-    : (validate.errors ?? []).map(
+    : /* v8 ignore next 3 -- ajv always populates errors[] when validation fails; defensive fallbacks */
+      (validate.errors ?? []).map(
         (e: ErrorObject) => `${e.instancePath || '/'} ${e.message ?? 'validation error'}`,
       );
 
@@ -197,6 +199,7 @@ export async function buildCatalog(options: BuildCatalogOptions): Promise<BuildC
 
 // ---------- CLI ----------
 
+/* v8 ignore start -- CLI glue, exercised end-to-end via `pnpm build:catalog` in CI */
 async function main(): Promise<number> {
   const argv = process.argv.slice(2);
   const toStdout = argv.includes('--stdout');
@@ -234,3 +237,4 @@ if (isDirectRun) {
     },
   );
 }
+/* v8 ignore stop */
