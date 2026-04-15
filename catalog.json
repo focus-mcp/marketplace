@@ -1,0 +1,12 @@
+{
+  "$schema": "https://focus-mcp.github.io/marketplace/schemas/catalog/v1.json",
+  "name": "FocusMCP Marketplace",
+  "description": "Catalogue officiel des briques MCP FocusMCP.",
+  "owner": {
+    "name": "FocusMCP contributors",
+    "url": "https://github.com/focus-mcp",
+    "email": "contact@focusmcp.dev"
+  },
+  "updated": "2026-04-15T19:28:41.321Z",
+  "bricks": []
+}

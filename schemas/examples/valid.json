@@ -1,0 +1,36 @@
+{
+  "$schema": "https://focus-mcp.github.io/marketplace/schemas/catalog/v1.json",
+  "name": "FocusMCP Marketplace",
+  "description": "Catalogue officiel des briques FocusMCP.",
+  "owner": {
+    "name": "FocusMCP contributors",
+    "url": "https://github.com/focus-mcp",
+    "email": "contact@focusmcp.dev"
+  },
+  "updated": "2026-04-15T12:00:00Z",
+  "bricks": [
+    {
+      "name": "indexer",
+      "version": "0.1.0",
+      "description": "Indexe un codebase pour des recherches sémantiques efficientes.",
+      "tags": ["code", "search"],
+      "dependencies": [],
+      "tools": [
+        {
+          "name": "search",
+          "description": "Recherche dans l'index.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "query": { "type": "string" }
+            },
+            "required": ["query"]
+          }
+        }
+      ],
+      "source": { "type": "local", "path": "bricks/indexer" },
+      "license": "MIT",
+      "publisher": "focus-mcp"
+    }
+  ]
+}
