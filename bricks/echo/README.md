@@ -19,11 +19,15 @@ Also serves as a **minimal template** for brick authors: structure, manifest, te
 
 ## Example
 
-```json
-// Request
-{ "name": "echo_say", "arguments": { "message": "hello" } }
+Request:
 
-// Response
+```json
+{ "name": "echo_say", "arguments": { "message": "hello" } }
+```
+
+Response:
+
+```json
 { "message": "hello" }
 ```
 

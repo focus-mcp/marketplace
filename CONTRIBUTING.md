@@ -3,82 +3,82 @@ SPDX-FileCopyrightText: 2026 FocusMCP contributors
 SPDX-License-Identifier: MIT
 -->
 
-# Contribuer à la marketplace FocusMCP
+# Contributing to the FocusMCP marketplace
 
-Merci de ton intérêt pour la marketplace FocusMCP. Ce document décrit **comment proposer une brique** et les règles de qualité exigées.
+Thanks for your interest in the FocusMCP marketplace. This document describes **how to propose a brick** and the quality rules we enforce.
 
 ## Code of Conduct
 
-Tous les contributeurs s'engagent à respecter le [Code of Conduct](./CODE_OF_CONDUCT.md).
+All contributors agree to follow the [Code of Conduct](./CODE_OF_CONDUCT.md).
 
-## Processus de soumission
+## Submission process
 
-1. **Ouvre une issue** via le template « Brick submission » (atomicité, domaine, licence).
-2. Attends la validation par un mainteneur — l'objectif est d'éviter les doublons et les briques fourre-tout.
-3. **Ouvre une PR** sur la branche `develop` :
-   - soit en ajoutant `bricks/<name>/` (brique hébergée dans ce repo),
-   - soit en ajoutant une entrée dans `external_bricks.json` (brique hébergée ailleurs, avec `source.type = "url"` ou `"git-subdir"`).
-4. La PR doit passer **toute la CI** : lint, typecheck, tests, REUSE, gitleaks, build du catalogue.
+1. **Open an issue** via the "Brick submission" template (atomicity, domain, license).
+2. Wait for maintainer validation — the goal is to avoid duplicates and kitchen-sink bricks.
+3. **Open a PR** targeting the `develop` branch:
+   - either by adding `bricks/<name>/` (brick hosted in this repo),
+   - or by adding an entry to `external_bricks.json` (brick hosted elsewhere, with `source.type = "url"` or `"git-subdir"`).
+4. The PR must pass **the whole CI**: lint, typecheck, tests, REUSE, gitleaks, catalog build.
 
-## Structure d'une brique locale
+## Local brick layout
 
 ```
 bricks/<name>/
-  mcp-brick.json        — manifeste (obligatoire)
-  package.json          — `name: "focus-<name>"`, `version`, `private: true`, `type: "module"`
+  mcp-brick.json        — manifest (required)
+  package.json          — `name: "@focusmcp/<name>"`, `version`, `private: true`, `type: "module"`
   src/
     index.ts
     ...
-  tests/ (ou *.test.ts à côté)
-  README.md             — documentation de la brique
-  LICENSE               — MIT (ou licence compatible MIT)
+  tests/ (or *.test.ts next to sources)
+  README.md             — brick documentation
+  LICENSE               — MIT (or an MIT-compatible license)
 ```
 
-### Manifeste `mcp-brick.json`
+### `mcp-brick.json` manifest
 
-Champs obligatoires :
+Required fields:
 
-- `name` (kebab-case, sans préfixe `focus-`)
+- `name` (kebab-case, bare domain name — e.g. `echo`, `indexer`, `memory`)
 - `description`
-- `dependencies` (tableau des noms de briques requises, peut être vide)
-- `tools` (tableau `{name, description, inputSchema}`)
+- `dependencies` (array of required brick names, may be empty)
+- `tools` (array of `{name, description, inputSchema}`)
 
-Champs optionnels : `tags`, `license`, `homepage`, `publisher`.
+Optional fields: `tags`, `license`, `homepage`, `publisher`.
 
-La `version` n'apparaît **pas** dans le manifeste : elle est lue depuis `package.json` pour rester la source de vérité unique de Changesets.
+`version` **does not** appear in the manifest: it is read from `package.json` to keep Changesets as the single source of truth.
 
-## Règles non-négociables
+## Non-negotiable rules
 
-1. **Atomicité** — 1 brique = 1 domaine. Pas de brique fourre-tout. Si deux responsabilités cohabitent, il faut deux briques.
-2. **Nommage** — kebab-case, convention `focus-<domaine>` (le préfixe `focus-` va sur le package npm / tarball, le `name` du manifeste est sans préfixe).
-3. **Licence MIT-compatible** — GPL/AGPL refusées pour préserver la licence du projet.
-4. **TDD / Coverage ≥ 80 %** — tests exigés, couverture bloquante en CI.
-5. **SPDX headers** dans tous les fichiers source (`SPDX-FileCopyrightText: 2026 FocusMCP contributors` + `SPDX-License-Identifier: MIT`). Pour les JSON, créer un fichier `.license` à côté (convention REUSE).
-6. **TypeScript strict** — pas de `any`, pas de `console.log` (passer par le logger du core), ESM only.
-7. **Conventional Commits** — enforced par commitlint (`feat(indexer): ...`, `fix(memory): ...`).
-8. **Changeset obligatoire** pour toute PR qui touche une brique (`pnpm changeset`). Le mode est `independent` : chaque brique a sa propre version.
+1. **Atomicity** — 1 brick = 1 domain. No kitchen-sink bricks. If two responsibilities coexist, split into two bricks.
+2. **Naming** — kebab-case, bare domain name (e.g. `echo`, `indexer`, `sf-router`). No `focus-` prefix. The npm package uses the scope `@focusmcp/<name>`.
+3. **MIT-compatible license** — GPL/AGPL rejected to preserve the project license.
+4. **TDD / Coverage ≥ 80 %** — tests required, coverage enforced in CI.
+5. **SPDX headers** in every source file (`SPDX-FileCopyrightText: 2026 FocusMCP contributors` + `SPDX-License-Identifier: MIT`). For JSON files, create a sibling `.license` file (REUSE convention).
+6. **Strict TypeScript** — no `any`, no `console.log` (use the core logger instead), ESM only.
+7. **Conventional Commits** — enforced by commitlint (`feat(indexer): ...`, `fix(memory): ...`).
+8. **Changeset required** on every PR that touches a brick (`pnpm changeset`). Mode is `independent`: each brick has its own version.
 
 ## Quality gates
 
-Avant d'ouvrir une PR :
+Before opening a PR:
 
 ```bash
 pnpm lint
 pnpm typecheck
 pnpm test
-pnpm build:catalog     # valide la structure du catalogue avec le JSON Schema
-pnpm reuse             # REUSE compliance (headers SPDX)
+pnpm build:catalog     # validates the catalog structure against the JSON Schema
+pnpm reuse             # REUSE compliance (SPDX headers)
 ```
 
-## Revue
+## Review
 
-Les mainteneurs vérifient :
+Maintainers check:
 
-- la pertinence du domaine (atomicité, absence de doublon) ;
-- la qualité du code (tests, typage, lint) ;
-- la conformité du manifeste au JSON Schema ;
-- la cohérence du catalogue généré.
+- domain relevance (atomicity, no duplicate);
+- code quality (tests, typing, lint);
+- manifest conformance to the JSON Schema;
+- coherence of the generated catalog.
 
-## Sécurité
+## Security
 
-Les vulnérabilités doivent être reportées **en privé** — voir [SECURITY.md](./SECURITY.md).
+Vulnerabilities must be reported **privately** — see [SECURITY.md](./SECURITY.md).

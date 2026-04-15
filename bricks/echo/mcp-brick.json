@@ -1,6 +1,5 @@
 {
   "name": "echo",
-  "version": "1.0.0",
   "description": "Hello-world brick — returns the message it receives. Serves as a smoke test for the FocusMCP pipeline.",
   "dependencies": [],
   "tools": [
