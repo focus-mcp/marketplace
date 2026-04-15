@@ -1,0 +1,82 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+
+name: Brick submission
+description: Propose a new brick for the FocusMCP marketplace
+labels: [brick-submission]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing a new brick. Please read `CONTRIBUTING.md` first.
+        The submission must respect the **atomicity rule**: 1 brick = 1 domain.
+  - type: input
+    id: name
+    attributes:
+      label: Brick name
+      description: 'kebab-case, without the `focus-` prefix (e.g. `indexer`, `memory`, `sandbox`).'
+      placeholder: 'indexer'
+    validations:
+      required: true
+  - type: input
+    id: domain
+    attributes:
+      label: Domain / scope
+      description: One short sentence describing the single responsibility of this brick.
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why is this not covered by an existing brick?
+      description: Explain why extending an existing brick is not appropriate.
+    validations:
+      required: true
+  - type: input
+    id: repo
+    attributes:
+      label: Source code URL
+      description: 'Link to the brick source (repo, subdir, or existing package).'
+    validations:
+      required: true
+  - type: dropdown
+    id: source-type
+    attributes:
+      label: Proposed source type in the catalog
+      options:
+        - local (will be contributed under `bricks/<name>/`)
+        - url (external tarball)
+        - git-subdir (external git repo subdirectory)
+    validations:
+      required: true
+  - type: checkboxes
+    id: atomicity
+    attributes:
+      label: Atomicity check
+      options:
+        - label: This brick owns a single domain (no catch-all).
+          required: true
+        - label: Its tools all serve that single domain.
+          required: true
+  - type: checkboxes
+    id: license
+    attributes:
+      label: License
+      options:
+        - label: The brick is published under an MIT-compatible license.
+          required: true
+  - type: checkboxes
+    id: quality
+    attributes:
+      label: Quality gates
+      options:
+        - label: Manifest `mcp-brick.json` is present or will be added.
+          required: true
+        - label: Tests are present (coverage ≥ 80%).
+          required: true
+        - label: SPDX headers are present in all source files.
+          required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes
