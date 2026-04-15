@@ -5,32 +5,32 @@ SPDX-License-Identifier: MIT
 
 # echo
 
-Hello-world brique pour FocusMCP — retourne le message qu'elle reçoit.
+Hello-world brick for FocusMCP — returns the message it receives.
 
-Son seul but est de servir de **smoke test du pipeline FocusMCP** : manifest parsing, loader, Registry, Router, EventBus. Si `echo_say` répond, toute la plomberie fonctionne.
+Its sole purpose is to serve as a **smoke test of the FocusMCP pipeline**: manifest parsing, brick loader, Registry, Router, EventBus. If `echo_say` responds, the whole plumbing works.
 
-Sert aussi de **template minimal** pour les auteurs de briques : structure, manifest, tests, Changesets.
+Also serves as a **minimal template** for brick authors: structure, manifest, tests, Changesets.
 
-## Tool exposé
+## Exposed tool
 
-| Nom | Description | Input | Output |
+| Name | Description | Input | Output |
 |---|---|---|---|
-| `echo_say` | Retourne le message reçu tel quel | `{ message: string }` | `{ message: string }` |
+| `echo_say` | Returns the received message as-is | `{ message: string }` | `{ message: string }` |
 
-## Exemple
+## Example
 
 ```json
-// Requête
+// Request
 { "name": "echo_say", "arguments": { "message": "hello" } }
 
-// Réponse
+// Response
 { "message": "hello" }
 ```
 
-## Dépendances
+## Dependencies
 
-Aucune — brique autonome, aucune dépendance runtime (pas même `@focusmcp/sdk`). Types structurels inlinés pour rester self-contained.
+None — fully self-contained, no runtime dependencies (not even `@focusmcp/sdk`). Structural types inlined to keep the brick independent.
 
 ## License
 
-MIT — voir [LICENSE](../../LICENSE).
+MIT — see [LICENSE](../../LICENSE).

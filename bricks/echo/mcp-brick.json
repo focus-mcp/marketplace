@@ -1,18 +1,18 @@
 {
   "name": "echo",
   "version": "1.0.0",
-  "description": "Hello-world brique — retourne le message qu'elle reçoit, servant de smoke test pour le pipeline FocusMCP",
+  "description": "Hello-world brick — returns the message it receives. Serves as a smoke test for the FocusMCP pipeline.",
   "dependencies": [],
   "tools": [
     {
       "name": "echo_say",
-      "description": "Retourne le message reçu tel quel. Utile comme canary pour vérifier que FocusMCP dispatche correctement les tool calls.",
+      "description": "Returns the received message as-is. Useful as a canary to verify FocusMCP correctly dispatches tool calls end-to-end.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "message": {
             "type": "string",
-            "description": "Message à faire écho"
+            "description": "Message to echo back"
           }
         },
         "required": ["message"],
