@@ -1,0 +1,21 @@
+{
+  "name": "@focusmcp/echo",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Hello-world brique FocusMCP — smoke test du pipeline",
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src",
+    "mcp-brick.json",
+    "mcp-brick.json.license",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "vitest run"
+  }
+}

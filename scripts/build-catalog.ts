@@ -94,7 +94,7 @@ export interface BuildCatalogResult {
 const DEFAULT_SCHEMA_URL = 'https://focus-mcp.github.io/marketplace/schemas/catalog/v1.json';
 const DEFAULT_CATALOG_META: Required<Pick<Catalog, 'name' | 'description' | 'owner'>> = {
   name: 'FocusMCP Marketplace',
-  description: 'Catalogue officiel des briques MCP FocusMCP.',
+  description: 'Official catalog of atomic MCP bricks for FocusMCP.',
   owner: {
     name: 'FocusMCP contributors',
     url: 'https://github.com/focus-mcp',
