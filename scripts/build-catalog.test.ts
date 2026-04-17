@@ -118,6 +118,32 @@ describe('buildCatalog', () => {
         expect(errors.some((e) => e.includes('pattern'))).toBe(true);
     });
 
+    it('throws when a brick is missing version in package.json', async () => {
+        await writeJson(join(root, 'bricks/no-version/mcp-brick.json'), {
+            name: 'no-version',
+            description: 'Brique sans version dans son package.json.',
+            dependencies: [],
+            tools: [],
+        });
+        await writeJson(join(root, 'bricks/no-version/package.json'), { name: 'no-version' });
+
+        await expect(buildCatalog({ rootDir: root, now: frozenNow })).rejects.toThrow(
+            /Missing version/i,
+        );
+    });
+
+    it('rethrows non-ENOENT errors when reading a brick package.json', async () => {
+        await writeJson(join(root, 'bricks/bad-pkg/mcp-brick.json'), {
+            name: 'bad-pkg',
+            description: 'Brique avec package.json malformé.',
+            dependencies: [],
+            tools: [],
+        });
+        await writeFile(join(root, 'bricks/bad-pkg/package.json'), '{ not valid json', 'utf8');
+
+        await expect(buildCatalog({ rootDir: root, now: frozenNow })).rejects.toThrow();
+    });
+
     it('sorts bricks alphabetically by name', async () => {
         await writeJson(join(root, 'bricks/zeta/mcp-brick.json'), {
             name: 'zeta',

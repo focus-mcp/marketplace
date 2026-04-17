@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: MIT
 
 export interface EchoInput {
-  readonly message: string;
+    readonly message: string;
 }
 
 export interface EchoOutput {
-  readonly message: string;
+    readonly message: string;
 }
 
 /** Pure function: returns the message as-is. Extracted for direct testability. */
 export function echo(input: EchoInput): EchoOutput {
-  return { message: input.message };
+    return { message: input.message };
 }
 
 /**
@@ -20,14 +20,14 @@ export function echo(input: EchoInput): EchoOutput {
  * `{ message: undefined }` silently.
  */
 export function parseEchoInput(data: unknown): EchoInput {
-  if (
-    data === null ||
-    typeof data !== 'object' ||
-    typeof (data as { message?: unknown }).message !== 'string'
-  ) {
-    throw new TypeError(
-      'Invalid echo payload: expected an object with a string "message" property.',
-    );
-  }
-  return data as EchoInput;
+    if (
+        data === null ||
+        typeof data !== 'object' ||
+        typeof (data as { message?: unknown }).message !== 'string'
+    ) {
+        throw new TypeError(
+            'Invalid echo payload: expected an object with a string "message" property.',
+        );
+    }
+    return data as EchoInput;
 }

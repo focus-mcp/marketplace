@@ -1,28 +1,23 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: FocusMCP Marketplace
+Upstream-Name: FocusMCP CLI Manager
 Upstream-Contact: FocusMCP contributors <contact@focusmcp.dev>
-Source: https://github.com/focus-mcp/marketplace
+Source: https://github.com/focus-mcp/cli-manager
 
 Files: PRD.md AGENTS.md README.md CHANGELOG.md
        CONTRIBUTING.md CODE_OF_CONDUCT.md SECURITY.md
        *.json *.yaml *.yml *.toml .nvmrc .editorconfig .gitattributes .gitignore
-       pnpm-workspace.yaml
 Copyright: 2026 FocusMCP contributors
 License: MIT
 
-Files: schemas/**
+Files: src/**
 Copyright: 2026 FocusMCP contributors
 License: MIT
 
-Files: scripts/**
+Files: static/**
 Copyright: 2026 FocusMCP contributors
 License: MIT
 
-Files: bricks/**
-Copyright: 2026 FocusMCP contributors
-License: MIT
-
-Files: external_bricks/** external_bricks.json
+Files: config/**
 Copyright: 2026 FocusMCP contributors
 License: MIT
 
@@ -35,13 +30,5 @@ Copyright: 2026 FocusMCP contributors
 License: MIT
 
 Files: .husky/**
-Copyright: 2026 FocusMCP contributors
-License: MIT
-
-Files: .focusmcp/**
-Copyright: 2026 FocusMCP contributors
-License: MIT
-
-Files: modules/**
 Copyright: 2026 FocusMCP contributors
 License: MIT

@@ -15,7 +15,8 @@
             "!**/coverage",
             "!**/sbom.json",
             "!**/pnpm-lock.yaml",
-            "!.focusmcp/catalog.json"
+            "!.focusmcp/catalog.json",
+            "!**/*.svelte"
         ]
     },
     "formatter": {

@@ -19,7 +19,7 @@
         "url": "https://github.com/focus-mcp/marketplace/issues"
     },
     "scripts": {
-        "build": "pnpm -r --filter \"./bricks/**\" --if-present build",
+        "build": "pnpm -r --filter \"./bricks/**\" --filter \"./modules/**\" --if-present build",
         "build:catalog": "tsx scripts/build-catalog.ts",
         "lint": "biome check .",
         "lint:fix": "biome check --write .",

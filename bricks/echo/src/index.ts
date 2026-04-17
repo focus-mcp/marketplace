@@ -13,14 +13,14 @@ export { echo, parseEchoInput } from './echo.ts';
  * self-contained.
  */
 interface BrickBus {
-  on(
-    event: string,
-    handler: (data: unknown) => Promise<unknown> | unknown,
-  ): undefined | (() => void);
+    on(
+        event: string,
+        handler: (data: unknown) => Promise<unknown> | unknown,
+    ): undefined | (() => void);
 }
 
 interface BrickContext {
-  readonly bus: BrickBus;
+    readonly bus: BrickBus;
 }
 
 /**
@@ -29,32 +29,32 @@ interface BrickContext {
  * never reads them from the manifest by accident.
  */
 interface BrickManifest {
-  readonly name: string;
-  readonly description: string;
-  readonly dependencies: readonly string[];
-  readonly tools: readonly { readonly name: string; readonly description: string }[];
-  readonly tags?: readonly string[];
-  readonly license?: string;
+    readonly name: string;
+    readonly description: string;
+    readonly dependencies: readonly string[];
+    readonly tools: readonly { readonly name: string; readonly description: string }[];
+    readonly tags?: readonly string[];
+    readonly license?: string;
 }
 
 interface Brick {
-  readonly manifest: BrickManifest;
-  start(ctx: BrickContext): Promise<void> | void;
-  stop(): Promise<void> | void;
+    readonly manifest: BrickManifest;
+    start(ctx: BrickContext): Promise<void> | void;
+    stop(): Promise<void> | void;
 }
 
 let unsubscribeEchoSay: undefined | (() => void);
 
 const brick: Brick = {
-  manifest: manifestJson,
-  start(ctx) {
-    unsubscribeEchoSay?.();
-    unsubscribeEchoSay = ctx.bus.on('echo:say', (data) => echo(parseEchoInput(data)));
-  },
-  stop() {
-    unsubscribeEchoSay?.();
-    unsubscribeEchoSay = undefined;
-  },
+    manifest: manifestJson,
+    start(ctx) {
+        unsubscribeEchoSay?.();
+        unsubscribeEchoSay = ctx.bus.on('echo:say', (data) => echo(parseEchoInput(data)));
+    },
+    stop() {
+        unsubscribeEchoSay?.();
+        unsubscribeEchoSay = undefined;
+    },
 };
 
 export default brick;
