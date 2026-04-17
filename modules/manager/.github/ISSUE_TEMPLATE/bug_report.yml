@@ -1,0 +1,91 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+
+name: Bug report
+description: Report a reproducible bug in the FocusMCP CLI manager dashboard
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for filling this out — it helps triage.
+  - type: input
+    id: area
+    attributes:
+      label: Affected area
+      description: 'UI page, API client, build tooling, etc. (e.g. `bricks page`, `api-client.ts`, `svelte build`).'
+      placeholder: 'bricks page'
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: cli-manager version
+      placeholder: '0.0.0'
+    validations:
+      required: true
+  - type: input
+    id: cli_version
+    attributes:
+      label: Connected @focusmcp/cli version (if applicable)
+      placeholder: '0.x.y'
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Clear and concise description of the bug.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Steps to reproduce the bug.
+      placeholder: |
+        1. Open '...'
+        2. Click '...'
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome / Chromium
+        - Firefox
+        - Safari
+        - Edge
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: OS
+      options:
+        - Windows 11
+        - Windows 10
+        - macOS 14
+        - macOS 13
+        - Ubuntu 22.04
+        - Ubuntu 24.04
+        - Other Linux
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots
+      description: Relevant console errors, network requests, or screenshots.
