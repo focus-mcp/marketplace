@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/cli-manager",
+    "name": "@focusmcp/manager",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP — optional web dashboard that observes a running @focusmcp/cli via its admin HTTP API",
@@ -12,11 +12,12 @@
     "packageManager": "pnpm@10.32.1",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/focus-mcp/cli-manager.git"
+        "url": "git+https://github.com/focus-mcp/marketplace.git",
+        "directory": "modules/manager"
     },
     "homepage": "https://manager.focusmcp.dev",
     "bugs": {
-        "url": "https://github.com/focus-mcp/cli-manager/issues"
+        "url": "https://github.com/focus-mcp/marketplace/issues"
     },
     "main": "build/index.html",
     "exports": {

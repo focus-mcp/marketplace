@@ -53,6 +53,7 @@ config/               # tool configs (vitest, commitlint, lint-staged, gitleaks)
 7. **Static only** — every route prerenders (`export const prerender = true;` in `+layout.ts` or the page itself). Do not add `+page.server.ts` or `+server.ts`.
 8. **Conventional Commits** — enforced by commitlint (`feat(bricks): ...`, `fix(api-client): ...`).
 9. **Changeset required** on every user-facing PR (`pnpm changeset`).
+10. **Language** — All public-facing content (README, CONTRIBUTING, AGENTS, SECURITY, CODE_OF_CONDUCT, commit messages, PR titles/bodies, issue templates) is **English**. The sole exception is `PRD.md` (internal strategic doc, French by project convention).
 
 ## Quality gates
 
