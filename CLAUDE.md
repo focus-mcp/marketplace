@@ -1,0 +1,157 @@
+<!--
+SPDX-FileCopyrightText: 2026 FocusMCP contributors
+SPDX-License-Identifier: MIT
+-->
+
+# CLAUDE.md — focus-mcp/marketplace
+
+> Auto-loaded by Claude Code (and any agents.md-compatible tool) when working in this repo.
+> This file is the **source of truth for AI agent behaviour** on this project. It replaces the
+> former `~/.claude/projects/**/memory/` system — do not recreate that folder.
+
+## Projet
+
+**FocusMCP** — orchestrateur MCP. Reduces AI-agent context from 200k to ~2k tokens by composing
+**briques** (atomic MCP modules). Site [focusmcp.dev](https://focusmcp.dev).
+
+Ce repo = **catalogue officiel** des briques MCP + hébergement monorepo des briques officielles
+(`bricks/*`) + modules internes (`modules/*`, dont le `manager` = dashboard web optionnel).
+Le catalogue (`catalog.json`) est généré par `scripts/build-catalog.ts` et publié sur gh-pages.
+
+## Écosystème (4 repos actifs + 1 archivé)
+
+| Repo | Rôle |
+|---|---|
+| `focus-mcp/core` | Monorepo lib TS — Registry + EventBus + Router + SDK + Validator + marketplace resolver. |
+| `focus-mcp/cli` | `@focusmcp/cli` — stdio MCP, brick manager, publié npm. |
+| `focus-mcp/marketplace` (ici) | Catalogue + bricks + modules (manager). Catalog sur gh-pages. |
+| `focus-mcp/client` | **archivé** — ex desktop Tauri, Phase 2. |
+
+## Architecture
+
+```
+marketplace/
+├── bricks/<name>/            # briques officielles (pnpm workspace)
+│   ├── mcp-brick.json        # manifeste
+│   ├── package.json          # @focusmcp/<name>
+│   └── src/
+├── modules/<name>/           # modules internes (pnpm workspace)
+│   └── manager/              # dashboard web SvelteKit static (Phase 2)
+├── external_bricks.json      # refs URL / git-subdir (manuel)
+├── schemas/catalog/v1.json   # JSON Schema du catalogue
+├── scripts/
+│   ├── build-catalog.ts      # générateur, écrit dist/catalog.json
+│   └── build-catalog.test.ts
+└── .focusmcp/                # gh-pages source (catalog.json publié)
+```
+
+**Pipeline release** (Changesets independent mode) :
+1. PR merge sur `develop` avec un changeset
+2. Sync `develop → main` via PR
+3. Workflow `release.yml` sur main : Changesets bump versions, tag `focus-<name>@x.y.z`, GitHub
+   Release, `pnpm build:catalog`, push gh-pages avec nouveau `catalog.json`
+
+**Domaine custom à configurer (Phase 2)** : `marketplace.focusmcp.dev` → gh-pages (CNAME +
+DNS + GitHub Pages settings). Actuellement : `https://focus-mcp.github.io/marketplace/catalog.json`.
+
+## Règles non-négociables (tous repos FocusMCP)
+
+1. **TDD strict** — tests AVANT le code. Coverage ≥ **80 %** global.
+2. **Périmètre strict** — pas de features non demandées.
+3. **Standards pro** — TS strict (pas de `any`), Biome (indent 4 spaces), Conventional Commits,
+   husky + lint-staged, semver, SPDX headers (REUSE, via `.license` sidecar pour JSON), Changesets.
+4. **Imports** : `node:` protocol.
+5. **Public-facing content en anglais** — critique ici car le catalogue expose des contenus lus par
+   des tiers :
+   - `.github/` (workflows, templates, renovate)
+   - PR/issue titles + bodies, commit messages
+   - **`mcp-brick.json`** : `description`, `tools[].description`, `tools[].inputSchema.properties.*.description`
+   - **`bricks/<name>/README.md`** (lu dans le client FocusMCP au browse)
+   - **Entries Changesets** (`.changeset/*.md`)
+   - Docs contributor-facing (README, AGENTS, CONTRIBUTING, SECURITY, CODE_OF_CONDUCT)
+   - Seule exception : `PRD.md` et contenus internes modules en français.
+6. **Git-flow strict** — `develop` permanente.
+7. **npm orgs** — `focusmcp` + `focus-mcp` réservées. Scope canonique `@focusmcp/*`. Au MVP,
+   briques non publiées npm (distribution = tarball GitHub Release via `catalog.json`).
+8. **Rulesets GitHub** — `main protection` cible UNIQUEMENT `refs/heads/main` ;
+   `develop protection` cible UNIQUEMENT `refs/heads/develop`. Ne pas mélanger (Code Quality
+   = pending éternel sur non-default branch).
+
+## Dans ce repo (marketplace)
+
+**Stack** : Node ≥ 22, pnpm ≥ 10, TS 5.7+, ESM, Vitest, Biome 2.4+, Changesets independent,
+Ajv 8 (pour validation du schema). Pour `modules/manager/` : SvelteKit 2 + Svelte 5 runes +
+Tailwind 4 + adapter-static.
+
+**Layout pnpm-workspace.yaml** :
+```yaml
+packages:
+  - 'bricks/*'
+  - 'modules/*'
+  - 'scripts'
+```
+
+**Briques installées aujourd'hui** :
+- `bricks/echo/` — hello-world brique pour smoke-test le pipeline (tools: `echo_say`)
+
+**Modules installés aujourd'hui** :
+- `modules/manager/` — dashboard web static SvelteKit. Purement observationnel, consomme
+  l'admin API HTTP de la CLI (pas encore shippée). Package: `@focusmcp/manager`. Publish Phase 2.
+
+**Conventions bricks** :
+- Nom = kebab-case **nu** (ex: `echo`, `indexer`, `memory`, `sf-router`). **Pas de préfixe `focus-`**.
+- Package npm = `@focusmcp/<name>` (scope canonique).
+- Manifeste `mcp-brick.json` : pas de `version` (source de vérité = `package.json`).
+- Source de la brique (catalogue) : `source: { type: "local", path: "bricks/<name>" }` (interne)
+  ou `{ type: "url", url, sha? }` (external_bricks.json).
+
+**Commandes** :
+```bash
+pnpm install
+pnpm test            # Vitest (bricks + scripts/build-catalog)
+pnpm test:coverage
+pnpm typecheck
+pnpm lint / lint:fix
+pnpm build           # build tous les bricks et modules avec `build` script
+pnpm build:catalog   # génère dist/catalog.json, valide contre schemas/catalog/v1.json
+pnpm changeset       # required avant toute PR qui touche une brique ou un module
+```
+
+## Workflow pour une feature
+
+1. Lire PRD.md + ce fichier
+2. Feature branch depuis `develop`
+3. Red → Green → Refactor (TDD strict)
+4. Pour une brique : scaffolding `bricks/<name>/{mcp-brick.json, package.json, src/, README.md}` +
+   tests Vitest + changeset
+5. Pour un module : scaffolding `modules/<name>/` (SvelteKit ou autre selon besoin) + changeset
+6. `pnpm test:coverage && pnpm typecheck && pnpm lint && pnpm build:catalog`
+7. Conventional Commits
+8. PR vers `develop` + résoudre threads Copilot avant merge
+
+## Quality gates (PR doit passer tout ça)
+
+- `Lint (Biome)` — `pnpm lint`
+- `Typecheck` — `pnpm typecheck`
+- `Test + Coverage` — `pnpm test:coverage` (thresholds 80 %)
+- `REUSE compliance` — tous les fichiers ont un SPDX
+- `Gitleaks (secret scan)` — pas de secret commité
+- `Build catalog` — `pnpm build:catalog` (validation schema stricte)
+- `Build modules` — `pnpm build` (manager static build)
+- `CodeQL` — security scan
+- `Commitlint` — Conventional Commits
+
+## Sécurité
+
+- Aucun secret commité (gitleaks CI + pre-commit)
+- Schema JSON strict (ajv) sur toutes les briques avant publication
+- Briques reviewées humainement avant merge (atomicité, pas de kitchen-sink)
+- MIT-compatible licenses only
+
+## Documentation à lire en priorité
+
+1. [PRD.md](./PRD.md) — vision, architecture, roadmap catalogue
+2. [AGENTS.md](./AGENTS.md) — instructions cross-agents
+3. [CONTRIBUTING.md](./CONTRIBUTING.md) — workflow de soumission de brique
+4. [schemas/catalog/v1.json](./schemas/catalog/v1.json) — format exact du catalogue
+5. [scripts/build-catalog.ts](./scripts/build-catalog.ts) — générateur de référence
