@@ -41,3 +41,7 @@ License: MIT
 Files: .focusmcp/**
 Copyright: 2026 FocusMCP contributors
 License: MIT
+
+Files: modules/**
+Copyright: 2026 FocusMCP contributors
+License: MIT
