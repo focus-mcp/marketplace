@@ -35,21 +35,23 @@ marketplace/
 │   ├── mcp-brick.json        # manifeste
 │   ├── package.json          # @focusmcp/<name>
 │   └── src/
-├── modules/<name>/           # modules internes (pnpm workspace)
-│   └── manager/              # dashboard web SvelteKit static (Phase 2)
+├── modules/manager/          # dashboard web SvelteKit static (Phase 2) — seul module actuellement
 ├── external_bricks.json      # refs URL / git-subdir (manuel)
 ├── schemas/catalog/v1.json   # JSON Schema du catalogue
 ├── scripts/
 │   ├── build-catalog.ts      # générateur, écrit dist/catalog.json
 │   └── build-catalog.test.ts
-└── .focusmcp/                # gh-pages source (catalog.json publié)
+└── dist/catalog.json         # sortie locale du générateur (non commitée) ;
+                              # le workflow release assemble un `publish/` qui est poussé sur gh-pages
 ```
 
 **Pipeline release** (Changesets independent mode) :
 1. PR merge sur `develop` avec un changeset
 2. Sync `develop → main` via PR
-3. Workflow `release.yml` sur main : Changesets bump versions, tag `focus-<name>@x.y.z`, GitHub
-   Release, `pnpm build:catalog`, push gh-pages avec nouveau `catalog.json`
+3. Workflow `release.yml` sur main : Changesets bump versions, tag `@focusmcp/<name>@x.y.z`
+   (format scoped npm natif de Changesets), GitHub Release par package bumpé, `pnpm build:catalog`,
+   publish sur gh-pages (le workflow assemble un dossier `publish/` qui devient la racine de
+   `gh-pages` via `peaceiris/actions-gh-pages`).
 
 **Domaine custom à configurer (Phase 2)** : `marketplace.focusmcp.dev` → gh-pages (CNAME +
 DNS + GitHub Pages settings). Actuellement : `https://focus-mcp.github.io/marketplace/catalog.json`.
@@ -69,7 +71,10 @@ DNS + GitHub Pages settings). Actuellement : `https://focus-mcp.github.io/market
    - **`bricks/<name>/README.md`** (lu dans le client FocusMCP au browse)
    - **Entries Changesets** (`.changeset/*.md`)
    - Docs contributor-facing (README, AGENTS, CONTRIBUTING, SECURITY, CODE_OF_CONDUCT)
-   - Seule exception : `PRD.md` et contenus internes modules en français.
+   - Règle "à partir de maintenant" : tout nouveau contenu public en anglais ; les docs
+     existantes peuvent rester en français jusqu'à leur prochaine réécriture substantielle.
+   - Exceptions permanentes : `PRD.md`, `CLAUDE.md` (ce fichier) et contenus internes modules
+     restent en français.
 6. **Git-flow strict** — `develop` permanente.
 7. **npm orgs** — `focusmcp` + `focus-mcp` réservées. Scope canonique `@focusmcp/*`. Au MVP,
    briques non publiées npm (distribution = tarball GitHub Release via `catalog.json`).
