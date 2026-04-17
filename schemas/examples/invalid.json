@@ -1,20 +1,20 @@
 {
-  "$schema": "https://focus-mcp.github.io/marketplace/schemas/catalog/v1.json",
-  "name": "FocusMCP Marketplace",
-  "description": "Catalogue avec brique invalide (nom en camelCase, version non-semver).",
-  "owner": {
-    "name": "FocusMCP contributors",
-    "url": "https://github.com/focus-mcp"
-  },
-  "updated": "2026-04-15T12:00:00Z",
-  "bricks": [
-    {
-      "name": "BadName",
-      "version": "not-semver",
-      "description": "Nom en CamelCase et version non-semver — doit échouer.",
-      "dependencies": [],
-      "tools": [],
-      "source": { "type": "local", "path": "bricks/bad" }
-    }
-  ]
+    "$schema": "https://focus-mcp.github.io/marketplace/schemas/catalog/v1.json",
+    "name": "FocusMCP Marketplace",
+    "description": "Catalogue avec brique invalide (nom en camelCase, version non-semver).",
+    "owner": {
+        "name": "FocusMCP contributors",
+        "url": "https://github.com/focus-mcp"
+    },
+    "updated": "2026-04-15T12:00:00Z",
+    "bricks": [
+        {
+            "name": "BadName",
+            "version": "not-semver",
+            "description": "Nom en CamelCase et version non-semver — doit échouer.",
+            "dependencies": [],
+            "tools": [],
+            "source": { "type": "local", "path": "bricks/bad" }
+        }
+    ]
 }
