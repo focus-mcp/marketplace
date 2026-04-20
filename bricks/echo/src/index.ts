@@ -50,7 +50,7 @@ const brick: Brick = {
     manifest: manifestJson,
     start(ctx) {
         unsubscribeEchoSay?.();
-        unsubscribeEchoSay = ctx.bus.handle('echo:echo_say', (data) => echo(parseEchoInput(data)));
+        unsubscribeEchoSay = ctx.bus.handle('echo:say', (data) => echo(parseEchoInput(data)));
     },
     stop() {
         unsubscribeEchoSay?.();
