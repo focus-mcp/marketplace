@@ -58,6 +58,8 @@ importers:
 
   bricks/echo: {}
 
+  bricks/filesystem: {}
+
   modules/manager:
     devDependencies:
       '@biomejs/biome':
