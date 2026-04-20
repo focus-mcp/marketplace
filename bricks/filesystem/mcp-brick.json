@@ -1,6 +1,7 @@
 {
     "name": "filesystem",
-    "description": "File system operations — read, write, list, search, and manage files.",
+    "version": "0.0.0",
+    "description": "File system operations \u2014 read, write, list, search, and manage files.",
     "dependencies": [],
     "tools": [
         {
@@ -9,7 +10,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Absolute path to the file" }
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute path to the file"
+                    }
                 },
                 "required": ["path"],
                 "additionalProperties": false
@@ -21,8 +25,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Absolute path to the file" },
-                    "content": { "type": "string", "description": "Content to write" }
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute path to the file"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Content to write"
+                    }
                 },
                 "required": ["path", "content"],
                 "additionalProperties": false
@@ -34,7 +44,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Absolute path to list" },
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute path to list"
+                    },
                     "recursive": {
                         "type": "boolean",
                         "description": "List recursively (default false)"
@@ -50,9 +63,18 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Directory to search in" },
-                    "pattern": { "type": "string", "description": "Regex pattern to search for" },
-                    "glob": { "type": "string", "description": "File glob filter (e.g. '*.ts')" }
+                    "path": {
+                        "type": "string",
+                        "description": "Directory to search in"
+                    },
+                    "pattern": {
+                        "type": "string",
+                        "description": "Regex pattern to search for"
+                    },
+                    "glob": {
+                        "type": "string",
+                        "description": "File glob filter (e.g. '*.ts')"
+                    }
                 },
                 "required": ["path", "pattern"],
                 "additionalProperties": false
@@ -64,7 +86,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Absolute path to delete" }
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute path to delete"
+                    }
                 },
                 "required": ["path"],
                 "additionalProperties": false
