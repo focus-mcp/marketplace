@@ -47,19 +47,22 @@ describe('echo brick (default export)', () => {
         expect(brick.manifest.tools[0]?.name).toBe('echo_say');
     });
 
-    it('registers the echo:say handler on the bus when started', async () => {
+    it('registers the echo:echo_say handler on the bus when started', async () => {
         const handlers = new Map<string, (data: unknown) => Promise<unknown> | unknown>();
         const bus = {
-            on: vi.fn((event: string, handler: (data: unknown) => Promise<unknown> | unknown) => {
-                handlers.set(event, handler);
-                return () => handlers.delete(event);
-            }),
+            handle: vi.fn(
+                (event: string, handler: (data: unknown) => Promise<unknown> | unknown) => {
+                    handlers.set(event, handler);
+                    return () => handlers.delete(event);
+                },
+            ),
+            on: vi.fn(),
         };
 
         await brick.start({ bus });
 
-        expect(bus.on).toHaveBeenCalledWith('echo:say', expect.any(Function));
-        const handler = handlers.get('echo:say');
+        expect(bus.handle).toHaveBeenCalledWith('echo:echo_say', expect.any(Function));
+        const handler = handlers.get('echo:echo_say');
         expect(handler).toBeDefined();
         expect(await handler?.({ message: 'ping' })).toEqual({ message: 'ping' });
     });
@@ -67,22 +70,23 @@ describe('echo brick (default export)', () => {
     it('handler rejects invalid payloads with a TypeError', async () => {
         const handlers = new Map<string, (data: unknown) => Promise<unknown> | unknown>();
         const bus = {
-            on: (event: string, handler: (data: unknown) => Promise<unknown> | unknown) => {
+            handle: (event: string, handler: (data: unknown) => Promise<unknown> | unknown) => {
                 handlers.set(event, handler);
                 return () => handlers.delete(event);
             },
+            on: vi.fn(),
         };
 
         await brick.start({ bus });
-        const handler = handlers.get('echo:say');
+        const handler = handlers.get('echo:echo_say');
         expect(() => handler?.({ not: 'an echo input' })).toThrow(TypeError);
 
         await brick.stop();
     });
 
-    it('stop() invokes the unsubscribe returned by bus.on', async () => {
+    it('stop() invokes the unsubscribe returned by bus.handle', async () => {
         const unsubscribe = vi.fn();
-        const bus = { on: vi.fn(() => unsubscribe) };
+        const bus = { handle: vi.fn(() => unsubscribe), on: vi.fn() };
 
         await brick.start({ bus });
         await brick.stop();

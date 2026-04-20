@@ -17,6 +17,7 @@ interface BrickBus {
         event: string,
         handler: (data: unknown) => Promise<unknown> | unknown,
     ): undefined | (() => void);
+    handle(target: string, handler: (data: unknown) => Promise<unknown> | unknown): () => void;
 }
 
 interface BrickContext {
@@ -49,7 +50,7 @@ const brick: Brick = {
     manifest: manifestJson,
     start(ctx) {
         unsubscribeEchoSay?.();
-        unsubscribeEchoSay = ctx.bus.on('echo:say', (data) => echo(parseEchoInput(data)));
+        unsubscribeEchoSay = ctx.bus.handle('echo:echo_say', (data) => echo(parseEchoInput(data)));
     },
     stop() {
         unsubscribeEchoSay?.();
