@@ -1,0 +1,78 @@
+{
+    "name": "filesystem",
+    "version": "0.0.0",
+    "prefix": "fs",
+    "description": "File system operations — read, write, list, search, and manage files.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "read",
+            "description": "Read a file and return its content as text.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Absolute path to the file" }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "write",
+            "description": "Write content to a file (creates or overwrites).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Absolute path to the file" },
+                    "content": { "type": "string", "description": "Content to write" }
+                },
+                "required": ["path", "content"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "list",
+            "description": "List files and directories in a path.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Absolute path to list" },
+                    "recursive": {
+                        "type": "boolean",
+                        "description": "List recursively (default false)"
+                    }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "search",
+            "description": "Search for a pattern in files (grep-like).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Directory to search in" },
+                    "pattern": { "type": "string", "description": "Regex pattern to search for" },
+                    "glob": { "type": "string", "description": "File glob filter (e.g. '*.ts')" }
+                },
+                "required": ["path", "pattern"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "delete",
+            "description": "Delete a file or empty directory.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Absolute path to delete" }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["filesystem", "io", "core"],
+    "license": "MIT"
+}

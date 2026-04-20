@@ -44,10 +44,10 @@ describe('echo brick (default export)', () => {
         expect(brick.manifest.name).toBe('echo');
         expect(brick.manifest.dependencies).toEqual([]);
         expect(brick.manifest.tools).toHaveLength(1);
-        expect(brick.manifest.tools[0]?.name).toBe('echo_say');
+        expect(brick.manifest.tools[0]?.name).toBe('say');
     });
 
-    it('registers the echo:echo_say handler on the bus when started', async () => {
+    it('registers the echo:say handler on the bus when started', async () => {
         const handlers = new Map<string, (data: unknown) => Promise<unknown> | unknown>();
         const bus = {
             handle: vi.fn(
@@ -61,8 +61,8 @@ describe('echo brick (default export)', () => {
 
         await brick.start({ bus });
 
-        expect(bus.handle).toHaveBeenCalledWith('echo:echo_say', expect.any(Function));
-        const handler = handlers.get('echo:echo_say');
+        expect(bus.handle).toHaveBeenCalledWith('echo:say', expect.any(Function));
+        const handler = handlers.get('echo:say');
         expect(handler).toBeDefined();
         expect(await handler?.({ message: 'ping' })).toEqual({ message: 'ping' });
     });
@@ -78,7 +78,7 @@ describe('echo brick (default export)', () => {
         };
 
         await brick.start({ bus });
-        const handler = handlers.get('echo:echo_say');
+        const handler = handlers.get('echo:say');
         expect(() => handler?.({ not: 'an echo input' })).toThrow(TypeError);
 
         await brick.stop();
