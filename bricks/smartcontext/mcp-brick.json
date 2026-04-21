@@ -1,0 +1,50 @@
+{
+    "name": "smartcontext",
+    "version": "0.0.0",
+    "prefix": "sctx",
+    "description": "Composite brick — orchestrates smartread, cache, compress, tokenbudget, and overview to deliver optimal context within a token budget.",
+    "dependencies": ["smartread", "cache", "compress", "tokenbudget", "overview"],
+    "tools": [
+        {
+            "name": "load",
+            "description": "Auto-discover relevant files for a task, choose read modes, and return optimal context within budget.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "task": {
+                        "type": "string",
+                        "description": "Task description to contextualize"
+                    },
+                    "dir": { "type": "string", "description": "Root directory to scan" },
+                    "budget": { "type": "number", "description": "Token budget (default: 2000)" }
+                },
+                "required": ["task", "dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "refresh",
+            "description": "Re-check files for changes and update context using cache to detect stale entries.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Directory to refresh" },
+                    "budget": { "type": "number", "description": "Token budget (default: 2000)" }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "status",
+            "description": "Show current context budget usage and cache statistics.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["context", "composite", "orchestration", "tokens"],
+    "license": "MIT"
+}

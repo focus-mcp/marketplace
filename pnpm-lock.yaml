@@ -60,6 +60,8 @@ importers:
 
   bricks/callgraph: {}
 
+  bricks/compress: {}
+
   bricks/depgraph: {}
 
   bricks/echo: {}
@@ -80,9 +82,15 @@ importers:
 
   bricks/multiread: {}
 
+  bricks/overview: {}
+
+  bricks/smartcontext: {}
+
   bricks/smartread: {}
 
   bricks/symbol: {}
+
+  bricks/tokenbudget: {}
 
   bricks/treesitter: {}
 
