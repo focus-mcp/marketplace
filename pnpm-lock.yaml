@@ -62,6 +62,8 @@ importers:
 
   bricks/compress: {}
 
+  bricks/contextpack: {}
+
   bricks/depgraph: {}
 
   bricks/echo: {}
@@ -80,9 +82,21 @@ importers:
 
   bricks/filewrite: {}
 
+  bricks/impact: {}
+
+  bricks/memory: {}
+
   bricks/multiread: {}
 
+  bricks/outline: {}
+
   bricks/overview: {}
+
+  bricks/refs: {}
+
+  bricks/repos: {}
+
+  bricks/session: {}
 
   bricks/smartcontext: {}
 
