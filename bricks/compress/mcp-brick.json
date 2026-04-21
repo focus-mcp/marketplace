@@ -1,0 +1,52 @@
+{
+    "name": "compress",
+    "version": "0.0.0",
+    "prefix": "cmp",
+    "description": "Compress text output to save tokens — strip comments, collapse whitespace, abbreviate patterns.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "output",
+            "description": "Strip comments, collapse whitespace, remove blank lines from code or text.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "text": { "type": "string", "description": "Text to compress" },
+                    "level": {
+                        "type": "string",
+                        "enum": ["light", "medium", "aggressive"],
+                        "description": "Compression level (default: medium)"
+                    }
+                },
+                "required": ["text"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "response",
+            "description": "Compress a JSON tool response: strip null/undefined values, shorten paths, abbreviate keys.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "json": { "type": "string", "description": "JSON string to compress" }
+                },
+                "required": ["json"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "terse",
+            "description": "Ultra-compressed: keep ONLY identifiers, function names, type names. Strip all implementation.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "text": { "type": "string", "description": "Source text to make terse" }
+                },
+                "required": ["text"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["compress", "tokens", "output", "json"],
+    "license": "MIT"
+}
