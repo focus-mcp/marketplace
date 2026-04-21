@@ -156,6 +156,61 @@ describe('tsLangs', () => {
     });
 });
 
+describe('parseFile — method and class branch coverage', () => {
+    it('parses public methods inside a class', () => {
+        const content = [
+            'export class MyService {',
+            '    doSomething() {}',
+            '    helper() {}',
+            '}',
+        ].join('\n');
+        const result = parseFile('/test.ts', content, 0);
+        const methods = result.symbols.filter((s) => s.kind === 'method');
+        expect(methods.length).toBeGreaterThanOrEqual(1);
+        expect(methods.some((m) => m.name === 'doSomething')).toBe(true);
+    });
+
+    it('skips constructor and underscore-prefixed methods', () => {
+        const content = [
+            'export class MyClass {',
+            '    constructor() {}',
+            '    _private() {}',
+            '    public() {}',
+            '}',
+        ].join('\n');
+        const result = parseFile('/test.ts', content, 0);
+        const names = result.symbols.filter((s) => s.kind === 'method').map((s) => s.name);
+        expect(names).not.toContain('constructor');
+        expect(names).not.toContain('_private');
+        expect(names).toContain('public');
+    });
+
+    it('closes currentClass when closing brace is encountered', () => {
+        const content = [
+            'export class Box {',
+            '    getValue() {}',
+            '}',
+            'export function standalone(): void {}',
+        ].join('\n');
+        const result = parseFile('/test.ts', content, 0);
+        // standalone should be a function symbol, not a method of Box
+        const fn = result.symbols.find((s) => s.name === 'standalone');
+        expect(fn).toBeDefined();
+        expect(fn?.kind).toBe('function');
+    });
+
+    it('parseFile handles line with no matching pattern (null branch)', () => {
+        const content = [
+            'export class Outer {',
+            '    // just a comment inside class',
+            '    helper() {}',
+            '}',
+        ].join('\n');
+        const result = parseFile('/test.ts', content, 0);
+        expect(result.symbols.some((s) => s.kind === 'class')).toBe(true);
+    });
+});
+
 describe('treesitter brick', () => {
     it('registers 5 handlers on start and unregisters on stop', async () => {
         const { default: brick } = await import('./index.ts');

@@ -119,6 +119,49 @@ describe('cgDepth', () => {
         const result = await cgDepth({ name: 'top', dir: testDir });
         expect(result.depth).toBeGreaterThanOrEqual(2);
     });
+
+    it('respects custom maxDepth', async () => {
+        await writeFile(
+            join(testDir, 'j.ts'),
+            [
+                'export function a(): void { b(); }',
+                'export function b(): void { c(); }',
+                'export function c(): void { d(); }',
+                'export function d(): void {}',
+            ].join('\n'),
+        );
+        const result = await cgDepth({ name: 'a', dir: testDir, maxDepth: 2 });
+        expect(result.depth).toBeLessThanOrEqual(2);
+    });
+});
+
+describe('collectFiles (callgraph) — branch coverage', () => {
+    it('ignores files with unsupported extensions', async () => {
+        await writeFile(join(testDir, 'readme.md'), '# Readme');
+        await writeFile(join(testDir, 'code.ts'), 'export function code(): void {}');
+        // cgCallers triggers collectFiles internally
+        const result = await cgCallers({ name: 'code', dir: testDir });
+        // only code.ts is scanned — readme.md is ignored
+        expect(result.callers).toHaveLength(0);
+    });
+});
+
+describe('processLine — currentFn tracking branches', () => {
+    it('closes currentFn when brace depth returns to 0 inside function body', async () => {
+        // A multi-line function whose body closes on a subsequent line
+        await writeFile(
+            join(testDir, 'k.ts'),
+            [
+                'export function outer(): void {',
+                '    helper();',
+                '}',
+                'export function unrelated(): void {}',
+            ].join('\n'),
+        );
+        // cgChain exercises processLine / buildCallMap with multi-line functions
+        const result = await cgChain({ from: 'outer', to: 'helper', dir: testDir });
+        expect(result.chain).not.toBeNull();
+    });
 });
 
 describe('callgraph brick', () => {

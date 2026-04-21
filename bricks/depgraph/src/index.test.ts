@@ -163,6 +163,36 @@ describe('depFanout', () => {
     });
 });
 
+describe('depCircular — resolveImport index file branch', () => {
+    it('resolves imports to index.ts inside a subdirectory', async () => {
+        // resolveImport checks `candidate/index${ext}` — trigger that branch
+        const subDir = join(testDir, 'utils');
+        await mkdir(subDir);
+        await writeFile(join(subDir, 'index.ts'), 'export function util() {}');
+        await writeFile(
+            join(testDir, 'main.ts'),
+            "import { util } from './utils';\nexport function main() {}",
+        );
+        // No cycles expected; just verify the graph resolves correctly (no crash)
+        const result = await depCircular({ dir: testDir });
+        expect(Array.isArray(result.cycles)).toBe(true);
+    });
+});
+
+describe('depFanin — fileImportsTarget extension matching branch', () => {
+    it('detects fanin when import specifier has no extension (resolved via extension loop)', async () => {
+        // importer uses './util' (no ext) — fileImportsTarget must use the extension loop
+        await writeFile(join(testDir, 'util.ts'), 'export function util() {}');
+        await writeFile(
+            join(testDir, 'consumer.ts'),
+            "import { util } from './util';\nexport function consumer() {}",
+        );
+        const result = await depFanin({ file: join(testDir, 'util.ts'), dir: testDir });
+        expect(result.count).toBeGreaterThanOrEqual(1);
+        expect(result.fanin.some((f) => f.endsWith('consumer.ts'))).toBe(true);
+    });
+});
+
 describe('depgraph brick', () => {
     it('registers 5 handlers on start and unregisters on stop', async () => {
         const { default: brick } = await import('./index.ts');

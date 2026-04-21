@@ -36,6 +36,31 @@ describe('parseSymbols', () => {
             'variable',
         ]);
     });
+
+    it('returns empty array for lines that match no pattern (null branch)', () => {
+        const content = ['// just a comment', 'const x = 42;', 'let y = "hello";'].join('\n');
+        const syms = parseSymbols('/test.ts', content);
+        expect(syms).toHaveLength(0);
+    });
+});
+
+describe('collectFiles (symbol) — branch coverage', () => {
+    it('recurses into subdirectories', async () => {
+        const { mkdir } = await import('node:fs/promises');
+        const subDir = join(testDir, 'sub');
+        await mkdir(subDir);
+        await writeFile(join(testDir, 'root.ts'), 'export function root(): void {}');
+        await writeFile(join(subDir, 'nested.ts'), 'export function nested(): void {}');
+        const result = await symFind({ name: 'nested', dir: testDir });
+        expect(result.symbols.some((s) => s.name === 'nested')).toBe(true);
+    });
+
+    it('ignores files with unsupported extensions', async () => {
+        await writeFile(join(testDir, 'data.json'), '{}');
+        await writeFile(join(testDir, 'code.ts'), 'export function code(): void {}');
+        const result = await symFind({ name: 'code', dir: testDir });
+        expect(result.symbols).toHaveLength(1);
+    });
 });
 
 describe('symFind', () => {
