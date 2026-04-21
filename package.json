@@ -21,6 +21,7 @@
     "scripts": {
         "build": "pnpm -r --filter \"./bricks/**\" --filter \"./modules/**\" --if-present build",
         "build:catalog": "tsx scripts/build-catalog.ts",
+        "build:docs": "tsx scripts/build-docs.ts",
         "lint": "biome check .",
         "lint:fix": "biome check --write .",
         "format": "biome format --write .",
