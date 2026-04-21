@@ -80,7 +80,7 @@
     },
     "overrides": [
         {
-            "includes": ["scripts/build-catalog.ts"],
+            "includes": ["scripts/build-catalog.ts", "scripts/build-docs.ts"],
             "linter": {
                 "rules": {
                     "suspicious": {
