@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2026 FocusMCP contributors
 // SPDX-License-Identifier: MIT
 
-import { readFile, stat } from 'node:fs/promises';
+import { open } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 interface CacheEntry {
@@ -45,18 +45,22 @@ export async function cacheGet(input: CacheGetInput): Promise<CacheGetOutput> {
         hits++;
         return { hit: true, content: entry.content };
     }
-    const fileStat = await stat(abs);
-    const mtime = fileStat.mtimeMs;
-    if (entry && entry.mtime === mtime) {
-        entry.accessCount++;
-        hits++;
-        return { hit: true, content: entry.content };
+    const fh = await open(abs, 'r');
+    try {
+        const fileStat = await fh.stat();
+        const mtime = fileStat.mtimeMs;
+        if (entry && entry.mtime === mtime) {
+            entry.accessCount++;
+            hits++;
+            return { hit: true, content: entry.content };
+        }
+        const content = await fh.readFile('utf-8');
+        store.set(abs, { content, mtime, accessCount: 1 });
+        misses++;
+        return { hit: false, content };
+    } finally {
+        await fh.close();
     }
-    const content = await readFile(abs, 'utf-8');
-    const freshStat = await stat(abs);
-    store.set(abs, { content, mtime: freshStat.mtimeMs, accessCount: 1 });
-    misses++;
-    return { hit: false, content };
 }
 
 export function cacheSet(input: CacheSetInput): { ok: boolean } {
@@ -90,10 +94,15 @@ export async function cacheWarmup(
     for (const p of input.paths) {
         try {
             const abs = resolve(p);
-            const content = await readFile(abs, 'utf-8');
-            const fileStat = await stat(abs);
-            store.set(abs, { content, mtime: fileStat.mtimeMs, accessCount: 0 });
-            loaded++;
+            const fh = await open(abs, 'r');
+            try {
+                const content = await fh.readFile('utf-8');
+                const fileStat = await fh.stat();
+                store.set(abs, { content, mtime: fileStat.mtimeMs, accessCount: 0 });
+                loaded++;
+            } finally {
+                await fh.close();
+            }
         } catch {
             failed++;
         }
