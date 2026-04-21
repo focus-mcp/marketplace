@@ -46,7 +46,7 @@ jobs:
           title: 'chore(release): version bricks'
           createGithubReleases: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
 
   catalog:
     name: Publish catalog to GitHub Pages
@@ -68,7 +68,7 @@ jobs:
           cp -r schemas/* publish/schemas/
       - uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.RELEASE_TOKEN }}
           publish_dir: ./publish
           publish_branch: gh-pages
           keep_files: false
