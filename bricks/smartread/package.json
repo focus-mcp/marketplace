@@ -1,0 +1,21 @@
+{
+    "name": "@focusmcp/smartread",
+    "version": "0.0.0",
+    "private": true,
+    "description": "FocusMCP smartread brick — intelligent file reading, multiple modes",
+    "license": "MIT",
+    "type": "module",
+    "main": "./src/index.ts",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "files": [
+        "src",
+        "mcp-brick.json",
+        "mcp-brick.json.license",
+        "README.md"
+    ],
+    "scripts": {
+        "test": "vitest run"
+    }
+}
