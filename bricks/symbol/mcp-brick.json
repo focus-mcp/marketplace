@@ -1,0 +1,67 @@
+{
+    "name": "symbol",
+    "prefix": "sym",
+    "description": "Symbol lookup in source files — find, get, bulk, body.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "find",
+            "description": "Find symbols by name (substring match) in a directory.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Symbol name or substring" },
+                    "dir": { "type": "string", "description": "Directory to search in" }
+                },
+                "required": ["name", "dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "get",
+            "description": "Get exact symbol match with signature.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Exact symbol name" },
+                    "dir": { "type": "string", "description": "Directory to search in" }
+                },
+                "required": ["name", "dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "bulk",
+            "description": "Look up multiple symbols in one call.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "names": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Symbol names to look up"
+                    },
+                    "dir": { "type": "string", "description": "Directory to search in" }
+                },
+                "required": ["names", "dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "body",
+            "description": "Read the body of a symbol (lines startLine to endLine).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "file": { "type": "string", "description": "Absolute file path" },
+                    "startLine": { "type": "number", "description": "Start line (1-based)" },
+                    "endLine": { "type": "number", "description": "End line (inclusive)" }
+                },
+                "required": ["file", "startLine", "endLine"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["symbols", "code-intel", "search"],
+    "license": "MIT"
+}

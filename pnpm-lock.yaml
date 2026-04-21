@@ -56,7 +56,15 @@ importers:
         specifier: ^3.2.0
         version: 3.2.4(@types/node@22.19.17)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3)
 
+  bricks/cache: {}
+
+  bricks/callgraph: {}
+
+  bricks/depgraph: {}
+
   bricks/echo: {}
+
+  bricks/filediff: {}
 
   bricks/filelist: {}
 
@@ -69,6 +77,14 @@ importers:
   bricks/filesystem: {}
 
   bricks/filewrite: {}
+
+  bricks/multiread: {}
+
+  bricks/smartread: {}
+
+  bricks/symbol: {}
+
+  bricks/treesitter: {}
 
   modules/manager:
     devDependencies:

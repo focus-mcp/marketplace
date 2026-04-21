@@ -1,0 +1,71 @@
+{
+    "name": "depgraph",
+    "prefix": "dep",
+    "description": "Dependency graph analysis — imports, exports, circular deps, fan-in/out.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "imports",
+            "description": "List all imports of a file.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "file": { "type": "string", "description": "Absolute file path" }
+                },
+                "required": ["file"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "exports",
+            "description": "List all exports of a file.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "file": { "type": "string", "description": "Absolute file path" }
+                },
+                "required": ["file"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "circular",
+            "description": "Detect circular dependencies in a directory.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Absolute directory path" }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "fanin",
+            "description": "Find which files import this file.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "file": { "type": "string", "description": "Absolute file path" },
+                    "dir": { "type": "string", "description": "Directory to search in" }
+                },
+                "required": ["file", "dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "fanout",
+            "description": "Count how many files this file imports.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "file": { "type": "string", "description": "Absolute file path" }
+                },
+                "required": ["file"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["depgraph", "imports", "analysis", "circular"],
+    "license": "MIT"
+}
