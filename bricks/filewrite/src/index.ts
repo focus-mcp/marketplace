@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: MIT
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
+import type { FwAppendInput, FwCreateInput, FwWriteInput } from './operations.ts';
+import { fwAppend, fwCreate, fwWrite } from './operations.ts';
 
 interface BrickBus {
     on(
@@ -32,14 +34,26 @@ interface Brick {
     stop(): Promise<void> | void;
 }
 
+const unsubscribers: Array<() => void> = [];
+
 const brick: Brick = {
     manifest: manifestJson,
-    // Composite brick — dependencies handle all operations.
-    start(_ctx: BrickContext) {
-        // no-op: fileread, filewrite, filelist, fileops, filesearch are loaded by the runtime
+    start(ctx) {
+        for (const unsub of unsubscribers) unsub();
+        unsubscribers.length = 0;
+        unsubscribers.push(
+            ctx.bus.handle('filewrite:write', (data) => fwWrite(data as FwWriteInput)),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('filewrite:append', (data) => fwAppend(data as FwAppendInput)),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('filewrite:create', (data) => fwCreate(data as FwCreateInput)),
+        );
     },
     stop() {
-        // no-op
+        for (const unsub of unsubscribers) unsub();
+        unsubscribers.length = 0;
     },
 };
 

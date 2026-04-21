@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: MIT
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
+import type { FsrchReplaceInput, FsrchSearchInput } from './operations.ts';
+import { fsrchReplace, fsrchSearch } from './operations.ts';
 
 interface BrickBus {
     on(
@@ -32,14 +34,23 @@ interface Brick {
     stop(): Promise<void> | void;
 }
 
+const unsubscribers: Array<() => void> = [];
+
 const brick: Brick = {
     manifest: manifestJson,
-    // Composite brick — dependencies handle all operations.
-    start(_ctx: BrickContext) {
-        // no-op: fileread, filewrite, filelist, fileops, filesearch are loaded by the runtime
+    start(ctx) {
+        for (const unsub of unsubscribers) unsub();
+        unsubscribers.length = 0;
+        unsubscribers.push(
+            ctx.bus.handle('filesearch:search', (data) => fsrchSearch(data as FsrchSearchInput)),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('filesearch:replace', (data) => fsrchReplace(data as FsrchReplaceInput)),
+        );
     },
     stop() {
-        // no-op
+        for (const unsub of unsubscribers) unsub();
+        unsubscribers.length = 0;
     },
 };
 

@@ -1,0 +1,62 @@
+{
+    "name": "filelist",
+    "version": "0.0.0",
+    "prefix": "fl",
+    "description": "List directory contents — entries, tree, glob, find.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "list",
+            "description": "List files and directories in a path",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Absolute directory path" }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "tree",
+            "description": "Recursive directory tree",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string" },
+                    "depth": { "type": "number", "description": "Max depth (default unlimited)" }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "glob",
+            "description": "Find files matching a glob pattern",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string" },
+                    "pattern": { "type": "string", "description": "Glob pattern (e.g. *.ts)" }
+                },
+                "required": ["path", "pattern"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "find",
+            "description": "Find files by name (substring match)",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string" },
+                    "name": { "type": "string", "description": "Filename substring to match" }
+                },
+                "required": ["path", "name"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["file", "list", "directory"],
+    "license": "MIT"
+}
