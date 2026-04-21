@@ -213,8 +213,8 @@ export async function tsIndex(input: TsIndexInput): Promise<{ files: number; sym
     const files = await collectFiles(abs);
     let symbolCount = 0;
     for (const f of files) {
-        const s = await stat(f);
         const content = await readFile(f, 'utf-8');
+        const s = await stat(f);
         const indexed = parseFile(f, content, s.mtimeMs);
         indexStore.set(f, indexed);
         symbolCount += indexed.symbols.length;
@@ -224,8 +224,8 @@ export async function tsIndex(input: TsIndexInput): Promise<{ files: number; sym
 
 export async function tsReindex(input: TsReindexInput): Promise<{ symbols: number }> {
     const abs = resolve(input.path);
-    const s = await stat(abs);
     const content = await readFile(abs, 'utf-8');
+    const s = await stat(abs);
     const indexed = parseFile(abs, content, s.mtimeMs);
     indexStore.set(abs, indexed);
     return { symbols: indexed.symbols.length };

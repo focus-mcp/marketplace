@@ -47,7 +47,8 @@ export async function cacheGet(input: CacheGetInput): Promise<CacheGetOutput> {
         return { hit: true, content: entry.content };
     }
     const content = await readFile(abs, 'utf-8');
-    store.set(abs, { content, mtime, accessCount: 1 });
+    const freshStat = await stat(abs);
+    store.set(abs, { content, mtime: freshStat.mtimeMs, accessCount: 1 });
     misses++;
     return { hit: false, content };
 }
@@ -82,8 +83,8 @@ export async function cacheWarmup(
     for (const p of input.paths) {
         try {
             const abs = resolve(p);
-            const fileStat = await stat(abs);
             const content = await readFile(abs, 'utf-8');
+            const fileStat = await stat(abs);
             store.set(abs, { content, mtime: fileStat.mtimeMs, accessCount: 0 });
             loaded++;
         } catch {
