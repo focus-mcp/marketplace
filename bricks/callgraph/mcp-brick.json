@@ -1,0 +1,82 @@
+{
+    "name": "callgraph",
+    "prefix": "cg",
+    "description": "Call graph analysis — callers, callees, call chains.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "callers",
+            "description": "Find which functions call this function (grep usage in files).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Function name to find callers for"
+                    },
+                    "dir": { "type": "string", "description": "Directory to search in" }
+                },
+                "required": ["name", "dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "callees",
+            "description": "Find which functions this function calls.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Function name" },
+                    "file": {
+                        "type": "string",
+                        "description": "File containing the function"
+                    },
+                    "startLine": {
+                        "type": "number",
+                        "description": "Start line of function body"
+                    },
+                    "endLine": { "type": "number", "description": "End line of function body" }
+                },
+                "required": ["name", "file", "startLine", "endLine"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "chain",
+            "description": "Find the call chain from function A to function Z.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "from": { "type": "string", "description": "Start function name" },
+                    "to": { "type": "string", "description": "End function name" },
+                    "dir": { "type": "string", "description": "Directory to search in" },
+                    "maxDepth": {
+                        "type": "number",
+                        "description": "Maximum search depth (default 5)"
+                    }
+                },
+                "required": ["from", "to", "dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "depth",
+            "description": "Find the maximum call depth of a function.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Function name" },
+                    "dir": { "type": "string", "description": "Directory to search in" },
+                    "maxDepth": {
+                        "type": "number",
+                        "description": "Maximum depth to explore (default 5)"
+                    }
+                },
+                "required": ["name", "dir"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["callgraph", "code-intel", "analysis"],
+    "license": "MIT"
+}
