@@ -1,0 +1,50 @@
+{
+    "name": "filewrite",
+    "version": "0.0.0",
+    "prefix": "fw",
+    "description": "Write files — create, overwrite, append.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "write",
+            "description": "Write content to a file (creates or overwrites)",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Absolute file path" },
+                    "content": { "type": "string", "description": "Content to write" }
+                },
+                "required": ["path", "content"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "append",
+            "description": "Append content to end of a file",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string" },
+                    "content": { "type": "string" }
+                },
+                "required": ["path", "content"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "create",
+            "description": "Create a file only if it does not already exist",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string" },
+                    "content": { "type": "string" }
+                },
+                "required": ["path", "content"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["file", "write", "io"],
+    "license": "MIT"
+}

@@ -1,0 +1,74 @@
+{
+    "name": "cache",
+    "prefix": "cache",
+    "description": "In-memory file cache — avoid redundant disk reads with mtime-based invalidation.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "get",
+            "description": "Get a file from cache. Returns content + hit/miss status.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Absolute file path" }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "set",
+            "description": "Force a file into the cache with given content.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Absolute file path" },
+                    "content": { "type": "string", "description": "File content to cache" }
+                },
+                "required": ["path", "content"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "invalidate",
+            "description": "Invalidate one file or the entire cache (omit path to clear all).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "File path to invalidate; omit to clear all"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "warmup",
+            "description": "Pre-load a list of files into the cache.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "paths": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "List of absolute file paths to cache"
+                    }
+                },
+                "required": ["paths"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "stats",
+            "description": "Return cache metrics: entry count, total size, hit rate.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["cache", "performance", "io"],
+    "license": "MIT"
+}

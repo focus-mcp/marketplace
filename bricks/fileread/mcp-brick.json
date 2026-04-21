@@ -1,0 +1,63 @@
+{
+    "name": "fileread",
+    "version": "0.0.0",
+    "prefix": "fr",
+    "description": "Read files — full, head, tail, line range, encoding detection.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "read",
+            "description": "Read entire file content",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Absolute file path" }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "head",
+            "description": "Read first N lines of a file",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string" },
+                    "lines": { "type": "number", "description": "Number of lines (default 10)" }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "tail",
+            "description": "Read last N lines of a file",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string" },
+                    "lines": { "type": "number", "description": "Number of lines (default 10)" }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "range",
+            "description": "Read specific line range from a file",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string" },
+                    "from": { "type": "number", "description": "Start line (1-based)" },
+                    "to": { "type": "number", "description": "End line (inclusive)" }
+                },
+                "required": ["path", "from", "to"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["file", "read", "io"],
+    "license": "MIT"
+}

@@ -1,0 +1,64 @@
+{
+    "name": "treesitter",
+    "prefix": "ts",
+    "description": "Regex-based code indexer for TypeScript/JavaScript — parses symbols, imports, exports.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "index",
+            "description": "Index a directory: parse all TS/JS files and store symbols in memory.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": {
+                        "type": "string",
+                        "description": "Absolute path to directory to index"
+                    }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "reindex",
+            "description": "Re-index a single file.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Absolute path to file" }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "status",
+            "description": "Return index status: file count, symbol count, languages.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "cleanup",
+            "description": "Clear the entire index.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "langs",
+            "description": "List supported languages.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["ast", "parser", "symbols", "typescript"],
+    "license": "MIT"
+}

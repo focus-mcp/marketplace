@@ -1,0 +1,53 @@
+{
+    "name": "multiread",
+    "version": "0.0.0",
+    "prefix": "mr",
+    "description": "Batch file reading — multiple files in one call, deduplication.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "batch",
+            "description": "Read multiple files in one call",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "paths": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "List of file paths to read"
+                    }
+                },
+                "required": ["paths"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "dedup",
+            "description": "Read multiple files, deduplicate shared imports/headers",
+            "inputSchema": {
+                "type": "object",
+                "properties": { "paths": { "type": "array", "items": { "type": "string" } } },
+                "required": ["paths"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "merge",
+            "description": "Read and concatenate files with separators",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "paths": { "type": "array", "items": { "type": "string" } },
+                    "separator": {
+                        "type": "string",
+                        "description": "Separator between files (default: filename header)"
+                    }
+                },
+                "required": ["paths"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["file", "read", "batch", "tokens"],
+    "license": "MIT"
+}

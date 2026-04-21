@@ -1,0 +1,10 @@
+{
+    "name": "filesystem",
+    "version": "0.0.0",
+    "prefix": "fs",
+    "description": "Complete filesystem operations — loads fileread, filewrite, filelist, fileops, filesearch.",
+    "dependencies": ["fileread", "filewrite", "filelist", "fileops", "filesearch"],
+    "tools": [],
+    "tags": ["filesystem", "composite"],
+    "license": "MIT"
+}

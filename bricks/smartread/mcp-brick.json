@@ -1,0 +1,61 @@
+{
+    "name": "smartread",
+    "version": "0.0.0",
+    "prefix": "sr",
+    "description": "Intelligent file reading — multiple modes to minimize token usage.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "full",
+            "description": "Read entire file (fallback mode)",
+            "inputSchema": {
+                "type": "object",
+                "properties": { "path": { "type": "string" } },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "map",
+            "description": "Read file structure only — function/class signatures, no bodies",
+            "inputSchema": {
+                "type": "object",
+                "properties": { "path": { "type": "string" } },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "signatures",
+            "description": "Extract only exported function/class signatures",
+            "inputSchema": {
+                "type": "object",
+                "properties": { "path": { "type": "string" } },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "imports",
+            "description": "Extract only import/require statements",
+            "inputSchema": {
+                "type": "object",
+                "properties": { "path": { "type": "string" } },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "summary",
+            "description": "One-line summary per function/block (name + line count)",
+            "inputSchema": {
+                "type": "object",
+                "properties": { "path": { "type": "string" } },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["file", "read", "smart", "tokens"],
+    "license": "MIT"
+}
