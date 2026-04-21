@@ -1,0 +1,39 @@
+{
+    "name": "filesearch",
+    "version": "0.0.0",
+    "prefix": "fsrch",
+    "description": "Search and replace in files — regex search, in-place replace.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "search",
+            "description": "Search for a regex pattern in files",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Directory to search in" },
+                    "pattern": { "type": "string", "description": "Regex pattern" },
+                    "glob": { "type": "string", "description": "File glob filter (e.g. *.ts)" }
+                },
+                "required": ["path", "pattern"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "replace",
+            "description": "Search and replace in a file",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "File path" },
+                    "pattern": { "type": "string", "description": "Regex pattern to find" },
+                    "replacement": { "type": "string", "description": "Replacement string" }
+                },
+                "required": ["path", "pattern", "replacement"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["file", "search", "replace", "regex"],
+    "license": "MIT"
+}

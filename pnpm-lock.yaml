@@ -58,7 +58,17 @@ importers:
 
   bricks/echo: {}
 
+  bricks/filelist: {}
+
+  bricks/fileops: {}
+
+  bricks/fileread: {}
+
+  bricks/filesearch: {}
+
   bricks/filesystem: {}
+
+  bricks/filewrite: {}
 
   modules/manager:
     devDependencies:

@@ -1,13 +1,16 @@
 # @focusmcp/filesystem
 
-File system operations for FocusMCP — read, write, list, search, and manage files.
+Composite filesystem brick for FocusMCP — loads all filesystem sub-bricks.
 
-## Tools
+This is a **composite brick**: it depends on `fileread`, `filewrite`, `filelist`, `fileops`, and `filesearch`.
+It exposes no tools of its own — the runtime loads and registers all sub-bricks automatically.
 
-| Tool | Exposed as | Description |
-|------|-----------|-------------|
-| `read` | `fs_read` | Read a file |
-| `write` | `fs_write` | Write/create a file |
-| `list` | `fs_list` | List directory contents |
-| `search` | `fs_search` | Search for patterns (grep) |
-| `delete` | `fs_delete` | Delete a file |
+## Dependencies
+
+| Brick | Prefix | Description |
+|-------|--------|-------------|
+| `fileread` | `fr` | Read files (full, head, tail, range) |
+| `filewrite` | `fw` | Write files (write, append, create) |
+| `filelist` | `fl` | List directories (list, tree, glob, find) |
+| `fileops` | `fo` | File operations (move, copy, delete, rename) |
+| `filesearch` | `fsrch` | Search and replace in files |

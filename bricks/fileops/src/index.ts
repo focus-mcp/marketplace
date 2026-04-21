@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: MIT
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
+import type { FoCopyInput, FoDeleteInput, FoMoveInput, FoRenameInput } from './operations.ts';
+import { foCopy, foDelete, foMove, foRename } from './operations.ts';
 
 interface BrickBus {
     on(
@@ -32,14 +34,25 @@ interface Brick {
     stop(): Promise<void> | void;
 }
 
+const unsubscribers: Array<() => void> = [];
+
 const brick: Brick = {
     manifest: manifestJson,
-    // Composite brick — dependencies handle all operations.
-    start(_ctx: BrickContext) {
-        // no-op: fileread, filewrite, filelist, fileops, filesearch are loaded by the runtime
+    start(ctx) {
+        for (const unsub of unsubscribers) unsub();
+        unsubscribers.length = 0;
+        unsubscribers.push(ctx.bus.handle('fileops:move', (data) => foMove(data as FoMoveInput)));
+        unsubscribers.push(ctx.bus.handle('fileops:copy', (data) => foCopy(data as FoCopyInput)));
+        unsubscribers.push(
+            ctx.bus.handle('fileops:delete', (data) => foDelete(data as FoDeleteInput)),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('fileops:rename', (data) => foRename(data as FoRenameInput)),
+        );
     },
     stop() {
-        // no-op
+        for (const unsub of unsubscribers) unsub();
+        unsubscribers.length = 0;
     },
 };
 
