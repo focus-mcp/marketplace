@@ -1,0 +1,74 @@
+{
+    "name": "tokenbudget",
+    "version": "0.0.0",
+    "prefix": "tb",
+    "description": "Token budget management — estimate and optimize token usage for AI agents.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "estimate",
+            "description": "Estimate token count for text (chars/4 heuristic, adjusted for code vs prose).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "text": { "type": "string", "description": "Text to estimate" },
+                    "path": { "type": "string", "description": "File path to read and estimate" }
+                },
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "analyze",
+            "description": "Analyze token cost of a directory recursively, per-file breakdown sorted by cost.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Directory to analyze" },
+                    "maxFiles": {
+                        "type": "number",
+                        "description": "Max files to analyze (default 50)"
+                    }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "fill",
+            "description": "Given a token budget and file list, select files that fit using compression levels to maximize info.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "budget": { "type": "number", "description": "Token budget" },
+                    "files": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "List of file paths"
+                    },
+                    "mode": {
+                        "type": "string",
+                        "enum": ["signatures", "map", "full"],
+                        "description": "Read mode (default: signatures)"
+                    }
+                },
+                "required": ["budget", "files"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "optimize",
+            "description": "Suggest how to read a set of files within a budget.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "budget": { "type": "number", "description": "Token budget" },
+                    "dir": { "type": "string", "description": "Directory to optimize" }
+                },
+                "required": ["budget", "dir"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["tokens", "budget", "optimize", "estimate"],
+    "license": "MIT"
+}

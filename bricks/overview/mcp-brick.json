@@ -1,0 +1,66 @@
+{
+    "name": "overview",
+    "version": "0.0.0",
+    "prefix": "ovw",
+    "description": "Project-level understanding without reading all files — detect framework, language, conventions, and architecture.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "project",
+            "description": "Scan root dir and detect project metadata: name, framework, language, type, scripts, packageManager.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory to scan" }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "architecture",
+            "description": "Scan directory structure, count files per folder, detect architectural patterns.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory to scan" },
+                    "maxDepth": {
+                        "type": "number",
+                        "description": "Max directory depth (default 3)"
+                    }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "conventions",
+            "description": "Read sample files and detect coding conventions: indent, quotes, semicolons, import style.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory to scan" }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "dependencies",
+            "description": "Parse package.json and categorize dependencies: production, dev, framework, testRunner, linter, bundler.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory containing package.json"
+                    }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["overview", "project", "architecture", "conventions"],
+    "license": "MIT"
+}

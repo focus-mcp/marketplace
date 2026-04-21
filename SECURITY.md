@@ -3,54 +3,54 @@ SPDX-FileCopyrightText: 2026 FocusMCP contributors
 SPDX-License-Identifier: MIT
 -->
 
-# Politique de sécurité
+# Security Policy
 
-## Versions supportées
+## Supported versions
 
-La marketplace et ses briques sont en pré-MVP (`0.x`). Aucune brique n'est encore considérée comme stable. Chaque brique suit **sa propre version** (semver, mode Changesets independent).
+The marketplace and its bricks are pre-MVP (`0.x`). No brick is yet considered stable. Each brick follows **its own version** (semver, Changesets independent mode).
 
-## Reporter une vulnérabilité
+## Reporting a vulnerability
 
-**Ne pas ouvrir d'issue publique** pour une vulnérabilité de sécurité (sur une brique, sur le générateur de catalogue, ou sur le schéma).
+**Do not open a public issue** for a security vulnerability (in a brick, in the catalog generator, or in the schema).
 
-Envoyer un rapport privé via :
+Send a private report via:
 
-- **[GitHub Security Advisories](https://github.com/focus-mcp/marketplace/security/advisories/new)** (recommandé)
-- ou par email : security@focusmcp.dev
+- **[GitHub Security Advisories](https://github.com/focus-mcp/marketplace/security/advisories/new)** (recommended)
+- or by email: security@focusmcp.dev
 
-Inclure si possible :
+Please include if possible:
 
-- Brique concernée (ou tooling)
-- Description du problème
-- Étapes de reproduction
-- Impact estimé
-- Suggestions de mitigation
+- Affected brick (or tooling)
+- Description of the issue
+- Reproduction steps
+- Estimated impact
+- Mitigation suggestions
 
-## Engagement
+## Our commitment
 
-Nous nous engageons à :
+We commit to:
 
-- **Accuser réception** sous 72h
-- **Évaluer** et **prioriser** la vulnérabilité sous 7 jours
-- **Coordonner** la divulgation responsable
-- **Créditer** le découvreur (sauf demande contraire)
+- **Acknowledge** receipt within 72h
+- **Assess** and **prioritize** within 7 days
+- **Coordinate** responsible disclosure
+- **Credit** the reporter (unless they request otherwise)
 
-## Périmètre
+## Scope
 
-Ce dépôt étant un **catalogue** (et non un runtime), les surfaces d'attaque principales sont :
+Since this repository is a **catalog** (not a runtime), the main attack surfaces are:
 
-1. **Le catalogue `catalog.json`** publié sur GitHub Pages — intégrité du JSON, cohérence des `integrity`/`sha` associés aux tarballs.
-2. **Le JSON Schema `schemas/catalog/v1.json`** — une régression de schéma peut permettre des entrées malveillantes.
-3. **Les briques elles-mêmes** — une brique malveillante ou compromise peut affecter les utilisateurs de FocusMCP.
-4. **Le pipeline CI** — secret scanning, permissions minimales sur les workflows.
+1. **The `catalog.json`** published on GitHub Pages — JSON integrity, consistency of `integrity`/`sha` values associated with tarballs.
+2. **The JSON Schema `schemas/catalog/v1.json`** — a schema regression could let malicious entries through.
+3. **The bricks themselves** — a malicious or compromised brick can affect FocusMCP users.
+4. **The CI pipeline** — secret scanning, least-privilege workflow permissions.
 
-Les vulnérabilités affectant l'une de ces surfaces sont prioritaires.
+Vulnerabilities affecting one of these surfaces are our top priority.
 
-## Pratiques de sécurité du projet
+## Project security practices
 
-- Secret scanning (gitleaks) en pre-commit + CI
+- Secret scanning (gitleaks) in pre-commit and CI
 - Dependency scanning (Renovate + `pnpm audit`)
-- SAST (CodeQL) en CI
-- REUSE compliance (licences explicites)
-- Validation stricte du catalogue contre le JSON Schema à chaque build
-- Commits signés (GPG/SSH) recommandés pour les mainteneurs
+- SAST (CodeQL) in CI
+- REUSE compliance (explicit licenses)
+- Strict catalog validation against the JSON Schema on every build
+- Signed commits (GPG/SSH) recommended for maintainers

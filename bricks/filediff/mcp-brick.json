@@ -1,0 +1,47 @@
+{
+    "name": "filediff",
+    "version": "0.0.0",
+    "prefix": "fd",
+    "description": "File comparison — diff, patch, delta between files or versions.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "diff",
+            "description": "Compare two files and return unified diff",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "a": { "type": "string", "description": "Path to first file" },
+                    "b": { "type": "string", "description": "Path to second file" }
+                },
+                "required": ["a", "b"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "patch",
+            "description": "Apply a unified diff patch to a file",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "File to patch" },
+                    "patch": { "type": "string", "description": "Unified diff content" }
+                },
+                "required": ["path", "patch"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "delta",
+            "description": "Show only changed lines between two strings (compact)",
+            "inputSchema": {
+                "type": "object",
+                "properties": { "before": { "type": "string" }, "after": { "type": "string" } },
+                "required": ["before", "after"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["file", "diff", "patch"],
+    "license": "MIT"
+}

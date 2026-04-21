@@ -1,0 +1,62 @@
+{
+    "name": "fileops",
+    "version": "0.0.0",
+    "prefix": "fo",
+    "description": "File operations — move, copy, delete, rename.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "move",
+            "description": "Move a file or directory to a new path",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "from": { "type": "string", "description": "Source path" },
+                    "to": { "type": "string", "description": "Destination path" }
+                },
+                "required": ["from", "to"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "copy",
+            "description": "Copy a file to a new path",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "from": { "type": "string" },
+                    "to": { "type": "string" }
+                },
+                "required": ["from", "to"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "delete",
+            "description": "Delete a file or empty directory",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Absolute path to delete" }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "rename",
+            "description": "Rename a file within its parent directory",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Current file path" },
+                    "name": { "type": "string", "description": "New filename (not a full path)" }
+                },
+                "required": ["path", "name"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["file", "move", "copy", "delete"],
+    "license": "MIT"
+}
