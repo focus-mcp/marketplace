@@ -149,22 +149,9 @@ export async function cgCallees(input: CgCalleesInput): Promise<{ callees: strin
     const content = await readFile(resolve(input.file), 'utf-8');
     const lines = content.split('\n').slice(input.startLine - 1, input.endLine);
     const calleeSet = new Set<string>();
-    const keywords = new Set([
-        'if',
-        'for',
-        'while',
-        'switch',
-        'catch',
-        'function',
-        'class',
-        'return',
-        'new',
-        'typeof',
-        'instanceof',
-    ]);
     for (const line of lines) {
         for (const call of extractCallsFromLine(line, '')) {
-            if (!keywords.has(call)) calleeSet.add(call);
+            if (!CALL_KEYWORDS.has(call)) calleeSet.add(call);
         }
     }
     return { callees: Array.from(calleeSet) };

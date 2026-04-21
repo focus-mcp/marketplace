@@ -41,13 +41,17 @@ const brick: Brick = {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
         unsubscribers.push(
-            ctx.bus.handle('cg:callers', (data) => cgCallers(data as CgCallersInput)),
+            ctx.bus.handle('callgraph:callers', (data) => cgCallers(data as CgCallersInput)),
         );
         unsubscribers.push(
-            ctx.bus.handle('cg:callees', (data) => cgCallees(data as CgCalleesInput)),
+            ctx.bus.handle('callgraph:callees', (data) => cgCallees(data as CgCalleesInput)),
         );
-        unsubscribers.push(ctx.bus.handle('cg:chain', (data) => cgChain(data as CgChainInput)));
-        unsubscribers.push(ctx.bus.handle('cg:depth', (data) => cgDepth(data as CgDepthInput)));
+        unsubscribers.push(
+            ctx.bus.handle('callgraph:chain', (data) => cgChain(data as CgChainInput)),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('callgraph:depth', (data) => cgDepth(data as CgDepthInput)),
+        );
     },
     stop() {
         for (const unsub of unsubscribers) unsub();

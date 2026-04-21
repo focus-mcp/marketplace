@@ -226,11 +226,11 @@ describe('treesitter brick', () => {
 
         await brick.start({ bus });
         expect(bus.handle).toHaveBeenCalledTimes(5);
-        expect(bus.handle).toHaveBeenCalledWith('ts:index', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('ts:reindex', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('ts:status', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('ts:cleanup', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('ts:langs', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('treesitter:index', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('treesitter:reindex', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('treesitter:status', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('treesitter:cleanup', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('treesitter:langs', expect.any(Function));
 
         await brick.stop();
         for (const unsub of unsubscribers) {

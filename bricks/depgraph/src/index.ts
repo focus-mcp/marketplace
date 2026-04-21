@@ -47,17 +47,19 @@ const brick: Brick = {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
         unsubscribers.push(
-            ctx.bus.handle('dep:imports', (data) => depImports(data as DepImportsInput)),
+            ctx.bus.handle('depgraph:imports', (data) => depImports(data as DepImportsInput)),
         );
         unsubscribers.push(
-            ctx.bus.handle('dep:exports', (data) => depExports(data as DepExportsInput)),
+            ctx.bus.handle('depgraph:exports', (data) => depExports(data as DepExportsInput)),
         );
         unsubscribers.push(
-            ctx.bus.handle('dep:circular', (data) => depCircular(data as DepCircularInput)),
+            ctx.bus.handle('depgraph:circular', (data) => depCircular(data as DepCircularInput)),
         );
-        unsubscribers.push(ctx.bus.handle('dep:fanin', (data) => depFanin(data as DepFaninInput)));
         unsubscribers.push(
-            ctx.bus.handle('dep:fanout', (data) => depFanout(data as DepFanoutInput)),
+            ctx.bus.handle('depgraph:fanin', (data) => depFanin(data as DepFaninInput)),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('depgraph:fanout', (data) => depFanout(data as DepFanoutInput)),
         );
     },
     stop() {

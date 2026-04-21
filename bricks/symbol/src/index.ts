@@ -40,10 +40,10 @@ const brick: Brick = {
     start(ctx) {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
-        unsubscribers.push(ctx.bus.handle('sym:find', (data) => symFind(data as SymFindInput)));
-        unsubscribers.push(ctx.bus.handle('sym:get', (data) => symGet(data as SymGetInput)));
-        unsubscribers.push(ctx.bus.handle('sym:bulk', (data) => symBulk(data as SymBulkInput)));
-        unsubscribers.push(ctx.bus.handle('sym:body', (data) => symBody(data as SymBodyInput)));
+        unsubscribers.push(ctx.bus.handle('symbol:find', (data) => symFind(data as SymFindInput)));
+        unsubscribers.push(ctx.bus.handle('symbol:get', (data) => symGet(data as SymGetInput)));
+        unsubscribers.push(ctx.bus.handle('symbol:bulk', (data) => symBulk(data as SymBulkInput)));
+        unsubscribers.push(ctx.bus.handle('symbol:body', (data) => symBody(data as SymBodyInput)));
     },
     stop() {
         for (const unsub of unsubscribers) unsub();

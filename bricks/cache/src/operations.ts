@@ -8,6 +8,7 @@ interface CacheEntry {
     content: string;
     mtime: number;
     accessCount: number;
+    overridden?: boolean;
 }
 
 const store = new Map<string, CacheEntry>();
@@ -38,9 +39,14 @@ export interface CacheGetOutput {
 
 export async function cacheGet(input: CacheGetInput): Promise<CacheGetOutput> {
     const abs = resolve(input.path);
+    const entry = store.get(abs);
+    if (entry?.overridden) {
+        entry.accessCount++;
+        hits++;
+        return { hit: true, content: entry.content };
+    }
     const fileStat = await stat(abs);
     const mtime = fileStat.mtimeMs;
-    const entry = store.get(abs);
     if (entry && entry.mtime === mtime) {
         entry.accessCount++;
         hits++;
@@ -60,6 +66,7 @@ export function cacheSet(input: CacheSetInput): { ok: boolean } {
         content: input.content,
         mtime: Date.now(),
         accessCount: existing?.accessCount ?? 0,
+        overridden: true,
     });
     return { ok: true };
 }
@@ -103,7 +110,7 @@ export function cacheStats(): {
 } {
     let totalBytes = 0;
     for (const entry of store.values()) {
-        totalBytes += entry.content.length;
+        totalBytes += Buffer.byteLength(entry.content);
     }
     const total = hits + misses;
     return {

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 import { readdir, readFile } from 'node:fs/promises';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 
 const SUPPORTED_EXTS = new Set(['.ts', '.tsx', '.js', '.jsx']);
 const RELATIVE_EXTS = ['.ts', '.tsx', '.js', '.jsx'] as const;
@@ -96,25 +96,26 @@ export function parseExports(content: string): string[] {
     return fileExports;
 }
 
-/** Resolve a relative import specifier to a file in the files list */
-function resolveImport(from: string, baseDir: string, files: string[]): string | null {
+/** Resolve a relative import specifier to a file in the files set */
+function resolveImport(from: string, baseDir: string, files: ReadonlySet<string>): string | null {
     const candidate = join(baseDir, from);
-    if (files.includes(candidate)) return candidate;
+    if (files.has(candidate)) return candidate;
     for (const ext of RELATIVE_EXTS) {
-        if (files.includes(`${candidate}${ext}`)) return `${candidate}${ext}`;
-        if (files.includes(`${candidate}/index${ext}`)) return `${candidate}/index${ext}`;
+        if (files.has(`${candidate}${ext}`)) return `${candidate}${ext}`;
+        if (files.has(`${candidate}/index${ext}`)) return `${candidate}/index${ext}`;
     }
     return null;
 }
 
 function buildDepGraph(files: string[], contents: Map<string, string>): Map<string, Set<string>> {
+    const fileSet = new Set(files);
     const graph = new Map<string, Set<string>>();
     for (const f of files) {
         const deps = new Set<string>();
-        const base = f.slice(0, f.lastIndexOf('/'));
+        const base = dirname(f);
         for (const imp of parseImports(contents.get(f) ?? '')) {
             if (!imp.from.startsWith('.')) continue;
-            const resolved = resolveImport(imp.from, base, files);
+            const resolved = resolveImport(imp.from, base, fileSet);
             if (resolved) deps.add(resolved);
         }
         graph.set(f, deps);
@@ -165,15 +166,17 @@ export async function depCircular(input: DepCircularInput): Promise<{ cycles: st
     return { cycles: detectCycles(graph, files) };
 }
 
-function fileImportsTarget(content: string, sourceFile: string, target: string): boolean {
-    const base = sourceFile.slice(0, sourceFile.lastIndexOf('/'));
+function fileImportsTarget(
+    content: string,
+    sourceFile: string,
+    target: string,
+    allFiles: ReadonlySet<string>,
+): boolean {
+    const base = dirname(sourceFile);
     for (const imp of parseImports(content)) {
         if (!imp.from.startsWith('.')) continue;
-        const resolved = join(base, imp.from);
+        const resolved = resolveImport(imp.from, base, allFiles);
         if (resolved === target) return true;
-        for (const ext of RELATIVE_EXTS) {
-            if (`${resolved}${ext}` === target) return true;
-        }
     }
     return false;
 }
@@ -182,11 +185,12 @@ export async function depFanin(input: DepFaninInput): Promise<{ fanin: string[];
     const abs = resolve(input.dir);
     const target = resolve(input.file);
     const files = await collectFiles(abs);
+    const fileSet = new Set(files);
     const fanin: string[] = [];
     for (const f of files) {
         if (f === target) continue;
         const content = await readFile(f, 'utf-8');
-        if (fileImportsTarget(content, f, target)) fanin.push(f);
+        if (fileImportsTarget(content, f, target, fileSet)) fanin.push(f);
     }
     return { fanin, count: fanin.length };
 }

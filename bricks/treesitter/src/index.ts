@@ -40,13 +40,15 @@ const brick: Brick = {
     start(ctx) {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
-        unsubscribers.push(ctx.bus.handle('ts:index', (data) => tsIndex(data as TsIndexInput)));
         unsubscribers.push(
-            ctx.bus.handle('ts:reindex', (data) => tsReindex(data as TsReindexInput)),
+            ctx.bus.handle('treesitter:index', (data) => tsIndex(data as TsIndexInput)),
         );
-        unsubscribers.push(ctx.bus.handle('ts:status', () => tsStatus()));
-        unsubscribers.push(ctx.bus.handle('ts:cleanup', () => tsCleanup()));
-        unsubscribers.push(ctx.bus.handle('ts:langs', () => tsLangs()));
+        unsubscribers.push(
+            ctx.bus.handle('treesitter:reindex', (data) => tsReindex(data as TsReindexInput)),
+        );
+        unsubscribers.push(ctx.bus.handle('treesitter:status', () => tsStatus()));
+        unsubscribers.push(ctx.bus.handle('treesitter:cleanup', () => tsCleanup()));
+        unsubscribers.push(ctx.bus.handle('treesitter:langs', () => tsLangs()));
     },
     stop() {
         for (const unsub of unsubscribers) unsub();

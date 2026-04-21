@@ -208,11 +208,11 @@ describe('depgraph brick', () => {
 
         await brick.start({ bus });
         expect(bus.handle).toHaveBeenCalledTimes(5);
-        expect(bus.handle).toHaveBeenCalledWith('dep:imports', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('dep:exports', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('dep:circular', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('dep:fanin', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('dep:fanout', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('depgraph:imports', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('depgraph:exports', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('depgraph:circular', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('depgraph:fanin', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('depgraph:fanout', expect.any(Function));
 
         await brick.stop();
         for (const unsub of unsubscribers) {

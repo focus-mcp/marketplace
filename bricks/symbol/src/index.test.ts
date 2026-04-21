@@ -141,10 +141,10 @@ describe('symbol brick', () => {
 
         await brick.start({ bus });
         expect(bus.handle).toHaveBeenCalledTimes(4);
-        expect(bus.handle).toHaveBeenCalledWith('sym:find', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('sym:get', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('sym:bulk', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('sym:body', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('symbol:find', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('symbol:get', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('symbol:bulk', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('symbol:body', expect.any(Function));
 
         await brick.stop();
         for (const unsub of unsubscribers) {

@@ -179,10 +179,10 @@ describe('callgraph brick', () => {
 
         await brick.start({ bus });
         expect(bus.handle).toHaveBeenCalledTimes(4);
-        expect(bus.handle).toHaveBeenCalledWith('cg:callers', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('cg:callees', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('cg:chain', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('cg:depth', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('callgraph:callers', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('callgraph:callees', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('callgraph:chain', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('callgraph:depth', expect.any(Function));
 
         await brick.stop();
         for (const unsub of unsubscribers) {
