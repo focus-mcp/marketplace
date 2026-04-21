@@ -1,0 +1,52 @@
+{
+    "name": "outline",
+    "version": "0.0.0",
+    "prefix": "out",
+    "description": "File and repo structure outline — list exported symbols and directory trees without reading full content.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "file",
+            "description": "Outline a single file: list exported symbols with line numbers, no body.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Absolute path to file" }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "repo",
+            "description": "Outline entire repo: per-file symbol summary.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory to scan" },
+                    "maxFiles": {
+                        "type": "number",
+                        "description": "Max files to scan (default 100)"
+                    }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "structure",
+            "description": "Directory structure with file counts per folder.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory to scan" },
+                    "maxDepth": { "type": "number", "description": "Max depth (default 3)" }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["outline", "symbols", "structure", "navigation"],
+    "license": "MIT"
+}

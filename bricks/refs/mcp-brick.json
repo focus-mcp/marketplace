@@ -1,0 +1,63 @@
+{
+    "name": "refs",
+    "version": "0.0.0",
+    "prefix": "refs",
+    "description": "Cross-references — find who imports or uses a symbol, locate declarations, and trace inheritance chains.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "references",
+            "description": "Find all files that import or reference a symbol name.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Symbol name to search for" },
+                    "dir": { "type": "string", "description": "Root directory to scan" }
+                },
+                "required": ["name", "dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "implementations",
+            "description": "Find implementations of an interface or type.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Interface or type name" },
+                    "dir": { "type": "string", "description": "Root directory to scan" }
+                },
+                "required": ["name", "dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "declaration",
+            "description": "Find where a symbol is declared or exported.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Symbol name" },
+                    "dir": { "type": "string", "description": "Root directory to scan" }
+                },
+                "required": ["name", "dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "hierarchy",
+            "description": "Class or interface inheritance chain.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Class or interface name" },
+                    "dir": { "type": "string", "description": "Root directory to scan" }
+                },
+                "required": ["name", "dir"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["references", "cross-references", "symbols", "navigation"],
+    "license": "MIT"
+}
