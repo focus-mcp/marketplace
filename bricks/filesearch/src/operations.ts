@@ -38,7 +38,7 @@ export async function fsrchSearch(input: FsrchSearchInput): Promise<{ matches: s
     const regex = new RegExp(input.pattern);
     const globFilter = input.glob
         ? new RegExp(
-              `^${input.glob.replace(/\./g, '\\.').replace(/\*/g, '.*').replace(/\?/g, '.')}$`,
+              `^${input.glob.replace(/\\/g, '\\\\').replace(/\./g, '\\.').replace(/\*/g, '.*').replace(/\?/g, '.')}$`,
           )
         : null;
     const items = await readdir(dir, { recursive: true, withFileTypes: true });
