@@ -12,6 +12,10 @@ out/
 lib/
 *.tsbuildinfo
 
+# ============ Publish artifacts (tracked intentionally) ============
+# publish/ contains the built catalog served via raw.githubusercontent.com
+!publish/
+
 # ============ Framework caches ============
 .vite/
 .parcel-cache/
