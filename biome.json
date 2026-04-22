@@ -12,6 +12,7 @@
             "!**/node_modules",
             "!**/dist",
             "!**/build",
+            "!**/publish",
             "!**/coverage",
             "!**/sbom.json",
             "!**/pnpm-lock.yaml",

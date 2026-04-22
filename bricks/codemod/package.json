@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/codemod",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP codemod brick — automated refactoring via symbol, rename, codeedit, inline, textsearch",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

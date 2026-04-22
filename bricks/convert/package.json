@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/convert",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP convert brick — unit conversion, encoding, format transformation, naming conventions",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

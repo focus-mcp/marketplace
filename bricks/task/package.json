@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/task",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP task brick — task management for multi-agent workflows",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/autopilot",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP autopilot composite brick — autonomous task execution with reasoning, context management, and shell commands",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/fts",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP fts brick — full-text search with TF-IDF ranking",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

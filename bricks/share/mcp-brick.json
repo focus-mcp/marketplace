@@ -16,7 +16,8 @@
                         "description": "Context key to get or set"
                     },
                     "value": {
-                        "description": "Value to store (any JSON-serializable type). Omit to read."
+                        "type": "string",
+                        "description": "Value to store (JSON string). Omit to read."
                     }
                 },
                 "required": ["key"],
@@ -54,7 +55,8 @@
                         "description": "Unique identifier of the task"
                     },
                     "result": {
-                        "description": "Result to store (any JSON-serializable type). Omit to read."
+                        "type": "string",
+                        "description": "Result to store (JSON string). Omit to read."
                     }
                 },
                 "required": ["taskId"],

@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/codeedit",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP codeedit brick — precise code editing for function bodies, insertions, and safe deletion",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

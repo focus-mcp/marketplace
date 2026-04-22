@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/onboarding",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP onboarding composite brick — orchestrates overview, smartcontext, and codebase to guide new contributors and AI agents",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

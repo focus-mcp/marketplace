@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/batch",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP batch brick — batch execution patterns for sequential, parallel, and pipeline operations",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

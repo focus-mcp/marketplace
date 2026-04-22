@@ -138,6 +138,16 @@
                         "path": { "type": "string", "minLength": 1 },
                         "ref": { "type": "string", "minLength": 1 }
                     }
+                },
+                {
+                    "type": "object",
+                    "required": ["type", "package"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "const": "npm" },
+                        "package": { "type": "string" },
+                        "registry": { "type": "string", "format": "uri" }
+                    }
                 }
             ]
         }

@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/heatmap",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP heatmap brick — track file access patterns, detect hot and cold files",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

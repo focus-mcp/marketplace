@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/sandbox",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP sandbox brick — sandboxed JavaScript code execution in an isolated VM context",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

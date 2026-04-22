@@ -74,7 +74,11 @@ describe('buildCatalog', () => {
         if (!brick) throw new Error('brick[0] missing');
         expect(brick.name).toBe('indexer');
         expect(brick.version).toBe('0.2.1');
-        expect(brick.source).toEqual({ type: 'local', path: 'bricks/indexer' });
+        expect(brick.source).toEqual({
+            type: 'npm',
+            package: 'focus-indexer',
+            registry: 'https://npm.pkg.github.com',
+        });
         expect(brick.license).toBe('MIT');
     });
 

@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/routes",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP routes brick — API route detection for Express, Fastify, Next.js, SvelteKit",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

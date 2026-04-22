@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/parallel",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP parallel brick — parallel execution coordination for tasks",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

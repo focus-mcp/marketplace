@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/fullaudit",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP fullaudit composite brick — orchestrates codebase, review, and metrics to deliver a full project audit",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

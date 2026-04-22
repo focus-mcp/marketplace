@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/share",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP share brick — shared state for multi-agent context, files, results and broadcast",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/fileread",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP fileread brick — read files full, head, tail, line range",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

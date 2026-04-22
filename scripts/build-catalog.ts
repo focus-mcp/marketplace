@@ -34,7 +34,8 @@ export interface CatalogTool {
 export type CatalogSource =
     | { type: 'local'; path: string }
     | { type: 'url'; url: string; sha?: string }
-    | { type: 'git-subdir'; url: string; path: string; ref: string };
+    | { type: 'git-subdir'; url: string; path: string; ref: string }
+    | { type: 'npm'; package: string; registry?: string };
 
 export interface CatalogBrick {
     name: string;
@@ -128,13 +129,14 @@ export async function collectLocalBricks(rootDir: string): Promise<CatalogBrick[
     for (const manifestPath of manifests.sort()) {
         const brickDir = dirname(manifestPath);
         const manifest = await readJson<BrickManifest>(manifestPath);
-        const pkg = await tryReadJson<{ version?: string }>(join(brickDir, 'package.json'));
+        const pkg = await tryReadJson<{ version?: string; name?: string }>(
+            join(brickDir, 'package.json'),
+        );
         if (!pkg?.version) {
             throw new Error(
                 `Missing version in ${join(brickDir, 'package.json')} (required for brick ${manifest.name})`,
             );
         }
-        const relPath = `bricks/${brickDir.split(/[\\/]/).pop() ?? ''}`;
         bricks.push({
             name: manifest.name,
             version: pkg.version,
@@ -142,7 +144,11 @@ export async function collectLocalBricks(rootDir: string): Promise<CatalogBrick[
             ...(manifest.tags ? { tags: manifest.tags } : {}),
             dependencies: manifest.dependencies ?? [],
             tools: manifest.tools ?? [],
-            source: { type: 'local', path: relPath },
+            source: {
+                type: 'npm',
+                package: pkg.name ?? `@focusmcp/${manifest.name}`,
+                registry: 'https://npm.pkg.github.com',
+            },
             ...(manifest.license ? { license: manifest.license } : {}),
             ...(manifest.homepage ? { homepage: manifest.homepage } : {}),
             ...(manifest.publisher ? { publisher: manifest.publisher } : {}),
