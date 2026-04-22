@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/inline",
+    "name": "@focusmcp/inline",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP inline brick — inline, extract, and move refactoring operations",

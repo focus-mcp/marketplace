@@ -1,4 +1,4 @@
-# @focus-mcp/codemod
+# @focusmcp/codemod
 
 Composite codemod brick for FocusMCP — loads all code modification sub-bricks.
 

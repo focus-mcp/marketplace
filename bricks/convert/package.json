@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/convert",
+    "name": "@focusmcp/convert",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP convert brick — unit conversion, encoding, format transformation, naming conventions",

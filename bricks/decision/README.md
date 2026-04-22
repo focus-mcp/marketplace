@@ -1,4 +1,4 @@
-# @focus-mcp/decision
+# @focusmcp/decision
 
 Structured decision-making — define options, analyze tradeoffs, get recommendations, and record decisions (ADR-style).
 

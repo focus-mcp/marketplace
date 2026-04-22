@@ -1,4 +1,4 @@
-# @focus-mcp/tokenbudget
+# @focusmcp/tokenbudget
 
 Token budget management — estimate and optimize token usage for AI agents.
 

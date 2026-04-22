@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/repos",
+    "name": "@focusmcp/repos",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP repos brick — multi-repo management: register, track, and get stats",

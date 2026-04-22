@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/shell",
+    "name": "@focusmcp/shell",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP shell brick — command execution and process management",

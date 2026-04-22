@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/multiread",
+    "name": "@focusmcp/multiread",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP multiread brick — batch file reading, deduplication, merge",

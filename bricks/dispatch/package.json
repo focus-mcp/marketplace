@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/dispatch",
+    "name": "@focusmcp/dispatch",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP dispatch brick — task dispatch queue for multi-step workflow orchestration",

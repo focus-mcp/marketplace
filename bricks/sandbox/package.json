@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/sandbox",
+    "name": "@focusmcp/sandbox",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP sandbox brick — sandboxed JavaScript code execution in an isolated VM context",

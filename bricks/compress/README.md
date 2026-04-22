@@ -1,4 +1,4 @@
-# @focus-mcp/compress
+# @focusmcp/compress
 
 Compress text output to save tokens — strip comments, collapse whitespace, remove blank lines, and abbreviate common patterns.
 

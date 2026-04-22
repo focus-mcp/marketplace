@@ -1,4 +1,4 @@
-# @focus-mcp/session
+# @focusmcp/session
 
 Session context save and restore — track loaded files and operations, persist sessions to disk at `~/.focus/sessions/`.
 

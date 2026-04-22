@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/treesitter",
+    "name": "@focusmcp/treesitter",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP treesitter brick — regex-based code indexer for TypeScript/JavaScript",

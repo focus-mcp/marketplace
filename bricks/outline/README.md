@@ -1,4 +1,4 @@
-# @focus-mcp/outline
+# @focusmcp/outline
 
 File and repo structure outline — list exported symbols and directory trees without reading full content.
 

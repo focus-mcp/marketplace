@@ -1,4 +1,4 @@
-# @focus-mcp/graphexport
+# @focusmcp/graphexport
 
 Knowledge graph export — generate HTML, Mermaid, GraphML, Cypher, Obsidian, and wiki formats from an in-memory graph.
 

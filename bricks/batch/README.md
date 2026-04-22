@@ -1,4 +1,4 @@
-# @focus-mcp/batch
+# @focusmcp/batch
 
 Batch execution patterns — run multiple operations sequentially, in parallel, or as a pipeline.
 

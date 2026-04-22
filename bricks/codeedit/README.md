@@ -1,4 +1,4 @@
-# @focus-mcp/codeedit
+# @focusmcp/codeedit
 
 Precise code editing — replace function bodies, insert before/after, safe delete with dependency check.
 

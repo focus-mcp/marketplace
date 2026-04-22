@@ -1,4 +1,4 @@
-# @focus-mcp/callgraph
+# @focusmcp/callgraph
 
 Call graph analysis for FocusMCP — find callers, callees, call chains, and call depth.
 

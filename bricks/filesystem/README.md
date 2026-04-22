@@ -1,4 +1,4 @@
-# @focus-mcp/filesystem
+# @focusmcp/filesystem
 
 Composite filesystem brick for FocusMCP — loads all filesystem sub-bricks.
 

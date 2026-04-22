@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/callgraph",
+    "name": "@focusmcp/callgraph",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP callgraph brick — call graph analysis for source files",

@@ -11,7 +11,7 @@ SPDX-License-Identifier: MIT
 
 This repository is the **fifth pillar** of FocusMCP, after `core` (the TypeScript library), `client` (the Tauri app), `marketplace` (the catalog of atomic MCP bricks), and `cli` (the command-line orchestrator).
 
-The **cli-manager** is a **purely observational** web dashboard that connects to a running `@focus-mcp/cli` through its admin HTTP API. It is **not required** to run FocusMCP — all brick management (install, remove, enable, configure) stays in the CLI. The manager is the "glass pane" on top of a live orchestrator.
+The **cli-manager** is a **purely observational** web dashboard that connects to a running `@focusmcp/cli` through its admin HTTP API. It is **not required** to run FocusMCP — all brick management (install, remove, enable, configure) stays in the CLI. The manager is the "glass pane" on top of a live orchestrator.
 
 ## Status
 
@@ -35,14 +35,14 @@ Browser (user)
 cli-manager (static bundle, prerendered SvelteKit)
     │ fetch(baseUrl + token)
     ▼
-@focus-mcp/cli with `--admin-api` enabled
+@focusmcp/cli with `--admin-api` enabled
 ```
 
-The manager does **not** depend on `@focus-mcp/core`. Its only link to the FocusMCP runtime is the CLI's admin HTTP API — it could be replaced by any other compatible server.
+The manager does **not** depend on `@focusmcp/core`. Its only link to the FocusMCP runtime is the CLI's admin HTTP API — it could be replaced by any other compatible server.
 
 ## Distribution (Phase 2)
 
-- `npx @focus-mcp/cli-manager` — starts a tiny static server and opens the browser.
+- `npx @focusmcp/cli-manager` — starts a tiny static server and opens the browser.
 - Optional hosted version at `manager.focusmcp.dev` — also a static bundle, same code.
 
 ## Stack

@@ -1,4 +1,4 @@
-# @focus-mcp/multiread
+# @focusmcp/multiread
 
 Batch file reading for FocusMCP — multiple files in one call, deduplication, merge.
 

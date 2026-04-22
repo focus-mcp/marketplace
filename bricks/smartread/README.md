@@ -1,4 +1,4 @@
-# @focus-mcp/smartread
+# @focusmcp/smartread
 
 Intelligent file reading for FocusMCP — multiple modes to minimize token usage.
 

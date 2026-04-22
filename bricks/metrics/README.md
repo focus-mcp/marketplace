@@ -1,4 +1,4 @@
-# @focus-mcp/metrics
+# @focusmcp/metrics
 
 Session metrics tracking — token usage, costs, duration, and per-tool statistics.
 

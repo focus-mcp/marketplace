@@ -1,4 +1,4 @@
-# @focus-mcp/review
+# @focusmcp/review
 
 Structured code review — analyze code quality, security, architecture patterns, compare versions.
 

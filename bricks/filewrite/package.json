@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/filewrite",
+    "name": "@focusmcp/filewrite",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP filewrite brick — write, append, create files",

@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/task",
+    "name": "@focusmcp/task",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP task brick — task management for multi-agent workflows",

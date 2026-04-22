@@ -1,4 +1,4 @@
-# @focus-mcp/knowledge
+# @focusmcp/knowledge
 
 Knowledge base — index documents/notes, search by content, fetch entries, purge stale data, rank by relevance.
 

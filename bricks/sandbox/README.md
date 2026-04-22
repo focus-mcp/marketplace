@@ -1,4 +1,4 @@
-# @focus-mcp/sandbox
+# @focusmcp/sandbox
 
 Sandboxed code execution — run JavaScript snippets in an isolated Node.js VM context.
 
