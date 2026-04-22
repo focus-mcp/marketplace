@@ -218,7 +218,7 @@ export function geGraphml(): string {
 // ─── geCypher ────────────────────────────────────────────────────────────────
 
 function cypherEscape(value: string): string {
-    return value.replace(/'/g, "\\'");
+    return value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 }
 
 function renderCypherNodes(): string[] {

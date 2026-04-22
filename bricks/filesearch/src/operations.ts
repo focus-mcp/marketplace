@@ -33,14 +33,17 @@ async function searchInFile(filePath: string, regex: RegExp): Promise<string[]> 
     return matches;
 }
 
+function escapeForGlob(glob: string): string {
+    // Escape all regex special characters except glob wildcards (* and ?)
+    const escaped = glob.replace(/[\\^$+.()|[\]{}]/g, '\\$&');
+    // Convert glob wildcards to regex equivalents
+    return escaped.replace(/\*/g, '.*').replace(/\?/g, '.');
+}
+
 export async function fsrchSearch(input: FsrchSearchInput): Promise<{ matches: string[] }> {
     const dir = resolve(input.path);
     const regex = new RegExp(input.pattern);
-    const globFilter = input.glob
-        ? new RegExp(
-              `^${input.glob.replace(/\\/g, '\\\\').replace(/\./g, '\\.').replace(/\*/g, '.*').replace(/\?/g, '.')}$`,
-          )
-        : null;
+    const globFilter = input.glob ? new RegExp(`^${escapeForGlob(input.glob)}$`) : null;
     const items = await readdir(dir, { recursive: true, withFileTypes: true });
     const matches: string[] = [];
     for (const entry of items) {
