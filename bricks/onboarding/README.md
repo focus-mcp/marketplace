@@ -1,4 +1,4 @@
-# @focus-mcp/onboarding
+# @focusmcp/onboarding
 
 Project onboarding workflow — auto-discover project structure, conventions, and key files for a new contributor or AI agent.
 

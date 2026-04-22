@@ -1,4 +1,4 @@
-# @focus-mcp/planning
+# @focusmcp/planning
 
 Structured planning — create plans with steps, dependencies, and time estimates.
 

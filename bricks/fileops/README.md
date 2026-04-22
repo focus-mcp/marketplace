@@ -1,4 +1,4 @@
-# @focus-mcp/fileops
+# @focusmcp/fileops
 
 File operations for FocusMCP — move, copy, delete, rename.
 

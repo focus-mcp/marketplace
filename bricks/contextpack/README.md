@@ -1,4 +1,4 @@
-# @focus-mcp/contextpack
+# @focusmcp/contextpack
 
 Pack files into compressed context bundles — reduce token usage by extracting only signatures, maps, or full content.
 

@@ -1,4 +1,4 @@
-# @focus-mcp/inline
+# @focusmcp/inline
 
 Inline, extract, and move refactoring — inline variables/functions, extract code to new functions, move between files.
 

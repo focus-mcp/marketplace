@@ -1,4 +1,4 @@
-# @focus-mcp/debate
+# @focusmcp/debate
 
 Structured multi-perspective debate — define positions, score arguments, find consensus, summarize.
 

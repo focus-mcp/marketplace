@@ -8,7 +8,7 @@ export type { EchoInput, EchoOutput } from './echo.ts';
 export { echo, parseEchoInput } from './echo.ts';
 
 /**
- * Minimal structural types for the Brick contract. Mirrors `@focus-mcp/core`
+ * Minimal structural types for the Brick contract. Mirrors `@focusmcp/core`
  * without introducing a runtime dependency — the hello-world brick stays
  * self-contained.
  */

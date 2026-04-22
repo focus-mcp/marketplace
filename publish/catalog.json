@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-22T11:31:56.581Z",
+  "updated": "2026-04-22T15:17:39.476Z",
   "bricks": [
     {
       "name": "agent",
@@ -104,7 +104,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/agent",
+        "package": "@focusmcp/agent",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -129,7 +129,7 @@
       "tools": [],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/aiteam",
+        "package": "@focusmcp/aiteam",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -213,7 +213,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/autopilot",
+        "package": "@focusmcp/autopilot",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -355,7 +355,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/batch",
+        "package": "@focusmcp/batch",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -456,7 +456,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/cache",
+        "package": "@focusmcp/cache",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -586,7 +586,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/callgraph",
+        "package": "@focusmcp/callgraph",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -611,7 +611,7 @@
       "tools": [],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/codebase",
+        "package": "@focusmcp/codebase",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -766,7 +766,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/codeedit",
+        "package": "@focusmcp/codeedit",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -790,7 +790,7 @@
       "tools": [],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/codemod",
+        "package": "@focusmcp/codemod",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -870,7 +870,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/compress",
+        "package": "@focusmcp/compress",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -998,7 +998,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/contextpack",
+        "package": "@focusmcp/contextpack",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -1146,7 +1146,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/convert",
+        "package": "@focusmcp/convert",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -1292,7 +1292,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/debate",
+        "package": "@focusmcp/debate",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -1468,7 +1468,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/decision",
+        "package": "@focusmcp/decision",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -1578,7 +1578,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/depgraph",
+        "package": "@focusmcp/depgraph",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -1600,7 +1600,7 @@
       "tools": [],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/devtools",
+        "package": "@focusmcp/devtools",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -1800,7 +1800,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/diagram",
+        "package": "@focusmcp/diagram",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -1895,7 +1895,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/dispatch",
+        "package": "@focusmcp/dispatch",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -1931,7 +1931,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/echo",
+        "package": "@focusmcp/echo",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -2014,7 +2014,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/filediff",
+        "package": "@focusmcp/filediff",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -2112,7 +2112,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/filelist",
+        "package": "@focusmcp/filelist",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -2213,7 +2213,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/fileops",
+        "package": "@focusmcp/fileops",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -2315,7 +2315,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/fileread",
+        "package": "@focusmcp/fileread",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -2388,7 +2388,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/filesearch",
+        "package": "@focusmcp/filesearch",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -2411,7 +2411,7 @@
       "tools": [],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/filesystem",
+        "package": "@focusmcp/filesystem",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -2492,7 +2492,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/filewrite",
+        "package": "@focusmcp/filewrite",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -2625,7 +2625,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/format",
+        "package": "@focusmcp/format",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -2738,7 +2738,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/fts",
+        "package": "@focusmcp/fts",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -2800,7 +2800,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/fullaudit",
+        "package": "@focusmcp/fullaudit",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -2924,7 +2924,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/graphbuild",
+        "package": "@focusmcp/graphbuild",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -2999,7 +2999,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/graphcluster",
+        "package": "@focusmcp/graphcluster",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -3085,7 +3085,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/graphexport",
+        "package": "@focusmcp/graphexport",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -3223,7 +3223,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/graphquery",
+        "package": "@focusmcp/graphquery",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -3318,7 +3318,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/heatmap",
+        "package": "@focusmcp/heatmap",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -3411,7 +3411,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/impact",
+        "package": "@focusmcp/impact",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -3525,7 +3525,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/inline",
+        "package": "@focusmcp/inline",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -3670,7 +3670,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/knowledge",
+        "package": "@focusmcp/knowledge",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -3694,7 +3694,7 @@
       "tools": [],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/knowledgebase",
+        "package": "@focusmcp/knowledgebase",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -3812,7 +3812,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/memory",
+        "package": "@focusmcp/memory",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -3911,7 +3911,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/metrics",
+        "package": "@focusmcp/metrics",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -3993,7 +3993,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/multiread",
+        "package": "@focusmcp/multiread",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -4055,7 +4055,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/onboarding",
+        "package": "@focusmcp/onboarding",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -4134,7 +4134,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/outline",
+        "package": "@focusmcp/outline",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -4226,7 +4226,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/overview",
+        "package": "@focusmcp/overview",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -4361,7 +4361,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/parallel",
+        "package": "@focusmcp/parallel",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -4487,7 +4487,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/planning",
+        "package": "@focusmcp/planning",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -4595,7 +4595,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/refs",
+        "package": "@focusmcp/refs",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -4739,7 +4739,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/rename",
+        "package": "@focusmcp/rename",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -4824,7 +4824,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/repos",
+        "package": "@focusmcp/repos",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -4979,7 +4979,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/research",
+        "package": "@focusmcp/research",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -5073,7 +5073,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/review",
+        "package": "@focusmcp/review",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -5174,7 +5174,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/routes",
+        "package": "@focusmcp/routes",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -5267,7 +5267,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/sandbox",
+        "package": "@focusmcp/sandbox",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -5368,7 +5368,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/savings",
+        "package": "@focusmcp/savings",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -5532,7 +5532,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/semanticsearch",
+        "package": "@focusmcp/semanticsearch",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -5624,7 +5624,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/session",
+        "package": "@focusmcp/session",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -5733,7 +5733,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/share",
+        "package": "@focusmcp/share",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -5853,7 +5853,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/shell",
+        "package": "@focusmcp/shell",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -5935,7 +5935,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/smartcontext",
+        "package": "@focusmcp/smartcontext",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -6035,7 +6035,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/smartread",
+        "package": "@focusmcp/smartread",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -6150,7 +6150,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/symbol",
+        "package": "@focusmcp/symbol",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -6265,7 +6265,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/task",
+        "package": "@focusmcp/task",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -6419,7 +6419,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/textsearch",
+        "package": "@focusmcp/textsearch",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -6535,7 +6535,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/thinking",
+        "package": "@focusmcp/thinking",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -6650,7 +6650,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/tokenbudget",
+        "package": "@focusmcp/tokenbudget",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -6731,7 +6731,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/treesitter",
+        "package": "@focusmcp/treesitter",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"
@@ -6825,7 +6825,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/validate",
+        "package": "@focusmcp/validate",
         "registry": "https://npm.pkg.github.com"
       },
       "license": "MIT"

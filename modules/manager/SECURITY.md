@@ -37,7 +37,7 @@ We commit to:
 
 ## Threat model
 
-The cli-manager is a **fully static, client-side bundle**. It runs in the user's browser and speaks HTTP (and SSE) to a local `@focus-mcp/cli` instance that the user has explicitly started with `--admin-api`.
+The cli-manager is a **fully static, client-side bundle**. It runs in the user's browser and speaks HTTP (and SSE) to a local `@focusmcp/cli` instance that the user has explicitly started with `--admin-api`.
 
 As a consequence:
 

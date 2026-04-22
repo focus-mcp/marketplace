@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/overview",
+    "name": "@focusmcp/overview",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP overview brick — project-level understanding without reading all files",

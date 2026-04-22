@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/onboarding",
+    "name": "@focusmcp/onboarding",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP onboarding composite brick — orchestrates overview, smartcontext, and codebase to guide new contributors and AI agents",

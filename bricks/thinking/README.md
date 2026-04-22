@@ -1,4 +1,4 @@
-# @focus-mcp/thinking
+# @focusmcp/thinking
 
 Structured reasoning chains — think step by step, branch alternatives, revise conclusions, summarize.
 

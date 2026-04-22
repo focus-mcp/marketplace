@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/fullaudit",
+    "name": "@focusmcp/fullaudit",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP fullaudit composite brick — orchestrates codebase, review, and metrics to deliver a full project audit",

@@ -1,4 +1,4 @@
-# @focus-mcp/parallel
+# @focusmcp/parallel
 
 Parallel execution coordination — run tasks concurrently, collect results, merge outputs, handle timeouts.
 

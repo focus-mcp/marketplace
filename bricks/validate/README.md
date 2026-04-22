@@ -1,4 +1,4 @@
-# @focus-mcp/validate
+# @focusmcp/validate
 
 Validate data — JSON syntax, JSON Schema compliance, TypeScript type checking, lint rules.
 

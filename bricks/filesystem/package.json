@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/filesystem",
+    "name": "@focusmcp/filesystem",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP filesystem brick — read, write, list, search files",

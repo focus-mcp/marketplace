@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/symbol",
+    "name": "@focusmcp/symbol",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP symbol brick — symbol lookup in source files",

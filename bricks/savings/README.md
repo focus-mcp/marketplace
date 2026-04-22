@@ -1,4 +1,4 @@
-# @focus-mcp/savings
+# @focusmcp/savings
 
 Track and report token savings — compare FocusMCP usage vs naive full-read, trend over time, ROI.
 

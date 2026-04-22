@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/filediff",
+    "name": "@focusmcp/filediff",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP filediff brick — diff, patch, delta file comparison",

@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/session",
+    "name": "@focusmcp/session",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP session brick — session context save and restore",

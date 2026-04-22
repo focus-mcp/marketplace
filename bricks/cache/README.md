@@ -1,4 +1,4 @@
-# @focus-mcp/cache
+# @focusmcp/cache
 
 In-memory file cache for FocusMCP — avoids redundant disk reads with mtime-based invalidation.
 

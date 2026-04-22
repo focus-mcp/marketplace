@@ -1,4 +1,4 @@
-# @focus-mcp/convert
+# @focusmcp/convert
 
 Convert between formats and units — unit conversion, encoding, format transformation, naming conventions.
 

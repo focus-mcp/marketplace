@@ -1,5 +1,5 @@
 {
-    "name": "@focus-mcp/validate",
+    "name": "@focusmcp/validate",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP validate brick — JSON syntax, JSON Schema, TypeScript types, lint rules",

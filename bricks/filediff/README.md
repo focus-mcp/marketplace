@@ -1,4 +1,4 @@
-# @focus-mcp/filediff
+# @focusmcp/filediff
 
 File comparison tools for FocusMCP — diff, patch, delta.
 

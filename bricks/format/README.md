@@ -1,4 +1,4 @@
-# @focus-mcp/format
+# @focusmcp/format
 
 Format data into various output formats — pretty JSON, YAML, markdown, ASCII tables.
 
