@@ -31,7 +31,7 @@ export async function mrBatch(input: MrBatchInput): Promise<{ files: Record<stri
     return { files: Object.fromEntries(entries) };
 }
 
-const IMPORT_PATTERN = /^import\s+|require\(/;
+const IMPORT_PATTERN = /^import\s+|^.*require\(/;
 
 function extractImports(content: string): Set<string> {
     return new Set(

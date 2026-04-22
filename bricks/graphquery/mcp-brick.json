@@ -1,0 +1,91 @@
+{
+    "name": "graphquery",
+    "version": "0.0.0",
+    "prefix": "gq",
+    "description": "Knowledge graph query — find nodes, traverse neighbors, find paths, filter by type.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "query",
+            "description": "Query the graph with a pattern — find nodes by type, label substring, or connected to a specific node.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "pattern": {
+                        "type": "string",
+                        "description": "Search pattern (substring match on label)"
+                    },
+                    "type": { "type": "string", "description": "Filter by node type" },
+                    "limit": { "type": "number", "description": "Max results (default 20)" }
+                },
+                "required": ["pattern"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "node",
+            "description": "Get full details of a specific node by ID, including all edges.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string", "description": "Node ID" }
+                },
+                "required": ["id"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "neighbors",
+            "description": "Find all nodes connected to a given node (incoming and outgoing edges).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string", "description": "Node ID" },
+                    "direction": {
+                        "type": "string",
+                        "description": "'in', 'out', or 'both' (default 'both')"
+                    },
+                    "edgeType": { "type": "string", "description": "Filter by edge type" }
+                },
+                "required": ["id"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "path",
+            "description": "Find shortest path between two nodes using BFS.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "from": { "type": "string", "description": "Start node ID" },
+                    "to": { "type": "string", "description": "End node ID" },
+                    "maxDepth": { "type": "number", "description": "Max path length (default 5)" }
+                },
+                "required": ["from", "to"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "filter",
+            "description": "Filter the graph to a subgraph matching criteria (node types, edge types).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "nodeTypes": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Keep only these node types"
+                    },
+                    "edgeTypes": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Keep only these edge types"
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["graph", "query", "traversal", "path", "knowledge"],
+    "license": "MIT"
+}

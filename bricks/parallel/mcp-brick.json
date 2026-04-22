@@ -1,0 +1,106 @@
+{
+    "name": "parallel",
+    "version": "0.0.0",
+    "prefix": "par",
+    "description": "Parallel execution coordination — run tasks concurrently, collect results, merge outputs, handle timeouts.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "run",
+            "description": "Run multiple shell commands in parallel with concurrency control.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "tasks": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "string" },
+                                "command": { "type": "string" }
+                            },
+                            "required": ["id", "command"]
+                        },
+                        "description": "Tasks to run"
+                    },
+                    "concurrency": {
+                        "type": "number",
+                        "description": "Max concurrent tasks (default: all)"
+                    },
+                    "cwd": {
+                        "type": "string",
+                        "description": "Working directory"
+                    }
+                },
+                "required": ["tasks"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "collect",
+            "description": "Collect and aggregate results from a previous parallel run.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "runId": {
+                        "type": "string",
+                        "description": "Run ID from a previous par_run call"
+                    }
+                },
+                "required": ["runId"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "merge",
+            "description": "Merge multiple text outputs into one, with separators and optional dedup.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "outputs": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "string" },
+                                "content": { "type": "string" }
+                            },
+                            "required": ["id", "content"]
+                        },
+                        "description": "Outputs to merge"
+                    },
+                    "separator": {
+                        "type": "string",
+                        "description": "Separator between outputs (default: newline)"
+                    },
+                    "dedup": {
+                        "type": "boolean",
+                        "description": "Remove duplicate lines (default false)"
+                    }
+                },
+                "required": ["outputs"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "timeout",
+            "description": "Set or check timeout configuration for parallel runs.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "defaultMs": {
+                        "type": "number",
+                        "description": "Default timeout per task in ms"
+                    },
+                    "runId": {
+                        "type": "string",
+                        "description": "Check timeout status of a run"
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["parallel", "concurrent", "merge", "orchestration"],
+    "license": "MIT"
+}

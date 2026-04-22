@@ -1,0 +1,104 @@
+{
+    "name": "semanticsearch",
+    "version": "0.0.0",
+    "prefix": "sem",
+    "description": "Semantic search using TF-IDF vector space — cosine similarity, intent matching, document similarity.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "search",
+            "description": "Semantic search — find documents most similar to a query using cosine similarity on TF-IDF vectors.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "corpus": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "string" },
+                                "text": { "type": "string" }
+                            },
+                            "required": ["id", "text"]
+                        },
+                        "description": "Documents to search"
+                    },
+                    "query": { "type": "string", "description": "Search query" },
+                    "limit": { "type": "number", "description": "Max results (default 5)" }
+                },
+                "required": ["corpus", "query"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "similar",
+            "description": "Find documents most similar to a given document (by ID or text).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "corpus": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "string" },
+                                "text": { "type": "string" }
+                            },
+                            "required": ["id", "text"]
+                        },
+                        "description": "All documents"
+                    },
+                    "targetId": {
+                        "type": "string",
+                        "description": "ID of document to find similar ones to"
+                    },
+                    "limit": { "type": "number", "description": "Max results (default 5)" }
+                },
+                "required": ["corpus", "targetId"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "intent",
+            "description": "Classify a query against a set of intents (intent = label + example phrases). Returns best matching intent.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "query": { "type": "string", "description": "User query to classify" },
+                    "intents": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "label": { "type": "string" },
+                                "examples": { "type": "array", "items": { "type": "string" } }
+                            },
+                            "required": ["label", "examples"]
+                        },
+                        "description": "Intent definitions"
+                    }
+                },
+                "required": ["query", "intents"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "embeddings",
+            "description": "Generate TF-IDF vector representation of texts. Useful for debugging or external processing.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "texts": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Texts to vectorize"
+                    }
+                },
+                "required": ["texts"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["search", "semantic", "similarity", "tfidf", "vector", "intent"],
+    "license": "MIT"
+}

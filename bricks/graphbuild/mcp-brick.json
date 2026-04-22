@@ -1,0 +1,94 @@
+{
+    "name": "graphbuild",
+    "version": "0.0.0",
+    "prefix": "gb",
+    "description": "Knowledge graph builder — construct a graph of code entities (files, functions, types) and their relationships.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "build",
+            "description": "Build a knowledge graph from a directory by scanning imports, exports, and call sites.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory to scan" },
+                    "maxFiles": {
+                        "type": "number",
+                        "description": "Max files to scan (default 200)"
+                    }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "update",
+            "description": "Incrementally update the graph for changed files without full rebuild.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "files": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Changed file paths to re-scan"
+                    }
+                },
+                "required": ["files"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "watch",
+            "description": "Return graph stats and detect stale nodes (files that no longer exist).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "add",
+            "description": "Manually add a node or edge to the graph.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "node": {
+                        "type": "object",
+                        "properties": {
+                            "id": { "type": "string" },
+                            "type": { "type": "string" },
+                            "label": { "type": "string" }
+                        },
+                        "description": "Node to add"
+                    },
+                    "edge": {
+                        "type": "object",
+                        "properties": {
+                            "from": { "type": "string" },
+                            "to": { "type": "string" },
+                            "type": { "type": "string" }
+                        },
+                        "description": "Edge to add"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "multimodal",
+            "description": "Return the graph in multiple formats: summary stats, node list, edge list.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Output format: 'summary', 'nodes', 'edges', 'full' (default 'summary')"
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["graph", "knowledge", "codebase", "relationships"],
+    "license": "MIT"
+}

@@ -12,10 +12,11 @@ SPDX-License-Identifier: MIT
 
 | Priority | Total | Done | Remaining |
 |----------|-------|------|-----------|
-| Done | 27 | 27 | 0 |
-| P1 | 15 | 0 | 15 |
-| P2 | 23 | 0 | 23 |
-| **Total** | **65** | **27** | **38** |
+| Original | 27 | 27 | 0 |
+| P1 | 15 | 15 | 0 |
+| P2 | 18 | 18 | 0 |
+| Composites | 5 | 5 | 0 |
+| **Total** | **65** | **65** | **0** |
 
 ## Done (27 bricks)
 
@@ -74,7 +75,7 @@ SPDX-License-Identifier: MIT
 
 ---
 
-## P1 — Advanced Features (15 bricks)
+## P1 — Advanced Features (15 bricks) ✅ Complete
 
 ### Search
 | Brick | Prefix | Tools | Unlocks |
@@ -113,7 +114,7 @@ SPDX-License-Identifier: MIT
 
 ---
 
-## P2 — Orchestration & Multi-Agent (23 bricks)
+## P2 — Orchestration & Multi-Agent (18 bricks) ✅ Complete
 
 ### Knowledge Graph
 | Brick | Prefix | Tools |
@@ -161,29 +162,29 @@ SPDX-License-Identifier: MIT
 |-----------|--------|-------------|--------|
 | filesystem | fs | fileread, filewrite, filelist, fileops, filesearch | ✅ Done |
 | smartcontext | sctx | smartread, cache, compress, tokenbudget, overview | ✅ Done |
-| codebase | codebase | treesitter, symbol, outline, callgraph, depgraph, refs | ✅ Ready (all deps done) |
-| codemod | cmod | symbol, rename, codeedit, inline, textsearch | ❌ Blocked by P1 |
-| devtools | dev | shell, sandbox, batch | ❌ Blocked by P1 |
-| knowledgebase | kbase | knowledge, fts, graphbuild, graphquery | ❌ Blocked by P1+P2 |
-| aiteam | team | dispatch, parallel, debate, review, agent | ❌ Blocked by P2 |
+| codebase | codebase | treesitter, symbol, outline, callgraph, depgraph, refs | ✅ Done |
+| codemod | cmod | symbol, rename, codeedit, inline, textsearch | ✅ Done |
+| devtools | dev | shell, sandbox, batch | ✅ Done |
+| knowledgebase | kbase | knowledge, fts, graphbuild, graphquery | ✅ Ready (all deps done: knowledge, fts, graphbuild, graphquery) |
+| aiteam | team | dispatch, parallel, debate, review, agent | ✅ Ready (all deps done: dispatch, parallel, debate, review, agent) |
 
 ## Workflows (blocked until composites are done)
 
 | Workflow | Prefix | Dependencies | Status |
 |----------|--------|-------------|--------|
-| onboarding | onb | codebase, smartcontext, overview | ❌ Blocked by codebase |
-| fullaudit | audit | codebase, review, metrics | ❌ Blocked by P2 |
-| autopilot | auto | codebase, smartcontext, devtools, thinking | ❌ Blocked by P1 |
+| onboarding | onb | codebase, smartcontext, overview | ✅ Ready (codebase done, smartcontext done, overview done) |
+| fullaudit | audit | codebase, review, metrics | ✅ Ready (codebase done, review done, metrics done) |
+| autopilot | auto | codebase, smartcontext, devtools, thinking | ✅ Ready (codebase, smartcontext, devtools, thinking all done) |
 
 ---
 
 ## Critical Path
 
 ```
-✅ Done → codebase composite (all deps ready!)
-P1 shell+sandbox+batch → devtools composite
-P1 rename+codeedit+inline+textsearch → codemod composite
-P1 thinking → autopilot workflow
+✅ All P1 bricks complete
+✅ All P2 bricks complete  
+✅ All composites ready (codebase, devtools, codemod, knowledgebase, aiteam)
+✅ All workflows ready (onboarding, fullaudit, autopilot)
 ```
 
 ## Naming Convention

@@ -1,0 +1,84 @@
+{
+    "name": "planning",
+    "version": "0.0.0",
+    "prefix": "plan",
+    "description": "Structured planning — create plans with steps, dependencies, and time estimates.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "create",
+            "description": "Create a new plan with a title and optional description.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "title": { "type": "string", "description": "Plan title" },
+                    "description": { "type": "string", "description": "Plan description" }
+                },
+                "required": ["title"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "steps",
+            "description": "Add or list steps in a plan. Each step has a title, optional estimate, and status.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "planId": { "type": "string", "description": "Plan ID" },
+                    "add": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "title": { "type": "string" },
+                                "estimate": {
+                                    "type": "string",
+                                    "description": "Time estimate (e.g. '2h', '30m')"
+                                }
+                            },
+                            "required": ["title"]
+                        },
+                        "description": "Steps to add"
+                    },
+                    "complete": {
+                        "type": "number",
+                        "description": "Mark step at this index as done"
+                    }
+                },
+                "required": ["planId"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "dependencies",
+            "description": "Define dependencies between steps — step B depends on step A.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "planId": { "type": "string", "description": "Plan ID" },
+                    "from": {
+                        "type": "number",
+                        "description": "Step index that must complete first"
+                    },
+                    "to": { "type": "number", "description": "Step index that depends on 'from'" }
+                },
+                "required": ["planId", "from", "to"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "estimate",
+            "description": "Get plan summary — total steps, completed, blocked, estimated time remaining.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "planId": { "type": "string", "description": "Plan ID" }
+                },
+                "required": ["planId"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["planning", "steps", "dependencies", "estimation", "workflow"],
+    "license": "MIT"
+}

@@ -1,0 +1,21 @@
+{
+    "name": "@focusmcp/autopilot",
+    "version": "0.0.0",
+    "private": true,
+    "description": "FocusMCP autopilot composite brick — autonomous task execution with reasoning, context management, and shell commands",
+    "license": "MIT",
+    "type": "module",
+    "main": "./src/index.ts",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "files": [
+        "src",
+        "mcp-brick.json",
+        "mcp-brick.json.license",
+        "README.md"
+    ],
+    "scripts": {
+        "test": "vitest run"
+    }
+}

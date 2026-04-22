@@ -1,0 +1,21 @@
+{
+    "name": "@focusmcp/shell",
+    "version": "0.0.0",
+    "private": true,
+    "description": "FocusMCP shell brick — command execution and process management",
+    "license": "MIT",
+    "type": "module",
+    "main": "./src/index.ts",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "files": [
+        "src",
+        "mcp-brick.json",
+        "mcp-brick.json.license",
+        "README.md"
+    ],
+    "scripts": {
+        "test": "vitest run"
+    }
+}

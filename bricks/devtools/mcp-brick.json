@@ -1,0 +1,10 @@
+{
+    "name": "devtools",
+    "version": "0.0.0",
+    "prefix": "dev",
+    "description": "Developer tools — loads shell, sandbox, batch for command execution and scripting.",
+    "dependencies": ["shell", "sandbox", "batch"],
+    "tools": [],
+    "tags": ["devtools", "composite", "execution"],
+    "license": "MIT"
+}

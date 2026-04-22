@@ -1,0 +1,77 @@
+{
+    "name": "fts",
+    "version": "0.0.0",
+    "prefix": "fts",
+    "description": "Full-text search with TF-IDF ranking — index files, search with relevance scoring, suggest completions.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "index",
+            "description": "Index a directory for full-text search. Reads supported files and builds an inverted index.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Directory to index" },
+                    "glob": {
+                        "type": "string",
+                        "description": "File glob filter (default: *.ts,*.js,*.md,*.json)"
+                    },
+                    "maxFiles": {
+                        "type": "number",
+                        "description": "Max files to index (default 500)"
+                    }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "search",
+            "description": "Search the index with a query. Returns ranked results with TF-IDF scores.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "Search query (space-separated terms)"
+                    },
+                    "limit": { "type": "number", "description": "Max results (default 10)" }
+                },
+                "required": ["query"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "rank",
+            "description": "Given a query and a list of file paths, rank them by relevance using the index.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "query": { "type": "string", "description": "Search query" },
+                    "files": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "File paths to rank"
+                    }
+                },
+                "required": ["query", "files"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "suggest",
+            "description": "Auto-complete a partial query using indexed terms.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "prefix": { "type": "string", "description": "Partial term to complete" },
+                    "limit": { "type": "number", "description": "Max suggestions (default 5)" }
+                },
+                "required": ["prefix"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["search", "fulltext", "tfidf", "index", "ranking"],
+    "license": "MIT"
+}

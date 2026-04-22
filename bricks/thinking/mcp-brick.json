@@ -1,0 +1,80 @@
+{
+    "name": "thinking",
+    "version": "0.0.0",
+    "prefix": "thk",
+    "description": "Structured reasoning chains — think step by step, branch alternatives, revise conclusions, summarize.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "think",
+            "description": "Add a reasoning step to the current chain. Each step has a thought and optional confidence score.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "thought": { "type": "string", "description": "The reasoning step content" },
+                    "confidence": {
+                        "type": "number",
+                        "description": "Confidence level 0-1 (optional)"
+                    },
+                    "chainId": {
+                        "type": "string",
+                        "description": "Chain ID to append to (default: current chain)"
+                    }
+                },
+                "required": ["thought"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "branch",
+            "description": "Create a reasoning branch — explore an alternative line of thinking from the current point.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "label": {
+                        "type": "string",
+                        "description": "Branch label (e.g. 'Option A', 'If we assume...')"
+                    },
+                    "thought": { "type": "string", "description": "First thought in this branch" },
+                    "chainId": { "type": "string", "description": "Chain to branch from" }
+                },
+                "required": ["label", "thought"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "revise",
+            "description": "Revise a previous reasoning step with new information. Keeps the original for audit trail.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "stepIndex": {
+                        "type": "number",
+                        "description": "Index of step to revise (0-based)"
+                    },
+                    "revision": { "type": "string", "description": "Revised thought" },
+                    "reason": { "type": "string", "description": "Why this revision" },
+                    "chainId": { "type": "string", "description": "Chain ID" }
+                },
+                "required": ["stepIndex", "revision", "reason"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "summarize",
+            "description": "Summarize the current reasoning chain into a structured conclusion.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "chainId": {
+                        "type": "string",
+                        "description": "Chain to summarize (default: current)"
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["thinking", "reasoning", "chain-of-thought", "analysis"],
+    "license": "MIT"
+}

@@ -1,0 +1,95 @@
+{
+    "name": "codeedit",
+    "version": "0.0.0",
+    "prefix": "ce",
+    "description": "Precise code editing — replace function bodies, insert before/after, safe delete with dependency check.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "replacebody",
+            "description": "Replace the body of a function or method by name. Finds the function and replaces its entire body.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "File path" },
+                    "name": { "type": "string", "description": "Function or method name" },
+                    "newBody": {
+                        "type": "string",
+                        "description": "New function body content (without braces)"
+                    },
+                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                },
+                "required": ["path", "name", "newBody"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "insertafter",
+            "description": "Insert code after a specific line number or after a pattern match.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "File path" },
+                    "after": {
+                        "type": "number",
+                        "description": "Line number to insert after (1-based)"
+                    },
+                    "pattern": {
+                        "type": "string",
+                        "description": "Regex pattern to insert after (alternative to line number)"
+                    },
+                    "content": { "type": "string", "description": "Content to insert" },
+                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                },
+                "required": ["path", "content"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "insertbefore",
+            "description": "Insert code before a specific line number or before a pattern match.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "File path" },
+                    "before": {
+                        "type": "number",
+                        "description": "Line number to insert before (1-based)"
+                    },
+                    "pattern": {
+                        "type": "string",
+                        "description": "Regex pattern to insert before"
+                    },
+                    "content": { "type": "string", "description": "Content to insert" },
+                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                },
+                "required": ["path", "content"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "safedelete",
+            "description": "Delete a function or export, checking first if anything depends on it. Refuses if dependents exist.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "File path" },
+                    "name": { "type": "string", "description": "Function/export name to delete" },
+                    "dir": {
+                        "type": "string",
+                        "description": "Project root to check for dependents"
+                    },
+                    "force": {
+                        "type": "boolean",
+                        "description": "Delete even if dependents exist (default false)"
+                    },
+                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                },
+                "required": ["path", "name"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["edit", "code", "refactoring", "insert", "delete", "codemod"],
+    "license": "MIT"
+}

@@ -1,0 +1,132 @@
+{
+    "name": "diagram",
+    "version": "0.0.0",
+    "prefix": "diag",
+    "description": "Diagram generation — produce Mermaid, DOT/Graphviz, and ASCII diagrams from data.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "mermaid",
+            "description": "Generate a Mermaid diagram from structured data (flowchart, sequence, class, or graph).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Diagram type: flowchart, sequence, classDiagram, graph"
+                    },
+                    "nodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "string" },
+                                "label": { "type": "string" }
+                            },
+                            "required": ["id"]
+                        },
+                        "description": "Nodes/participants"
+                    },
+                    "edges": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "from": { "type": "string" },
+                                "to": { "type": "string" },
+                                "label": { "type": "string" }
+                            },
+                            "required": ["from", "to"]
+                        },
+                        "description": "Connections between nodes"
+                    },
+                    "direction": {
+                        "type": "string",
+                        "description": "Graph direction: TB, BT, LR, RL (default TB)"
+                    }
+                },
+                "required": ["type", "nodes", "edges"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "dot",
+            "description": "Generate a DOT/Graphviz diagram from structured data.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "nodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "string" },
+                                "label": { "type": "string" },
+                                "shape": { "type": "string" }
+                            },
+                            "required": ["id"]
+                        },
+                        "description": "Nodes"
+                    },
+                    "edges": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "from": { "type": "string" },
+                                "to": { "type": "string" },
+                                "label": { "type": "string" }
+                            },
+                            "required": ["from", "to"]
+                        },
+                        "description": "Edges"
+                    },
+                    "directed": {
+                        "type": "boolean",
+                        "description": "Directed graph (default true)"
+                    }
+                },
+                "required": ["nodes", "edges"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "ascii",
+            "description": "Generate a simple ASCII box-and-arrow diagram from nodes and edges.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "nodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "string" },
+                                "label": { "type": "string" }
+                            },
+                            "required": ["id"]
+                        },
+                        "description": "Nodes"
+                    },
+                    "edges": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "from": { "type": "string" },
+                                "to": { "type": "string" },
+                                "label": { "type": "string" }
+                            },
+                            "required": ["from", "to"]
+                        },
+                        "description": "Edges"
+                    }
+                },
+                "required": ["nodes", "edges"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["diagram", "mermaid", "graphviz", "dot", "ascii", "visualization"],
+    "license": "MIT"
+}

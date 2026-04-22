@@ -56,9 +56,16 @@ export async function flTree(input: FlTreeInput): Promise<{ tree: string[] }> {
     return { tree };
 }
 
+function escapeForGlob(glob: string): string {
+    // Escape all regex special characters except glob wildcards (* and ?)
+    const escaped = glob.replace(/[\\^$+.()|[\]{}]/g, '\\$&');
+    // Convert glob wildcards to regex equivalents
+    return escaped.replace(/\*/g, '.*').replace(/\?/g, '.');
+}
+
 export async function flGlob(input: FlGlobInput): Promise<{ matches: string[] }> {
     const dir = resolve(input.path);
-    const pattern = input.pattern.replace(/\./g, '\\.').replace(/\*/g, '.*').replace(/\?/g, '.');
+    const pattern = escapeForGlob(input.pattern);
     const regex = new RegExp(`^${pattern}$`);
     const items = await readdir(dir, { recursive: true, withFileTypes: true });
     const matches: string[] = [];
