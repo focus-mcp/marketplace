@@ -24,3 +24,10 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          direct_prompt: |
+            Review this PR. Focus on:
+            1. Code quality — any bugs, logic errors, or edge cases missed
+            2. Security — hardcoded secrets, injection, unsafe patterns
+            3. Consistency — does it follow existing brick patterns (manifest, tests, operations)
+            4. Tests — adequate coverage, meaningful assertions
+            Leave inline comments on specific issues. Approve if clean, request changes if not.
