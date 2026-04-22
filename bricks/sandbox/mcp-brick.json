@@ -1,0 +1,68 @@
+{
+    "name": "sandbox",
+    "version": "0.0.0",
+    "prefix": "box",
+    "description": "Sandboxed code execution — run JavaScript/TypeScript snippets in an isolated VM context.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "run",
+            "description": "Execute a JavaScript code snippet in a sandboxed VM context. Returns the result of the last expression.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "code": { "type": "string", "description": "JavaScript code to execute" },
+                    "timeout": {
+                        "type": "number",
+                        "description": "Execution timeout in ms (default 5000)"
+                    }
+                },
+                "required": ["code"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "file",
+            "description": "Read a file and execute it in the sandbox. Returns the module exports or last expression.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Path to JS/TS file to execute" },
+                    "timeout": {
+                        "type": "number",
+                        "description": "Execution timeout in ms (default 5000)"
+                    }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "eval",
+            "description": "Evaluate an expression and return its value. Lighter than run — single expression only.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "expression": {
+                        "type": "string",
+                        "description": "JavaScript expression to evaluate"
+                    },
+                    "timeout": { "type": "number", "description": "Timeout in ms (default 2000)" }
+                },
+                "required": ["expression"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "languages",
+            "description": "List supported languages and their status.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["sandbox", "execution", "vm", "javascript", "devtools"],
+    "license": "MIT"
+}

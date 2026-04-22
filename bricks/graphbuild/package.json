@@ -1,0 +1,21 @@
+{
+    "name": "@focusmcp/graphbuild",
+    "version": "0.0.0",
+    "private": true,
+    "description": "FocusMCP graphbuild brick — knowledge graph builder for code entities and their relationships",
+    "license": "MIT",
+    "type": "module",
+    "main": "./src/index.ts",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "files": [
+        "src",
+        "mcp-brick.json",
+        "mcp-brick.json.license",
+        "README.md"
+    ],
+    "scripts": {
+        "test": "vitest run"
+    }
+}

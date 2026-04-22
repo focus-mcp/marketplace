@@ -56,15 +56,37 @@ importers:
         specifier: ^3.2.0
         version: 3.2.4(@types/node@22.19.17)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3)
 
+  bricks/agent: {}
+
+  bricks/batch: {}
+
   bricks/cache: {}
 
   bricks/callgraph: {}
+
+  bricks/codebase: {}
+
+  bricks/codeedit: {}
+
+  bricks/codemod: {}
 
   bricks/compress: {}
 
   bricks/contextpack: {}
 
+  bricks/convert: {}
+
+  bricks/debate: {}
+
+  bricks/decision: {}
+
   bricks/depgraph: {}
+
+  bricks/devtools: {}
+
+  bricks/diagram: {}
+
+  bricks/dispatch: {}
 
   bricks/echo: {}
 
@@ -82,9 +104,29 @@ importers:
 
   bricks/filewrite: {}
 
+  bricks/format: {}
+
+  bricks/fts: {}
+
+  bricks/graphbuild: {}
+
+  bricks/graphcluster: {}
+
+  bricks/graphexport: {}
+
+  bricks/graphquery: {}
+
+  bricks/heatmap: {}
+
   bricks/impact: {}
 
+  bricks/inline: {}
+
+  bricks/knowledge: {}
+
   bricks/memory: {}
+
+  bricks/metrics: {}
 
   bricks/multiread: {}
 
@@ -92,11 +134,33 @@ importers:
 
   bricks/overview: {}
 
+  bricks/parallel: {}
+
+  bricks/planning: {}
+
   bricks/refs: {}
+
+  bricks/rename: {}
 
   bricks/repos: {}
 
+  bricks/research: {}
+
+  bricks/review: {}
+
+  bricks/routes: {}
+
+  bricks/sandbox: {}
+
+  bricks/savings: {}
+
+  bricks/semanticsearch: {}
+
   bricks/session: {}
+
+  bricks/share: {}
+
+  bricks/shell: {}
 
   bricks/smartcontext: {}
 
@@ -104,9 +168,17 @@ importers:
 
   bricks/symbol: {}
 
+  bricks/task: {}
+
+  bricks/textsearch: {}
+
+  bricks/thinking: {}
+
   bricks/tokenbudget: {}
 
   bricks/treesitter: {}
+
+  bricks/validate: {}
 
   modules/manager:
     devDependencies:

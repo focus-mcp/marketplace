@@ -1,0 +1,112 @@
+{
+    "name": "convert",
+    "version": "0.0.0",
+    "prefix": "conv",
+    "description": "Convert between formats and units — unit conversion, encoding, format transformation, naming conventions.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "units",
+            "description": "Convert between units: bytes (B/KB/MB/GB), time (ms/s/m/h), or tokens with cost estimate.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "number",
+                        "description": "The numeric value to convert"
+                    },
+                    "from": {
+                        "type": "string",
+                        "description": "Source unit: b, kb, mb, gb, ms, s, m, h, tokens"
+                    },
+                    "to": {
+                        "type": "string",
+                        "description": "Target unit: b, kb, mb, gb, ms, s, m, h, tokens, cost"
+                    },
+                    "pricePerMillion": {
+                        "type": "number",
+                        "description": "Token price per 1M tokens in USD (required when converting tokens→cost)"
+                    }
+                },
+                "required": ["value", "from", "to"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "encoding",
+            "description": "Encode or decode text using base64, hex, URL encoding, or HTML entities.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "The text to encode or decode"
+                    },
+                    "operation": {
+                        "type": "string",
+                        "enum": [
+                            "base64encode",
+                            "base64decode",
+                            "hexencode",
+                            "hexdecode",
+                            "urlencode",
+                            "urldecode",
+                            "htmlescape",
+                            "htmlunescape"
+                        ],
+                        "description": "The encoding operation to perform"
+                    }
+                },
+                "required": ["text", "operation"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "format",
+            "description": "Convert data between formats: JSON, CSV, and YAML.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "string",
+                        "description": "The input data string to convert"
+                    },
+                    "from": {
+                        "type": "string",
+                        "enum": ["json", "csv"],
+                        "description": "Source format"
+                    },
+                    "to": {
+                        "type": "string",
+                        "enum": ["json", "csv", "yaml"],
+                        "description": "Target format"
+                    }
+                },
+                "required": ["data", "from", "to"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "language",
+            "description": "Convert naming conventions between camelCase, snake_case, kebab-case, and PascalCase.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "The identifier to convert"
+                    },
+                    "to": {
+                        "type": "string",
+                        "enum": ["camel", "snake", "kebab", "pascal"],
+                        "description": "Target naming convention"
+                    }
+                },
+                "required": ["text", "to"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["convert", "units", "encoding", "format", "naming"],
+    "license": "MIT"
+}

@@ -1,0 +1,10 @@
+{
+    "name": "aiteam",
+    "version": "0.0.0",
+    "prefix": "team",
+    "description": "AI team coordination — loads dispatch, parallel, debate, review, agent for multi-agent orchestration.",
+    "dependencies": ["dispatch", "parallel", "debate", "review", "agent"],
+    "tools": [],
+    "tags": ["aiteam", "composite", "orchestration", "multi-agent"],
+    "license": "MIT"
+}

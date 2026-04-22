@@ -1,0 +1,75 @@
+{
+    "name": "review",
+    "version": "0.0.0",
+    "prefix": "rev",
+    "description": "Structured code review — analyze code quality, security, architecture patterns, compare versions.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "code",
+            "description": "Review a file for code quality — complexity, naming, patterns. Returns findings.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute path to the file to review"
+                    }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "security",
+            "description": "Review a file for security issues — hardcoded secrets, eval, SQL injection patterns.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute path to the file to review"
+                    }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "architecture",
+            "description": "Review directory structure for architecture patterns (layers, modules, coupling).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": {
+                        "type": "string",
+                        "description": "Absolute path to the directory to review"
+                    }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "compare",
+            "description": "Compare two file versions and list what changed (additions, removals, modifications).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "pathA": {
+                        "type": "string",
+                        "description": "Absolute path to the first (original) file"
+                    },
+                    "pathB": {
+                        "type": "string",
+                        "description": "Absolute path to the second (modified) file"
+                    }
+                },
+                "required": ["pathA", "pathB"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["review", "code-quality", "security", "architecture", "diff"],
+    "license": "MIT"
+}

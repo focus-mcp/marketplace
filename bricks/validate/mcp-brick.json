@@ -1,0 +1,75 @@
+{
+    "name": "validate",
+    "version": "0.0.0",
+    "prefix": "val",
+    "description": "Validate data — JSON syntax, JSON Schema compliance, TypeScript type checking, lint rules.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "json",
+            "description": "Validate JSON syntax — check if a string is valid JSON and report parse errors.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "The string to validate as JSON"
+                    }
+                },
+                "required": ["text"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "schema",
+            "description": "Validate data against a JSON Schema (subset: type, required, properties, items).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "string",
+                        "description": "JSON string of the data to validate"
+                    },
+                    "schema": {
+                        "type": "object",
+                        "description": "JSON Schema object (type, required, properties, items supported)"
+                    }
+                },
+                "required": ["data", "schema"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "types",
+            "description": "Check TypeScript type annotations in a file — find `any`, missing return types, implicit any.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute path to the TypeScript file to analyse"
+                    }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "lint",
+            "description": "Apply simple lint rules to code — unused imports, console.log, TODO/FIXME count, debugger statements.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute path to the source file to lint"
+                    }
+                },
+                "required": ["path"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["validate", "json", "schema", "types", "lint"],
+    "license": "MIT"
+}

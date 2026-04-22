@@ -1,0 +1,85 @@
+{
+    "name": "shell",
+    "version": "0.0.0",
+    "prefix": "sh",
+    "description": "Shell command execution — run commands, background processes, kill, and compress output.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "exec",
+            "description": "Execute a shell command and return stdout, stderr, and exit code. Timeout after 30s by default.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "command": { "type": "string", "description": "Shell command to execute" },
+                    "cwd": {
+                        "type": "string",
+                        "description": "Working directory (default: process.cwd())"
+                    },
+                    "timeout": {
+                        "type": "number",
+                        "description": "Timeout in milliseconds (default 30000)"
+                    },
+                    "env": {
+                        "type": "object",
+                        "description": "Additional environment variables",
+                        "additionalProperties": { "type": "string" }
+                    }
+                },
+                "required": ["command"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "background",
+            "description": "Start a command in the background. Returns a process ID to check or kill later.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "command": {
+                        "type": "string",
+                        "description": "Shell command to run in background"
+                    },
+                    "cwd": { "type": "string", "description": "Working directory" }
+                },
+                "required": ["command"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "kill",
+            "description": "Kill a background process by its ID.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string", "description": "Process ID returned by background" }
+                },
+                "required": ["id"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "compress",
+            "description": "Execute a command and return compressed output — strips ANSI codes, collapses blank lines, truncates to maxLines.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "command": { "type": "string", "description": "Shell command to execute" },
+                    "cwd": { "type": "string", "description": "Working directory" },
+                    "maxLines": {
+                        "type": "number",
+                        "description": "Max output lines (default 100)"
+                    },
+                    "timeout": {
+                        "type": "number",
+                        "description": "Timeout in milliseconds (default 30000)"
+                    }
+                },
+                "required": ["command"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["shell", "exec", "command", "process", "devtools"],
+    "license": "MIT"
+}

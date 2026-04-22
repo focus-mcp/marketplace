@@ -1,0 +1,76 @@
+{
+    "name": "heatmap",
+    "version": "0.0.0",
+    "prefix": "hm",
+    "description": "File access heatmap — track read/write patterns, detect hot and cold files.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "track",
+            "description": "Record a file access (read or write) with the current timestamp.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "description": "Absolute or relative path of the accessed file"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["read", "write"],
+                        "description": "Access type: 'read' or 'write'"
+                    }
+                },
+                "required": ["file", "type"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "hotfiles",
+            "description": "Return the most frequently accessed files, optionally filtered by access type.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "limit": {
+                        "type": "number",
+                        "description": "Maximum number of files to return (default 10)"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["read", "write"],
+                        "description": "Filter by access type (omit for combined count)"
+                    }
+                },
+                "required": [],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "patterns",
+            "description": "Detect access patterns — files commonly accessed together within 1 second of each other.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "coldfiles",
+            "description": "Find files that have not been accessed within a given time threshold.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "threshold": {
+                        "type": "number",
+                        "description": "Inactivity threshold in milliseconds (default 3600000 = 1 hour)"
+                    }
+                },
+                "required": [],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["heatmap", "tracking", "patterns", "files", "analysis"],
+    "license": "MIT"
+}

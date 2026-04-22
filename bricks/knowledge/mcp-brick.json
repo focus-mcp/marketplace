@@ -1,0 +1,99 @@
+{
+    "name": "knowledge",
+    "version": "0.0.0",
+    "prefix": "kb",
+    "description": "Knowledge base — index documents, search by content, fetch entries, purge stale data, rank by relevance.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "index",
+            "description": "Index a document or note into the knowledge base with tags and metadata.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "title": { "type": "string", "description": "Document title" },
+                    "content": { "type": "string", "description": "Document content" },
+                    "tags": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Tags for categorization"
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Source reference (URL, file path, etc.)"
+                    }
+                },
+                "required": ["title", "content"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "search",
+            "description": "Search the knowledge base by query. Returns ranked results.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "query": { "type": "string", "description": "Search query" },
+                    "tags": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Filter by tags"
+                    },
+                    "limit": { "type": "number", "description": "Max results (default 10)" }
+                },
+                "required": ["query"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "fetch",
+            "description": "Fetch a specific knowledge entry by ID.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string", "description": "Entry ID" }
+                },
+                "required": ["id"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "purge",
+            "description": "Remove entries older than a given age or matching specific tags.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "olderThanDays": {
+                        "type": "number",
+                        "description": "Remove entries older than N days"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Remove entries with these tags"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "rank",
+            "description": "Re-rank existing search results by additional criteria (recency, tag match, content length).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "query": { "type": "string", "description": "Search query" },
+                    "boost": {
+                        "type": "string",
+                        "description": "Boost factor: 'recency', 'tags', 'length' (default 'recency')"
+                    },
+                    "limit": { "type": "number", "description": "Max results (default 10)" }
+                },
+                "required": ["query"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["knowledge", "search", "index", "documents", "knowledgebase"],
+    "license": "MIT"
+}

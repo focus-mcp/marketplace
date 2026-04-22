@@ -1,0 +1,21 @@
+{
+    "name": "@focusmcp/batch",
+    "version": "0.0.0",
+    "private": true,
+    "description": "FocusMCP batch brick — batch execution patterns for sequential, parallel, and pipeline operations",
+    "license": "MIT",
+    "type": "module",
+    "main": "./src/index.ts",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "files": [
+        "src",
+        "mcp-brick.json",
+        "mcp-brick.json.license",
+        "README.md"
+    ],
+    "scripts": {
+        "test": "vitest run"
+    }
+}

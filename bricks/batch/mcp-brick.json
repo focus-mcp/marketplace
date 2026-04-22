@@ -1,0 +1,106 @@
+{
+    "name": "batch",
+    "version": "0.0.0",
+    "prefix": "bat",
+    "description": "Batch execution patterns — run multiple operations sequentially, in parallel, or as a pipeline.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "multi",
+            "description": "Execute multiple shell commands and collect all results. Each command runs independently.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "commands": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "List of shell commands"
+                    },
+                    "cwd": {
+                        "type": "string",
+                        "description": "Working directory for all commands"
+                    },
+                    "timeout": {
+                        "type": "number",
+                        "description": "Per-command timeout in ms (default 30000)"
+                    }
+                },
+                "required": ["commands"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "sequential",
+            "description": "Execute commands one by one. Stops on first failure unless continueOnError is set.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "commands": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Commands to run in order"
+                    },
+                    "cwd": { "type": "string", "description": "Working directory" },
+                    "timeout": {
+                        "type": "number",
+                        "description": "Per-command timeout in ms (default 30000)"
+                    },
+                    "continueOnError": {
+                        "type": "boolean",
+                        "description": "Continue after failure (default false)"
+                    }
+                },
+                "required": ["commands"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "parallel",
+            "description": "Execute all commands in parallel. Returns when all complete.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "commands": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Commands to run in parallel"
+                    },
+                    "cwd": { "type": "string", "description": "Working directory" },
+                    "timeout": {
+                        "type": "number",
+                        "description": "Per-command timeout in ms (default 30000)"
+                    },
+                    "maxConcurrency": {
+                        "type": "number",
+                        "description": "Max parallel commands (default: unlimited)"
+                    }
+                },
+                "required": ["commands"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "pipeline",
+            "description": "Pipe stdout of each command into stdin of the next (shell pipe chain).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "commands": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Commands to pipe together"
+                    },
+                    "cwd": { "type": "string", "description": "Working directory" },
+                    "timeout": {
+                        "type": "number",
+                        "description": "Total pipeline timeout in ms (default 30000)"
+                    }
+                },
+                "required": ["commands"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["batch", "execution", "parallel", "sequential", "pipeline", "devtools"],
+    "license": "MIT"
+}

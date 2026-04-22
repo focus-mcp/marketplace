@@ -1,0 +1,106 @@
+{
+    "name": "decision",
+    "version": "0.0.0",
+    "prefix": "dec",
+    "description": "Structured decision-making — define options, analyze tradeoffs, recommend, and record decisions.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "options",
+            "description": "Define options for a decision. Each option has a label and optional pros/cons.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "question": { "type": "string", "description": "The decision question" },
+                    "options": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "label": { "type": "string" },
+                                "pros": { "type": "array", "items": { "type": "string" } },
+                                "cons": { "type": "array", "items": { "type": "string" } }
+                            },
+                            "required": ["label"]
+                        },
+                        "description": "Available options"
+                    }
+                },
+                "required": ["question", "options"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "tradeoffs",
+            "description": "Add criteria and weights to evaluate options. Score each option against criteria.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "decisionId": { "type": "string", "description": "Decision ID" },
+                    "criteria": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": { "type": "string" },
+                                "weight": { "type": "number", "description": "Weight 1-10" }
+                            },
+                            "required": ["name", "weight"]
+                        },
+                        "description": "Evaluation criteria"
+                    },
+                    "scores": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "option": { "type": "string" },
+                                "scores": {
+                                    "type": "array",
+                                    "items": { "type": "number" },
+                                    "description": "Score per criterion (1-10)"
+                                }
+                            },
+                            "required": ["option", "scores"]
+                        },
+                        "description": "Scores per option"
+                    }
+                },
+                "required": ["decisionId", "criteria", "scores"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "recommend",
+            "description": "Get a recommendation based on weighted scores.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "decisionId": { "type": "string", "description": "Decision ID" }
+                },
+                "required": ["decisionId"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "record",
+            "description": "Record the final decision with rationale. Persists to a JSON file.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "decisionId": { "type": "string", "description": "Decision ID" },
+                    "chosen": { "type": "string", "description": "The chosen option label" },
+                    "rationale": { "type": "string", "description": "Why this option was chosen" },
+                    "outputPath": {
+                        "type": "string",
+                        "description": "File path to save the decision record (optional)"
+                    }
+                },
+                "required": ["decisionId", "chosen", "rationale"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["decision", "tradeoff", "analysis", "recommendation", "adr"],
+    "license": "MIT"
+}

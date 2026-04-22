@@ -1,0 +1,86 @@
+{
+    "name": "share",
+    "version": "0.0.0",
+    "prefix": "shr",
+    "description": "Shared state for multi-agent — share context, files, results between agents, broadcast messages.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "context",
+            "description": "Share or retrieve shared context (key-value store visible to all agents). If value is provided, sets the key. Always returns the current value.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "Context key to get or set"
+                    },
+                    "value": {
+                        "description": "Value to store (any JSON-serializable type). Omit to read."
+                    }
+                },
+                "required": ["key"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "files",
+            "description": "Share file references between agents — register which agent owns or watches which files. If files are provided, registers them. Otherwise lists files for the agent.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "agentId": {
+                        "type": "string",
+                        "description": "Identifier of the agent registering or querying files"
+                    },
+                    "files": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "List of file paths to register for this agent. Omit to read."
+                    }
+                },
+                "required": ["agentId"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "results",
+            "description": "Share task results — store and retrieve results by task ID. If result is provided, stores it. Otherwise retrieves the stored result.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "taskId": {
+                        "type": "string",
+                        "description": "Unique identifier of the task"
+                    },
+                    "result": {
+                        "description": "Result to store (any JSON-serializable type). Omit to read."
+                    }
+                },
+                "required": ["taskId"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "broadcast",
+            "description": "Send a message to all registered listeners (in-memory pub/sub). The message is logged and delivered synchronously to all current listeners.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Message content to broadcast"
+                    },
+                    "from": {
+                        "type": "string",
+                        "description": "Identifier of the agent sending the message"
+                    }
+                },
+                "required": ["message", "from"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["share", "context", "broadcast", "multi-agent", "state"],
+    "license": "MIT"
+}
