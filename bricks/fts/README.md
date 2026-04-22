@@ -1,4 +1,4 @@
-# @focusmcp/fts
+# @focus-mcp/fts
 
 Full-text search with TF-IDF ranking — index files, search with relevance scoring, suggest completions.
 

@@ -1,4 +1,4 @@
-# @focusmcp/filesearch
+# @focus-mcp/filesearch
 
 Search and replace in files for FocusMCP.
 

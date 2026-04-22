@@ -146,7 +146,7 @@ export async function collectLocalBricks(rootDir: string): Promise<CatalogBrick[
             tools: manifest.tools ?? [],
             source: {
                 type: 'npm',
-                package: pkg.name ?? `@focusmcp/${manifest.name}`,
+                package: pkg.name ?? `@focus-mcp/${manifest.name}`,
                 registry: 'https://npm.pkg.github.com',
             },
             ...(manifest.license ? { license: manifest.license } : {}),

@@ -25,7 +25,7 @@ Active development — pre-MVP. See [PRD.md](./PRD.md).
 bricks/              — official bricks (each subfolder = 1 workspace package)
   <name>/
     mcp-brick.json   — manifest (name, description, tools, deps…)
-    package.json     — version, name `@focusmcp/<name>`
+    package.json     — version, name `@focus-mcp/<name>`
     src/             — brick source
     ...
 external_bricks.json — externally-hosted bricks referenced in the catalog
@@ -51,7 +51,7 @@ pnpm build:catalog   # builds dist/catalog.json and validates it against the sch
 
 ## Versioning
 
-Each brick has **its own version** (Changesets in `independent` mode). Tags follow the `@focusmcp/<name>@<version>` pattern (e.g. `@focusmcp/indexer@0.2.1`). No package is published to npm at MVP: distribution happens via **GitHub Releases** (tarballs) and the `catalog.json` served from GitHub Pages.
+Each brick has **its own version** (Changesets in `independent` mode). Tags follow the `@focus-mcp/<name>@<version>` pattern (e.g. `@focus-mcp/indexer@0.2.1`). No package is published to npm at MVP: distribution happens via **GitHub Releases** (tarballs) and the `catalog.json` served from GitHub Pages.
 
 ## Submitting a brick
 

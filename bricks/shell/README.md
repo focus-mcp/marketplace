@@ -1,4 +1,4 @@
-# @focusmcp/shell
+# @focus-mcp/shell
 
 Shell command execution — run commands, background processes, kill, and compress output.
 

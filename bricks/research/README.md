@@ -1,4 +1,4 @@
-# @focusmcp/research
+# @focus-mcp/research
 
 Multi-source research — collect info from multiple files/sources, synthesize findings, validate consistency.
 

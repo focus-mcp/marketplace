@@ -1,4 +1,4 @@
-# @focusmcp/diagram
+# @focus-mcp/diagram
 
 Diagram generation — produce Mermaid, DOT/Graphviz, and ASCII diagrams from structured data.
 

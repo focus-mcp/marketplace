@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/depgraph",
+    "name": "@focus-mcp/depgraph",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP depgraph brick — dependency graph analysis for source files",

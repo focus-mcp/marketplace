@@ -1,4 +1,4 @@
-# @focusmcp/aiteam
+# @focus-mcp/aiteam
 
 Composite AI team coordination brick for FocusMCP — loads all multi-agent orchestration sub-bricks.
 

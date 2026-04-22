@@ -1,4 +1,4 @@
-# @focusmcp/graphbuild
+# @focus-mcp/graphbuild
 
 Knowledge graph builder — construct a graph of code entities (files, functions, types) and their relationships.
 

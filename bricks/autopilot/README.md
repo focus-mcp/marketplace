@@ -1,4 +1,4 @@
-# @focusmcp/autopilot
+# @focus-mcp/autopilot
 
 Autopilot workflow — autonomous task execution with reasoning, context management, and shell commands.
 

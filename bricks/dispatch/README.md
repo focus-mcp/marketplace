@@ -1,4 +1,4 @@
-# @focusmcp/dispatch
+# @focus-mcp/dispatch
 
 Task dispatch queue — send tasks to an in-memory queue, cancel them, and check their status for multi-step workflow orchestration.
 

@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/graphbuild",
+    "name": "@focus-mcp/graphbuild",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP graphbuild brick — knowledge graph builder for code entities and their relationships",

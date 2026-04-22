@@ -1,4 +1,4 @@
-# @focusmcp/knowledgebase
+# @focus-mcp/knowledgebase
 
 Composite knowledge base brick for FocusMCP — loads all knowledge sub-bricks.
 

@@ -1,4 +1,4 @@
-# @focusmcp/impact
+# @focus-mcp/impact
 
 Change impact analysis — given a file, find what files are affected by a change.
 

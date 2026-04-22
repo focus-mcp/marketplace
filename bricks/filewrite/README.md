@@ -1,4 +1,4 @@
-# @focusmcp/filewrite
+# @focus-mcp/filewrite
 
 Write files for FocusMCP — create, overwrite, append.
 

@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/codeedit",
+    "name": "@focus-mcp/codeedit",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP codeedit brick — precise code editing for function bodies, insertions, and safe deletion",

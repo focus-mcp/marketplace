@@ -1,4 +1,4 @@
-# @focusmcp/devtools
+# @focus-mcp/devtools
 
 Composite devtools brick for FocusMCP — loads all developer tools sub-bricks.
 

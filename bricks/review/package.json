@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/review",
+    "name": "@focus-mcp/review",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP review brick — structured code review for quality, security, architecture, and diffs",

@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/devtools",
+    "name": "@focus-mcp/devtools",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP devtools brick — shell, sandbox, batch for command execution and scripting",

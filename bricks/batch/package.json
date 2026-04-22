@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/batch",
+    "name": "@focus-mcp/batch",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP batch brick — batch execution patterns for sequential, parallel, and pipeline operations",

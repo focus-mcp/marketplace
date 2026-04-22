@@ -1,4 +1,4 @@
-# @focusmcp/agent
+# @focus-mcp/agent
 
 Agent registry — register AI agents with capabilities, list available agents, query capabilities.
 

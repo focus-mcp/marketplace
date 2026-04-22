@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/research",
+    "name": "@focus-mcp/research",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP research brick — multi-source research, synthesis and consistency validation",

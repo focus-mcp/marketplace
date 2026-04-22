@@ -1,4 +1,4 @@
-# @focusmcp/semanticsearch
+# @focus-mcp/semanticsearch
 
 Semantic search using TF-IDF vector space — cosine similarity, intent matching, document similarity. No external AI or embedding API required.
 

@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/rename",
+    "name": "@focus-mcp/rename",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP rename brick — rename refactoring for symbols, files, and bulk operations",

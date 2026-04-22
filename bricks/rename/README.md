@@ -1,4 +1,4 @@
-# @focusmcp/rename
+# @focus-mcp/rename
 
 Rename refactoring — rename symbols across files, rename files with import updates, bulk rename with preview.
 

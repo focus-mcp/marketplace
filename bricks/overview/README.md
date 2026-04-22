@@ -1,4 +1,4 @@
-# @focusmcp/overview
+# @focus-mcp/overview
 
 Project-level understanding without reading all files — detect framework, language, conventions, and architecture at a glance.
 

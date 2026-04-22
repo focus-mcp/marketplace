@@ -1,4 +1,4 @@
-# @focusmcp/fullaudit
+# @focus-mcp/fullaudit
 
 Full project audit workflow — code quality review, security scan, architecture analysis, and metrics report.
 

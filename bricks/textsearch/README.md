@@ -1,4 +1,4 @@
-# @focusmcp/textsearch
+# @focus-mcp/textsearch
 
 Text search and replace across files — regex search, multi-file replace, grouped results.
 

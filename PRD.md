@@ -6,7 +6,7 @@ SPDX-License-Identifier: MIT
 # FocusMCP Marketplace — Product Requirements Document
 
 > Périmètre : le **catalogue officiel** de briques (repo `marketplace/`).
-> Pour la lib `@focusmcp/core` : voir [`core/PRD.md`](../core/PRD.md). Pour l'app desktop : voir [`client/PRD.md`](../client/PRD.md).
+> Pour la lib `@focus-mcp/core` : voir [`core/PRD.md`](../core/PRD.md). Pour l'app desktop : voir [`client/PRD.md`](../client/PRD.md).
 
 ## Vision (rappel)
 
@@ -25,12 +25,12 @@ Le repo `marketplace/` contient :
 1. **L'index officiel** (`catalog.json`) — liste de toutes les briques publiées
 2. **Le code source des briques officielles MVP** (focus-indexer, focus-memory, focus-sandbox, focus-thinking, etc.)
 3. **Le process de soumission** pour les briques tierces souhaitant rejoindre l'officiel
-4. **Les quality gates** appliqués à chaque brique (validation via `@focusmcp/validator`)
+4. **Les quality gates** appliqués à chaque brique (validation via `@focus-mcp/validator`)
 
 ```
 ┌──────────────────────────────────────────────┐
 │ FocusMCP Client (Tauri)                      │
-│  └─ Marketplace Manager (dans @focusmcp/core)│
+│  └─ Marketplace Manager (dans @focus-mcp/core)│
 │       ├─ catalogue officiel ◄──┐             │
 │       └─ catalogues tiers (P1) │             │
 └────────────────────────────────┼─────────────┘
@@ -96,7 +96,7 @@ Le nom **déclare sans ambiguïté** le domaine. Les briques fourre-tout (`focus
 }
 ```
 
-Le résolveur (côté `@focusmcp/core` marketplace client) consomme ce JSON pour :
+Le résolveur (côté `@focus-mcp/core` marketplace client) consomme ce JSON pour :
 - Afficher dans la page Discover du client
 - Résoudre `<name>@<range>` lors d'un `focus add <brick>`
 - Télécharger depuis `source` (release GitHub) avec vérif intégrité
@@ -145,8 +145,8 @@ Chaque PR passe par :
 
 | Gate | Outil | Échec si |
 |---|---|---|
-| **Manifeste valide** | `@focusmcp/validator` | Schéma KO, namespace incorrect |
-| **Conformance brique** | `@focusmcp/validator` | Tools mal déclarés, dépendances non whitelist |
+| **Manifeste valide** | `@focus-mcp/validator` | Schéma KO, namespace incorrect |
+| **Conformance brique** | `@focus-mcp/validator` | Tools mal déclarés, dépendances non whitelist |
 | **Build** | tsup | Erreur compilation |
 | **Tests** | Vitest | Coverage < 80%, tests rouges |
 | **Lint** | Biome | Erreurs lint |
@@ -237,7 +237,7 @@ Configuration via `.centerrc` (cf. `core/PRD.md`) :
 | Briques | **TypeScript strict** | Code source |
 | Build | **tsup** | Bundling par brique |
 | Tests | **Vitest** | Unit + intégration |
-| Validator | **@focusmcp/validator** | Quality gate conformance |
+| Validator | **@focus-mcp/validator** | Quality gate conformance |
 | Lint | **Biome** | Style et qualité |
 | License | **REUSE** | SPDX headers |
 | SBOM | **cdxgen** | Génération SBOM par release |

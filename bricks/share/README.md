@@ -1,4 +1,4 @@
-# @focusmcp/share
+# @focus-mcp/share
 
 Shared state for multi-agent — share context, files, results between agents, broadcast messages.
 

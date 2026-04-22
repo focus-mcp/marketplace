@@ -1,4 +1,4 @@
-# @focusmcp/depgraph
+# @focus-mcp/depgraph
 
 Dependency graph analysis for FocusMCP — imports, exports, circular dependency detection, fan-in/out.
 

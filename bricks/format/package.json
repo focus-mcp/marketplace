@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/format",
+    "name": "@focus-mcp/format",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP format brick — format data into JSON, YAML, markdown, and ASCII tables",

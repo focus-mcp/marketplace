@@ -1,4 +1,4 @@
-# @focusmcp/fileread
+# @focus-mcp/fileread
 
 Read files for FocusMCP — full content, head, tail, line range.
 

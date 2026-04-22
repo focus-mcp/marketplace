@@ -1,4 +1,4 @@
-# @focusmcp/graphcluster
+# @focus-mcp/graphcluster
 
 Graph clustering — detect communities, explain groupings, identify architecture layers in a knowledge graph.
 
