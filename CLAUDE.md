@@ -76,8 +76,10 @@ DNS + GitHub Pages settings). Actuellement : `https://focus-mcp.github.io/market
    - Exceptions permanentes : `PRD.md`, `CLAUDE.md` (ce fichier) et contenus internes modules
      restent en français.
 6. **Git-flow strict** — `develop` permanente.
-7. **npm orgs** — `focusmcp` + `focus-mcp` réservées. Scope canonique `@focusmcp/*`. Au MVP,
-   briques non publiées npm (distribution = tarball GitHub Release via `catalog.json`).
+7. **npm orgs** — `focusmcp` + `focus-mcp` réservées. Scope canonique `@focusmcp/*`. Distribution
+   via npm / GitHub Packages (`@focusmcp/<name>`), référencées dans `catalog.json` avec
+   `source: { type: "npm", package: "@focusmcp/<name>" }`. Les tarballs GitHub Release ne sont
+   plus le mode de distribution principal.
 8. **Rulesets GitHub** — `main protection` cible UNIQUEMENT `refs/heads/main` ;
    `develop protection` cible UNIQUEMENT `refs/heads/develop`. Ne pas mélanger (Code Quality
    = pending éternel sur non-default branch).
@@ -96,19 +98,30 @@ packages:
   - 'scripts'
 ```
 
-**Briques installées aujourd'hui** :
+**Briques dans le catalogue (67 total)** :
 - `bricks/echo/` — hello-world brique pour smoke-test le pipeline (tools: `echo_say`)
+- **Files** : read-file, write-file, list-dir, search-files, watch-file, …
+- **Code Intel** : code-search, symbol-lookup, ast-query, references, …
+- **Context** : summarize, chunk-context, extract-context, filter-context, …
+- **Git** : git-log, git-diff, git-blame, git-status, …
+- **Web** : fetch-url, scrape-page, search-web, …
+- **Database** : query-sql, list-tables, describe-schema, …
+- **AI** : embed, classify, generate, …
+- **Utilities** : format-json, parse-csv, convert-units, …
 
-**Modules installés aujourd'hui** :
+**Modules installés** :
 - `modules/manager/` — dashboard web static SvelteKit. Purement observationnel, consomme
-  l'admin API HTTP de la CLI (pas encore shippée). Package: `@focusmcp/manager`. Publish Phase 2.
+  l'admin API HTTP de la CLI. Package: `@focusmcp/manager`. Publish Phase 2.
 
 **Conventions bricks** :
 - Nom = kebab-case **nu** (ex: `echo`, `indexer`, `memory`, `sf-router`). **Pas de préfixe `focus-`**.
 - Package npm = `@focusmcp/<name>` (scope canonique).
 - Manifeste `mcp-brick.json` : pas de `version` (source de vérité = `package.json`).
-- Source de la brique (catalogue) : `source: { type: "local", path: "bricks/<name>" }` (interne)
-  ou `{ type: "url", url, sha? }` (external_bricks.json).
+- Source de la brique (catalogue) : `source: { type: "local", path: "bricks/<name>" }` (interne),
+  `{ type: "url", url, sha? }` (external_bricks.json), ou `{ type: "npm", package: "@focusmcp/<name>" }`
+  (distribution npm — mode principal).
+- **Multi-source** : le fichier de config utilisateur peut référencer des URLs de catalogues
+  externes (catalogues tiers ou privés), en plus du catalogue officiel.
 
 **Commandes** :
 ```bash

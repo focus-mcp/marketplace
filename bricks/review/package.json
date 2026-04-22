@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/review",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP review brick — structured code review for quality, security, architecture, and diffs",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

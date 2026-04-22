@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/graphbuild",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP graphbuild brick — knowledge graph builder for code entities and their relationships",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

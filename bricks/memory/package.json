@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/memory",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP memory brick — persistent key-value memory stored as JSON files",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/semanticsearch",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP semanticsearch brick — semantic search using TF-IDF vector space and cosine similarity",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

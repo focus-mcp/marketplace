@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/smartcontext",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP smartcontext composite brick — orchestrates bricks to deliver optimal context within token budget",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

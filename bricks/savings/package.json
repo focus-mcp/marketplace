@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/savings",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP savings brick — track token savings, compare sessions, trend over time, ROI",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

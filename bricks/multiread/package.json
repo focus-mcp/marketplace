@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/multiread",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP multiread brick — batch file reading, deduplication, merge",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }

@@ -1,7 +1,7 @@
 {
     "name": "@focusmcp/refs",
     "version": "0.0.0",
-    "private": true,
+    "private": false,
     "description": "FocusMCP refs brick — cross-references: find who imports or uses a symbol",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     }
 }
