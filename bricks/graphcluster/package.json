@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/graphcluster",
+    "name": "@focus-mcp/graphcluster",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP graphcluster brick — detect communities and architecture layers in a knowledge graph",

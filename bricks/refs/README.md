@@ -1,4 +1,4 @@
-# @focusmcp/refs
+# @focus-mcp/refs
 
 Cross-references — find who imports or uses a symbol, locate declarations, and trace inheritance chains.
 

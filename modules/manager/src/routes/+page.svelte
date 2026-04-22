@@ -12,7 +12,7 @@ let status = $state<'idle' | 'pending' | 'ready'>('idle');
 function handleConnect(event: SubmitEvent): void {
     event.preventDefault();
     status = 'pending';
-    // Deliberately no network call here — wiring lands when @focusmcp/cli admin API ships.
+    // Deliberately no network call here — wiring lands when @focus-mcp/cli admin API ships.
     status = 'ready';
 }
 </script>
@@ -21,7 +21,7 @@ function handleConnect(event: SubmitEvent): void {
   <div class="space-y-3">
     <h1 class="text-3xl font-semibold tracking-tight text-slate-900">FocusMCP Manager</h1>
     <p class="max-w-2xl text-base text-slate-600">
-      Connect this dashboard to your running <code class="rounded bg-slate-100 px-1.5 py-0.5 text-sm">@focusmcp/cli</code>
+      Connect this dashboard to your running <code class="rounded bg-slate-100 px-1.5 py-0.5 text-sm">@focus-mcp/cli</code>
       to observe live metrics, logs, and the bricks loaded in your orchestrator. The manager is
       <strong>purely observational</strong>: brick install, remove, and configuration all happen in the CLI.
     </p>

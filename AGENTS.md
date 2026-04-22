@@ -20,7 +20,7 @@ Read [PRD.md](./PRD.md) for the complete catalog vision (schema, distribution, s
 - Monorepo **pnpm workspaces**: `bricks/*` + `scripts`
 - Tests: **Vitest** (unit), **ajv** for schema validation
 - Lint/format: **Biome 2.x**
-- Changesets in **independent** mode — each brick has its own version + tag `@focusmcp/<name>@x.y.z`
+- Changesets in **independent** mode — each brick has its own version + tag `@focus-mcp/<name>@x.y.z`
 - **No npm publish at MVP** — distribution via GitHub Releases (tarballs) + `catalog.json` on GitHub Pages
 
 ## File layout
@@ -60,7 +60,7 @@ pnpm changeset            # create a changeset before merging
 ```
 bricks/<name>/
   mcp-brick.json          # manifest (name, description, dependencies, tools…)
-  package.json            # name: "@focusmcp/<name>", version, private: true
+  package.json            # name: "@focus-mcp/<name>", version, private: true
   src/
     index.ts              # main export
     <feature>/

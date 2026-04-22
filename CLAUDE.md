@@ -23,7 +23,7 @@ Le catalogue (`catalog.json`) est généré par `scripts/build-catalog.ts` et pu
 | Repo | Rôle |
 |---|---|
 | `focus-mcp/core` | Monorepo lib TS — Registry + EventBus + Router + SDK + Validator + marketplace resolver. |
-| `focus-mcp/cli` | `@focusmcp/cli` — stdio MCP, brick manager, publié npm. |
+| `focus-mcp/cli` | `@focus-mcp/cli` — stdio MCP, brick manager, publié npm. |
 | `focus-mcp/marketplace` (ici) | Catalogue + bricks + modules (manager). Catalog sur gh-pages. |
 | `focus-mcp/client` | **archivé** — ex desktop Tauri, Phase 2. |
 
@@ -33,7 +33,7 @@ Le catalogue (`catalog.json`) est généré par `scripts/build-catalog.ts` et pu
 marketplace/
 ├── bricks/<name>/            # briques officielles (pnpm workspace)
 │   ├── mcp-brick.json        # manifeste
-│   ├── package.json          # @focusmcp/<name>
+│   ├── package.json          # @focus-mcp/<name>
 │   └── src/
 ├── modules/manager/          # dashboard web SvelteKit static (Phase 2) — seul module actuellement
 ├── external_bricks.json      # refs URL / git-subdir (manuel)
@@ -48,7 +48,7 @@ marketplace/
 **Pipeline release** (Changesets independent mode) :
 1. PR merge sur `develop` avec un changeset
 2. Sync `develop → main` via PR
-3. Workflow `release.yml` sur main : Changesets bump versions, tag `@focusmcp/<name>@x.y.z`
+3. Workflow `release.yml` sur main : Changesets bump versions, tag `@focus-mcp/<name>@x.y.z`
    (format scoped npm natif de Changesets), GitHub Release par package bumpé, `pnpm build:catalog`,
    publish sur gh-pages (le workflow assemble un dossier `publish/` qui devient la racine de
    `gh-pages` via `peaceiris/actions-gh-pages`).
@@ -76,9 +76,9 @@ DNS + GitHub Pages settings). Actuellement : `https://focus-mcp.github.io/market
    - Exceptions permanentes : `PRD.md`, `CLAUDE.md` (ce fichier) et contenus internes modules
      restent en français.
 6. **Git-flow strict** — `develop` permanente.
-7. **npm orgs** — `focusmcp` + `focus-mcp` réservées. Scope canonique `@focusmcp/*`. Distribution
-   via npm / GitHub Packages (`@focusmcp/<name>`), référencées dans `catalog.json` avec
-   `source: { type: "npm", package: "@focusmcp/<name>" }`. Les tarballs GitHub Release ne sont
+7. **npm orgs** — `focusmcp` + `focus-mcp` réservées. Scope canonique `@focus-mcp/*`. Distribution
+   via npm / GitHub Packages (`@focus-mcp/<name>`), référencées dans `catalog.json` avec
+   `source: { type: "npm", package: "@focus-mcp/<name>" }`. Les tarballs GitHub Release ne sont
    plus le mode de distribution principal.
 8. **Rulesets GitHub** — `main protection` cible UNIQUEMENT `refs/heads/main` ;
    `develop protection` cible UNIQUEMENT `refs/heads/develop`. Ne pas mélanger (Code Quality
@@ -111,14 +111,14 @@ packages:
 
 **Modules installés** :
 - `modules/manager/` — dashboard web static SvelteKit. Purement observationnel, consomme
-  l'admin API HTTP de la CLI. Package: `@focusmcp/manager`. Publish Phase 2.
+  l'admin API HTTP de la CLI. Package: `@focus-mcp/manager`. Publish Phase 2.
 
 **Conventions bricks** :
 - Nom = kebab-case **nu** (ex: `echo`, `indexer`, `memory`, `sf-router`). **Pas de préfixe `focus-`**.
-- Package npm = `@focusmcp/<name>` (scope canonique).
+- Package npm = `@focus-mcp/<name>` (scope canonique).
 - Manifeste `mcp-brick.json` : pas de `version` (source de vérité = `package.json`).
 - Source de la brique (catalogue) : `source: { type: "local", path: "bricks/<name>" }` (interne),
-  `{ type: "url", url, sha? }` (external_bricks.json), ou `{ type: "npm", package: "@focusmcp/<name>" }`
+  `{ type: "url", url, sha? }` (external_bricks.json), ou `{ type: "npm", package: "@focus-mcp/<name>" }`
   (distribution npm — mode principal).
 - **Multi-source** : le fichier de config utilisateur peut référencer des URLs de catalogues
   externes (catalogues tiers ou privés), en plus du catalogue officiel.

@@ -1,4 +1,4 @@
-# @focusmcp/symbol
+# @focus-mcp/symbol
 
 Symbol lookup for FocusMCP — find, get, bulk lookup, and read symbol bodies from source files.
 

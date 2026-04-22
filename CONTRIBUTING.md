@@ -25,7 +25,7 @@ All contributors agree to follow the [Code of Conduct](./CODE_OF_CONDUCT.md).
 ```
 bricks/<name>/
   mcp-brick.json        — manifest (required)
-  package.json          — `name: "@focusmcp/<name>"`, `version`, `private: true`, `type: "module"`
+  package.json          — `name: "@focus-mcp/<name>"`, `version`, `private: true`, `type: "module"`
   src/
     index.ts
     ...
@@ -50,7 +50,7 @@ Optional fields: `tags`, `license`, `homepage`, `publisher`.
 ## Non-negotiable rules
 
 1. **Atomicity** — 1 brick = 1 domain. No kitchen-sink bricks. If two responsibilities coexist, split into two bricks.
-2. **Naming** — kebab-case, bare domain name (e.g. `echo`, `indexer`, `sf-router`). No `focus-` prefix. The npm package uses the scope `@focusmcp/<name>`.
+2. **Naming** — kebab-case, bare domain name (e.g. `echo`, `indexer`, `sf-router`). No `focus-` prefix. The npm package uses the scope `@focus-mcp/<name>`.
 3. **MIT-compatible license** — GPL/AGPL rejected to preserve the project license.
 4. **TDD / Coverage ≥ 80 %** — tests required, coverage enforced in CI.
 5. **SPDX headers** in every source file (`SPDX-FileCopyrightText: 2026 FocusMCP contributors` + `SPDX-License-Identifier: MIT`). For JSON files, create a sibling `.license` file (REUSE convention).

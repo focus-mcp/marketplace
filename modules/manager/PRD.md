@@ -6,13 +6,13 @@ SPDX-License-Identifier: MIT
 # FocusMCP CLI Manager — Product Requirements Document
 
 > Périmètre : le **dashboard web optionnel** (repo `cli-manager/`).
-> Pour la lib `@focusmcp/core` : voir [`core/PRD.md`](../core/PRD.md). Pour l'app desktop : voir [`client/PRD.md`](../client/PRD.md). Pour la CLI : voir [`cli/PRD.md`](../cli/PRD.md). Pour le marketplace : voir [`marketplace/PRD.md`](../marketplace/PRD.md).
+> Pour la lib `@focus-mcp/core` : voir [`core/PRD.md`](../core/PRD.md). Pour l'app desktop : voir [`client/PRD.md`](../client/PRD.md). Pour la CLI : voir [`cli/PRD.md`](../cli/PRD.md). Pour le marketplace : voir [`marketplace/PRD.md`](../marketplace/PRD.md).
 
 ## Vision (rappel)
 
 **FocusMCP** — Focaliser les agents AI sur l'essentiel.
 
-Le `cli-manager` est le **compagnon optionnel** de `@focusmcp/cli`. Il n'est **pas nécessaire** pour utiliser FocusMCP : la CLI fait tout le travail opérationnel (install, remove, enable, configure des briques). Le manager est la **vitre d'observation** posée au-dessus d'un orchestrateur déjà en marche — comme un `htop` pour FocusMCP.
+Le `cli-manager` est le **compagnon optionnel** de `@focus-mcp/cli`. Il n'est **pas nécessaire** pour utiliser FocusMCP : la CLI fait tout le travail opérationnel (install, remove, enable, configure des briques). Le manager est la **vitre d'observation** posée au-dessus d'un orchestrateur déjà en marche — comme un `htop` pour FocusMCP.
 
 ---
 
@@ -21,7 +21,7 @@ Le `cli-manager` est le **compagnon optionnel** de `@focusmcp/cli`. Il n'est **p
 Le repo `cli-manager/` fournit :
 
 1. **Un dashboard web statique** (SvelteKit prerendered, aucune partie serveur)
-2. **Un client HTTP** qui consomme l'API admin exposée par `@focusmcp/cli --admin-api`
+2. **Un client HTTP** qui consomme l'API admin exposée par `@focus-mcp/cli --admin-api`
 3. **Des vues read-only** : briques, métriques, logs, graphe de dépendances
 
 **Hors périmètre** :
@@ -29,7 +29,7 @@ Le repo `cli-manager/` fournit :
 - Installer / supprimer / activer / désactiver des briques (→ CLI)
 - Éditer la configuration runtime (→ CLI)
 - Héberger des secrets, des sessions utilisateur, une base de données
-- Dépendre de `@focusmcp/core` (le manager est découplé, il ne parle que HTTP)
+- Dépendre de `@focus-mcp/core` (le manager est découplé, il ne parle que HTTP)
 
 ---
 
@@ -42,10 +42,10 @@ Browser (utilisateur)
 cli-manager (static bundle, prerendered SvelteKit)
     │ fetch(baseUrl + token)
     ▼
-@focusmcp/cli avec `--admin-api` activé
+@focus-mcp/cli avec `--admin-api` activé
     │
     ▼
-@focusmcp/core (runtime orchestrateur, briques en mémoire)
+@focus-mcp/core (runtime orchestrateur, briques en mémoire)
 ```
 
 - Le manager est **100 % client-side**. Aucune route `+page.server.ts`, aucune route `+server.ts`. `adapter-static` produit un dossier `build/` qui peut être servi par n'importe quel serveur de fichiers statiques (GitHub Pages, Cloudflare Pages, S3, `npx serve`).
@@ -94,10 +94,10 @@ Toutes les fonctionnalités listées ici sont **différées** — ce repo ne con
 
 ## Distribution
 
-### Phase 2 — `npx @focusmcp/cli-manager`
+### Phase 2 — `npx @focus-mcp/cli-manager`
 
 ```bash
-npx @focusmcp/cli-manager --port 5174
+npx @focus-mcp/cli-manager --port 5174
 # → sert le bundle statique
 # → ouvre le navigateur
 # → l'utilisateur colle baseUrl + token
@@ -124,7 +124,7 @@ Implémentation : `package.json` `bin` pointant vers un petit script qui sert `b
    Admin API listening on http://localhost:4311
    Admin token (copy to your manager): xxxxxxxxxxxxxxxx
    ```
-3. L'utilisateur ouvre le manager (`npx @focusmcp/cli-manager` ou `manager.focusmcp.dev`).
+3. L'utilisateur ouvre le manager (`npx @focus-mcp/cli-manager` ou `manager.focusmcp.dev`).
 4. Dans le formulaire de connexion, il colle la baseUrl et le token.
 5. Le manager appelle `GET /v1/health` avec le token en `Authorization: Bearer <token>`.
 6. Les autres vues (bricks, metrics, logs, graph) consomment leurs endpoints respectifs.
@@ -177,7 +177,7 @@ Le contrat côté manager est défini dans [`src/lib/api-client.ts`](./src/lib/a
 |---|---|---|
 | **Framework UI** | SvelteKit (Svelte 5) | Bundle léger, DX excellente, runes modernes |
 | **Output** | `adapter-static` + prerender | Zéro backend, hostable partout, simple à distribuer |
-| **Pas de `@focusmcp/core`** | Dépendance HTTP uniquement | Manager découplé : peut être remplacé, réécrit, dupliqué sans toucher le core |
+| **Pas de `@focus-mcp/core`** | Dépendance HTTP uniquement | Manager découplé : peut être remplacé, réécrit, dupliqué sans toucher le core |
 | **Styling** | Tailwind | Cohérence avec l'écosystème client, pas de design-system custom à maintenir |
 | **Auth** | Token simple (pas OAuth/OIDC) | Outil local, token one-off généré par la CLI, complexité minimale |
 | **Storage** | En mémoire uniquement | Pas de secret qui traîne, rechargement = re-connexion consciente |
@@ -211,7 +211,7 @@ Le contrat côté manager est défini dans [`src/lib/api-client.ts`](./src/lib/a
 - [ ] Stream SSE des events (`/v1/events`)
 - [ ] Graph DAG dépendances
 - [ ] Catalog browser (marketplace officiel, updates disponibles)
-- [ ] Distribution `npx @focusmcp/cli-manager`
+- [ ] Distribution `npx @focus-mcp/cli-manager`
 - [ ] Hosted version sur `manager.focusmcp.dev`
 
 ### P3 — Qualité de vie

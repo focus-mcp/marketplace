@@ -1,4 +1,4 @@
-# @focusmcp/filelist
+# @focus-mcp/filelist
 
 List directory contents for FocusMCP — entries, tree, glob, find.
 

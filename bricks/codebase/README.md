@@ -1,4 +1,4 @@
-# @focusmcp/codebase
+# @focus-mcp/codebase
 
 Complete codebase intelligence — loads treesitter, symbol, outline, callgraph, depgraph, refs.
 

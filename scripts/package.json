@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/scripts",
+    "name": "@focus-mcp/scripts",
     "version": "0.0.0",
     "private": true,
     "description": "Internal build scripts for the FocusMCP marketplace (catalog generator, etc.)",

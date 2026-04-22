@@ -1,4 +1,4 @@
-# @focusmcp/smartcontext
+# @focus-mcp/smartcontext
 
 Composite brick — orchestrates smartread, cache, compress, tokenbudget, and overview to deliver optimal context within a token budget.
 

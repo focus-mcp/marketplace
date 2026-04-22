@@ -33,7 +33,7 @@ Response:
 
 ## Dependencies
 
-None — fully self-contained, no runtime dependencies (not even `@focusmcp/sdk`). Structural types inlined to keep the brick independent.
+None — fully self-contained, no runtime dependencies (not even `@focus-mcp/sdk`). Structural types inlined to keep the brick independent.
 
 ## License
 

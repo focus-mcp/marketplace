@@ -45,7 +45,7 @@ config/               # tool configs (vitest, commitlint, lint-staged, gitleaks)
 ## Non-negotiable rules
 
 1. **Observation only** — no code path in this repo may mutate the CLI state. Brick management belongs to the CLI.
-2. **No `@focusmcp/core` dependency** — the manager is decoupled and only speaks HTTP to the CLI.
+2. **No `@focus-mcp/core` dependency** — the manager is decoupled and only speaks HTTP to the CLI.
 3. **No `any`** — use `unknown` + narrowing, or define precise interfaces.
 4. **No `console.log`** — use the (future) in-app logging surface or `throw`.
 5. **TDD / Coverage ≥ 80 %** on `src/lib/**/*.ts` (unit-testable logic). `.svelte` files are covered by `svelte-check` and future component tests.
@@ -75,7 +75,7 @@ Maintainers check:
 - Svelte 5 idioms (runes, typed props).
 - Accessibility baseline.
 - Test coverage on `src/lib/**/*.ts`.
-- No leakage of `@focusmcp/core` or server-side code.
+- No leakage of `@focus-mcp/core` or server-side code.
 
 ## Security
 

@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/fileops",
+    "name": "@focus-mcp/fileops",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP fileops brick — move, copy, delete, rename files",

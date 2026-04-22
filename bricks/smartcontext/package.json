@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/smartcontext",
+    "name": "@focus-mcp/smartcontext",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP smartcontext composite brick — orchestrates bricks to deliver optimal context within token budget",

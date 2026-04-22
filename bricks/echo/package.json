@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/echo",
+    "name": "@focus-mcp/echo",
     "version": "0.0.0",
     "private": false,
     "description": "Hello-world brique FocusMCP — smoke test du pipeline",

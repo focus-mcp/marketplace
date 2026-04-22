@@ -1,4 +1,4 @@
-# @focusmcp/graphquery
+# @focus-mcp/graphquery
 
 Knowledge graph query — find nodes, traverse neighbors, find paths, filter by type.
 

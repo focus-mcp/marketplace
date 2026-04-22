@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/codemod",
+    "name": "@focus-mcp/codemod",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP codemod brick — automated refactoring via symbol, rename, codeedit, inline, textsearch",

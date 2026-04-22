@@ -1,4 +1,4 @@
-# @focusmcp/routes
+# @focus-mcp/routes
 
 API route detection — scan projects for Express, Fastify, Next.js, SvelteKit route definitions.
 

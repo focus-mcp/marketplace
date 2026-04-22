@@ -1,4 +1,4 @@
-# @focusmcp/treesitter
+# @focus-mcp/treesitter
 
 Regex-based code indexer for FocusMCP — parses TypeScript/JavaScript symbols, imports, and exports.
 

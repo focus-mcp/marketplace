@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/agent",
+    "name": "@focus-mcp/agent",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP agent brick — agent registry with capabilities",

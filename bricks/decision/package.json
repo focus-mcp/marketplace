@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/decision",
+    "name": "@focus-mcp/decision",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP decision brick — structured decision-making with options, tradeoffs, recommendations, and records",

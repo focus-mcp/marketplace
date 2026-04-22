@@ -1,4 +1,4 @@
-# @focusmcp/task
+# @focus-mcp/task
 
 Task management for multi-agent workflows — create tasks, assign to agents, track status, mark complete.
 

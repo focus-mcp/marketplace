@@ -1,4 +1,4 @@
-# @focusmcp/memory
+# @focus-mcp/memory
 
 Persistent key-value memory — store and recall information across sessions as JSON files in `~/.focus/memory/`.
 

@@ -1,4 +1,4 @@
-# @focusmcp/repos
+# @focus-mcp/repos
 
 Multi-repo management — register, track, and get stats for multiple repositories. Configuration stored in `~/.focus/repos.json`.
 

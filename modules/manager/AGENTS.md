@@ -10,7 +10,7 @@ SPDX-License-Identifier: MIT
 
 ## Project
 
-**FocusMCP cli-manager** — optional web dashboard that observes a running `@focusmcp/cli` via its admin HTTP API. Fifth repo of the FocusMCP ecosystem (after `core`, `client`, `marketplace`, `cli`). Site: https://focusmcp.dev.
+**FocusMCP cli-manager** — optional web dashboard that observes a running `@focus-mcp/cli` via its admin HTTP API. Fifth repo of the FocusMCP ecosystem (after `core`, `client`, `marketplace`, `cli`). Site: https://focusmcp.dev.
 Read [PRD.md](./PRD.md) for the complete vision (scope, architecture, distribution).
 
 ## Stack
@@ -21,7 +21,7 @@ Read [PRD.md](./PRD.md) for the complete vision (scope, architecture, distributi
 - **Tailwind CSS** for styling
 - Tests: **Vitest** (unit, `src/lib/**/*.ts` only — `.svelte` files are typechecked by `svelte-check`)
 - Lint/format: **Biome 2.x** for `.ts`/`.js`/`.json`/`.md`; `svelte-check` for `.svelte`
-- Changesets (single package), npm scope `@focusmcp`
+- Changesets (single package), npm scope `@focus-mcp`
 
 ## File layout
 
@@ -49,7 +49,7 @@ static/                  # assets copied as-is
 ## Non-negotiable rules
 
 1. **Observation only** — this repo never writes to the CLI or to a filesystem. Brick install, remove, configure all happen in the CLI. The manager is read-only.
-2. **No `@focusmcp/core` dependency** — the manager only speaks HTTP to `@focusmcp/cli`. Never import from `@focusmcp/core` here.
+2. **No `@focus-mcp/core` dependency** — the manager only speaks HTTP to `@focus-mcp/cli`. Never import from `@focus-mcp/core` here.
 3. **Strict TDD** for logic in `src/lib/**/*.ts` — write the test BEFORE the code (Red → Green → Refactor). Coverage ≥ 80 % on that surface.
 4. **No `any`**, no `console.log`. Use `unknown` + narrowing when necessary.
 5. **Static bundle** — every route has `export const prerender = true;` (directly or via `+layout.ts`). No SSR. No server-side code. No `+page.server.ts`, no `+server.ts`.

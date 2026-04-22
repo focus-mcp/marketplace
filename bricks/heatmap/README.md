@@ -1,4 +1,4 @@
-# @focusmcp/heatmap
+# @focus-mcp/heatmap
 
 File access heatmap — track read/write patterns, detect hot and cold files.
 
