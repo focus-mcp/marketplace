@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/memory",
+    "name": "@focus-mcp/brick-memory",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP memory brick — persistent key-value memory stored as JSON files",

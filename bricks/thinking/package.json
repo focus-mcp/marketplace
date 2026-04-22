@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/thinking",
+    "name": "@focus-mcp/brick-thinking",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP thinking brick — structured reasoning chains for AI agents",

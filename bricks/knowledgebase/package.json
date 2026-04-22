@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/knowledgebase",
+    "name": "@focus-mcp/brick-knowledgebase",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP knowledgebase brick — document indexing and graph-powered search",

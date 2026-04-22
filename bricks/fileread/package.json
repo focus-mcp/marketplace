@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/fileread",
+    "name": "@focus-mcp/brick-fileread",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP fileread brick — read files full, head, tail, line range",

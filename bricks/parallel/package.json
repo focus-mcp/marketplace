@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/parallel",
+    "name": "@focus-mcp/brick-parallel",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP parallel brick — parallel execution coordination for tasks",

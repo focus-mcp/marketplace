@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/knowledge",
+    "name": "@focus-mcp/brick-knowledge",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP knowledge brick — knowledge base with index, search, fetch, purge and rank",

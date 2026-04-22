@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/impact",
+    "name": "@focus-mcp/brick-impact",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP impact brick — change impact analysis for files and symbols",

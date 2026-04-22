@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/tokenbudget",
+    "name": "@focus-mcp/brick-tokenbudget",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP tokenbudget brick — token budget management and estimation",

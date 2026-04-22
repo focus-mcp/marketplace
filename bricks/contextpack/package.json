@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/contextpack",
+    "name": "@focus-mcp/brick-contextpack",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP contextpack brick — pack files into compressed context bundles to reduce token usage",

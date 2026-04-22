@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/textsearch",
+    "name": "@focus-mcp/brick-textsearch",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP textsearch brick — text search and replace across files",

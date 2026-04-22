@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/smartread",
+    "name": "@focus-mcp/brick-smartread",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP smartread brick — intelligent file reading, multiple modes",

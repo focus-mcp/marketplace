@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/graphquery",
+    "name": "@focus-mcp/brick-graphquery",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP graphquery brick — knowledge graph query: find nodes, traverse neighbors, find paths, filter by type",

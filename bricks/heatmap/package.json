@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/heatmap",
+    "name": "@focus-mcp/brick-heatmap",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP heatmap brick — track file access patterns, detect hot and cold files",
