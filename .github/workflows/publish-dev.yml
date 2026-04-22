@@ -1,11 +1,11 @@
 # SPDX-FileCopyrightText: 2026 FocusMCP contributors
 # SPDX-License-Identifier: MIT
 
-name: Publish to npm
+name: Publish to GitHub Packages (dev)
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
   workflow_dispatch:
 
 permissions:
@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   publish:
-    name: Publish @focusmcp/* packages
+    name: Publish @focusmcp/* to GitHub Packages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-          registry-url: https://registry.npmjs.org
+          registry-url: https://npm.pkg.github.com
           scope: '@focusmcp'
       - run: pnpm install --frozen-lockfile
       - run: pnpm build:catalog
@@ -39,4 +39,4 @@ jobs:
             fi
           done
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
