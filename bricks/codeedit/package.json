@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-codeedit",
     "version": "1.0.0",
     "private": false,
-    "description": "FocusMCP codeedit brick — precise code editing for function bodies, insertions, and safe deletion",
+    "description": "Precise code editing — replace function bodies, insert before/after, safe delete with dependency check.",
     "license": "MIT",
     "type": "module",
     "main": "./src/index.ts",
@@ -21,5 +21,37 @@
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.org"
+    },
+    "keywords": [
+        "mcp",
+        "model-context-protocol",
+        "ai",
+        "llm",
+        "focus",
+        "brick",
+        "edit",
+        "code",
+        "refactoring",
+        "insert",
+        "delete",
+        "codemod"
+    ],
+    "author": "FocusMCP contributors",
+    "homepage": "https://github.com/focus-mcp/marketplace/tree/main/bricks/codeedit#readme",
+    "bugs": {
+        "url": "https://github.com/focus-mcp/marketplace/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/focus-mcp/marketplace.git",
+        "directory": "bricks/codeedit"
+    },
+    "peerDependencies": {
+        "@focus-mcp/core": "^1.0.0"
+    },
+    "peerDependenciesMeta": {
+        "@focus-mcp/core": {
+            "optional": true
+        }
     }
 }
