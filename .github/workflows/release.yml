@@ -2,9 +2,8 @@
 # SPDX-License-Identifier: MIT
 #
 # Release workflow — on push to main:
-#   1. Runs Changesets (creates tags `<brick-name>@x.y.z` for bumped bricks + GitHub Releases).
-#   2. Rebuilds the catalog and publishes it + the JSON schemas to the `gh-pages` branch.
-# No npm publish at MVP (bricks are distributed via GitHub Releases tarballs).
+#   1. Runs Changesets (bumps brick versions, creates tags + GitHub Releases).
+#   2. Publishes all @focus-mcp/brick-* packages to npmjs.org with @latest tag.
 
 name: Release
 
@@ -17,7 +16,6 @@ permissions:
   contents: write
   pull-requests: write
   id-token: write
-  pages: write
 
 concurrency: release-${{ github.ref }}
 
@@ -35,7 +33,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22
-          registry-url: https://npm.pkg.github.com
+          registry-url: https://registry.npmjs.org
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - id: changesets
@@ -48,14 +46,19 @@ jobs:
           createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   catalog:
-    name: Publish catalog to GitHub Pages
+    name: Rebuild catalog for raw GitHub serving
     runs-on: ubuntu-latest
     needs: release
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: main
+          token: ${{ secrets.RELEASE_TOKEN }}
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v5
         with:
@@ -63,15 +66,10 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build:catalog
-      - name: Assemble publish dir
+      - name: Commit updated catalog
         run: |
-          mkdir -p publish/schemas
-          cp dist/catalog.json publish/catalog.json
-          cp -r schemas/* publish/schemas/
-      - uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.RELEASE_TOKEN }}
-          publish_dir: ./publish
-          publish_branch: gh-pages
-          keep_files: false
-          commit_message: 'chore(catalog): publish ${{ github.sha }}'
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add publish/catalog.json
+          git diff --cached --quiet || git commit -m 'chore(catalog): update after release'
+          git push
