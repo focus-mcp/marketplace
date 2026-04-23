@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-multiread",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP multiread brick — batch file reading, deduplication, merge",
     "license": "MIT",

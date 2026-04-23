@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-outline",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP outline brick — file and repo structure outline without reading full content",
     "license": "MIT",

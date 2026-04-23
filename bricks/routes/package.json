@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-routes",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP routes brick — API route detection for Express, Fastify, Next.js, SvelteKit",
     "license": "MIT",

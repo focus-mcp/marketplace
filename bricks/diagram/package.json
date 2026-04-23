@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-diagram",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP diagram brick — generate Mermaid, DOT/Graphviz, and ASCII diagrams from data",
     "license": "MIT",

@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-cache",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP cache brick — in-memory file cache with mtime-based invalidation",
     "license": "MIT",

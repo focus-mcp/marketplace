@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-autopilot",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP autopilot composite brick — autonomous task execution with reasoning, context management, and shell commands",
     "license": "MIT",

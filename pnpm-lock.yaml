@@ -133,6 +133,8 @@ importers:
 
   bricks/knowledgebase: {}
 
+  bricks/lastversion: {}
+
   bricks/memory: {}
 
   bricks/metrics: {}

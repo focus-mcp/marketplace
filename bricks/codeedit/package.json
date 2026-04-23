@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-codeedit",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP codeedit brick — precise code editing for function bodies, insertions, and safe deletion",
     "license": "MIT",

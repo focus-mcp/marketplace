@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-metrics",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP metrics brick — session metrics tracking for token usage, costs, and durations",
     "license": "MIT",

@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-planning",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP planning brick — structured planning with steps, dependencies, and time estimates",
     "license": "MIT",

@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-graphbuild",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP graphbuild brick — knowledge graph builder for code entities and their relationships",
     "license": "MIT",
