@@ -77,7 +77,6 @@ describe('buildCatalog', () => {
         expect(brick.source).toEqual({
             type: 'npm',
             package: 'focus-indexer',
-            registry: 'https://npm.pkg.github.com',
         });
         expect(brick.license).toBe('MIT');
     });

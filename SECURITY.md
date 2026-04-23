@@ -7,7 +7,7 @@ SPDX-License-Identifier: MIT
 
 ## Supported versions
 
-The marketplace and its bricks are pre-MVP (`0.x`). No brick is yet considered stable. Each brick follows **its own version** (semver, Changesets independent mode).
+All 68 bricks are published at **v1.0.0** (stable). The `lastversion` brick was added in v1.1.0. Each brick follows **its own version** (semver, independently published to npmjs.org as `@focus-mcp/brick-<name>`).
 
 ## Reporting a vulnerability
 
@@ -39,7 +39,7 @@ We commit to:
 
 Since this repository is a **catalog** (not a runtime), the main attack surfaces are:
 
-1. **The `catalog.json`** published on GitHub Pages — JSON integrity, consistency of `integrity`/`sha` values associated with tarballs.
+1. **The `catalog.json`** served via raw GitHub (`publish/catalog.json` on `main`) — JSON integrity, consistency of source references pointing to npm packages.
 2. **The JSON Schema `schemas/catalog/v1.json`** — a schema regression could let malicious entries through.
 3. **The bricks themselves** — a malicious or compromised brick can affect FocusMCP users.
 4. **The CI pipeline** — secret scanning, least-privilege workflow permissions.

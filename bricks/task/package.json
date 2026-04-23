@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-task",
     "version": "1.0.0",
     "private": false,
-    "description": "FocusMCP task brick — task management for multi-agent workflows",
+    "description": "Task management for multi-agent workflows — create tasks, assign to agents, track status, mark complete.",
     "license": "MIT",
     "type": "module",
     "main": "./src/index.ts",
@@ -21,5 +21,36 @@
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.org"
+    },
+    "keywords": [
+        "mcp",
+        "model-context-protocol",
+        "ai",
+        "llm",
+        "focus",
+        "brick",
+        "task",
+        "workflow",
+        "agent",
+        "orchestration",
+        "multi-agent"
+    ],
+    "author": "FocusMCP contributors",
+    "homepage": "https://github.com/focus-mcp/marketplace/tree/main/bricks/task#readme",
+    "bugs": {
+        "url": "https://github.com/focus-mcp/marketplace/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/focus-mcp/marketplace.git",
+        "directory": "bricks/task"
+    },
+    "peerDependencies": {
+        "@focus-mcp/core": "^1.0.0"
+    },
+    "peerDependenciesMeta": {
+        "@focus-mcp/core": {
+            "optional": true
+        }
     }
 }

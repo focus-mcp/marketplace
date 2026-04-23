@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-smartcontext",
     "version": "1.0.0",
     "private": false,
-    "description": "FocusMCP smartcontext composite brick — orchestrates bricks to deliver optimal context within token budget",
+    "description": "Composite brick — orchestrates smartread, cache, compress, tokenbudget, and overview to deliver optimal context within a token budget.",
     "license": "MIT",
     "type": "module",
     "main": "./src/index.ts",
@@ -21,5 +21,35 @@
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.org"
+    },
+    "keywords": [
+        "mcp",
+        "model-context-protocol",
+        "ai",
+        "llm",
+        "focus",
+        "brick",
+        "context",
+        "composite",
+        "orchestration",
+        "tokens"
+    ],
+    "author": "FocusMCP contributors",
+    "homepage": "https://github.com/focus-mcp/marketplace/tree/main/bricks/smartcontext#readme",
+    "bugs": {
+        "url": "https://github.com/focus-mcp/marketplace/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/focus-mcp/marketplace.git",
+        "directory": "bricks/smartcontext"
+    },
+    "peerDependencies": {
+        "@focus-mcp/core": "^1.0.0"
+    },
+    "peerDependenciesMeta": {
+        "@focus-mcp/core": {
+            "optional": true
+        }
     }
 }

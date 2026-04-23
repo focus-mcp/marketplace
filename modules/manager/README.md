@@ -7,7 +7,7 @@ SPDX-License-Identifier: MIT
 
 > **Optional web dashboard for the FocusMCP CLI.**
 >
-> [focusmcp.dev](https://focusmcp.dev) · [PRD](./PRD.md) · [Core](https://github.com/focus-mcp/core) · [Client](https://github.com/focus-mcp/client) · [Marketplace](https://github.com/focus-mcp/marketplace)
+> [focusmcp.dev](https://focusmcp.dev) · [PRD](./PRD.md) · [Core](https://github.com/focus-mcp/core) · [Marketplace](https://github.com/focus-mcp/marketplace)
 
 This repository is the **fifth pillar** of FocusMCP, after `core` (the TypeScript library), `client` (the Tauri app), `marketplace` (the catalog of atomic MCP bricks), and `cli` (the command-line orchestrator).
 
@@ -52,7 +52,6 @@ The manager does **not** depend on `@focusmcp/core`. Its only link to the FocusM
 - **Tailwind CSS** for styling.
 - **Vitest** + `@vitest/coverage-v8` for unit tests (≥ 80% threshold on `src/lib/**/*.ts`).
 - **Biome** for TS/JS/JSON formatting and linting. `.svelte` files are covered by `svelte-check`.
-- **Changesets** for release automation.
 - **husky** + **commitlint** for Conventional Commits.
 - **REUSE** (SPDX) + **gitleaks** + **CodeQL** for compliance and security.
 
@@ -69,7 +68,6 @@ pnpm typecheck        # svelte-check on .svelte + tsc
 pnpm test             # Vitest
 pnpm test:coverage    # Vitest + coverage thresholds
 pnpm reuse            # REUSE compliance (SPDX headers)
-pnpm changeset        # create a changeset
 ```
 
 ## Contributing

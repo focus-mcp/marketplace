@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-treesitter",
     "version": "1.0.0",
     "private": false,
-    "description": "FocusMCP treesitter brick — regex-based code indexer for TypeScript/JavaScript",
+    "description": "Regex-based code indexer for TypeScript/JavaScript — parses symbols, imports, exports.",
     "license": "MIT",
     "type": "module",
     "main": "./src/index.ts",
@@ -21,5 +21,35 @@
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.org"
+    },
+    "keywords": [
+        "mcp",
+        "model-context-protocol",
+        "ai",
+        "llm",
+        "focus",
+        "brick",
+        "ast",
+        "parser",
+        "symbols",
+        "typescript"
+    ],
+    "author": "FocusMCP contributors",
+    "homepage": "https://github.com/focus-mcp/marketplace/tree/main/bricks/treesitter#readme",
+    "bugs": {
+        "url": "https://github.com/focus-mcp/marketplace/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/focus-mcp/marketplace.git",
+        "directory": "bricks/treesitter"
+    },
+    "peerDependencies": {
+        "@focus-mcp/core": "^1.0.0"
+    },
+    "peerDependenciesMeta": {
+        "@focus-mcp/core": {
+            "optional": true
+        }
     }
 }

@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-dispatch",
     "version": "1.0.0",
     "private": false,
-    "description": "FocusMCP dispatch brick — task dispatch queue for multi-step workflow orchestration",
+    "description": "Task dispatch queue — send tasks, manage queue, cancel, check status for multi-step workflows.",
     "license": "MIT",
     "type": "module",
     "main": "./src/index.ts",
@@ -21,5 +21,36 @@
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.org"
+    },
+    "keywords": [
+        "mcp",
+        "model-context-protocol",
+        "ai",
+        "llm",
+        "focus",
+        "brick",
+        "dispatch",
+        "queue",
+        "task",
+        "orchestration",
+        "workflow"
+    ],
+    "author": "FocusMCP contributors",
+    "homepage": "https://github.com/focus-mcp/marketplace/tree/main/bricks/dispatch#readme",
+    "bugs": {
+        "url": "https://github.com/focus-mcp/marketplace/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/focus-mcp/marketplace.git",
+        "directory": "bricks/dispatch"
+    },
+    "peerDependencies": {
+        "@focus-mcp/core": "^1.0.0"
+    },
+    "peerDependenciesMeta": {
+        "@focus-mcp/core": {
+            "optional": true
+        }
     }
 }

@@ -6,7 +6,7 @@ SPDX-License-Identifier: MIT
 # FocusMCP CLI Manager — Product Requirements Document
 
 > Périmètre : le **dashboard web optionnel** (repo `cli-manager/`).
-> Pour la lib `@focusmcp/core` : voir [`core/PRD.md`](../core/PRD.md). Pour l'app desktop : voir [`client/PRD.md`](../client/PRD.md). Pour la CLI : voir [`cli/PRD.md`](../cli/PRD.md). Pour le marketplace : voir [`marketplace/PRD.md`](../marketplace/PRD.md).
+> Pour la lib `@focusmcp/core` : voir [`core/VISION.md`](../../../core/VISION.md). Pour la CLI : voir [`cli/VISION.md`](../../../cli/VISION.md). Pour le marketplace : voir [`marketplace/VISION.md`](../../VISION.md).
 
 ## Vision (rappel)
 
@@ -164,7 +164,7 @@ Le contrat côté manager est défini dans [`src/lib/api-client.ts`](./src/lib/a
 | Tests | **Vitest** | Unit (src/lib/**/*.ts) |
 | Typecheck Svelte | **svelte-check** | Erreurs `.svelte` |
 | Lint / Format | **Biome 2.x** | `.ts`, `.js`, `.json`, `.md` |
-| Release | **Changesets** | Versioning + tag + release |
+| Release | **stable-publish.yml** | Tag + publish sur npm (@focus-mcp/manager, Phase 2) |
 | Commits | **commitlint** + **husky** | Conventional Commits |
 | License | **REUSE** | SPDX headers |
 | CI | **GitHub Actions** | Lint, typecheck, test, build, CodeQL, gitleaks |
