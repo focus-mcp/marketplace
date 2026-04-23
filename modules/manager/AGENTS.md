@@ -21,7 +21,7 @@ Read [PRD.md](./PRD.md) for the complete vision (scope, architecture, distributi
 - **Tailwind CSS** for styling
 - Tests: **Vitest** (unit, `src/lib/**/*.ts` only — `.svelte` files are typechecked by `svelte-check`)
 - Lint/format: **Biome 2.x** for `.ts`/`.js`/`.json`/`.md`; `svelte-check` for `.svelte`
-- Changesets (single package), npm scope `@focusmcp`
+- Changesets (single package), npm scope `@focus-mcp`
 
 ## File layout
 

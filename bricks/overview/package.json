@@ -1,7 +1,7 @@
 {
-    "name": "@focusmcp/overview",
-    "version": "0.0.0",
-    "private": true,
+    "name": "@focus-mcp/brick-overview",
+    "version": "1.0.0",
+    "private": false,
     "description": "FocusMCP overview brick — project-level understanding without reading all files",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
     }
 }

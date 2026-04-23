@@ -1,0 +1,115 @@
+{
+    "name": "debate",
+    "version": "0.0.0",
+    "prefix": "dbt",
+    "description": "Structured multi-perspective debate — define positions, score arguments, find consensus, summarize.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "debate",
+            "description": "Start a debate with a topic and an array of positions (role + argument).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "topic": {
+                        "type": "string",
+                        "description": "The debate topic or question"
+                    },
+                    "positions": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "role": {
+                                    "type": "string",
+                                    "description": "Name or role of the debater"
+                                },
+                                "argument": {
+                                    "type": "string",
+                                    "description": "The debater's argument"
+                                }
+                            },
+                            "required": ["role", "argument"],
+                            "additionalProperties": false
+                        },
+                        "minItems": 2,
+                        "description": "List of positions (minimum 2)"
+                    }
+                },
+                "required": ["topic", "positions"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "consensus",
+            "description": "Find common ground between positions in a debate by extracting overlapping keywords and themes.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "debateId": {
+                        "type": "string",
+                        "description": "ID of the debate to analyze"
+                    }
+                },
+                "required": ["debateId"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "score",
+            "description": "Score each position on criteria (relevance, evidence, feasibility) from 1 to 10 and compute a weighted ranking.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "debateId": {
+                        "type": "string",
+                        "description": "ID of the debate to score"
+                    },
+                    "scores": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "role": { "type": "string", "description": "Role being scored" },
+                                "relevance": {
+                                    "type": "number",
+                                    "description": "Relevance score 1-10"
+                                },
+                                "evidence": {
+                                    "type": "number",
+                                    "description": "Evidence quality score 1-10"
+                                },
+                                "feasibility": {
+                                    "type": "number",
+                                    "description": "Feasibility score 1-10"
+                                }
+                            },
+                            "required": ["role", "relevance", "evidence", "feasibility"],
+                            "additionalProperties": false
+                        },
+                        "description": "Criteria scores per position"
+                    }
+                },
+                "required": ["debateId", "scores"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "summary",
+            "description": "Summarize the debate with winner, key points, and areas of agreement and disagreement.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "debateId": {
+                        "type": "string",
+                        "description": "ID of the debate to summarize"
+                    }
+                },
+                "required": ["debateId"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["debate", "consensus", "scoring", "analysis", "reasoning"],
+    "license": "MIT"
+}

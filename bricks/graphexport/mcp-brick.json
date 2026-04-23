@@ -1,0 +1,56 @@
+{
+    "name": "graphexport",
+    "version": "0.0.0",
+    "prefix": "ge",
+    "description": "Knowledge graph export — generate HTML, Mermaid, GraphML, Cypher, Obsidian, and wiki formats.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "html",
+            "description": "Export graph as a standalone HTML page with a simple SVG visualization.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Page title (default 'Knowledge Graph')"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "mermaid",
+            "description": "Export graph as Mermaid diagram syntax.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "direction": { "type": "string", "description": "TB, LR, BT, RL (default TB)" }
+                },
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "graphml",
+            "description": "Export graph as GraphML XML format.",
+            "inputSchema": { "type": "object", "properties": {}, "additionalProperties": false }
+        },
+        {
+            "name": "cypher",
+            "description": "Export graph as Cypher CREATE statements (Neo4j compatible).",
+            "inputSchema": { "type": "object", "properties": {}, "additionalProperties": false }
+        },
+        {
+            "name": "obsidian",
+            "description": "Export graph as Obsidian-compatible markdown files with [[wikilinks]].",
+            "inputSchema": { "type": "object", "properties": {}, "additionalProperties": false }
+        },
+        {
+            "name": "wiki",
+            "description": "Export graph as a single wiki-style markdown document with sections per node.",
+            "inputSchema": { "type": "object", "properties": {}, "additionalProperties": false }
+        }
+    ],
+    "tags": ["graph", "export", "mermaid", "graphml", "cypher", "obsidian"],
+    "license": "MIT"
+}

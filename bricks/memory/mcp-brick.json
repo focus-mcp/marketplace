@@ -1,0 +1,77 @@
+{
+    "name": "memory",
+    "version": "0.0.0",
+    "prefix": "mem",
+    "description": "Persistent key-value memory — store and recall information across sessions as JSON files.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "store",
+            "description": "Save a key-value pair to persistent memory.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "key": { "type": "string", "description": "Memory key" },
+                    "value": { "type": "string", "description": "Value to store" },
+                    "tags": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Optional tags for categorization"
+                    }
+                },
+                "required": ["key", "value"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "recall",
+            "description": "Get a value by key from persistent memory.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "key": { "type": "string", "description": "Memory key" }
+                },
+                "required": ["key"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "search",
+            "description": "Search memories by query (substring match on key, value, and tags).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "query": { "type": "string", "description": "Search query" },
+                    "limit": { "type": "number", "description": "Max results (default 10)" }
+                },
+                "required": ["query"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "forget",
+            "description": "Delete a memory entry by key.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "key": { "type": "string", "description": "Memory key to delete" }
+                },
+                "required": ["key"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "list",
+            "description": "List all memory keys, optionally filtered by tag.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "tag": { "type": "string", "description": "Filter by tag (optional)" }
+                },
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["memory", "storage", "persistence", "key-value"],
+    "license": "MIT"
+}

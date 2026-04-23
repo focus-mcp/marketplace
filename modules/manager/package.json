@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/manager",
+    "name": "@focus-mcp/manager",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP — optional web dashboard that observes a running @focusmcp/cli via its admin HTTP API",

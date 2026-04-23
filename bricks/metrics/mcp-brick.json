@@ -1,0 +1,84 @@
+{
+    "name": "metrics",
+    "version": "0.0.0",
+    "prefix": "met",
+    "description": "Session metrics tracking — token usage, costs, duration, and per-tool statistics.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "session",
+            "description": "Get or reset session metrics summary.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "reset": {
+                        "type": "boolean",
+                        "description": "If true, reset all session metrics and return empty summary."
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "tokens",
+            "description": "Track token usage — record input/output tokens per tool call.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "tool": {
+                        "type": "string",
+                        "description": "Name of the tool call being recorded."
+                    },
+                    "inputTokens": {
+                        "type": "number",
+                        "description": "Number of input tokens consumed."
+                    },
+                    "outputTokens": {
+                        "type": "number",
+                        "description": "Number of output tokens produced."
+                    }
+                },
+                "required": ["tool", "inputTokens", "outputTokens"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "costs",
+            "description": "Calculate estimated costs based on token usage and model pricing.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "inputPricePer1k": {
+                        "type": "number",
+                        "description": "Cost per 1 000 input tokens in USD. Default: 0.003."
+                    },
+                    "outputPricePer1k": {
+                        "type": "number",
+                        "description": "Cost per 1 000 output tokens in USD. Default: 0.015."
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "duration",
+            "description": "Track and report tool call durations.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "tool": {
+                        "type": "string",
+                        "description": "Filter duration stats to a specific tool name."
+                    },
+                    "last": {
+                        "type": "number",
+                        "description": "Return stats for the last N tool calls."
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["metrics", "tokens", "costs", "duration", "session", "observability"],
+    "license": "MIT"
+}

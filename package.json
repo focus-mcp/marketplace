@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/marketplace-root",
+    "name": "@focus-mcp/marketplace-root",
     "version": "0.0.0",
     "private": true,
     "description": "FocusMCP — catalogue officiel de briques MCP atomiques",
@@ -20,7 +20,8 @@
     },
     "scripts": {
         "build": "pnpm -r --filter \"./bricks/**\" --filter \"./modules/**\" --if-present build",
-        "build:catalog": "tsx scripts/build-catalog.ts",
+        "build:catalog": "tsx scripts/build-catalog.ts && cp dist/catalog.json publish/catalog.json",
+        "build:docs": "tsx scripts/build-docs.ts",
         "lint": "biome check .",
         "lint:fix": "biome check --write .",
         "format": "biome format --write .",
@@ -54,7 +55,8 @@
         "overrides": {
             "tar": "^7.5.13",
             "glob": "^10.4.5",
-            "minimatch": "^9.0.5"
+            "minimatch": "^9.0.5",
+            "cookie": ">=0.7.0"
         }
     }
 }

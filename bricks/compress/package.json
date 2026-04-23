@@ -1,7 +1,7 @@
 {
-    "name": "@focusmcp/compress",
-    "version": "0.0.0",
-    "private": true,
+    "name": "@focus-mcp/brick-compress",
+    "version": "1.0.0",
+    "private": false,
     "description": "FocusMCP compress brick — compress text output to save tokens",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
     }
 }

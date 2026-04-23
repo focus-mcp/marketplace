@@ -1,0 +1,85 @@
+{
+    "name": "savings",
+    "version": "0.0.0",
+    "prefix": "sav",
+    "description": "Track and report token savings — compare FocusMCP usage vs naive full-read, trend over time, ROI.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "report",
+            "description": "Generate a savings report — tokens saved vs baseline for a session.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "baselineTokens": {
+                        "type": "number",
+                        "description": "Token count for naive full-read baseline"
+                    },
+                    "actualTokens": {
+                        "type": "number",
+                        "description": "Token count actually consumed by FocusMCP"
+                    },
+                    "duration": {
+                        "type": "number",
+                        "description": "Session duration in milliseconds (optional)"
+                    }
+                },
+                "required": ["baselineTokens", "actualTokens"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "compare",
+            "description": "Compare two sessions' efficiency — which saved more tokens.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "sessionA": {
+                        "type": "string",
+                        "description": "ID of the first session to compare"
+                    },
+                    "sessionB": {
+                        "type": "string",
+                        "description": "ID of the second session to compare"
+                    }
+                },
+                "required": ["sessionA", "sessionB"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "trend",
+            "description": "Show savings trend over multiple sessions — running average and direction.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "last": {
+                        "type": "number",
+                        "description": "Number of most recent sessions to include (default: all)"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "roi",
+            "description": "Calculate return on investment — time/cost saved vs FocusMCP overhead.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "costPerToken": {
+                        "type": "number",
+                        "description": "Cost in USD per token (default: 0.000003)"
+                    },
+                    "overheadMs": {
+                        "type": "number",
+                        "description": "FocusMCP overhead in milliseconds (default: 0)"
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["savings", "tokens", "roi", "metrics", "efficiency"],
+    "license": "MIT"
+}

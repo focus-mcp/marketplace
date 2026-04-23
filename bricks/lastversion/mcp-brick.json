@@ -1,0 +1,132 @@
+{
+    "name": "lastversion",
+    "version": "0.0.0",
+    "prefix": "lv",
+    "description": "Package version intelligence — latest version, diff, changelog, audit across npm/pypi/github/gitlab.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "latest",
+            "description": "Get the latest version of a package with metadata (date, deprecated flag, LTS flag, audit count).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "source": {
+                        "type": "string",
+                        "description": "Source: npm, pypi, github, gitlab, cargo, rubygems, gomod"
+                    },
+                    "target": {
+                        "type": "string",
+                        "description": "Package name or owner/repo (for github/gitlab)"
+                    },
+                    "includePrerelease": {
+                        "type": "boolean",
+                        "description": "Include pre-releases (alpha/beta/rc). Default false."
+                    }
+                },
+                "required": ["source", "target"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "versions",
+            "description": "List all versions of a package, optionally filtered by semver range or stable-only.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "source": {
+                        "type": "string",
+                        "description": "Source: npm, pypi, github, gitlab"
+                    },
+                    "target": { "type": "string", "description": "Package name or owner/repo" },
+                    "range": { "type": "string", "description": "Semver range (e.g. '>=18.0.0')" },
+                    "limit": { "type": "number", "description": "Max results (default 50)" },
+                    "stable": {
+                        "type": "boolean",
+                        "description": "Stable only (filter pre-releases). Default true."
+                    }
+                },
+                "required": ["source", "target"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "diff",
+            "description": "Compare two versions: bump type (patch/minor/major/breaking), days between, breaking change hints.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "source": {
+                        "type": "string",
+                        "description": "Source: npm, pypi, github, gitlab"
+                    },
+                    "target": { "type": "string", "description": "Package name or owner/repo" },
+                    "from": { "type": "string", "description": "Source version" },
+                    "to": { "type": "string", "description": "Target version" }
+                },
+                "required": ["source", "target", "from", "to"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "changelog",
+            "description": "Fetch release notes aggregated between two versions (from GitHub Releases API).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "repo": { "type": "string", "description": "GitHub repo owner/name" },
+                    "from": { "type": "string", "description": "Start version (tag)" },
+                    "to": {
+                        "type": "string",
+                        "description": "End version (tag). Default: latest."
+                    },
+                    "limit": {
+                        "type": "number",
+                        "description": "Max releases to return (default 20)"
+                    }
+                },
+                "required": ["repo"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "check",
+            "description": "Check if a currently installed version is outdated. Returns staleness analysis with bump type and days behind.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "source": {
+                        "type": "string",
+                        "description": "Source: npm, pypi, github, gitlab"
+                    },
+                    "target": { "type": "string", "description": "Package name or owner/repo" },
+                    "current": { "type": "string", "description": "Currently installed version" }
+                },
+                "required": ["source", "target", "current"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "audit",
+            "description": "Fetch security advisories for a package version (GitHub Advisory DB via OSV.dev).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "source": {
+                        "type": "string",
+                        "description": "Source: npm, pypi, github, cargo, gomod"
+                    },
+                    "target": { "type": "string", "description": "Package name" },
+                    "version": {
+                        "type": "string",
+                        "description": "Specific version to check (optional)"
+                    }
+                },
+                "required": ["source", "target"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["version", "release", "npm", "pypi", "github", "audit", "security", "updates"],
+    "license": "MIT"
+}

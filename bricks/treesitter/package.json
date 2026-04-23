@@ -1,7 +1,7 @@
 {
-    "name": "@focusmcp/treesitter",
-    "version": "0.0.0",
-    "private": true,
+    "name": "@focus-mcp/brick-treesitter",
+    "version": "1.0.0",
+    "private": false,
     "description": "FocusMCP treesitter brick — regex-based code indexer for TypeScript/JavaScript",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
     }
 }

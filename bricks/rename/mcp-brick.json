@@ -1,0 +1,85 @@
+{
+    "name": "rename",
+    "version": "0.0.0",
+    "prefix": "ren",
+    "description": "Rename refactoring — rename symbols across files, rename files with import updates, bulk rename with preview.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "symbol",
+            "description": "Rename a symbol (function, variable, class, type) across all files in a directory. Dry run by default.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory to search" },
+                    "oldName": { "type": "string", "description": "Current symbol name" },
+                    "newName": { "type": "string", "description": "New symbol name" },
+                    "apply": {
+                        "type": "boolean",
+                        "description": "Apply changes (default false = dry run)"
+                    }
+                },
+                "required": ["dir", "oldName", "newName"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "file",
+            "description": "Rename a file and update all imports referencing it across the project.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "path": { "type": "string", "description": "Current file path" },
+                    "newName": {
+                        "type": "string",
+                        "description": "New filename (just the name, not full path)"
+                    },
+                    "dir": { "type": "string", "description": "Project root to update imports in" },
+                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                },
+                "required": ["path", "newName"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "bulk",
+            "description": "Rename multiple symbols at once. Useful for coordinated renames.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory" },
+                    "renames": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "oldName": { "type": "string" },
+                                "newName": { "type": "string" }
+                            },
+                            "required": ["oldName", "newName"]
+                        },
+                        "description": "List of renames"
+                    },
+                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                },
+                "required": ["dir", "renames"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "preview",
+            "description": "Preview what a symbol rename would change without any mutation. Shows affected files and line numbers.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory" },
+                    "oldName": { "type": "string", "description": "Symbol to search for" }
+                },
+                "required": ["dir", "oldName"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["rename", "refactoring", "symbol", "codemod"],
+    "license": "MIT"
+}

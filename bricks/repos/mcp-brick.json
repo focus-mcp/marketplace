@@ -1,0 +1,57 @@
+{
+    "name": "repos",
+    "version": "0.0.0",
+    "prefix": "repos",
+    "description": "Multi-repo management — register, track, and get stats for multiple repositories.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "list",
+            "description": "List all registered repositories.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "register",
+            "description": "Register a repository path by name.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Repository name" },
+                    "path": { "type": "string", "description": "Absolute path to the repository" }
+                },
+                "required": ["name", "path"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "unregister",
+            "description": "Remove a registered repository.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Repository name to remove" }
+                },
+                "required": ["name"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "stats",
+            "description": "Get file and line count statistics for a registered repository.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Repository name" }
+                },
+                "required": ["name"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["repos", "multi-repo", "management", "stats"],
+    "license": "MIT"
+}

@@ -1,0 +1,52 @@
+{
+    "name": "autopilot",
+    "version": "0.0.0",
+    "prefix": "auto",
+    "description": "Autopilot workflow — autonomous task execution with reasoning, context management, and shell commands.",
+    "dependencies": ["codebase", "smartcontext", "devtools", "thinking"],
+    "tools": [
+        {
+            "name": "plan",
+            "description": "Create an execution plan for a task — break it into steps with reasoning.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "task": { "type": "string", "description": "Task description" },
+                    "dir": { "type": "string", "description": "Project root directory" }
+                },
+                "required": ["task"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "execute",
+            "description": "Execute a plan step by step with reasoning at each stage.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "planId": { "type": "string", "description": "Plan ID from auto_plan" },
+                    "step": {
+                        "type": "number",
+                        "description": "Step to execute (default: next pending)"
+                    }
+                },
+                "required": ["planId"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "status",
+            "description": "Get autopilot status — current plan, completed steps, next step.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "planId": { "type": "string", "description": "Plan ID" }
+                },
+                "required": ["planId"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["autopilot", "workflow", "autonomous", "planning"],
+    "license": "MIT"
+}

@@ -1,0 +1,101 @@
+{
+    "name": "textsearch",
+    "version": "0.0.0",
+    "prefix": "txt",
+    "description": "Text search and replace across files — regex search, multi-file replace, grouped results.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "search",
+            "description": "Search for a text pattern across files in a directory. Returns matches with file, line number, and context.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory to search in" },
+                    "pattern": {
+                        "type": "string",
+                        "description": "Text pattern to search for (plain text)"
+                    },
+                    "glob": {
+                        "type": "string",
+                        "description": "File glob filter (e.g. *.ts). Default: all supported files"
+                    },
+                    "maxResults": {
+                        "type": "number",
+                        "description": "Max results to return (default 50)"
+                    }
+                },
+                "required": ["dir", "pattern"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "regex",
+            "description": "Search for a regex pattern across files. Supports capture groups.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory to search in" },
+                    "pattern": {
+                        "type": "string",
+                        "description": "JavaScript regex pattern (without flags)"
+                    },
+                    "flags": { "type": "string", "description": "Regex flags (default: 'i')" },
+                    "glob": { "type": "string", "description": "File glob filter" },
+                    "maxResults": { "type": "number", "description": "Max results (default 50)" }
+                },
+                "required": ["dir", "pattern"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "replace",
+            "description": "Search and replace text across multiple files. Returns preview of changes without applying by default.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory to search in" },
+                    "pattern": {
+                        "type": "string",
+                        "description": "Search pattern (text or regex)"
+                    },
+                    "replacement": {
+                        "type": "string",
+                        "description": "Replacement string (supports $1, $2 for regex captures)"
+                    },
+                    "isRegex": {
+                        "type": "boolean",
+                        "description": "Treat pattern as regex (default false)"
+                    },
+                    "glob": { "type": "string", "description": "File glob filter" },
+                    "apply": {
+                        "type": "boolean",
+                        "description": "Actually apply changes (default false = dry run)"
+                    }
+                },
+                "required": ["dir", "pattern", "replacement"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "grouped",
+            "description": "Search and group results by file, showing match count per file.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory to search in" },
+                    "pattern": { "type": "string", "description": "Search pattern" },
+                    "isRegex": {
+                        "type": "boolean",
+                        "description": "Treat pattern as regex (default false)"
+                    },
+                    "glob": { "type": "string", "description": "File glob filter" }
+                },
+                "required": ["dir", "pattern"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["search", "text", "regex", "replace", "refactoring"],
+    "license": "MIT"
+}

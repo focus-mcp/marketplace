@@ -1,0 +1,25 @@
+{
+    "name": "@focus-mcp/brick-share",
+    "version": "1.0.0",
+    "private": false,
+    "description": "FocusMCP share brick — shared state for multi-agent context, files, results and broadcast",
+    "license": "MIT",
+    "type": "module",
+    "main": "./src/index.ts",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "files": [
+        "src",
+        "mcp-brick.json",
+        "mcp-brick.json.license",
+        "README.md"
+    ],
+    "scripts": {
+        "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
+    }
+}

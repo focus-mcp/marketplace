@@ -1,0 +1,80 @@
+{
+    "name": "agent",
+    "version": "0.0.0",
+    "prefix": "agt",
+    "description": "Agent registry — register AI agents with capabilities, list available agents, query capabilities.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "register",
+            "description": "Register an agent with name, capabilities list, and optional metadata.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Human-readable name of the agent"
+                    },
+                    "capabilities": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "List of capability identifiers the agent can handle"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "additionalProperties": { "type": "string" },
+                        "description": "Optional key-value metadata about the agent"
+                    }
+                },
+                "required": ["name", "capabilities"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "unregister",
+            "description": "Remove an agent from the registry by ID.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique identifier of the agent to remove"
+                    }
+                },
+                "required": ["id"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "list",
+            "description": "List all registered agents, optionally filtered by capability.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "capability": {
+                        "type": "string",
+                        "description": "Filter agents by this capability (optional)"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "capabilities",
+            "description": "Query which agents can handle a specific capability/task type.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "capability": {
+                        "type": "string",
+                        "description": "Capability identifier to query"
+                    }
+                },
+                "required": ["capability"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["agent", "registry", "capabilities", "ai"],
+    "license": "MIT"
+}

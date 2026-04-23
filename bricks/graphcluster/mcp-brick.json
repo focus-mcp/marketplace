@@ -1,0 +1,63 @@
+{
+    "name": "graphcluster",
+    "version": "0.0.0",
+    "prefix": "gc",
+    "description": "Graph clustering — detect communities, explain groupings, identify architecture layers.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "cluster",
+            "description": "Detect clusters of tightly connected nodes using label propagation algorithm.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "maxClusters": {
+                        "type": "number",
+                        "description": "Max clusters to detect (default 10)"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "communities",
+            "description": "List all detected communities with their members and interconnection density.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "minSize": {
+                        "type": "number",
+                        "description": "Minimum community size (default 2)"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "explain",
+            "description": "Explain a cluster — what connects its members, common types, shared dependencies.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "clusterId": {
+                        "type": "number",
+                        "description": "Cluster index from cluster results"
+                    }
+                },
+                "required": ["clusterId"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "architecture",
+            "description": "Detect architecture layers — group nodes by directory depth and dependency direction (top-down).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["graph", "cluster", "community", "architecture", "analysis"],
+    "license": "MIT"
+}

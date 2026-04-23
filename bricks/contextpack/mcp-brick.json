@@ -1,0 +1,87 @@
+{
+    "name": "contextpack",
+    "version": "0.0.0",
+    "prefix": "cp",
+    "description": "Pack files into a compressed context bundle — reduce token usage by extracting only signatures, maps, or full content.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "pack",
+            "description": "Pack multiple files into a single context string.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "files": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "List of file paths to pack"
+                    },
+                    "mode": {
+                        "type": "string",
+                        "enum": ["signatures", "map", "full"],
+                        "description": "Pack mode: signatures (exports only), map (key lines), full (entire file). Default: signatures"
+                    }
+                },
+                "required": ["files"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "budget",
+            "description": "Given a token budget, pack as many files as possible.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "files": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "List of file paths"
+                    },
+                    "budget": { "type": "number", "description": "Token budget" }
+                },
+                "required": ["files", "budget"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "estimate",
+            "description": "Estimate pack size without actually packing.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "files": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "List of file paths"
+                    },
+                    "mode": {
+                        "type": "string",
+                        "enum": ["signatures", "map", "full"],
+                        "description": "Pack mode (default: signatures)"
+                    }
+                },
+                "required": ["files"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "prioritize",
+            "description": "Sort files by relevance to a query.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "files": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "List of file paths"
+                    },
+                    "query": { "type": "string", "description": "Relevance query" }
+                },
+                "required": ["files", "query"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["context", "pack", "tokens", "compression"],
+    "license": "MIT"
+}

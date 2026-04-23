@@ -1,7 +1,7 @@
 {
-    "name": "@focusmcp/symbol",
-    "version": "0.0.0",
-    "private": true,
+    "name": "@focus-mcp/brick-symbol",
+    "version": "1.0.0",
+    "private": false,
     "description": "FocusMCP symbol brick — symbol lookup in source files",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
     }
 }

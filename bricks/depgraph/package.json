@@ -1,7 +1,7 @@
 {
-    "name": "@focusmcp/depgraph",
-    "version": "0.0.0",
-    "private": true,
+    "name": "@focus-mcp/brick-depgraph",
+    "version": "1.0.0",
+    "private": false,
     "description": "FocusMCP depgraph brick — dependency graph analysis for source files",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
     }
 }

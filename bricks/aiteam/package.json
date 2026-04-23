@@ -1,0 +1,25 @@
+{
+    "name": "@focus-mcp/brick-aiteam",
+    "version": "1.0.0",
+    "private": false,
+    "description": "FocusMCP aiteam brick — AI team coordination via dispatch, parallel, debate, review, agent",
+    "license": "MIT",
+    "type": "module",
+    "main": "./src/index.ts",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "files": [
+        "src",
+        "mcp-brick.json",
+        "mcp-brick.json.license",
+        "README.md"
+    ],
+    "scripts": {
+        "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
+    }
+}

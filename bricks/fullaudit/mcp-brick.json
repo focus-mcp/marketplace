@@ -1,0 +1,42 @@
+{
+    "name": "fullaudit",
+    "version": "0.0.0",
+    "prefix": "audit",
+    "description": "Full project audit workflow — code quality review, security scan, architecture analysis, and metrics report.",
+    "dependencies": ["codebase", "review", "metrics"],
+    "tools": [
+        {
+            "name": "run",
+            "description": "Run a full audit on a project directory — code quality, security, architecture patterns.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Project root directory" },
+                    "checks": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Checks to run: 'code', 'security', 'architecture' (default: all)"
+                    }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "report",
+            "description": "Generate a markdown audit report from the last run.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "'markdown', 'json', or 'summary' (default 'markdown')"
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["audit", "workflow", "quality", "security"],
+    "license": "MIT"
+}

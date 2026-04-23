@@ -1,0 +1,71 @@
+{
+    "name": "routes",
+    "version": "0.0.0",
+    "prefix": "rt",
+    "description": "API route detection — scan projects for Express, Fastify, Next.js, SvelteKit route definitions.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "scan",
+            "description": "Scan a project directory and detect all API routes/endpoints with HTTP methods.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory to scan" },
+                    "framework": {
+                        "type": "string",
+                        "description": "Force framework (express, fastify, nextjs, sveltekit). Auto-detects if omitted."
+                    }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "search",
+            "description": "Search routes by path pattern or HTTP method.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory" },
+                    "pattern": {
+                        "type": "string",
+                        "description": "Path pattern to search (e.g. '/api/user')"
+                    },
+                    "method": {
+                        "type": "string",
+                        "description": "HTTP method filter (GET, POST, etc.)"
+                    }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "list",
+            "description": "List all detected routes in a compact table format.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory" }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "frameworks",
+            "description": "Detect which web frameworks are used in the project.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "dir": { "type": "string", "description": "Root directory" }
+                },
+                "required": ["dir"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["routes", "api", "endpoints", "express", "web"],
+    "license": "MIT"
+}

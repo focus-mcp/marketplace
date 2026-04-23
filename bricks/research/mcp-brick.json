@@ -1,0 +1,81 @@
+{
+    "name": "research",
+    "version": "0.0.0",
+    "prefix": "rsh",
+    "description": "Multi-source research — collect info from multiple files/sources, synthesize findings, validate consistency.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "multisource",
+            "description": "Read multiple files and extract key information (exports, types, patterns) from each.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "paths": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Absolute paths to the files to read and analyze"
+                    }
+                },
+                "required": ["paths"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "synthesize",
+            "description": "Combine findings from multiple sources into a structured summary.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "sources": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "path": { "type": "string" },
+                                "exports": { "type": "array", "items": { "type": "string" } },
+                                "imports": { "type": "array", "items": { "type": "string" } },
+                                "types": { "type": "array", "items": { "type": "string" } },
+                                "functions": { "type": "array", "items": { "type": "string" } }
+                            },
+                            "required": ["path", "exports", "imports", "types", "functions"],
+                            "additionalProperties": false
+                        },
+                        "description": "Array of source analysis objects from multisource"
+                    }
+                },
+                "required": ["sources"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "validate",
+            "description": "Cross-check findings for consistency — conflicting types, unused exports, missing dependencies.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "sources": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "path": { "type": "string" },
+                                "exports": { "type": "array", "items": { "type": "string" } },
+                                "imports": { "type": "array", "items": { "type": "string" } },
+                                "types": { "type": "array", "items": { "type": "string" } },
+                                "functions": { "type": "array", "items": { "type": "string" } }
+                            },
+                            "required": ["path", "exports", "imports", "types", "functions"],
+                            "additionalProperties": false
+                        },
+                        "description": "Array of source analysis objects from multisource"
+                    }
+                },
+                "required": ["sources"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["research", "multisource", "synthesize", "validate", "analysis"],
+    "license": "MIT"
+}

@@ -1,0 +1,63 @@
+{
+    "name": "session",
+    "version": "0.0.0",
+    "prefix": "ses",
+    "description": "Session context save and restore — track loaded files and operations, persist sessions to disk.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "save",
+            "description": "Save current session state to disk.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Session name" },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "files": { "type": "array", "items": { "type": "string" } },
+                            "context": { "type": "string" },
+                            "notes": { "type": "string" }
+                        },
+                        "additionalProperties": false,
+                        "description": "Session data to save"
+                    }
+                },
+                "required": ["name", "data"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "restore",
+            "description": "Restore a saved session from disk.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Session name to restore" }
+                },
+                "required": ["name"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "context",
+            "description": "Get current in-memory session summary.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "history",
+            "description": "List all saved sessions.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["session", "context", "persistence", "restore"],
+    "license": "MIT"
+}

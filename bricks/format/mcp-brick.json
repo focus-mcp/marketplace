@@ -1,0 +1,98 @@
+{
+    "name": "format",
+    "version": "0.0.0",
+    "prefix": "fmt",
+    "description": "Format data into various output formats — pretty JSON, YAML, markdown, ASCII tables.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "json",
+            "description": "Format and pretty-print JSON with optional key sorting and field filtering.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "string",
+                        "description": "JSON string to format"
+                    },
+                    "indent": {
+                        "type": "number",
+                        "description": "Number of spaces for indentation (default 2)"
+                    },
+                    "sortKeys": {
+                        "type": "boolean",
+                        "description": "Whether to sort object keys alphabetically"
+                    }
+                },
+                "required": ["data"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "yaml",
+            "description": "Convert JSON data to YAML format.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "string",
+                        "description": "JSON string to convert to YAML"
+                    }
+                },
+                "required": ["data"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "markdown",
+            "description": "Convert structured JSON data to markdown (headings, lists, or table).",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "string",
+                        "description": "JSON string to convert to markdown"
+                    },
+                    "style": {
+                        "type": "string",
+                        "enum": ["list", "table", "headings"],
+                        "description": "Markdown style: list (default), table, or headings"
+                    }
+                },
+                "required": ["data"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "table",
+            "description": "Format tabular data as an ASCII table with +--+ borders and optional column alignment.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "headers": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Column header labels"
+                    },
+                    "rows": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        },
+                        "description": "Table rows as arrays of cell strings"
+                    },
+                    "align": {
+                        "type": "array",
+                        "items": { "type": "string", "enum": ["left", "right", "center"] },
+                        "description": "Per-column alignment (default: left)"
+                    }
+                },
+                "required": ["headers", "rows"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["format", "json", "yaml", "markdown", "table", "output"],
+    "license": "MIT"
+}

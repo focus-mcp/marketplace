@@ -1,0 +1,64 @@
+{
+    "name": "impact",
+    "version": "0.0.0",
+    "prefix": "imp",
+    "description": "Change impact analysis — given a file or symbol, find what files are affected by a change.",
+    "dependencies": [],
+    "tools": [
+        {
+            "name": "analyze",
+            "description": "Analyze impact of changing a file: find direct and indirect dependents.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "description": "Absolute path to the changed file"
+                    },
+                    "dir": { "type": "string", "description": "Root directory of the project" }
+                },
+                "required": ["file", "dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "affected",
+            "description": "List all files affected by changes to the given set of files.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "files": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "List of changed file paths"
+                    },
+                    "dir": { "type": "string", "description": "Root directory of the project" }
+                },
+                "required": ["files", "dir"],
+                "additionalProperties": false
+            }
+        },
+        {
+            "name": "propagate",
+            "description": "Trace how a change propagates through the dependency graph.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "description": "Absolute path to the changed file"
+                    },
+                    "dir": { "type": "string", "description": "Root directory of the project" },
+                    "maxDepth": {
+                        "type": "number",
+                        "description": "Max propagation depth (default 3)"
+                    }
+                },
+                "required": ["file", "dir"],
+                "additionalProperties": false
+            }
+        }
+    ],
+    "tags": ["impact", "dependencies", "analysis", "refactoring"],
+    "license": "MIT"
+}

@@ -1,7 +1,7 @@
 {
-    "name": "@focusmcp/cache",
-    "version": "0.0.0",
-    "private": true,
+    "name": "@focus-mcp/brick-cache",
+    "version": "1.0.0",
+    "private": false,
     "description": "FocusMCP cache brick — in-memory file cache with mtime-based invalidation",
     "license": "MIT",
     "type": "module",
@@ -17,5 +17,9 @@
     ],
     "scripts": {
         "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
     }
 }

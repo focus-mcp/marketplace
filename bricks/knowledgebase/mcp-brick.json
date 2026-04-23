@@ -1,0 +1,10 @@
+{
+    "name": "knowledgebase",
+    "version": "0.0.0",
+    "prefix": "kbase",
+    "description": "Knowledge base — loads knowledge, fts, graphbuild, graphquery for document indexing and graph-powered search.",
+    "dependencies": ["knowledge", "fts", "graphbuild", "graphquery"],
+    "tools": [],
+    "tags": ["knowledgebase", "composite", "search", "graph"],
+    "license": "MIT"
+}

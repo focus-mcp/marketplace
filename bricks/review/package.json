@@ -1,0 +1,25 @@
+{
+    "name": "@focus-mcp/brick-review",
+    "version": "1.0.0",
+    "private": false,
+    "description": "FocusMCP review brick — structured code review for quality, security, architecture, and diffs",
+    "license": "MIT",
+    "type": "module",
+    "main": "./src/index.ts",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "files": [
+        "src",
+        "mcp-brick.json",
+        "mcp-brick.json.license",
+        "README.md"
+    ],
+    "scripts": {
+        "test": "vitest run"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org"
+    }
+}
