@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-onboarding",
     "version": "1.0.0",
     "private": false,
-    "description": "FocusMCP onboarding composite brick — orchestrates overview, smartcontext, and codebase to guide new contributors and AI agents",
+    "description": "Project onboarding workflow — auto-discover project structure, conventions, and key files for a new contributor or AI agent.",
     "license": "MIT",
     "type": "module",
     "main": "./src/index.ts",
@@ -21,5 +21,35 @@
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.org"
+    },
+    "keywords": [
+        "mcp",
+        "model-context-protocol",
+        "ai",
+        "llm",
+        "focus",
+        "brick",
+        "onboarding",
+        "workflow",
+        "project",
+        "guide"
+    ],
+    "author": "FocusMCP contributors",
+    "homepage": "https://github.com/focus-mcp/marketplace/tree/main/bricks/onboarding#readme",
+    "bugs": {
+        "url": "https://github.com/focus-mcp/marketplace/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/focus-mcp/marketplace.git",
+        "directory": "bricks/onboarding"
+    },
+    "peerDependencies": {
+        "@focus-mcp/core": "^1.0.0"
+    },
+    "peerDependenciesMeta": {
+        "@focus-mcp/core": {
+            "optional": true
+        }
     }
 }
