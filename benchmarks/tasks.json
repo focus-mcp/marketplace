@@ -1,0 +1,20 @@
+[
+    {
+        "id": "read-understand",
+        "title": "Find the entry point and explain the bootstrap flow",
+        "description": "Typical exploration task: read structure, understand main entry.",
+        "required_bricks": ["filelist", "fileread", "smartread", "symbol", "overview"]
+    },
+    {
+        "id": "search-usages",
+        "title": "Find all usages of function X across the codebase",
+        "description": "Cross-codebase search: needs grep + symbol resolution + semantic hints.",
+        "required_bricks": ["filesearch", "textsearch", "symbol", "refs", "semanticsearch"]
+    },
+    {
+        "id": "edit-refactor",
+        "title": "Refactor module Y to use async/await",
+        "description": "Read code, understand current pattern, apply structured edits, verify.",
+        "required_bricks": ["fileread", "symbol", "codeedit", "validate"]
+    }
+]

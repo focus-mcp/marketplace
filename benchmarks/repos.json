@@ -1,0 +1,122 @@
+[
+    {
+        "id": "next-js",
+        "language": "typescript",
+        "profile": "ssr-framework",
+        "url": "https://github.com/vercel/next.js",
+        "ref": "canary",
+        "loc_estimate": 1000000
+    },
+    {
+        "id": "vscode",
+        "language": "typescript",
+        "profile": "electron-app",
+        "url": "https://github.com/microsoft/vscode",
+        "ref": "main",
+        "loc_estimate": 1500000
+    },
+    {
+        "id": "nestjs",
+        "language": "typescript",
+        "profile": "backend-di",
+        "url": "https://github.com/nestjs/nest",
+        "ref": "master",
+        "loc_estimate": 120000
+    },
+    {
+        "id": "django",
+        "language": "python",
+        "profile": "web-framework",
+        "url": "https://github.com/django/django",
+        "ref": "main",
+        "loc_estimate": 300000
+    },
+    {
+        "id": "home-assistant",
+        "language": "python",
+        "profile": "large-app",
+        "url": "https://github.com/home-assistant/core",
+        "ref": "dev",
+        "loc_estimate": 1200000
+    },
+    {
+        "id": "flask",
+        "language": "python",
+        "profile": "microframework",
+        "url": "https://github.com/pallets/flask",
+        "ref": "main",
+        "loc_estimate": 15000
+    },
+    {
+        "id": "kubernetes",
+        "language": "go",
+        "profile": "distributed",
+        "url": "https://github.com/kubernetes/kubernetes",
+        "ref": "master",
+        "loc_estimate": 2500000
+    },
+    {
+        "id": "grafana",
+        "language": "go",
+        "profile": "observability",
+        "url": "https://github.com/grafana/grafana",
+        "ref": "main",
+        "loc_estimate": 800000
+    },
+    {
+        "id": "tokio",
+        "language": "rust",
+        "profile": "async-runtime",
+        "url": "https://github.com/tokio-rs/tokio",
+        "ref": "master",
+        "loc_estimate": 80000
+    },
+    {
+        "id": "deno",
+        "language": "rust",
+        "profile": "runtime",
+        "url": "https://github.com/denoland/deno",
+        "ref": "main",
+        "loc_estimate": 500000
+    },
+    {
+        "id": "spring-boot",
+        "language": "java",
+        "profile": "enterprise",
+        "url": "https://github.com/spring-projects/spring-boot",
+        "ref": "main",
+        "loc_estimate": 500000
+    },
+    {
+        "id": "elasticsearch",
+        "language": "java",
+        "profile": "search-engine",
+        "url": "https://github.com/elastic/elasticsearch",
+        "ref": "main",
+        "loc_estimate": 1800000
+    },
+    {
+        "id": "laravel",
+        "language": "php",
+        "profile": "modern-mvc",
+        "url": "https://github.com/laravel/framework",
+        "ref": "master",
+        "loc_estimate": 200000
+    },
+    {
+        "id": "symfony",
+        "language": "php",
+        "profile": "enterprise-di",
+        "url": "https://github.com/symfony/symfony",
+        "ref": "7.x",
+        "loc_estimate": 600000
+    },
+    {
+        "id": "wordpress",
+        "language": "php",
+        "profile": "legacy-hooks",
+        "url": "https://github.com/WordPress/WordPress",
+        "ref": "master",
+        "loc_estimate": 250000
+    }
+]

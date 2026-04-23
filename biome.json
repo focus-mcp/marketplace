@@ -81,7 +81,12 @@
     },
     "overrides": [
         {
-            "includes": ["scripts/build-catalog.ts", "scripts/build-docs.ts"],
+            "includes": [
+                "scripts/build-catalog.ts",
+                "scripts/build-docs.ts",
+                "benchmarks/src/measure.ts",
+                "benchmarks/src/report.ts"
+            ],
             "linter": {
                 "rules": {
                     "suspicious": {
