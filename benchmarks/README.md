@@ -1,3 +1,5 @@
+**Agents: read `AGENTS.md` before running any task.**
+
 # FocusMCP Benchmarks
 
 Static token-cost benchmark validating the "200k → ~2k tokens" claim.
