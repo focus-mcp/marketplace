@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-23T13:35:33.358Z",
+  "updated": "2026-04-23T16:50:03.502Z",
   "bricks": [
     {
       "name": "agent",
@@ -104,8 +104,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-agent",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-agent"
       },
       "license": "MIT"
     },
@@ -129,8 +128,7 @@
       "tools": [],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-aiteam",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-aiteam"
       },
       "license": "MIT"
     },
@@ -213,8 +211,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-autopilot",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-autopilot"
       },
       "license": "MIT"
     },
@@ -355,8 +352,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-batch",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-batch"
       },
       "license": "MIT"
     },
@@ -456,8 +452,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-cache",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-cache"
       },
       "license": "MIT"
     },
@@ -586,8 +581,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-callgraph",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-callgraph"
       },
       "license": "MIT"
     },
@@ -611,8 +605,7 @@
       "tools": [],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-codebase",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-codebase"
       },
       "license": "MIT"
     },
@@ -766,8 +759,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-codeedit",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-codeedit"
       },
       "license": "MIT"
     },
@@ -790,8 +782,7 @@
       "tools": [],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-codemod",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-codemod"
       },
       "license": "MIT"
     },
@@ -870,8 +861,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-compress",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-compress"
       },
       "license": "MIT"
     },
@@ -998,8 +988,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-contextpack",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-contextpack"
       },
       "license": "MIT"
     },
@@ -1146,8 +1135,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-convert",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-convert"
       },
       "license": "MIT"
     },
@@ -1292,8 +1280,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-debate",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-debate"
       },
       "license": "MIT"
     },
@@ -1468,8 +1455,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-decision",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-decision"
       },
       "license": "MIT"
     },
@@ -1578,8 +1564,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-depgraph",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-depgraph"
       },
       "license": "MIT"
     },
@@ -1600,8 +1585,7 @@
       "tools": [],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-devtools",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-devtools"
       },
       "license": "MIT"
     },
@@ -1800,8 +1784,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-diagram",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-diagram"
       },
       "license": "MIT"
     },
@@ -1895,8 +1878,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-dispatch",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-dispatch"
       },
       "license": "MIT"
     },
@@ -1931,8 +1913,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-echo",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-echo"
       },
       "license": "MIT"
     },
@@ -2014,8 +1995,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-filediff",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-filediff"
       },
       "license": "MIT"
     },
@@ -2112,8 +2092,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-filelist",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-filelist"
       },
       "license": "MIT"
     },
@@ -2213,8 +2192,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-fileops",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-fileops"
       },
       "license": "MIT"
     },
@@ -2315,8 +2293,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-fileread",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-fileread"
       },
       "license": "MIT"
     },
@@ -2388,8 +2365,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-filesearch",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-filesearch"
       },
       "license": "MIT"
     },
@@ -2411,8 +2387,7 @@
       "tools": [],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-filesystem",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-filesystem"
       },
       "license": "MIT"
     },
@@ -2492,8 +2467,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-filewrite",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-filewrite"
       },
       "license": "MIT"
     },
@@ -2625,8 +2599,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-format",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-format"
       },
       "license": "MIT"
     },
@@ -2738,8 +2711,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-fts",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-fts"
       },
       "license": "MIT"
     },
@@ -2800,8 +2772,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-fullaudit",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-fullaudit"
       },
       "license": "MIT"
     },
@@ -2924,8 +2895,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-graphbuild",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-graphbuild"
       },
       "license": "MIT"
     },
@@ -2999,8 +2969,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-graphcluster",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-graphcluster"
       },
       "license": "MIT"
     },
@@ -3085,8 +3054,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-graphexport",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-graphexport"
       },
       "license": "MIT"
     },
@@ -3223,8 +3191,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-graphquery",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-graphquery"
       },
       "license": "MIT"
     },
@@ -3318,8 +3285,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-heatmap",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-heatmap"
       },
       "license": "MIT"
     },
@@ -3411,8 +3377,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-impact",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-impact"
       },
       "license": "MIT"
     },
@@ -3525,8 +3490,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-inline",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-inline"
       },
       "license": "MIT"
     },
@@ -3670,8 +3634,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-knowledge",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-knowledge"
       },
       "license": "MIT"
     },
@@ -3694,8 +3657,7 @@
       "tools": [],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-knowledgebase",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-knowledgebase"
       },
       "license": "MIT"
     },
@@ -3892,8 +3854,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-lastversion",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-lastversion"
       },
       "license": "MIT"
     },
@@ -4010,8 +3971,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-memory",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-memory"
       },
       "license": "MIT"
     },
@@ -4109,8 +4069,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-metrics",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-metrics"
       },
       "license": "MIT"
     },
@@ -4191,8 +4150,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-multiread",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-multiread"
       },
       "license": "MIT"
     },
@@ -4253,8 +4211,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-onboarding",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-onboarding"
       },
       "license": "MIT"
     },
@@ -4332,8 +4289,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-outline",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-outline"
       },
       "license": "MIT"
     },
@@ -4424,8 +4380,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-overview",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-overview"
       },
       "license": "MIT"
     },
@@ -4559,8 +4514,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-parallel",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-parallel"
       },
       "license": "MIT"
     },
@@ -4685,8 +4639,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-planning",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-planning"
       },
       "license": "MIT"
     },
@@ -4793,8 +4746,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-refs",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-refs"
       },
       "license": "MIT"
     },
@@ -4937,8 +4889,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-rename",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-rename"
       },
       "license": "MIT"
     },
@@ -5022,8 +4973,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-repos",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-repos"
       },
       "license": "MIT"
     },
@@ -5177,8 +5127,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-research",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-research"
       },
       "license": "MIT"
     },
@@ -5271,8 +5220,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-review",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-review"
       },
       "license": "MIT"
     },
@@ -5372,8 +5320,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-routes",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-routes"
       },
       "license": "MIT"
     },
@@ -5465,8 +5412,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-sandbox",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-sandbox"
       },
       "license": "MIT"
     },
@@ -5566,8 +5512,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-savings",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-savings"
       },
       "license": "MIT"
     },
@@ -5730,8 +5675,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-semanticsearch",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-semanticsearch"
       },
       "license": "MIT"
     },
@@ -5822,8 +5766,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-session",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-session"
       },
       "license": "MIT"
     },
@@ -5931,8 +5874,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-share",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-share"
       },
       "license": "MIT"
     },
@@ -6051,8 +5993,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-shell",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-shell"
       },
       "license": "MIT"
     },
@@ -6133,8 +6074,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-smartcontext",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-smartcontext"
       },
       "license": "MIT"
     },
@@ -6233,8 +6173,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-smartread",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-smartread"
       },
       "license": "MIT"
     },
@@ -6348,8 +6287,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-symbol",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-symbol"
       },
       "license": "MIT"
     },
@@ -6463,8 +6401,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-task",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-task"
       },
       "license": "MIT"
     },
@@ -6617,8 +6554,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-textsearch",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-textsearch"
       },
       "license": "MIT"
     },
@@ -6733,8 +6669,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-thinking",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-thinking"
       },
       "license": "MIT"
     },
@@ -6848,8 +6783,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-tokenbudget",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-tokenbudget"
       },
       "license": "MIT"
     },
@@ -6929,8 +6863,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-treesitter",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-treesitter"
       },
       "license": "MIT"
     },
@@ -7023,8 +6956,7 @@
       ],
       "source": {
         "type": "npm",
-        "package": "@focus-mcp/brick-validate",
-        "registry": "https://npm.pkg.github.com"
+        "package": "@focus-mcp/brick-validate"
       },
       "license": "MIT"
     }
