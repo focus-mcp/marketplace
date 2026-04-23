@@ -5,6 +5,8 @@ SPDX-License-Identifier: MIT
 
 # FocusMCP Benchmark Protocol
 
+> **For runners**: each benchmark case lives at `cases/<task-id>/<repo-id>/`. Launch Claude Code inside a case directory — its `AGENTS.md` is the full prompt and rules. After the session, run `pnpm benchmark:collect` to harvest token metrics.
+
 This directory hosts the FocusMCP benchmark suite. Agents working here follow a strict protocol to produce comparable runs.
 
 ## You are a benchmark subject

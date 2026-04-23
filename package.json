@@ -34,7 +34,10 @@
         "version": "changeset version",
         "release": "changeset publish",
         "prepare": "husky",
-        "benchmark": "tsx benchmarks/src/measure.ts && tsx benchmarks/src/report.ts"
+        "benchmark:static": "tsx benchmarks/src/measure.ts && tsx benchmarks/src/report.ts",
+        "benchmark:clone": "bash benchmarks/scripts/clone.sh",
+        "benchmark:parse": "tsx benchmarks/scripts/parse-session.ts",
+        "benchmark:collect": "tsx benchmarks/scripts/collect.ts"
     },
     "devDependencies": {
         "@biomejs/biome": "^2.2.0",

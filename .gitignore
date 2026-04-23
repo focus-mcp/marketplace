@@ -113,6 +113,10 @@ lerna-debug.log*
 **/$RECYCLE.BIN/
 **/Icon?
 
+# ============ Benchmarks ============
+benchmarks/.cache/
+benchmarks/cases/*/*/repo
+
 # ============ Misc ============
 *.tgz
 *.tar.gz
