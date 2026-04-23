@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-fts",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP fts brick — full-text search with TF-IDF ranking",
     "license": "MIT",

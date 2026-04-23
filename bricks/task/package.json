@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-task",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP task brick — task management for multi-agent workflows",
     "license": "MIT",

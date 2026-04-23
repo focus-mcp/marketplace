@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-overview",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP overview brick — project-level understanding without reading all files",
     "license": "MIT",

@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-tokenbudget",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP tokenbudget brick — token budget management and estimation",
     "license": "MIT",

@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-graphcluster",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "private": false,
     "description": "FocusMCP graphcluster brick — detect communities and architecture layers in a knowledge graph",
     "license": "MIT",

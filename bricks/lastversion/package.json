@@ -1,8 +1,8 @@
 {
-    "name": "@focus-mcp/brick-codebase",
+    "name": "@focus-mcp/brick-lastversion",
     "version": "1.0.0",
     "private": false,
-    "description": "FocusMCP codebase brick — composite for code intelligence",
+    "description": "FocusMCP lastversion brick — package version intelligence across npm/pypi/github/gitlab",
     "license": "MIT",
     "type": "module",
     "main": "./src/index.ts",
