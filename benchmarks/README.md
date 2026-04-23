@@ -1,59 +1,26 @@
-**Agents: read `AGENTS.md` before running any task.**
+<!--
+SPDX-FileCopyrightText: 2026 FocusMCP contributors
+SPDX-License-Identifier: MIT
+-->
 
-# FocusMCP Benchmarks
+# Benchmarks
 
-Static token-cost benchmark validating the "200k → ~2k tokens" claim.
+Per-brick token-savings measurement for FocusMCP. Read `AGENTS.md` for the protocol.
 
-## What this benchmarks
+## Quick start
 
-Without FocusMCP, an AI agent loads **all** brick tool definitions at startup.
-With FocusMCP, the agent loads only the bricks needed for the current task.
+1. Clone `nestjs/nest` once at `~/benchmarks/test-repo/` (shallow, depth=1).
+2. Pick a brick from `marketplace/bricks/<brick>/`.
+3. Create a throwaway dir and copy the brick manifest + symlink the test repo:
+   ```bash
+   mkdir -p /tmp/focus-bench/<brick>-native && cd $_
+   cp /path/to/marketplace/bricks/<brick>/mcp-brick.json .
+   ln -s ~/benchmarks/test-repo ./test-repo
+   ```
+4. Launch Claude Code in that dir: `claude`
+5. Paste `BRICK_BENCH_PROMPT.md` with `{{MODE}} = native` as the first message.
+6. Let Claude complete the task, then exit.
+7. Repeat in a **separate** throwaway dir with `{{MODE}} = brick` and `focus` MCP enabled.
+8. Find both session JSONLs at `~/.claude/projects/*/*.jsonl` and diff the `usage` fields.
 
-This benchmark measures that difference in **token cost** using the cl100k_base
-BPE tokenizer (same as GPT-4/Claude) on each brick's `tools` array —
-exactly what an MCP server sends in a `tools/list` response.
-
-Phase 1 (this) = static math on tool definitions.
-Phase 2 (roadmap) = real execution on 15 target repos.
-
-## How to run
-
-```bash
-# From marketplace root
-pnpm benchmark
-```
-
-This runs two steps:
-1. `tsx benchmarks/src/measure.ts` — counts tokens per brick, computes savings per task
-2. `tsx benchmarks/src/report.ts` — generates `BENCHMARKS.md` at marketplace root
-
-## Output locations
-
-| File | Description |
-|---|---|
-| `benchmarks/reports/summary.json` | Machine-readable full results |
-| `benchmarks/reports/<task-id>.md` | Per-task breakdown |
-| `BENCHMARKS.md` | Marketing-friendly report (root) |
-
-## How to interpret the numbers
-
-- **Baseline tokens**: cost of loading all 68 bricks (no FocusMCP)
-- **Focus tokens**: cost of loading only the bricks needed for a task
-- **Savings %**: (baseline - focus) / baseline × 100
-
-A 95% savings means an agent pays ~5% of the usual token cost for that task.
-
-## Task scenarios
-
-See `tasks.json` for the 3 scenarios. Each lists the bricks an expert agent would load:
-
-- `read-understand`: exploration — filelist, fileread, smartread, symbol, overview
-- `search-usages`: search — filesearch, textsearch, symbol, refs, semanticsearch
-- `edit-refactor`: editing — fileread, symbol, codeedit, validate
-
-## Phase 2 roadmap
-
-- Clone the 15 repos listed in `repos.json`
-- Run each task scenario with and without FocusMCP
-- Measure actual context window token usage (not just tool definitions)
-- Store clones under `.cache/` (git-ignored)
+Iterate on 2-3 bricks first to stabilize the prompt before scaling.

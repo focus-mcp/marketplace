@@ -1,2 +1,2 @@
-# Phase 2: repo clones for real execution benchmarks
+# Benchmark session data and temporary clones (kept outside repo)
 .cache/
