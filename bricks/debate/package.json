@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/debate",
+    "name": "@focus-mcp/brick-debate",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP debate brick — structured multi-perspective debate with scoring and consensus",

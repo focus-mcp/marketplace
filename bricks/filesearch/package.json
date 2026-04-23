@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/filesearch",
+    "name": "@focus-mcp/brick-filesearch",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP filesearch brick — regex search and replace in files",

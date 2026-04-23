@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/semanticsearch",
+    "name": "@focus-mcp/brick-semanticsearch",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP semanticsearch brick — semantic search using TF-IDF vector space and cosine similarity",

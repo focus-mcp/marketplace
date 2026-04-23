@@ -1,5 +1,5 @@
 {
-    "name": "@focusmcp/filelist",
+    "name": "@focus-mcp/brick-filelist",
     "version": "0.0.0",
     "private": false,
     "description": "FocusMCP filelist brick — list, tree, glob, find files",
