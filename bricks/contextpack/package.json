@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-contextpack",
     "version": "1.0.0",
     "private": false,
-    "description": "FocusMCP contextpack brick — pack files into compressed context bundles to reduce token usage",
+    "description": "Pack files into a compressed context bundle — reduce token usage by extracting only signatures, maps, or full content.",
     "license": "MIT",
     "type": "module",
     "main": "./src/index.ts",
@@ -21,5 +21,35 @@
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.org"
+    },
+    "keywords": [
+        "mcp",
+        "model-context-protocol",
+        "ai",
+        "llm",
+        "focus",
+        "brick",
+        "context",
+        "pack",
+        "tokens",
+        "compression"
+    ],
+    "author": "FocusMCP contributors",
+    "homepage": "https://github.com/focus-mcp/marketplace/tree/main/bricks/contextpack#readme",
+    "bugs": {
+        "url": "https://github.com/focus-mcp/marketplace/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/focus-mcp/marketplace.git",
+        "directory": "bricks/contextpack"
+    },
+    "peerDependencies": {
+        "@focus-mcp/core": "^1.0.0"
+    },
+    "peerDependenciesMeta": {
+        "@focus-mcp/core": {
+            "optional": true
+        }
     }
 }

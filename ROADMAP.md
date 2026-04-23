@@ -16,7 +16,20 @@ SPDX-License-Identifier: MIT
 | P1 | 15 | 15 | 0 |
 | P2 | 18 | 18 | 0 |
 | Composites | 5 | 5 | 0 |
-| **Total** | **65** | **65** | **0** |
+| Workflows | 3 | 3 | 0 |
+| Post-v1.0 | 1 | 1 | 0 |
+| **Total** | **69** | **69** | **0** |
+
+## v1.0.0 — Initial release (68 bricks) ✅
+
+All 68 bricks shipped and published as `@focus-mcp/brick-<name>` on npmjs.org.
+
+## v1.1.0 — lastversion brick ✅
+
+- Added `lastversion` brick — checks the latest published version of any npm package.
+  Published as `@focus-mcp/brick-lastversion`.
+
+---
 
 ## Done (27 bricks)
 
@@ -156,7 +169,16 @@ SPDX-License-Identifier: MIT
 
 ---
 
-## Composites (blocked until dependencies are done)
+## Post-v1.0 releases
+
+### v1.1.0 — Version Intelligence
+| Brick | Prefix | Tools | Package |
+|-------|--------|-------|---------|
+| lastversion | lastversion | check | `@focus-mcp/brick-lastversion` |
+
+---
+
+## Composites (all done)
 
 | Composite | Prefix | Dependencies | Status |
 |-----------|--------|-------------|--------|
@@ -165,26 +187,28 @@ SPDX-License-Identifier: MIT
 | codebase | codebase | treesitter, symbol, outline, callgraph, depgraph, refs | ✅ Done |
 | codemod | cmod | symbol, rename, codeedit, inline, textsearch | ✅ Done |
 | devtools | dev | shell, sandbox, batch | ✅ Done |
-| knowledgebase | kbase | knowledge, fts, graphbuild, graphquery | ✅ Ready (all deps done: knowledge, fts, graphbuild, graphquery) |
-| aiteam | team | dispatch, parallel, debate, review, agent | ✅ Ready (all deps done: dispatch, parallel, debate, review, agent) |
+| knowledgebase | kbase | knowledge, fts, graphbuild, graphquery | ✅ Done |
+| aiteam | team | dispatch, parallel, debate, review, agent | ✅ Done |
 
-## Workflows (blocked until composites are done)
+## Workflows (all done)
 
 | Workflow | Prefix | Dependencies | Status |
 |----------|--------|-------------|--------|
-| onboarding | onb | codebase, smartcontext, overview | ✅ Ready (codebase done, smartcontext done, overview done) |
-| fullaudit | audit | codebase, review, metrics | ✅ Ready (codebase done, review done, metrics done) |
-| autopilot | auto | codebase, smartcontext, devtools, thinking | ✅ Ready (codebase, smartcontext, devtools, thinking all done) |
+| onboarding | onb | codebase, smartcontext, overview | ✅ Done |
+| fullaudit | audit | codebase, review, metrics | ✅ Done |
+| autopilot | auto | codebase, smartcontext, devtools, thinking | ✅ Done |
 
 ---
 
 ## Critical Path
 
 ```
-✅ All P1 bricks complete
-✅ All P2 bricks complete  
-✅ All composites ready (codebase, devtools, codemod, knowledgebase, aiteam)
-✅ All workflows ready (onboarding, fullaudit, autopilot)
+✅ All P0 bricks complete (v1.0.0)
+✅ All P1 bricks complete (v1.0.0)
+✅ All P2 bricks complete (v1.0.0)
+✅ All composites done
+✅ All workflows done
+✅ lastversion brick added (v1.1.0)
 ```
 
 ## Naming Convention
@@ -194,3 +218,4 @@ SPDX-License-Identifier: MIT
 - CLI glue: `{prefix}_{tool}` → exposed as `mcp__focus__{prefix}_{tool}`
 - Internal FocusMCP: no prefix → list, describe, call, load, unload, reload
 - Reserved prefixes: focus, focusmcp, mcp, internal, system
+- npm scope: `@focus-mcp/brick-<name>`

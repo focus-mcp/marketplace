@@ -5,8 +5,11 @@ SPDX-License-Identifier: MIT
 
 # AGENTS.md
 
-> Instructions for AI agents working on this repository (Claude Code, Cursor, Codex, Copilot, Gemini CLI, Aider, etc.).
-> Format inspired by the emerging [agents.md](https://agentsmd.net/) convention.
+> This file is the **single source of truth for AI agent behavior** on this project.
+> It follows the [agents.md](https://agents.md) standard and is read by Claude Code,
+> Cursor, Aider, GitHub Copilot, and any other AI coding tool.
+>
+> Humans, this file is for you too — it documents our conventions and expectations.
 
 ## Project
 
@@ -21,7 +24,7 @@ Read [PRD.md](./PRD.md) for the complete vision (scope, architecture, distributi
 - **Tailwind CSS** for styling
 - Tests: **Vitest** (unit, `src/lib/**/*.ts` only — `.svelte` files are typechecked by `svelte-check`)
 - Lint/format: **Biome 2.x** for `.ts`/`.js`/`.json`/`.md`; `svelte-check` for `.svelte`
-- Changesets (single package), npm scope `@focus-mcp`
+- npm scope `@focus-mcp` (package: `@focus-mcp/manager`, Phase 2)
 
 ## File layout
 
@@ -73,7 +76,6 @@ pnpm test:coverage        # coverage + thresholds (80%)
 pnpm typecheck            # svelte-check
 pnpm lint                 # Biome check
 pnpm lint:fix             # Biome auto-fix
-pnpm changeset            # create a changeset before merging
 ```
 
 ## Standard workflow to add a page / feature
@@ -85,20 +87,19 @@ pnpm changeset            # create a changeset before merging
 5. **Refactor** — keep it small and composable.
 6. **Lint + typecheck + test**: `pnpm lint && pnpm typecheck && pnpm test`.
 7. **Build**: `pnpm build` — must succeed on every PR.
-8. **Changeset**: `pnpm changeset`.
-9. **Commit** with Conventional Commits.
-10. **PR** to `develop` (never directly to `main`).
+8. **Commit** with Conventional Commits.
+9. **PR** to `develop` (never directly to `main`).
 
 ## Git-flow
 
 - Working branch: **`develop`** (persistent, never deleted).
-- Release: PR `develop → main`; `main` triggers the `release.yml` workflow.
+- Release: PR `develop → main`; `main` triggers the `stable-publish.yml` workflow.
 - **Never `--delete-branch` on the develop→main PR.**
 
 ## Security
 
 - **No secrets** in the code (gitleaks blocks in pre-commit and CI).
-- **No `eval`**, no `new Function()`.
+- **No `eval`** and no dynamic code construction — use static imports and typed interfaces.
 - The manager holds **no server-side secrets** (fully static). The admin token lives in the user's browser session only.
 - CORS is controlled by the CLI; the manager assumes same-origin localhost by default.
 

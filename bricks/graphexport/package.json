@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-graphexport",
     "version": "1.0.0",
     "private": false,
-    "description": "FocusMCP graphexport brick — knowledge graph export to HTML, Mermaid, GraphML, Cypher, Obsidian, and wiki",
+    "description": "Knowledge graph export — generate HTML, Mermaid, GraphML, Cypher, Obsidian, and wiki formats.",
     "license": "MIT",
     "type": "module",
     "main": "./src/index.ts",
@@ -21,5 +21,37 @@
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.org"
+    },
+    "keywords": [
+        "mcp",
+        "model-context-protocol",
+        "ai",
+        "llm",
+        "focus",
+        "brick",
+        "graph",
+        "export",
+        "mermaid",
+        "graphml",
+        "cypher",
+        "obsidian"
+    ],
+    "author": "FocusMCP contributors",
+    "homepage": "https://github.com/focus-mcp/marketplace/tree/main/bricks/graphexport#readme",
+    "bugs": {
+        "url": "https://github.com/focus-mcp/marketplace/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/focus-mcp/marketplace.git",
+        "directory": "bricks/graphexport"
+    },
+    "peerDependencies": {
+        "@focus-mcp/core": "^1.0.0"
+    },
+    "peerDependenciesMeta": {
+        "@focus-mcp/core": {
+            "optional": true
+        }
     }
 }
