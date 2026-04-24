@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-24T15:17:08.825Z",
+  "updated": "2026-04-24T15:26:38.800Z",
   "bricks": [
     {
       "name": "agent",
@@ -3819,7 +3819,7 @@
     },
     {
       "name": "lastversion",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "description": "Package version intelligence — latest version, diff, changelog, audit across npm/pypi/github/gitlab.",
       "tags": [
         "version",
@@ -5482,26 +5482,27 @@
     },
     {
       "name": "sandbox",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "description": "Sandboxed code execution — run JavaScript/TypeScript snippets in an isolated VM context.",
       "tags": [
         "sandbox",
         "execution",
         "vm",
         "javascript",
+        "typescript",
         "devtools"
       ],
       "dependencies": [],
       "tools": [
         {
           "name": "run",
-          "description": "Execute a JavaScript code snippet in a sandboxed VM context. Returns the result of the last expression.",
+          "description": "Execute a JavaScript or TypeScript snippet in a sandboxed VM context. TypeScript is auto-transpiled via esbuild. Returns the result of the last expression.",
           "inputSchema": {
             "type": "object",
             "properties": {
               "code": {
                 "type": "string",
-                "description": "JavaScript code to execute"
+                "description": "JavaScript or TypeScript code to execute"
               },
               "timeout": {
                 "type": "number",
@@ -5537,13 +5538,13 @@
         },
         {
           "name": "eval",
-          "description": "Evaluate an expression and return its value. Lighter than run — single expression only.",
+          "description": "Evaluate a JavaScript or TypeScript expression and return its value. Lighter than run — single expression only. TypeScript is auto-transpiled via esbuild.",
           "inputSchema": {
             "type": "object",
             "properties": {
               "expression": {
                 "type": "string",
-                "description": "JavaScript expression to evaluate"
+                "description": "JavaScript or TypeScript expression to evaluate"
               },
               "timeout": {
                 "type": "number",
@@ -5562,6 +5563,23 @@
           "inputSchema": {
             "type": "object",
             "properties": {},
+            "additionalProperties": false
+          }
+        },
+        {
+          "name": "read",
+          "description": "Read a file from the current working directory (bounded — no absolute paths, no ../ escapes). Returns the file contents as a string. Use this to load source files from the codebase before processing them in the sandbox.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Relative path to the file within the working directory (e.g. 'src/utils.ts'). Absolute paths and directory traversal are rejected."
+              }
+            },
+            "required": [
+              "path"
+            ],
             "additionalProperties": false
           }
         }
