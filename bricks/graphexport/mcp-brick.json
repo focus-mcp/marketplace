@@ -2,18 +2,68 @@
     "name": "graphexport",
     "version": "0.0.0",
     "prefix": "ge",
-    "description": "Knowledge graph export — generate HTML, Mermaid, GraphML, Cypher, Obsidian, and wiki formats.",
+    "description": "Generate visualizations from a provided or upstream graph. For upstream graphs, use with graphbuild/callgraph/depgraph first. Alternatively, load an inline graph via ge_input(graph) to use standalone.",
     "dependencies": [],
     "tools": [
         {
+            "name": "input",
+            "description": "Load an inline graph (nodes + edges JSON) into ambient state for subsequent export tools. Use this to make graphexport standalone without an upstream graphbuild/callgraph/depgraph brick.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "graph": {
+                        "type": "object",
+                        "description": "Inline graph with nodes and edges arrays",
+                        "properties": {
+                            "nodes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "string" },
+                                        "label": { "type": "string" },
+                                        "type": { "type": "string" }
+                                    },
+                                    "required": ["id", "label", "type"]
+                                }
+                            },
+                            "edges": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "from": { "type": "string" },
+                                        "to": { "type": "string" },
+                                        "type": { "type": "string" }
+                                    },
+                                    "required": ["from", "to", "type"]
+                                }
+                            }
+                        },
+                        "required": ["nodes", "edges"]
+                    }
+                },
+                "required": ["graph"],
+                "additionalProperties": false
+            }
+        },
+        {
             "name": "html",
-            "description": "Export graph as a standalone HTML page with a simple SVG visualization.",
+            "description": "Export graph as a standalone HTML page with a simple SVG visualization. Pass graph inline or rely on upstream graphbuild/callgraph/depgraph context.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
                     "title": {
                         "type": "string",
                         "description": "Page title (default 'Knowledge Graph')"
+                    },
+                    "graph": {
+                        "type": "object",
+                        "description": "Optional inline graph (overrides upstream context)",
+                        "properties": {
+                            "nodes": { "type": "array" },
+                            "edges": { "type": "array" }
+                        }
                     }
                 },
                 "additionalProperties": false
@@ -21,34 +71,94 @@
         },
         {
             "name": "mermaid",
-            "description": "Export graph as Mermaid diagram syntax.",
+            "description": "Export graph as Mermaid diagram syntax. Pass graph inline or rely on upstream graphbuild/callgraph/depgraph context.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "direction": { "type": "string", "description": "TB, LR, BT, RL (default TB)" }
+                    "direction": { "type": "string", "description": "TB, LR, BT, RL (default TB)" },
+                    "graph": {
+                        "type": "object",
+                        "description": "Optional inline graph (overrides upstream context)",
+                        "properties": {
+                            "nodes": { "type": "array" },
+                            "edges": { "type": "array" }
+                        }
+                    }
                 },
                 "additionalProperties": false
             }
         },
         {
             "name": "graphml",
-            "description": "Export graph as GraphML XML format.",
-            "inputSchema": { "type": "object", "properties": {}, "additionalProperties": false }
+            "description": "Export graph as GraphML XML format. Pass graph inline or rely on upstream graphbuild/callgraph/depgraph context.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "graph": {
+                        "type": "object",
+                        "description": "Optional inline graph (overrides upstream context)",
+                        "properties": {
+                            "nodes": { "type": "array" },
+                            "edges": { "type": "array" }
+                        }
+                    }
+                },
+                "additionalProperties": false
+            }
         },
         {
             "name": "cypher",
-            "description": "Export graph as Cypher CREATE statements (Neo4j compatible).",
-            "inputSchema": { "type": "object", "properties": {}, "additionalProperties": false }
+            "description": "Export graph as Cypher CREATE statements (Neo4j compatible). Pass graph inline or rely on upstream graphbuild/callgraph/depgraph context.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "graph": {
+                        "type": "object",
+                        "description": "Optional inline graph (overrides upstream context)",
+                        "properties": {
+                            "nodes": { "type": "array" },
+                            "edges": { "type": "array" }
+                        }
+                    }
+                },
+                "additionalProperties": false
+            }
         },
         {
             "name": "obsidian",
-            "description": "Export graph as Obsidian-compatible markdown files with [[wikilinks]].",
-            "inputSchema": { "type": "object", "properties": {}, "additionalProperties": false }
+            "description": "Export graph as Obsidian-compatible markdown files with [[wikilinks]]. Pass graph inline or rely on upstream graphbuild/callgraph/depgraph context.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "graph": {
+                        "type": "object",
+                        "description": "Optional inline graph (overrides upstream context)",
+                        "properties": {
+                            "nodes": { "type": "array" },
+                            "edges": { "type": "array" }
+                        }
+                    }
+                },
+                "additionalProperties": false
+            }
         },
         {
             "name": "wiki",
-            "description": "Export graph as a single wiki-style markdown document with sections per node.",
-            "inputSchema": { "type": "object", "properties": {}, "additionalProperties": false }
+            "description": "Export graph as a single wiki-style markdown document with sections per node. Pass graph inline or rely on upstream graphbuild/callgraph/depgraph context.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "graph": {
+                        "type": "object",
+                        "description": "Optional inline graph (overrides upstream context)",
+                        "properties": {
+                            "nodes": { "type": "array" },
+                            "edges": { "type": "array" }
+                        }
+                    }
+                },
+                "additionalProperties": false
+            }
         }
     ],
     "tags": ["graph", "export", "mermaid", "graphml", "cypher", "obsidian"],
