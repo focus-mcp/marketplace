@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-task",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Task management for multi-agent workflows — create tasks, assign to agents, track status, mark complete.",
     "license": "MIT",

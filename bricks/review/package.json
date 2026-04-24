@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-review",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Structured code review — analyze code quality, security, architecture patterns, compare versions.",
     "license": "MIT",

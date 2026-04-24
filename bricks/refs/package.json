@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-refs",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Cross-references — find who imports or uses a symbol, locate declarations, and trace inheritance chains.",
     "license": "MIT",

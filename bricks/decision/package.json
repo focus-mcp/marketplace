@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-decision",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Structured decision-making — define options, analyze tradeoffs, recommend, and record decisions.",
     "license": "MIT",

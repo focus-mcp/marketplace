@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-dispatch",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Task dispatch queue — send tasks, manage queue, cancel, check status for multi-step workflows.",
     "license": "MIT",
