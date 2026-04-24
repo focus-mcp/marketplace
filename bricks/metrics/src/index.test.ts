@@ -2,14 +2,24 @@
 // SPDX-License-Identifier: MIT
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { metCosts, metDuration, metSession, metTokens, resetMetrics } from './operations.ts';
+import {
+    flushPending,
+    metBatch,
+    metCosts,
+    metDuration,
+    metSession,
+    metTokens,
+    resetMetrics,
+} from './operations.ts';
 
 beforeEach(() => {
     resetMetrics();
+    flushPending();
 });
 
 afterEach(() => {
     resetMetrics();
+    flushPending();
 });
 
 // ─── metSession ───────────────────────────────────────────────────────────────
@@ -81,6 +91,72 @@ describe('metTokens', () => {
         expect(result.recorded).toBe(true);
         expect(result.total.tokens).toBe(0);
     });
+
+    // ─── P0 regression: 21 consecutive calls must NOT incur 21x fsync latency ──
+
+    it('21 consecutive metTokens calls complete in bounded time (no per-call fsync)', () => {
+        const CALLS = 21;
+        // Measure a single call baseline
+        const singleStart = performance.now();
+        metTokens({ tool: 'baseline', inputTokens: 10, outputTokens: 5 });
+        const singleDuration = performance.now() - singleStart;
+        flushPending();
+        resetMetrics();
+
+        // Measure 21 calls
+        const batchStart = performance.now();
+        for (let i = 0; i < CALLS; i++) {
+            metTokens({ tool: `t${i}`, inputTokens: 10, outputTokens: 5 });
+        }
+        flushPending();
+        const batchDuration = performance.now() - batchStart;
+
+        // 21 calls must be ≤ 5× a single call (was 21× with fsync per call)
+        // Be generous: allow up to 50ms total for 21 in-memory pushes
+        expect(batchDuration).toBeLessThan(50);
+        // Also check ratio — only meaningful if singleDuration > 0
+        if (singleDuration > 0) {
+            expect(batchDuration / singleDuration).toBeLessThan(5);
+        }
+    });
+});
+
+// ─── metBatch ─────────────────────────────────────────────────────────────────
+
+describe('metBatch', () => {
+    it('records multiple entries in one call', () => {
+        const result = metBatch({
+            records: [
+                { tool: 'search', inputTokens: 100, outputTokens: 50 },
+                { tool: 'read', inputTokens: 200, outputTokens: 80 },
+                { tool: 'write', inputTokens: 50, outputTokens: 20 },
+            ],
+        });
+
+        expect(result.recorded).toBe(3);
+        expect(result.total.inputTokens).toBe(350);
+        expect(result.total.outputTokens).toBe(150);
+        expect(result.total.tokens).toBe(500);
+    });
+
+    it('returns 0 for empty records array', () => {
+        const result = metBatch({ records: [] });
+
+        expect(result.recorded).toBe(0);
+        expect(result.total.tokens).toBe(0);
+    });
+
+    it('accumulates on top of existing session data', () => {
+        metTokens({ tool: 'existing', inputTokens: 100, outputTokens: 50 });
+        flushPending();
+
+        const result = metBatch({
+            records: [{ tool: 'new', inputTokens: 50, outputTokens: 25 }],
+        });
+
+        expect(result.total.inputTokens).toBe(150);
+        expect(result.total.outputTokens).toBe(75);
+    });
 });
 
 // ─── metCosts ─────────────────────────────────────────────────────────────────
@@ -138,8 +214,6 @@ describe('metDuration', () => {
     });
 
     it('returns stats for all calls when no filter given', () => {
-        // Inject tool calls directly via metTokens then patch duration via the store
-        // We test by recording tokens — duration is 0 by default from metTokens
         metTokens({ tool: 'search', inputTokens: 10, outputTokens: 5 });
         metTokens({ tool: 'read', inputTokens: 10, outputTokens: 5 });
 
@@ -185,7 +259,7 @@ describe('metDuration', () => {
 // ─── brick lifecycle ──────────────────────────────────────────────────────────
 
 describe('metrics brick', () => {
-    it('registers 4 handlers on start and unregisters on stop', async () => {
+    it('registers 5 handlers on start and unregisters on stop', async () => {
         const { default: brick } = await import('./index.ts');
         const unsubbers: Array<() => void> = [];
         const bus = {
@@ -198,11 +272,12 @@ describe('metrics brick', () => {
         };
 
         await brick.start({ bus });
-        expect(bus.handle).toHaveBeenCalledTimes(4);
+        expect(bus.handle).toHaveBeenCalledTimes(5);
         expect(bus.handle).toHaveBeenCalledWith('metrics:session', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('metrics:tokens', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('metrics:costs', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('metrics:duration', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('metrics:batch', expect.any(Function));
 
         await brick.stop();
         for (const unsub of unsubbers) {
