@@ -2,8 +2,14 @@
 // SPDX-License-Identifier: MIT
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
-import type { FoCopyInput, FoDeleteInput, FoMoveInput, FoRenameInput } from './operations.ts';
-import { foCopy, foDelete, foMove, foRename } from './operations.ts';
+import type {
+    FoBatchInput,
+    FoCopyInput,
+    FoDeleteInput,
+    FoMoveInput,
+    FoRenameInput,
+} from './operations.ts';
+import { foBatch, foCopy, foDelete, foMove, foRename, setWorkRoot } from './operations.ts';
 
 interface BrickBus {
     on(
@@ -48,6 +54,16 @@ const brick: Brick = {
         );
         unsubscribers.push(
             ctx.bus.handle('fileops:rename', (data) => foRename(data as FoRenameInput)),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('fileops:batch', (data) => foBatch(data as FoBatchInput)),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('fileops:setRoot', (data) => {
+                const { root } = data as { root: string };
+                setWorkRoot(root);
+                return { root };
+            }),
         );
     },
     stop() {

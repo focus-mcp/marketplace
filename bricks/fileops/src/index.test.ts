@@ -5,18 +5,65 @@ import { access, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { foCopy, foDelete, foMove, foRename } from './operations.ts';
+import {
+    foBatch,
+    foCopy,
+    foDelete,
+    foMove,
+    foRename,
+    getWorkRoot,
+    setWorkRoot,
+} from './operations.ts';
 
 let testDir: string;
+let originalWorkRoot: string;
 
 beforeEach(async () => {
     testDir = await mkdtemp(join(tmpdir(), 'focusmcp-fileops-test-'));
     await writeFile(join(testDir, 'source.txt'), 'source content');
+    originalWorkRoot = getWorkRoot();
+    // Pin workRoot to testDir so all relative paths resolve there
+    setWorkRoot(testDir);
 });
 
 afterEach(async () => {
+    setWorkRoot(originalWorkRoot);
     await rm(testDir, { recursive: true, force: true });
 });
+
+// ─── workRoot + path sandboxing ───────────────────────────────────────────────
+
+describe('workRoot sandboxing', () => {
+    it('resolves relative path "./foo.ts" relative to workRoot, not process.cwd()', async () => {
+        await writeFile(join(testDir, 'foo.ts'), 'ts content');
+        const result = await foCopy({ from: './foo.ts', to: './foo.copy.ts' });
+        // Must have operated inside testDir, not process.cwd()
+        expect(result.from).toBe(join(testDir, 'foo.ts'));
+        expect(result.to).toBe(join(testDir, 'foo.copy.ts'));
+        const content = await readFile(join(testDir, 'foo.copy.ts'), 'utf-8');
+        expect(content).toBe('ts content');
+    });
+
+    it('rejects a path that escapes workRoot via ../', async () => {
+        await expect(foCopy({ from: '../escape.txt', to: './dest.txt' })).rejects.toThrow(
+            /escapes workRoot|outside workRoot/,
+        );
+    });
+
+    it('rejects deeply nested escape via ../../', async () => {
+        await expect(foDelete({ path: '../../etc/passwd' })).rejects.toThrow(
+            /escapes workRoot|outside workRoot/,
+        );
+    });
+
+    it('rename target is confined to workRoot', async () => {
+        const result = await foRename({ path: './source.txt', name: 'renamed.txt' });
+        expect(result.from).toBe(join(testDir, 'source.txt'));
+        expect(result.to).toBe(join(testDir, 'renamed.txt'));
+    });
+});
+
+// ─── foMove ───────────────────────────────────────────────────────────────────
 
 describe('foMove', () => {
     it('moves a file to a new path', async () => {
@@ -29,6 +76,8 @@ describe('foMove', () => {
         await expect(access(from)).rejects.toThrow();
     });
 });
+
+// ─── foCopy ───────────────────────────────────────────────────────────────────
 
 describe('foCopy', () => {
     it('copies a file to a new path', async () => {
@@ -43,6 +92,8 @@ describe('foCopy', () => {
     });
 });
 
+// ─── foDelete ─────────────────────────────────────────────────────────────────
+
 describe('foDelete', () => {
     it('deletes a file', async () => {
         const path = join(testDir, 'source.txt');
@@ -56,6 +107,8 @@ describe('foDelete', () => {
     });
 });
 
+// ─── foRename ─────────────────────────────────────────────────────────────────
+
 describe('foRename', () => {
     it('renames a file within its directory', async () => {
         const path = join(testDir, 'source.txt');
@@ -67,8 +120,51 @@ describe('foRename', () => {
     });
 });
 
+// ─── foBatch ─────────────────────────────────────────────────────────────────
+
+describe('foBatch', () => {
+    it('executes multiple ops in sequence', async () => {
+        await writeFile(join(testDir, 'a.txt'), 'a');
+        await writeFile(join(testDir, 'b.txt'), 'b');
+
+        const result = await foBatch({
+            ops: [
+                { op: 'copy', from: join(testDir, 'a.txt'), to: join(testDir, 'a2.txt') },
+                { op: 'rename', path: join(testDir, 'b.txt'), name: 'b2.txt' },
+                { op: 'delete', path: join(testDir, 'a.txt') },
+            ],
+        });
+
+        expect(result.results).toHaveLength(3);
+        expect(result.results[0]).toMatchObject({ op: 'copy', copied: true });
+        expect(result.results[1]).toMatchObject({ op: 'rename', renamed: true });
+        expect(result.results[2]).toMatchObject({ op: 'delete', deleted: true });
+
+        await expect(access(join(testDir, 'a2.txt'))).resolves.toBeUndefined();
+        await expect(access(join(testDir, 'b2.txt'))).resolves.toBeUndefined();
+        await expect(access(join(testDir, 'a.txt'))).rejects.toThrow();
+    });
+
+    it('stops on first error', async () => {
+        await expect(
+            foBatch({
+                ops: [
+                    { op: 'delete', path: join(testDir, 'nonexistent.txt') },
+                    {
+                        op: 'copy',
+                        from: join(testDir, 'source.txt'),
+                        to: join(testDir, 'dest.txt'),
+                    },
+                ],
+            }),
+        ).rejects.toThrow();
+    });
+});
+
+// ─── brick lifecycle ──────────────────────────────────────────────────────────
+
 describe('fileops brick', () => {
-    it('registers 4 handlers on start and unregisters on stop', async () => {
+    it('registers 6 handlers on start and unregisters on stop', async () => {
         const { default: brick } = await import('./index.ts');
         const unsubscribers: Array<() => void> = [];
         const bus = {
@@ -80,11 +176,13 @@ describe('fileops brick', () => {
             on: vi.fn(),
         };
         await brick.start({ bus });
-        expect(bus.handle).toHaveBeenCalledTimes(4);
+        expect(bus.handle).toHaveBeenCalledTimes(6);
         expect(bus.handle).toHaveBeenCalledWith('fileops:move', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('fileops:copy', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('fileops:delete', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('fileops:rename', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('fileops:batch', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('fileops:setRoot', expect.any(Function));
         await brick.stop();
         for (const unsub of unsubscribers) {
             expect(unsub).toHaveBeenCalled();
