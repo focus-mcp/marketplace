@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-onboarding",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Project onboarding workflow — auto-discover project structure, conventions, and key files for a new contributor or AI agent.",
     "license": "MIT",

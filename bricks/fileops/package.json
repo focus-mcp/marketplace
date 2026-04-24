@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-fileops",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "File operations — move, copy, delete, rename.",
     "license": "MIT",

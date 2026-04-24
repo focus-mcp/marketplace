@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-shell",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Shell command execution — run commands, background processes, kill, and compress output.",
     "license": "MIT",

@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-validate",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Validate data — JSON syntax, JSON Schema compliance, TypeScript type checking, lint rules.",
     "license": "MIT",

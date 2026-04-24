@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-smartcontext",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Composite brick — orchestrates smartread, cache, compress, tokenbudget, and overview to deliver optimal context within a token budget.",
     "license": "MIT",

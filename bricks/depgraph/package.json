@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-depgraph",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Dependency graph analysis — imports, exports, circular deps, fan-in/out.",
     "license": "MIT",
