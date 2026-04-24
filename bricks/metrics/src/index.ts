@@ -3,12 +3,13 @@
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
 import type {
+    MetBatchInput,
     MetCostsInput,
     MetDurationInput,
     MetSessionInput,
     MetTokensInput,
 } from './operations.ts';
-import { metCosts, metDuration, metSession, metTokens } from './operations.ts';
+import { metBatch, metCosts, metDuration, metSession, metTokens } from './operations.ts';
 
 interface BrickBus {
     on(
@@ -57,6 +58,9 @@ const brick: Brick = {
         );
         unsubscribers.push(
             ctx.bus.handle('metrics:duration', (data) => metDuration(data as MetDurationInput)),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('metrics:batch', (data) => metBatch(data as MetBatchInput)),
         );
     },
     stop() {
