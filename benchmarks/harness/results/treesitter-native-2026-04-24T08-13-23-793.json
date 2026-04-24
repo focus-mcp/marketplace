@@ -1,0 +1,25 @@
+{
+  "brick": "treesitter",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:11:56.092Z",
+  "duration_ms": 87701,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 20935,
+    "cache_read_input_tokens": 660530,
+    "output_tokens": 4223,
+    "total": 685736
+  },
+  "session_id": "5636ad14-73c4-47be-95f6-6a96472a3eec",
+  "result_block": "## Result\n- **Brick**: treesitter\n- **Mode**: native\n- **Mini-task**: List all unique `export function` symbol names from `test-repo/packages/common/decorators/core/*.ts`, sorted alphabetically\n- **Answer**:\n  ```\n  applyDecorators\n  Bind\n  Catch\n  Controller\n  flatten\n  Inject\n  Injectable\n  mixin\n  Optional\n  UseGuards\n  UseInterceptors\n  UsePipes\n  Version\n  ```\n- **Turns used**: 7\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: The `exception-filters.decorator.ts` and `set-metadata.decorator.ts` files export only `const` arrow functions (`UseFilters`, `Dependencies`, `SetMetadata`) not `export function`, so they are correctly excluded. `dependencies.decorator.ts` exports `flatten` via `export function` alongside the `Dependencies` const. `index.ts` only re-exports with `export * from ...` and declares no function symbols of its own.",
+  "mini_task_spec": "Using only the TypeScript source files directly inside `test-repo/packages/common/decorators/core/` (all `.ts` files, including `index.ts`), list every **unique exported function name** — i.e. symbols declared with `export function <name>` — sorted alphabetically. Overloaded function signatures (same name, different signatures) count only once. Report one name per line.",
+  "workdir": "/tmp/focus-bench/treesitter-native-2026-04-24T08-11-56-092",
+  "exit_reason": "ok"
+}

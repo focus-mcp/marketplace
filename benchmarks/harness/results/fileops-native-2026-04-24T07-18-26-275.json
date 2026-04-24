@@ -1,0 +1,26 @@
+{
+  "brick": "fileops",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:16:59.642Z",
+  "duration_ms": 86633,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 33984,
+    "cache_read_input_tokens": 449814,
+    "output_tokens": 3919,
+    "total": 487750
+  },
+  "session_id": "ea395e53-1b61-4022-8885-4f8845637e41",
+  "result_block": "## Result\n- **Brick**: fileops\n- **Mode**: native\n- **Mini-task**: Copy `logger.service.ts` and rename `console-logger.service.ts` in `packages/common/services/`\n- **Answer**:\n  ```\n  console.service.ts\n  index.ts\n  logger-copy.service.ts\n  logger.service.ts\n  utils\n  ```\n- **Turns used**: 5\n- **Tools used**: Bash, Glob, Read\n- **Rough token estimate**: ~4,500\n- **Notes**: Straightforward. `cp` and `mv` via Bash replicate what the fileops brick's `copy` and `rename` tools would do. No issues encountered. The `utils` entry is a subdirectory that appears in the listing as expected.",
+  "mini_task_spec": "Using file operation tools, perform the following two operations on the NestJS test repository located at `test-repo/packages/common/services/`:\n\n1. **Copy** the file `test-repo/packages/common/services/logger.service.ts` to a new file `test-repo/packages/common/services/logger-copy.service.ts` (same directory, new name).\n2. **Rename** the file `test-repo/packages/common/services/console-logger.service.ts` to `console.service.ts` within the same directory (i.e., the result lives at `test-repo/packages/common/services/console.service.ts`).\n\nAfter completing both operations, list all entries (files and directories) **directly** inside `test-repo/packages/common/services/` (non-recursive — do not descend into subdirectories), sorted alphabetically, one per line, reporting only the basename (not the full path).\n\nExpected answer format: basenames only, one per line, alphabetically sorted.\n\n---",
+  "workdir": "/tmp/focus-bench/fileops-native-2026-04-24T07-16-59-642",
+  "exit_reason": "ok"
+}

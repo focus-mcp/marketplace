@@ -1,0 +1,26 @@
+{
+  "brick": "impact",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:32:22.981Z",
+  "duration_ms": 116288,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 51,
+    "cache_creation_input_tokens": 53389,
+    "cache_read_input_tokens": 798525,
+    "output_tokens": 9074,
+    "total": 861039
+  },
+  "session_id": "68ff7980-a96f-474b-864c-7965a8ce39f8",
+  "result_block": "## Result\n- **Brick**: impact\n- **Mode**: native\n- **Mini-task**: Find all direct importers of `packages/common/utils/load-package.util.ts` in `test-repo/packages/`\n- **Answer**:\n```\npackages/common/pipes/validation.pipe.ts\npackages/common/serializer/class-serializer.interceptor.ts\npackages/common/test/utils/load-package.util.spec.ts\npackages/core/nest-application.ts\npackages/core/nest-factory.ts\npackages/microservices/client/client-grpc.ts\npackages/microservices/client/client-kafka.ts\npackages/microservices/client/client-mqtt.ts\npackages/microservices/client/client-nats.ts\npackages/microservices/client/client-redis.ts\npackages/microservices/client/client-rmq.ts\npackages/microservices/deserializers/nats-request-json.deserializer.ts\npackages/microservices/deserializers/nats-response-json.deserializer.ts\npackages/microservices/helpers/kafka-reply-partition-assigner.ts\npackages/microservices/serializers/nats-record.serializer.ts\npackages/microservices/server/server.ts\npackages/platform-fastify/adapters/fastify-adapter.ts\npackages/platform-ws/adapters/ws-adapter.ts\npackages/testing/testing-module.ts\n```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: 3,500\n- **Notes**: The `packages/common/utils/index.ts` only re-exports `forward-ref.util`, not `load-package.util`, so no indirect importers via barrel file need to be counted. All 19 matching files use direct path imports (either relative or via the `@nestjs/common/` package alias).",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/`, a developer is about to modify `test-repo/packages/common/utils/load-package.util.ts`. Using change-impact analysis, identify all `.ts` files within `test-repo/packages/` (including test/spec files) that are **direct importers** of `packages/common/utils/load-package.util.ts` — i.e., files that contain an import statement referencing either the relative path (e.g., `../utils/load-package.util`, `../../utils/load-package.util`) or the package path `@nestjs/common/utils/load-package.util`. Do not include the source file itself (`packages/common/utils/load-package.util.ts`). List the results as paths relative to `test-repo/`, one per line, sorted alphabetically.",
+  "workdir": "/tmp/focus-bench/impact-native-2026-04-24T07-32-22-981",
+  "exit_reason": "ok"
+}

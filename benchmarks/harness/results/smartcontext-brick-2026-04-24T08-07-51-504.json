@@ -1,0 +1,24 @@
+{
+  "brick": "smartcontext",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:07:18.259Z",
+  "duration_ms": 33245,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch"
+  ],
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 15064,
+    "cache_read_input_tokens": 103951,
+    "output_tokens": 1244,
+    "total": 120283
+  },
+  "session_id": "179823b6-cfb1-4951-af2e-f20ec8ef1565",
+  "result_block": "",
+  "workdir": "/tmp/focus-bench/smartcontext-brick-2026-04-24T08-07-18-258",
+  "exit_reason": "ok"
+}

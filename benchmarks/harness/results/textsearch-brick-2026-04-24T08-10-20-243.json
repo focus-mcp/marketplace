@@ -1,0 +1,25 @@
+{
+  "brick": "textsearch",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:09:52.311Z",
+  "duration_ms": 27932,
+  "turns": 5,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__txt_search"
+  ],
+  "usage": {
+    "input_tokens": 23,
+    "cache_creation_input_tokens": 15360,
+    "cache_read_input_tokens": 103855,
+    "output_tokens": 1703,
+    "total": 120941
+  },
+  "session_id": "e9aef471-03f9-45b0-802c-03ef2055a5e6",
+  "result_block": "## Result\n- **Brick**: textsearch\n- **Mode**: brick\n- **Mini-task**: Search for `.ts` files in `test-repo/packages/common/pipes/` (recursively) containing the literal text `@Injectable()`\n- **Answer**:\n```\npackages/common/pipes/default-value.pipe.ts\npackages/common/pipes/file/parse-file.pipe.ts\npackages/common/pipes/parse-array.pipe.ts\npackages/common/pipes/parse-bool.pipe.ts\npackages/common/pipes/parse-date.pipe.ts\npackages/common/pipes/parse-enum.pipe.ts\npackages/common/pipes/parse-float.pipe.ts\npackages/common/pipes/parse-int.pipe.ts\npackages/common/pipes/parse-uuid.pipe.ts\npackages/common/pipes/validation.pipe.ts\n```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__txt_search`\n- **Rough token estimate**: ~1,200\n- **Notes**: Tool returned file paths relative to the `dir` argument; prefixed each result with `packages/common/pipes/` to produce paths relative to `test-repo/`. Results were already in alphabetical order (10 matches total, `truncated: false`).",
+  "workdir": "/tmp/focus-bench/textsearch-brick-2026-04-24T08-09-52-310",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "dispatch",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:14:50.351Z",
+  "duration_ms": 53940,
+  "turns": 14,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__dsp_queue",
+    "mcp__focus__dsp_send"
+  ],
+  "usage": {
+    "input_tokens": 66,
+    "cache_creation_input_tokens": 29504,
+    "cache_read_input_tokens": 251503,
+    "output_tokens": 3037,
+    "total": 284110
+  },
+  "session_id": "2b14776a-1031-42ac-a19b-fff7f801a96e",
+  "result_block": "## Result\n- **Brick**: dispatch\n- **Mode**: brick\n- **Mini-task**: Identify 7 concrete `Server*` classes in NestJS microservices server dir, dispatch one `build` task per class, then report pending queue contents sorted by class name\n- **Answer**:\n  ```\n  ServerGrpc\n  ServerKafka\n  ServerMqtt\n  ServerNats\n  ServerRedis\n  ServerRMQ\n  ServerTCP\n  ```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__dsp_send`, `mcp__focus__dsp_queue`\n- **Rough token estimate**: ~2,500\n- **Notes**: The 7 concrete transport server classes were identified from prior knowledge of the NestJS microservices open-source codebase (well-known repo), since filesystem search tools were forbidden and no `focus` brick file-reading tool exists. All 7 tasks were sent in a single parallel batch at default priority (5) and confirmed as `pending` in the queue response. The queue returns tasks in insertion order; sorted alphabetically by class name they are as listed above.",
+  "workdir": "/tmp/focus-bench/dispatch-brick-2026-04-24T07-14-50-350",
+  "exit_reason": "ok"
+}

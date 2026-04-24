@@ -1,0 +1,25 @@
+{
+  "brick": "dispatch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:10:38.701Z",
+  "duration_ms": 120475,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 51,
+    "cache_creation_input_tokens": 28423,
+    "cache_read_input_tokens": 758858,
+    "output_tokens": 7541,
+    "total": 794873
+  },
+  "session_id": "b5254a2e-75b3-490e-9ad7-a616c9ba5e8c",
+  "result_block": "## Result\n- **Brick**: dispatch\n- **Mode**: native\n- **Mini-task**: Identify @nestjs/* packages that are required (non-optional) peer dependencies of at least one other package in the monorepo\n- **Answer**:\n  ```\n  @nestjs/common\n  @nestjs/core\n  @nestjs/websockets\n  ```\n- **Turns used**: 9\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~4,500\n- **Notes**: The dispatch brick's core strength is task queue management — the natural bridge to this repo is determining build dispatch priority order. Packages that are required peer dependencies of others must be built first (higher priority). The task is fully deterministic: reading `peerDependencies` and `peerDependenciesMeta` from each `package.json` yields an unambiguous set of required cross-package deps. No brick tools were used (native mode only).",
+  "mini_task_spec": "You are working with a NestJS monorepo located at `test-repo/`. Each package is under `test-repo/packages/<name>/package.json` and has a `\"name\"` field (e.g. `@nestjs/common`), a `\"peerDependencies\"` section, and an optional `\"peerDependenciesMeta\"` section.\n\nA peer dependency is **required** if it appears in `peerDependencies` but does NOT appear in `peerDependenciesMeta` (or `peerDependenciesMeta` does not exist in the file). A peer dependency is **optional** if it appears in `peerDependenciesMeta` with `\"optional\": true`.\n\nYour task: Identify which `@nestjs/*` packages (those whose `name` starts with `@nestjs/`) that live inside `test-repo/packages/` are listed as a **required** (non-optional) peer dependency by at least one other `@nestjs/*` package in `test-repo/packages/`. Only consider cross-package references within the monorepo (i.e. the dependency's name must match one of the packages' own `name` fields).\n\nReturn the result as a sorted alphabetical list of package names, one per line.\n\n**Expected answer format**: package names (e.g. `@nestjs/common`), one per line, sorted alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/dispatch-native-2026-04-24T07-10-38-701",
+  "exit_reason": "ok"
+}

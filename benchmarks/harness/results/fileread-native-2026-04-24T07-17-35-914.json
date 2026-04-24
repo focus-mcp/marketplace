@@ -1,0 +1,25 @@
+{
+  "brick": "fileread",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:16:28.653Z",
+  "duration_ms": 67261,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 34,
+    "cache_creation_input_tokens": 19510,
+    "cache_read_input_tokens": 438064,
+    "output_tokens": 4215,
+    "total": 461823
+  },
+  "session_id": "e2a69699-bb0c-4037-a809-6f73fea89ba7",
+  "result_block": "## Result\n\n- **Brick**: fileread\n- **Mode**: native\n- **Mini-task**: Extract import sources from head-30 and last method name from tail-4 of `packages/core/injector/injector.ts`\n- **Answer**:\n  - **Part 1 — import sources (lines 1–30), in order**:\n    ```\n    @nestjs/common\n    @nestjs/common/constants\n    @nestjs/common/interfaces\n    @nestjs/common/utils/cli-colors.util\n    @nestjs/common/utils/shared.utils\n    iterare\n    perf_hooks\n    ```\n  - **Part 2 — last private method name (last 4 lines)**: `getNowTimestamp`\n- **Turns used**: 5\n- **Tools used**: `Read`, `Bash`\n- **Rough token estimate**: ~900\n- **Notes**: Brick is purely about file I/O (head/tail/range). The native solution used `Read` with `limit`/`offset` parameters and a `head`+`tail` bash call to verify. No subagents or write tools used. The answer is fully deterministic.",
+  "mini_task_spec": "Using the fileread brick, perform two targeted read operations on the file `test-repo/packages/core/injector/injector.ts`:\n\n1. **Head operation**: Read only the first 30 lines of the file. From those 30 lines, extract all import source module paths — the quoted strings that appear after `from` keywords in TypeScript `import` statements. List them in order of first appearance, one per line, without quotes.\n\n2. **Tail operation**: Read only the last 4 lines of the same file. Report the name of the private method defined in those last lines (i.e., the identifier immediately after `private `).\n\nExpected answer format:\n- Part 1: a newline-separated list of 7 module path strings (in order of appearance in the first 30 lines).\n- Part 2: a single method name (string).\n\n---",
+  "workdir": "/tmp/focus-bench/fileread-native-2026-04-24T07-16-28-653",
+  "exit_reason": "ok"
+}

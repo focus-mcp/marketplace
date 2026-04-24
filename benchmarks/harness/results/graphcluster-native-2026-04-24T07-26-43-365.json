@@ -1,0 +1,25 @@
+{
+  "brick": "graphcluster",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:24:49.380Z",
+  "duration_ms": 113985,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 40,
+    "cache_creation_input_tokens": 31682,
+    "cache_read_input_tokens": 576624,
+    "output_tokens": 7935,
+    "total": 616281
+  },
+  "session_id": "f31a3269-48c5-45ef-acd1-f008af649088",
+  "result_block": "## Result\n\n- **Brick**: graphcluster\n- **Mode**: native\n- **Mini-task**: Compute topological architecture layers of @nestjs/* packages by their required inter-package peer-dependencies\n- **Answer**:\n  ```\n  Layer 0: common\n  Layer 1: core\n  Layer 2: microservices, platform-express, platform-fastify, testing, websockets\n  Layer 3: platform-socket.io, platform-ws\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~4 000\n- **Notes**: The graphcluster `architecture` tool would automate this from an existing dependency graph; natively it requires reading each package.json, extracting required (non-optional) peerDependencies for @nestjs/* packages, and running a BFS topological sort. Optional peer deps (e.g., websockets→platform-socket.io, core→microservices) are deliberately excluded since they would introduce ambiguity and near-cycles.",
+  "mini_task_spec": "Examine the `test-repo/packages/` directory, which contains the NestJS monorepo packages. Each subdirectory has a `package.json`. For each package whose `name` starts with `@nestjs/`, collect the set of **required** inter-`@nestjs/*` dependencies: include entries in `peerDependencies` that are **not** marked `optional: true` in `peerDependenciesMeta`, plus any `@nestjs/*` entries in `dependencies` (not `devDependencies`). Using these directed edges, compute the **topological architecture layers**: Layer 0 = packages with no required `@nestjs/*` deps, Layer 1 = packages whose required deps are all in Layer 0, Layer 2 = packages whose required deps are all in Layer 0–1, and so on. For each layer, list the packages by their short name (strip the `@nestjs/` prefix) sorted alphabetically. Report the result as:\n\n```\nLayer 0: <comma-separated names>\nLayer 1: <comma-separated names>\nLayer 2: <comma-separated names>\n...\n```\n\n---",
+  "workdir": "/tmp/focus-bench/graphcluster-native-2026-04-24T07-24-49-380",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "filelist",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:16:52.695Z",
+  "duration_ms": 51292,
+  "turns": 8,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__fl_find",
+    "mcp__focus__fl_glob"
+  ],
+  "usage": {
+    "input_tokens": 32,
+    "cache_creation_input_tokens": 32323,
+    "cache_read_input_tokens": 172701,
+    "output_tokens": 2909,
+    "total": 207965
+  },
+  "session_id": "d230c749-29ef-4bb9-a661-cebd8c6d535a",
+  "result_block": "## Result\n- **Brick**: filelist\n- **Mode**: brick\n- **Mini-task**: Find all `index.ts` files directly inside first-level package subdirectories of `test-repo/packages/` (depth 2 from repo root), sorted alphabetically\n- **Answer**:\n  ```\n  packages/common/index.ts\n  packages/core/index.ts\n  packages/microservices/index.ts\n  packages/platform-express/index.ts\n  packages/platform-fastify/index.ts\n  packages/platform-socket.io/index.ts\n  packages/platform-ws/index.ts\n  packages/testing/index.ts\n  packages/websockets/index.ts\n  ```\n- **Turns used**: 5\n- **Tools used**: `mcp__focus__fl_glob`, `mcp__focus__fl_find`\n- **Rough token estimate**: ~5,500\n- **Notes**: The `fl_glob` tool returned empty results for both `*/index.ts` and `**/index.ts` patterns, suggesting the glob implementation may not support these patterns correctly or has a path-resolution issue. Fell back to `fl_find` with `index.ts`, which returned all `index.ts` files recursively — results were then manually filtered to include only paths with exactly one directory segment between `packages/` and `index.ts` (i.e., `packages/<package>/index.ts`).",
+  "workdir": "/tmp/focus-bench/filelist-brick-2026-04-24T07-16-52-694",
+  "exit_reason": "ok"
+}

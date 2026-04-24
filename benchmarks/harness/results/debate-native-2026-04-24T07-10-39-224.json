@@ -1,0 +1,25 @@
+{
+  "brick": "debate",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:09:39.673Z",
+  "duration_ms": 59551,
+  "turns": 9,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 13564,
+    "cache_read_input_tokens": 286504,
+    "output_tokens": 3440,
+    "total": 303533
+  },
+  "session_id": "23b69b66-e865-43d6-8619-4c0a58e4c1a8",
+  "result_block": "## Result\n\n- **Brick**: debate\n- **Mode**: native\n- **Mini-task**: Compute weighted debate scores for platform-express vs platform-fastify from test-repo/decision-http-adapter.json\n- **Answer**:\n  ```\n  platform-express weighted total: 243\n  platform-fastify weighted total: 188\n  winner: platform-express\n  ```\n- **Turns used**: 4\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1,800\n- **Notes**: The `decision-http-adapter.json` file in the test-repo is tailor-made for this brick — it already encodes a scored multi-option debate. Native mode solved it with a single Python one-liner computing weighted sums directly from the JSON; the brick mode would exercise `debate` → `score` → `summary` in sequence. The file's `rationale` field even confirms the expected answer (243 vs 188), making the answer fully deterministic and verifiable.",
+  "mini_task_spec": "Read the file `test-repo/decision-http-adapter.json`. It contains a structured two-option decision between `platform-express` and `platform-fastify` as the HTTP adapter for a NestJS application. The file includes:\n- A `criteria` array, each entry with a `name` and integer `weight`.\n- A `scores` array, each entry with an `option` label and a `scores` array of raw integers (one per criterion, in the same order as `criteria`).\n\nUsing the debate brick's `debate`, `score`, and `summary` tools:\n1. Call `debate` with the topic `\"Which HTTP adapter should be used for a new NestJS application: platform-express or platform-fastify?\"` and two positions derived from each option's pros (joined into a single argument string).\n2. Call `score` on the resulting debate, supplying per-role scores that reflect the relative strengths encoded in the JSON: for `platform-express` use relevance=6, evidence=9, feasibility=9; for `platform-fastify` use relevance=9, evidence=6, feasibility=5.\n3. Call `summary` on the debate.\n\nReport the following, in this exact format:\n```\nplatform-express weighted total: <integer>\nplatform-fastify weighted total: <integer>\nwinner: <option label>\n```\n\nThe weighted total for each option is computed as: sum over all criteria of (raw_score[i] × weight[i]). The criteria weights from the file are [9, 8, 6, 7] in order. The raw scores for `platform-express` are [6, 9, 9, 9] and for `platform-fastify` are [9, 6, 4, 5].\n\n---",
+  "workdir": "/tmp/focus-bench/debate-native-2026-04-24T07-09-39-673",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "metrics",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:36:35.806Z",
+  "duration_ms": 143414,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 43,
+    "cache_creation_input_tokens": 41904,
+    "cache_read_input_tokens": 641762,
+    "output_tokens": 9412,
+    "total": 693121
+  },
+  "session_id": "0d1bc0a7-f41d-4b1b-830b-dbd5fbde8ade",
+  "result_block": "## Result\n\n- **Brick**: metrics\n- **Mode**: native\n- **Mini-task**: Compute total session cost for simulated reads of all >300-line non-spec .ts files in packages/common\n- **Answer**: $0.088560\n\n  Breakdown:\n  | File | Lines | inputTokens | outputTokens |\n  |------|-------|-------------|--------------|\n  | decorators/http/route-params.decorator.ts | 771 | 7710 | 50 |\n  | services/console.service.ts | 621 | 6210 | 50 |\n  | module-utils/configurable-module.builder.ts | 372 | 3720 | 50 |\n  | pipes/validation.pipe.ts | 350 | 3500 | 50 |\n  | services/logger.service.ts | 344 | 3440 | 50 |\n  | services/logger-copy.service.ts | 344 | 3440 | 50 |\n  \n  Total inputTokens: 28020 → cost: $0.084060  \n  Total outputTokens: 300 → cost: $0.004500  \n  **Grand total: $0.088560**\n\n- **Turns used**: 7\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2500 tokens\n- **Notes**: The metrics brick cannot be exercised in native mode — all cost computation was done manually with Python arithmetic. The spec is designed so brick mode would use `met_tokens` (once per file, 6 calls) then `met_costs` to produce the identical numeric answer. Two files (logger.service.ts and logger-copy.service.ts) tie at 344 lines; the task criterion \"more than 300 lines\" naturally includes both without needing a tiebreaker.",
+  "mini_task_spec": "Using the `metrics` brick (tools: `met_tokens`, `met_costs`), simulate a session that \"reads\" all non-spec TypeScript files (files matching `*.ts` but NOT `*.spec.ts`) in `test-repo/packages/common` (search recursively) that have **more than 300 lines**. For each qualifying file, record a token-usage entry with `inputTokens = lineCount × 10` and `outputTokens = 50`. After recording all entries, call the `met_costs` tool with default pricing (inputPricePer1k = 0.003, outputPricePer1k = 0.015) to compute the total session cost. Report the total estimated cost as a dollar amount rounded to 6 decimal places (e.g. `$0.088560`). The answer must reflect the exact 6 qualifying files and their precise line counts as returned by `wc -l`.\n\n---",
+  "workdir": "/tmp/focus-bench/metrics-native-2026-04-24T07-36-35-806",
+  "exit_reason": "ok"
+}

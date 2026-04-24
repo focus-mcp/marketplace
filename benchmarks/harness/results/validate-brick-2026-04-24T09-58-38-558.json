@@ -1,0 +1,32 @@
+{
+  "brick": "validate",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:55:52.632Z",
+  "duration_ms": 165926,
+  "turns": 25,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 122,
+    "cache_creation_input_tokens": 65114,
+    "cache_read_input_tokens": 793434,
+    "output_tokens": 8453,
+    "total": 867123
+  },
+  "session_id": "e385ad89-4e3e-46f8-a4c6-12bf8c195c81",
+  "result_block": "## Result\n- **Brick**: validate\n- **Mode**: brick\n- **Mini-task**: Count lines containing TypeScript `any` type in `packages/platform-ws/adapters/ws-adapter.ts` using `mcp__focus__val_types`\n- **Answer**: UNAVAILABLE — brick tool could not be activated\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_search`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~6,000 tokens\n- **Notes**: The `validate` brick is listed as installed (version `^0.0.0`) but `focus_load \"validate\"` fails with `Cannot find module '@focus-mcp/brick-validate'` — the noop stub at `.focus/bricks/noop.js` cannot resolve the npm package. `focus_update` returned \"not yet implemented\". `focus_remove` failed with \"Lock entry not found\". The marketplace shows version `1.0.0` available but reinstall is blocked. Without Bash access to run `npm install`, the module resolution issue cannot be fixed and `mcp__focus__val_types` never becomes available.",
+  "workdir": "/tmp/focus-bench/validate-brick-2026-04-24T09-55-52-630",
+  "exit_reason": "ok"
+}

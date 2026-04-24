@@ -1,0 +1,27 @@
+{
+  "brick": "parallel",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:41:57.148Z",
+  "duration_ms": 402300,
+  "turns": 12,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__par_collect",
+    "mcp__focus__par_merge",
+    "mcp__focus__par_run"
+  ],
+  "usage": {
+    "input_tokens": 51,
+    "cache_creation_input_tokens": 145694,
+    "cache_read_input_tokens": 406544,
+    "output_tokens": 29865,
+    "total": 582154
+  },
+  "session_id": "eb959bb3-3204-4820-80c4-b75879cf4945",
+  "result_block": "## Result\n- **Brick**: parallel\n- **Mode**: brick\n- **Mini-task**: Count TypeScript source files (excluding `.spec.ts` and `.d.ts`) in each of nine NestJS monorepo packages, running all nine `find` commands in parallel\n- **Answer**:\n  ```\n  common=187\n  core=179\n  microservices=135\n  platform-express=24\n  platform-fastify=15\n  platform-socket.io=3\n  platform-ws=3\n  testing=12\n  websockets=43\n  ```\n- **Turns used**: 11\n- **Tools used**: `mcp__focus__par_run`, `mcp__focus__par_collect`, `mcp__focus__par_merge`\n- **Rough token estimate**: ~14,000 tokens\n- **Notes**: The tool executes commands by splitting on whitespace (not via a shell), so `find ... | wc -l` failed because `|` was passed literally to `find`. Wrapping with `sh -c \"...\"` also failed due to whitespace-splitting of the double-quoted string. Workaround: ran bare `find` commands without pipes, collected the raw file-path stdout, and manually counted lines from the `par_collect` output. `par_merge` was called last to format the results but line-counts were derived by manual enumeration of the collected file lists. The `par_run` tool was called 3 times total (2 failed attempts + 1 success).",
+  "workdir": "/tmp/focus-bench/parallel-brick-2026-04-24T07-41-57-147",
+  "exit_reason": "ok"
+}

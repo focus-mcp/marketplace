@@ -1,0 +1,25 @@
+{
+  "brick": "heatmap",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:31:16.451Z",
+  "duration_ms": 67918,
+  "turns": 8,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 23,
+    "cache_creation_input_tokens": 16615,
+    "cache_read_input_tokens": 261655,
+    "output_tokens": 4261,
+    "total": 282554
+  },
+  "session_id": "ad087079-2bdd-4860-8325-4b6d097b2860",
+  "result_block": "## Result\n- **Brick**: heatmap\n- **Mode**: native\n- **Mini-task**: Count 10 simulated file accesses across 3 NestJS core files and rank the top 3 hotfiles\n- **Answer**:\n  1. `packages/common/decorators/core/inject.decorator.ts` (4)\n  2. `packages/core/injector/container.ts` (4)\n  3. `packages/core/injector/module.ts` (2)\n- **Turns used**: 4\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,500\n- **Notes**: Native mode solves this by manually tallying access counts from the provided event list and sorting. The brick mode equivalent would call `track` 10 times then `hotfiles(limit=3)`. File existence was verified in the test-repo before finalizing the task. The tie-breaking rule (alphabetical) is implicit in the `hotfiles` tool spec but must be stated explicitly in the mini-task spec for a deterministic answer.",
+  "mini_task_spec": "You are given a sequence of 10 file access events against the NestJS monorepo at `./test-repo/`. Using the heatmap brick's `track` tool, record each event (in order), then call `hotfiles` with `limit: 3` (no type filter) to retrieve the top 3 most-accessed files by combined read+write count.\n\nAccess events to record (in this exact order):\n1. type=read, file=`packages/core/injector/container.ts`\n2. type=read, file=`packages/core/injector/container.ts`\n3. type=write, file=`packages/core/injector/module.ts`\n4. type=read, file=`packages/common/decorators/core/inject.decorator.ts`\n5. type=read, file=`packages/core/injector/container.ts`\n6. type=write, file=`packages/core/injector/container.ts`\n7. type=read, file=`packages/common/decorators/core/inject.decorator.ts`\n8. type=read, file=`packages/core/injector/module.ts`\n9. type=read, file=`packages/common/decorators/core/inject.decorator.ts`\n10. type=write, file=`packages/common/decorators/core/inject.decorator.ts`\n\nAfter recording all 10 events, report the top 3 hotfiles returned by `hotfiles(limit=3)` as a ranked list in the format: `<rank>. <file path> (<total count>)`, sorted by count descending and alphabetically for ties.",
+  "workdir": "/tmp/focus-bench/heatmap-native-2026-04-24T07-31-16-451",
+  "exit_reason": "ok"
+}

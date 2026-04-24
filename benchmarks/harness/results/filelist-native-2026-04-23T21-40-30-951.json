@@ -1,0 +1,25 @@
+{
+  "brick": "filelist",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-23T21:39:34.028Z",
+  "duration_ms": 56923,
+  "turns": 10,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 30,
+    "cache_creation_input_tokens": 54663,
+    "cache_read_input_tokens": 338958,
+    "output_tokens": 3540,
+    "total": 397191
+  },
+  "session_id": "276df615-edca-4c55-b691-ca246cdb398a",
+  "result_block": "## Result\n\n- **Brick**: filelist\n- **Mode**: native\n- **Mini-task**: Find all non-spec TypeScript files whose filename contains \"service\" inside `test-repo/packages/`, sorted alphabetically\n- **Answer**: 14 files found (sorted):\n  1. packages/common/exceptions/service-unavailable.exception.ts\n  2. packages/common/interfaces/microservices/nest-microservice-options.interface.ts\n  3. packages/common/interfaces/nest-microservice.interface.ts\n  4. packages/common/services/console-logger.service.ts\n  5. packages/common/services/logger.service.ts\n  6. packages/core/discovery/discovery-service.ts\n  7. packages/core/services/reflector.service.ts\n  8. packages/microservices/decorators/grpc-service.decorator.ts\n  9. packages/microservices/errors/invalid-grpc-service.exception.ts\n  10. packages/microservices/interfaces/microservice-configuration.interface.ts\n  11. packages/microservices/interfaces/microservice-entrypoint-metadata.interface.ts\n  12. packages/microservices/microservices-module.ts\n  13. packages/microservices/nest-microservice.ts\n  14. packages/testing/services/testing-logger.service.ts\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~3,500 tokens (small JSON file read ~500, directory listings ~1,000, glob results ~1,000, bash output ~500, prompt+response ~500)\n- **Notes**: Native mode used Glob then Bash `find` to filter out `.spec.ts` files and sort. The filelist brick's `glob` and `find` tools map directly to this task. Native tools accomplish this straightforwardly with slightly more flexibility (e.g., combining `! -name \"*.spec.ts\"` exclusion in one command).\n```",
+  "workdir": "/tmp/focus-bench/filelist-native-2026-04-23T21-39-34-028",
+  "exit_reason": "ok"
+}

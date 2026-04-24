@@ -1,0 +1,26 @@
+{
+  "brick": "graphquery",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:24:59.734Z",
+  "duration_ms": 111804,
+  "turns": 24,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 56,
+    "cache_creation_input_tokens": 50267,
+    "cache_read_input_tokens": 955087,
+    "output_tokens": 6394,
+    "total": 1011804
+  },
+  "session_id": "2bdb17ae-680d-4607-8b07-afcd22b51028",
+  "result_block": "## Result\n- **Brick**: graphquery\n- **Mode**: native\n- **Mini-task**: Find all non-test files in `packages/core/inspector/` that import from `packages/core/injector/`\n- **Answer**:\n  ```\n  packages/core/inspector/graph-inspector.ts\n  packages/core/inspector/serialized-graph.ts\n  ```\n- **Turns used**: 9\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~6,000\n- **Notes**: The task exercises the core graph-neighbor-traversal strength of the brick — finding nodes connected by import edges to a specific directory scope. In native mode this was solved by direct `grep` for `'../injector/` patterns in the inspector directory. The graphquery brick would solve this via `filter` (to isolate inspector nodes) + `neighbors` (direction=out, edgeType=import) filtered to target nodes in the injector scope.",
+  "mini_task_spec": "Using the `graphquery` knowledge graph of the NestJS repository at `test-repo/`, identify all TypeScript source files (excluding test files — i.e., files ending in `.spec.ts`) located directly inside `packages/core/inspector/` (not in subdirectories) that contain at least one import statement that references a module from `packages/core/injector/` (import path starts with `'../injector/`).\n\nReturn the matching file paths relative to `test-repo/`, one per line, sorted alphabetically. Expected format: one path per line, e.g.:\n```\npackages/core/inspector/graph-inspector.ts\npackages/core/inspector/serialized-graph.ts\n```\n\nTo solve this, you should use the graphquery brick tools to query nodes in the `packages/core/inspector/` area, then inspect their outgoing import edges to find which ones point to nodes in `packages/core/injector/`.\n\n---",
+  "workdir": "/tmp/focus-bench/graphquery-native-2026-04-24T07-24-59-734",
+  "exit_reason": "ok"
+}

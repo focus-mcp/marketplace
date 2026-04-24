@@ -1,0 +1,25 @@
+{
+  "brick": "task",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:09:09.908Z",
+  "duration_ms": 81063,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 12693,
+    "cache_read_input_tokens": 349316,
+    "output_tokens": 4315,
+    "total": 366353
+  },
+  "session_id": "10a296af-4903-4a69-b965-c12853026cdb",
+  "result_block": "## Result\n- **Brick**: task\n- **Mode**: native\n- **Mini-task**: Plan a 9-task multi-agent audit workflow for all NestJS package directories\n- **Answer**:\n  ```\n  Audit: common, priority=1\n  Audit: core, priority=2\n  Audit: microservices, priority=3\n  Audit: platform-express, priority=4\n  Audit: platform-fastify, priority=5\n  Audit: platform-socket.io, priority=6\n  Audit: platform-ws, priority=7\n  Audit: testing, priority=8\n  Audit: websockets, priority=9\n  ```\n- **Turns used**: 6\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1,200\n- **Notes**: Native mode only reads the filesystem to enumerate packages alphabetically and derives priorities; no actual task creation or agent assignment occurs. The brick mode run would call `tsk__create` nine times (one per package) then `tsk__status` to verify, exercising all lifecycle tools except `tsk__complete`.",
+  "mini_task_spec": "You are orchestrating a multi-agent code audit of a NestJS monorepo. Your job is to plan the task workflow as follows:\n\n1. Identify all **package directories** (directories only, not files) inside `test-repo/packages/`. Sort them alphabetically.\n2. For each package directory, create one task using the `tsk__create` tool with:\n   - **title**: `\"Audit: <package-name>\"` (where `<package-name>` is the directory name)\n   - **description**: `\"Perform a code audit of the <package-name> package\"`\n   - **priority**: the package's 1-based rank in the alphabetically-sorted list (alphabetically first = priority 1, second = priority 2, etc.)\n3. After creating all tasks, call `tsk__status` (with no arguments, or with status `\"pending\"`) to retrieve all tasks.\n4. Report the final list of task titles and their priority numbers, sorted by priority ascending (one entry per line, format: `\"<title>, priority=<N>\"`).\n\nThe answer should be a list of 9 entries, one per package directory found in `test-repo/packages/`, sorted by priority. The exact answer format expected: one entry per line, e.g. `Audit: common, priority=1`.\n\n---",
+  "workdir": "/tmp/focus-bench/task-native-2026-04-24T08-09-09-908",
+  "exit_reason": "ok"
+}

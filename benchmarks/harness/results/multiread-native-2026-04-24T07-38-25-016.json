@@ -1,0 +1,25 @@
+{
+  "brick": "multiread",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:37:31.993Z",
+  "duration_ms": 53023,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 30,
+    "cache_creation_input_tokens": 55570,
+    "cache_read_input_tokens": 542104,
+    "output_tokens": 3535,
+    "total": 601239
+  },
+  "session_id": "172873df-1bad-4689-aef6-c8e953a06172",
+  "result_block": "## Result\n- **Brick**: multiread\n- **Mode**: native\n- **Mini-task**: Identify import lines shared across four NestJS decorator files\n- **Answer**:\n  ```\n  import { extendArrayMetadata } from '../../utils/extend-metadata.util';\n  import { isFunction } from '../../utils/shared.utils';\n  import { validateEach } from '../../utils/validate-each.util';\n  ```\n- **Turns used**: 4\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: The four decorator files (use-guards, use-pipes, use-interceptors, exception-filters) each have 5 import lines; 3 are shared identically across all four and 2 are unique per file. The shared imports are the three utility/helper imports. Sorted alphabetically by their second identifier token: `extendArrayMetadata`, `isFunction`, `validateEach`.",
+  "mini_task_spec": "Read the following four TypeScript files from the `test-repo` repository and identify which import statement lines (lines starting with `import`) appear **identically** in **all four** files:\n\n- `test-repo/packages/common/decorators/core/use-guards.decorator.ts`\n- `test-repo/packages/common/decorators/core/use-pipes.decorator.ts`\n- `test-repo/packages/common/decorators/core/use-interceptors.decorator.ts`\n- `test-repo/packages/common/decorators/core/exception-filters.decorator.ts`\n\nReport the shared import lines sorted alphabetically, one per line. The expected answer format is a list of exact import statement strings (including the trailing semicolon), sorted alphabetically, one per line.",
+  "workdir": "/tmp/focus-bench/multiread-native-2026-04-24T07-37-31-993",
+  "exit_reason": "ok"
+}

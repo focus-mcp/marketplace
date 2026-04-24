@@ -1,0 +1,24 @@
+{
+  "brick": "onboarding",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:42:15.803Z",
+  "duration_ms": 22905,
+  "turns": 8,
+  "tools_used": [
+    "Read",
+    "ToolSearch"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 15045,
+    "cache_read_input_tokens": 149565,
+    "output_tokens": 1313,
+    "total": 165952
+  },
+  "session_id": "31312d59-3a2f-4ec8-a399-0a3ba412ccb7",
+  "result_block": "",
+  "workdir": "/tmp/focus-bench/onboarding-brick-2026-04-24T07-42-15-802",
+  "exit_reason": "ok"
+}

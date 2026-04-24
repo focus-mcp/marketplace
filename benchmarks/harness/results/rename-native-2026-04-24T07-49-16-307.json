@@ -1,0 +1,26 @@
+{
+  "brick": "rename",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:47:47.152Z",
+  "duration_ms": 89155,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 44,
+    "cache_creation_input_tokens": 21942,
+    "cache_read_input_tokens": 607139,
+    "output_tokens": 5415,
+    "total": 634540
+  },
+  "session_id": "c1dab7a8-58c2-4458-946b-551af50589cd",
+  "result_block": "## Result\n\n- **Brick**: rename\n- **Mode**: native\n- **Mini-task**: Find all `.ts` files in `test-repo/packages` that reference the symbol `LoggerService`, sorted alphabetically\n- **Answer**:\n  ```\n  test-repo/packages/common/interfaces/modules/provider.interface.ts\n  test-repo/packages/common/interfaces/nest-application-context.interface.ts\n  test-repo/packages/common/interfaces/nest-application-context-options.interface.ts\n  test-repo/packages/common/services/console.service.ts\n  test-repo/packages/common/services/logger-copy.service.ts\n  test-repo/packages/common/services/logger.service.ts\n  test-repo/packages/common/test/services/logger.service.spec.ts\n  test-repo/packages/core/injector/injector.ts\n  test-repo/packages/core/injector/instance-loader.ts\n  test-repo/packages/core/injector/instance-wrapper.ts\n  test-repo/packages/core/nest-application-context.ts\n  test-repo/packages/microservices/server/server.ts\n  test-repo/packages/testing/testing-module.builder.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: `Read`, `Bash`, `Grep`\n- **Rough token estimate**: ~2 500\n- **Notes**: Locale-aware `sort` places `nest-application-context.interface.ts` before `nest-application-context-options.interface.ts` (`.` collates before `-` in the system locale), which differs from pure ASCII/`LC_ALL=C` ordering. The brick-mode run should normalize to the same locale, or the spec verifier should accept both orderings for those two adjacent entries.",
+  "mini_task_spec": "Using the rename brick's **preview** capability, identify every TypeScript file (`.ts` extension) under `test-repo/packages` that contains the symbol `LoggerService`. List each matching file path relative to the repository root (i.e., starting with `test-repo/packages/…`), one path per line, sorted alphabetically (using the default `sort` locale). Do **not** include `.spec.ts` files differently — include all `.ts` files regardless of whether they are test files. Do **not** include non-`.ts` files (`.bak`, `.js`, `.md`, etc.). The answer format is a plain sorted list of relative file paths, one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/rename-native-2026-04-24T07-47-47-152",
+  "exit_reason": "ok"
+}

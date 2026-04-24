@@ -1,0 +1,27 @@
+{
+  "brick": "filewrite",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:20:37.616Z",
+  "duration_ms": 59478,
+  "turns": 9,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__fw_append",
+    "mcp__focus__fw_create",
+    "mcp__focus__fw_write"
+  ],
+  "usage": {
+    "input_tokens": 38,
+    "cache_creation_input_tokens": 15425,
+    "cache_read_input_tokens": 183487,
+    "output_tokens": 2066,
+    "total": 201016
+  },
+  "session_id": "d76714f2-561d-4e32-a9ef-121c984c40d0",
+  "result_block": "## Result\n- **Brick**: filewrite\n- **Mode**: brick\n- **Mini-task**: Create `test-repo/packages/common/CHANGELOG.md` with initial content, then append a versioned changelog entry\n- **Answer**: File created via `fw_write` (overwrite, since `fw_create` reported the file already existed) with the initial 5-line content, then `fw_append` added the 5-line versioned block — producing the expected 10-line final file.\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__fw_create`, `mcp__focus__fw_write`, `mcp__focus__fw_append`\n- **Rough token estimate**: ~1,800\n- **Notes**: `fw_create` failed because the file already existed (a pre-existing stub was present in the repo), so `fw_write` was used instead to overwrite it with the correct initial content. Both write and append operations succeeded as confirmed by their `{\"written\":true}` / `{\"appended\":true}` responses.",
+  "workdir": "/tmp/focus-bench/filewrite-brick-2026-04-24T07-20-37-616",
+  "exit_reason": "ok"
+}

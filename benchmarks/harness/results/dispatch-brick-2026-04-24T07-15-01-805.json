@@ -1,0 +1,32 @@
+{
+  "brick": "dispatch",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:12:39.177Z",
+  "duration_ms": 142628,
+  "turns": 21,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__dsp_queue",
+    "mcp__focus__dsp_send",
+    "mcp__focus__dsp_status",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 93,
+    "cache_creation_input_tokens": 48840,
+    "cache_read_input_tokens": 614914,
+    "output_tokens": 7258,
+    "total": 671105
+  },
+  "session_id": "61ce9446-ed05-4df7-b927-e164c4503892",
+  "result_block": "## Result\n- **Brick**: dispatch\n- **Mode**: brick\n- **Mini-task**: Identify which `@nestjs/*` packages in `test-repo/packages/` are required (non-optional) peer dependencies of at least one other `@nestjs/*` package in the monorepo\n- **Answer**: *Unable to determine* — the dispatch brick is a pure task queue (no execution workers); the `fileread` marketplace brick was found but failed to load (`ENOENT: mcp-brick.json` missing after install); no file-reading capability was available via `mcp__focus__*` tools alone.\n- **Turns used**: 17\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_update`, `mcp__focus__dsp_send`, `mcp__focus__dsp_queue`, `mcp__focus__dsp_status`\n- **Rough token estimate**: ~4,500\n- **Notes**: \n  - The dispatch brick (`dsp_send/queue/cancel/status`) is a stateful task queue only — submitted tasks remain `pending` indefinitely; there is no built-in worker/executor that processes tasks and returns file contents or computation results.\n  - `focus_search` found a `fileread@1.0.0` brick in the marketplace; `focus_install` succeeded, but `focus_load` failed with `ENOENT` (the brick's `mcp-brick.json` was not written to disk at the expected path).\n  - `focus_update` returned `not yet implemented`.\n  - Without a functional file-reading brick, the filesystem-dependent task cannot be completed using only `mcp__focus__*` tools under the given constraints.",
+  "workdir": "/tmp/focus-bench/dispatch-brick-2026-04-24T07-12-39-176",
+  "exit_reason": "ok"
+}

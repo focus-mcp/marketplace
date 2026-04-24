@@ -1,0 +1,26 @@
+{
+  "brick": "smartread",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:05:59.973Z",
+  "duration_ms": 141238,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 52057,
+    "cache_read_input_tokens": 609743,
+    "output_tokens": 10866,
+    "total": 672705
+  },
+  "session_id": "3b29c091-e815-4640-bd6b-33afb24af1aa",
+  "result_block": "## Result\n- **Brick**: smartread\n- **Mode**: native\n- **Mini-task**: List public methods of `RouterExplorer` class in `packages/core/router/router-explorer.ts`\n- **Answer**:\n  ```\n  applyPathsToRouterProxy\n  createRequestScopedHandler\n  explore\n  extractRouterPath\n  ```\n- **Turns used**: 9\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~7,000 tokens (full 463-line file read + grep outputs + mcp-brick.json)\n- **Notes**: In native mode, identifying public methods required reading the full 463-line file (or at minimum grepping it). The `smartread` brick's `map` or `signatures` mode would return just the method stubs without bodies, potentially cutting file-read cost from ~4,000 tokens to ~200 tokens for this file.",
+  "mini_task_spec": "Using the `smartread` brick's **`map`** or **`signatures`** tool, identify all **public methods** (non-constructor) declared in the `RouterExplorer` class in `test-repo/packages/core/router/router-explorer.ts`. List the method names only (not their signatures or return types), sorted alphabetically, one per line. Do not include private methods or the constructor.\n\nExpected answer format: a plain list of method names, one per line, sorted alphabetically (e.g. `applyPathsToRouterProxy\\ncreateRequestScopedHandler\\nexplore\\nextractRouterPath`).\n\n---",
+  "workdir": "/tmp/focus-bench/smartread-native-2026-04-24T08-05-59-973",
+  "exit_reason": "ok"
+}

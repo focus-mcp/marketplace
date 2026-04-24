@@ -1,0 +1,26 @@
+{
+  "brick": "graphbuild",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:24:22.358Z",
+  "duration_ms": 37375,
+  "turns": 7,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__gb_build",
+    "mcp__focus__gb_multimodal"
+  ],
+  "usage": {
+    "input_tokens": 28,
+    "cache_creation_input_tokens": 19743,
+    "cache_read_input_tokens": 146082,
+    "output_tokens": 2204,
+    "total": 168057
+  },
+  "session_id": "2d691258-f4a3-4d8b-bbc5-18aa0a9f0788",
+  "result_block": "## Result\n- **Brick**: graphbuild\n- **Mode**: brick\n- **Mini-task**: Find all intra-directory import/re-export edges among TypeScript files in `test-repo/packages/core/discovery/`\n- **Answer**:\n  ```\n  discovery-module -> discovery-service\n  discovery-service -> discoverable-meta-host-collection\n  index -> discovery-module\n  index -> discovery-service\n  ```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__gb_build`, `mcp__focus__gb_multimodal`\n- **Rough token estimate**: ~2,500\n- **Notes**: The graph returned 17 edges total; 4 were intra-directory imports. Self-export edges (e.g., `file.ts → file.ts#ClassName`) and edges to `../injector/` or `../metadata-scanner` were excluded as specified. The `edges` format from `gb_multimodal` provided full absolute paths, making it straightforward to filter by the `discovery/` path segment for both source and target.",
+  "workdir": "/tmp/focus-bench/graphbuild-brick-2026-04-24T07-24-22-357",
+  "exit_reason": "ok"
+}

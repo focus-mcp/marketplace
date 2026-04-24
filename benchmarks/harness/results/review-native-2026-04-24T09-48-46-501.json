@@ -1,0 +1,26 @@
+{
+  "brick": "review",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:46:06.823Z",
+  "duration_ms": 159678,
+  "turns": 33,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 80,
+    "cache_creation_input_tokens": 49655,
+    "cache_read_input_tokens": 1455901,
+    "output_tokens": 7509,
+    "total": 1513145
+  },
+  "session_id": "3e6ff346-eee4-4de5-860d-2a9f121ed9ac",
+  "result_block": "## Result\n- **Brick**: review\n- **Mode**: native\n- **Mini-task**: Identify all `@deprecated`-annotated methods in `packages/core/metadata-scanner.ts`\n- **Answer**: `getAllFilteredMethodNames, scanFromPrototype`\n- **Turns used**: 9\n- **Tools used**: Bash, Read, Glob, Grep\n- **Rough token estimate**: ~6,000\n- **Notes**: No unusual blocking. The file was small and clear; both deprecated methods are explicitly flagged with `@deprecated` in their JSDoc blocks. The brick's `code` tool would normally surface these as code quality findings (deprecation debt + duplication). Native mode required only reading the file directly.",
+  "mini_task_spec": "Using the `rev__code` tool (code quality review), review the file `packages/core/metadata-scanner.ts` in the NestJS test repository. Identify every method that is annotated with the `@deprecated` JSDoc tag in its documentation comment. Report the names of those methods as a comma-separated list, sorted alphabetically.\n\nThe expected answer format is: a comma-separated list of method names (no file paths, no descriptions), sorted alphabetically. Example format: `methodA, methodB`.",
+  "workdir": "/tmp/focus-bench/review-native-2026-04-24T09-46-06-823",
+  "exit_reason": "ok"
+}

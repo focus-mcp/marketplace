@@ -1,0 +1,25 @@
+{
+  "brick": "contextpack",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:04:24.612Z",
+  "duration_ms": 36829,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__cp_pack"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 15496,
+    "cache_read_input_tokens": 119282,
+    "output_tokens": 1799,
+    "total": 136602
+  },
+  "session_id": "d612f5bf-37ec-4fd9-83d3-780bd7fbae06",
+  "result_block": "## Result\n- **Brick**: contextpack\n- **Mode**: brick\n- **Mini-task**: Extract all top-level exported symbol names (in signatures mode) from 5 TypeScript decorator files in `test-repo/packages/common/decorators/core/`\n- **Answer**:\n```\nCustomDecorator\nInjectable\nInjectableOptions\nmixin\nSetMetadata\nUseGuards\nUseInterceptors\nUsePipes\n```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__cp_pack`\n- **Rough token estimate**: ~400 (191 packed tokens from tool output + overhead)\n- **Notes**: Tool worked cleanly. The `signatures` mode correctly extracted only top-level `export` statements. All 5 files resolved successfully with `fileCount: 5`. No fallbacks needed.",
+  "workdir": "/tmp/focus-bench/contextpack-brick-2026-04-24T07-04-24-611",
+  "exit_reason": "ok"
+}

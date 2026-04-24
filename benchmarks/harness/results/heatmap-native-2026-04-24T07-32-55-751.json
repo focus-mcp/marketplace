@@ -1,0 +1,25 @@
+{
+  "brick": "heatmap",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:30:52.892Z",
+  "duration_ms": 122859,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 51,
+    "cache_creation_input_tokens": 30785,
+    "cache_read_input_tokens": 811054,
+    "output_tokens": 7702,
+    "total": 849592
+  },
+  "session_id": "6bf4d7ad-ca8b-4518-96cc-867d8eb90573",
+  "result_block": "## Result\n- **Brick**: heatmap\n- **Mode**: native\n- **Mini-task**: Find top-5 most-imported `@nestjs/common` paths from `packages/core` source files (hotfiles by read count)\n- **Answer**:\n  ```\n  @nestjs/common: 82\n  @nestjs/common/utils/shared.utils: 47\n  @nestjs/common/interfaces: 38\n  @nestjs/common/constants: 25\n  @nestjs/common/utils/cli-colors.util: 7\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~3,500\n- **Notes**: The heatmap brick's `track`/`hotfiles` paradigm maps cleanly to \"imports as reads.\" Native approach used `grep -rl` per path and a pipeline that deduplicates imports per file. Counts for both approaches (raw grep vs. per-file dedup) were identical, confirming each core source file imports each path at most once.",
+  "mini_task_spec": "You are working with the NestJS shallow-clone repository at `test-repo/`. Your task is to identify the \"hottest\" `@nestjs/common` module paths as seen from the `packages/core` package — i.e., the module paths most frequently imported by distinct source files there.\n\n**Exact steps**:\n1. Consider all `.ts` files under `test-repo/packages/core/` that are **not** `.spec.ts` and **not** `.d.ts` files (179 files total).\n2. For each such file, extract every unique import path that starts with `@nestjs/common` (matching the pattern `from '@nestjs/common...'`). Deduplicate per file — if a file imports from the same path more than once, count it once for that file.\n3. Across all files, count how many **distinct files** import from each `@nestjs/common` module path.\n4. Return the **top 5** paths by count, sorted **descending** by count. Break ties **alphabetically** by path.\n\n**Expected answer format**: one entry per line in the format `<module_path>: <count>`, e.g.:\n```\n@nestjs/common: 82\n@nestjs/common/utils/shared.utils: 47\n...\n```",
+  "workdir": "/tmp/focus-bench/heatmap-native-2026-04-24T07-30-52-892",
+  "exit_reason": "ok"
+}

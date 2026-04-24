@@ -1,0 +1,25 @@
+{
+  "brick": "impact",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:31:16.797Z",
+  "duration_ms": 102470,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 49,
+    "cache_creation_input_tokens": 33063,
+    "cache_read_input_tokens": 736438,
+    "output_tokens": 5691,
+    "total": 775241
+  },
+  "session_id": "b9fbe985-b7a5-4e1f-b1d1-01a84ef93f82",
+  "result_block": "## Result\n\n- **Brick**: impact\n- **Mode**: native\n- **Mini-task**: Find all direct (non-test) dependents of `packages/core/helpers/context-id-factory.ts`\n- **Answer**:\n  ```\n  packages/core/helpers/index.ts\n  packages/core/injector/module.ts\n  packages/core/middleware/middleware-module.ts\n  packages/core/nest-application-context.ts\n  packages/core/router/router-explorer.ts\n  packages/microservices/listeners-controller.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~4,500\n- **Notes**: All six files were found via `grep -rn \"context-id-factory\"` across `packages/`. Two additional spec files (`context-id-factory.spec.ts`, `nest-application-context.spec.ts`) were excluded per the task definition. The microservices importer uses the package alias `@nestjs/core/helpers/context-id-factory` rather than a relative path, which a naive path-tracing tool might miss — the brick's `analyze` tool should handle this via module resolution.",
+  "mini_task_spec": "Using the NestJS monorepo at `test-repo/`, determine the **direct dependents** of the file `test-repo/packages/core/helpers/context-id-factory.ts`. Specifically, find every TypeScript source file (`.ts`) across all packages under `test-repo/packages/` that contains an import statement directly referencing `context-id-factory` (by path or package alias), **excluding** any spec/test files (files ending in `.spec.ts`). List the results as paths relative to `test-repo/`, one per line, sorted alphabetically.\n\nExpected answer format: a sorted list of relative paths (relative to `test-repo/`), one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/impact-native-2026-04-24T07-31-16-797",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "memory",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:37:38.645Z",
+  "duration_ms": 88360,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 45,
+    "cache_creation_input_tokens": 21970,
+    "cache_read_input_tokens": 621172,
+    "output_tokens": 5452,
+    "total": 648639
+  },
+  "session_id": "6d84ed27-4f65-4bff-ad54-735048ebef30",
+  "result_block": "## Result\n- **Brick**: memory\n- **Mode**: native\n- **Mini-task**: Extract and catalogue all NestJS HTTP exception class↔HttpStatus mappings from `packages/common/exceptions/`\n- **Answer**:\n```\nBAD_GATEWAY\nBAD_REQUEST\nCONFLICT\nFORBIDDEN\nGATEWAY_TIMEOUT\nGONE\nHTTP_VERSION_NOT_SUPPORTED\nI_AM_A_TEAPOT\nINTERNAL_SERVER_ERROR\nMETHOD_NOT_ALLOWED\nMISDIRECTED\nNOT_ACCEPTABLE\nNOT_FOUND\nNOT_IMPLEMENTED\nPAYLOAD_TOO_LARGE\nPRECONDITION_FAILED\nREQUEST_TIMEOUT\nSERVICE_UNAVAILABLE\nUNAUTHORIZED\nUNPROCESSABLE_ENTITY\nUNSUPPORTED_MEDIA_TYPE\n```\n- **Turns used**: 9\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: `http.exception.ts` contains `HttpStatus.BAD_REQUEST` only in JSDoc comment examples (not as the class's own status), so it must be explicitly excluded. `intrinsic.exception.ts` defines `IntrinsicException extends Error` (not `HttpException`). Both are correctly excluded. All 21 concrete exception classes were found. In brick mode, the agent would `store` 21 entries then `list` by tag `\"http-exception\"` to verify.",
+  "mini_task_spec": "In the NestJS repository at `test-repo/packages/common/exceptions/`, there are TypeScript files defining concrete HTTP exception classes. Each file (excluding `http.exception.ts`, `intrinsic.exception.ts`, and `index.ts`) defines exactly one class that extends `HttpException` and uses exactly one `HttpStatus.<CONSTANT>` value.\n\nYour task:\n1. For each such `.ts` file, read the exported class name and the first `HttpStatus.<CONSTANT>` used in it.\n2. Use `mem__store` to store each entry with key = the `HttpStatus` constant name (e.g., `BAD_REQUEST`), value = the exception class name (e.g., `BadRequestException`), and tags = `[\"http-exception\"]`.\n3. After storing all entries, call `mem__list` with tag `\"http-exception\"`.\n4. Report the resulting list of keys, sorted alphabetically, one per line.\n\nExpected answer format: 21 keys, one per line, sorted alphabetically (A–Z).\n\n---",
+  "workdir": "/tmp/focus-bench/memory-native-2026-04-24T07-37-38-645",
+  "exit_reason": "ok"
+}

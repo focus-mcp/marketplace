@@ -45,3 +45,7 @@ License: MIT
 Files: modules/**
 Copyright: 2026 FocusMCP contributors
 License: MIT
+
+Files: benchmarks/**
+Copyright: 2026 FocusMCP contributors
+License: MIT

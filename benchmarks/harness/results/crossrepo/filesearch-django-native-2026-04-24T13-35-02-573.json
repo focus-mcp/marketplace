@@ -1,0 +1,26 @@
+{
+  "brick": "filesearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T13:33:55.751Z",
+  "duration_ms": 66822,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 38,
+    "cache_creation_input_tokens": 13872,
+    "cache_read_input_tokens": 484762,
+    "output_tokens": 2775,
+    "total": 501447
+  },
+  "session_id": "354d3e06-44db-4ab7-a535-9c2769e876cc",
+  "result_block": "## Result\n\n- **Brick**: filesearch\n- **Mode**: native\n- **Mini-task**: Find Python files under `test-repo/django/utils/` that directly import the `re` module\n- **Answer**:\n```\ndjango/utils/formats.py\ndjango/utils/html.py\ndjango/utils/http.py\ndjango/utils/regex_helper.py\ndjango/utils/text.py\ndjango/utils/translation/trans_real.py\ndjango/utils/xmlutils.py\n```\n- **Turns used**: 6\n- **Tools used**: Bash, Glob, Read\n- **Rough token estimate**: ~1,500\n- **Notes**: The test-repo is a Django source tree (not NestJS as the prompt suggested). The task is well-suited to the `filesearch` brick's `search` tool, which accepts a `path`, a `pattern` (regex), and an optional `glob` filter — exactly matching the use of `Grep` used in native mode.",
+  "mini_task_spec": "Using the **filesearch** brick's `search` tool, find all Python (`.py`) files under `test-repo/django/utils/` that contain the exact string `import re` as a standalone statement (regex pattern: `\\bimport re\\b`). List every matching file path **relative to `test-repo/`**, sorted alphabetically, one path per line.",
+  "workdir": "/tmp/focus-bench/filesearch-native-2026-04-24T13-33-55-751",
+  "exit_reason": "ok"
+}

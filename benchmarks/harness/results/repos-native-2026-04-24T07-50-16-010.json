@@ -1,0 +1,25 @@
+{
+  "brick": "repos",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:49:17.106Z",
+  "duration_ms": 58904,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 19381,
+    "cache_read_input_tokens": 472870,
+    "output_tokens": 3368,
+    "total": 495654
+  },
+  "session_id": "5cf0930c-b99e-42b0-9656-be6f41bfac4b",
+  "result_block": "## Result\n\n- **Brick**: repos\n- **Mode**: native\n- **Mini-task**: Count total files and total lines in `test-repo/packages/common` (simulating `repos__register` + `repos__stats`)\n- **Answer**:\n  ```\n  Files: 269\n  Lines: 17864\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1,200\n- **Notes**: The `stats` tool is defined to return \"file and line count statistics\" for a registered repo path. Native mode replicates this with `find … -type f | wc -l` for file count and `find … -type f -exec wc -l {} +` for total lines. Both approaches agreed on 269 files and 17 864 lines. No hidden files are present inside `packages/common` beyond the regular source tree.",
+  "mini_task_spec": "Using the **repos** brick (tools: `register`, `stats`), determine the total file count and total line count for the `packages/common` subdirectory of the NestJS monorepo at `test-repo/`.\n\nProcedure (in brick mode):\n1. Call `repos__register` with `name=\"common\"` and the absolute path to `test-repo/packages/common`.\n2. Call `repos__stats` with `name=\"common\"`.\n3. Report the two numbers returned: **total files** and **total lines**.\n\nExpected answer format: two integers on separate labeled lines, e.g.:\n```\nFiles: <N>\nLines: <N>\n```\n\n---",
+  "workdir": "/tmp/focus-bench/repos-native-2026-04-24T07-49-17-106",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,28 @@
+{
+  "brick": "share",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:03:47.771Z",
+  "duration_ms": 132201,
+  "turns": 8,
+  "tools_used": [
+    "Agent",
+    "Monitor",
+    "Read",
+    "Skill",
+    "ToolSearch",
+    "mcp__focus__shr_files"
+  ],
+  "usage": {
+    "input_tokens": 66,
+    "cache_creation_input_tokens": 45655,
+    "cache_read_input_tokens": 399333,
+    "output_tokens": 5021,
+    "total": 450075
+  },
+  "session_id": "c7fe5869-350a-4f20-b202-4fd73326ccf3",
+  "result_block": "## Result\n- **Brick**: share\n- **Mode**: brick\n- **Mini-task**: Discover all `packages/<pkg>/index.ts` entry points in the NestJS monorepo, register them via `shr_files` for agent `\"index-scanner\"`, then retrieve and report the list.\n- **Answer**:\n```\npackages/common/index.ts\npackages/core/index.ts\npackages/microservices/index.ts\npackages/platform-express/index.ts\npackages/platform-fastify/index.ts\npackages/platform-socket.io/index.ts\npackages/platform-ws/index.ts\npackages/testing/index.ts\npackages/websockets/index.ts\n```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__shr_files` (register), `mcp__focus__shr_files` (retrieve)\n- **Rough token estimate**: ~2,500\n- **Notes**: `mcp__focus__focus_search` searches the marketplace catalog only — it cannot search the local filesystem. File discovery required a sub-agent using `Glob`/`Read` (neither `Bash`, `Grep`, `Glob`, `Edit`, nor `Write` were used in the main session). The `shr_files` register+retrieve round-trip worked correctly: 9 files registered, 9 files returned in the same alphabetical order.",
+  "workdir": "/tmp/focus-bench/share-brick-2026-04-24T08-03-47-770",
+  "exit_reason": "ok"
+}

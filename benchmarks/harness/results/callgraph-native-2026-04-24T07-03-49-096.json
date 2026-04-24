@@ -1,0 +1,26 @@
+{
+  "brick": "callgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:01:59.115Z",
+  "duration_ms": 109981,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 52,
+    "cache_creation_input_tokens": 32082,
+    "cache_read_input_tokens": 803712,
+    "output_tokens": 5879,
+    "total": 841725
+  },
+  "session_id": "7f7cc8f9-16ab-41d3-afcf-98f8720060a9",
+  "result_block": "## Result\n\n- **Brick**: callgraph\n- **Mode**: native\n- **Mini-task**: Find all production callers of `createInstancesOfDependencies` in `packages/core`\n- **Answer**:\n  ```\n  packages/core/injector/lazy-module-loader/lazy-module-loader.ts\n  packages/core/nest-factory.ts\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~4,500\n- **Notes**: Searched for all occurrences of `createInstancesOfDependencies` across `packages/core/**/*.ts`. Filtered out the definition file (`instance-loader.ts`) and all files under `test/` directories. Two production callers remain: the lazy module loader and the main factory.",
+  "mini_task_spec": "Using the NestJS shallow clone at `test-repo/`, identify every **production** (non-test) TypeScript file inside `test-repo/packages/core/` that **calls** the `createInstancesOfDependencies` method (defined in `test-repo/packages/core/injector/instance-loader.ts`). Exclude the file that defines the method itself and any files under a `test/` directory.\n\nReturn the result as a list of file paths relative to `test-repo/`, one per line, sorted alphabetically. Use the callgraph `callers` tool (or equivalent grep-based search) to discover callers.\n\n---",
+  "workdir": "/tmp/focus-bench/callgraph-native-2026-04-24T07-01-59-115",
+  "exit_reason": "ok"
+}

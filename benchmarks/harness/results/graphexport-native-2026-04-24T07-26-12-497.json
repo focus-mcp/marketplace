@@ -1,0 +1,25 @@
+{
+  "brick": "graphexport",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:24:54.571Z",
+  "duration_ms": 77926,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 32,
+    "cache_creation_input_tokens": 19277,
+    "cache_read_input_tokens": 393593,
+    "output_tokens": 5321,
+    "total": 418223
+  },
+  "session_id": "1d1aaef9-0183-4c96-b888-8e5ff8b52e91",
+  "result_block": "## Result\n- **Brick**: graphexport\n- **Mode**: native\n- **Mini-task**: Generate a Mermaid `graph TB` diagram of inter-package NestJS peerDependency relationships from the 9 packages in `test-repo/packages/`\n- **Answer**:\n```\ngraph TB\n    common\n    core --> common\n    core --> microservices\n    core --> platform-express\n    core --> websockets\n    microservices --> common\n    microservices --> core\n    microservices --> websockets\n    platform-express --> common\n    platform-express --> core\n    platform-fastify --> common\n    platform-fastify --> core\n    platform-socket.io --> common\n    platform-socket.io --> websockets\n    platform-ws --> common\n    platform-ws --> websockets\n    testing --> common\n    testing --> core\n    testing --> microservices\n    testing --> platform-express\n    websockets --> common\n    websockets --> core\n    websockets --> platform-socket.io\n```\n- **Turns used**: 9\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~2,500\n- **Notes**: All inter-package NestJS dependencies across the monorepo are exclusively `peerDependencies` (none are `dependencies` or `devDependencies`). `common` is the only package with no outbound NestJS peer-dependency edges. The task maps cleanly to the `mermaid` tool of the graphexport brick (direction=TB).",
+  "mini_task_spec": "The 9 NestJS packages in `test-repo/packages/` are: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, and `websockets`. Each package has a `package.json` that may list other NestJS packages as `peerDependencies` (keys of the form `@nestjs/<name>`).\n\n**Task**: Read each package's `test-repo/packages/<name>/package.json`, collect every `peerDependencies` entry whose key matches `@nestjs/<pkg>` where `<pkg>` is one of the 9 packages, then produce a **Mermaid `graph TB` diagram** where:\n\n- Each node label is the short package name (e.g. `common`, `core`, …).\n- Each directed edge `A --> B` means package `A`'s `peerDependencies` contains `@nestjs/B`.\n- Packages that have no outbound edges must still appear as standalone nodes.\n- List edges sorted first by source (alphabetically), then by target (alphabetically). Standalone node declarations come before edges.\n\n**Expected answer format**: A Mermaid code block. The exact expected output is:\n\n```\ngraph TB\n    common\n    core --> common\n    core --> microservices\n    core --> platform-express\n    core --> websockets\n    microservices --> common\n    microservices --> core\n    microservices --> websockets\n    platform-express --> common\n    platform-express --> core\n    platform-fastify --> common\n    platform-fastify --> core\n    platform-socket.io --> common\n    platform-socket.io --> websockets\n    platform-ws --> common\n    platform-ws --> websockets\n    testing --> common\n    testing --> core\n    testing --> microservices\n    testing --> platform-express\n    websockets --> common\n    websockets --> core\n    websockets --> platform-socket.io\n```\n\n---",
+  "workdir": "/tmp/focus-bench/graphexport-native-2026-04-24T07-24-54-571",
+  "exit_reason": "ok"
+}

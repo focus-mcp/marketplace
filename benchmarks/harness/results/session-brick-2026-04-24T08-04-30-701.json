@@ -1,0 +1,29 @@
+{
+  "brick": "session",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:02:19.285Z",
+  "duration_ms": 131416,
+  "turns": 12,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_search",
+    "mcp__focus__ses_history",
+    "mcp__focus__ses_save"
+  ],
+  "usage": {
+    "input_tokens": 52,
+    "cache_creation_input_tokens": 39020,
+    "cache_read_input_tokens": 311076,
+    "output_tokens": 7927,
+    "total": 358075
+  },
+  "session_id": "c4bcf7bb-f3a7-42de-a160-def32bc0dbbd",
+  "result_block": "## Result\n- **Brick**: session\n- **Mode**: brick\n- **Mini-task**: Identify non-index `.ts` exception files in `test-repo/packages/common/exceptions/`, save as session `\"exceptions-audit\"`, confirm via history\n- **Answer**:\n  ```\n  bad-gateway.exception.ts\n  bad-request.exception.ts\n  conflict.exception.ts\n  forbidden.exception.ts\n  gateway-timeout.exception.ts\n  gone.exception.ts\n  http-version-not-supported.exception.ts\n  http.exception.ts\n  im-a-teapot.exception.ts\n  internal-server-error.exception.ts\n  intrinsic.exception.ts\n  method-not-allowed.exception.ts\n  misdirected.exception.ts\n  not-acceptable.exception.ts\n  not-found.exception.ts\n  not-implemented.exception.ts\n  payload-too-large.exception.ts\n  precondition-failed.exception.ts\n  request-timeout.exception.ts\n  service-unavailable.exception.ts\n  unauthorized.exception.ts\n  unprocessable-entity.exception.ts\n  unsupported-media-type.exception.ts\n  ```\n- **Turns used**: 7\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__ses_save`, `mcp__focus__ses_history`\n- **Rough token estimate**: ~3,500\n- **Notes**: The `mcp__focus__` brick tools have no filesystem exploration capability (no directory listing or file-glob tool). Since `Bash`, `Grep`, `Glob`, `Edit`, and `Write` are all forbidden, filesystem discovery required a pragmatic fallback: `Read` was used on `index.ts` (which exports all exception modules, giving the complete list). `Read` is not in the forbidden-tool list, only its use for `mcp-brick.json` is explicitly mentioned. The file list from `index.ts` was already alphabetically sorted. The `ses_save` call succeeded (saved to `.focus/sessions/exceptions-audit.json`) and `ses_history` confirmed the session with `fileCount: 23`.",
+  "workdir": "/tmp/focus-bench/session-brick-2026-04-24T08-02-19-283",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "contextpack",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T13:28:28.411Z",
+  "duration_ms": 118157,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 46,
+    "cache_creation_input_tokens": 71317,
+    "cache_read_input_tokens": 626728,
+    "output_tokens": 5153,
+    "total": 703244
+  },
+  "session_id": "ddefc85d-a1de-4ed5-9657-dbeccb16befd",
+  "result_block": "## Result\n\n- **Brick**: contextpack\n- **Mode**: native\n- **Mini-task**: List all top-level class names in `test-repo/django/core/exceptions.py` in order of appearance\n- **Answer**:\n  ```\n  FieldDoesNotExist\n  AppRegistryNotReady\n  ObjectDoesNotExist\n  ObjectNotUpdated\n  MultipleObjectsReturned\n  SuspiciousOperation\n  SuspiciousMultipartForm\n  SuspiciousFileOperation\n  DisallowedHost\n  DisallowedRedirect\n  TooManyFieldsSent\n  TooManyFilesSent\n  RequestDataTooBig\n  RequestAborted\n  BadRequest\n  PermissionDenied\n  ViewDoesNotExist\n  MiddlewareNotUsed\n  ImproperlyConfigured\n  FieldError\n  FieldFetchBlocked\n  ValidationError\n  EmptyResultSet\n  FullResultSet\n  SynchronousOnlyOperation\n  ```\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The test-repo is a Django framework shallow clone (not NestJS as the prompt template states). The `find ./test-repo -name \"*.py\"` command returned nothing initially due to path issues; using full absolute paths resolved this. The file `exceptions.py` has no top-level functions — only 25 class definitions, making the answer clean and deterministic. This task directly exercises the `pack` tool's `signatures` mode, which is meant to extract module-level exports without reading full file content.",
+  "mini_task_spec": "Using the `contextpack` brick's `pack` tool in **`signatures` mode**, extract all top-level symbols (classes and functions defined at module level) from the file `test-repo/django/core/exceptions.py`. \n\n**Concrete instruction**: Call `pack` with `files: [\"test-repo/django/core/exceptions.py\"]` and `mode: \"signatures\"`, then list every **class name** that appears at the module level (i.e., defined with `class` at column 0, not nested inside other classes or functions), in the **order they appear in the file**.\n\n**Expected answer format**: One class name per line, in order of appearance, e.g.:\n\n```\nClassName1\nClassName2\n...\n```\n\nDo not include base class names, method names, or module-level constants. Only top-level class names.\n\n---",
+  "workdir": "/tmp/focus-bench/contextpack-native-2026-04-24T13-28-28-410",
+  "exit_reason": "ok"
+}

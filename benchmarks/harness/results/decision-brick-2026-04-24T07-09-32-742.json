@@ -1,0 +1,28 @@
+{
+  "brick": "decision",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:08:34.476Z",
+  "duration_ms": 58266,
+  "turns": 9,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__dec_options",
+    "mcp__focus__dec_recommend",
+    "mcp__focus__dec_record",
+    "mcp__focus__dec_tradeoffs"
+  ],
+  "usage": {
+    "input_tokens": 31,
+    "cache_creation_input_tokens": 25569,
+    "cache_read_input_tokens": 187195,
+    "output_tokens": 3572,
+    "total": 216367
+  },
+  "session_id": "0d976eef-5b3a-48bb-907e-05307160946d",
+  "result_block": "## Result\n- **Brick**: decision\n- **Mode**: brick\n- **Mini-task**: Structured tradeoff analysis to choose between platform-express and platform-fastify as NestJS HTTP adapter using 4 weighted criteria\n- **Answer**: `platform-express, express=243, fastify=188`\n- **Turns used**: 7\n- **Tools used**: `mcp__focus__dec_options`, `mcp__focus__dec_tradeoffs`, `mcp__focus__dec_recommend`, `mcp__focus__dec_record`\n- **Rough token estimate**: ~4,500 tokens\n- **Notes**: All four decision brick tools worked as expected. The `dec_options` call returned a `decisionId` that was threaded through subsequent calls. The `dec_recommend` tool confirmed the weighted totals (express=243, fastify=188) matching the manual computation: express = (6×9)+(9×8)+(9×6)+(9×7) = 54+72+54+63 = 243; fastify = (9×9)+(6×8)+(4×6)+(5×7) = 81+48+24+35 = 188. The decision record was saved to `test-repo/decision-http-adapter.json`. No fallbacks were needed.",
+  "workdir": "/tmp/focus-bench/decision-brick-2026-04-24T07-08-34-475",
+  "exit_reason": "ok"
+}

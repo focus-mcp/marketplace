@@ -1,0 +1,25 @@
+{
+  "brick": "shell",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:05:55.185Z",
+  "duration_ms": 24534,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__sh_exec"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 14842,
+    "cache_read_input_tokens": 118397,
+    "output_tokens": 1099,
+    "total": 134363
+  },
+  "session_id": "f016321e-ddab-47d5-9205-b5ce713bbade",
+  "result_block": "## Result\n- **Brick**: shell\n- **Mode**: brick\n- **Mini-task**: Count TypeScript source files (excluding `.spec.ts` and `.d.ts`) in each of 9 package directories under `test-repo/packages/`, sorted alphabetically\n- **Answer**:\n```\ncommon: 187\ncore: 179\nmicroservices: 135\nplatform-express: 24\nplatform-fastify: 15\nplatform-socket.io: 3\nplatform-ws: 3\ntesting: 12\nwebsockets: 43\n```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__sh_exec`\n- **Rough token estimate**: ~1,500\n- **Notes**: Single shell command with a loop handled all 9 packages efficiently. No issues encountered. The `find` command with `! -name \"*.spec.ts\" ! -name \"*.d.ts\"` correctly excluded test and declaration files.",
+  "workdir": "/tmp/focus-bench/shell-brick-2026-04-24T08-05-55-184",
+  "exit_reason": "ok"
+}

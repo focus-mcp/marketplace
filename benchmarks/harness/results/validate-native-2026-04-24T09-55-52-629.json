@@ -1,0 +1,25 @@
+{
+  "brick": "validate",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:51:27.285Z",
+  "duration_ms": 265344,
+  "turns": 40,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 103,
+    "cache_creation_input_tokens": 77039,
+    "cache_read_input_tokens": 2359174,
+    "output_tokens": 13879,
+    "total": 2450195
+  },
+  "session_id": "48c59bc1-168b-4854-81b3-82785b7376bf",
+  "result_block": "## Result\n- **Brick**: validate\n- **Mode**: native\n- **Mini-task**: Count lines with `any` type annotation in `packages/platform-ws/adapters/ws-adapter.ts`\n- **Answer**: 20\n- **Turns used**: 8\n- **Tools used**: `Read`, `Bash`, `Grep`\n- **Rough token estimate**: ~6,000\n- **Notes**: The file `packages/platform-ws/adapters/ws-adapter.ts` contains 20 distinct lines with the `any` type (word-boundary match). Two of those lines (`131` and `157`) each contain two `any` tokens, giving 22 total `any` tokens across 20 lines. All imports in the file are used. No `console.log`, `TODO/FIXME`, or `debugger` statements are present. The `json` and `schema` tools were not exercised since the task focuses on `types`.",
+  "mini_task_spec": "Using the `validate` brick's `types` tool (`mcp__focus__val_types`), audit the TypeScript file at `packages/platform-ws/adapters/ws-adapter.ts` for type quality issues.\n\n**Task**: Call the `types` tool with the path to `packages/platform-ws/adapters/ws-adapter.ts`. Report the total number of **lines** in that file that contain the TypeScript `any` type (as a word boundary match on `any`).\n\n**Expected answer format**: A single integer — the count of lines that contain the `any` type annotation.\n\n*(Do not count occurrences per line — count distinct lines. The tool should scan the file and return the number of lines where `any` appears as a TypeScript type.)*\n\n---",
+  "workdir": "/tmp/focus-bench/validate-native-2026-04-24T09-51-27-285",
+  "exit_reason": "ok"
+}

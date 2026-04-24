@@ -1,0 +1,27 @@
+{
+  "brick": "parallel",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:43:23.174Z",
+  "duration_ms": 573010,
+  "turns": 19,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__par_collect",
+    "mcp__focus__par_merge",
+    "mcp__focus__par_run"
+  ],
+  "usage": {
+    "input_tokens": 83,
+    "cache_creation_input_tokens": 127671,
+    "cache_read_input_tokens": 1200361,
+    "output_tokens": 33592,
+    "total": 1361707
+  },
+  "session_id": "0223cf21-5844-4477-83c2-90d204657ea4",
+  "result_block": "## Result\n- **Brick**: parallel\n- **Mode**: brick\n- **Mini-task**: Count non-spec TypeScript source files in each of 9 NestJS packages concurrently using par_run, then merge into a single sorted report via par_merge\n- **Answer**:\n  ```\n  common: 187\n  core: 179\n  microservices: 135\n  platform-express: 24\n  platform-fastify: 15\n  platform-socket.io: 3\n  platform-ws: 3\n  testing: 12\n  websockets: 43\n  ```\n- **Turns used**: 15\n- **Tools used**: `mcp__focus__par_run`, `mcp__focus__par_collect`, `mcp__focus__par_merge`\n- **Rough token estimate**: ~70,000 tokens\n- **Notes**:\n  1. **No shell / pipe support**: `par_run` splits commands by whitespace (naive `str.split()`, not `shlex`), not via a shell. The `|` pipe character is passed literally as a `find` argument — so `find ... | wc -l` fails. Wrapping in `bash -c \"...\"` also fails because the quoted script is shredded into separate tokens.\n  2. **Workaround used**: First collected file *lists* with `find ... -printf x` (one `x` per matching file, no pipes, no shell), then ran a second `par_run` using `expr length <x-string>` to convert the character-count of each output into an exact file count. This is a two-pass approach instead of the intended single-command `find | wc -l`.\n  3. **Token overflow on large find output**: The raw file-listing `par_collect` result (73,548 chars) exceeded the MCP token limit and was auto-saved to disk; the `-printf x` trick neatly avoided that by compressing one file → one character.\n  4. `par_merge` doubled the separator (outputting `\\n\\\\n\\n` between entries) when `\"\\n\"` was passed as the separator string — minor cosmetic quirk, data was correct.",
+  "workdir": "/tmp/focus-bench/parallel-brick-2026-04-24T07-43-23-174",
+  "exit_reason": "ok"
+}

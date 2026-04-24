@@ -1,0 +1,25 @@
+{
+  "brick": "graphquery",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:28:09.750Z",
+  "duration_ms": 90934,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 36,
+    "cache_creation_input_tokens": 24068,
+    "cache_read_input_tokens": 472763,
+    "output_tokens": 5416,
+    "total": 502283
+  },
+  "session_id": "8d78b46c-9ea4-4819-ac02-322b0bad4448",
+  "result_block": "## Result\n- **Brick**: graphquery\n- **Mode**: native\n- **Mini-task**: Find shortest peerDependency path from @nestjs/platform-ws to @nestjs/core in the NestJS monorepo\n- **Answer**: `@nestjs/platform-ws → @nestjs/websockets → @nestjs/core`\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~3,500\n- **Notes**: All packages use only `peerDependencies` for `@nestjs/*` inter-package edges (no `@nestjs/*` in regular `dependencies`). The path is unambiguous: `platform-ws` peers only `common` and `websockets`; `websockets` peers `core` directly; so the 2-hop path through `websockets` is the unique shortest path. No alternative 2-hop path exists since `common` has no outgoing `@nestjs` peer edges.",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/`, each sub-package under `test-repo/packages/` has a `package.json`. Build a directed graph where each node is an `@nestjs/*`-scoped package and a directed edge from A to B exists when B appears in A's `peerDependencies` field (ignore non-`@nestjs` entries). Using only this peer-dependency graph, find the **shortest path** (fewest edges) from `@nestjs/platform-ws` to `@nestjs/core`. If multiple shortest paths of equal length exist, list the one whose intermediate node(s) come first alphabetically by package name.\n\nReport the answer as the sequence of full package names (including `@nestjs/` prefix), separated by ` → `, on a single line. Example format: `@nestjs/X → @nestjs/Y → @nestjs/Z`.\n\nThe nine packages to consider are: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets` (all under `test-repo/packages/`).\n\n---",
+  "workdir": "/tmp/focus-bench/graphquery-native-2026-04-24T07-28-09-750",
+  "exit_reason": "ok"
+}

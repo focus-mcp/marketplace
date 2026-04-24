@@ -1,0 +1,26 @@
+{
+  "brick": "semanticsearch",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:02:22.570Z",
+  "duration_ms": 313428,
+  "turns": 4,
+  "tools_used": [
+    "Agent",
+    "Read",
+    "ToolSearch",
+    "mcp__focus__sem_search"
+  ],
+  "usage": {
+    "input_tokens": 60,
+    "cache_creation_input_tokens": 117340,
+    "cache_read_input_tokens": 121352,
+    "output_tokens": 3189,
+    "total": 241941
+  },
+  "session_id": "8696799b-a6e3-4774-a049-58e7f427c985",
+  "result_block": "## Result\n- **Brick**: semanticsearch\n- **Mode**: brick\n- **Mini-task**: TF-IDF cosine similarity search over 12 TypeScript injector files for query \"module exports imports controllers\", return top 3\n- **Answer**:\n  ```\n  module.ts\n  instance-loader.ts\n  container.ts\n  ```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__sem_search`\n- **Rough token estimate**: ~70,000\n- **Notes**: The `sem_search` tool required full corpus text to be passed in; file contents were read via the `Read` tool (via sub-agent) since sem_search has no built-in file access. The top 3 results by cosine similarity are `module.ts`, `instance-loader.ts`, and `container.ts` — which intuitively makes sense as these are the files most concerned with module structure, exports/imports, and controller registration in NestJS's DI system.",
+  "workdir": "/tmp/focus-bench/semanticsearch-brick-2026-04-24T08-02-22-569",
+  "exit_reason": "ok"
+}

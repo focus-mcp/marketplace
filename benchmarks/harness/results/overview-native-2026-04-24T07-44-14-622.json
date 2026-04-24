@@ -1,0 +1,25 @@
+{
+  "brick": "overview",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:42:12.788Z",
+  "duration_ms": 121834,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 47,
+    "cache_creation_input_tokens": 48354,
+    "cache_read_input_tokens": 807715,
+    "output_tokens": 6456,
+    "total": 862572
+  },
+  "session_id": "eaa685b2-f645-42ec-83ef-26c972521010",
+  "result_block": "## Result\n\n- **Brick**: overview\n- **Mode**: native\n- **Mini-task**: Detect coding conventions (quotes, trailing commas, arrow parens, import style) in the NestJS monorepo\n- **Answer**:\n  ```\n  quotes: single\n  trailingComma: all\n  arrowParens: avoid\n  importStyle: esmodule\n  ```\n- **Turns used**: 15\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~6 500\n- **Notes**: The `.prettierrc` file directly encodes the first three properties. Import style was cross-checked in two TypeScript source files (`packages/common/index.ts`, `packages/core/nest-factory.ts`), both use ES-module `import` syntax. Indentation (2 spaces, Prettier default) was also confirmed via `cat -A` inspection but was not part of the required answer. No unusual obstacles encountered.",
+  "mini_task_spec": "Using the `conventions` tool from the **overview** brick, determine the coding conventions in use across the NestJS monorepo located at `test-repo/`.\n\nSpecifically, identify and report each of the following four properties, exactly as configured:\n\n1. **Quote style** — are TypeScript source files written with single quotes or double quotes?\n2. **Trailing comma setting** — what is the configured trailing-comma mode (e.g. `none`, `es5`, or `all`)?\n3. **Arrow function parentheses setting** — are arrow-function single parameters always parenthesized, or is parenthesizing avoided (`always` vs `avoid`)?\n4. **Import style** — do TypeScript source files use ES-module `import … from …` syntax or CommonJS `require()` calls?\n\nExpected answer format — four lines, one per property, in this order:\n\n```\nquotes: <single|double>\ntrailingComma: <none|es5|all>\narrowParens: <always|avoid>\nimportStyle: <esmodule|commonjs>\n```\n\nThe source of truth for properties 1–3 is `test-repo/.prettierrc`. Property 4 must be verified in actual TypeScript source files (e.g. `test-repo/packages/common/index.ts` or `test-repo/packages/core/nest-factory.ts`).\n\n---",
+  "workdir": "/tmp/focus-bench/overview-native-2026-04-24T07-42-12-788",
+  "exit_reason": "ok"
+}

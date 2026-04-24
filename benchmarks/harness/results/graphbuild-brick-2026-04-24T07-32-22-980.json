@@ -1,0 +1,28 @@
+{
+  "brick": "graphbuild",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:29:38.159Z",
+  "duration_ms": 164821,
+  "turns": 9,
+  "tools_used": [
+    "Agent",
+    "Monitor",
+    "Read",
+    "ToolSearch",
+    "mcp__focus__gb_build",
+    "mcp__focus__gb_multimodal"
+  ],
+  "usage": {
+    "input_tokens": 65,
+    "cache_creation_input_tokens": 49195,
+    "cache_read_input_tokens": 432382,
+    "output_tokens": 4994,
+    "total": 486636
+  },
+  "session_id": "2042efb1-9916-4b84-97ce-f4990f5209c3",
+  "result_block": "## Result\n- **Brick**: graphbuild\n- **Mode**: brick\n- **Mini-task**: List all direct relative import specifiers in `test-repo/packages/core/nest-factory.ts`, sorted alphabetically\n- **Answer**:\n```\n./adapters/http-adapter\n./application-config\n./constants\n./errors/exceptions-zone\n./helpers/load-adapter\n./helpers/rethrow\n./injector/container\n./injector/injector\n./injector/instance-loader\n./inspector/graph-inspector\n./inspector/noop-graph-inspector\n./inspector/uuid-factory\n./metadata-scanner\n./nest-application\n./nest-application-context\n./scanner\n```\n- **Turns used**: 6\n- **Tools used**: `mcp__focus__gb_build`, `mcp__focus__gb_multimodal` (called twice — once for `edges`, once for `nodes`)\n- **Rough token estimate**: ~30,000 tokens\n- **Notes**: Both `gb_multimodal` calls returned outputs exceeding the inline token limit and were saved to disk files. The `edges` format returned 830 edges across the full `packages/core` tree — no filtering by file is possible within the brick tools themselves. An `Agent` sub-call was needed to read the oversized output file and extract the 16 `imports`-type edges from `nest-factory.ts`. The `nodes` format call was redundant (abandoned after `edges` was sufficient). No `../` (parent-relative) imports were found — all 16 imports target files within the same `packages/core/` root, hence all specifiers use `./`.",
+  "workdir": "/tmp/focus-bench/graphbuild-brick-2026-04-24T07-29-38-158",
+  "exit_reason": "ok"
+}

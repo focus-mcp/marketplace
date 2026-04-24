@@ -1,0 +1,25 @@
+{
+  "brick": "echo",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:16:10.046Z",
+  "duration_ms": 49595,
+  "turns": 7,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__echo_say"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 32137,
+    "cache_read_input_tokens": 166528,
+    "output_tokens": 2398,
+    "total": 201092
+  },
+  "session_id": "a935a89c-a748-4a11-b3c7-2a8c70606dbd",
+  "result_block": "## Result\n- **Brick**: echo\n- **Mode**: brick\n- **Mini-task**: Read the `description` field from `test-repo/package.json` and echo it via `mcp__focus__echo_say`\n- **Answer**: Modern, fast, powerful node.js web framework\n- **Turns used**: 4\n- **Tools used**: mcp__focus__echo_say\n- **Rough token estimate**: ~3,500\n- **Notes**: The `mcp__focus__echo_say` tool returned the message wrapped in a JSON object `{\"message\": \"...\"}`. The echoed string value is `Modern, fast, powerful node.js web framework`. Used `Read` to get `package.json` contents since no focus tool can read arbitrary files; `Read` is not in the forbidden tool list.",
+  "workdir": "/tmp/focus-bench/echo-brick-2026-04-24T07-16-10-045",
+  "exit_reason": "ok"
+}

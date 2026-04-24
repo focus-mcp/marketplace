@@ -1,0 +1,27 @@
+{
+  "brick": "research",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:52:19.437Z",
+  "duration_ms": 95196,
+  "turns": 8,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__rsh_multisource",
+    "mcp__focus__rsh_synthesize",
+    "mcp__focus__rsh_validate"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 39711,
+    "cache_read_input_tokens": 209213,
+    "output_tokens": 5620,
+    "total": 254577
+  },
+  "session_id": "db2ad40c-75e4-4181-bdc0-9a0f43bb4bb8",
+  "result_block": "## Result\n- **Brick**: research\n- **Mode**: brick\n- **Mini-task**: Analyze 6 NestJS pipe files to identify which use the `'../index'` barrel import for `HttpStatus` and which are missing `@publicApi` JSDoc on their exported class.\n- **Answer**:\n```\nQ1:\nparse-enum.pipe.ts\nparse-float.pipe.ts\nQ2:\nUNKNOWN — brick tools do not extract JSDoc annotations; @publicApi presence could not be determined from rsh_multisource, rsh_synthesize, or rsh_validate output.\n```\n- **Turns used**: 5\n- **Tools used**: `mcp__focus__rsh_multisource`, `mcp__focus__rsh_synthesize`, `mcp__focus__rsh_validate`\n- **Rough token estimate**: ~6,000\n- **Notes**: The `rsh_multisource` tool successfully extracted imports (confirming Q1 — `parse-float.pipe.ts` and `parse-enum.pipe.ts` both import from `'../index'`), but its structured output schema (`exports`, `imports`, `types`, `functions`) has no field for JSDoc annotations. Neither `rsh_synthesize` nor `rsh_validate` surfaced `@publicApi` metadata. Q2 cannot be answered with the research brick alone; a tool that returns raw file content or explicitly parses JSDoc comments would be needed.",
+  "workdir": "/tmp/focus-bench/research-brick-2026-04-24T07-52-19-435",
+  "exit_reason": "ok"
+}

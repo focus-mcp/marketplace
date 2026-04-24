@@ -1,0 +1,27 @@
+{
+  "brick": "knowledge",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:34:31.062Z",
+  "duration_ms": 102566,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 41,
+    "cache_creation_input_tokens": 22934,
+    "cache_read_input_tokens": 565911,
+    "output_tokens": 5184,
+    "total": 594070
+  },
+  "session_id": "fe8df40d-bdea-4711-b3ef-e73ebca6ee9a",
+  "result_block": "## Result\n\n- **Brick**: knowledge\n- **Mode**: native\n- **Mini-task**: Find WebDAV-related HTTP method decorators in NestJS common package by simulating a knowledge-base index+search workflow\n- **Answer**:\n  ```\n  Copy\n  Lock\n  Mkcol\n  Move\n  Propfind\n  Proppatch\n  Unlock\n  ```\n- **Turns used**: 7\n- **Tools used**: Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The seven WebDAV decorators are identified by their JSDoc descriptions containing the word \"Webdav\" (lowercase 'dav') in `request-mapping.decorator.ts`. A knowledge-base search for \"WebDAV\" would match these entries since content-search is case-insensitive by convention. The remaining 9 decorators (Post, Get, Delete, Put, Patch, Options, Head, All, Search) describe standard HTTP methods and would not be returned by a WebDAV-specific search.",
+  "mini_task_spec": "The file `test-repo/packages/common/decorators/http/request-mapping.decorator.ts` exports multiple HTTP method route decorators. Each exported decorator (created via `createMappingDecorator`) has a JSDoc block immediately above its `export const` line containing a single description sentence (the line starting with `* Route handler (method) Decorator.`).\n\nYour task:\n1. For each such exported decorator (excluding `RequestMapping` itself), use the knowledge brick's `index` tool to index it as a knowledge base entry with:\n   - `title` = the decorator name (e.g., `\"Get\"`, `\"Post\"`, `\"Propfind\"`)\n   - `content` = the full JSDoc description sentence (e.g., `\"Route handler (method) Decorator. Routes HTTP GET requests to the specified path.\"`)\n   - `tags` = `[\"decorator\", \"http-method\"]`\n   - `source` = `\"test-repo/packages/common/decorators/http/request-mapping.decorator.ts\"`\n2. Use the knowledge brick's `search` tool with query `\"WebDAV\"` to retrieve matching entries.\n3. Report the `title` values (decorator names) of all entries returned by that search, sorted alphabetically, one per line.\n\nExpected answer format: a plain list of decorator names, one per line, sorted alphabetically (case-sensitive, capital-first).\n\n---",
+  "workdir": "/tmp/focus-bench/knowledge-native-2026-04-24T07-34-31-062",
+  "exit_reason": "ok"
+}

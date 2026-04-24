@@ -1,0 +1,26 @@
+{
+  "brick": "symbol",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:48:24.394Z",
+  "duration_ms": 99508,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 40,
+    "cache_creation_input_tokens": 38776,
+    "cache_read_input_tokens": 559661,
+    "output_tokens": 7052,
+    "total": 605529
+  },
+  "session_id": "445605cf-8235-4f0f-af6d-d15a4d746083",
+  "result_block": "## Result\n- **Brick**: symbol\n- **Mode**: native\n- **Mini-task**: List all exported `*Exception` classes in `packages/core/errors/exceptions/` with file path and line number\n- **Answer**:\n```\nCircularDependencyException:packages/core/errors/exceptions/circular-dependency.exception.ts:3\nInvalidClassException:packages/core/errors/exceptions/invalid-class.exception.ts:4\nInvalidClassModuleException:packages/core/errors/exceptions/invalid-class-module.exception.ts:4\nInvalidClassScopeException:packages/core/errors/exceptions/invalid-class-scope.exception.ts:6\nInvalidExceptionFilterException:packages/core/errors/exceptions/invalid-exception-filter.exception.ts:4\nInvalidMiddlewareConfigurationException:packages/core/errors/exceptions/invalid-middleware-configuration.exception.ts:4\nInvalidMiddlewareException:packages/core/errors/exceptions/invalid-middleware.exception.ts:4\nInvalidModuleException:packages/core/errors/exceptions/invalid-module.exception.ts:4\nRuntimeException:packages/core/errors/exceptions/runtime.exception.ts:1\nUndefinedDependencyException:packages/core/errors/exceptions/undefined-dependency.exception.ts:6\nUndefinedForwardRefException:packages/core/errors/exceptions/undefined-forwardref.exception.ts:5\nUndefinedModuleException:packages/core/errors/exceptions/undefined-module.exception.ts:4\nUnknownDependenciesException:packages/core/errors/exceptions/unknown-dependencies.exception.ts:6\nUnknownElementException:packages/core/errors/exceptions/unknown-element.exception.ts:3\nUnknownExportException:packages/core/errors/exceptions/unknown-export.exception.ts:4\nUnknownModuleException:packages/core/errors/exceptions/unknown-module.exception.ts:3\nUnknownRequestMappingException:packages/core/errors/exceptions/unknown-request-mapping.exception.ts:5\n```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: All 17 classes found via a single regex grep `^export class \\w+Exception\\b` on the target directory. Line numbers verified with a second grep pass. `RuntimeException` is included as its name ends with \"Exception\". No ambiguities encountered.",
+  "mini_task_spec": "Using the symbol brick, find all exported class symbols whose names end with the word `Exception` (i.e., the class name itself ends in `Exception`) inside the directory `test-repo/packages/core/errors/exceptions/`. For each symbol found, record the class name, the file path relative to `test-repo/`, and the 1-based line number where the `export class` declaration appears. Output a list sorted alphabetically by class name, one entry per line, in the format:\n\n```\nClassName:relative/file/path:lineNumber\n```\n\nExample line: `CircularDependencyException:packages/core/errors/exceptions/circular-dependency.exception.ts:3`\n\nInclude all classes whose names end in `Exception`, including `RuntimeException`.\n\n---",
+  "workdir": "/tmp/focus-bench/symbol-native-2026-04-24T09-48-24-394",
+  "exit_reason": "ok"
+}

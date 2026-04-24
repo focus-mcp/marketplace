@@ -1,0 +1,32 @@
+{
+  "brick": "overview",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:43:26.135Z",
+  "duration_ms": 128070,
+  "turns": 17,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__ovw_architecture",
+    "mcp__focus__ovw_conventions"
+  ],
+  "usage": {
+    "input_tokens": 76,
+    "cache_creation_input_tokens": 33302,
+    "cache_read_input_tokens": 454312,
+    "output_tokens": 5838,
+    "total": 493528
+  },
+  "session_id": "5aacb90a-1a09-46cd-b4d2-d53791c1d683",
+  "result_block": "## Result\n- **Brick**: overview\n- **Mode**: brick\n- **Mini-task**: Read all 23 `*.exception.ts` files in `test-repo/packages/common/exceptions/` using `multiread`'s `batch` tool and list classes directly extending `HttpException`, sorted A–Z\n- **Answer**: *(could not complete — see Notes)*\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_reload`, `mcp__focus__ovw_conventions`, `mcp__focus__ovw_architecture`\n- **Rough token estimate**: ~3,500\n- **Notes**: The `multiread` brick was found in the FocusMCP Marketplace catalog and `focus_install` reported success (`Installed multiread@1.0.0`), but `focus_load` immediately failed with `ENOENT: no such file or directory, open '/tmp/focus-bench/overview-brick-2026-04-24T07-43-26-134/.focus/bricks/multiread/mcp-brick.json'`. The `focus_reload` call also returned `Brick \"multiread\" not found`. The brick's files were never written to disk despite the install success message — likely a bug in the install flow for this sandbox environment. With no `batch` tool available and the `ovw_*` tools only returning project metadata (not file contents), the task cannot be completed using only `mcp__focus__*` tools.",
+  "workdir": "/tmp/focus-bench/overview-brick-2026-04-24T07-43-26-134",
+  "exit_reason": "ok"
+}

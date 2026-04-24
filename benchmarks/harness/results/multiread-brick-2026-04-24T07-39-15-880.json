@@ -1,0 +1,25 @@
+{
+  "brick": "multiread",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:38:25.017Z",
+  "duration_ms": 50863,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__mr_batch"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 20134,
+    "cache_read_input_tokens": 116623,
+    "output_tokens": 2474,
+    "total": 139256
+  },
+  "session_id": "adb733d7-85a5-40ec-8d01-31481d01193b",
+  "result_block": "## Result\n- **Brick**: multiread\n- **Mode**: brick\n- **Mini-task**: Find import lines that appear identically in all four TypeScript decorator files\n- **Answer**:\n```\nimport { extendArrayMetadata } from '../../utils/extend-metadata.util';\nimport { isFunction } from '../../utils/shared.utils';\nimport { validateEach } from '../../utils/validate-each.util';\n```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__mr_batch`\n- **Rough token estimate**: ~2,500\n- **Notes**: Used `mr_batch` to read all four files in one call. The `mr_dedup` tool was also available and specifically designed for deduplicating shared imports, but `mr_batch` returned the raw content which was sufficient to identify the three shared imports manually. The first two imports in each file are unique (different metadata constants and different interface imports), while the last three (`extendArrayMetadata`, `isFunction`, `validateEach`) are identical across all four files.",
+  "workdir": "/tmp/focus-bench/multiread-brick-2026-04-24T07-38-25-016",
+  "exit_reason": "ok"
+}

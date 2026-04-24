@@ -1,0 +1,26 @@
+{
+  "brick": "agent",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:00:00.438Z",
+  "duration_ms": 131887,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 52,
+    "cache_creation_input_tokens": 28721,
+    "cache_read_input_tokens": 809191,
+    "output_tokens": 6628,
+    "total": 844592
+  },
+  "session_id": "2bd393c5-f412-4a38-a5aa-9cde41905362",
+  "result_block": "## Result\n- **Brick**: agent\n- **Mode**: native\n- **Mini-task**: Identify all concrete transport client class names in `packages/microservices/client/` (the agents that would be registered) and list them alphabetically\n- **Answer**:\n  ```\n  ClientGrpcProxy\n  ClientKafka\n  ClientMqtt\n  ClientNats\n  ClientRedis\n  ClientRMQ\n  ClientTCP\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The brick is an in-memory agent registry with no persistent state. In native mode, the \"registration\" step is simply code inspection — identifying concrete (non-abstract, non-factory) exported classes from transport-specific client files. `client-proxy.ts` is excluded because it's abstract; `client-proxy-factory.ts` is excluded as it's a factory utility, not a transport. The 7 concrete transport clients map cleanly to the brick's `register` → `list` → `capabilities` workflow.",
+  "mini_task_spec": "In the NestJS test-repo (`test-repo/packages/microservices/client/`), there are several TypeScript files defining transport-specific microservice clients. Your task is to simulate an agent registry for these clients using the agent registry brick (`mcp__focus__agt_*` tools).\n\n**Step 1 – Register agents:** For each concrete (non-abstract) transport client file in `test-repo/packages/microservices/client/` — excluding `client-proxy.ts` (abstract base), `client-proxy-factory.ts` (factory helper), and `index.ts` (re-export barrel) — register one agent using the brick's `register` tool. Use the exported class name as the agent `name`, and set `capabilities` to `[\"transport\", \"<protocol>\"]` where `<protocol>` is the transport identifier from the filename stem (e.g., `grpc` from `client-grpc.ts`). The exported class names are embedded in each file's `export class ...` declaration.\n\n**Step 2 – List agents:** Call the brick's `list` tool with no filter to retrieve all registered agents.\n\n**Step 3 – Answer:** Report the agent names returned by `list`, one per line, sorted alphabetically (case-insensitive). Expected format: a plain list of class names, one per line, alphabetically ordered.\n\n---",
+  "workdir": "/tmp/focus-bench/agent-native-2026-04-24T07-00-00-438",
+  "exit_reason": "ok"
+}
