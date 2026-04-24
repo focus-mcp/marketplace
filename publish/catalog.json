@@ -7,11 +7,11 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-24T10:37:40.812Z",
+  "updated": "2026-04-24T11:49:33.616Z",
   "bricks": [
     {
       "name": "agent",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Agent registry — register AI agents with capabilities, list available agents, query capabilities.",
       "tags": [
         "agent",
@@ -110,7 +110,7 @@
     },
     {
       "name": "aiteam",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "AI team coordination — loads dispatch, parallel, debate, review, agent for multi-agent orchestration.",
       "tags": [
         "aiteam",
@@ -134,7 +134,7 @@
     },
     {
       "name": "autopilot",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Autopilot workflow — autonomous task execution with reasoning, context management, and shell commands.",
       "tags": [
         "autopilot",
@@ -217,7 +217,7 @@
     },
     {
       "name": "batch",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Batch execution patterns — run multiple operations sequentially, in parallel, or as a pipeline.",
       "tags": [
         "batch",
@@ -358,7 +358,7 @@
     },
     {
       "name": "cache",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "In-memory file cache — avoid redundant disk reads with mtime-based invalidation.",
       "tags": [
         "cache",
@@ -458,7 +458,7 @@
     },
     {
       "name": "callgraph",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Call graph analysis — callers, callees, call chains.",
       "tags": [
         "callgraph",
@@ -587,7 +587,7 @@
     },
     {
       "name": "codebase",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Complete codebase intelligence — loads treesitter, symbol, outline, callgraph, depgraph, refs.",
       "tags": [
         "codebase",
@@ -611,7 +611,7 @@
     },
     {
       "name": "codeedit",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Precise code editing — replace function bodies, insert before/after, safe delete with dependency check.",
       "tags": [
         "edit",
@@ -765,7 +765,7 @@
     },
     {
       "name": "codemod",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Code modification toolkit — loads symbol, rename, codeedit, inline, textsearch for automated refactoring.",
       "tags": [
         "codemod",
@@ -788,7 +788,7 @@
     },
     {
       "name": "compress",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Compress text output to save tokens — strip comments, collapse whitespace, abbreviate patterns.",
       "tags": [
         "compress",
@@ -867,7 +867,7 @@
     },
     {
       "name": "contextpack",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Pack files into a compressed context bundle — reduce token usage by extracting only signatures, maps, or full content.",
       "tags": [
         "context",
@@ -994,7 +994,7 @@
     },
     {
       "name": "convert",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Convert between formats and units — unit conversion, encoding, format transformation, naming conventions.",
       "tags": [
         "convert",
@@ -1141,7 +1141,7 @@
     },
     {
       "name": "debate",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Structured multi-perspective debate — define positions, score arguments, find consensus, summarize.",
       "tags": [
         "debate",
@@ -1286,7 +1286,7 @@
     },
     {
       "name": "decision",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Structured decision-making — define options, analyze tradeoffs, recommend, and record decisions.",
       "tags": [
         "decision",
@@ -1461,7 +1461,7 @@
     },
     {
       "name": "depgraph",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Dependency graph analysis — imports, exports, circular deps, fan-in/out.",
       "tags": [
         "depgraph",
@@ -1570,7 +1570,7 @@
     },
     {
       "name": "devtools",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Developer tools — loads shell, sandbox, batch for command execution and scripting.",
       "tags": [
         "devtools",
@@ -1591,7 +1591,7 @@
     },
     {
       "name": "diagram",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Diagram generation — produce Mermaid, DOT/Graphviz, and ASCII diagrams from data.",
       "tags": [
         "diagram",
@@ -1790,7 +1790,7 @@
     },
     {
       "name": "dispatch",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Task dispatch queue — send tasks, manage queue, cancel, check status for multi-step workflows.",
       "tags": [
         "dispatch",
@@ -1884,7 +1884,7 @@
     },
     {
       "name": "echo",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Hello-world brick — returns the message it receives. Serves as a smoke test for the FocusMCP pipeline.",
       "tags": [
         "example",
@@ -1919,7 +1919,7 @@
     },
     {
       "name": "filediff",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "File comparison — diff, patch, delta between files or versions.",
       "tags": [
         "file",
@@ -2001,7 +2001,7 @@
     },
     {
       "name": "filelist",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "List directory contents — entries, tree, glob, find.",
       "tags": [
         "file",
@@ -2098,7 +2098,7 @@
     },
     {
       "name": "fileops",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "File operations — move, copy, delete, rename.",
       "tags": [
         "file",
@@ -2198,7 +2198,7 @@
     },
     {
       "name": "fileread",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Read files — full, head, tail, line range, encoding detection.",
       "tags": [
         "file",
@@ -2299,7 +2299,7 @@
     },
     {
       "name": "filesearch",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Search and replace in files — regex search, in-place replace.",
       "tags": [
         "file",
@@ -2371,7 +2371,7 @@
     },
     {
       "name": "filesystem",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Complete filesystem operations — loads fileread, filewrite, filelist, fileops, filesearch.",
       "tags": [
         "filesystem",
@@ -2393,7 +2393,7 @@
     },
     {
       "name": "filewrite",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Write files — create, overwrite, append.",
       "tags": [
         "file",
@@ -2473,7 +2473,7 @@
     },
     {
       "name": "format",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Format data into various output formats — pretty JSON, YAML, markdown, ASCII tables.",
       "tags": [
         "format",
@@ -2605,7 +2605,7 @@
     },
     {
       "name": "fts",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Full-text search with TF-IDF ranking — index files, search with relevance scoring, suggest completions.",
       "tags": [
         "search",
@@ -2717,7 +2717,7 @@
     },
     {
       "name": "fullaudit",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Full project audit workflow — code quality review, security scan, architecture analysis, and metrics report.",
       "tags": [
         "audit",
@@ -2778,7 +2778,7 @@
     },
     {
       "name": "graphbuild",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Knowledge graph builder — construct a graph of code entities (files, functions, types) and their relationships.",
       "tags": [
         "graph",
@@ -2901,7 +2901,7 @@
     },
     {
       "name": "graphcluster",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Graph clustering — detect communities, explain groupings, identify architecture layers.",
       "tags": [
         "graph",
@@ -2975,7 +2975,7 @@
     },
     {
       "name": "graphexport",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Knowledge graph export — generate HTML, Mermaid, GraphML, Cypher, Obsidian, and wiki formats.",
       "tags": [
         "graph",
@@ -3060,7 +3060,7 @@
     },
     {
       "name": "graphquery",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Knowledge graph query — find nodes, traverse neighbors, find paths, filter by type.",
       "tags": [
         "graph",
@@ -3197,7 +3197,7 @@
     },
     {
       "name": "heatmap",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "File access heatmap — track read/write patterns, detect hot and cold files.",
       "tags": [
         "heatmap",
@@ -3291,7 +3291,7 @@
     },
     {
       "name": "impact",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Change impact analysis — given a file or symbol, find what files are affected by a change.",
       "tags": [
         "impact",
@@ -3383,7 +3383,7 @@
     },
     {
       "name": "inline",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Inline, extract, and move refactoring — inline variables/functions, extract code to new functions, move between files.",
       "tags": [
         "inline",
@@ -3496,7 +3496,7 @@
     },
     {
       "name": "knowledge",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Knowledge base — index documents, search by content, fetch entries, purge stale data, rank by relevance.",
       "tags": [
         "knowledge",
@@ -3640,7 +3640,7 @@
     },
     {
       "name": "knowledgebase",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Knowledge base — loads knowledge, fts, graphbuild, graphquery for document indexing and graph-powered search.",
       "tags": [
         "knowledgebase",
@@ -3663,7 +3663,7 @@
     },
     {
       "name": "lastversion",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Package version intelligence — latest version, diff, changelog, audit across npm/pypi/github/gitlab.",
       "tags": [
         "version",
@@ -3860,7 +3860,7 @@
     },
     {
       "name": "memory",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Persistent key-value memory — store and recall information across sessions as JSON files.",
       "tags": [
         "memory",
@@ -3977,7 +3977,7 @@
     },
     {
       "name": "metrics",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Session metrics tracking — token usage, costs, duration, and per-tool statistics.",
       "tags": [
         "metrics",
@@ -4075,7 +4075,7 @@
     },
     {
       "name": "multiread",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Batch file reading — multiple files in one call, deduplication.",
       "tags": [
         "file",
@@ -4156,7 +4156,7 @@
     },
     {
       "name": "onboarding",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Project onboarding workflow — auto-discover project structure, conventions, and key files for a new contributor or AI agent.",
       "tags": [
         "onboarding",
@@ -4217,7 +4217,7 @@
     },
     {
       "name": "outline",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "File and repo structure outline — list exported symbols and directory trees without reading full content.",
       "tags": [
         "outline",
@@ -4295,7 +4295,7 @@
     },
     {
       "name": "overview",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Project-level understanding without reading all files — detect framework, language, conventions, and architecture.",
       "tags": [
         "overview",
@@ -4386,7 +4386,7 @@
     },
     {
       "name": "parallel",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Parallel execution coordination — run tasks concurrently, collect results, merge outputs, handle timeouts.",
       "tags": [
         "parallel",
@@ -4520,7 +4520,7 @@
     },
     {
       "name": "planning",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Structured planning — create plans with steps, dependencies, and time estimates.",
       "tags": [
         "planning",
@@ -4645,7 +4645,7 @@
     },
     {
       "name": "refs",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Cross-references — find who imports or uses a symbol, locate declarations, and trace inheritance chains.",
       "tags": [
         "references",
@@ -4752,7 +4752,7 @@
     },
     {
       "name": "rename",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Rename refactoring — rename symbols across files, rename files with import updates, bulk rename with preview.",
       "tags": [
         "rename",
@@ -4895,7 +4895,7 @@
     },
     {
       "name": "repos",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Multi-repo management — register, track, and get stats for multiple repositories.",
       "tags": [
         "repos",
@@ -4979,7 +4979,7 @@
     },
     {
       "name": "research",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Multi-source research — collect info from multiple files/sources, synthesize findings, validate consistency.",
       "tags": [
         "research",
@@ -5133,7 +5133,7 @@
     },
     {
       "name": "review",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Structured code review — analyze code quality, security, architecture patterns, compare versions.",
       "tags": [
         "review",
@@ -5226,7 +5226,7 @@
     },
     {
       "name": "routes",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "API route detection — scan projects for Express, Fastify, Next.js, SvelteKit route definitions.",
       "tags": [
         "routes",
@@ -5326,7 +5326,7 @@
     },
     {
       "name": "sandbox",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Sandboxed code execution — run JavaScript/TypeScript snippets in an isolated VM context.",
       "tags": [
         "sandbox",
@@ -5418,7 +5418,7 @@
     },
     {
       "name": "savings",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Track and report token savings — compare FocusMCP usage vs naive full-read, trend over time, ROI.",
       "tags": [
         "savings",
@@ -5518,7 +5518,7 @@
     },
     {
       "name": "semanticsearch",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Semantic search using TF-IDF vector space — cosine similarity, intent matching, document similarity.",
       "tags": [
         "search",
@@ -5681,7 +5681,7 @@
     },
     {
       "name": "session",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Session context save and restore — track loaded files and operations, persist sessions to disk.",
       "tags": [
         "session",
@@ -5772,7 +5772,7 @@
     },
     {
       "name": "share",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Shared state for multi-agent — share context, files, results between agents, broadcast messages.",
       "tags": [
         "share",
@@ -5880,7 +5880,7 @@
     },
     {
       "name": "shell",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Shell command execution — run commands, background processes, kill, and compress output.",
       "tags": [
         "shell",
@@ -5999,7 +5999,7 @@
     },
     {
       "name": "smartcontext",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Composite brick — orchestrates smartread, cache, compress, tokenbudget, and overview to deliver optimal context within a token budget.",
       "tags": [
         "context",
@@ -6080,7 +6080,7 @@
     },
     {
       "name": "smartread",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Intelligent file reading — multiple modes to minimize token usage.",
       "tags": [
         "file",
@@ -6179,7 +6179,7 @@
     },
     {
       "name": "symbol",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Symbol lookup in source files — find, get, bulk, body.",
       "tags": [
         "symbols",
@@ -6293,7 +6293,7 @@
     },
     {
       "name": "task",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Task management for multi-agent workflows — create tasks, assign to agents, track status, mark complete.",
       "tags": [
         "task",
@@ -6407,7 +6407,7 @@
     },
     {
       "name": "textsearch",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Text search and replace across files — regex search, multi-file replace, grouped results.",
       "tags": [
         "search",
@@ -6560,7 +6560,7 @@
     },
     {
       "name": "thinking",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Structured reasoning chains — think step by step, branch alternatives, revise conclusions, summarize.",
       "tags": [
         "thinking",
@@ -6675,7 +6675,7 @@
     },
     {
       "name": "tokenbudget",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Token budget management — estimate and optimize token usage for AI agents.",
       "tags": [
         "tokens",
@@ -6789,7 +6789,7 @@
     },
     {
       "name": "treesitter",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Regex-based code indexer for TypeScript/JavaScript — parses symbols, imports, exports.",
       "tags": [
         "ast",
@@ -6869,7 +6869,7 @@
     },
     {
       "name": "validate",
-      "version": "1.1.0",
+      "version": "0.0.0-dev.39",
       "description": "Validate data — JSON syntax, JSON Schema compliance, TypeScript type checking, lint rules.",
       "tags": [
         "validate",
