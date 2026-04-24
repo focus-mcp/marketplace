@@ -58,6 +58,17 @@ jobs:
               2>/dev/null || true
             echo "Opened catalog-update PR from ${BRANCH}"
           fi
+      - name: Deploy catalog.json to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./publish
+          exclude_assets: 'bricks.md,bricks.md.license,*.license'
+          keep_files: true
+          commit_message: 'chore(catalog): deploy to gh-pages after stable publish [skip ci]'
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
       # Strategy: diff local package.json version vs npm registry @latest.
       # Only bricks whose version has changed are built then published.
       # Bricks already at the latest version on npm are skipped entirely — no build, no publish.
