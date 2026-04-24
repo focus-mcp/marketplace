@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-24T14:09:02.359Z",
+  "updated": "2026-04-24T15:07:06.889Z",
   "bricks": [
     {
       "name": "agent",
@@ -2098,7 +2098,7 @@
     },
     {
       "name": "fileops",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "description": "File operations — move, copy, delete, rename.",
       "tags": [
         "file",
@@ -3977,7 +3977,7 @@
     },
     {
       "name": "metrics",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "description": "Session metrics tracking — token usage, costs, duration, and per-tool statistics.",
       "tags": [
         "metrics",
