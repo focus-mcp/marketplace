@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-savings",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Track and report token savings — compare FocusMCP usage vs naive full-read, trend over time, ROI.",
     "license": "MIT",

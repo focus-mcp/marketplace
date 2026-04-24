@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-contextpack",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Pack files into a compressed context bundle — reduce token usage by extracting only signatures, maps, or full content.",
     "license": "MIT",

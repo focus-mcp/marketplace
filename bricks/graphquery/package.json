@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-graphquery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Knowledge graph query — find nodes, traverse neighbors, find paths, filter by type.",
     "license": "MIT",

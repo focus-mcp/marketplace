@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-thinking",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Structured reasoning chains — think step by step, branch alternatives, revise conclusions, summarize.",
     "license": "MIT",

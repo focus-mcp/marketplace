@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-knowledgebase",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Knowledge base — loads knowledge, fts, graphbuild, graphquery for document indexing and graph-powered search.",
     "license": "MIT",

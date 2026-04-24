@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-repos",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Multi-repo management — register, track, and get stats for multiple repositories.",
     "license": "MIT",

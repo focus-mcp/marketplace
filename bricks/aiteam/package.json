@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-aiteam",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "AI team coordination — loads dispatch, parallel, debate, review, agent for multi-agent orchestration.",
     "license": "MIT",
