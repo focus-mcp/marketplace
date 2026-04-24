@@ -6,6 +6,8 @@ name: Stable Publish
 on:
   push:
     branches: [main]
+    paths:
+      - "bricks/**"
   workflow_dispatch:
 
 permissions:
