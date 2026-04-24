@@ -59,6 +59,8 @@ jobs:
               "
             fi
           done
+      - name: Build all bricks
+        run: pnpm build
       - run: pnpm build:catalog
       - name: Publish all bricks with dev tag
         env:
