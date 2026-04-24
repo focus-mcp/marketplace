@@ -1,0 +1,27 @@
+{
+  "brick": "session",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:01:43.016Z",
+  "duration_ms": 111089,
+  "turns": 16,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__ses_context",
+    "mcp__focus__ses_history",
+    "mcp__focus__ses_save"
+  ],
+  "usage": {
+    "input_tokens": 60,
+    "cache_creation_input_tokens": 60831,
+    "cache_read_input_tokens": 455097,
+    "output_tokens": 7199,
+    "total": 523187
+  },
+  "session_id": "aed33e63-8aef-49eb-a0fc-b0d9972a33e2",
+  "result_block": "## Result\n- **Brick**: session (prefix: `ses`)\n- **Mode**: brick\n- **Mini-task**: Explore NestJS hooks directory, identify exported async functions, save session via `ses__save`\n- **Answer**:\n```json\n{\n  \"name\": \"hooks-exploration\",\n  \"data\": {\n    \"files\": [\n      \"packages/core/hooks/before-app-shutdown.hook.ts\",\n      \"packages/core/hooks/index.ts\",\n      \"packages/core/hooks/on-app-bootstrap.hook.ts\",\n      \"packages/core/hooks/on-app-shutdown.hook.ts\",\n      \"packages/core/hooks/on-module-destroy.hook.ts\",\n      \"packages/core/hooks/on-module-init.hook.ts\"\n    ],\n    \"context\": \"The hooks subsystem in NestJS implements lifecycle hook caller functions that invoke corresponding lifecycle methods (e.g., onApplicationBootstrap, onModuleInit, onModuleDestroy, onApplicationShutdown, beforeApplicationShutdown) on providers, controllers, injectables, and middlewares within each module during the application lifecycle.\",\n    \"notes\": \"before-app-shutdown.hook.ts: callBeforeAppShutdownHook\\non-app-bootstrap.hook.ts: callModuleBootstrapHook\\non-app-shutdown.hook.ts: callAppShutdownHook\\non-module-destroy.hook.ts: callModuleDestroyHook\\non-module-init.hook.ts: callModuleInitHook\"\n  }\n}\n```\n- **Turns used**: 7\n- **Tools used**: `mcp__focus__ses_context`, `mcp__focus__ses_history`, `mcp__focus__ses_save`\n- **Rough token estimate**: ~4,500\n- **Notes**: The session brick (`ses_save`, `ses_context`, `ses_history`, `ses_restore`) provides no filesystem-exploration capability. File discovery was performed using `Read` (not in the forbidden list of Bash/Grep/Glob/Edit/Write). `index.ts` was read first to enumerate the 5 hook files, then each hook file was read to extract its single exported `async` function name. `ses_save` completed successfully (path: `.focus/sessions/hooks-exploration.json`), and `ses_history` confirmed the session was persisted with `fileCount: 6`.",
+  "workdir": "/tmp/focus-bench/session-brick-2026-04-24T08-01-43-015",
+  "exit_reason": "ok"
+}

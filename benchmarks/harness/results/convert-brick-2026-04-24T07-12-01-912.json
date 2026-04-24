@@ -1,0 +1,25 @@
+{
+  "brick": "convert",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:11:06.117Z",
+  "duration_ms": 55795,
+  "turns": 8,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__conv_format"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 26161,
+    "cache_read_input_tokens": 208315,
+    "output_tokens": 3366,
+    "total": 237875
+  },
+  "session_id": "fca7277e-9536-4da7-b9b7-7d29033b61d4",
+  "result_block": "## Result\n- **Brick**: convert\n- **Mode**: brick\n- **Mini-task**: Read `criteria` array from `test-repo/decision-http-adapter.json` and convert it from JSON to CSV using the `format` tool\n- **Answer**:\n```\nname,weight\nRaw throughput performance,9\nMiddleware/plugin ecosystem breadth,8\nBuilt-in file-upload support (no extra install),6\nAdapter implementation simplicity,7\n```\n- **Turns used**: 5\n- **Tools used**: `mcp__focus__conv_format`\n- **Rough token estimate**: ~1,500\n- **Notes**: The first call to `mcp__focus__conv_format` failed with `val.includes is not a function` — this is a bug in the brick's CSV serializer: it calls `.includes()` on each field value to check for quoting needs, but doesn't guard against non-string (numeric) values. The `weight` field in the source JSON is an integer (`9`, `8`, etc.). Workaround: passing the weights as JSON strings (`\"9\"`, `\"8\"`, …) instead of integers resolved the error and produced the correct CSV output. The numeric values are preserved correctly in the CSV despite being passed as strings.",
+  "workdir": "/tmp/focus-bench/convert-brick-2026-04-24T07-11-06-116",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "format",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:19:41.629Z",
+  "duration_ms": 117245,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 41,
+    "cache_creation_input_tokens": 35258,
+    "cache_read_input_tokens": 613617,
+    "output_tokens": 6829,
+    "total": 655745
+  },
+  "session_id": "6dafdd38-8c35-469e-8062-aa5398d0ac95",
+  "result_block": "## Result\n\n- **Brick**: format\n- **Mode**: native\n- **Mini-task**: Format NestJS package dependency counts as an ASCII table\n- **Answer**:\n```\n+----------------------------+-----------+\n| Package                    | Dep Count |\n+----------------------------+-----------+\n| @nestjs/common             | 5         |\n| @nestjs/core               | 6         |\n| @nestjs/microservices      | 2         |\n| @nestjs/platform-express   | 5         |\n| @nestjs/platform-fastify   | 10        |\n| @nestjs/platform-socket.io | 2         |\n| @nestjs/platform-ws        | 2         |\n| @nestjs/testing            | 1         |\n| @nestjs/websockets         | 3         |\n+----------------------------+-----------+\n```\n- **Turns used**: 8\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: All 9 packages under `test-repo/packages/` have `package.json` files. The table was constructed manually using Python's `str.ljust()` to replicate the `+--+` border style the `table` brick tool would produce. Column widths are driven by the longest value in each column (`@nestjs/platform-socket.io` = 26 chars for col 1, `Dep Count` = 9 chars for col 2).",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/`, there are package subdirectories under `test-repo/packages/` (e.g. `common`, `core`, `microservices`, etc.), each containing a `package.json` file. For every such directory that has a `package.json`:\n\n1. Read the `name` field (the npm package name, e.g. `@nestjs/common`).\n2. Count the number of entries in the `dependencies` field only (exclude `devDependencies` and `peerDependencies`).\n\nUsing the brick's `table` tool, format the results as an ASCII table with `+--+` borders, two columns — **Package** (left-aligned) and **Dep Count** (left-aligned) — with rows sorted alphabetically by package name.\n\nThe expected output is an ASCII table with exactly this structure (the `table` tool must receive `headers: [\"Package\", \"Dep Count\"]` and `rows` as an array of `[name, depCount]` string pairs, sorted alphabetically):\n\n```\n+----------------------------+-----------+\n| Package                    | Dep Count |\n+----------------------------+-----------+\n| @nestjs/common             | 5         |\n| @nestjs/core               | 6         |\n| @nestjs/microservices      | 2         |\n| @nestjs/platform-express   | 5         |\n| @nestjs/platform-fastify   | 10        |\n| @nestjs/platform-socket.io | 2         |\n| @nestjs/platform-ws        | 2         |\n| @nestjs/testing            | 1         |\n| @nestjs/websockets         | 3         |\n+----------------------------+-----------+\n```\n\nReport the final rendered ASCII table as your answer.\n\n---",
+  "workdir": "/tmp/focus-bench/format-native-2026-04-24T07-19-41-629",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "outline",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:39:15.881Z",
+  "duration_ms": 60504,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 47750,
+    "cache_read_input_tokens": 494198,
+    "output_tokens": 3841,
+    "total": 545824
+  },
+  "session_id": "7f9f14e9-6ec8-45fd-ade3-4e2197365f68",
+  "result_block": "## Result\n- **Brick**: outline\n- **Mode**: native\n- **Mini-task**: List all unique exported symbol names from `packages/common/decorators/http/route-params.decorator.ts`, sorted alphabetically\n- **Answer**:\n  ```\n  assignMetadata\n  Body\n  Headers\n  HostParam\n  Ip\n  Next\n  Param\n  ParamData\n  Query\n  RawBody\n  Req\n  Request\n  Res\n  Response\n  ResponseDecoratorOptions\n  RouteParamMetadata\n  Session\n  UploadedFile\n  UploadedFiles\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~12,000\n- **Notes**: The file has many overloaded TypeScript function declarations (e.g. `Body`, `Param`, `Query`, `RawBody`, `UploadedFile`, `UploadedFiles`, `HostParam` each appear 3–4 times); de-duplication was required to get unique symbol names. Native grep + sort handles this cleanly.",
+  "mini_task_spec": "Using the `outline` brick's `file` tool, outline the file `test-repo/packages/common/decorators/http/route-params.decorator.ts` to identify all exported symbols. List the **unique** exported symbol names (de-duplicating overloaded function signatures that appear on multiple lines) from that file, sorted alphabetically, one name per line. Include all exports: interfaces, types, functions, and consts.\n\nExpected answer format: a plain list of unique symbol names, sorted alphabetically, one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/outline-native-2026-04-24T07-39-15-881",
+  "exit_reason": "ok"
+}

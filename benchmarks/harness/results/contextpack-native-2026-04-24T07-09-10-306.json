@@ -1,0 +1,27 @@
+{
+  "brick": "contextpack",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:06:35.217Z",
+  "duration_ms": 155089,
+  "turns": 21,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 50,
+    "cache_creation_input_tokens": 59670,
+    "cache_read_input_tokens": 826952,
+    "output_tokens": 8505,
+    "total": 895177
+  },
+  "session_id": "a4d0dbf8-5d6a-4170-8085-c70bda52b559",
+  "result_block": "## Result\n- **Brick**: contextpack\n- **Mode**: native\n- **Mini-task**: Extract and alphabetically list all exported symbol names from three NestJS common-package TypeScript files\n- **Answer**:\n  ```\n  DescriptionAndOptions\n  HttpException\n  HttpExceptionOptions\n  HttpStatus\n  ParseIntPipe\n  ParseIntPipeOptions\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Glob, Grep\n- **Rough token estimate**: ~6 000\n- **Notes**: No blockers. Native solution is a straightforward grep for `^export (class|interface|enum|type|function|const)` across the three files. The `pack --mode signatures` brick tool would produce the same result automatically across any number of files, making it far more efficient at scale.",
+  "mini_task_spec": "Using the `contextpack` brick's `pack` tool in `signatures` mode, extract all top-level exported symbols from these three TypeScript files in the NestJS repository:\n\n- `test-repo/packages/common/exceptions/http.exception.ts`\n- `test-repo/packages/common/enums/http-status.enum.ts`\n- `test-repo/packages/common/pipes/parse-int.pipe.ts`\n\nA \"top-level exported symbol\" is any TypeScript declaration preceded by `export` at the start of a line with a kind of `class`, `interface`, `enum`, `type`, `function`, or `const` — extract the symbol name only (not the full body).\n\nReturn a single flat list of all exported symbol names found across the three files, sorted alphabetically, one name per line. Do not group by file; do not include file paths in the answer list.\n\n---",
+  "workdir": "/tmp/focus-bench/contextpack-native-2026-04-24T07-06-35-217",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "filelist",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T13:28:28.395Z",
+  "duration_ms": 59478,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 26472,
+    "cache_read_input_tokens": 346467,
+    "output_tokens": 3058,
+    "total": 376026
+  },
+  "session_id": "2817b2d0-6f38-41b2-b792-564fd8a21693",
+  "result_block": "## Result\n- **Brick**: filelist\n- **Mode**: native\n- **Mini-task**: Find all `models.py` files under `test-repo/django/contrib`, sorted alphabetically\n- **Answer**:\n  ```\n  django/contrib/admin/models.py\n  django/contrib/auth/models.py\n  django/contrib/contenttypes/models.py\n  django/contrib/flatpages/models.py\n  django/contrib/gis/db/backends/base/models.py\n  django/contrib/gis/db/backends/oracle/models.py\n  django/contrib/gis/db/backends/postgis/models.py\n  django/contrib/gis/db/backends/spatialite/models.py\n  django/contrib/redirects/models.py\n  django/contrib/sessions/models.py\n  django/contrib/sites/models.py\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~3,500\n- **Notes**: The test-repo is a Django source tree (not NestJS as the prompt template mentioned). The `Glob` tool failed to resolve patterns relative to the working directory when `path` was set, so `Bash` `find` was used instead. The brick's `find` tool is a direct analogue of that `find -name` call.",
+  "mini_task_spec": "Using the **filelist** brick, find all files named exactly `models.py` anywhere inside the `test-repo/django/contrib` directory. Use the brick's `find` tool with `name: \"models.py\"` on the path pointing to `test-repo/django/contrib`. Return the discovered file paths as a sorted alphabetical list, each path expressed relative to `test-repo/` (i.e. starting with `django/contrib/…`), one path per line.",
+  "workdir": "/tmp/focus-bench/filelist-native-2026-04-24T13-28-28-395",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,30 @@
+{
+  "brick": "cache",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:00:15.081Z",
+  "duration_ms": 152390,
+  "turns": 18,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 85,
+    "cache_creation_input_tokens": 56551,
+    "cache_read_input_tokens": 640155,
+    "output_tokens": 6981,
+    "total": 703772
+  },
+  "session_id": "b159f9c6-7183-4d82-bbed-c8295a537941",
+  "result_block": "## Result\n- **Brick**: cache\n- **Mode**: brick\n- **Mini-task**: Identify all unique sub-module directories exported from `test-repo/packages/common/index.ts` and form their `index.ts` paths\n- **Answer**: *(could not be determined — see Notes)*\n- **Turns used**: 9\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~6,000\n- **Notes**: The cache brick is installed (reported as version `^0.0.0`) but `focus_load` fails with `\"Manifest.version must follow SemVer 2.0\"` — the `^` prefix makes it an invalid SemVer. `focus_update` is not yet implemented, `focus_reload` says brick not found, and the brick tools (`mcp__cache__get`, `mcp__cache__warmup`, etc.) never become available. With only `mcp__focus__*` management tools accessible and none of them providing file-reading capabilities, the task cannot be completed under the stated constraints. The task would have used `mcp__cache__get` on the absolute path of `test-repo/packages/common/index.ts` to retrieve its content, then parsed the `export … from './X'` statements to build the path list.",
+  "workdir": "/tmp/focus-bench/cache-brick-2026-04-24T07-00-15-080",
+  "exit_reason": "ok"
+}

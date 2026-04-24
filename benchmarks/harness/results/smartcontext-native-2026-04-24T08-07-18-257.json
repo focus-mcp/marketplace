@@ -1,0 +1,25 @@
+{
+  "brick": "smartcontext",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:06:01.541Z",
+  "duration_ms": 76716,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 29956,
+    "cache_read_input_tokens": 520928,
+    "output_tokens": 3248,
+    "total": 554169
+  },
+  "session_id": "1020b005-684f-4848-9cde-4fed3535c157",
+  "result_block": "## Result\n- **Brick**: smartcontext\n- **Mode**: native\n- **Mini-task**: Find all `.ts` files in `test-repo/packages/core` whose path contains \"interceptor\", sorted alphabetically\n- **Answer**:\n  ```\n  packages/core/interceptors/index.ts\n  packages/core/interceptors/interceptors-consumer.ts\n  packages/core/interceptors/interceptors-context-creator.ts\n  packages/core/test/interceptors/interceptors-consumer.spec.ts\n  packages/core/test/interceptors/interceptors-context-creator.spec.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1,800\n- **Notes**: Straightforward glob/find task. The brick would use `load` with the task string and dir to auto-rank these files by relevance within a token budget, which is a richer operation than a filename grep — but the deterministic file-listing subset is a fair proxy for verifying the brick's discovery output.",
+  "mini_task_spec": "You are working inside the NestJS monorepo located at `test-repo/`. Your task is: **\"add request timing logs to the interceptor pipeline.\"**\n\nUsing the directory `test-repo/packages/core`, find every TypeScript file (`.ts` extension) whose file path contains the substring `interceptor` (case-sensitive). Report the matching file paths sorted alphabetically, expressed relative to `test-repo/` (i.e., starting with `packages/core/…`).\n\nExpected answer format: a plain list of file paths, one per line, sorted alphabetically. Do not include absolute paths or any other text.\n\n---",
+  "workdir": "/tmp/focus-bench/smartcontext-native-2026-04-24T08-06-01-541",
+  "exit_reason": "ok"
+}

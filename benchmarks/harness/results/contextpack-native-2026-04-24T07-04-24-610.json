@@ -1,0 +1,26 @@
+{
+  "brick": "contextpack",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:02:47.472Z",
+  "duration_ms": 97138,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 45,
+    "cache_creation_input_tokens": 63147,
+    "cache_read_input_tokens": 730593,
+    "output_tokens": 6072,
+    "total": 799857
+  },
+  "session_id": "413208bb-47f6-4c2b-b4b4-6d8a3bcf207d",
+  "result_block": "## Result\n- **Brick**: contextpack\n- **Mode**: native\n- **Mini-task**: List all exported symbol names from 5 NestJS decorator files, sorted alphabetically\n- **Answer**:\n  ```\n  CustomDecorator\n  Injectable\n  InjectableOptions\n  mixin\n  SetMetadata\n  UseGuards\n  UseInterceptors\n  UsePipes\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Grep, Bash\n- **Rough token estimate**: ~3,500\n- **Notes**: The contextpack brick's `pack` tool in `signatures` mode is designed to extract exactly these export signatures without reading full file content. Native solution required reading each file in full or grepping for `^export` lines. The `prioritize` tool (sorting files by query relevance) was not benchmarked here since it is non-deterministic to replicate natively.",
+  "mini_task_spec": "Using the `pack` tool from the **contextpack** brick in `signatures` mode, extract all top-level exported symbol names from the following 5 TypeScript files in `test-repo/packages/common/decorators/core/`:\n\n1. `test-repo/packages/common/decorators/core/injectable.decorator.ts`\n2. `test-repo/packages/common/decorators/core/set-metadata.decorator.ts`\n3. `test-repo/packages/common/decorators/core/use-guards.decorator.ts`\n4. `test-repo/packages/common/decorators/core/use-interceptors.decorator.ts`\n5. `test-repo/packages/common/decorators/core/use-pipes.decorator.ts`\n\nIdentify all symbols that appear after a top-level `export` keyword (i.e., exported functions, types, constants, classes, interfaces, and enums). Report the exported names as a list sorted alphabetically (case-insensitive), one name per line. Do not include the `export` keyword or type qualifier — only the bare identifier name.",
+  "workdir": "/tmp/focus-bench/contextpack-native-2026-04-24T07-02-47-472",
+  "exit_reason": "ok"
+}

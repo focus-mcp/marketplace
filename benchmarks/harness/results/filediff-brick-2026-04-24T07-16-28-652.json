@@ -1,0 +1,25 @@
+{
+  "brick": "filediff",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:16:05.316Z",
+  "duration_ms": 23336,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__fd_diff"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 11974,
+    "cache_read_input_tokens": 114197,
+    "output_tokens": 1330,
+    "total": 127526
+  },
+  "session_id": "e56033a9-9a96-465c-979e-4f892bedc7c2",
+  "result_block": "## Result\n- **Brick**: filediff\n- **Mode**: brick\n- **Mini-task**: Count total changed lines (single `-`/`+`) in unified diff between `packages/platform-express/index.ts` and `packages/platform-fastify/index.ts`\n- **Answer**: 4\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__fd_diff`\n- **Rough token estimate**: ~600\n- **Notes**: The diff was clean and compact; two hunks each with one removal and one addition. The `---`/`+++` file-header lines were correctly excluded from the count.",
+  "workdir": "/tmp/focus-bench/filediff-brick-2026-04-24T07-16-05-315",
+  "exit_reason": "ok"
+}

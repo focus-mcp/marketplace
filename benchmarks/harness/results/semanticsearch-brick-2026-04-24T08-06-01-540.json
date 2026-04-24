@@ -1,0 +1,25 @@
+{
+  "brick": "semanticsearch",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:04:34.050Z",
+  "duration_ms": 87489,
+  "turns": 18,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__sem_search"
+  ],
+  "usage": {
+    "input_tokens": 38,
+    "cache_creation_input_tokens": 99143,
+    "cache_read_input_tokens": 250696,
+    "output_tokens": 7148,
+    "total": 357025
+  },
+  "session_id": "0920fab5-045b-4a8f-a773-6dc01c7b95f8",
+  "result_block": "## Result\n- **Brick**: semanticsearch\n- **Mode**: brick\n- **Mini-task**: Semantic search over 14 NestJS decorator files for \"dependency injection token provider registration\"\n- **Answer**:\n```\n1. inject.decorator.ts\n2. injectable.decorator.ts\n3. optional.decorator.ts\n```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__sem_search`\n- **Rough token estimate**: ~12,000\n- **Notes**: Tool worked as expected. TF-IDF cosine similarity correctly ranked `inject.decorator.ts` highest (explicit mention of `InjectionToken`, `SELF_DECLARED_DEPS_METADATA`, `PROPERTY_DEPS_METADATA`, token lookup), followed by `injectable.decorator.ts` (provider/DI/scope concepts), and `optional.decorator.ts` (optional injected dependency metadata). Scores drop off sharply after the top 2.",
+  "workdir": "/tmp/focus-bench/semanticsearch-brick-2026-04-24T08-04-34-050",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,27 @@
+{
+  "brick": "debate",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:10:39.226Z",
+  "duration_ms": 67264,
+  "turns": 11,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__dbt_debate",
+    "mcp__focus__dbt_score",
+    "mcp__focus__dbt_summary"
+  ],
+  "usage": {
+    "input_tokens": 41,
+    "cache_creation_input_tokens": 27725,
+    "cache_read_input_tokens": 216409,
+    "output_tokens": 2064,
+    "total": 246239
+  },
+  "session_id": "773d277f-bac2-4ffc-974f-67aa1538a4d8",
+  "result_block": "## Result\n- **Brick**: debate\n- **Mode**: brick\n- **Mini-task**: Use debate/score/summary tools to evaluate platform-express vs platform-fastify for a NestJS app, then compute weighted totals from the decision JSON.\n- **Answer**:\n```\nplatform-express weighted total: 243\nplatform-fastify weighted total: 188\nwinner: platform-express\n```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__dbt_debate`, `mcp__focus__dbt_score`, `mcp__focus__dbt_summary`\n- **Rough token estimate**: ~1,800\n- **Notes**: All three tools worked as expected. The `score` tool confirmed platform-express as rank 1 (weightedScore ≈ 7.8 vs 6.95) using the debate's internal relevance/evidence/feasibility weighting. The task-specified weighted totals (243 vs 188) are computed from the JSON file's own criteria weights [9,8,6,7] and raw scores, which are distinct from the tool's internal scoring — both methods agree on the winner. No fallbacks needed.",
+  "workdir": "/tmp/focus-bench/debate-brick-2026-04-24T07-10-39-225",
+  "exit_reason": "ok"
+}

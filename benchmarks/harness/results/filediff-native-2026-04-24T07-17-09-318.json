@@ -1,0 +1,26 @@
+{
+  "brick": "filediff",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:15:44.292Z",
+  "duration_ms": 85026,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 47,
+    "cache_creation_input_tokens": 20468,
+    "cache_read_input_tokens": 611852,
+    "output_tokens": 5652,
+    "total": 638019
+  },
+  "session_id": "eb1a9337-9ec7-4e9d-9b3f-4187fa7240b3",
+  "result_block": "## Result\n\n- **Brick**: filediff\n- **Mode**: native\n- **Mini-task**: Count added/removed lines in unified diff between platform-express and platform-fastify package.json\n- **Answer**:\n  ```\n  Added: 21\n  Removed: 10\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~2,500\n- **Notes**: The two `tsconfig.build.json` files were identical (no diff), so I pivoted to `package.json` which has meaningful structural differences — platform-fastify has no `devDependencies` block, replaces `cors`/`express`/`multer` with several `@fastify/*` packages, and adds a `peerDependenciesMeta` block. The diff count (21 added, 10 removed) is fully deterministic and reproducible.",
+  "mini_task_spec": "Using the `diff` tool from the **filediff** brick (or equivalent native `diff -u`), compare these two files in the NestJS test-repo:\n\n- File A: `test-repo/packages/platform-express/package.json`\n- File B: `test-repo/packages/platform-fastify/package.json`\n\nProduce the unified diff between them (A as the \"before\", B as the \"after\"). Then count:\n\n1. **Added lines**: lines in the diff output that start with `+` but are NOT the `+++` header line.\n2. **Removed lines**: lines in the diff output that start with `-` but are NOT the `---` header line.\n\nReport the answer in this exact format:\n```\nAdded: <integer>\nRemoved: <integer>\n```\n\n---",
+  "workdir": "/tmp/focus-bench/filediff-native-2026-04-24T07-15-44-292",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,27 @@
+{
+  "brick": "symbol",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:10:10.723Z",
+  "duration_ms": 126774,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 52,
+    "cache_creation_input_tokens": 36834,
+    "cache_read_input_tokens": 788263,
+    "output_tokens": 5975,
+    "total": 831124
+  },
+  "session_id": "b93e7bc9-8156-4163-9c02-82838604989a",
+  "result_block": "## Result\n\n- **Brick**: symbol\n- **Mode**: native\n- **Mini-task**: Find all exported `Use*` symbols in `test-repo/packages/common/decorators/core/` with file and line\n- **Answer**:\n  ```\n  UseFilters: packages/common/decorators/core/exception-filters.decorator.ts, line 29\n  UseGuards: packages/common/decorators/core/use-guards.decorator.ts, line 28\n  UseInterceptors: packages/common/decorators/core/use-interceptors.decorator.ts, line 28\n  UsePipes: packages/common/decorators/core/use-pipes.decorator.ts, line 29\n  ```\n- **Turns used**: 9\n- **Tools used**: Bash, Glob, Read, Grep\n- **Rough token estimate**: ~7,500\n- **Notes**: TypeScript source files are not found by `find -name \"*.ts\"` via Bash's own result (the shell returned empty), but direct `ls` and `cat` of known paths worked fine — the shell glob expansion was suppressed. Used `Grep` with a regex pattern to reliably locate all `export function Use*` and `export const Use*` declarations across the directory. `UseFilters` is exported as a `const` (arrow function), not a `function` declaration, but still qualifies as an exported symbol starting with `Use`.",
+  "mini_task_spec": "In the directory `test-repo/packages/common/decorators/core/`, find every exported symbol whose name begins with `Use`. For each such symbol, report its exact name and the file path relative to `test-repo/` where it is defined, along with the line number at which its definition starts.\n\n**Expected answer format**: one entry per line, sorted alphabetically by symbol name, formatted as:\n```\n<SymbolName>: <relative-file-path>, line <N>\n```\nUse paths relative to `test-repo/` (e.g. `packages/common/decorators/core/use-guards.decorator.ts`). Only include symbols whose names literally start with the prefix `Use` (case-sensitive). Do not include overload declarations — only the implementing definition.\n\n---",
+  "workdir": "/tmp/focus-bench/symbol-native-2026-04-24T08-10-10-722",
+  "exit_reason": "ok"
+}

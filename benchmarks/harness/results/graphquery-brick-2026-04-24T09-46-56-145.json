@@ -1,0 +1,33 @@
+{
+  "brick": "graphquery",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:45:02.885Z",
+  "duration_ms": 113260,
+  "turns": 19,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_add",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 78,
+    "cache_creation_input_tokens": 37356,
+    "cache_read_input_tokens": 504811,
+    "output_tokens": 5484,
+    "total": 547729
+  },
+  "session_id": "e619e5c9-54c2-46ca-8d90-9d2d266fec83",
+  "result_block": "## Result\n- **Brick**: graphquery\n- **Mode**: brick\n- **Mini-task**: Find all controller-type nodes in the NestJS dependency graph at `test-repo/integration/inspector/e2e/fixtures/post-init-graph.json` and return their labels sorted alphabetically\n- **Answer**: *(unavailable — brick tools could not be loaded)*\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_update`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_remove`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_add`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~4,500\n- **Notes**: The `graphquery` brick is registered as installed (version `^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-graphquery'` — the npm package is not installed in the environment. Without the brick loading, the `gq_query`/`gq_filter` tools never become available. `focus_update` is not implemented; `focus_remove` fails with \"Lock entry not found\"; reinstalling the same version is blocked. The focus MCP server itself is operational — this is a missing npm dependency, not a missing server. Per the rules, `Read` cannot be used on the graph file, and no alternative `mcp__focus__*` path exists to query the JSON directly.",
+  "workdir": "/tmp/focus-bench/graphquery-brick-2026-04-24T09-45-02-883",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,30 @@
+{
+  "brick": "graphcluster",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:26:43.367Z",
+  "duration_ms": 143544,
+  "turns": 17,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_search",
+    "mcp__focus__gc_architecture",
+    "mcp__focus__gc_cluster",
+    "mcp__focus__gc_communities"
+  ],
+  "usage": {
+    "input_tokens": 82,
+    "cache_creation_input_tokens": 29907,
+    "cache_read_input_tokens": 452869,
+    "output_tokens": 7359,
+    "total": 490217
+  },
+  "session_id": "6aba92f0-4ff9-4ce7-8515-afb335096d9d",
+  "result_block": "## Result\n- **Brick**: graphcluster\n- **Mode**: brick\n- **Mini-task**: Compute topological architecture layers of `@nestjs/*` packages in `test-repo/packages/` based on required inter-package dependencies\n- **Answer**: Unable to compute — the focus graph is empty. All `gc_*` tools returned no data (`{\"layers\":[]}`, `{\"clusters\":[],\"totalClusters\":0}`, `{\"communities\":[]}`). No `mcp__focus__*` tool exists to index a local codebase directory into the graph.\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__gc_architecture`, `mcp__focus__gc_cluster`, `mcp__focus__gc_communities`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~3,500\n- **Notes**: The focus MCP server is reachable and the graphcluster brick is loaded and responding, but the underlying graph has zero nodes and zero edges. The `gc_architecture` tool requires a pre-built dependency graph; no indexing/ingestion tool (e.g., a \"focus index <path>\" equivalent) is exposed via the MCP interface. The benchmark cannot be completed using only `mcp__focus__*` tools when the graph is unpopulated. This may indicate a missing initialization step in the test environment (e.g., a `focus build` CLI command that should have been run against the test-repo before the session started).",
+  "workdir": "/tmp/focus-bench/graphcluster-brick-2026-04-24T07-26-43-365",
+  "exit_reason": "ok"
+}

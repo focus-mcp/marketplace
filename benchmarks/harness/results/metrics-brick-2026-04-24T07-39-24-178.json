@@ -1,0 +1,27 @@
+{
+  "brick": "metrics",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:38:41.376Z",
+  "duration_ms": 42802,
+  "turns": 12,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__met_costs",
+    "mcp__focus__met_session",
+    "mcp__focus__met_tokens"
+  ],
+  "usage": {
+    "input_tokens": 55,
+    "cache_creation_input_tokens": 27478,
+    "cache_read_input_tokens": 214757,
+    "output_tokens": 2195,
+    "total": 244485
+  },
+  "session_id": "682ff20a-dd51-4c16-8ce1-39ff1400db6d",
+  "result_block": "## Result\n- **Brick**: metrics\n- **Mode**: brick\n- **Mini-task**: Record 5 NestJS config-file Read calls via met_tokens, then retrieve session totals and estimated cost via met_session and met_costs\n- **Answer**:\n  ```\n  Total input tokens: 250\n  Total output tokens: 3236\n  Total cost: $0.049290\n  ```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__met_tokens`, `mcp__focus__met_session`, `mcp__focus__met_costs`\n- **Rough token estimate**: ~1,500 tokens\n- **Notes**: All 5 `met_tokens` calls were dispatched in parallel in a single turn. The running totals returned by each call confirmed correct accumulation. `met_session` and `met_costs` were also fetched in parallel. No fallbacks or unexpected behavior — brick behaved exactly as specified.",
+  "workdir": "/tmp/focus-bench/metrics-brick-2026-04-24T07-38-41-374",
+  "exit_reason": "ok"
+}

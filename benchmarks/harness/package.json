@@ -1,0 +1,20 @@
+{
+    "name": "@focusmcp/bench-harness",
+    "version": "0.1.0",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "test-auth": "tsx src/test-auth.ts",
+        "bench": "tsx src/run-brick.ts",
+        "one-mode": "tsx src/run-one-mode.ts",
+        "fiche": "tsx src/generate-fiche.ts",
+        "sweep": "tsx src/sweep.ts"
+    },
+    "dependencies": {
+        "@anthropic-ai/claude-agent-sdk": "latest"
+    },
+    "devDependencies": {
+        "tsx": "^4.19.2",
+        "typescript": "^5.7.3"
+    }
+}

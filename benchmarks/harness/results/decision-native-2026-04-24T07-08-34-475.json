@@ -1,0 +1,25 @@
+{
+  "brick": "decision",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:06:13.733Z",
+  "duration_ms": 140741,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 53,
+    "cache_creation_input_tokens": 65540,
+    "cache_read_input_tokens": 1036874,
+    "output_tokens": 8878,
+    "total": 1111345
+  },
+  "session_id": "c2612fd6-0ccc-4bec-bdcb-0ed57b299a2d",
+  "result_block": "## Result\n- **Brick**: decision\n- **Mode**: native\n- **Mini-task**: Weighted tradeoff analysis: platform-express vs platform-fastify for a NestJS HTTP adapter\n- **Answer**: `platform-express`, express=243, fastify=188\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~6,500\n- **Notes**: Scores are grounded in verifiable codebase evidence: `packages/platform-express/` has a dedicated `multer/` directory with 5 file-upload interceptors and a 523-line adapter with 5 runtime deps; `packages/platform-fastify/` has a 917-line adapter with 10 runtime deps and requires the `middie` plugin for Express-style middleware. With the given weights, performance alone (fastify advantage: 9 vs 6 × weight 9 = +27) is more than offset by ecosystem, file-upload, and simplicity advantages of express (+23 + 30 + 28 = +81 net), giving express a clear win of 243 vs 188.",
+  "mini_task_spec": "Using the `decision` brick, perform a structured tradeoff analysis to decide between `platform-express` and `platform-fastify` as the HTTP adapter for a new NestJS application. Inspect the two packages at `test-repo/packages/platform-express/` and `test-repo/packages/platform-fastify/` for observable codebase evidence (dependency count, adapter line count, presence of built-in modules). Apply **exactly** these criteria and weights:\n\n| Criterion | Weight |\n|---|---|\n| Raw throughput performance | 9 |\n| Middleware/plugin ecosystem breadth | 8 |\n| Built-in file-upload support (no extra install) | 6 |\n| Adapter implementation simplicity | 7 |\n\nScore each option 1–10 using these scoring rules derived from codebase evidence:\n- **Raw throughput**: express=6 (slower baseline), fastify=9 (Fastify's known throughput advantage)\n- **Middleware ecosystem**: express=9 (vast npm ecosystem), fastify=6 (smaller plugin ecosystem)\n- **Built-in file upload**: express=9 (`packages/platform-express/multer/` module with 5 interceptors exists), fastify=4 (no built-in equivalent; needs external `@fastify/multipart`)\n- **Adapter simplicity**: express=9 (adapter is 523 lines, 5 runtime dependencies), fastify=5 (adapter is 917 lines, 10 runtime dependencies, requires middie plugin for middleware)\n\nCompute the weighted score for each option (sum of score × weight per criterion). Report the weighted total for each option and the recommended option (the one with the higher total). Answer format: `<recommended-option>, express=<score>, fastify=<score>`.\n\n---",
+  "workdir": "/tmp/focus-bench/decision-native-2026-04-24T07-06-13-733",
+  "exit_reason": "ok"
+}

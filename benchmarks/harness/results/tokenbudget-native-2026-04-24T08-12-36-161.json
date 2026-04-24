@@ -1,0 +1,25 @@
+{
+  "brick": "tokenbudget",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:11:49.341Z",
+  "duration_ms": 46820,
+  "turns": 10,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 45331,
+    "cache_read_input_tokens": 320729,
+    "output_tokens": 2619,
+    "total": 368708
+  },
+  "session_id": "0e8de68f-5eec-47dc-8126-3bde9e44ce7e",
+  "result_block": "## Result\n\n- **Brick**: tokenbudget\n- **Mode**: native\n- **Mini-task**: Find the top 5 most token-costly `.ts` files in `packages/common` using chars/4 heuristic\n- **Answer**:\n  ```\n  packages/common/test/services/logger.service.spec.ts: 8446\n  packages/common/test/pipes/validation.pipe.spec.ts: 6085\n  packages/common/test/decorators/route-params.decorator.spec.ts: 5870\n  packages/common/decorators/http/route-params.decorator.ts: 5778\n  packages/common/services/console.service.ts: 4593\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1,800\n- **Notes**: The chars/4 heuristic was applied as `floor(file_size_bytes / 4)` using `wc -c`. The brick's `analyze` tool may apply a code-vs-prose adjustment factor on top of this; results here assume no adjustment (pure chars/4). All 238 `.ts` files in `packages/common` were ranked.",
+  "mini_task_spec": "Using the **tokenbudget** brick's `analyze` tool (which estimates token cost per file using a chars/4 heuristic for code), analyze **all `.ts` files** in the directory `test-repo/packages/common` (recursively). Identify the **top 5 most token-costly files**, sorted by descending estimated token count.\n\nReport the answer as exactly 5 lines in this format:\n```\n<relative-path-from-test-repo>: <token_count>\n```\nwhere `<token_count>` is `floor(file_size_in_bytes / 4)` and paths are relative to `test-repo/`. Sort descending by token count.\n\n---",
+  "workdir": "/tmp/focus-bench/tokenbudget-native-2026-04-24T08-11-49-341",
+  "exit_reason": "ok"
+}

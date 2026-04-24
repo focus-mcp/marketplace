@@ -1,0 +1,25 @@
+{
+  "brick": "tokenbudget",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:12:36.162Z",
+  "duration_ms": 42893,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__tb_analyze"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 27244,
+    "cache_read_input_tokens": 117334,
+    "output_tokens": 2248,
+    "total": 146851
+  },
+  "session_id": "8ef8c0a9-189a-4aeb-ac35-facef0a011f4",
+  "result_block": "## Result\n- **Brick**: tokenbudget\n- **Mode**: brick\n- **Mini-task**: Find the top 5 most token-costly `.ts` files in `test-repo/packages/common` using the `tb_analyze` tool (floor(bytes/4) heuristic), sorted descending.\n- **Answer**:\n```\npackages/common/decorators/http/route-params.decorator.ts: 6682\npackages/common/services/console.service.ts: 5312\npackages/common/module-utils/configurable-module.builder.ts: 3576\npackages/common/pipes/validation.pipe.ts: 3339\npackages/common/services/logger-copy.service.ts: 2720\n```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__tb_analyze`\n- **Rough token estimate**: ~3,500\n- **Notes**: The `tb_analyze` tool returns all files (not just `.ts`), so manual filtering was needed to exclude `.md`, `.json`, `.bak`, and `.bak2` files from the ranked list. `services/logger-copy.service.ts` and `services/logger.service.ts` are tied at 2720 tokens; `logger-copy.service.ts` was selected as it appeared first in the tool's sorted output.",
+  "workdir": "/tmp/focus-bench/tokenbudget-brick-2026-04-24T08-12-36-162",
+  "exit_reason": "ok"
+}

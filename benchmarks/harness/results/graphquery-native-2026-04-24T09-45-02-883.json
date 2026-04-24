@@ -1,0 +1,25 @@
+{
+  "brick": "graphquery",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:42:20.723Z",
+  "duration_ms": 162160,
+  "turns": 37,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 87,
+    "cache_creation_input_tokens": 81118,
+    "cache_read_input_tokens": 1573713,
+    "output_tokens": 10339,
+    "total": 1665257
+  },
+  "session_id": "775546d5-495b-45a0-adb0-ab0cf3671c5a",
+  "result_block": "## Result\n- **Brick**: graphquery\n- **Mode**: native\n- **Mini-task**: List all controller node labels from the NestJS serialized graph (post-init-graph.json), sorted alphabetically\n- **Answer**:\n  ```\n  AppV1Controller\n  AppV2Controller\n  CatsController\n  DatabaseController\n  DogsController\n  DurableController\n  ExternalSvcController\n  HelloController\n  RequestChainController\n  UsersController\n  ```\n- **Turns used**: 9\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~4,500\n- **Notes**: The `test-repo` is a symlink to `/home/samuelds/benchmarks/test-repo`; `find ./test-repo -type f` returned nothing (symlink traversal issue in sandbox), but `find /home/samuelds/benchmarks/test-repo -type f` worked. The graph fixture files `integration/inspector/e2e/fixtures/post-init-graph.json` and `pre-init-graph.json` contain actual serialized NestJS module dependency graphs, making them ideal for the graphquery brick. The brick's `filter` tool (with `nodeTypes: [\"controller\"]`) directly solves this task; native mode required manual JSON parsing with Python.",
+  "mini_task_spec": "Using the serialized NestJS dependency graph stored at `test-repo/integration/inspector/e2e/fixtures/post-init-graph.json`, find all graph nodes whose `type` is `\"controller\"` and return their `label` values sorted alphabetically, one per line.\n\nThe graph is a JSON object with a `\"nodes\"` property where each entry has an `\"id\"`, a `\"label\"`, and a `\"metadata\"` object that includes a `\"type\"` field. Filter to nodes where `metadata.type === \"controller\"`.\n\nExpected answer format: a plain list of node label strings, sorted alphabetically, one per line (no extra formatting).\n\n---",
+  "workdir": "/tmp/focus-bench/graphquery-native-2026-04-24T09-42-20-723",
+  "exit_reason": "ok"
+}

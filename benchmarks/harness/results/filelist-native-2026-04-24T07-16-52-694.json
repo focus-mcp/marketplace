@@ -1,0 +1,26 @@
+{
+  "brick": "filelist",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:15:48.730Z",
+  "duration_ms": 63964,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 36,
+    "cache_creation_input_tokens": 33114,
+    "cache_read_input_tokens": 512286,
+    "output_tokens": 3041,
+    "total": 548477
+  },
+  "session_id": "07195093-7c95-448c-913b-81be416b4569",
+  "result_block": "## Result\n- **Brick**: filelist\n- **Mode**: native\n- **Mini-task**: Find all top-level `index.ts` entry-point files under `test-repo/packages/`\n- **Answer**:\n  ```\n  packages/common/index.ts\n  packages/core/index.ts\n  packages/microservices/index.ts\n  packages/platform-express/index.ts\n  packages/platform-fastify/index.ts\n  packages/platform-socket.io/index.ts\n  packages/platform-ws/index.ts\n  packages/testing/index.ts\n  packages/websockets/index.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: Bash, Read, Glob\n- **Rough token estimate**: ~2,800\n- **Notes**: The Glob tool with pattern `*/index.ts` and a directory path returned no results (likely a depth limitation or anchoring behaviour), so a `find` Bash command with `-maxdepth 2` was used as fallback to get the authoritative sorted list. The brick's native `glob` tool should handle this pattern correctly since it uses its own filesystem traversal.",
+  "mini_task_spec": "Using the `filelist` brick's `glob` tool (pattern `**/index.ts`, path pointing to `test-repo/packages/`) or its `find` tool (name `index.ts`), locate every file named exactly `index.ts` that sits **directly inside** a first-level package subdirectory of `test-repo/packages/` (i.e., depth = 2 from the repo root, matching `packages/<package-name>/index.ts`). Return the list of matching paths, relative to `test-repo/`, sorted alphabetically — one path per line.\n\n---",
+  "workdir": "/tmp/focus-bench/filelist-native-2026-04-24T07-15-48-730",
+  "exit_reason": "ok"
+}

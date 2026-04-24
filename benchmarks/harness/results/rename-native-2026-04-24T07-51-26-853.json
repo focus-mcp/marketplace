@@ -1,0 +1,25 @@
+{
+  "brick": "rename",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:50:09.191Z",
+  "duration_ms": 77662,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 31035,
+    "cache_read_input_tokens": 704161,
+    "output_tokens": 4931,
+    "total": 740175
+  },
+  "session_id": "02d3f53e-5460-48c5-8da2-9011623186d1",
+  "result_block": "## Result\n\n- **Brick**: rename\n- **Mode**: native\n- **Mini-task**: List all `.ts` files in `test-repo/packages` containing the symbol `StreamableFile`\n- **Answer**:\n  ```\n  packages/common/file-stream/interfaces/streamable-options.interface.ts\n  packages/common/file-stream/streamable-file.ts\n  packages/common/serializer/class-serializer.interceptor.ts\n  packages/common/test/file-stream/streamable-file.spec.ts\n  packages/common/test/serializer/class-serializer.interceptor.spec.ts\n  packages/platform-express/adapters/express-adapter.ts\n  packages/platform-fastify/adapters/fastify-adapter.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~2,500\n- **Notes**: The repo has no compiled JS files, only `.ts` sources. Integration tests in `test-repo/integration/` also reference `StreamableFile` (2 files) but are excluded by the `packages`-only scope. The symbol appears as a class name, import, and instanceof check across 7 files in the packages directory.",
+  "mini_task_spec": "Using the rename brick's `preview` tool (or equivalent dry-run capability), determine which TypeScript (`.ts`) files inside `test-repo/packages` contain the symbol `StreamableFile` and would be affected if it were renamed. Search the directory `test-repo/packages` recursively. Report the list of affected file paths **relative to `test-repo/`**, one per line, sorted alphabetically. Do not include files outside `test-repo/packages` (e.g. `integration/` is out of scope). The expected answer format is a plain list of relative paths, one per line, sorted alphabetically (ascending).",
+  "workdir": "/tmp/focus-bench/rename-native-2026-04-24T07-50-09-191",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,27 @@
+{
+  "brick": "agent",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T06:57:42.249Z",
+  "duration_ms": 111565,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 46,
+    "cache_creation_input_tokens": 30078,
+    "cache_read_input_tokens": 646567,
+    "output_tokens": 4893,
+    "total": 681584
+  },
+  "session_id": "f4a8e958-8116-48dc-bce3-4ecdf4beb109",
+  "result_block": "## Result\n\n- **Brick**: agent\n- **Mode**: native\n- **Mini-task**: Find the `name` values of all NestJS packages in `test-repo/packages/` whose directory starts with `platform-`, sorted alphabetically\n- **Answer**:\n  ```\n  @nestjs/platform-express\n  @nestjs/platform-fastify\n  @nestjs/platform-socket.io\n  @nestjs/platform-ws\n  ```\n- **Turns used**: 10\n- **Tools used**: Bash, Read, Grep, Glob\n- **Rough token estimate**: ~2,500\n- **Notes**: The brick's core strength is registering agents with capability tags and querying by capability. In brick mode this maps directly: register each `platform-*` package as an agent with capability `\"platform\"`, then call `agt__capabilities({capability: \"platform\"})` to retrieve the list. In native mode, the equivalent is grepping `package.json` files under directories matching `platform-*`. The answer is fully deterministic (4 packages, fixed names, fixed sort order).",
+  "mini_task_spec": "In the NestJS monorepo located at `test-repo/`, the `test-repo/packages/` directory contains several sub-directories, each representing a distinct NestJS package. Treat each sub-directory whose name starts with `platform-` as an agent that should be registered in an agent registry with the capability `\"platform\"`.\n\nYour task:\n1. Identify all sub-directories under `test-repo/packages/` whose names begin with `platform-`.\n2. For each such directory, read the `\"name\"` field from its `package.json` file.\n3. List those `name` values sorted alphabetically, one per line.\n\nExpected answer format: a list of npm package name strings, sorted alphabetically, one per line (e.g. `@nestjs/platform-express`).\n\n---",
+  "workdir": "/tmp/focus-bench/agent-native-2026-04-24T06-57-42-249",
+  "exit_reason": "ok"
+}

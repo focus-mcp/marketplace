@@ -1,0 +1,25 @@
+{
+  "brick": "batch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T06:58:07.825Z",
+  "duration_ms": 49921,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 13681,
+    "cache_read_input_tokens": 409107,
+    "output_tokens": 3131,
+    "total": 425952
+  },
+  "session_id": "aeed0dd9-6df2-415b-80eb-06277b408274",
+  "result_block": "## Result\n- **Brick**: batch\n- **Mode**: native\n- **Mini-task**: Count TypeScript source files per NestJS package in parallel\n- **Answer**:\n  ```\n  common: 186\n  core: 178\n  microservices: 132\n  platform-express: 24\n  platform-fastify: 15\n  platform-socket.io: 3\n  platform-ws: 3\n  testing: 12\n  websockets: 43\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,500\n- **Notes**: The `testing` package contains a top-level `test.ts` file (not inside a `test/` directory) which is correctly counted as a source file. Results were already in alphabetical order since the shell glob expanded packages in alphabetical order. The task directly exercises the `parallel` tool — in brick mode a single `bat__parallel` call with 9 simultaneous `find | wc -l` commands replaces what native mode handled with a sequential shell loop.",
+  "mini_task_spec": "For each of the 9 packages inside `test-repo/packages/` — `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets` — count the number of TypeScript **source** files that meet **all** of the following criteria:\n1. Filename ends with `.ts`\n2. Filename does **not** end with `.d.ts` (exclude declaration files)\n3. The file is **not** inside a directory named `test` or `spec` (i.e. exclude `**/test/**` and `**/spec/**`)\n\nUse a separate `find` command per package, run them all in **parallel** (one `bat__parallel` call with 9 commands, `cwd` set to `test-repo`). Report results as one line per package in the format `<package-name>: <count>`, sorted **alphabetically** by package name.\n\nExpected answer format — nine lines, alphabetical order:\n```\ncommon: <N>\ncore: <N>\nmicroservices: <N>\nplatform-express: <N>\nplatform-fastify: <N>\nplatform-socket.io: <N>\nplatform-ws: <N>\ntesting: <N>\nwebsockets: <N>\n```\n\n---",
+  "workdir": "/tmp/focus-bench/batch-native-2026-04-24T06-58-07-825",
+  "exit_reason": "ok"
+}

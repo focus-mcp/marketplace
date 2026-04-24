@@ -1,0 +1,26 @@
+{
+  "brick": "cache",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T06:59:26.361Z",
+  "duration_ms": 75353,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 36,
+    "cache_creation_input_tokens": 13569,
+    "cache_read_input_tokens": 457061,
+    "output_tokens": 4156,
+    "total": 474822
+  },
+  "session_id": "4226b088-c624-45cf-9245-eba572554ef2",
+  "result_block": "## Result\n\n- **Brick**: cache\n- **Mode**: native\n- **Mini-task**: List all per-package `index.ts` barrel files as warmup candidates\n- **Answer**:\n  ```\n  packages/common/index.ts\n  packages/core/index.ts\n  packages/microservices/index.ts\n  packages/platform-express/index.ts\n  packages/platform-fastify/index.ts\n  packages/platform-socket.io/index.ts\n  packages/platform-ws/index.ts\n  packages/testing/index.ts\n  packages/websockets/index.ts\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~1,200\n- **Notes**: `Glob` didn't match the pattern `test-repo/packages/*/index.ts` (likely due to CWD resolution), so `Bash` with `find -maxdepth 2` was used instead. The 9 files total 3,903 bytes — a realistic small warmup set for the cache brick's `warmup` tool.",
+  "mini_task_spec": "**Context**: You are working with a NestJS monorepo located at `test-repo/`. Each NestJS package under `test-repo/packages/` exposes a top-level `index.ts` barrel file. These barrel files are the most repeatedly-read files during a build pipeline and are the ideal candidates to pre-load using the cache brick's `warmup` tool.\n\n**Task**: Find all `index.ts` files located exactly one level deep inside `test-repo/packages/` (i.e., matching the pattern `test-repo/packages/<package-name>/index.ts`). List their paths relative to `test-repo/`, one per line, sorted alphabetically. These are the paths that should be passed to `warmup`.\n\n**Expected answer format**: A list of relative file paths (relative to `test-repo/`), one per line, sorted alphabetically. Example format:\n```\npackages/common/index.ts\npackages/core/index.ts\n...\n```\n\nDo not include paths deeper than one level inside `packages/` (e.g., `packages/common/utils/index.ts` should not appear).\n\n---",
+  "workdir": "/tmp/focus-bench/cache-native-2026-04-24T06-59-26-361",
+  "exit_reason": "ok"
+}

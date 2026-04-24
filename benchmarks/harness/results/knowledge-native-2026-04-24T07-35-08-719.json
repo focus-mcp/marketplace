@@ -1,0 +1,26 @@
+{
+  "brick": "knowledge",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:33:23.871Z",
+  "duration_ms": 104847,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 34,
+    "cache_creation_input_tokens": 37911,
+    "cache_read_input_tokens": 469605,
+    "output_tokens": 4191,
+    "total": 511741
+  },
+  "session_id": "2f3d6931-02bf-4d72-b5d7-45385b531ab6",
+  "result_block": "## Result\n- **Brick**: knowledge\n- **Mode**: native\n- **Mini-task**: Compute weighted scores for two HTTP adapter options from `test-repo/decision-http-adapter.json`\n- **Answer**:\n  ```\n  platform-express: 243\n  platform-fastify: 188\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The decision JSON at `test-repo/decision-http-adapter.json` is a pre-existing architectural decision record (ADR) with all the data needed. The rationale field in the document also confirms the scores (\"platform-express scored 243 vs platform-fastify's 188\"), making the answer independently verifiable without computation. In brick mode, the agent would index this document then search/fetch it to extract the scoring data.",
+  "mini_task_spec": "The file `test-repo/decision-http-adapter.json` is an architectural decision record comparing two NestJS HTTP adapter options (`platform-express` and `platform-fastify`). It contains:\n- A `criteria` array, where each entry has a `name` (string) and a `weight` (number).\n- A `scores` array, where each entry has an `option` (string) and a `scores` array of numbers aligned to the `criteria` array (same order, same length).\n\nYour task: for each option in `scores`, compute the **weighted total score** by summing `criteria[i].weight × option.scores[i]` for all `i`. Report the result as exactly two lines, one per option, in the order they appear in the `scores` array, in this format:\n\n```\n<option-label>: <weighted-total>\n```\n\nExample format (not the answer):\n```\nplatform-express: NNN\nplatform-fastify: NNN\n```\n\n---",
+  "workdir": "/tmp/focus-bench/knowledge-native-2026-04-24T07-33-23-871",
+  "exit_reason": "ok"
+}

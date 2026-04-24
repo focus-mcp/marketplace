@@ -1,0 +1,26 @@
+{
+  "brick": "routes",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:46:56.146Z",
+  "duration_ms": 74931,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 45,
+    "cache_creation_input_tokens": 24916,
+    "cache_read_input_tokens": 645656,
+    "output_tokens": 4446,
+    "total": 675063
+  },
+  "session_id": "53d499c8-3ab8-4354-8f68-cdb4d119edd0",
+  "result_block": "## Result\n\n- **Brick**: routes\n- **Mode**: native\n- **Mini-task**: List all HTTP endpoints in `sample/19-auth-jwt/src` by parsing NestJS controller decorators\n- **Answer**:\n  ```\n  GET /auth/profile\n  POST /auth/login\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: The `19-auth-jwt` sample has a single controller (`auth.controller.ts`) with exactly two routes. No users controller exists (the users module only has a service). The answer is deterministic and checkable by reading one file. NestJS uses decorators rather than Express/Fastify route registration syntax, so a routes brick must handle `@Controller`/`@Get`/`@Post` etc. — a direct strength test for this brick.",
+  "mini_task_spec": "Using the NestJS repository located at `test-repo/`, scan the sample application in `test-repo/sample/19-auth-jwt/src` and list every HTTP API endpoint defined via NestJS controller decorators. For each endpoint, construct the full URL path by combining the `@Controller(prefix)` value with each method-decorator argument (e.g. `@Get('profile')` under `@Controller('auth')` yields `GET /auth/profile`). Include only the HTTP method + full path; ignore decorators that are not one of `@Get`, `@Post`, `@Put`, `@Patch`, or `@Delete`.\n\nReturn the complete list as one endpoint per line in the format `METHOD /path`, sorted alphabetically (by the full line string).",
+  "workdir": "/tmp/focus-bench/routes-native-2026-04-24T09-46-56-146",
+  "exit_reason": "ok"
+}

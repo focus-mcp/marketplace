@@ -1,0 +1,24 @@
+{
+  "brick": "autopilot",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T06:58:49.070Z",
+  "duration_ms": 27429,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 37307,
+    "cache_read_input_tokens": 106029,
+    "output_tokens": 1024,
+    "total": 144385
+  },
+  "session_id": "84875f07-4659-4e72-882e-4fe44732557c",
+  "result_block": "",
+  "workdir": "/tmp/focus-bench/autopilot-brick-2026-04-24T06-58-49-069",
+  "exit_reason": "ok"
+}

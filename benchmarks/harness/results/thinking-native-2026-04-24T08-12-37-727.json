@@ -1,0 +1,25 @@
+{
+  "brick": "thinking",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:11:46.401Z",
+  "duration_ms": 51326,
+  "turns": 8,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 23,
+    "cache_creation_input_tokens": 9581,
+    "cache_read_input_tokens": 260638,
+    "output_tokens": 2552,
+    "total": 272794
+  },
+  "session_id": "d70181b4-8afd-4097-ab30-4837b289e9cc",
+  "result_block": "## Result\n- **Brick**: thinking\n- **Mode**: native\n- **Mini-task**: Verify the weighted-score decision in `test-repo/decision-http-adapter.json`\n- **Answer**:\n  ```\n  platform-express: 243\n  platform-fastify: 188\n  chosen correct: yes\n  ```\n- **Turns used**: 4\n- **Tools used**: `Bash`, `Read`\n- **Rough token estimate**: ~1,200\n- **Notes**: The `decision-http-adapter.json` file is a purpose-built artefact that maps cleanly onto the \"thinking\" brick's strength: step-by-step arithmetic reasoning across multiple criteria, branching per option, and a summarised conclusion. The Python one-liner confirmed the rationale in the file (243 vs 188, platform-express wins) is exact.",
+  "mini_task_spec": "Read the decision record at `test-repo/decision-http-adapter.json`. It contains two options (`platform-express`, `platform-fastify`), a list of weighted criteria (each with a `weight` field), and per-option `scores` arrays (aligned with the criteria list). Compute the weighted total score for each option by multiplying each criterion's `weight` by the corresponding option score and summing all products. Then determine whether the `chosen` field in the file names the option with the highest weighted total.\n\nReport three values:\n1. Weighted total for `platform-express`\n2. Weighted total for `platform-fastify`\n3. Is the `chosen` field mathematically correct? (`yes` or `no`)\n\nExpected answer format — three lines exactly:\n```\nplatform-express: <integer>\nplatform-fastify: <integer>\nchosen correct: yes|no\n```",
+  "workdir": "/tmp/focus-bench/thinking-native-2026-04-24T08-11-46-401",
+  "exit_reason": "ok"
+}

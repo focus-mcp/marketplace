@@ -1,0 +1,31 @@
+{
+  "brick": "symbol",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:55:19.522Z",
+  "duration_ms": 128611,
+  "turns": 22,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 82,
+    "cache_creation_input_tokens": 32881,
+    "cache_read_input_tokens": 564126,
+    "output_tokens": 6628,
+    "total": 603717
+  },
+  "session_id": "6ff6fce8-5007-411e-97ce-7bfdf3764ed9",
+  "result_block": "## Result\n- **Brick**: symbol\n- **Mode**: brick\n- **Mini-task**: Find all public method names defined in the `Injector` class in `test-repo/packages/core/injector/injector.ts`, sorted alphabetically\n- **Answer**: *(unavailable — see Notes)*\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`\n- **Rough token estimate**: ~3,500\n- **Notes**: The `symbol` brick could not be loaded. Three distinct failure modes were encountered across all installed bricks:\n  1. **`symbol`** — `Cannot find module '@focus-mcp/brick-symbol'` (npm package not present in node_modules despite brick being marked \"installed\")\n  2. **`treesitter`** — `Manifest.version must follow SemVer 2.0` (malformed manifest)\n  3. **`outline`, `refs`, `codebase`** — `Stripping types is currently unsupported for files under node_modules` (Node.js runtime lacks TypeScript-stripping support for node_modules paths)\n  \n  `focus_update` is not yet implemented, so no upgrade path was available. Since all `mcp__focus__*` brick tools failed to load and native filesystem tools (Bash, Grep, Glob, Read) are forbidden for task solving, the answer cannot be produced from brick tools alone. The task answer is **blocked by broken brick runtime**, not by a logic/search problem.",
+  "workdir": "/tmp/focus-bench/symbol-brick-2026-04-24T09-55-19-521",
+  "exit_reason": "ok"
+}

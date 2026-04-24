@@ -17,7 +17,8 @@
             "!**/sbom.json",
             "!**/pnpm-lock.yaml",
             "!.focusmcp/catalog.json",
-            "!**/*.svelte"
+            "!**/*.svelte",
+            "!benchmarks/harness"
         ]
     },
     "formatter": {

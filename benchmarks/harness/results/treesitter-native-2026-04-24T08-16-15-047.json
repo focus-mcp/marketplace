@@ -1,0 +1,26 @@
+{
+  "brick": "treesitter",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:15:25.112Z",
+  "duration_ms": 49935,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 30,
+    "cache_creation_input_tokens": 11291,
+    "cache_read_input_tokens": 360149,
+    "output_tokens": 2721,
+    "total": 374191
+  },
+  "session_id": "3489b545-10a7-41c7-ab39-88caf088c693",
+  "result_block": "## Result\n- **Brick**: treesitter\n- **Mode**: native\n- **Mini-task**: List all exported class names (sorted alphabetically) from `test-repo/packages/common/exceptions/*.ts`\n- **Answer**:\n```\nBadGatewayException\nBadRequestException\nConflictException\nForbiddenException\nGatewayTimeoutException\nGoneException\nHttpException\nHttpVersionNotSupportedException\nImATeapotException\nInternalServerErrorException\nIntrinsicException\nMethodNotAllowedException\nMisdirectedException\nNotAcceptableException\nNotFoundException\nNotImplementedException\nPayloadTooLargeException\nPreconditionFailedException\nRequestTimeoutException\nServiceUnavailableException\nUnauthorizedException\nUnprocessableEntityException\nUnsupportedMediaTypeException\n```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2 500\n- **Notes**: Regex-grep on `^export class` is a clean native substitute for treesitter's symbol extraction; the 23 classes are all in top-level `.ts` files (no subdirectories in `exceptions/`). `.bak` files were ignored by scoping to `*.ts` only.",
+  "mini_task_spec": "Using the treesitter brick, index the directory `test-repo/packages/common/exceptions/` and extract all **exported class names** defined in TypeScript (`.ts`) files within that directory. Do not recurse into subdirectories (there are none). List every exported class name — sorted alphabetically, one name per line — with no file paths, line numbers, or other annotations. The answer should be a plain list of class names.",
+  "workdir": "/tmp/focus-bench/treesitter-native-2026-04-24T08-15-25-112",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "rename",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:51:26.854Z",
+  "duration_ms": 42868,
+  "turns": 5,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__ren_preview"
+  ],
+  "usage": {
+    "input_tokens": 23,
+    "cache_creation_input_tokens": 16770,
+    "cache_read_input_tokens": 102626,
+    "output_tokens": 1987,
+    "total": 121406
+  },
+  "session_id": "581009c6-3617-49a7-8d2f-2d4e11336ef5",
+  "result_block": "## Result\n- **Brick**: rename\n- **Mode**: brick\n- **Mini-task**: Find all `.ts` files in `test-repo/packages` containing symbol `StreamableFile` using the rename brick's `preview` tool (dry-run)\n- **Answer**:\n```\npackages/common/file-stream/interfaces/streamable-options.interface.ts\npackages/common/file-stream/streamable-file.ts\npackages/common/serializer/class-serializer.interceptor.ts\npackages/common/test/file-stream/streamable-file.spec.ts\npackages/common/test/serializer/class-serializer.interceptor.spec.ts\npackages/platform-express/adapters/express-adapter.ts\npackages/platform-fastify/adapters/fastify-adapter.ts\n```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__ren_preview`\n- **Rough token estimate**: ~1,800\n- **Notes**: The `ren_preview` tool returns paths relative to the supplied `dir` (`test-repo/packages`), so `packages/` was prepended to each path to make them relative to `test-repo/`. The tool reported `fileCount: 7` with `total: 32` occurrences across those files — all files were `.ts`, so no filtering was necessary. No unexpected behavior observed.",
+  "workdir": "/tmp/focus-bench/rename-brick-2026-04-24T07-51-26-853",
+  "exit_reason": "ok"
+}

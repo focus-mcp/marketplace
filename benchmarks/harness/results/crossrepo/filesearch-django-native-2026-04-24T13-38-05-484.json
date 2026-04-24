@@ -1,0 +1,25 @@
+{
+  "brick": "filesearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T13:37:04.021Z",
+  "duration_ms": 61463,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 32,
+    "cache_creation_input_tokens": 9721,
+    "cache_read_input_tokens": 390071,
+    "output_tokens": 3145,
+    "total": 402969
+  },
+  "session_id": "6ae029a3-eef0-43ac-a6df-45d3b44dcba0",
+  "result_block": "## Result\n\n- **Brick**: filesearch\n- **Mode**: native\n- **Mini-task**: Find all Python files under `test-repo/django/` containing the `# FIXME` comment pattern, sorted alphabetically\n- **Answer**:\n  ```\n  django/core/handlers/asgi.py\n  django/db/models/expressions.py\n  django/http/multipartparser.py\n  django/utils/regex_helper.py\n  ```\n- **Turns used**: 5\n- **Tools used**: Bash, Grep (via Bash)\n- **Rough token estimate**: ~1,200\n- **Notes**: The test-repo is Django (not NestJS as described in the prompt — the prompt says \"NestJS shallow clone\" but the actual repo is Django). The pattern `# FIXME` (with leading space after `#`) correctly excludes lines like `# Skip ... (FIXME: ...)` in `contrib/admin/checks.py` and `# Create ... FIXME:` in `forms/models.py`, which have FIXME embedded mid-comment rather than as the marker itself.",
+  "mini_task_spec": "Using the `fsrch` (filesearch) brick's `search` tool, find every Python file under `test-repo/django/` that contains the literal comment string `# FIXME` (hash, space, then the word FIXME). Search recursively through the entire `django/` subtree of the repository, filtering to `*.py` files only. List the matching file paths **relative to `test-repo/`**, sorted alphabetically, one per line.\n\nExpected answer format: a sorted, newline-separated list of relative file paths (e.g. `django/core/handlers/asgi.py`). Do not include line numbers or matched text — only the file paths.\n\n---",
+  "workdir": "/tmp/focus-bench/filesearch-native-2026-04-24T13-37-04-021",
+  "exit_reason": "ok"
+}

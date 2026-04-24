@@ -1,0 +1,25 @@
+{
+  "brick": "graphcluster",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:25:31.697Z",
+  "duration_ms": 112609,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 44,
+    "cache_creation_input_tokens": 26991,
+    "cache_read_input_tokens": 661094,
+    "output_tokens": 6960,
+    "total": 695089
+  },
+  "session_id": "dd421cab-5dcc-4a82-81d3-84789742a4a8",
+  "result_block": "## Result\n\n- **Brick**: graphcluster\n- **Mode**: native\n- **Mini-task**: Find all bidirectional import pairs among top-level subdirectories of `test-repo/packages/core/`\n- **Answer**:\n  ```\n  discovery <-> injector\n  errors <-> injector\n  exceptions <-> helpers\n  exceptions <-> router\n  guards <-> helpers\n  helpers <-> injector\n  helpers <-> interceptors\n  helpers <-> pipes\n  helpers <-> router\n  injector <-> inspector\n  injector <-> router\n  inspector <-> router\n  ```\n- **Turns used**: 12\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~6,000\n- **Notes**: The `graphcluster` brick's `communities` and `cluster` tools would detect these tightly-coupled directory groups automatically via label propagation on the import graph. In native mode, I enumerated all O(n²) directory pairs and used `grep -rl` to detect cross-imports in both directions. The `helpers`, `injector`, and `router` directories are the most interconnected nodes, each appearing in 4–5 bidirectional pairs, suggesting they form the core of a single large community.",
+  "mini_task_spec": "In the NestJS monorepo located at `test-repo/packages/core/`, there are multiple top-level subdirectories representing distinct modules (e.g. `adapters`, `discovery`, `errors`, `exceptions`, `guards`, `helpers`, `hooks`, `injector`, `inspector`, `interceptors`, `interfaces`, `middleware`, `pipes`, `repl`, `router`, `services`). Analyze the TypeScript source files within these subdirectories to find all pairs of directories that have **bidirectional (mutual) import relationships** — meaning TypeScript files inside directory A contain imports whose path resolves to directory B, AND TypeScript files inside directory B contain imports whose path resolves to directory A (using `../dirName` relative import patterns).\n\nList each bidirectional pair as two directory names separated by ` <-> `, with the two names sorted alphabetically within each pair. Sort all pairs alphabetically (first by the first name in the pair, then by the second). Produce one pair per line. Only consider top-level subdirectories of `test-repo/packages/core/` (not nested subdirectories); do not include the `test/` directory.\n\n---",
+  "workdir": "/tmp/focus-bench/graphcluster-native-2026-04-24T07-25-31-697",
+  "exit_reason": "ok"
+}

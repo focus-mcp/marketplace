@@ -1,0 +1,31 @@
+{
+  "brick": "callgraph",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:43:58.317Z",
+  "duration_ms": 128489,
+  "turns": 24,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 102,
+    "cache_creation_input_tokens": 54479,
+    "cache_read_input_tokens": 697799,
+    "output_tokens": 6955,
+    "total": 759335
+  },
+  "session_id": "3f08752f-bf39-4edb-ab75-aa3f9de53f6b",
+  "result_block": "## Result\n- **Brick**: callgraph\n- **Mode**: brick\n- **Mini-task**: Find all methods in `NestFactoryStatic` (in `test-repo/packages/core/nest-factory.ts`) that directly call `this.initialize(`, using the callgraph brick's `callers` tool\n- **Answer**: Unable to determine — the callgraph brick's `callers` tool could not be loaded\n- **Turns used**: 14\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~3,500\n- **Notes**: The focus MCP server IS configured and its management tools (`focus_list`, `focus_load`, etc.) respond correctly. However, `focus_load(\"callgraph\")` fails with `Cannot find module '@focus-mcp/brick-callgraph'` — the npm package is not installed in the benchmark environment (`.focus/bricks/noop.js` is a stub that requires the real package). `focus_update` is not implemented; `focus_reload` reports \"Brick not found\". No callgraph tools (`callers`, `callees`, `chain`, `depth`) appeared in the session's available tool set. The brick is registered in the catalog and marked as \"installed\" (`^0.0.0`), but the backing module is missing, making all callgraph tools unavailable. The mini-task cannot be completed without those tools under the session's rules.",
+  "workdir": "/tmp/focus-bench/callgraph-brick-2026-04-24T09-43-58-315",
+  "exit_reason": "ok"
+}

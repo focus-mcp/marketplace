@@ -1,0 +1,26 @@
+{
+  "brick": "filesearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:17:21.090Z",
+  "duration_ms": 73434,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 50,
+    "cache_creation_input_tokens": 21512,
+    "cache_read_input_tokens": 700591,
+    "output_tokens": 4466,
+    "total": 726619
+  },
+  "session_id": "fe5a1ecf-e96d-4b58-b98d-29f597f582b0",
+  "result_block": "## Result\n- **Brick**: filesearch\n- **Mode**: native\n- **Mini-task**: Find all `.ts` files in `test-repo/packages/common` containing the regex `implements PipeTransform`, sorted alphabetically\n- **Answer**:\n  ```\n  test-repo/packages/common/pipes/default-value.pipe.ts\n  test-repo/packages/common/pipes/file/parse-file.pipe.ts\n  test-repo/packages/common/pipes/parse-array.pipe.ts\n  test-repo/packages/common/pipes/parse-bool.pipe.ts\n  test-repo/packages/common/pipes/parse-date.pipe.ts\n  test-repo/packages/common/pipes/parse-enum.pipe.ts\n  test-repo/packages/common/pipes/parse-float.pipe.ts\n  test-repo/packages/common/pipes/parse-int.pipe.ts\n  test-repo/packages/common/pipes/parse-uuid.pipe.ts\n  test-repo/packages/common/pipes/validation.pipe.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: The task directly exercises the brick's `search` tool (regex + glob filter). All 10 matching files are pipe implementations within `packages/common/pipes/`. No unusual blockers.",
+  "mini_task_spec": "Using the `filesearch` brick's `search` tool, find all TypeScript files (`.ts`) within the directory `test-repo/packages/common` that match the regex pattern `implements PipeTransform`. Call the tool with `path` set to `test-repo/packages/common`, `pattern` set to `implements PipeTransform`, and `glob` set to `*.ts`. Report the matching file paths, one per line, sorted alphabetically (ascending), relative to `test-repo/`.\n\nExpected answer format: a list of relative file paths (relative to `test-repo/`), one per line, sorted alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/filesearch-native-2026-04-24T07-17-21-090",
+  "exit_reason": "ok"
+}

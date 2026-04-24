@@ -1,0 +1,27 @@
+{
+  "brick": "session",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:59:55.286Z",
+  "duration_ms": 107729,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 47,
+    "cache_creation_input_tokens": 42082,
+    "cache_read_input_tokens": 686713,
+    "output_tokens": 6493,
+    "total": 735335
+  },
+  "session_id": "b3c17d1e-39cd-490d-a290-3025f3fa0c5c",
+  "result_block": "## Result\n- **Brick**: session\n- **Mode**: native\n- **Mini-task**: Build ses__save payload for NestJS core/hooks exploration\n- **Answer**:\n```json\n{\n  \"name\": \"hooks-exploration\",\n  \"data\": {\n    \"files\": [\n      \"packages/core/hooks/before-app-shutdown.hook.ts\",\n      \"packages/core/hooks/index.ts\",\n      \"packages/core/hooks/on-app-bootstrap.hook.ts\",\n      \"packages/core/hooks/on-app-shutdown.hook.ts\",\n      \"packages/core/hooks/on-module-destroy.hook.ts\",\n      \"packages/core/hooks/on-module-init.hook.ts\"\n    ],\n    \"context\": \"The hooks subsystem invokes NestJS lifecycle hooks (onModuleInit, onModuleDestroy, onApplicationBootstrap, beforeApplicationShutdown, onApplicationShutdown) on each module's providers, controllers, injectables, and middlewares.\",\n    \"notes\": \"- before-app-shutdown.hook.ts: callBeforeAppShutdownHook\\n- on-app-bootstrap.hook.ts: callModuleBootstrapHook\\n- on-app-shutdown.hook.ts: callAppShutdownHook\\n- on-module-destroy.hook.ts: callModuleDestroyHook\\n- on-module-init.hook.ts: callModuleInitHook\"\n  }\n}\n```\n- **Turns used**: 11\n- **Tools used**: Bash, Read, Glob, Grep\n- **Rough token estimate**: ~4,500\n- **Notes**: The task maps cleanly onto the session brick's `save` tool — file list, context, and notes fields align exactly with its schema. All six hook files were read to verify exported function names; `index.ts` only re-exports and has no exported function of its own. No ambiguities encountered.",
+  "mini_task_spec": "You are working with a NestJS codebase located at `test-repo/`. Your task is to simulate a session-tracking workflow using the **session** brick (`ses__save`, `ses__restore`, `ses__context`, `ses__history`).\n\nSpecifically:\n\n1. Explore the directory `test-repo/packages/core/hooks/` and identify **all `.ts` files** it contains (there are no sub-directories).\n2. For each file that is **not** `index.ts`, identify the single exported `async` function name defined in that file.\n3. Produce the JSON payload you would pass to `ses__save` for a session named `\"hooks-exploration\"`, with:\n   - `name`: `\"hooks-exploration\"`\n   - `data.files`: a JSON array of all 6 `.ts` file paths (relative to `test-repo/`), sorted **alphabetically**\n   - `data.context`: a single sentence describing what the hooks subsystem does in NestJS\n   - `data.notes`: a newline-separated string listing, for each non-index hook file (sorted alphabetically by filename), the format `\"<filename>: <exportedFunctionName>\"`\n\nThe expected answer is a **valid JSON object** matching the `ses__save` input schema. The `data.files` array and `data.notes` entries must be **exactly correct** (correct filenames, correct exported async function names). The `data.context` sentence may be paraphrased but must accurately describe the purpose of the hooks subsystem.\n\n---",
+  "workdir": "/tmp/focus-bench/session-native-2026-04-24T07-59-55-286",
+  "exit_reason": "ok"
+}

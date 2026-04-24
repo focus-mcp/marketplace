@@ -1,0 +1,25 @@
+{
+  "brick": "shell",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:03:34.106Z",
+  "duration_ms": 80643,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 41,
+    "cache_creation_input_tokens": 16858,
+    "cache_read_input_tokens": 533162,
+    "output_tokens": 3335,
+    "total": 553396
+  },
+  "session_id": "fe23c1f6-68e4-41a1-8ddb-216629c1980f",
+  "result_block": "## Result\n\n- **Brick**: shell\n- **Mode**: native\n- **Mini-task**: Count TypeScript source files (excl. `.spec.ts` and `.d.ts`) across all packages in `test-repo/packages/`\n- **Answer**: 601\n- **Turns used**: 6\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,500\n- **Notes**: Straightforward `find | wc -l` invocation — exactly the kind of shell exec the brick's `exec` tool is built for. The count is stable since the test-repo is a shallow clone with no generated files.",
+  "mini_task_spec": "Using shell command execution, count the total number of TypeScript source files inside `test-repo/packages/` (including all subdirectories at any depth). A \"TypeScript source file\" is any file whose name ends with `.ts`, **excluding** files ending in `.spec.ts` (test files) and files ending in `.d.ts` (declaration files). Run the following command (or an equivalent) from the repository root to obtain the count:\n\n```\nfind test-repo/packages -name \"*.ts\" ! -name \"*.spec.ts\" ! -name \"*.d.ts\" | wc -l\n```\n\nReport the answer as a single integer (the total file count). Use the `sh__exec` tool with the command above (with `cwd` set to the session working directory or adjusted paths as needed) to obtain the result.\n\n---",
+  "workdir": "/tmp/focus-bench/shell-native-2026-04-24T08-03-34-106",
+  "exit_reason": "ok"
+}

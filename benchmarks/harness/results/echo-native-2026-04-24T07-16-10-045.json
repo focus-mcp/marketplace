@@ -1,0 +1,25 @@
+{
+  "brick": "echo",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:15:08.662Z",
+  "duration_ms": 61383,
+  "turns": 8,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 17154,
+    "cache_read_input_tokens": 271089,
+    "output_tokens": 2288,
+    "total": 290555
+  },
+  "session_id": "c790a90e-7dab-4d12-9a44-ecd435fe389e",
+  "result_block": "## Result\n- **Brick**: echo\n- **Mode**: native\n- **Mini-task**: Extract the `description` from `test-repo/package.json` and echo it back\n- **Answer**: `Modern, fast, powerful node.js web framework`\n- **Turns used**: 4\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~800\n- **Notes**: The echo brick is a pure passthrough smoke-test; in native mode the task reduces to a simple file read with no brick interaction. The answer is deterministic and character-exact. In brick mode the paired run should call `mcp__focus__echo__say` with the extracted string and confirm the return value matches.",
+  "mini_task_spec": "Read the `test-repo/package.json` file and extract the value of the top-level `\"description\"` field. Then call the `mcp__focus__echo__say` tool with that exact string as the `message` argument. Report the value that the tool returns.\n\nExpected answer format: the echoed string returned by the `say` tool, exactly as returned (a single line of text, no quotes, no extra formatting).\n\n---",
+  "workdir": "/tmp/focus-bench/echo-native-2026-04-24T07-15-08-662",
+  "exit_reason": "ok"
+}

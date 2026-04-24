@@ -1,0 +1,25 @@
+{
+  "brick": "outline",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:40:16.386Z",
+  "duration_ms": 36634,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__out_file"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 15971,
+    "cache_read_input_tokens": 114937,
+    "output_tokens": 1626,
+    "total": 132559
+  },
+  "session_id": "8f7eba9b-0a15-4c40-8e05-fcd7ee7f0d34",
+  "result_block": "## Result\n- **Brick**: outline\n- **Mode**: brick\n- **Mini-task**: Outline `test-repo/packages/common/decorators/http/route-params.decorator.ts` and list unique exported symbol names, sorted alphabetically\n- **Answer**:\n```\nassignMetadata\nBody\nHeaders\nHostParam\nIp\nNext\nParam\nParamData\nQuery\nRawBody\nReq\nRequest\nRes\nResponse\nResponseDecoratorOptions\nRouteParamMetadata\nSession\nUploadedFile\nUploadedFiles\n```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__out_file`\n- **Rough token estimate**: ~1,800\n- **Notes**: The file contains several overloaded function signatures (e.g., `UploadedFile` ×4, `UploadedFiles` ×3, `Query` ×4, `Body` ×4, `RawBody` ×3, `Param` ×4, `HostParam` ×3). De-duplication was applied to produce the 19 unique names above. The `mcp__focus__out_file` tool returned all symbols cleanly with kind, line number, and signature — no fallbacks needed.",
+  "workdir": "/tmp/focus-bench/outline-brick-2026-04-24T07-40-16-385",
+  "exit_reason": "ok"
+}

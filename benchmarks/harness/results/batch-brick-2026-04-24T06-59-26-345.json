@@ -1,0 +1,25 @@
+{
+  "brick": "batch",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T06:58:57.748Z",
+  "duration_ms": 28597,
+  "turns": 5,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__bat_parallel"
+  ],
+  "usage": {
+    "input_tokens": 22,
+    "cache_creation_input_tokens": 16300,
+    "cache_read_input_tokens": 95456,
+    "output_tokens": 1366,
+    "total": 113144
+  },
+  "session_id": "20235e00-6a6b-4907-9cf8-0b6ccad7670f",
+  "result_block": "## Result\n- **Brick**: batch\n- **Mode**: brick\n- **Mini-task**: Count `.ts` source files (excluding `.d.ts` and `test`/`spec` dirs) per package in `test-repo/packages/`, run 9 find commands in parallel\n- **Answer**:\n```\ncommon: 186\ncore: 178\nmicroservices: 132\nplatform-express: 24\nplatform-fastify: 15\nplatform-socket.io: 3\nplatform-ws: 3\ntesting: 12\nwebsockets: 43\n```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__bat_parallel`\n- **Rough token estimate**: ~2,500\n- **Notes**: All 9 commands completed successfully in parallel (total wall time 25ms). No fallbacks needed. The `find` filter used `! -name '*.d.ts'` to exclude declaration files and `! -path '*/test/*' ! -path '*/spec/*'` to exclude test/spec directories.",
+  "workdir": "/tmp/focus-bench/batch-brick-2026-04-24T06-58-57-746",
+  "exit_reason": "ok"
+}

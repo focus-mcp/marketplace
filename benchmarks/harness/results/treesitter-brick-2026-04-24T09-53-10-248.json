@@ -1,0 +1,33 @@
+{
+  "brick": "treesitter",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:50:49.012Z",
+  "duration_ms": 141236,
+  "turns": 26,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_add",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 114,
+    "cache_creation_input_tokens": 38243,
+    "cache_read_input_tokens": 720149,
+    "output_tokens": 7522,
+    "total": 766028
+  },
+  "session_id": "be33ae99-57f3-4bc5-89ea-9f540c4eb25d",
+  "result_block": "## Result\n- **Brick**: treesitter\n- **Mode**: brick\n- **Mini-task**: Index `test-repo/packages/common/exceptions/` and list all exported class names defined with `export class` in `.ts` files, sorted alphabetically\n- **Answer**: Unable to complete — the treesitter brick could not be loaded; brick tools (`ts_index`, `ts_status`, etc.) were never registered\n- **Turns used**: 20\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_remove`, `mcp__focus__focus_catalog_add`\n- **Rough token estimate**: ~6,000\n- **Notes**: The focus MCP server is present and functional for catalog/management operations, but `focus_load \"treesitter\"` consistently fails with `Cannot find module '@focus-mcp/brick-treesitter'` (require stack points to `.focus/bricks/noop.js`). The brick is registered in focus's internal registry at version `^0.0.0` but the actual npm package is absent from node_modules. `focus_update` is not yet implemented; `focus_remove` fails with \"Lock entry not found\"; adding a local file:// catalog source also fails with \"fetch failed\". Because brick-specific tools (`ts_index`, etc.) are only registered after a successful `focus_load`, no indexing could be performed.",
+  "workdir": "/tmp/focus-bench/treesitter-brick-2026-04-24T09-50-49-011",
+  "exit_reason": "ok"
+}

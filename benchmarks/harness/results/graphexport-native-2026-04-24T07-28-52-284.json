@@ -1,0 +1,25 @@
+{
+  "brick": "graphexport",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:27:31.479Z",
+  "duration_ms": 80805,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 30,
+    "cache_creation_input_tokens": 17634,
+    "cache_read_input_tokens": 375063,
+    "output_tokens": 4549,
+    "total": 397276
+  },
+  "session_id": "ef86265e-17c7-4f48-b8b0-b089d87f2852",
+  "result_block": "## Result\n- **Brick**: graphexport\n- **Mode**: native\n- **Mini-task**: List all intra-NestJS peer dependency edges from test-repo packages as Mermaid-style `A --> B` lines, sorted alphabetically\n- **Answer**:\n```\ncore --> common\ncore --> microservices\ncore --> platform-express\ncore --> websockets\nmicroservices --> common\nmicroservices --> core\nmicroservices --> websockets\nplatform-express --> common\nplatform-express --> core\nplatform-fastify --> common\nplatform-fastify --> core\nplatform-socket.io --> common\nplatform-socket.io --> websockets\nplatform-ws --> common\nplatform-ws --> websockets\ntesting --> common\ntesting --> core\ntesting --> microservices\ntesting --> platform-express\nwebsockets --> common\nwebsockets --> core\nwebsockets --> platform-socket.io\n```\n- **Turns used**: 8\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,500\n- **Notes**: The graphexport brick's `mermaid` tool would normally receive a pre-built knowledge graph object and export it; in native mode the dependency graph was reconstructed by parsing each `package.json`'s `peerDependencies`. The `@nestjs/common` package has no intra-repo peer deps and so appears only as a target. 22 edges total.",
+  "mini_task_spec": "Inspect the `peerDependencies` field in each `package.json` found under `test-repo/packages/` (one per subdirectory). For every `@nestjs/*` package that lists another `@nestjs/*` package from the same repo as a peer dependency, treat that as a directed edge in a dependency graph. The nine packages are: `@nestjs/common`, `@nestjs/core`, `@nestjs/microservices`, `@nestjs/platform-express`, `@nestjs/platform-fastify`, `@nestjs/platform-socket.io`, `@nestjs/platform-ws`, `@nestjs/testing`, `@nestjs/websockets`.\n\nUsing the `mermaid` export tool (direction TB), produce the list of directed edges. Report **only the edges** (not node declarations), one per line, in the format `A --> B` where A and B are the short package names with the `@nestjs/` prefix stripped (e.g. `core --> common`). Sort edges alphabetically first by A, then by B. Omit self-loops and omit `@nestjs/common` as a source (it has no intra-repo peer deps).\n\nExpected answer format: plain list of `A --> B` lines, sorted alphabetically, one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/graphexport-native-2026-04-24T07-27-31-479",
+  "exit_reason": "ok"
+}

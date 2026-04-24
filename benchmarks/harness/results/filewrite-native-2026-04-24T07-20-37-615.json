@@ -1,0 +1,25 @@
+{
+  "brick": "filewrite",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:19:21.809Z",
+  "duration_ms": 75806,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 22523,
+    "cache_read_input_tokens": 507089,
+    "output_tokens": 3537,
+    "total": 533186
+  },
+  "session_id": "79485038-bb61-4266-8895-be37df4eeff5",
+  "result_block": "## Result\n- **Brick**: filewrite\n- **Mode**: native\n- **Mini-task**: Create CHANGELOG.md in packages/common with header then append a release entry\n- **Answer**:\n  ```\n  # Changelog\n  \n  All notable changes to `@nestjs/common` will be documented in this file.\n  \n  ## [Unreleased]\n  \n  ## [11.1.19] - 2026-04-24\n  \n  ### Added\n  - Initial changelog entry for @nestjs/common v11.1.19.\n  ```\n- **Turns used**: 7\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1,800\n- **Notes**: Native mode used shell heredoc redirect (`cat >`) to create the file and `cat >>` to append — direct equivalents of the brick's `create` and `append` tools. No Edit/Write Claude tools used. The `Glob` and `Grep` tools were available but not needed for this straightforward write task.",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/`, the file `test-repo/packages/common/CHANGELOG.md` does not exist. Your task is:\n\n1. **Create** the file `test-repo/packages/common/CHANGELOG.md` with exactly this content (using a \"create\" or \"write\" operation):\n   ```\n   # Changelog\n   \n   All notable changes to `@nestjs/common` will be documented in this file.\n   \n   ## [Unreleased]\n   ```\n\n2. **Append** the following block to the same file (using an \"append\" operation — do NOT rewrite the whole file):\n   ```\n   \n   ## [11.1.19] - 2026-04-24\n   \n   ### Added\n   - Initial changelog entry for @nestjs/common v11.1.19.\n   ```\n\nThe expected final content of `test-repo/packages/common/CHANGELOG.md` (10 lines) is:\n```\n# Changelog\n\nAll notable changes to `@nestjs/common` will be documented in this file.",
+  "workdir": "/tmp/focus-bench/filewrite-native-2026-04-24T07-19-21-809",
+  "exit_reason": "ok"
+}

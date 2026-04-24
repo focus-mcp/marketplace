@@ -1,0 +1,32 @@
+{
+  "brick": "cache",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:00:41.715Z",
+  "duration_ms": 191389,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 108,
+    "cache_creation_input_tokens": 51859,
+    "cache_read_input_tokens": 661298,
+    "output_tokens": 9413,
+    "total": 722678
+  },
+  "session_id": "b9bd97fd-5cf1-4d24-b6ed-2c6ad2d86f31",
+  "result_block": "## Result\n- **Brick**: cache\n- **Mode**: brick\n- **Mini-task**: Find all `index.ts` files exactly one level deep in `test-repo/packages/`, sorted alphabetically — these are the warmup candidates for the cache brick\n- **Answer**: _Unable to determine_ — the cache brick could not be loaded (manifest version `^0.0.0` fails SemVer 2.0 validation; `focus_update` is not yet implemented; `focus_remove` returned \"Lock entry not found\"). None of the available `mcp__focus__*` tools enumerate the local filesystem, so the `index.ts` paths could not be discovered.\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_remove`\n- **Rough token estimate**: ~3,500\n- **Notes**: The local brick manifest has version `^0.0.0` (missing a proper SemVer), which blocks `focus_load`. `focus_update` returns \"not yet implemented\". `focus_remove` returns \"Lock entry not found\", preventing reinstall. The `mcp__focus__*` tools are purely brick-lifecycle management tools and cannot enumerate directories, so even if the cache brick had loaded, discovering package paths without native filesystem tools would require already knowing the package names. This benchmark environment appears to have a broken brick installation state that blocks the intended workflow.",
+  "workdir": "/tmp/focus-bench/cache-brick-2026-04-24T07-00-41-714",
+  "exit_reason": "ok"
+}

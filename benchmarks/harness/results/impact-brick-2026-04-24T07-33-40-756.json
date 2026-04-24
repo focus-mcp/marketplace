@@ -1,0 +1,25 @@
+{
+  "brick": "impact",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:32:59.268Z",
+  "duration_ms": 41488,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__imp_analyze"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 30960,
+    "cache_read_input_tokens": 112140,
+    "output_tokens": 1912,
+    "total": 145037
+  },
+  "session_id": "dd7332d9-d390-4831-bafd-170ad2d0da73",
+  "result_block": "## Result\n- **Brick**: impact\n- **Mode**: brick\n- **Mini-task**: Find all non-test TypeScript files that directly import `packages/core/helpers/context-id-factory.ts`\n- **Answer**:\n  ```\n  packages/core/helpers/index.ts\n  packages/core/injector/module.ts\n  packages/core/middleware/middleware-module.ts\n  packages/core/nest-application-context.ts\n  packages/core/router/router-explorer.ts\n  ```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__imp_analyze`\n- **Rough token estimate**: ~3,500\n- **Notes**: The `imp_analyze` tool returned both `directDependents` and `indirectDependents`. The direct dependents list contained 7 entries; 2 were spec files (`.spec.ts`) and were excluded per task requirements, leaving 5 non-test source files. Results were already in alphabetical order. All paths are relative to `test-repo/` as required.",
+  "workdir": "/tmp/focus-bench/impact-brick-2026-04-24T07-32-59-267",
+  "exit_reason": "ok"
+}

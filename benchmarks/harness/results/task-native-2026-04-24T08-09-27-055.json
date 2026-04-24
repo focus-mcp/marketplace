@@ -1,0 +1,26 @@
+{
+  "brick": "task",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:07:51.505Z",
+  "duration_ms": 95550,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 40,
+    "cache_creation_input_tokens": 19909,
+    "cache_read_input_tokens": 531798,
+    "output_tokens": 5097,
+    "total": 556844
+  },
+  "session_id": "114efab7-2245-4ff0-a0b3-f558c0ed48b4",
+  "result_block": "## Result\n\n- **Brick**: task\n- **Mode**: native\n- **Mini-task**: Find all `@deprecated`-annotated members in test-repo/packages/ TypeScript files, sorted by file path then line number\n- **Answer**:\n  ```\n  packages/common/pipes/file/max-file-size.validator.ts:16:message\n  packages/core/metadata-scanner.ts:12:scanFromPrototype\n  packages/core/metadata-scanner.ts:68:getAllFilteredMethodNames\n  packages/microservices/external/kafka.interface.ts:143:JavaCompatiblePartitioner\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: No TODO/FIXME comments exist in the codebase; `@deprecated` annotations were the best proxy for actionable cleanup tasks that map naturally to the task brick's create→assign→complete workflow. The four deprecated items span three packages (common, core, microservices), making it a natural multi-agent scenario where each agent handles one package.",
+  "mini_task_spec": "You are working with a NestJS monorepo at `test-repo/`. Your goal is to enumerate every `@deprecated`-annotated member across all TypeScript (`.ts`) files under `test-repo/packages/`, so that a multi-agent workflow can create one cleanup task per deprecated item.\n\nFor each `@deprecated` annotation found, record:\n1. The file path relative to `test-repo/`\n2. The line number of the `@deprecated` tag\n3. The name of the deprecated member (the function, method, or property declared immediately after the JSDoc block containing `@deprecated`)\n\nSort the results first alphabetically by file path, then by line number (ascending) within the same file.\n\nReturn each result on its own line in this exact format:\n```\n<file_path>:<line_number_of_@deprecated_tag>:<member_name>\n```\n\nExample format (not the real answer):\n```\npackages/core/foo.ts:42:oldMethod\n```\n\n---",
+  "workdir": "/tmp/focus-bench/task-native-2026-04-24T08-07-51-505",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "textsearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:10:13.838Z",
+  "duration_ms": 50024,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 10713,
+    "cache_read_input_tokens": 349745,
+    "output_tokens": 3098,
+    "total": 363585
+  },
+  "session_id": "6c0209ac-0aac-4c2a-afe3-04cf742e0431",
+  "result_block": "## Result\n\n- **Brick**: textsearch\n- **Mode**: native\n- **Mini-task**: Find all `.ts` files in `test-repo/packages/` containing `@Injectable()`, sorted alphabetically\n- **Answer**:\n```\npackages/common/decorators/core/inject.decorator.ts\npackages/common/pipes/default-value.pipe.ts\npackages/common/pipes/file/parse-file.pipe.ts\npackages/common/pipes/parse-array.pipe.ts\npackages/common/pipes/parse-bool.pipe.ts\npackages/common/pipes/parse-date.pipe.ts\npackages/common/pipes/parse-enum.pipe.ts\npackages/common/pipes/parse-float.pipe.ts\npackages/common/pipes/parse-int.pipe.ts\npackages/common/pipes/parse-uuid.pipe.ts\npackages/common/pipes/validation.pipe.ts\npackages/common/serializer/class-serializer.interceptor.ts\npackages/common/services/console.service.ts\npackages/common/services/logger-copy.service.ts\npackages/common/services/logger.service.ts\npackages/common/test/decorators/injectable.decorator.spec.ts\npackages/core/discovery/discovery-service.ts\npackages/core/errors/messages.ts\npackages/core/scanner.ts\npackages/core/test/errors/test/messages.spec.ts\npackages/core/test/injector/injector.spec.ts\npackages/core/test/injector/instance-loader.spec.ts\npackages/core/test/injector/module.spec.ts\npackages/core/test/injector/nested-transient-isolation.spec.ts\npackages/core/test/middleware/container.spec.ts\npackages/core/test/middleware/middleware-module.spec.ts\npackages/core/test/middleware/resolver.spec.ts\npackages/core/test/scanner.spec.ts\npackages/core/test/scope/transient-scope.spec.ts\npackages/microservices/test/context/rpc-context-creator.spec.ts\npackages/microservices/test/module/clients.module.spec.ts\npackages/websockets/test/context/ws-context-creator.spec.ts\n```\n- **Turns used**: 5\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1,800\n- **Notes**: The brick's `grouped` tool maps cleanly to this task (file-level result grouping + match count). Native mode used `grep -r --include=\"*.ts\" -l | sort` to replicate it deterministically.",
+  "mini_task_spec": "Using the **textsearch** brick's `grouped` or `search` tool, find every TypeScript file inside `test-repo/packages/` that contains the exact literal string `@Injectable()`. Return the list of matching file paths **relative to `test-repo/`**, one per line, sorted alphabetically. Use `glob` filter `*.ts` and search `dir` set to `test-repo/packages/`. Do not include non-TypeScript files. The answer format is a plain sorted list of relative paths (e.g. `packages/common/pipes/parse-int.pipe.ts`).\n\n---",
+  "workdir": "/tmp/focus-bench/textsearch-native-2026-04-24T08-10-13-838",
+  "exit_reason": "ok"
+}

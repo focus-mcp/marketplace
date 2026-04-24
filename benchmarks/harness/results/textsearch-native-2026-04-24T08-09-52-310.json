@@ -1,0 +1,25 @@
+{
+  "brick": "textsearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:08:42.184Z",
+  "duration_ms": 70126,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 38,
+    "cache_creation_input_tokens": 30259,
+    "cache_read_input_tokens": 532503,
+    "output_tokens": 4183,
+    "total": 566983
+  },
+  "session_id": "926c4915-8be5-4e66-a28f-2f8e7dc9cd04",
+  "result_block": "## Result\n- **Brick**: textsearch\n- **Mode**: native\n- **Mini-task**: Find all `.ts` files in `packages/common/pipes/` containing `@Injectable()`\n- **Answer**:\n  ```\n  packages/common/pipes/default-value.pipe.ts\n  packages/common/pipes/file/parse-file.pipe.ts\n  packages/common/pipes/parse-array.pipe.ts\n  packages/common/pipes/parse-bool.pipe.ts\n  packages/common/pipes/parse-date.pipe.ts\n  packages/common/pipes/parse-enum.pipe.ts\n  packages/common/pipes/parse-float.pipe.ts\n  packages/common/pipes/parse-int.pipe.ts\n  packages/common/pipes/parse-uuid.pipe.ts\n  packages/common/pipes/validation.pipe.ts\n  ```\n- **Turns used**: 5\n- **Tools used**: `Read`, `Bash`, `Grep`\n- **Rough token estimate**: ~2,500\n- **Notes**: The task maps cleanly to the brick's `search` tool (plain-text pattern with a glob filter). The result is deterministic — 10 files, no ambiguity. All paths are relative to `test-repo/` and sorted alphabetically by the `sort` flag passed to the shell grep command.",
+  "mini_task_spec": "Using the textsearch brick, search for all TypeScript (`.ts`) files inside `test-repo/packages/common/pipes/` (recursively) that contain the literal text `@Injectable()`. Use the brick's `search` tool with `dir` set to `test-repo/packages/common/pipes/`, `pattern` set to `@Injectable()`, and `glob` set to `*.ts`. Report the list of matching file paths **relative to `test-repo/`**, one per line, sorted alphabetically.\n\nExpected answer format: a sorted list of relative paths (relative to `test-repo/`), one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/textsearch-native-2026-04-24T08-08-42-183",
+  "exit_reason": "ok"
+}

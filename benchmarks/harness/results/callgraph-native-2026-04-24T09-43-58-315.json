@@ -1,0 +1,26 @@
+{
+  "brick": "callgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:42:20.710Z",
+  "duration_ms": 97604,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 41,
+    "cache_creation_input_tokens": 70126,
+    "cache_read_input_tokens": 566408,
+    "output_tokens": 5559,
+    "total": 642134
+  },
+  "session_id": "1ec6ea28-5147-4768-ad31-5b2b535a051d",
+  "result_block": "## Result\n- **Brick**: callgraph\n- **Mode**: native\n- **Mini-task**: Find all NestFactoryStatic methods that call `this.initialize(` in `packages/core/nest-factory.ts`\n- **Answer**:\n  ```\n  create\n  createApplicationContext\n  createMicroservice\n  ```\n- **Turns used**: 10\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~6,000\n- **Notes**: The `initialize` name appears in other files (`instance-links-host.ts`, `instance-wrapper.ts`, `router-module.ts`) but those are unrelated classes' own `initialize` methods, not callers of `NestFactoryStatic#initialize`. The three callers all use `await this.initialize(` and are straightforwardly identifiable via grep for `this\\.initialize\\(` scoped to `nest-factory.ts`.",
+  "mini_task_spec": "Using the **callgraph** brick's `callers` tool, find all methods within the `NestFactoryStatic` class in `test-repo/packages/core/nest-factory.ts` that directly call `this.initialize(`. Search the directory `test-repo/packages/core`. Report the distinct public method names (not overload signatures, just unique names) sorted alphabetically, one per line.\n\nExpected answer format: a list of method names, sorted alphabetically, one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/callgraph-native-2026-04-24T09-42-20-710",
+  "exit_reason": "ok"
+}

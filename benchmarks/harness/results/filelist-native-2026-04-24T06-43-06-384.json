@@ -1,0 +1,26 @@
+{
+  "brick": "filelist",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T06:41:52.865Z",
+  "duration_ms": 73519,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 2581,
+    "cache_creation_input_tokens": 89694,
+    "cache_read_input_tokens": 465646,
+    "output_tokens": 3891,
+    "total": 561812
+  },
+  "session_id": "a6ff006d-ce35-4282-bf75-92955957c6f9",
+  "result_block": "## Result\n- **Brick**: filelist\n- **Mode**: native\n- **Mini-task**: Find all `*.decorator.ts` files under `test-repo/packages` via glob, sorted alphabetically\n- **Answer**:\n```\ntest-repo/packages/common/decorators/core/bind.decorator.ts\ntest-repo/packages/common/decorators/core/catch.decorator.ts\ntest-repo/packages/common/decorators/core/controller.decorator.ts\ntest-repo/packages/common/decorators/core/dependencies.decorator.ts\ntest-repo/packages/common/decorators/core/exception-filters.decorator.ts\ntest-repo/packages/common/decorators/core/injectable.decorator.ts\ntest-repo/packages/common/decorators/core/inject.decorator.ts\ntest-repo/packages/common/decorators/core/optional.decorator.ts\ntest-repo/packages/common/decorators/core/set-metadata.decorator.ts\ntest-repo/packages/common/decorators/core/use-guards.decorator.ts\ntest-repo/packages/common/decorators/core/use-interceptors.decorator.ts\ntest-repo/packages/common/decorators/core/use-pipes.decorator.ts\ntest-repo/packages/common/decorators/core/version.decorator.ts\ntest-repo/packages/common/decorators/http/create-route-param-metadata.decorator.ts\ntest-repo/packages/common/decorators/http/header.decorator.ts\ntest-repo/packages/common/decorators/http/http-code.decorator.ts\ntest-repo/packages/common/decorators/http/redirect.decorator.ts\ntest-repo/packages/common/decorators/http/render.decorator.ts\ntest-repo/packages/common/decorators/http/request-mapping.decorator.ts\ntest-repo/packages/common/decorators/http/route-params.decorator.ts\ntest-repo/packages/common/decorators/http/sse.decorator.ts\ntest-repo/packages/common/decorators/modules/global.decorator.ts\ntest-repo/packages/common/decorators/modules/module.decorator.ts\ntest-repo/packages/common/serializer/decorators/serialize-options.decorator.ts\ntest-repo/packages/microservices/decorators/client.decorator.ts\ntest-repo/packages/microservices/decorators/ctx.decorator.ts\ntest-repo/packages/microservices/decorators/event-pattern.decorator.ts\ntest-repo/packages/microservices/decorators/grpc-service.decorator.ts\ntest-repo/packages/microservices/decorators/message-pattern.decorator.ts\ntest-repo/packages/microservices/decorators/payload.decorator.ts\ntest-repo/packages/platform-fastify/decorators/route-config.decorator.ts\ntest-repo/packages/platform-fastify/decorators/route-constraints.decorator.ts\ntest-repo/packages/platform-fastify/decorators/route-schema.decorator.ts\ntest-repo/packages/websockets/decorators/ack.decorator.ts\ntest-repo/packages/websockets/decorators/connected-socket.decorator.ts\ntest-repo/packages/websockets/decorators/gateway-server.decorator.ts\ntest-repo/packages/websockets/decorators/message-body.decorator.ts\ntest-repo/packages/websockets/decorators/socket-gateway.decorator.ts\ntest-repo/packages/websockets/decorators/subscribe-message.decorator.ts\n```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~3,500\n- **Notes**: The `filelist` brick's `glob` tool is directly exercised by this task. Native mode used `Glob` built-in + `Bash` (find + sort) to produce the sorted list. The Glob tool output was unsorted, so `find | sort` was used to guarantee alphabetical ordering. 39 files matched.",
+  "mini_task_spec": "Using the `filelist` brick's `glob` tool, find all files matching the pattern `**/*.decorator.ts` rooted at the `test-repo/packages` directory (absolute path: `/tmp/focus-bench/filelist-native-2026-04-24T06-41-52-864/test-repo/packages`). List every matching file path (relative to the session working directory `/tmp/focus-bench/filelist-native-2026-04-24T06-41-52-864/`), one per line, sorted alphabetically. The expected answer format is a plain list of relative file paths, one per line, sorted alphabetically (ascending).",
+  "workdir": "/tmp/focus-bench/filelist-native-2026-04-24T06-41-52-864",
+  "exit_reason": "ok"
+}

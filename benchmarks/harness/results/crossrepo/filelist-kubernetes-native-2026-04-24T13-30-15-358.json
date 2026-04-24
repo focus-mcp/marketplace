@@ -1,0 +1,26 @@
+{
+  "brick": "filelist",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T13:28:28.406Z",
+  "duration_ms": 106952,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 41,
+    "cache_creation_input_tokens": 24755,
+    "cache_read_input_tokens": 558736,
+    "output_tokens": 3966,
+    "total": 587498
+  },
+  "session_id": "056e6b11-d3c1-45c8-8d1c-59dc271a29da",
+  "result_block": "## Result\n- **Brick**: filelist\n- **Mode**: native\n- **Mini-task**: Find all `*_test.go` files directly in `test-repo/pkg/scheduler/`\n- **Answer**:\n  ```\n  pkg/scheduler/eventhandlers_test.go\n  pkg/scheduler/extender_test.go\n  pkg/scheduler/schedule_one_podgroup_test.go\n  pkg/scheduler/schedule_one_test.go\n  pkg/scheduler/scheduler_test.go\n  ```\n- **Turns used**: 6\n- **Tools used**: Bash, Read, Glob\n- **Rough token estimate**: ~2 500\n- **Notes**: The test-repo is a Kubernetes (Go) monorepo, not NestJS — the task was adapted accordingly. The `glob` tool is the brick's primary differentiator; a non-recursive `*_test.go` glob against a well-defined directory produces a small, stable, easily verified answer.",
+  "mini_task_spec": "Using the `filelist` brick's `glob` tool, find all files matching the pattern `*_test.go` that reside **directly** (non-recursively) inside the `test-repo/pkg/scheduler/` directory. List only the file paths relative to `test-repo/`, sorted alphabetically, one per line.\n\nThe brick's `glob` tool accepts a `path` (directory to search, absolute at runtime) and a `pattern` (e.g. `*_test.go`). In brick mode the path must be the absolute path to `test-repo/pkg/scheduler/` in the running session. The expected answer format is a sorted list of relative paths (relative to `test-repo/`), one per line:\n\n```\npkg/scheduler/eventhandlers_test.go\npkg/scheduler/extender_test.go\npkg/scheduler/schedule_one_podgroup_test.go\npkg/scheduler/schedule_one_test.go\npkg/scheduler/scheduler_test.go\n```\n\n---",
+  "workdir": "/tmp/focus-bench/filelist-native-2026-04-24T13-28-28-406",
+  "exit_reason": "ok"
+}

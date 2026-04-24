@@ -1,0 +1,26 @@
+{
+  "brick": "smartread",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:06:19.720Z",
+  "duration_ms": 77343,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 40,
+    "cache_creation_input_tokens": 13820,
+    "cache_read_input_tokens": 509714,
+    "output_tokens": 4625,
+    "total": 528199
+  },
+  "session_id": "59891537-3cd8-402e-96f1-80613870b91c",
+  "result_block": "## Result\n- **Brick**: smartread\n- **Mode**: native\n- **Mini-task**: List all external module specifiers imported in `packages/core/nest-application.ts`\n- **Answer**:\n  ```\n  @nestjs/common\n  @nestjs/common/interfaces\n  @nestjs/common/services/logger.service\n  @nestjs/common/utils/load-package.util\n  @nestjs/common/utils/shared.utils\n  iterare\n  os\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~1,800\n- **Notes**: The file has 497 lines total; only the first ~40 lines contain static `import` statements. The `imports` mode of the brick would extract these in one call without reading the full file — the exact token-efficiency scenario it's designed for. Two dynamic `require()` calls inside `optionalRequire(...)` (for `@nestjs/websockets/socket-module` and `@nestjs/microservices/microservices-module`) were intentionally excluded because the task asks about `import` statements only.",
+  "mini_task_spec": "Using the `imports` tool from the **smartread** brick, extract all **external** (non-relative) module specifiers that appear in `import … from '…'` statements in the file `test-repo/packages/core/nest-application.ts`. A module specifier is \"external\" if it does **not** begin with `./` or `../`. List the unique module specifiers, sorted alphabetically, one per line. Do not include relative imports, `require()` calls, or dynamic imports.\n\nExpected answer format: a sorted list of module specifier strings, one per line, e.g.:\n```\n@nestjs/common\n@nestjs/common/interfaces\niterare\nos\n```",
+  "workdir": "/tmp/focus-bench/smartread-native-2026-04-24T08-06-19-719",
+  "exit_reason": "ok"
+}
