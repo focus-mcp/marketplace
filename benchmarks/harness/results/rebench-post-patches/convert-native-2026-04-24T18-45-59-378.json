@@ -1,0 +1,25 @@
+{
+  "brick": "convert",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:45:00.258Z",
+  "duration_ms": 59120,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 19349,
+    "cache_read_input_tokens": 441968,
+    "output_tokens": 3333,
+    "total": 464685
+  },
+  "session_id": "c0286613-dfe1-468b-9235-aa3af7586dfa",
+  "result_block": "## Result\n- **Brick**: convert\n- **Mode**: native\n- **Mini-task**: Convert the `criteria` JSON array from `decision-http-adapter.json` to YAML\n- **Answer**:\n```yaml\n- name: Raw throughput performance\n  weight: 9\n- name: Middleware/plugin ecosystem breadth\n  weight: 8\n- name: Built-in file-upload support (no extra install)\n  weight: 6\n- name: Adapter implementation simplicity\n  weight: 7\n```\n- **Turns used**: 6\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1 800\n- **Notes**: Solved natively via Python's `json` + `yaml` (PyYAML) in a single Bash call. The answer is fully deterministic given the file contents. The `format` brick tool would do the same conversion in one call without needing a Python runtime.",
+  "mini_task_spec": "Read the file `test-repo/decision-http-adapter.json`. Extract the value of the top-level `criteria` key, which is a JSON array of objects each having `name` (string) and `weight` (integer) fields. Convert that JSON array to YAML format using the `conv_format` tool (source format: `json`, target format: `yaml`). Report the full YAML output, preserving original key order (`name` before `weight`) and original array order. Expected answer format: a YAML list, each item on its own line with a leading `- `, sub-keys indented by two spaces, no trailing newline shown (exact whitespace as produced by a standard YAML serializer with `default_flow_style=False`).\n\n---",
+  "workdir": "/tmp/focus-bench/convert-native-2026-04-24T18-45-00-258",
+  "exit_reason": "ok"
+}

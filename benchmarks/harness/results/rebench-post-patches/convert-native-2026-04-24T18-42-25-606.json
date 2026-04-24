@@ -1,0 +1,26 @@
+{
+  "brick": "convert",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:41:16.263Z",
+  "duration_ms": 69343,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 44,
+    "cache_creation_input_tokens": 31579,
+    "cache_read_input_tokens": 652525,
+    "output_tokens": 4396,
+    "total": 688544
+  },
+  "session_id": "1603ec16-fd6a-4d8d-a3b1-696c359da6c3",
+  "result_block": "## Result\n- **Brick**: convert\n- **Mode**: native\n- **Mini-task**: Convert all exported PascalCase type/interface names in `provider.interface.ts` to kebab-case\n- **Answer**:\n  ```\n  class-provider\n  existing-provider\n  factory-provider\n  provider\n  value-provider\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Grep, Bash\n- **Rough token estimate**: ~3,500\n- **Notes**: PascalCase → kebab-case conversion done natively with `sed` + `tr`. The file has exactly 5 top-level exports: `Provider`, `ClassProvider`, `ValueProvider`, `FactoryProvider`, `ExistingProvider`. The `language` brick tool would replace the sed/tr step with a single structured call per identifier.",
+  "mini_task_spec": "Open the file `test-repo/packages/common/interfaces/modules/provider.interface.ts`. Identify every top-level exported `type` or `interface` declaration in that file (stripping any generic type parameters such as `<T = any>`). Convert each exported name from PascalCase to kebab-case using the `convert` brick's `language` tool (with `to: \"kebab\"`). Return the resulting kebab-case names as a sorted (alphabetical) list, one per line.\n\nExpected answer format: plain list of kebab-case strings, one per line, sorted A–Z.\n\n---",
+  "workdir": "/tmp/focus-bench/convert-native-2026-04-24T18-41-16-263",
+  "exit_reason": "ok"
+}

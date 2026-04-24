@@ -1,0 +1,25 @@
+{
+  "brick": "graphexport",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:37:18.847Z",
+  "duration_ms": 154294,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 38113,
+    "cache_read_input_tokens": 497788,
+    "output_tokens": 9777,
+    "total": 545715
+  },
+  "session_id": "9e54bf28-0c94-4ea7-96e0-9a89f95035c2",
+  "result_block": "## Result\n- **Brick**: graphexport\n- **Mode**: native\n- **Mini-task**: Build Mermaid LR flowchart of @nestjs/* peerDependency graph from test-repo/packages/\n- **Answer**:\n```\nflowchart LR\n  common[\"common\"]\n  core[\"core\"]\n  microservices[\"microservices\"]\n  platform_express[\"platform-express\"]\n  platform_fastify[\"platform-fastify\"]\n  platform_socket_io[\"platform-socket.io\"]\n  platform_ws[\"platform-ws\"]\n  testing[\"testing\"]\n  websockets[\"websockets\"]\n  core --> common\n  core --> microservices\n  core --> platform_express\n  core --> websockets\n  microservices --> common\n  microservices --> core\n  microservices --> websockets\n  platform_express --> common\n  platform_express --> core\n  platform_fastify --> common\n  platform_fastify --> core\n  platform_socket_io --> common\n  platform_socket_io --> websockets\n  platform_ws --> common\n  platform_ws --> websockets\n  testing --> common\n  testing --> core\n  testing --> microservices\n  testing --> platform_express\n  websockets --> common\n  websockets --> core\n  websockets --> platform_socket_io\n```\n- **Turns used**: 5\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~2,800\n- **Notes**: The brick's `ge_mermaid` output format may differ slightly from the manually constructed output (e.g. spacing, quoting style). The spec normalises the format by specifying exact rules (alphabetical ordering, underscore IDs) so both modes produce a directly comparable result. Node IDs must use underscores because Mermaid does not allow hyphens or dots in bare identifiers.",
+  "mini_task_spec": "Inspect the `package.json` for each of the 9 NestJS packages under `test-repo/packages/`: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, and `websockets`. For each package, collect every entry under `peerDependencies` whose name starts with `@nestjs/`. Build a directed graph where each `@nestjs/*` package is a node (id = short name with hyphens/dots replaced by underscores, label = short name as-is, type = `\"package\"`) and each peerDependency relationship is an edge (from = dependent short name, to = dependency short name, type = `\"peerDep\"`). Load this graph via `ge_input`, then export it as a Mermaid `flowchart LR` diagram using `ge_mermaid` (direction `LR`). The expected answer is the complete Mermaid diagram text with nodes declared alphabetically and edges listed alphabetically (first by from-node ID, then by to-node ID), using underscores in node IDs for hyphens/dots. Expected format (exact):\n\n```\nflowchart LR\n  common[\"common\"]\n  core[\"core\"]\n  microservices[\"microservices\"]\n  platform_express[\"platform-express\"]\n  platform_fastify[\"platform-fastify\"]\n  platform_socket_io[\"platform-socket.io\"]\n  platform_ws[\"platform-ws\"]\n  testing[\"testing\"]\n  websockets[\"websockets\"]\n  core --> common\n  core --> microservices\n  core --> platform_express\n  core --> websockets\n  microservices --> common\n  microservices --> core\n  microservices --> websockets\n  platform_express --> common\n  platform_express --> core\n  platform_fastify --> common\n  platform_fastify --> core\n  platform_socket_io --> common\n  platform_socket_io --> websockets\n  platform_ws --> common\n  platform_ws --> websockets\n  testing --> common\n  testing --> core\n  testing --> microservices\n  testing --> platform_express\n  websockets --> common\n  websockets --> core\n  websockets --> platform_socket_io\n```",
+  "workdir": "/tmp/focus-bench/graphexport-native-2026-04-24T18-37-18-846",
+  "exit_reason": "ok"
+}

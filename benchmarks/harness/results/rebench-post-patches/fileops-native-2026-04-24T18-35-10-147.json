@@ -1,0 +1,26 @@
+{
+  "brick": "fileops",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:34:15.382Z",
+  "duration_ms": 54765,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 61922,
+    "cache_read_input_tokens": 441881,
+    "output_tokens": 3722,
+    "total": 507562
+  },
+  "session_id": "c2049108-4dd8-43a7-a501-37e2aaaec994",
+  "result_block": "## Result\n- **Brick**: fileops\n- **Mode**: native\n- **Mini-task**: Delete all `.bak`/`.bak2` backup files from `test-repo/packages/common/exceptions/`\n- **Answer**:\n```\npackages/common/exceptions/bad-gateway.exception.bak\npackages/common/exceptions/bad-request.exception.bak\npackages/common/exceptions/bad-request.exception.bak2\npackages/common/exceptions/conflict.exception.bak\npackages/common/exceptions/forbidden.exception.bak\npackages/common/exceptions/forbidden.exception.bak2\npackages/common/exceptions/gateway-timeout.exception.bak\npackages/common/exceptions/gone.exception.bak\npackages/common/exceptions/http-version-not-supported.exception.bak\npackages/common/exceptions/im-a-teapot.exception.bak\npackages/common/exceptions/index.bak\npackages/common/exceptions/internal-server-error.exception.bak\npackages/common/exceptions/method-not-allowed.exception.bak\npackages/common/exceptions/not-acceptable.exception.bak\npackages/common/exceptions/not-found.exception.bak\npackages/common/exceptions/not-implemented.exception.bak\npackages/common/exceptions/payload-too-large.exception.bak\npackages/common/exceptions/precondition-failed.exception.bak\npackages/common/exceptions/request-timeout.exception.bak\npackages/common/exceptions/service-unavailable.exception.bak\npackages/common/exceptions/unauthorized.exception.bak\npackages/common/exceptions/unprocessable-entity.exception.bak\npackages/common/exceptions/unsupported-media-type.exception.bak\n```\n- **Turns used**: 5\n- **Tools used**: Bash, Glob\n- **Rough token estimate**: ~2,500\n- **Notes**: 23 backup files total (21 `.bak` + 2 `.bak2`). All found exclusively in `packages/common/exceptions/`. Deletion confirmed with a post-deletion count check returning 0.",
+  "mini_task_spec": "In the NestJS repo at `test-repo/`, the directory `test-repo/packages/common/exceptions/` contains stale backup files with extensions `.bak` and `.bak2` mixed in alongside real TypeScript source files. Your task is to delete **all** files in `test-repo/packages/common/exceptions/` whose name ends with `.bak` or `.bak2`, then report the sorted list of relative paths (relative to `test-repo/`) of every file you deleted, one per line, sorted alphabetically. Do not delete any `.ts` or other non-backup files. No other directories need to be searched.\n\nExpected answer format: a sorted list of relative paths (relative to `test-repo/`), one per line, e.g.:\n```\npackages/common/exceptions/bad-gateway.exception.bak\npackages/common/exceptions/bad-request.exception.bak\n...\n```\n\n---",
+  "workdir": "/tmp/focus-bench/fileops-native-2026-04-24T18-34-15-381",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "callgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:39:34.516Z",
+  "duration_ms": 115004,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 52,
+    "cache_creation_input_tokens": 57404,
+    "cache_read_input_tokens": 913599,
+    "output_tokens": 5259,
+    "total": 976314
+  },
+  "session_id": "6f52db13-dd61-4535-b925-9c65a0554a00",
+  "result_block": "## Result\n\n- **Brick**: callgraph\n- **Mode**: native\n- **Mini-task**: Find all non-test callers of `scanForPaths` in `packages/core`\n- **Answer**:\n  ```\n  getRouteInfoFromController in test-repo/packages/core/middleware/routes-mapper.ts\n  explore in test-repo/packages/core/router/router-explorer.ts\n  ```\n- **Turns used**: 8\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~6,000\n- **Notes**: Excluded all files under `test/` (spec files). The definition file itself (`paths-explorer.ts`) was also excluded. Exactly two production callers exist: `getRouteInfoFromController` (in `RoutesMapper`) calls it at line 77, and `explore` (in `RouterExplorer`) calls it at line 109.",
+  "mini_task_spec": "Using the callgraph brick's **`callers`** tool, find all non-test functions/methods that call `scanForPaths` within `test-repo/packages/core`. Exclude any files under `test-repo/packages/core/test/`. For each caller found, report the **method name** and the **relative file path** (relative to `test-repo/`). Sort the results alphabetically by file path. Output one entry per line in the format `<method_name> in <relative_file_path>`.\n\nThe directory to search is `test-repo/packages/core`. `scanForPaths` is defined in `test-repo/packages/core/router/paths-explorer.ts` in class `PathsExplorer`.\n\n---",
+  "workdir": "/tmp/focus-bench/callgraph-native-2026-04-24T18-39-34-516",
+  "exit_reason": "ok"
+}

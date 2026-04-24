@@ -1,0 +1,32 @@
+{
+  "brick": "depgraph",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:51:25.411Z",
+  "duration_ms": 117660,
+  "turns": 26,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 123,
+    "cache_creation_input_tokens": 29468,
+    "cache_read_input_tokens": 678034,
+    "output_tokens": 6063,
+    "total": 713688
+  },
+  "session_id": "f2824a79-92bd-4717-9ef8-5c232c703251",
+  "result_block": "## Result\n- **Brick**: depgraph\n- **Mode**: brick\n- **Mini-task**: Find all non-test `.ts` files in `test-repo/packages/core/` that directly import from `test-repo/packages/core/injector/container.ts`, excluding test paths and index re-export-only files, sorted alphabetically.\n- **Answer**: UNAVAILABLE — the `fanin` tool could not be invoked; see Notes.\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`\n- **Rough token estimate**: ~4,000\n- **Notes**: The focus MCP server is configured and all meta-tools (`focus_*`) respond correctly. However, `focus_load depgraph` fails with `Cannot find module '@focus-mcp/brick-depgraph'` — the npm package is registered in the lock (version `^0.0.0`) but not actually present on disk. `focus_update` is not yet implemented, `focus_remove` cannot find a lock entry, and no depgraph brick tools (fanin, imports, etc.) appear in the deferred tool registry. Because the rules forbid native filesystem/search tools, the task cannot be completed without a working `fanin` tool.",
+  "workdir": "/tmp/focus-bench/depgraph-brick-2026-04-24T18-51-25-409",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "treesitter",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:48:31.410Z",
+  "duration_ms": 59996,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 22487,
+    "cache_read_input_tokens": 507218,
+    "output_tokens": 3232,
+    "total": 532976
+  },
+  "session_id": "e561ac4c-e30a-4372-8c6d-9b43cdf02a1c",
+  "result_block": "## Result\n- **Brick**: treesitter\n- **Mode**: native\n- **Mini-task**: List all exported class names in `test-repo/packages/common/exceptions/`, sorted alphabetically\n- **Answer**:\n  ```\n  BadGatewayException\n  BadRequestException\n  ConflictException\n  ForbiddenException\n  GatewayTimeoutException\n  GoneException\n  HttpException\n  HttpVersionNotSupportedException\n  ImATeapotException\n  InternalServerErrorException\n  IntrinsicException\n  MethodNotAllowedException\n  MisdirectedException\n  NotAcceptableException\n  NotFoundException\n  NotImplementedException\n  PayloadTooLargeException\n  PreconditionFailedException\n  RequestTimeoutException\n  ServiceUnavailableException\n  TooManyRequestsException\n  UnauthorizedException\n  UnprocessableEntityException\n  UnsupportedMediaTypeException\n  ```\n  (24 classes total)\n- **Turns used**: 6\n- **Tools used**: Bash, Grep, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: The `index.ts` file in the exceptions directory is a pure barrel re-export with no class declarations, contributing 0 class names. All 24 exported classes are declared exactly once in their own dedicated `.exception.ts` files. Task was straightforward with `Grep` regex on `^export class`.",
+  "mini_task_spec": "Using the treesitter brick's `index` tool, index the directory `test-repo/packages/common/exceptions/` and then query/inspect the resulting symbol index to identify every TypeScript class that is declared with `export class` in that directory. List the exported class names, one per line, sorted alphabetically. The expected answer format is a plain list of class names (no file paths, no qualifiers), sorted A→Z. The `index.ts` file in that directory contains only barrel re-exports (`export * from ...`) and no class declarations, so it should contribute zero class names.",
+  "workdir": "/tmp/focus-bench/treesitter-native-2026-04-24T18-48-31-409",
+  "exit_reason": "ok"
+}

@@ -8,16 +8,16 @@
 
 | | Native | Brick | Δ |
 |---|---:|---:|---:|
-| Total tokens | 460,556 | 766,028 | +66.3% ⚠️ |
-| cache_creation | 30,977 | 38,243 | |
-| cache_read | 426,486 | 720,149 | |
-| output | 3,060 | 7,522 | |
-| Turns (SDK) | 12 | 26 | |
-| Duration (s) | 56.9 | 141.2 | +148% ⚠️ |
+| Total tokens | 582,781 | 505,838 | -13.2% |
+| cache_creation | 28,898 | 27,602 | |
+| cache_read | 550,036 | 472,827 | |
+| output | 3,805 | 5,325 | |
+| Turns (SDK) | 19 | 19 | |
+| Duration (s) | 52.5 | 112.0 | +113% ⚠️ |
 
 ## Mini-task (iso)
 
-Using the treesitter brick, index the directory `test-repo/packages/common/exceptions/` and then identify all exported class names defined in the TypeScript files within that directory. Return the list of class names sorted alphabetically, one per line. Do not include class names re-exported from other modules — only those directly declared with `export class` in a `.ts` file under that directory.
+Using the treesitter brick, index the directory `test-repo/packages/common/enums/` and identify every TypeScript `enum` symbol that is exported (i.e. declared with `export enum`). Return the enum names sorted alphabetically, one per line. Only include enum names as declared in `.ts` files directly inside that directory (not transitive re-exports via barrel `index.ts`). Expected format is a plain alphabetically-sorted list of identifier names, one per line.
 
 ## Tool coverage (brick mode)
 
@@ -32,32 +32,30 @@ Using the treesitter brick, index the directory `test-repo/packages/common/excep
 ## Answers comparison
 
 **Native answer**: ```
-  BadGatewayException
-  BadRequestException
-  ConflictException
-  ForbiddenException
-  GatewayTimeoutException
-... (24 total)
+  HttpStatus
+  RequestMethod
+  RouteParamtypes
+  ShutdownSignal
+  VersioningType
+... (6 total)
 ```
 
-**Brick answer**: Unable to complete — the treesitter brick could not be loaded; brick tools (`ts_index`, `ts_status`, etc.) were never registered
+**Brick answer**: *(unavailable — brick failed to load; ts_index tool was never registered)*
 
 **Match**: divergent (manual check needed)
 
 ## Observations
 
-- Brick is regressive: +66.3% tokens, +148% duration, 0/5 tool coverage. The `treesitter` brick could not be loaded (`@focus-mcp/brick-treesitter` npm package absent) — all overhead is from failed load attempts consuming 26 turns.
-- This is a Cat C brick (known not to be measured in Phase 1 due to npm package absence). The regression entirely reflects load-failure overhead.
+_(empty — to be filled in the qualitative analysis pass)_
 
 ## Auto-detected issues
 
 - Tools not called: `ts_index`, `ts_reindex`, `ts_status`, `ts_cleanup`, `ts_langs`
-- Turns > 15 (brick): 26
-- Brick notes flagged: failed — "The focus MCP server is present and functional for catalog/management operations, but `focus_load "treesitter"` consistently fails with `Cannot find module '@focus-mcp/brick-treesitter'` (require stac"
-- Brick slower than native by 148% (UX concern)
-- Brick uses MORE tokens than native (766,028 vs 460,556)
+- Turns > 15 (brick): 19
+- Turns > 15 (native): 19
+- Brick notes flagged: fallback — "The treesitter brick is registered as installed (version `^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-treesitter'`. The brick stub at `.focus/bricks/noop.js` references "
+- Brick slower than native by 113% (UX concern)
 
 ## Recommendations
 
-- 🔧 Ensure `@focus-mcp/brick-treesitter` is published to npm and pre-installed in bench environment before re-running.
-- 📝 Cat C brick — exclude from Phase 1 summary stats.
+_(empty — to be filled after analysis)_

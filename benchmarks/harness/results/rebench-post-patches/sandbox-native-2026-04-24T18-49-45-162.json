@@ -1,0 +1,26 @@
+{
+  "brick": "sandbox",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:48:11.123Z",
+  "duration_ms": 94039,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 43,
+    "cache_creation_input_tokens": 48833,
+    "cache_read_input_tokens": 683991,
+    "output_tokens": 5632,
+    "total": 738499
+  },
+  "session_id": "07fb1b23-25ba-4b83-af0e-e6451d752f52",
+  "result_block": "## Result\n- **Brick**: sandbox\n- **Mode**: native\n- **Mini-task**: Extract and sort all `RouteParamtypes` enum members from `test-repo/packages/common/enums/route-paramtypes.enum.ts`\n- **Answer**:\n  ```\n  ACK=13\n  BODY=3\n  FILE=8\n  FILES=9\n  HEADERS=6\n  HOST=10\n  IP=11\n  NEXT=2\n  PARAM=5\n  QUERY=4\n  RAW_BODY=12\n  REQUEST=0\n  RESPONSE=1\n  SESSION=7\n  ```\n- **Turns used**: 14\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~9,000\n- **Notes**: Several turns were spent locating `mcp-brick.json` (permission denied at `/root/task/`, not found at `/home/user/task/`, succeeded at the session workdir). The route-params.decorator.ts read was exploratory context-gathering; strictly the task only required reading the enum file. In brick mode, `box__read` + `box__run` would compress this to 2 tool calls.",
+  "mini_task_spec": "Using the sandbox brick, read the file `test-repo/packages/common/enums/route-paramtypes.enum.ts`, execute JavaScript code that extracts all enum member name-value pairs from the `RouteParamtypes` enum defined in that file, and return them sorted alphabetically. The expected answer is a list of `NAME=VALUE` entries (no spaces around `=`), one per line, sorted alphabetically by name (A–Z). Do not include the enum name, braces, or trailing commas — only the sorted member entries.\n\nTo solve this with the sandbox brick:\n1. Use `box__read` with path `test-repo/packages/common/enums/route-paramtypes.enum.ts` to load the file contents.\n2. Use `box__run` to execute a JavaScript snippet that applies a regex like `/^\\s+(\\w+)\\s*=\\s*(\\d+)/gm` against the file string, collects all matches into `NAME=VALUE` pairs, sorts them alphabetically, and returns the joined result.\n\n---",
+  "workdir": "/tmp/focus-bench/sandbox-native-2026-04-24T18-48-11-122",
+  "exit_reason": "ok"
+}

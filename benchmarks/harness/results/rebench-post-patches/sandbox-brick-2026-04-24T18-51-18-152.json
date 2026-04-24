@@ -1,0 +1,31 @@
+{
+  "brick": "sandbox",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:49:45.163Z",
+  "duration_ms": 92989,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 100,
+    "cache_creation_input_tokens": 57604,
+    "cache_read_input_tokens": 565295,
+    "output_tokens": 5309,
+    "total": 628308
+  },
+  "session_id": "3646bf17-ce92-455c-aaf6-5ce0c349843f",
+  "result_block": "## Result\n- **Brick**: sandbox\n- **Mode**: brick\n- **Mini-task**: Read `route-paramtypes.enum.ts` and extract all `RouteParamtypes` enum member name=value pairs, sorted alphabetically\n- **Answer**: *(not obtained — brick tools unavailable; see Notes)*\n- **Turns used**: 11\n- **Tools used**: `mcp__focus__focus_load`, `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_update`\n- **Rough token estimate**: ~6,000\n- **Notes**: The sandbox brick is listed as installed (version `^0.0.0`) but fails to load because the Node module `@focus-mcp/brick-sandbox` cannot be resolved at runtime (`Cannot find module '@focus-mcp/brick-sandbox'`). As a result, the brick tools `box__read` and `box__run` were never registered and do not appear in the deferred tool registry. `focus_update` returned \"not yet implemented\", so upgrading to the marketplace version (1.1.0) was not possible. No native filesystem tools (`Bash`, `Grep`, `Glob`) were used per the rules. Task cannot be completed without a working brick load.",
+  "workdir": "/tmp/focus-bench/sandbox-brick-2026-04-24T18-49-45-162",
+  "exit_reason": "ok"
+}
