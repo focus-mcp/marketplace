@@ -1,0 +1,28 @@
+{
+  "brick": "smartread",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:08:21.212Z",
+  "duration_ms": 48695,
+  "turns": 10,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__sr_full",
+    "mcp__focus__sr_map",
+    "mcp__focus__sr_signatures",
+    "mcp__focus__sr_summary"
+  ],
+  "usage": {
+    "input_tokens": 50,
+    "cache_creation_input_tokens": 37636,
+    "cache_read_input_tokens": 234935,
+    "output_tokens": 2473,
+    "total": 275094
+  },
+  "session_id": "b6ef5725-17bb-4504-a408-ddbce1781625",
+  "result_block": "## Result\n- **Brick**: smartread\n- **Mode**: brick\n- **Mini-task**: List all public non-constructor methods of `RouterExplorer` class in `router-explorer.ts`, sorted alphabetically\n- **Answer**:\n```\napplyPathsToRouterProxy\ncreateRequestScopedHandler\nexplore\nextractRouterPath\n```\n- **Turns used**: 5\n- **Tools used**: `mcp__focus__sr_map`, `mcp__focus__sr_signatures`, `mcp__focus__sr_summary`, `mcp__focus__sr_full`\n- **Rough token estimate**: ~4,500\n- **Notes**: `sr_map` returned raw code snippets (not structured method names), `sr_signatures` only returned the top-level exported symbols (class/interface names), and `sr_summary` only returned the class as a single block. Had to fall back to `sr_full` to read the entire file and manually identify public methods. The `map` and `signatures` tools were not granular enough to extract class member visibility.",
+  "workdir": "/tmp/focus-bench/smartread-brick-2026-04-24T08-08-21-212",
+  "exit_reason": "ok"
+}

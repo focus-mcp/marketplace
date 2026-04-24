@@ -1,0 +1,25 @@
+{
+  "brick": "research",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:51:49.279Z",
+  "duration_ms": 114560,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 47,
+    "cache_creation_input_tokens": 38035,
+    "cache_read_input_tokens": 711867,
+    "output_tokens": 7285,
+    "total": 757234
+  },
+  "session_id": "9ec7a20d-72e2-4cb3-a68e-edf13c7792f7",
+  "result_block": "## Result\n- **Brick**: research\n- **Mode**: native\n- **Mini-task**: Find HttpStatus enum members (4xx/5xx) with no corresponding exception class in packages/common/exceptions/\n- **Answer**:\n  ```\n  EXPECTATION_FAILED\n  FAILED_DEPENDENCY\n  INSUFFICIENT_STORAGE\n  LENGTH_REQUIRED\n  LOCKED\n  LOOP_DETECTED\n  PAYMENT_REQUIRED\n  PRECONDITION_REQUIRED\n  PROXY_AUTHENTICATION_REQUIRED\n  REQUESTED_RANGE_NOT_SATISFIABLE\n  TOO_MANY_REQUESTS\n  UNRECOVERABLE_ERROR\n  URI_TOO_LONG\n  ```\n- **Turns used**: 9\n- **Tools used**: Bash, Read\n- **Rough token estimate**: 9,000\n- **Notes**: `misdirected.exception.ts` contains a copy-paste error in its JSDoc (says `'Bad Gateway'` instead of `'Misdirected'`) but correctly uses `HttpStatus.MISDIRECTED` at runtime — not counted as a consistency gap for this task. All 5xx values defined in the enum (INSUFFICIENT_STORAGE = 507, LOOP_DETECTED = 508) have no matching exception class alongside the well-covered ones (500–505).",
+  "mini_task_spec": "In the NestJS shallow clone at `test-repo/`, cross-reference two files to identify a consistency gap:\n\n1. **Source A**: `test-repo/packages/common/enums/http-status.enum.ts` — defines the `HttpStatus` enum with all HTTP status code constants.\n2. **Source B**: All `.ts` files in `test-repo/packages/common/exceptions/` (excluding `index.ts`, `http.exception.ts`, and `intrinsic.exception.ts`) — each file exports a concrete exception class that references one specific `HttpStatus.*` member.\n\nYour task: determine which `HttpStatus` enum member names whose numeric value falls in the **4xx or 5xx range** are **not referenced** (as `HttpStatus.<MEMBER>`) by any exception class file in `test-repo/packages/common/exceptions/`. List the unused member names sorted alphabetically, one per line.\n\nExpected answer format: a plain list of `HttpStatus` enum member names (just the identifiers, e.g. `EXPECTATION_FAILED`), one per line, sorted alphabetically, covering only codes ≥ 400.\n\n---",
+  "workdir": "/tmp/focus-bench/research-native-2026-04-24T07-51-49-279",
+  "exit_reason": "ok"
+}

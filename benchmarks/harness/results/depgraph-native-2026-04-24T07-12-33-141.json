@@ -1,0 +1,26 @@
+{
+  "brick": "depgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:10:03.852Z",
+  "duration_ms": 149289,
+  "turns": 21,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 59,
+    "cache_creation_input_tokens": 67142,
+    "cache_read_input_tokens": 1014957,
+    "output_tokens": 10905,
+    "total": 1093063
+  },
+  "session_id": "a31b6ded-3091-467d-a693-1fb46d1dc52c",
+  "result_block": "## Result\n\n- **Brick**: depgraph\n- **Mode**: native\n- **Mini-task**: Find all non-test source files in `packages/core/` that import from `injector/container.ts` (fan-in analysis)\n- **Answer**:\n  ```\n  test-repo/packages/core/exceptions/base-exception-filter-context.ts\n  test-repo/packages/core/exceptions/external-exception-filter-context.ts\n  test-repo/packages/core/guards/guards-context-creator.ts\n  test-repo/packages/core/helpers/external-context-creator.ts\n  test-repo/packages/core/inspector/graph-inspector.ts\n  test-repo/packages/core/interceptors/interceptors-context-creator.ts\n  test-repo/packages/core/middleware/container.ts\n  test-repo/packages/core/middleware/middleware-module.ts\n  test-repo/packages/core/middleware/routes-mapper.ts\n  test-repo/packages/core/nest-application-context.ts\n  test-repo/packages/core/nest-application.ts\n  test-repo/packages/core/nest-factory.ts\n  test-repo/packages/core/pipes/pipes-context-creator.ts\n  test-repo/packages/core/router/router-exception-filters.ts\n  test-repo/packages/core/router/router-explorer.ts\n  test-repo/packages/core/router/routes-resolver.ts\n  test-repo/packages/core/scanner.ts\n  ```\n- **Turns used**: 9\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: Files inside `injector/` itself (e.g., `instance-loader.ts`, `module.ts`) use relative paths like `./container` rather than `injector/container`, so they are not caught by the `injector/container` string search — this is consistent with how the `fanin` brick tool would resolve paths (it would use the actual module resolution, not just string matching). The `repl/repl-context.ts` imports via the barrel `../injector` index rather than directly from `container.ts`, so it is correctly excluded from direct fan-in results.",
+  "mini_task_spec": "Using the depgraph brick's **fan-in** capability, find all non-test TypeScript source files in `test-repo/packages/core/` that directly import from `test-repo/packages/core/injector/container.ts`. Specifically, these are `.ts` files (excluding `.spec.ts` test files and any files under `test-repo/packages/core/test/`) whose content contains the text `injector/container` as part of an import specifier (i.e., files that reference `../injector/container`, `../../injector/container`, etc.). List all matching file paths relative to `test-repo/`, one per line, sorted alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/depgraph-native-2026-04-24T07-10-03-852",
+  "exit_reason": "ok"
+}

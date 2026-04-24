@@ -1,0 +1,25 @@
+{
+  "brick": "fts",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:21:44.029Z",
+  "duration_ms": 121790,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 46,
+    "cache_creation_input_tokens": 76750,
+    "cache_read_input_tokens": 805115,
+    "output_tokens": 6880,
+    "total": 888791
+  },
+  "session_id": "6fddab46-eaa1-4f61-b88e-fd4da011970e",
+  "result_block": "## Result\n- **Brick**: fts\n- **Mode**: native\n- **Mini-task**: Rank non-test `.ts` files in `packages/core` by relevance to query \"exception filter handler\"\n- **Answer**:\n  ```\n  packages/core/adapters/http-adapter.ts\n  packages/core/router/router-explorer.ts\n  packages/core/exceptions/exceptions-handler.ts\n  packages/core/exceptions/external-exceptions-handler.ts\n  packages/core/middleware/middleware-module.ts\n  ```\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Glob (only Bash and Read effectively used for the search and ranking)\n- **Rough token estimate**: ~6,000\n- **Notes**: Native mode used raw case-insensitive term-frequency counts (sum of occurrences of \"exception\", \"filter\", \"handler\") rather than true TF-IDF. `http-adapter.ts` ranks #1 because it contains \"handler\" 70 times (method handler patterns), not because it is thematically about exception filters — a TF-IDF approach would likely down-rank it since \"handler\" appears in many files. The brick-mode result may differ in ordering, particularly for the top 1-2 positions, due to IDF weighting penalising very common terms like \"handler\".",
+  "mini_task_spec": "Index the non-test TypeScript source files in `test-repo/packages/core` (all `.ts` files that are **not** under any `test/` subdirectory and do not end with `.spec.ts`) using full-text search. Then search for the query **\"exception filter handler\"** and report the top 5 most relevant file paths (relative to `test-repo/`), one per line, sorted by descending relevance score (for ties, use ascending alphabetical path order).\n\nExpected answer format: a list of exactly 5 file paths, one per line, relative to `test-repo/`, sorted by relevance rank (highest first).\n\n---",
+  "workdir": "/tmp/focus-bench/fts-native-2026-04-24T07-21-44-028",
+  "exit_reason": "ok"
+}

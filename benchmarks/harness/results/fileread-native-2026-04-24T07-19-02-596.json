@@ -1,0 +1,25 @@
+{
+  "brick": "fileread",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:17:43.988Z",
+  "duration_ms": 78608,
+  "turns": 10,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 30673,
+    "cache_read_input_tokens": 355912,
+    "output_tokens": 4298,
+    "total": 390912
+  },
+  "session_id": "3c01a48b-c1bd-4a57-913d-db0e5b0fdeda",
+  "result_block": "## Result\n- **Brick**: fileread\n- **Mode**: native\n- **Mini-task**: Extract exact `return` statement from a specific line range in `container.ts`\n- **Answer**: `return metadataKey ? (metadata?.[metadataKey] ?? []) : metadata;`\n- **Turns used**: 6\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~6,500\n- **Notes**: The full file (367 lines) was read once to orient the design, then a targeted range read (lines 335–345) confirmed the exact answer. The brick's `range` tool maps cleanly onto the Read tool's `offset`/`limit` parameters used here. No unusual blockers.",
+  "mini_task_spec": "Open the file `test-repo/packages/core/injector/container.ts`. Read **lines 339 through 345** of that file (using a line-range read operation). Within those lines, identify and report the exact text of the single `return` statement found in the implementation body of `getDynamicMetadataByToken`. Strip any leading and trailing whitespace from the line before reporting. The expected answer format is a single line of TypeScript code.\n\n---",
+  "workdir": "/tmp/focus-bench/fileread-native-2026-04-24T07-17-43-988",
+  "exit_reason": "ok"
+}

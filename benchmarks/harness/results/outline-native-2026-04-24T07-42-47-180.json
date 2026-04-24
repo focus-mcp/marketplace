@@ -1,0 +1,26 @@
+{
+  "brick": "outline",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:41:37.947Z",
+  "duration_ms": 69233,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 52328,
+    "cache_read_input_tokens": 599756,
+    "output_tokens": 4424,
+    "total": 656547
+  },
+  "session_id": "701ef63f-5967-45fa-a54a-06db227c839a",
+  "result_block": "## Result\n- **Brick**: outline\n- **Mode**: native\n- **Mini-task**: List unique exported symbol names from `packages/common/decorators/http/route-params.decorator.ts`, alphabetically sorted\n- **Answer**:\n  ```\n  assignMetadata\n  Body\n  Headers\n  HostParam\n  Ip\n  Next\n  Param\n  ParamData\n  Query\n  RawBody\n  Req\n  Request\n  Res\n  Response\n  ResponseDecoratorOptions\n  RouteParamMetadata\n  Session\n  UploadedFile\n  UploadedFiles\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~12,000\n- **Notes**: The file has many overloaded function declarations (e.g. `UploadedFile`, `Query`, `Body`, `Param`, etc.), so deduplication by symbol name was required. The `Grep` pattern `^export (interface|type|function|const|...)` cleanly surfaced all export lines with line numbers. No unusual issues encountered.",
+  "mini_task_spec": "Use the outline brick's `out__file` tool on the file `test-repo/packages/common/decorators/http/route-params.decorator.ts` (a NestJS HTTP parameter decorator source file) and list all **unique exported symbol names** found in that file. Symbols that appear multiple times (due to TypeScript function overloads) should be listed only once. Produce the result as an alphabetically sorted list of symbol names, one per line.\n\nExpected answer format: alphabetically sorted list of unique exported symbol names, one per line, no line numbers or types — only the bare names.\n\n---",
+  "workdir": "/tmp/focus-bench/outline-native-2026-04-24T07-41-37-947",
+  "exit_reason": "ok"
+}

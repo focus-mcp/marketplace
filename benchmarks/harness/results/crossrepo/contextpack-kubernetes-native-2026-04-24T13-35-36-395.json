@@ -1,0 +1,27 @@
+{
+  "brick": "contextpack",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T13:33:51.093Z",
+  "duration_ms": 105302,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 44,
+    "cache_creation_input_tokens": 40187,
+    "cache_read_input_tokens": 666207,
+    "output_tokens": 5701,
+    "total": 712139
+  },
+  "session_id": "8627db5b-690b-4604-9e3c-b13c21796605",
+  "result_block": "## Result\n- **Brick**: contextpack\n- **Mode**: native\n- **Mini-task**: List exported top-level Go identifiers from non-test files in `test-repo/pkg/auth/`\n- **Answer**:\n  ```\n  NewDefaultNodeIdentifier\n  NewFromFile\n  NodeIdentifier\n  PolicyList\n  ```\n- **Turns used**: 6\n- **Tools used**: `Read`, `Bash`, `Grep`\n- **Rough token estimate**: ~4,500\n- **Notes**: The test-repo is a Kubernetes (Go) repo, not NestJS as the prompt template mentioned. The task was adapted accordingly. All four identifiers were confirmed by (a) reading each file directly and (b) grepping for `^(func|type|const|var) [A-Z]` patterns. Exported receiver methods (`Authorize`, `RulesFor`) were intentionally excluded because they are methods, not top-level declarations — this matches what `pack --mode=signatures` would expose as the top-level API surface.",
+  "mini_task_spec": "Using only the non-test Go source files (files whose names do NOT end in `_test.go`) found recursively under `test-repo/pkg/auth/`, identify every exported top-level identifier — meaning exported `func`, `type`, `const`, or `var` declarations at package scope that are **not** methods on a receiver type. List each identifier's name, one per line, in alphabetical order.\n\nThe exact three non-test files to consider are:\n- `test-repo/pkg/auth/authorizer/abac/abac.go`\n- `test-repo/pkg/auth/nodeidentifier/default.go`\n- `test-repo/pkg/auth/nodeidentifier/interfaces.go`\n\nExpected answer format: one identifier name per line, alphabetically sorted (e.g. `Foo\\nBar` → `Bar\\nFoo`). Do NOT include receiver-based methods, unexported identifiers, or test functions.\n\nUse the `pack` tool (mode `signatures`) on those three files, then extract just the names of top-level exported declarations.\n\n---",
+  "workdir": "/tmp/focus-bench/contextpack-native-2026-04-24T13-33-51-093",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "compress",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:01:46.572Z",
+  "duration_ms": 147346,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 54,
+    "cache_creation_input_tokens": 58168,
+    "cache_read_input_tokens": 926520,
+    "output_tokens": 8410,
+    "total": 993152
+  },
+  "session_id": "424ad9a8-a6e4-4bce-bf97-e04a52bfca88",
+  "result_block": "## Result\n- **Brick**: compress\n- **Mode**: native\n- **Mini-task**: List all public method names of `HttpException` using terse extraction, sorted alphabetically\n- **Answer**:\n  ```\n  static createBody\n  static extractDescriptionAndOptionsFrom\n  static getDescriptionFrom\n  static getHttpExceptionOptionsFrom\n  getResponse\n  getStatus\n  initCause\n  initMessage\n  initName\n  ```\n  Sorted alphabetically (treating `static ` prefix as part of the name):\n  ```\n  getResponse\n  getStatus\n  initCause\n  initMessage\n  initName\n  static createBody\n  static extractDescriptionAndOptionsFrom\n  static getDescriptionFrom\n  static getHttpExceptionOptionsFrom\n  ```\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~4,500\n- **Notes**: The compress brick's `terse` tool is designed to strip all implementation and keep only identifiers/names. In native mode this was solved by reading the file directly and using Grep to extract `public` declarations. The `createBody` method appears as 4 overloaded signatures but is a single logical method name. The answer above deduplicates it to one entry.",
+  "mini_task_spec": "Read the file `test-repo/packages/common/exceptions/http.exception.ts`. Using the `terse` compression tool (which keeps ONLY identifiers, function names, and type names — stripping all implementation), identify all **public method names** (instance and static) defined inside the `HttpException` class. Exclude the constructor and public properties (fields). For static methods, prefix the name with `static `. List the results sorted **alphabetically**, one per line.\n\nExpected answer format: one name per line (e.g. `createBody` or `static createBody`), sorted alphabetically (case-sensitive, uppercase before lowercase).\n\n---",
+  "workdir": "/tmp/focus-bench/compress-native-2026-04-24T07-01-46-571",
+  "exit_reason": "ok"
+}

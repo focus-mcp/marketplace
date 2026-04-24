@@ -1,0 +1,26 @@
+{
+  "brick": "session",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:01:03.808Z",
+  "duration_ms": 75475,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 15007,
+    "cache_read_input_tokens": 448161,
+    "output_tokens": 4290,
+    "total": 467493
+  },
+  "session_id": "0546daf9-cda4-47e3-87b4-d9745740403f",
+  "result_block": "## Result\n\n- **Brick**: session\n- **Mode**: native\n- **Mini-task**: List all `.ts` exception files in `packages/common/exceptions` (excluding `index.ts`) — what the session brick's `save` would record in `files`\n- **Answer**:\n```\nbad-gateway.exception.ts\nbad-request.exception.ts\nconflict.exception.ts\nforbidden.exception.ts\ngateway-timeout.exception.ts\ngone.exception.ts\nhttp.exception.ts\nhttp-version-not-supported.exception.ts\nim-a-teapot.exception.ts\ninternal-server-error.exception.ts\nintrinsic.exception.ts\nmethod-not-allowed.exception.ts\nmisdirected.exception.ts\nnot-acceptable.exception.ts\nnot-found.exception.ts\nnot-implemented.exception.ts\npayload-too-large.exception.ts\nprecondition-failed.exception.ts\nrequest-timeout.exception.ts\nservice-unavailable.exception.ts\nunauthorized.exception.ts\nunprocessable-entity.exception.ts\nunsupported-media-type.exception.ts\n```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~1,800\n- **Notes**: The `exceptions` directory contains 21 `.bak` backup files alongside the `.ts` sources, making it a realistic test of file-type filtering. In brick mode the agent would call `ses__save` with this file list and then `ses__history` to confirm persistence — the native solution substitutes Glob + Bash to produce the equivalent enumeration. The `intrinsic.exception.ts` and `misdirected.exception.ts` files have no corresponding `.bak`, suggesting they are newer additions.",
+  "mini_task_spec": "Explore the directory `test-repo/packages/common/exceptions`. That directory contains both TypeScript source files (`.ts`) and backup files (`.bak`). Your task is to identify all `.ts` files that are **not** `index.ts` — these represent the actual exception class files. Save a session named `\"exceptions-audit\"` using the session brick's `save` tool, with the `files` field set to the sorted list of relative paths (relative to `test-repo/packages/common/exceptions/`) of those exception `.ts` files, and `context` set to `\"NestJS common exceptions audit\"`. Then call `history` to confirm the session was saved. Report: the sorted list of **filenames** (not full paths) that were stored in the `files` field, one per line, alphabetically ascending.\n\n---",
+  "workdir": "/tmp/focus-bench/session-native-2026-04-24T08-01-03-808",
+  "exit_reason": "ok"
+}

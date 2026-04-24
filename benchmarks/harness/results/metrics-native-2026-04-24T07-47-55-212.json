@@ -1,0 +1,25 @@
+{
+  "brick": "metrics",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:46:35.808Z",
+  "duration_ms": 79404,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 36,
+    "cache_creation_input_tokens": 22783,
+    "cache_read_input_tokens": 477793,
+    "output_tokens": 4468,
+    "total": 505080
+  },
+  "session_id": "a4a81ffd-ba85-4f81-8ca0-4d26937550e2",
+  "result_block": "## Result\n\n- **Brick**: metrics\n- **Mode**: native\n- **Mini-task**: Track token usage for 3 NestJS source files and compute estimated input cost at default pricing\n- **Answer**:\n  ```\n  Total input tokens: 2801\n  Estimated input cost: $0.008403\n  ```\n  Per-file breakdown: `application-config.ts` → 1081 tokens (4324 bytes), `constants.ts` → 231 tokens (922 bytes), `adapters/http-adapter.ts` → 1489 tokens (5955 bytes)\n- **Turns used**: 9\n- **Tools used**: `Bash`, `Read`\n- **Rough token estimate**: ~3,500 tokens\n- **Notes**: In native mode the metrics tools (`mcp__focus__met_*`) were not available, so token counting and cost math were done manually with `wc -c` and a Python one-liner. The brick mode equivalent would call `tokens` three times then `costs`, with the brick doing the arithmetic internally.",
+  "mini_task_spec": "Using the **metrics** MCP brick (tools: `session`, `tokens`, `costs`, `duration`), simulate tracking a short coding session over three source files in `test-repo/packages/core/`:\n\n1. `application-config.ts`\n2. `constants.ts`\n3. `adapters/http-adapter.ts`\n\nFor each file, compute the approximate input token count as **`ceil(byte_count / 4)`** (byte count = file size in bytes as reported by `wc -c`; no output tokens). Record each file as a separate `tokens` tool call with `tool` set to `\"Read\"`.\n\nAfter recording all three, call the `costs` tool with **default pricing** (`inputPricePer1k = 0.003`, `outputPricePer1k = 0.015`).\n\nReport two values:\n- **Total input tokens** (integer): sum of all three per-file token counts\n- **Estimated input cost** (USD, 6 decimal places): total_input_tokens / 1000 × 0.003\n\nExpected answer format:\n```\nTotal input tokens: <integer>\nEstimated input cost: $<value with 6 decimal places>\n```\n\n---",
+  "workdir": "/tmp/focus-bench/metrics-native-2026-04-24T07-46-35-807",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "impact",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:34:19.270Z",
+  "duration_ms": 48765,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__imp_analyze"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 22003,
+    "cache_read_input_tokens": 115230,
+    "output_tokens": 1724,
+    "total": 138982
+  },
+  "session_id": "60a65b1e-14e7-49f8-a9cd-ac238390289d",
+  "result_block": "## Result\n- **Brick**: impact\n- **Mode**: brick\n- **Mini-task**: Find all `.ts` files in `test-repo/packages/` that directly import `packages/common/utils/load-package.util.ts`\n- **Answer**:\n  ```\n  packages/common/pipes/validation.pipe.ts\n  packages/common/serializer/class-serializer.interceptor.ts\n  packages/common/test/utils/load-package.util.spec.ts\n  ```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__imp_analyze`\n- **Rough token estimate**: ~2 500\n- **Notes**: `imp_analyze` returns a clean `directDependents` array (depth 1) alongside `indirectDependents` with depth labels. All three direct importers are `.ts` files inside `packages/`, none is the source file itself. Paths in the response are already relative to `test-repo/`, so no path manipulation was needed. Results sorted alphabetically as requested.",
+  "workdir": "/tmp/focus-bench/impact-brick-2026-04-24T07-34-19-269",
+  "exit_reason": "ok"
+}

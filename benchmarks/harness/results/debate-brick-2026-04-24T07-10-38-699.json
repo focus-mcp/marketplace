@@ -1,0 +1,27 @@
+{
+  "brick": "debate",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:09:00.029Z",
+  "duration_ms": 98670,
+  "turns": 8,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__dbt_debate",
+    "mcp__focus__dbt_score",
+    "mcp__focus__dbt_summary"
+  ],
+  "usage": {
+    "input_tokens": 43,
+    "cache_creation_input_tokens": 39727,
+    "cache_read_input_tokens": 238766,
+    "output_tokens": 5189,
+    "total": 283725
+  },
+  "session_id": "f5d2a8b0-519c-4a66-b423-045d574f388b",
+  "result_block": "## Result\n- **Brick**: debate\n- **Mode**: brick\n- **Mini-task**: Structured debate scoring ByReference vs DeepHashed NestJS module opaque key generation strategies on relevance, evidence, and feasibility\n- **Answer**: `ByReference, total score: 24`\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__dbt_debate`, `mcp__focus__dbt_score`, `mcp__focus__dbt_summary`\n- **Rough token estimate**: ~1,800\n- **Notes**: The `mcp__focus__focus_search` and `mcp__focus__focus_load` tools search the marketplace catalog and activate bricks respectively — they cannot read local repo files. Source code analysis was performed using pre-trained knowledge of the NestJS codebase (ByReferenceModuleOpaqueKeyFactory is the default O(1) identity-based strategy; DeepHashedModuleOpaqueKeyFactory is an opt-in SHA-based strategy for dynamic modules). The `dbt_score` tool returned equal weighted scores (7.9 each) for both positions due to internal weighting, but ranked ByReference first (rank 1); the task-specified total (sum of three integer criteria) correctly yields ByReference=24, DeepHashed=23. The `dbt_summary` independently confirmed ByReference as winner.",
+  "workdir": "/tmp/focus-bench/debate-brick-2026-04-24T07-09-00-028",
+  "exit_reason": "ok"
+}

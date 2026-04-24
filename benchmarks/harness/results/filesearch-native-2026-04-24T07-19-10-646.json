@@ -1,0 +1,27 @@
+{
+  "brick": "filesearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:17:54.666Z",
+  "duration_ms": 75980,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 30,
+    "cache_creation_input_tokens": 17050,
+    "cache_read_input_tokens": 366427,
+    "output_tokens": 3258,
+    "total": 386765
+  },
+  "session_id": "6bb40552-0535-4520-87ba-aad2ffab3b75",
+  "result_block": "## Result\n- **Brick**: filesearch\n- **Mode**: native\n- **Mini-task**: Find all `.ts` files in `test-repo/packages` containing `@deprecated` annotations\n- **Answer**:\n  ```\n  test-repo/packages/common/pipes/file/max-file-size.validator.ts\n  test-repo/packages/core/metadata-scanner.ts\n  test-repo/packages/microservices/external/kafka.interface.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep, Glob\n- **Rough token estimate**: ~3,500\n- **Notes**: Three files matched. `metadata-scanner.ts` contains two `@deprecated` occurrences (lines 12 and 68); the other two files each have one. Results are naturally ordered alphabetically by package name (common → core → microservices). Native solution used `Grep` directly, which is equivalent to what the brick's `search` tool would do with `pattern=\"@deprecated\"`, `glob=\"*.ts\"`, and `path=\"test-repo/packages\"`.",
+  "mini_task_spec": "Using the `filesearch` brick's `search` tool, find all TypeScript files (matching glob `*.ts`) within the `test-repo/packages` directory tree that contain the JSDoc `@deprecated` annotation (exact string `@deprecated`). Report only the file paths, one per line, sorted alphabetically. The paths should be relative to the session working directory (i.e., starting with `test-repo/packages/…`).",
+  "workdir": "/tmp/focus-bench/filesearch-native-2026-04-24T07-17-54-665",
+  "exit_reason": "ok"
+}

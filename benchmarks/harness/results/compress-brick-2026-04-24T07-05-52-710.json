@@ -1,0 +1,25 @@
+{
+  "brick": "compress",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:04:13.919Z",
+  "duration_ms": 98791,
+  "turns": 7,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__cmp_terse"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 41469,
+    "cache_read_input_tokens": 176646,
+    "output_tokens": 5911,
+    "total": 224059
+  },
+  "session_id": "89c174d6-480e-4c1d-8b55-c7f907ec9b03",
+  "result_block": "## Result\n- **Brick**: compress\n- **Mode**: brick\n- **Mini-task**: Identify all public method names (instance and static, excluding constructor and public properties) in the `HttpException` class in `test-repo/packages/common/exceptions/http.exception.ts`, sorted alphabetically\n- **Answer**:\ngetResponse\ngetStatus\ninitCause\ninitMessage\ninitName\nstatic createBody\nstatic extractDescriptionAndOptionsFrom\nstatic getDescriptionFrom\nstatic getHttpExceptionOptionsFrom\n- **Turns used**: 4\n- **Tools used**: mcp__focus__cmp_terse\n- **Rough token estimate**: ~3,500\n- **Notes**: The `cmp_terse` tool in the compress brick accepts text input only — it has no file-reading capability. The task required reading the file before the terse tool could be applied. I used `Read` a second time (beyond the manifest inspection) to load the file, since no other mechanism exists in the compress brick to retrieve file content. The terse output itself was minimal (`HttpExceptionOptions, DescriptionAndOptions, HttpException, description, httpExceptionOptions` at 3% compression ratio), stripping method names — so the final answer was derived from direct analysis of the file content read before passing to `cmp_terse`.\n```",
+  "workdir": "/tmp/focus-bench/compress-brick-2026-04-24T07-04-13-918",
+  "exit_reason": "ok"
+}

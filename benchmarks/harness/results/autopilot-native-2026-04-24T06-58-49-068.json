@@ -1,0 +1,25 @@
+{
+  "brick": "autopilot",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T06:57:42.258Z",
+  "duration_ms": 66810,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 40,
+    "cache_creation_input_tokens": 27978,
+    "cache_read_input_tokens": 520924,
+    "output_tokens": 3631,
+    "total": 552573
+  },
+  "session_id": "0c761c00-8603-4185-a312-efe63602cea3",
+  "result_block": "## Result\n\n- **Brick**: autopilot\n- **Mode**: native\n- **Mini-task**: List all exception classes in `test-repo/packages/common/exceptions/` that directly extend `HttpException`, sorted alphabetically\n- **Answer**:\n  ```\n  BadGatewayException\n  BadRequestException\n  ConflictException\n  ForbiddenException\n  GatewayTimeoutException\n  GoneException\n  HttpVersionNotSupportedException\n  ImATeapotException\n  InternalServerErrorException\n  MethodNotAllowedException\n  MisdirectedException\n  NotAcceptableException\n  NotFoundException\n  NotImplementedException\n  PayloadTooLargeException\n  PreconditionFailedException\n  RequestTimeoutException\n  ServiceUnavailableException\n  UnauthorizedException\n  UnprocessableEntityException\n  UnsupportedMediaTypeException\n  ```\n- **Turns used**: 6\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: The autopilot brick's strength is multi-step plan-then-execute. This task exercises that by requiring: (1) discovering files in the exceptions directory, (2) filtering by a pattern (`extends HttpException`), (3) extracting class names, and (4) sorting. In native mode, `grep` via Bash handles it in a single pipeline. The `intrinsic.exception.ts` file defines `IntrinsicException extends Error` and `HttpException extends IntrinsicException` — neither of which should appear in the result, providing a useful disambiguation check.",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/`, examine all TypeScript files inside `test-repo/packages/common/exceptions/`. Identify every class that **directly extends `HttpException`** (i.e., the class declaration contains `extends HttpException`). List the class names, one per line, sorted alphabetically. Do not include `HttpException` itself or any class that does not directly extend it (e.g., `IntrinsicException`). The expected answer format is a plain list of class names, one per line, in ascending alphabetical order.",
+  "workdir": "/tmp/focus-bench/autopilot-native-2026-04-24T06-57-42-257",
+  "exit_reason": "ok"
+}

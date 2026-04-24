@@ -1,0 +1,25 @@
+{
+  "brick": "sandbox",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:55:56.566Z",
+  "duration_ms": 68516,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 38,
+    "cache_creation_input_tokens": 21136,
+    "cache_read_input_tokens": 498980,
+    "output_tokens": 4367,
+    "total": 524521
+  },
+  "session_id": "367a9176-46f6-4bf8-acca-c16bccdaf8f3",
+  "result_block": "## Result\n- **Brick**: sandbox\n- **Mode**: native\n- **Mini-task**: Compute sum of HTTP status code numeric values used as keys in HttpErrorByCode\n- **Answer**: 8236\n- **Turns used**: 11\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: The enum keys and their numeric values were extracted by reading two source files. The 19 status codes that appear as keys in `HttpErrorByCode` are: 400, 401, 403, 404, 405, 406, 408, 409, 410, 412, 413, 415, 418, 422, 500, 501, 502, 503, 504. In brick mode, `mcp__focus__box__run` or `mcp__focus__box__eval` could compute the sum directly by running JavaScript. No unusual blockers encountered.",
+  "mini_task_spec": "In the NestJS repository under `test-repo/`, there is a utility file at `test-repo/packages/common/utils/http-error-by-code.util.ts` that defines a `HttpErrorByCode` record. This record maps HTTP status code enum members (from `test-repo/packages/common/enums/http-status.enum.ts`) to their corresponding exception classes.\n\nYour task: identify every `HttpStatus` enum member used as a key in the `HttpErrorByCode` record, look up its numeric value in the `HttpStatus` enum defined in `test-repo/packages/common/enums/http-status.enum.ts`, then compute and return the **sum of all those numeric values**.\n\nExpected answer format: a single integer (the sum).\n\n---",
+  "workdir": "/tmp/focus-bench/sandbox-native-2026-04-24T07-55-56-566",
+  "exit_reason": "ok"
+}

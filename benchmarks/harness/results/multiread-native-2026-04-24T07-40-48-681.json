@@ -1,0 +1,26 @@
+{
+  "brick": "multiread",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:39:24.179Z",
+  "duration_ms": 84502,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 36,
+    "cache_creation_input_tokens": 29991,
+    "cache_read_input_tokens": 493930,
+    "output_tokens": 4755,
+    "total": 528712
+  },
+  "session_id": "340d4a00-f120-4549-9cfa-42bbcc89c49b",
+  "result_block": "## Result\n\n- **Brick**: multiread\n- **Mode**: native\n- **Mini-task**: Collect default description strings from all 21 concrete HTTP exception classes in `test-repo/packages/common/exceptions/`\n- **Answer**:\n```\nBadGatewayException: \"Bad Gateway\"\nBadRequestException: \"Bad Request\"\nConflictException: \"Conflict\"\nForbiddenException: \"Forbidden\"\nGatewayTimeoutException: \"Gateway Timeout\"\nGoneException: \"Gone\"\nHttpVersionNotSupportedException: \"HTTP Version Not Supported\"\nImATeapotException: \"I'm a teapot\"\nInternalServerErrorException: \"Internal Server Error\"\nMethodNotAllowedException: \"Method Not Allowed\"\nMisdirectedException: \"Misdirected\"\nNotAcceptableException: \"Not Acceptable\"\nNotFoundException: \"Not Found\"\nNotImplementedException: \"Not Implemented\"\nPayloadTooLargeException: \"Payload Too Large\"\nPreconditionFailedException: \"Precondition Failed\"\nRequestTimeoutException: \"Request Timeout\"\nServiceUnavailableException: \"Service Unavailable\"\nUnauthorizedException: \"Unauthorized\"\nUnprocessableEntityException: \"Unprocessable Entity\"\nUnsupportedMediaTypeException: \"Unsupported Media Type\"\n```\n- **Turns used**: 9\n- **Tools used**: Bash, Read, Glob\n- **Rough token estimate**: ~9,000\n- **Notes**: The `multiread` brick's `batch` tool would collapse the 6+ sequential file-read Bash calls into a single invocation, which is exactly the efficiency gain it's designed to provide. Files with multi-line constructor signatures (e.g., `HttpVersionNotSupportedException`, `InternalServerErrorException`, `UnprocessableEntityException`, `UnsupportedMediaTypeException`) required a full file read since the default value spanned two lines and the grep pass missed them.",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/packages/common/exceptions/`, there are several TypeScript files each defining a concrete HTTP exception class. Each class has a constructor with a `descriptionOrOptions` parameter whose default value is the human-readable error description string.\n\nRead **all `.ts` files** in `test-repo/packages/common/exceptions/` **except** `index.ts`, `http.exception.ts`, and `intrinsic.exception.ts`. For each file, identify the exception class name and the default string value of the `descriptionOrOptions` constructor parameter.\n\nOutput exactly 21 lines, one per exception class, sorted alphabetically by class name, in the format:\n\n```\nClassName: \"default description\"\n```\n\n(Use straight double-quotes around the description, even if the original source uses single-quotes or backticks.)",
+  "workdir": "/tmp/focus-bench/multiread-native-2026-04-24T07-39-24-179",
+  "exit_reason": "ok"
+}

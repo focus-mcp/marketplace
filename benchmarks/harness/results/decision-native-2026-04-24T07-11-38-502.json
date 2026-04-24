@@ -1,0 +1,25 @@
+{
+  "brick": "decision",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:09:57.859Z",
+  "duration_ms": 100643,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 34,
+    "cache_creation_input_tokens": 18802,
+    "cache_read_input_tokens": 436644,
+    "output_tokens": 4360,
+    "total": 459840
+  },
+  "session_id": "552fef0b-1054-4b1d-aa05-cd0e68983ce8",
+  "result_block": "## Result\n\n- **Brick**: decision\n- **Mode**: native\n- **Mini-task**: Compute weighted tradeoff scores from `test-repo/decision-http-adapter.json` and identify the winning HTTP adapter\n- **Answer**:\n  ```\n  platform-express: 243\n  platform-fastify: 188\n  Winner: platform-express\n  ```\n- **Turns used**: 8\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1,800\n- **Notes**: The decision JSON was already present in the test-repo root (`test-repo/decision-http-adapter.json`), making this a clean read-and-compute task. Computation: express = 9×6 + 8×9 + 6×9 + 7×9 = 54+72+54+63 = 243; fastify = 9×9 + 8×6 + 6×4 + 7×5 = 81+48+24+35 = 188. The rationale in the file confirms these numbers. The brick's `tradeoffs` + `recommend` tools are exactly designed to automate this weighted-score computation and surface the winner.",
+  "mini_task_spec": "The file `test-repo/decision-http-adapter.json` contains a structured decision record for choosing between two NestJS HTTP adapters. It includes an `options` array (with labels, pros, and cons), a `criteria` array (each criterion has a `name` and a `weight` from 1–10), and a `scores` array (each entry has an `option` label and a `scores` array of numeric scores, one per criterion in the same order).\n\n**Task**: Read `test-repo/decision-http-adapter.json`. For each option, compute its total weighted score as the dot product of the criteria weights vector and the option's scores vector (i.e., `sum(weight[i] * score[i])` for all criteria `i`). Report the weighted score for each option and identify the winning option (highest total weighted score).\n\n**Expected answer format**: Two lines, one per option, formatted as `<option-label>: <total-weighted-score>`, sorted by descending score, followed by a third line: `Winner: <winning-option-label>`.\n\n---",
+  "workdir": "/tmp/focus-bench/decision-native-2026-04-24T07-09-57-859",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,24 @@
+{
+  "brick": "fullaudit",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:25:13.653Z",
+  "duration_ms": 18043,
+  "turns": 5,
+  "tools_used": [
+    "Read",
+    "ToolSearch"
+  ],
+  "usage": {
+    "input_tokens": 16,
+    "cache_creation_input_tokens": 10237,
+    "cache_read_input_tokens": 86444,
+    "output_tokens": 787,
+    "total": 97484
+  },
+  "session_id": "78545b61-a4fa-4e30-8068-6b393f1d4d75",
+  "result_block": "",
+  "workdir": "/tmp/focus-bench/fullaudit-brick-2026-04-24T07-25-13-652",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "symbol",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:06:33.547Z",
+  "duration_ms": 94247,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 44,
+    "cache_creation_input_tokens": 37951,
+    "cache_read_input_tokens": 617049,
+    "output_tokens": 4972,
+    "total": 660016
+  },
+  "session_id": "29cf1941-e91e-4e2d-a493-036e8bed97d5",
+  "result_block": "## Result\n- **Brick**: symbol\n- **Mode**: native\n- **Mini-task**: List all public methods of `MetadataScanner` with their start/end lines\n- **Answer**:\n  ```\n  scanFromPrototype: 16-65\n  getAllFilteredMethodNames: 72-76\n  getAllMethodNames: 78-120\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~4,500\n- **Notes**: The file is small (122 lines) and self-contained. Closing braces were confirmed with a targeted Grep for `^  \\}` to unambiguously separate method-level closes from class-level close. The deprecated generator method `getAllFilteredMethodNames` is a public generator (`public *`) and counts as a public method.",
+  "mini_task_spec": "In the file `test-repo/packages/core/metadata-scanner.ts`, the `MetadataScanner` class contains several public methods. Using symbol-lookup tools to find all public methods of the `MetadataScanner` class in `test-repo/packages/core/`, identify each method by name and determine the exact start line (1-based) of its signature declaration and the end line (1-based) of its closing brace `}`.\n\nReport results in this exact format, one method per line, sorted by start line:\n\n```\nmethodName: startLine-endLine\n```\n\nFor example: `exampleMethod: 10-25`",
+  "workdir": "/tmp/focus-bench/symbol-native-2026-04-24T08-06-33-547",
+  "exit_reason": "ok"
+}

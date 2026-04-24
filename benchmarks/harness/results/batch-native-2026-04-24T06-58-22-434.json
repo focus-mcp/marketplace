@@ -1,0 +1,25 @@
+{
+  "brick": "batch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T06:57:42.261Z",
+  "duration_ms": 40173,
+  "turns": 9,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 26,
+    "cache_creation_input_tokens": 16743,
+    "cache_read_input_tokens": 292213,
+    "output_tokens": 1944,
+    "total": 310926
+  },
+  "session_id": "96f2cd73-291a-473e-9e61-dd7a3f3883c8",
+  "result_block": "## Result\n- **Brick**: batch\n- **Mode**: native\n- **Mini-task**: Count TypeScript source files (excluding `.spec.ts`) per package in `test-repo/packages/`\n- **Answer**:\n  ```\n  common: 186\n  core: 179\n  microservices: 135\n  platform-express: 24\n  platform-fastify: 15\n  platform-socket.io: 3\n  platform-ws: 3\n  testing: 12\n  websockets: 43\n  ```\n- **Turns used**: 4\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1,500\n- **Notes**: Straightforward task. In native mode a single Bash loop handles it; in brick mode the `parallel` tool is the natural fit — launching 9 independent `find` commands simultaneously. The task cleanly exposes the brick's parallelism advantage.",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/`, count the number of TypeScript **source** files (`.ts` extension, excluding `.spec.ts` test files) in each of the 9 package directories under `test-repo/packages/`. A \"source file\" is any file whose name ends with `.ts` but does NOT end with `.spec.ts`. Run the counts across all packages and report one line per package in the format `<package-name>: <count>`, sorted alphabetically by package name. Use the `parallel` tool from the batch brick to run all 9 `find` commands simultaneously, one per package directory.\n\nExpected answer format — nine lines, alphabetical by package name:\n```\ncommon: <N>\ncore: <N>\nmicroservices: <N>\nplatform-express: <N>\nplatform-fastify: <N>\nplatform-socket.io: <N>\nplatform-ws: <N>\ntesting: <N>\nwebsockets: <N>\n```",
+  "workdir": "/tmp/focus-bench/batch-native-2026-04-24T06-57-42-261",
+  "exit_reason": "ok"
+}

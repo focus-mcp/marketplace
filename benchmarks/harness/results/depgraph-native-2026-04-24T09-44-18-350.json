@@ -1,0 +1,26 @@
+{
+  "brick": "depgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:42:20.719Z",
+  "duration_ms": 117630,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 50,
+    "cache_creation_input_tokens": 75698,
+    "cache_read_input_tokens": 698874,
+    "output_tokens": 6716,
+    "total": 781338
+  },
+  "session_id": "5f247de0-b3b4-404b-a4a0-4916969d1e02",
+  "result_block": "## Result\n- **Brick**: depgraph\n- **Mode**: native\n- **Mini-task**: Find all files in packages/core/ that import packages/core/constants.ts (fan-in)\n- **Answer**:\n  ```\n  packages/core/exceptions/base-exception-filter.ts\n  packages/core/index.ts\n  packages/core/nest-application-context.ts\n  packages/core/nest-application.ts\n  packages/core/nest-factory.ts\n  packages/core/scanner.ts\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Glob, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: Grep-based resolution required careful scoping — files in subdirectories use `from './constants'` to reach their own local `constants.ts` (e.g. `injector/constants.ts`, `repl/constants.ts`, `guards/constants.ts`), not `core/constants.ts`. Only root-level `from './constants'` and one-level-deep `from '../constants'` resolve to `core/constants.ts`. No `import type` patterns were found for this file. The `index.ts` re-export (`export { ... } from './constants'`) counts as a direct dependency edge.",
+  "mini_task_spec": "Using the NestJS monorepo shallow clone at `test-repo/`, identify all TypeScript source files (excluding `*.spec.ts` test files) within `test-repo/packages/core/` that directly import from the file `test-repo/packages/core/constants.ts`. This includes both `import` statements and `export ... from` re-export statements that resolve to that exact file. Only consider direct dependencies (one-hop); do not traverse transitive imports. List the matching file paths relative to `test-repo/`, one per line, sorted alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/depgraph-native-2026-04-24T09-42-20-718",
+  "exit_reason": "ok"
+}

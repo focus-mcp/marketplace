@@ -1,0 +1,26 @@
+{
+  "brick": "format",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:19:16.741Z",
+  "duration_ms": 87787,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 46831,
+    "cache_read_input_tokens": 515604,
+    "output_tokens": 5742,
+    "total": 568214
+  },
+  "session_id": "23f5f1f6-81ae-4f84-9490-bb6dd5327608",
+  "result_block": "## Result\n\n- **Brick**: format\n- **Mode**: native\n- **Mini-task**: Compute weighted decision scores from JSON and pretty-print sorted summary\n- **Answer**:\n```json\n{\n  \"chosen\": \"platform-express\",\n  \"scores_summary\": [\n    {\n      \"option\": \"platform-express\",\n      \"weighted_total\": 243\n    },\n    {\n      \"option\": \"platform-fastify\",\n      \"weighted_total\": 188\n    }\n  ]\n}\n```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~3,000\n- **Notes**: `decision-http-adapter.json` lives at the repo root (not inside `packages/`). The weighted totals match the rationale in the file (\"platform-express scored 243 vs platform-fastify's 188\"), providing a built-in correctness check. In native mode the computation and formatting were done via a Python one-liner in Bash; in brick mode the agent would use the `mcp__focus__fmt__json` tool with `sortKeys: true` and `indent: 2` after computing the object.",
+  "mini_task_spec": "Read the file `test-repo/decision-http-adapter.json`. It contains a `criteria` array (4 items, each with `name` and `weight` fields) and a `scores` array (2 items, each with `option` string and `scores` integer array in the same order as `criteria`). Also read the top-level `chosen` string field.\n\n1. Compute each option's **weighted total**: for each criterion index `i`, multiply `criteria[i].weight` × `scores[i]` and sum across all criteria.\n2. Build a summary JSON object with exactly these two top-level keys:\n   - `\"chosen\"` – the string value from the file's `chosen` field\n   - `\"scores_summary\"` – an array preserving the original order of options, where each entry has keys `\"option\"` (string) and `\"weighted_total\"` (integer)\n3. Format the summary object as **pretty-printed JSON** with **2-space indentation** and **keys sorted alphabetically** at every level.\n\nOutput **only** the formatted JSON string (no prose). Expected answer format: a multi-line JSON string exactly as produced by `json.dumps(obj, indent=2, sort_keys=True)`.\n\n---",
+  "workdir": "/tmp/focus-bench/format-native-2026-04-24T07-19-16-741",
+  "exit_reason": "ok"
+}

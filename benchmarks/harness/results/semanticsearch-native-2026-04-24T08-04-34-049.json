@@ -1,0 +1,25 @@
+{
+  "brick": "semanticsearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:02:38.454Z",
+  "duration_ms": 115595,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 42,
+    "cache_creation_input_tokens": 51712,
+    "cache_read_input_tokens": 613889,
+    "output_tokens": 6115,
+    "total": 671758
+  },
+  "session_id": "9f4cd7eb-4fa6-4436-933c-ce594ab44e59",
+  "result_block": "## Result\n- **Brick**: semanticsearch\n- **Mode**: native\n- **Mini-task**: Find top-3 most semantically similar files to \"dependency injection token provider registration\" among the 14 core decorator files\n- **Answer**:\n  1. inject.decorator.ts\n  2. injectable.decorator.ts\n  3. optional.decorator.ts\n- **Turns used**: 6\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~9,000\n- **Notes**: In native mode, TF-IDF was approximated by counting raw occurrences of the query's key terms (\"dependency\", \"injection\", \"token\", \"provider\", \"register\", \"inject\") across all 14 files. `inject.decorator.ts` scored 40 term hits (dominated by \"inject\", \"injection\", \"token\", \"provider\"), `injectable.decorator.ts` scored 36, and `optional.decorator.ts` scored 7 (it references `@Inject` and \"optional providers\" in its JSDoc). `dependencies.decorator.ts` scored 4 on these exact terms (the word \"dependencies\" doesn't share a stem with \"dependency\" under a simple regex). The brick's TF-IDF cosine similarity may produce a slightly different third-place result between `optional.decorator.ts` and `dependencies.decorator.ts` depending on stemming behavior.",
+  "mini_task_spec": "You are working with the NestJS monorepo shallow clone at `test-repo/`. There are exactly 14 TypeScript files in `test-repo/packages/common/decorators/core/` (excluding `index.ts`):\n\n```\napply-decorators.ts\nbind.decorator.ts\ncatch.decorator.ts\ncontroller.decorator.ts\ndependencies.decorator.ts\nexception-filters.decorator.ts\ninjectable.decorator.ts\ninject.decorator.ts\noptional.decorator.ts\nset-metadata.decorator.ts\nuse-guards.decorator.ts\nuse-interceptors.decorator.ts\nuse-pipes.decorator.ts\nversion.decorator.ts\n```\n\nRead the full text content of each of these 14 files. Build a corpus where each document has the file's basename (e.g. `inject.decorator.ts`) as its `id` and the file's full text as its `text`. Then use the `mcp__focus__sem__search` tool with this corpus and the query `\"dependency injection token provider registration\"` with `limit: 3`.\n\nReport the top 3 results as a ranked list of filenames (most similar first, one per line). Expected format:\n```\n1. <filename>\n2. <filename>\n3. <filename>\n```\n\nThe files to read are at paths like `test-repo/packages/common/decorators/core/inject.decorator.ts`.\n\n---",
+  "workdir": "/tmp/focus-bench/semanticsearch-native-2026-04-24T08-02-38-454",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "filelist",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:14:57.120Z",
+  "duration_ms": 65838,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 30546,
+    "cache_read_input_tokens": 459672,
+    "output_tokens": 3302,
+    "total": 493553
+  },
+  "session_id": "8d62a784-6e86-4745-a7c7-09422c7f668f",
+  "result_block": "## Result\n\n- **Brick**: filelist\n- **Mode**: native\n- **Mini-task**: List all `*.decorator.ts` files under `test-repo/packages/common/decorators/`, sorted alphabetically\n- **Answer**:\n```\npackages/common/decorators/core/bind.decorator.ts\npackages/common/decorators/core/catch.decorator.ts\npackages/common/decorators/core/controller.decorator.ts\npackages/common/decorators/core/dependencies.decorator.ts\npackages/common/decorators/core/exception-filters.decorator.ts\npackages/common/decorators/core/injectable.decorator.ts\npackages/common/decorators/core/inject.decorator.ts\npackages/common/decorators/core/optional.decorator.ts\npackages/common/decorators/core/set-metadata.decorator.ts\npackages/common/decorators/core/use-guards.decorator.ts\npackages/common/decorators/core/use-interceptors.decorator.ts\npackages/common/decorators/core/use-pipes.decorator.ts\npackages/common/decorators/core/version.decorator.ts\npackages/common/decorators/http/create-route-param-metadata.decorator.ts\npackages/common/decorators/http/header.decorator.ts\npackages/common/decorators/http/http-code.decorator.ts\npackages/common/decorators/http/redirect.decorator.ts\npackages/common/decorators/http/render.decorator.ts\npackages/common/decorators/http/request-mapping.decorator.ts\npackages/common/decorators/http/route-params.decorator.ts\npackages/common/decorators/http/sse.decorator.ts\npackages/common/decorators/modules/global.decorator.ts\npackages/common/decorators/modules/module.decorator.ts\n```\n(23 files total)\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~2 500\n- **Notes**: The Glob tool returns paths prefixed with `test-repo/` (relative to the session workdir), so the final paths were stripped to be relative to `test-repo/` itself for the answer. The first Glob attempt using a pattern rooted at `test-repo/` with a `packages/common/decorators/**` prefix found nothing — the tool requires the search `path` to be set to the target directory and the pattern to be a pure glob (e.g. `**/*.decorator.ts`). Once corrected, results were complete and consistent with a `find` cross-check.",
+  "mini_task_spec": "Using the **filelist** brick's `glob` tool, find every file whose name ends with `.decorator.ts` anywhere inside the directory `test-repo/packages/common/decorators/` (search recursively through all sub-directories). Return the matched file paths relative to `test-repo/`, sorted alphabetically, one path per line.\n\nExpected answer format — a sorted list of relative paths such as:\n```\npackages/common/decorators/core/bind.decorator.ts\npackages/common/decorators/core/catch.decorator.ts\n…\n```\n\n---",
+  "workdir": "/tmp/focus-bench/filelist-native-2026-04-24T07-14-57-120",
+  "exit_reason": "ok"
+}

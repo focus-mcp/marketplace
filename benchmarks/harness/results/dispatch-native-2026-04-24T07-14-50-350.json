@@ -1,0 +1,26 @@
+{
+  "brick": "dispatch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:13:17.178Z",
+  "duration_ms": 93172,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 13260,
+    "cache_read_input_tokens": 500574,
+    "output_tokens": 5458,
+    "total": 519331
+  },
+  "session_id": "39ab58e8-0b05-4fa2-962d-9e72957adfa9",
+  "result_block": "## Result\n\n- **Brick**: dispatch\n- **Mode**: native\n- **Mini-task**: List all concrete microservice transport server classes in `test-repo/packages/microservices/server/`, sorted alphabetically\n- **Answer**:\n  ```\n  ServerGrpc\n  ServerKafka\n  ServerMqtt\n  ServerNats\n  ServerRedis\n  ServerRMQ\n  ServerTCP\n  ```\n- **Turns used**: 14\n- **Tools used**: `Read`, `Glob`, `Bash`\n- **Rough token estimate**: ~2 500\n- **Notes**: `Glob` patterns against `./test-repo/…` returned no results (likely a CWD mismatch); fell back to `Bash`/`grep` for all file discovery. The abstract base `Server<>` (in `server.ts`) and `ServerFactory` (in `server-factory.ts`) were excluded. The `sort` output used the system locale, placing `ServerRedis` before `ServerRMQ` (case-folded comparison). In brick mode the agent would call `dsp_send` once per class, then verify with `dsp_queue`.",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/packages/microservices/server/`, several TypeScript files define transport-specific server classes (e.g. `server-grpc.ts`, `server-kafka.ts`, etc.). Your task is:\n\n1. Identify every **concrete** (non-abstract) exported class whose name starts with `Server` in the files under `test-repo/packages/microservices/server/` — exclude the abstract base `Server` class (in `server.ts`) and exclude `ServerFactory` (in `server-factory.ts`).\n2. Use the dispatch brick (`dsp` prefix) to **send one `build` task per transport class** to the queue, each with payload `{\"class\": \"<ClassName>\"}` and default priority.\n3. After sending all tasks, call `dsp_queue` (status filter: `\"pending\"`) and report the **list of task `type` + `payload.class` values** from the queue response, sorted alphabetically by class name.\n\nExpected answer format: a sorted list of class names, one per line (e.g. `ServerGrpc`, `ServerKafka`, …). There are exactly 7 such classes.\n\n---",
+  "workdir": "/tmp/focus-bench/dispatch-native-2026-04-24T07-13-17-178",
+  "exit_reason": "ok"
+}

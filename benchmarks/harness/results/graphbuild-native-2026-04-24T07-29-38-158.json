@@ -1,0 +1,25 @@
+{
+  "brick": "graphbuild",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:28:20.608Z",
+  "duration_ms": 77550,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 30649,
+    "cache_read_input_tokens": 514040,
+    "output_tokens": 3747,
+    "total": 548473
+  },
+  "session_id": "6431c8f8-9daf-4538-9925-ad60192c7cde",
+  "result_block": "## Result\n- **Brick**: graphbuild\n- **Mode**: native\n- **Mini-task**: List all relative import paths from `packages/core/nest-factory.ts`, sorted alphabetically\n- **Answer**:\n```\n./adapters/http-adapter\n./application-config\n./constants\n./errors/exceptions-zone\n./helpers/load-adapter\n./helpers/rethrow\n./injector/container\n./injector/injector\n./injector/instance-loader\n./inspector/graph-inspector\n./inspector/noop-graph-inspector\n./inspector/uuid-factory\n./metadata-scanner\n./nest-application\n./nest-application-context\n./scanner\n```\n- **Turns used**: 5\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~6 000\n- **Notes**: Straightforward grep + sed pipeline. All 16 relative imports were extracted cleanly. The graphbuild brick would build the same edge-list via its `build` tool scanning imports across the directory, then let a query return the outgoing edges of this specific node.",
+  "mini_task_spec": "Examine the file `test-repo/packages/core/nest-factory.ts` and list every **direct relative import specifier** it contains — i.e., every module path in an `import … from '…'` statement that starts with `./` or `../`. Report only the module specifier strings (not the imported symbols, not the surrounding quotes), one per line, sorted alphabetically. Do not include imports from `@nestjs/…` or any other non-relative paths.",
+  "workdir": "/tmp/focus-bench/graphbuild-native-2026-04-24T07-28-20-607",
+  "exit_reason": "ok"
+}

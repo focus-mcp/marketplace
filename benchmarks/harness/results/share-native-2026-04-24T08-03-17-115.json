@@ -1,0 +1,25 @@
+{
+  "brick": "share",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:01:48.860Z",
+  "duration_ms": 88255,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 19736,
+    "cache_read_input_tokens": 354670,
+    "output_tokens": 4840,
+    "total": 379275
+  },
+  "session_id": "3866fbc6-ec54-4a18-9458-96064f6d3d3b",
+  "result_block": "## Result\n\n- **Brick**: share\n- **Mode**: native\n- **Mini-task**: Find combined sorted unique `.ts` basenames registered by two agents across `packages/common/decorators/` and `packages/common/pipes/`\n- **Answer**:\n```\napply-decorators.ts\nbind.decorator.ts\ncatch.decorator.ts\ncontroller.decorator.ts\ncreate-route-param-metadata.decorator.ts\ndefault-value.pipe.ts\ndependencies.decorator.ts\nexception-filters.decorator.ts\nfile.interface.ts\nfile-type.validator.ts\nfile-validator-context.interface.ts\nfile-validator.interface.ts\nglobal.decorator.ts\nheader.decorator.ts\nhttp-code.decorator.ts\nindex.ts\ninjectable.decorator.ts\ninject.decorator.ts\nmax-file-size.validator.ts\nmodule.decorator.ts\noptional.decorator.ts\nparse-array.pipe.ts\nparse-bool.pipe.ts\nparse-date.pipe.ts\nparse-enum.pipe.ts\nparse-file-options.interface.ts\nparse-file-pipe.builder.ts\nparse-file.pipe.ts\nparse-float.pipe.ts\nparse-int.pipe.ts\nparse-uuid.pipe.ts\nredirect.decorator.ts\nrender.decorator.ts\nrequest-mapping.decorator.ts\nroute-params.decorator.ts\nset-metadata.decorator.ts\nsse.decorator.ts\nuse-guards.decorator.ts\nuse-interceptors.decorator.ts\nuse-pipes.decorator.ts\nvalidation.pipe.ts\nversion.decorator.ts\n```\n(42 unique basenames; 28 files from decorators + 20 files from pipes = 48 total, deduplicated on 7 occurrences of `index.ts` → 42 unique)\n\n- **Turns used**: 7\n- **Tools used**: Read, Bash\n- **Rough token estimate**: 2,500\n- **Notes**: The `share` brick's `shr:files` tool is designed exactly for this agent-coordination pattern — each agent registers its file ownership and a coordinator merges the lists. In native mode this was straightforward shell `find` + `sort | uniq`. The brick mode counterpart would use `shr:files` to register per-agent, then read back both registries and merge them programmatically.",
+  "mini_task_spec": "You are analyzing the NestJS monorepo at `test-repo/`. Simulate a multi-agent workflow where:\n\n- **Agent A** (\"decorator-agent\") is assigned the directory `test-repo/packages/common/decorators/` and would use the `share` brick (`shr:files`) to register all `.ts` files it owns.\n- **Agent B** (\"pipe-agent\") is assigned the directory `test-repo/packages/common/pipes/` and would use the `share` brick (`shr:files`) to register all `.ts` files it owns.\n\nAfter both agents register their files, a coordinator would read both registries and compile the combined list. Using the brick, determine the **combined, deduplicated, alphabetically-sorted list of `.ts` file basenames** (filename only — no directory path) that would be registered across both agents.\n\nExpected answer format: one filename per line, sorted alphabetically. Only the filename (e.g. `index.ts`), not the full path.\n\n---",
+  "workdir": "/tmp/focus-bench/share-native-2026-04-24T08-01-48-860",
+  "exit_reason": "ok"
+}

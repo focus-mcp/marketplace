@@ -1,0 +1,26 @@
+{
+  "brick": "refs",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:45:59.955Z",
+  "duration_ms": 74424,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 27668,
+    "cache_read_input_tokens": 473140,
+    "output_tokens": 4313,
+    "total": 505158
+  },
+  "session_id": "299d697c-96be-4fd3-a537-3006549ffe22",
+  "result_block": "## Result\n- **Brick**: refs\n- **Mode**: native\n- **Mini-task**: Find all files in test-repo/packages/ that reference the `CanActivate` symbol\n- **Answer**:\n```\npackages/common/decorators/core/use-guards.decorator.ts\npackages/common/index.ts\npackages/common/interfaces/features/can-activate.interface.ts\npackages/common/interfaces/nest-application.interface.ts\npackages/common/interfaces/nest-microservice.interface.ts\npackages/common/test/decorators/apply-decorators.spec.ts\npackages/core/application-config.ts\npackages/core/guards/guards-consumer.ts\npackages/core/guards/guards-context-creator.ts\npackages/core/helpers/external-context-creator.ts\npackages/core/nest-application.ts\npackages/core/router/router-execution-context.ts\npackages/core/scanner.ts\npackages/microservices/context/rpc-context-creator.ts\npackages/microservices/nest-microservice.ts\npackages/websockets/context/ws-context-creator.ts\n```\n- **Turns used**: 6\n- **Tools used**: Bash, Read, Glob\n- **Rough token estimate**: ~4,000\n- **Notes**: The `references` brick tool is designed to do exactly this search semantically; in native mode it was replicated precisely with `grep -rn \"CanActivate\" ./test-repo/packages/ --include=\"*.ts\" -l | sort`. The declaration file (`can-activate.interface.ts`) is included because it contains the symbol string and the brick's `references` tool would naturally surface it too. 16 files total.",
+  "mini_task_spec": "Using the `references` tool from the **refs** brick, find all files under `test-repo/packages/` that import or reference the symbol `CanActivate`. Scan the directory `test-repo/packages/` (the NestJS monorepo packages folder). List every matched file path, sorted alphabetically, one per line, expressed as paths relative to `test-repo/` (e.g., `packages/common/index.ts`). Do not include files from `test-repo/integration/` or `test-repo/sample/`. The answer should be a sorted list of file paths.\n\n---",
+  "workdir": "/tmp/focus-bench/refs-native-2026-04-24T07-45-59-955",
+  "exit_reason": "ok"
+}

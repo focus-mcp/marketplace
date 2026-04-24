@@ -1,0 +1,25 @@
+{
+  "brick": "compress",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:06:09.929Z",
+  "duration_ms": 71325,
+  "turns": 7,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__cmp_output"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 25499,
+    "cache_read_input_tokens": 175924,
+    "output_tokens": 4226,
+    "total": 205682
+  },
+  "session_id": "5a01ab06-afa2-40cb-9174-abaf5f314fb7",
+  "result_block": "## Result\n- **Brick**: compress\n- **Mode**: brick\n- **Mini-task**: Apply aggressive compression to `streamable-options.interface.ts` and count non-empty lines\n- **Answer**: 5\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__cmp_output`\n- **Rough token estimate**: ~800\n- **Notes**: The aggressive compression correctly stripped all block comments (`/** … */`), trimmed leading/trailing whitespace, and removed blank lines. The `Read` tool was used twice (once for `mcp-brick.json`, once to load the source file content for passing to the MCP tool) — the second use was necessary because `mcp__focus__cmp_output` requires text input directly and there is no MCP tool that reads files from the filesystem.",
+  "workdir": "/tmp/focus-bench/compress-brick-2026-04-24T07-06-09-928",
+  "exit_reason": "ok"
+}

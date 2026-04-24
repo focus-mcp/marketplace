@@ -1,0 +1,25 @@
+{
+  "brick": "filediff",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:14:49.619Z",
+  "duration_ms": 75696,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 15114,
+    "cache_read_input_tokens": 655113,
+    "output_tokens": 4875,
+    "total": 675150
+  },
+  "session_id": "cbcd2471-ed08-432e-abc8-3db9bc676cfe",
+  "result_block": "## Result\n- **Brick**: filediff\n- **Mode**: native\n- **Mini-task**: Count changed lines between platform-express/index.ts and platform-fastify/index.ts\n- **Answer**: 4\n- **Turns used**: 6\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1,800\n- **Notes**: The two files differ in exactly two places: the package name in the comment header (`@platform-express` → `@platform-fastify`) and the last export (`./multer` → `./decorators`), producing 2 deletions + 2 additions = 4 changed lines. The task is a natural fit for the brick's `diff` tool; in native mode it was trivially solved with `diff -u` + `grep`.",
+  "mini_task_spec": "Compare the two files `test-repo/packages/platform-express/index.ts` and `test-repo/packages/platform-fastify/index.ts` using a unified diff. Count the total number of **changed lines** in the diff — that is, lines beginning with a single `-` or `+` (exclude the `---` / `+++` file-header lines and context lines). Report the count as a single integer.",
+  "workdir": "/tmp/focus-bench/filediff-native-2026-04-24T07-14-49-619",
+  "exit_reason": "ok"
+}

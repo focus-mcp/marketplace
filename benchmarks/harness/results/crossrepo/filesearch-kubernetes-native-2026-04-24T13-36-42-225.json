@@ -1,0 +1,26 @@
+{
+  "brick": "filesearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T13:35:22.409Z",
+  "duration_ms": 79816,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 23155,
+    "cache_read_input_tokens": 550965,
+    "output_tokens": 3772,
+    "total": 577931
+  },
+  "session_id": "3a7c9448-ea46-4ab0-a793-8d0159ee603c",
+  "result_block": "## Result\n- **Brick**: filesearch\n- **Mode**: native\n- **Mini-task**: List all `.go` files under `test-repo/pkg/kubelet/cm` that contain `// TODO(` sorted alphabetically\n- **Answer**:\n```\ntest-repo/pkg/kubelet/cm/cgroup_manager_linux.go\ntest-repo/pkg/kubelet/cm/container_manager_linux.go\ntest-repo/pkg/kubelet/cm/container_manager_windows.go\ntest-repo/pkg/kubelet/cm/cpumanager/policy_options.go\ntest-repo/pkg/kubelet/cm/cpumanager/topology/topology_test.go\ntest-repo/pkg/kubelet/cm/devicemanager/plugin/v1beta1/server.go\ntest-repo/pkg/kubelet/cm/dra/manager.go\ntest-repo/pkg/kubelet/cm/node_container_manager_linux.go\n```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The test-repo is a Kubernetes (Go) repo, not a NestJS repo as the prompt template mentioned. The `filesearch` brick's `search` tool maps directly to regex-based recursive file search — this task exercises that capability cleanly. The answer is deterministic: 8 files, alphabetically sorted.",
+  "mini_task_spec": "Using the `filesearch` brick's `search` tool, find all Go (`.go`) files under the directory `test-repo/pkg/kubelet/cm` (search recursively) that contain the regex pattern `// TODO\\(` (a Go-style attributed TODO comment). Report the matching file paths, one per line, sorted alphabetically. Do not include any other output — just the sorted list of relative file paths (relative to `test-repo/`). Use glob filter `*.go` and the path `test-repo/pkg/kubelet/cm`.",
+  "workdir": "/tmp/focus-bench/filesearch-native-2026-04-24T13-35-22-408",
+  "exit_reason": "ok"
+}

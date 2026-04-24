@@ -1,0 +1,25 @@
+{
+  "brick": "textsearch",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:11:03.863Z",
+  "duration_ms": 42537,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__txt_grouped"
+  ],
+  "usage": {
+    "input_tokens": 26,
+    "cache_creation_input_tokens": 18929,
+    "cache_read_input_tokens": 127082,
+    "output_tokens": 3078,
+    "total": 149115
+  },
+  "session_id": "7065ca0d-47f4-4142-9c79-470c7d9d2f75",
+  "result_block": "## Result\n- **Brick**: textsearch\n- **Mode**: brick\n- **Mini-task**: Find all TypeScript files under `test-repo/packages/` containing the literal string `@Injectable()`, return sorted relative paths\n- **Answer**:\n```\npackages/common/decorators/core/inject.decorator.ts\npackages/common/pipes/default-value.pipe.ts\npackages/common/pipes/file/parse-file.pipe.ts\npackages/common/pipes/parse-array.pipe.ts\npackages/common/pipes/parse-bool.pipe.ts\npackages/common/pipes/parse-date.pipe.ts\npackages/common/pipes/parse-enum.pipe.ts\npackages/common/pipes/parse-float.pipe.ts\npackages/common/pipes/parse-int.pipe.ts\npackages/common/pipes/parse-uuid.pipe.ts\npackages/common/pipes/validation.pipe.ts\npackages/common/serializer/class-serializer.interceptor.ts\npackages/common/services/console.service.ts\npackages/common/services/logger-copy.service.ts\npackages/common/services/logger.service.ts\npackages/common/test/decorators/injectable.decorator.spec.ts\npackages/core/discovery/discovery-service.ts\npackages/core/errors/messages.ts\npackages/core/scanner.ts\npackages/core/test/errors/test/messages.spec.ts\npackages/core/test/injector/injector.spec.ts\npackages/core/test/injector/instance-loader.spec.ts\npackages/core/test/injector/module.spec.ts\npackages/core/test/injector/nested-transient-isolation.spec.ts\npackages/core/test/middleware/container.spec.ts\npackages/core/test/middleware/middleware-module.spec.ts\npackages/core/test/middleware/resolver.spec.ts\npackages/core/test/scanner.spec.ts\npackages/core/test/scope/transient-scope.spec.ts\npackages/microservices/test/context/rpc-context-creator.spec.ts\npackages/microservices/test/module/clients.module.spec.ts\npackages/websockets/test/context/ws-context-creator.spec.ts\n```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__txt_grouped`\n- **Rough token estimate**: ~1,500\n- **Notes**: The `txt_grouped` tool returned results with file paths already relative to the searched `dir` (`test-repo/packages/`), so `packages/` was prepended to produce paths relative to `test-repo/`. Results came back in alphabetical order (32 files, 55 total matches). No fallbacks needed.",
+  "workdir": "/tmp/focus-bench/textsearch-brick-2026-04-24T08-11-03-862",
+  "exit_reason": "ok"
+}

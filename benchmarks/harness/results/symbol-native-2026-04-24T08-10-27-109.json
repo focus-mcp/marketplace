@@ -1,0 +1,25 @@
+{
+  "brick": "symbol",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:09:02.447Z",
+  "duration_ms": 84662,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 25325,
+    "cache_read_input_tokens": 698235,
+    "output_tokens": 5136,
+    "total": 728744
+  },
+  "session_id": "8c767a01-9ffa-4a5b-b988-dac77a9e6c9c",
+  "result_block": "## Result\n\n- **Brick**: symbol\n- **Mode**: native\n- **Mini-task**: Find start/end lines of three public methods in `packages/core/nest-application.ts`\n- **Answer**:\n  ```\n  enableVersioning: 286-291\n  setGlobalPrefix: 377-389\n  useGlobalFilters: 396-408\n  ```\n- **Turns used**: 10\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The `enableVersioning` method signature spans three lines (286–288) before the body opens; its `public` keyword line is 286. The `useStaticAssets` method has overload signatures before the implementation, so it was intentionally excluded to keep the task unambiguous. All three chosen methods have clean single-block bodies with no overloads.",
+  "mini_task_spec": "In the file `test-repo/packages/core/nest-application.ts`, there is a `NestApplication` class that defines several public methods. Using symbol-lookup tools, find the exact start line and end line (both 1-based, inclusive) for each of the following three methods: `enableVersioning`, `setGlobalPrefix`, and `useGlobalFilters`.\n\nReport each result as `methodName: startLine-endLine`, one per line, in the order the methods appear in the file (i.e., sorted by start line ascending). The start line is the line that begins with `public <methodName>(`, and the end line is the line containing the closing `}` of that method's body.\n\nExpected answer format example:\n```\nsomeMethod: 10-20\nanotherMethod: 30-45\nthirdMethod: 60-72\n```\n\n---",
+  "workdir": "/tmp/focus-bench/symbol-native-2026-04-24T08-09-02-447",
+  "exit_reason": "ok"
+}

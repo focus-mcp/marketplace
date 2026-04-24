@@ -1,0 +1,25 @@
+{
+  "brick": "batch",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T06:58:22.436Z",
+  "duration_ms": 32624,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__bat_parallel"
+  ],
+  "usage": {
+    "input_tokens": 26,
+    "cache_creation_input_tokens": 18091,
+    "cache_read_input_tokens": 124771,
+    "output_tokens": 1639,
+    "total": 144527
+  },
+  "session_id": "8e8edcd1-31a6-4aa4-9ea7-b9ebff0ffe02",
+  "result_block": "## Result\n- **Brick**: batch\n- **Mode**: brick\n- **Mini-task**: Count TypeScript source files (`.ts`, excluding `.spec.ts`) in each of the 9 package directories under `test-repo/packages/`, using the `parallel` tool to run all 9 `find` commands simultaneously.\n- **Answer**:\n```\ncommon: 186\ncore: 179\nmicroservices: 135\nplatform-express: 24\nplatform-fastify: 15\nplatform-socket.io: 3\nplatform-ws: 3\ntesting: 12\nwebsockets: 43\n```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__bat_parallel`\n- **Rough token estimate**: ~1,500\n- **Notes**: All 9 `find` commands ran in parallel successfully (total wall-clock ~26 ms). No errors or fallbacks needed. The `find … -not -name '*.spec.ts'` filter correctly excluded test files while counting all other `.ts` files.",
+  "workdir": "/tmp/focus-bench/batch-brick-2026-04-24T06-58-22-435",
+  "exit_reason": "ok"
+}

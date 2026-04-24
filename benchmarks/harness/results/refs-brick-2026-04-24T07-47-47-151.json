@@ -1,0 +1,25 @@
+{
+  "brick": "refs",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:47:14.380Z",
+  "duration_ms": 32771,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__refs_references"
+  ],
+  "usage": {
+    "input_tokens": 26,
+    "cache_creation_input_tokens": 22149,
+    "cache_read_input_tokens": 123106,
+    "output_tokens": 2554,
+    "total": 147835
+  },
+  "session_id": "41c4d5c6-4e4f-4391-92bc-e3aa79795286",
+  "result_block": "## Result\n- **Brick**: refs\n- **Mode**: brick\n- **Mini-task**: Find all files under `test-repo/packages/` that import or reference the symbol `CanActivate`, sorted alphabetically as paths relative to `test-repo/`\n- **Answer**:\n```\npackages/common/decorators/core/use-guards.decorator.ts\npackages/common/index.ts\npackages/common/interfaces/features/can-activate.interface.ts\npackages/common/interfaces/nest-application.interface.ts\npackages/common/interfaces/nest-microservice.interface.ts\npackages/common/test/decorators/apply-decorators.spec.ts\npackages/core/application-config.ts\npackages/core/guards/guards-consumer.ts\npackages/core/guards/guards-context-creator.ts\npackages/core/nest-application.ts\npackages/core/router/router-execution-context.ts\npackages/core/scanner.ts\npackages/microservices/nest-microservice.ts\n```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__refs_references`\n- **Rough token estimate**: ~2,500\n- **Notes**: The tool returned 39 reference entries across 13 unique files. All files are under `packages/` — no results from `integration/` or `sample/` appeared. Paths were deduplicated manually from the multi-entry results (the tool returns one entry per reference/usage, not per file). Results were sorted alphabetically by path.",
+  "workdir": "/tmp/focus-bench/refs-brick-2026-04-24T07-47-14-380",
+  "exit_reason": "ok"
+}

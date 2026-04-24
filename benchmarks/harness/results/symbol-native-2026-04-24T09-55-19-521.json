@@ -1,0 +1,26 @@
+{
+  "brick": "symbol",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:53:44.353Z",
+  "duration_ms": 95168,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 44,
+    "cache_creation_input_tokens": 22507,
+    "cache_read_input_tokens": 601347,
+    "output_tokens": 4217,
+    "total": 628115
+  },
+  "session_id": "8c3e2e42-e0f2-4e0c-9cdb-e301be51fa5a",
+  "result_block": "## Result\n- **Brick**: symbol\n- **Mode**: native\n- **Mini-task**: List all public method names of the `Injector` class in `test-repo/packages/core/injector/injector.ts`, sorted alphabetically\n- **Answer**:\n```\napplyProperties\napplySettlementSignal\ngetClassDependencies\ngetFactoryProviderDependencies\ninstantiateClass\nloadController\nloadCtorMetadata\nloadEnhancersPerContext\nloadInjectable\nloadInstance\nloadMiddleware\nloadPerContext\nloadPropertiesMetadata\nloadPrototype\nloadProvider\nlookupComponent\nlookupComponentInImports\nlookupComponentInParentModules\nreflectConstructorParams\nreflectOptionalParams\nreflectProperties\nreflectSelfParams\nresolveComponentHost\nresolveComponentWrapper\nresolveConstructorParams\nresolveParamToken\nresolveProperties\nresolveSingleParam\n```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: All 28 `public` keywords in the file correspond exactly to method definitions (no public fields). The `Injector` class spans most of the file (lines 86–end). Result verified by checking that grep count matches the sorted list length.",
+  "mini_task_spec": "In the NestJS test repository, find all **public method names** defined in the `Injector` class located at `test-repo/packages/core/injector/injector.ts`. Report the method names as a sorted alphabetical list, one name per line. Do not include access modifier keywords (`public`, `async`), return types, generic type parameters, or parameters — only the bare method name. Constructors and private/protected members should not be included.\n\n---",
+  "workdir": "/tmp/focus-bench/symbol-native-2026-04-24T09-53-44-352",
+  "exit_reason": "ok"
+}

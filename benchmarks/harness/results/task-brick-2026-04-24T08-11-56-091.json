@@ -1,0 +1,26 @@
+{
+  "brick": "task",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:10:30.972Z",
+  "duration_ms": 85119,
+  "turns": 17,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__tsk_create",
+    "mcp__focus__tsk_status"
+  ],
+  "usage": {
+    "input_tokens": 56,
+    "cache_creation_input_tokens": 61421,
+    "cache_read_input_tokens": 430126,
+    "output_tokens": 5153,
+    "total": 496756
+  },
+  "session_id": "de904ad6-e80f-448f-9edd-9b5b1cb512d2",
+  "result_block": "## Result\n- **Brick**: task\n- **Mode**: brick\n- **Mini-task**: Create one audit task per package directory in a NestJS monorepo, sorted alphabetically with priority, then retrieve all pending tasks\n- **Answer**:\n  ```\n  Audit: common, priority=1\n  Audit: core, priority=2\n  Audit: microservices, priority=3\n  Audit: platform-express, priority=4\n  Audit: platform-fastify, priority=5\n  Audit: platform-socket.io, priority=6\n  Audit: platform-ws, priority=7\n  Audit: testing, priority=8\n  Audit: websockets, priority=9\n  ```\n- **Turns used**: 6\n- **Tools used**: `mcp__focus__tsk_create`, `mcp__focus__tsk_status`\n- **Rough token estimate**: ~6,000\n- **Notes**: Package discovery was done via `Read` on `test-repo/packages/tsconfig.json` (which lists all 9 project references), since `mcp__focus__*` tools have no filesystem-browsing capability. All 9 tasks were created in a single parallel batch call, then verified via `tsk_status` with `status=\"pending\"` — all 9 confirmed present with correct priorities.",
+  "workdir": "/tmp/focus-bench/task-brick-2026-04-24T08-10-30-971",
+  "exit_reason": "ok"
+}

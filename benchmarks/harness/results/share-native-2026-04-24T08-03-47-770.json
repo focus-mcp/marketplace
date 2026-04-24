@@ -1,0 +1,25 @@
+{
+  "brick": "share",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:01:49.780Z",
+  "duration_ms": 117990,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 41,
+    "cache_creation_input_tokens": 22865,
+    "cache_read_input_tokens": 585820,
+    "output_tokens": 5978,
+    "total": 614704
+  },
+  "session_id": "6b0e1cf2-c426-4f40-859b-35c3df3da093",
+  "result_block": "## Result\n- **Brick**: share\n- **Mode**: native\n- **Mini-task**: Find and list all top-level `index.ts` package entry points in `test-repo/packages/`\n- **Answer**:\n  ```\n  packages/common/index.ts\n  packages/core/index.ts\n  packages/microservices/index.ts\n  packages/platform-express/index.ts\n  packages/platform-fastify/index.ts\n  packages/platform-socket.io/index.ts\n  packages/platform-ws/index.ts\n  packages/testing/index.ts\n  packages/websockets/index.ts\n  ```\n- **Turns used**: 8\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~2,800\n- **Notes**: The `share` brick is a runtime shared-state service (in-memory key-value/pub-sub), so native mode simply computes the data that would be stored — there's no persistent state to actually retrieve between turns. The task is deterministic because the file tree is fixed. The brick's `files` tool would wrap this exact list in a registry keyed by `agentId`.",
+  "mini_task_spec": "You are simulating a multi-agent analysis pipeline on the NestJS monorepo at `test-repo/`. Agent `index-scanner` is responsible for discovering all package entry points. Its job: find every `index.ts` file that lives **directly** inside a first-level package directory (i.e., matching the pattern `test-repo/packages/<package-name>/index.ts`, with no deeper nesting). After discovering these files, it registers them using the `shr__files` tool with `agentId` = `\"index-scanner\"`. A coordinator agent then calls `shr__files` with `agentId` = `\"index-scanner\"` (and no `files` argument) to retrieve the list.\n\n**Your task**: Use the `shr__files` tool to (1) register all matching `index.ts` files for agent `\"index-scanner\"`, then (2) retrieve and report the registered file list.\n\n**Expected answer format**: The list of file paths as returned by the `shr__files` retrieval call, one path per line, sorted alphabetically. Paths should be relative to `test-repo/` (e.g. `packages/common/index.ts`).\n\n---",
+  "workdir": "/tmp/focus-bench/share-native-2026-04-24T08-01-49-780",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "echo",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:13:23.167Z",
+  "duration_ms": 47015,
+  "turns": 9,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 6501,
+    "cache_read_input_tokens": 281687,
+    "output_tokens": 2362,
+    "total": 290575
+  },
+  "session_id": "0c3a28e8-7aca-4a77-b2dd-68a1b4573ac7",
+  "result_block": "## Result\n- **Brick**: echo\n- **Mode**: native\n- **Mini-task**: Find the NestJS monorepo version from lerna.json and determine what the echo brick's `say` tool returns when called with it\n- **Answer**: `11.1.19` — The echo brick's `say` tool returns the message unchanged, so calling it with `\"11.1.19\"` (the `version` field from `test-repo/lerna.json`) yields `\"11.1.19\"`.\n- **Turns used**: 4\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~800\n- **Notes**: The echo brick is a pure smoke-test/canary tool — it has no domain logic beyond returning its input. In native mode the answer is trivially derived by reading the file and knowing the identity semantics. The paired brick run's value is exercising the MCP dispatch pipeline end-to-end, not computing anything new.",
+  "mini_task_spec": "Read the file `test-repo/lerna.json` and extract the value of its top-level `\"version\"` field. Then call the FocusMCP echo brick's `say` tool (tool name: `echo__say`) with that version string as the `message` parameter. Report the exact string returned by the tool. The expected answer format is a single version string (e.g. `x.y.z`).",
+  "workdir": "/tmp/focus-bench/echo-native-2026-04-24T07-13-23-167",
+  "exit_reason": "ok"
+}

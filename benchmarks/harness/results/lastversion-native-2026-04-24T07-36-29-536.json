@@ -1,0 +1,26 @@
+{
+  "brick": "lastversion",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:35:08.036Z",
+  "duration_ms": 81500,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 41,
+    "cache_creation_input_tokens": 41035,
+    "cache_read_input_tokens": 599231,
+    "output_tokens": 4504,
+    "total": 644811
+  },
+  "session_id": "01bf730d-23e2-4f65-a390-0ed2c469485f",
+  "result_block": "## Result\n- **Brick**: lastversion\n- **Mode**: native\n- **Mini-task**: Check if the `file-type` npm dependency in `test-repo/package.json` is outdated and report its bump type\n- **Answer**:\n  ```\n  pinned: 21.3.4\n  latest: 22.0.1\n  bump: major\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: All other production dependencies in `test-repo/package.json` matched their latest npm versions exactly; `file-type` was the sole outdated production dependency, making it a clean, deterministic target for the brick's `check` and `diff` tools. The bump type is definitively `major` (21→22).",
+  "mini_task_spec": "In the file `test-repo/package.json` (the root of the NestJS monorepo), the `dependencies` section pins the `file-type` npm package at a specific version. Your task is to:\n\n1. Read `test-repo/package.json` and find the pinned version of `file-type` in the `dependencies` section.\n2. Look up the latest stable release of `file-type` on npm.\n3. Determine the bump type between the pinned version and the latest stable version.\n\nReport three values, exactly in this format (one value per line):\n```\npinned: <version>\nlatest: <version>\nbump: <patch|minor|major|up-to-date>\n```\n\n---",
+  "workdir": "/tmp/focus-bench/lastversion-native-2026-04-24T07-35-08-036",
+  "exit_reason": "ok"
+}

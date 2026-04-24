@@ -1,0 +1,27 @@
+{
+  "brick": "task",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:09:27.057Z",
+  "duration_ms": 85491,
+  "turns": 11,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_search"
+  ],
+  "usage": {
+    "input_tokens": 50,
+    "cache_creation_input_tokens": 23481,
+    "cache_read_input_tokens": 251952,
+    "output_tokens": 4130,
+    "total": 279613
+  },
+  "session_id": "5ff5a198-5c54-4204-9838-68804132ff66",
+  "result_block": "## Result\n- **Brick**: task\n- **Mode**: brick\n- **Mini-task**: Enumerate every `@deprecated`-annotated TypeScript member under `test-repo/packages/` and report `<file>:<line>:<member>` entries sorted by path then line number\n- **Answer**: *(none — see Notes)*\n- **Turns used**: 7\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_search` (×3), `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~2 500\n- **Notes**: The loaded `task` brick exposes only `create`, `assign`, `status`, and `complete` — task-lifecycle operations with no file I/O. The other available `mcp__focus__*` tools (`focus_list`, `focus_search`, `focus_catalog_list`) manage the brick registry, not the filesystem. A marketplace search for \"file search grep typescript\", \"filesystem code analysis deprecated\", and \"code search\" returned no results. Because no `mcp__focus__*` tool can read or search files, and `Bash`/`Grep`/`Glob` are explicitly forbidden, the `@deprecated` scan is not achievable within the stated constraints. Partial fallback (using `Read` beyond the single allowed brick-manifest read) was also ruled out by the \"solve using only `mcp__focus__*` tools\" requirement.",
+  "workdir": "/tmp/focus-bench/task-brick-2026-04-24T08-09-27-056",
+  "exit_reason": "ok"
+}

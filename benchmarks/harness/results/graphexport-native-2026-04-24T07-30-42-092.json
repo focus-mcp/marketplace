@@ -1,0 +1,25 @@
+{
+  "brick": "graphexport",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:29:09.262Z",
+  "duration_ms": 92830,
+  "turns": 9,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 9032,
+    "cache_read_input_tokens": 288186,
+    "output_tokens": 5764,
+    "total": 303007
+  },
+  "session_id": "94d15b1c-252e-40c9-8d9a-3a01306bd85b",
+  "result_block": "## Result\n- **Brick**: graphexport\n- **Mode**: native\n- **Mini-task**: Generate a Mermaid LR flowchart of `@nestjs/*` inter-package peer-dependency edges from `test-repo/packages/*/package.json`\n- **Answer**:\n\n```mermaid\nflowchart LR\n    common\n    core --> common\n    core --> microservices\n    core --> platform-express\n    core --> websockets\n    microservices --> common\n    microservices --> core\n    microservices --> websockets\n    platform-express --> common\n    platform-express --> core\n    platform-fastify --> common\n    platform-fastify --> core\n    platform-socket.io --> common\n    platform-socket.io --> websockets\n    platform-ws --> common\n    platform-ws --> websockets\n    testing --> common\n    testing --> core\n    testing --> microservices\n    testing --> platform-express\n    websockets --> common\n    websockets --> core\n    websockets --> platform-socket.io\n```\n\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1,800\n- **Notes**: All nine `@nestjs/*` packages found under `test-repo/packages/`. `@nestjs/common` has zero `@nestjs` peer dependencies so it appears only as an edge target; it is listed as a standalone node to ensure it appears in the diagram. Node names containing dots (`platform-socket.io`) and hyphens may need quoting in strict Mermaid parsers — the spec intentionally leaves that to the brick implementation.",
+  "mini_task_spec": "Read each `packages/*/package.json` file inside `test-repo/`, extract every `peerDependencies` entry whose key starts with `@nestjs/`, and build a directed inter-package peer-dependency graph. Each NestJS package is a node (label = the short name after `@nestjs/`, e.g. `common`, `core`). Each directed edge `A --> B` means \"package A lists package B in its `peerDependencies`\".\n\nUsing only the nine packages found under `test-repo/packages/` (`common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets`), produce a Mermaid flowchart with direction `LR`. Rules:\n\n1. List `common` first as a standalone node (it has no outgoing `@nestjs` peer-dep edges).\n2. List all directed edges next, sorted alphabetically first by source node name, then by target node name.\n3. Output only the fenced Mermaid code block (` ```mermaid … ``` `), no other text.\n\n---",
+  "workdir": "/tmp/focus-bench/graphexport-native-2026-04-24T07-29-09-261",
+  "exit_reason": "ok"
+}

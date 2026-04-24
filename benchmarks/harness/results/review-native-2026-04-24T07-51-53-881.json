@@ -1,0 +1,26 @@
+{
+  "brick": "review",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:50:46.511Z",
+  "duration_ms": 67370,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 43,
+    "cache_creation_input_tokens": 23204,
+    "cache_read_input_tokens": 602407,
+    "output_tokens": 3630,
+    "total": 629284
+  },
+  "session_id": "523dd5e6-8383-41a2-9a1f-81acb49e445a",
+  "result_block": "## Result\n\n- **Brick**: review\n- **Mode**: native\n- **Mini-task**: Enumerate hardcoded credential pairs in the JWT auth sample's users service\n- **Answer**:\n  ```\n  john:changeme\n  maria:guess\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: The file also exhibits a related security smell in `auth.service.ts` (plain-text password equality check `!==` instead of constant-time comparison), but the task is scoped specifically to the hardcoded credentials in `users.service.ts`. Both pairs are unambiguous and deterministically checkable.",
+  "mini_task_spec": "Using the `security` tool of the **review** brick, review the file `test-repo/sample/19-auth-jwt/src/users/users.service.ts` for security issues. The file contains hardcoded credential pairs in plaintext TypeScript source code. Identify and list **all** hardcoded username:password pairs embedded in the source file.\n\nExpected answer format: one `username:password` pair per line, sorted alphabetically by username.\n\nNo external context is required — the full answer is contained within that single file at path `test-repo/sample/19-auth-jwt/src/users/users.service.ts` (relative to the repo root).\n\n---",
+  "workdir": "/tmp/focus-bench/review-native-2026-04-24T07-50-46-511",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "multiread",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:40:48.682Z",
+  "duration_ms": 49264,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__mr_merge"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 56211,
+    "cache_read_input_tokens": 132542,
+    "output_tokens": 3326,
+    "total": 192108
+  },
+  "session_id": "2a658531-1425-4bb5-b34c-dab48d65784e",
+  "result_block": "## Result\n- **Brick**: multiread\n- **Mode**: brick\n- **Mini-task**: Read 21 NestJS HTTP exception `.ts` files and extract each class name + default `descriptionOrOptions` value, sorted alphabetically\n- **Answer**:\n```\nBadGatewayException: \"Bad Gateway\"\nBadRequestException: \"Bad Request\"\nConflictException: \"Conflict\"\nForbiddenException: \"Forbidden\"\nGatewayTimeoutException: \"Gateway Timeout\"\nGoneException: \"Gone\"\nHttpVersionNotSupportedException: \"HTTP Version Not Supported\"\nImATeapotException: \"I'm a teapot\"\nInternalServerErrorException: \"Internal Server Error\"\nMethodNotAllowedException: \"Method Not Allowed\"\nMisdirectedException: \"Misdirected\"\nNotAcceptableException: \"Not Acceptable\"\nNotFoundException: \"Not Found\"\nNotImplementedException: \"Not Implemented\"\nPayloadTooLargeException: \"Payload Too Large\"\nPreconditionFailedException: \"Precondition Failed\"\nRequestTimeoutException: \"Request Timeout\"\nServiceUnavailableException: \"Service Unavailable\"\nUnauthorizedException: \"Unauthorized\"\nUnprocessableEntityException: \"Unprocessable Entity\"\nUnsupportedMediaTypeException: \"Unsupported Media Type\"\n```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__mr_merge`\n- **Rough token estimate**: ~9,000 tokens\n- **Notes**: All 21 files were read in a single `mr_merge` call by predicting standard NestJS kebab-case filenames. The `ImATeapotException` uses a backtick template literal (`` `I'm a teapot` ``) in source — rendered here with straight double-quotes per the task spec. `ToolSearch` was used to load the `mr_merge` schema before calling it (2 turns overhead).",
+  "workdir": "/tmp/focus-bench/multiread-brick-2026-04-24T07-40-48-681",
+  "exit_reason": "ok"
+}

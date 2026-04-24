@@ -1,0 +1,25 @@
+{
+  "brick": "repos",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:50:26.067Z",
+  "duration_ms": 53426,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 14524,
+    "cache_read_input_tokens": 453099,
+    "output_tokens": 3208,
+    "total": 470866
+  },
+  "session_id": "6816f58f-a0db-47df-a100-cf03a8bba8fb",
+  "result_block": "## Result\n- **Brick**: repos\n- **Mode**: native\n- **Mini-task**: Count total files and total lines in `test-repo/packages/common` via repo stats\n- **Answer**:\n  ```\n  files: 269\n  lines: 17864\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1 200\n- **Notes**: Solved entirely with `find … | wc -l` and `find … | xargs wc -l`. The brick's `register` + `stats` flow maps directly onto these two shell operations; the numeric answers are deterministic for this shallow-cloned snapshot.",
+  "mini_task_spec": "Using the **repos** FocusMCP brick (tools: `register`, `stats`), register the directory `test-repo/packages/common` under the name `\"common\"` and then retrieve its statistics.\n\nReport the two numbers returned by `stats`:\n1. The **total number of files** in `test-repo/packages/common` (all file types, recursively).\n2. The **total number of lines** across all those files (recursively).\n\nExpected answer format: two integers, one per line, labeled:\n```\nfiles: <N>\nlines: <N>\n```\n\nThe task is limited to registering exactly one repo (`common` → `test-repo/packages/common`) and calling `stats(\"common\")`.\n\n---",
+  "workdir": "/tmp/focus-bench/repos-native-2026-04-24T07-50-26-067",
+  "exit_reason": "ok"
+}

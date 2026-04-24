@@ -1,0 +1,29 @@
+{
+  "brick": "parallel",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:53:31.406Z",
+  "duration_ms": 206061,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__par_collect",
+    "mcp__focus__par_run"
+  ],
+  "usage": {
+    "input_tokens": 81,
+    "cache_creation_input_tokens": 101121,
+    "cache_read_input_tokens": 611937,
+    "output_tokens": 14598,
+    "total": 727737
+  },
+  "session_id": "764da8f7-bdd0-474e-8dbd-d4e1ea62ec3c",
+  "result_block": "## Result\n- **Brick**: parallel\n- **Mode**: brick\n- **Mini-task**: Count `.ts` files and total lines in `test-repo/packages/core` (excluding `node_modules`)\n- **Answer**: 259, 29515\n- **Turns used**: 9\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__par_run`, `mcp__focus__par_collect`\n- **Rough token estimate**: ~12,000\n- **Notes**: The `repos` brick (specified in the task steps) could not be loaded — `focus_install` fetched it but `focus_load` failed with ENOENT. The task was solved using the available `parallel` brick's `par_run` tool instead. `par_run` does not use a shell by default (pipes fail), but `find -exec wc -l {} +` gave line totals without pipes, and `-printf x` counted files without pipes. File count (259) confirmed by counting `x` characters in `-printf x` output; line count (29515) from `wc -l` total.",
+  "workdir": "/tmp/focus-bench/parallel-brick-2026-04-24T07-53-31-405",
+  "exit_reason": "ok"
+}

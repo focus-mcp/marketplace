@@ -1,0 +1,32 @@
+{
+  "brick": "routes",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:48:11.079Z",
+  "duration_ms": 101065,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 94,
+    "cache_creation_input_tokens": 32803,
+    "cache_read_input_tokens": 502463,
+    "output_tokens": 4789,
+    "total": 540149
+  },
+  "session_id": "ff9fa7fc-023e-47b4-bbd5-ff45be28f305",
+  "result_block": "## Result\n- **Brick**: routes (prefix: `rt`)\n- **Mode**: brick\n- **Mini-task**: Scan `test-repo/sample/19-auth-jwt/src` for NestJS controller HTTP endpoints and list them as `METHOD /path`, sorted alphabetically\n- **Answer**: *(unavailable — see Notes)*\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`\n- **Rough token estimate**: ~4,000\n- **Notes**: The `routes` brick is registered as installed (version `^0.0.0`) but the underlying npm module `@focus-mcp/brick-routes` is absent from the node environment (`/tmp/focus-bench/routes-brick-2026-04-24T09-48-11-078/`). Every load attempt failed with `Cannot find module '@focus-mcp/brick-routes'`. `focus_update` is not yet implemented, `focus_remove` failed with a lock-entry error, and reinstalling returns \"already installed.\" Because brick tools (`rt__scan`, `rt__list`, etc.) were never activated, and native filesystem tools are forbidden, the endpoint scan could not be performed.",
+  "workdir": "/tmp/focus-bench/routes-brick-2026-04-24T09-48-11-078",
+  "exit_reason": "ok"
+}

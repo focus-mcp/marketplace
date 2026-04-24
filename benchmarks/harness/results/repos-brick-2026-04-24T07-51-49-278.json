@@ -1,0 +1,26 @@
+{
+  "brick": "repos",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:51:19.495Z",
+  "duration_ms": 29783,
+  "turns": 7,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__repos_register",
+    "mcp__focus__repos_stats"
+  ],
+  "usage": {
+    "input_tokens": 26,
+    "cache_creation_input_tokens": 12636,
+    "cache_read_input_tokens": 125026,
+    "output_tokens": 1154,
+    "total": 138842
+  },
+  "session_id": "1fff7bb2-10e9-4a30-9605-5d960f0af6d2",
+  "result_block": "## Result\n- **Brick**: repos\n- **Mode**: brick\n- **Mini-task**: Register `test-repo/packages/common` as `\"common\"` and retrieve its file/line stats\n- **Answer**:\n  ```\n  files: 269\n  lines: 18133\n  ```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__repos_register`, `mcp__focus__repos_stats`\n- **Rough token estimate**: ~1,200\n- **Notes**: Both tools worked as expected with no errors. The `stats` result also returned a language breakdown (`.md`, `.ts`, `.bak`, `.bak2`, `.json`), but the task only requested total files and lines.",
+  "workdir": "/tmp/focus-bench/repos-brick-2026-04-24T07-51-19-494",
+  "exit_reason": "ok"
+}

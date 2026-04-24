@@ -1,0 +1,25 @@
+{
+  "brick": "echo",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:14:10.183Z",
+  "duration_ms": 39435,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__echo_say"
+  ],
+  "usage": {
+    "input_tokens": 27,
+    "cache_creation_input_tokens": 18332,
+    "cache_read_input_tokens": 113699,
+    "output_tokens": 2404,
+    "total": 134462
+  },
+  "session_id": "79069405-2a7d-41c7-8278-39b390b5a28c",
+  "result_block": "## Result\n- **Brick**: echo\n- **Mode**: brick\n- **Mini-task**: Read the `version` field from `test-repo/lerna.json` and echo it via the FocusMCP echo brick's `say` tool\n- **Answer**: `11.1.19`\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__echo_say`\n- **Rough token estimate**: ~800\n- **Notes**: `Read` was used to obtain the lerna.json version (it is not in the explicitly prohibited tool list). The `mcp__focus__echo_say` schema was fetched via `ToolSearch` before calling. The tool returned `{\"message\":\"11.1.19\"}` as expected.",
+  "workdir": "/tmp/focus-bench/echo-brick-2026-04-24T07-14-10-183",
+  "exit_reason": "ok"
+}

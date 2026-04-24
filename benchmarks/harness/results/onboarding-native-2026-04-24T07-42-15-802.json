@@ -1,0 +1,25 @@
+{
+  "brick": "onboarding",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:41:03.385Z",
+  "duration_ms": 72417,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 45,
+    "cache_creation_input_tokens": 27437,
+    "cache_read_input_tokens": 675712,
+    "output_tokens": 4179,
+    "total": 707373
+  },
+  "session_id": "d2ff439b-c6f0-4ccd-beaf-bc15a0a0a5e7",
+  "result_block": "## Result\n- **Brick**: onboarding\n- **Mode**: native\n- **Mini-task**: List allowed commit message types from the NestJS monorepo's commitlint config\n- **Answer**:\n  ```\n  build\n  chore\n  ci\n  docs\n  feat\n  fix\n  perf\n  refactor\n  revert\n  style\n  test\n  sample\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~3,500\n- **Notes**: Straightforward discovery task. The answer is fully deterministic and sourced directly from `test-repo/.commitlintrc.json` → `rules.type-enum[2]`. No ambiguity. The onboarding brick's `scan` tool would auto-locate this file as a key convention file; `guide` would surface commit-type rules as a must-read for contributors.",
+  "mini_task_spec": "You are onboarding to the NestJS monorepo located at `test-repo/`. Acting as a new contributor performing a project onboarding scan, inspect the project's commit-message convention configuration file (`test-repo/.commitlintrc.json`) and identify every allowed commit message **`type`** value enforced by the `type-enum` rule. Report the complete list in the exact order the values appear in the configuration file, one value per line (no extra commentary).\n\n---",
+  "workdir": "/tmp/focus-bench/onboarding-native-2026-04-24T07-41-03-385",
+  "exit_reason": "ok"
+}

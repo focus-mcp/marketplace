@@ -1,0 +1,25 @@
+{
+  "brick": "savings",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:59:21.636Z",
+  "duration_ms": 83887,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 41,
+    "cache_creation_input_tokens": 22873,
+    "cache_read_input_tokens": 548035,
+    "output_tokens": 4856,
+    "total": 575805
+  },
+  "session_id": "741ed770-fde4-4ef7-9533-0e0d9f84b833",
+  "result_block": "## Result\n\n- **Brick**: savings\n- **Mode**: native\n- **Mini-task**: Compute token savings % when reading only `packages/common/exceptions/*.ts` vs all `packages/common/**/*.ts`\n- **Answer**: `90.1%`\n- **Turns used**: 6\n- **Tools used**: `Read`, `Bash`\n- **Rough token estimate**: ~1,200\n- **Notes**: The savings brick's `report` tool would normally do the arithmetic; natively I replicated it with byte counts (`wc -c`) and Python. The 1 token = 4 bytes approximation is the standard heuristic. The percentage formula is `(1 - actualTokens / baselineTokens) × 100`, yielding exactly `90.1%` after rounding to one decimal place.",
+  "mini_task_spec": "**Context**: The \"savings\" brick tracks token-savings metrics. It exposes a `report` tool that takes `baselineTokens` (naive full-read count) and `actualTokens` (FocusMCP-guided count) and returns savings statistics.\n\n**Task**: An agent must find all HTTP exception class names defined in `test-repo/packages/common/exceptions/`. Two session strategies are compared:\n\n- **Baseline (naive)**: the agent reads every `.ts` file under `test-repo/packages/common/` recursively (all sub-packages). There are **238** such files totalling **517,814 bytes**.\n- **Actual (FocusMCP-guided)**: the agent reads only the `.ts` files directly inside `test-repo/packages/common/exceptions/`. There are **24** such files totalling **51,127 bytes**.\n\nToken usage is approximated at **1 token = 4 bytes (integer division / floor)**:\n- `baselineTokens = 517814 // 4 = 129453`\n- `actualTokens = 51127 // 4 = 12781`\n\nUsing the savings brick's `report` tool (call `mcp__focus__sav__report` with `baselineTokens=129453` and `actualTokens=12781`), what is the **savings percentage** reported (rounded to one decimal place)?\n\n**Expected answer format**: a single percentage value with one decimal place, e.g. `90.1%`.\n\n---",
+  "workdir": "/tmp/focus-bench/savings-native-2026-04-24T07-59-21-636",
+  "exit_reason": "ok"
+}

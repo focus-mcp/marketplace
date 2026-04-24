@@ -1,0 +1,25 @@
+{
+  "brick": "parallel",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:52:38.711Z",
+  "duration_ms": 52693,
+  "turns": 8,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 28,
+    "cache_creation_input_tokens": 91121,
+    "cache_read_input_tokens": 485309,
+    "output_tokens": 2741,
+    "total": 579199
+  },
+  "session_id": "a2475f05-d5e3-405c-a43d-d8316fec3e78",
+  "result_block": "## Result\n\n- **Brick**: repos\n- **Mode**: native\n- **Mini-task**: Count TypeScript files and total lines in `test-repo/packages/core`\n- **Answer**: 259 files, 29515 lines\n- **Turns used**: 4\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~4,000 tokens\n- **Notes**: The `repos` brick's `stats` tool is designed to return \"file and line count statistics for a registered repository.\" In native mode, this was replicated using `find` + `wc -l` shell commands. The test-repo is a NestJS monorepo; `packages/core` is its largest package. No ambiguity in the result — file count and line count are fully deterministic.",
+  "mini_task_spec": "Using the `repos` brick in `./test-repo/`, determine the total number of TypeScript (`.ts`) files and the total number of lines across those files in the `test-repo/packages/core` subdirectory (excluding any `node_modules` directories).\n\nSteps to reproduce with the brick:\n1. Register `test-repo/packages/core` as a repository (e.g. name it `core`) using the `repos__register` tool, providing the absolute path to `test-repo/packages/core`.\n2. Call `repos__stats` with `{\"name\": \"core\"}` to retrieve file and line count statistics.\n3. Report the TypeScript file count and total line count.\n\nExpected answer format: two integers on one line, separated by a comma — `<file_count>, <line_count>` — where file count is the number of `.ts` files and line count is the total lines across all `.ts` files in `test-repo/packages/core` (excluding `node_modules`).\n\nDo NOT include the answer in this spec.\n\n---",
+  "workdir": "/tmp/focus-bench/parallel-native-2026-04-24T07-52-38-711",
+  "exit_reason": "ok"
+}

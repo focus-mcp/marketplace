@@ -1,0 +1,25 @@
+{
+  "brick": "parallel",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:41:15.831Z",
+  "duration_ms": 41315,
+  "turns": 8,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 26,
+    "cache_creation_input_tokens": 9661,
+    "cache_read_input_tokens": 313731,
+    "output_tokens": 2514,
+    "total": 325932
+  },
+  "session_id": "cdb8f48e-0488-42d0-b568-3e343b21c363",
+  "result_block": "## Result\n- **Brick**: parallel\n- **Mode**: native\n- **Mini-task**: Count TypeScript source files per package in parallel across all 9 NestJS packages\n- **Answer**:\n  ```\n  common=187\n  core=179\n  microservices=135\n  platform-express=24\n  platform-fastify=15\n  platform-socket.io=3\n  platform-ws=3\n  testing=12\n  websockets=43\n  ```\n- **Turns used**: 4\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~900\n- **Notes**: The task is a natural fit for the `parallel` brick's `run` + `merge` workflow — in native mode it required a sequential shell loop, while brick mode would run all 9 `find | wc -l` commands concurrently. No unusual issues encountered.",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/`, count the number of TypeScript **source** files (files ending in `.ts`, but **excluding** files ending in `.spec.ts` or `.d.ts`) in each of the nine package directories found under `test-repo/packages/`. The packages are: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets`.\n\nRun these nine counts **in parallel** (one task per package, each executing `find packages/<name> -name \"*.ts\" -not -name \"*.spec.ts\" -not -name \"*.d.ts\" | wc -l` from within `test-repo/`). Collect and merge the results into a single output.\n\nReport the answer as a list of `<package>=<count>` lines, sorted alphabetically by package name, one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/parallel-native-2026-04-24T07-41-15-830",
+  "exit_reason": "ok"
+}
