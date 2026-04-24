@@ -32,8 +32,7 @@ jobs:
           registry-url: https://registry.npmjs.org
           scope: '@focus-mcp'
       - run: pnpm install --frozen-lockfile
-      - name: Build all bricks
-        run: pnpm build
+      # catalog is always regenerated — it reads source package.json files and needs no dist
       - run: pnpm build:catalog
       - name: Commit regenerated catalog via PR
         env:
@@ -59,17 +58,55 @@ jobs:
               2>/dev/null || true
             echo "Opened catalog-update PR from ${BRANCH}"
           fi
-      - name: Publish all bricks with latest tag
-        run: |
-          for dir in bricks/*/; do
-            if [ -f "${dir}package.json" ]; then
-              NAME=$(node -e "console.log(require('./${dir}package.json').name)")
-              VERSION=$(node -e "console.log(require('./${dir}package.json').version)")
-              echo "Publishing ${NAME}@${VERSION}..."
-              cd "$dir"
-              npm publish --access public 2>&1 || echo "  → skipped (already published?)"
-              cd ../..
-            fi
-          done
+      # Strategy: diff local package.json version vs npm registry @latest.
+      # Only bricks whose version has changed are built then published.
+      # Bricks already at the latest version on npm are skipped entirely — no build, no publish.
+      # Follow-up idea: replace `npm view` loop with `pnpm changeset status --output`
+      # for intent-based (changeset-driven) filtering instead of state-based (registry diff).
+      - name: Build and publish only bumped bricks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          # Build a name->dir reverse map up front
+          declare -A DIRS
+          for dir in bricks/*/; do
+            [ -f "${dir}package.json" ] || continue
+            NAME=$(node -e "console.log(require('./${dir}package.json').name)")
+            DIRS["$NAME"]="$dir"
+          done
+
+          # Identify bricks whose local version differs from npm @latest
+          bumped=()
+          for NAME in "${!DIRS[@]}"; do
+            dir="${DIRS[$NAME]}"
+            LOCAL=$(node -e "console.log(require('./${dir}package.json').version)")
+            # If the package doesn't exist on npm yet, `npm view` exits non-zero -> treat as new (bumped)
+            NPM_VER=$(npm view "$NAME" version 2>/dev/null || echo "none")
+            if [ "$LOCAL" != "$NPM_VER" ]; then
+              echo "  -> will build/publish: $NAME ($NPM_VER -> $LOCAL)"
+              bumped+=("$NAME")
+            else
+              echo "  skip: $NAME already at $LOCAL"
+            fi
+          done
+
+          if [ ${#bumped[@]} -eq 0 ]; then
+            echo "Nothing to publish -- all bricks are already at their current version on npm."
+            exit 0
+          fi
+
+          # Build only the bumped bricks (pnpm --filter accepts multiple --filter flags)
+          FILTERS=()
+          for NAME in "${bumped[@]}"; do
+            FILTERS+=(--filter "$NAME")
+          done
+          pnpm "${FILTERS[@]}" run build
+
+          # Publish each bumped brick
+          for NAME in "${bumped[@]}"; do
+            dir="${DIRS[$NAME]}"
+            echo "Publishing $NAME from $dir..."
+            (cd "$dir" && npm publish --access public)
+          done
