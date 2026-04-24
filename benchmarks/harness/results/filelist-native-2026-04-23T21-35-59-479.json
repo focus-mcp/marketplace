@@ -1,0 +1,24 @@
+{
+  "brick": "filelist",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "started_at": "2026-04-23T21:34:47.901Z",
+  "duration_ms": 71578,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 104595,
+    "cache_read_input_tokens": 877911,
+    "output_tokens": 4615,
+    "total": 987160
+  },
+  "session_id": "6a4731b4-4eba-42ce-88c9-56c252c7d87d",
+  "result_block": "## Result\n\n- **Brick**: filelist\n- **Mode**: native\n- **Mini-task**: Enumerate all `.spec.ts` files in a NestJS monorepo and identify which modules have test coverage\n- **Answer**: The codebase has 200+ `.spec.ts` files across **5 packages** and **16 integration modules**:\n  - **packages WITH tests**: `common` (decorators, pipes, utils, services, exceptions), `core` (injector, hooks, guards, interceptors, middleware, inspector, errors), `microservices` (client, server, ctx-host, serializers, deserializers, json-socket), `websockets` (container, factories, decorators, context, exceptions), `platform-express` (adapters, multer interceptors/module)\n  - **packages WITHOUT tests**: `testing`, `platform-fastify`, `platform-socket.io`, `platform-ws`\n  - **integration modules**: `auto-mock`, `cors`, `discovery`, `graphql-code-first`, `graphql-schema-first`, `hello-world`, `hooks`, `injector`, `inspector`, `lazy-modules`, `microservices`, `module-utils`, `mongoose`, `nest-application`, `repl`, `scopes`\n- **Turns used**: 10\n- **Tools used**: `Read`, `Glob`, `Bash`\n- **Rough token estimate**: ~14,000 tokens (large Glob result sets with 100+ entries each, system prompt overhead, mcp-brick.json)\n- **Notes**: `find` command via `Bash` returned 0 results (likely sandbox restriction), but `Glob` worked correctly. Results were truncated on wide searches, requiring targeted per-package follow-up globs to get complete coverage. `Bash` was needed only to inspect directory structure, not to enumerate files.",
+  "workdir": "/tmp/focus-bench/filelist-native-2026-04-23T21-34-47-900",
+  "exit_reason": "ok"
+}

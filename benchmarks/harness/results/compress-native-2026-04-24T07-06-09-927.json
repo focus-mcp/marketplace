@@ -1,0 +1,25 @@
+{
+  "brick": "compress",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:04:02.169Z",
+  "duration_ms": 127758,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 48012,
+    "cache_read_input_tokens": 752050,
+    "output_tokens": 7461,
+    "total": 807571
+  },
+  "session_id": "c9f1d348-7cbb-4376-9b5f-450858327de0",
+  "result_block": "## Result\n- **Brick**: compress\n- **Mode**: native\n- **Mini-task**: Count lines remaining after aggressive compression of `streamable-options.interface.ts`\n- **Answer**: 5\n- **Turns used**: 6\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1,800\n- **Notes**: The file has 22 lines total — 17 are JSDoc comment lines (`/** … */`) and 5 are actual code lines. Simulated aggressive compression with Python (strip block comments, strip line comments, trim whitespace, drop blank lines) confirmed exactly 5 non-empty lines remain: the `export interface` declaration, three property lines (`type?`, `disposition?`, `length?`), and the closing `}`.",
+  "mini_task_spec": "Using the `compress` brick's `output` tool, apply **aggressive-level** compression to the file `test-repo/packages/common/file-stream/interfaces/streamable-options.interface.ts`. Aggressive compression strips all block comments (`/** … */`) and line comments (`// …`), collapses whitespace (trims leading/trailing spaces on each line), and removes blank lines.\n\nReport **the number of non-empty lines** in the compressed output.\n\nExpected answer format: a single integer.\n\n---",
+  "workdir": "/tmp/focus-bench/compress-native-2026-04-24T07-04-02-169",
+  "exit_reason": "ok"
+}

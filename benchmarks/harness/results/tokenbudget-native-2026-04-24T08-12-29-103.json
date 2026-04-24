@@ -1,0 +1,25 @@
+{
+  "brick": "tokenbudget",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:10:52.549Z",
+  "duration_ms": 96554,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 32264,
+    "cache_read_input_tokens": 457487,
+    "output_tokens": 5088,
+    "total": 494874
+  },
+  "session_id": "81c3dd57-2dbb-4a8e-b1c0-b3e6f6af2462",
+  "result_block": "## Result\n\n- **Brick**: tokenbudget\n- **Mode**: native\n- **Mini-task**: Rank all `.ts` files in `test-repo/packages/common/exceptions/` by estimated token cost (chars/4)\n- **Answer**:\n  ```\n  http.exception.ts 1488\n  im-a-teapot.exception.ts 554\n  http-version-not-supported.exception.ts 546\n  unsupported-media-type.exception.ts 539\n  internal-server-error.exception.ts 537\n  unprocessable-entity.exception.ts 535\n  service-unavailable.exception.ts 530\n  precondition-failed.exception.ts 530\n  method-not-allowed.exception.ts 527\n  payload-too-large.exception.ts 525\n  request-timeout.exception.ts 522\n  gateway-timeout.exception.ts 522\n  unauthorized.exception.ts 517\n  not-implemented.exception.ts 517\n  not-acceptable.exception.ts 517\n  misdirected.exception.ts 514\n  bad-request.exception.ts 514\n  bad-gateway.exception.ts 514\n  not-found.exception.ts 510\n  forbidden.exception.ts 510\n  conflict.exception.ts 508\n  gone.exception.ts 492\n  index.ts 252\n  intrinsic.exception.ts 54\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Glob (via Bash find/wc)\n- **Rough token estimate**: ~1,800\n- **Notes**: The brick's description says \"chars/4 heuristic, adjusted for code vs prose\" — the native implementation uses plain integer floor division (chars/4) with no code adjustment since the exact adjustment factor is not specified in the brick schema. If the brick applies a code-specific multiplier (e.g., 0.9× for denser code), results may differ slightly. `not-implemented.exception.ts` and `not-acceptable.exception.ts` both yield 517 tokens (same char count 2070); ties in the brick output may sort differently by filename.",
+  "mini_task_spec": "Using the `tokenbudget` brick's `analyze` tool, analyze the token cost of every `.ts` file in the directory `test-repo/packages/common/exceptions/`. Apply the brick's token-estimation heuristic (chars/4) to each file. List **all** files sorted by estimated token count in descending order. Report each file as `<basename> <estimated_tokens>` (one per line), where `basename` is the filename only (no directory prefix), and `estimated_tokens` is the integer result of floor(char_count / 4). Do **not** include the total row. The directory to analyze is `test-repo/packages/common/exceptions/`.\n\n---",
+  "workdir": "/tmp/focus-bench/tokenbudget-native-2026-04-24T08-10-52-549",
+  "exit_reason": "ok"
+}

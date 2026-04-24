@@ -1,0 +1,26 @@
+{
+  "brick": "heatmap",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:32:24.371Z",
+  "duration_ms": 57384,
+  "turns": 15,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__hm_hotfiles",
+    "mcp__focus__hm_track"
+  ],
+  "usage": {
+    "input_tokens": 54,
+    "cache_creation_input_tokens": 19107,
+    "cache_read_input_tokens": 341051,
+    "output_tokens": 3443,
+    "total": 363655
+  },
+  "session_id": "f7dc05ae-970a-4d74-879e-c144bd36a287",
+  "result_block": "## Result\n- **Brick**: heatmap\n- **Mode**: brick\n- **Mini-task**: Record 10 file access events against a NestJS monorepo and retrieve the top 3 hotfiles by combined read+write count\n- **Answer**:\n  1. `packages/common/decorators/core/inject.decorator.ts` (4)\n  2. `packages/core/injector/container.ts` (4)\n  3. `packages/core/injector/module.ts` (2)\n- **Turns used**: 13\n- **Tools used**: `mcp__focus__hm_track`, `mcp__focus__hm_hotfiles`\n- **Rough token estimate**: ~2,500\n- **Notes**: Both `inject.decorator.ts` and `container.ts` tied at 4 combined accesses (3 reads + 1 write each). The API returned `container.ts` first (likely insertion/last-access order), but per the task spec alphabetical ordering is applied for ties, placing `packages/common/…` before `packages/core/…`. `module.ts` had 2 accesses (1 read + 1 write).",
+  "workdir": "/tmp/focus-bench/heatmap-brick-2026-04-24T07-32-24-369",
+  "exit_reason": "ok"
+}

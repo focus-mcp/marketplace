@@ -1,0 +1,25 @@
+{
+  "brick": "shell",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:04:54.750Z",
+  "duration_ms": 20340,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__sh_exec"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 14585,
+    "cache_read_input_tokens": 116537,
+    "output_tokens": 888,
+    "total": 132035
+  },
+  "session_id": "093f1090-8c79-47f2-8f52-8c40b6ec3831",
+  "result_block": "## Result\n- **Brick**: shell\n- **Mode**: brick\n- **Mini-task**: Count TypeScript source files (`.ts`, excluding `.spec.ts` and `.d.ts`) inside `test-repo/packages/` recursively\n- **Answer**: 601\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__sh_exec`\n- **Rough token estimate**: ~1,200\n- **Notes**: No issues. The shell brick executed the `find` command directly and returned the count cleanly. Schema was loaded via `ToolSearch` before calling the tool.",
+  "workdir": "/tmp/focus-bench/shell-brick-2026-04-24T08-04-54-749",
+  "exit_reason": "ok"
+}

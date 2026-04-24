@@ -1,0 +1,26 @@
+{
+  "brick": "refs",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:48:39.449Z",
+  "duration_ms": 61044,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 49,
+    "cache_creation_input_tokens": 17394,
+    "cache_read_input_tokens": 661654,
+    "output_tokens": 3507,
+    "total": 682604
+  },
+  "session_id": "a2f5f3a3-86f3-4761-8097-e7725477c240",
+  "result_block": "## Result\n- **Brick**: refs\n- **Mode**: native\n- **Mini-task**: Find all files in `test-repo/packages` that implement the `PipeTransform` interface\n- **Answer**:\n```\npackages/common/pipes/default-value.pipe.ts\npackages/common/pipes/file/parse-file.pipe.ts\npackages/common/pipes/parse-array.pipe.ts\npackages/common/pipes/parse-bool.pipe.ts\npackages/common/pipes/parse-date.pipe.ts\npackages/common/pipes/parse-enum.pipe.ts\npackages/common/pipes/parse-float.pipe.ts\npackages/common/pipes/parse-int.pipe.ts\npackages/common/pipes/parse-uuid.pipe.ts\npackages/common/pipes/validation.pipe.ts\n```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: All 10 implementations are in `packages/common/pipes/`. The `Grep` tool found exact `implements PipeTransform` occurrences; `Bash` with `sort` produced the alphabetically-ordered list. No edge cases encountered.",
+  "mini_task_spec": "Using the **refs** brick's `implementations` tool, find all files within `test-repo/packages` that implement the `PipeTransform` interface (defined in `test-repo/packages/common/interfaces/features/pipe-transform.interface.ts`).\n\nScan only the `test-repo/packages` directory. Return the list of matching file paths, relative to `test-repo/`, sorted alphabetically, one per line. Each path should start with `packages/`.",
+  "workdir": "/tmp/focus-bench/refs-native-2026-04-24T07-48-39-449",
+  "exit_reason": "ok"
+}

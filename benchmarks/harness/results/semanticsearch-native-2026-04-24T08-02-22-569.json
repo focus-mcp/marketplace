@@ -1,0 +1,25 @@
+{
+  "brick": "semanticsearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:59:05.335Z",
+  "duration_ms": 197234,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 63,
+    "cache_creation_input_tokens": 56466,
+    "cache_read_input_tokens": 1136124,
+    "output_tokens": 11107,
+    "total": 1203760
+  },
+  "session_id": "be103e65-abdd-4c4d-a3cf-2eff9df6986b",
+  "result_block": "## Result\n\n- **Brick**: semanticsearch\n- **Mode**: native\n- **Mini-task**: Find top-3 TF-IDF-similar injector files to query \"module exports imports controllers\"\n- **Answer**:\n  ```\n  module.ts\n  injector.ts\n  instance-links-host.ts\n  ```\n- **Turns used**: 12\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~4,500\n- **Notes**: The winning file `module.ts` achieves near-perfect cosine similarity (0.997) because it contains all four query terms (`module`, `exports`, `imports`, `controllers`) with strong TF values. `injector.ts` is a clear second (0.695) as it contains all four terms. `instance-links-host.ts` ranks third (0.514) via high TF for `controllers` and `module` despite missing `exports`/`imports`. The IDF formula used is `log((N+1)/(df+1))+1` (sklearn-style smooth IDF). Results 3–10 were close enough that a different IDF formula could re-order positions 3–5; the spec should tolerate minor variation at rank 3 if the brick's implementation differs.",
+  "mini_task_spec": "Using the 12 TypeScript source files listed below from `test-repo/packages/core/injector/` as a TF-IDF document corpus (each document's text = full file contents), compute cosine similarity against the query **`\"module exports imports controllers\"`** and return the **top 3** most relevant files.\n\nCorpus files (all relative to `test-repo/packages/core/injector/`):\n- `abstract-instance-resolver.ts`\n- `compiler.ts`\n- `container.ts`\n- `injector.ts`\n- `instance-links-host.ts`\n- `instance-loader.ts`\n- `instance-wrapper.ts`\n- `internal-providers-storage.ts`\n- `module-ref.ts`\n- `modules-container.ts`\n- `module.ts`\n- `settlement-signal.ts`\n\nUse each file's full text content as the document body. Apply standard TF-IDF vectorization (tokenize by splitting on non-alpha characters, lowercase; IDF = log((N+1)/(df+1))+1; TF = term_count/doc_length; cosine similarity). Report the **top 3 results** as a list of bare filenames (no path prefix), one per line, ordered from most to least relevant (highest cosine similarity first).\n\n---",
+  "workdir": "/tmp/focus-bench/semanticsearch-native-2026-04-24T07-59-05-335",
+  "exit_reason": "ok"
+}

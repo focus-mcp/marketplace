@@ -1,0 +1,26 @@
+{
+  "brick": "memory",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:34:52.363Z",
+  "duration_ms": 115793,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 40,
+    "cache_creation_input_tokens": 25109,
+    "cache_read_input_tokens": 576083,
+    "output_tokens": 6625,
+    "total": 607857
+  },
+  "session_id": "5f854f5d-4e2d-4f45-a851-e2c214761bab",
+  "result_block": "## Result\n- **Brick**: memory\n- **Mode**: native\n- **Mini-task**: Catalog all PipeTransform classes in packages/common/pipes as memory key-value entries\n- **Answer**:\n  ```\n  nest:pipe:DefaultValuePipe=packages/common/pipes/default-value.pipe.ts\n  nest:pipe:ParseArrayPipe=packages/common/pipes/parse-array.pipe.ts\n  nest:pipe:ParseBoolPipe=packages/common/pipes/parse-bool.pipe.ts\n  nest:pipe:ParseDatePipe=packages/common/pipes/parse-date.pipe.ts\n  nest:pipe:ParseEnumPipe=packages/common/pipes/parse-enum.pipe.ts\n  nest:pipe:ParseFilePipe=packages/common/pipes/file/parse-file.pipe.ts\n  nest:pipe:ParseFloatPipe=packages/common/pipes/parse-float.pipe.ts\n  nest:pipe:ParseIntPipe=packages/common/pipes/parse-int.pipe.ts\n  nest:pipe:ParseUUIDPipe=packages/common/pipes/parse-uuid.pipe.ts\n  nest:pipe:ValidationPipe=packages/common/pipes/validation.pipe.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,000\n- **Notes**: The `grep -o 'export class [A-Za-z]*'` extraction correctly stripped generic type params. `ParseFilePipeBuilder` (in `parse-file-pipe.builder.ts`) does NOT implement `PipeTransform` so it was correctly excluded. All 10 entries are unambiguous.",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/`, find every TypeScript class declared in `test-repo/packages/common/pipes` (including all subdirectories) that explicitly `implements PipeTransform`. For each such class, store a memory entry using:\n- **key**: `nest:pipe:<ClassName>` — use only the bare class name (strip any generic type parameters, e.g. `ParseEnumPipe<T>` → `ParseEnumPipe`)\n- **value**: the file's path relative to `test-repo/` (e.g. `packages/common/pipes/validation.pipe.ts`)\n\nAfter storing all entries, list every stored key using the memory `list` tool. Return the complete set of key=value pairs sorted alphabetically by key, one per line in the format `<key>=<value>`.\n\nExpected answer format: 10 lines, each `nest:pipe:<ClassName>=packages/common/pipes/...`, sorted alphabetically by key.\n\n---",
+  "workdir": "/tmp/focus-bench/memory-native-2026-04-24T07-34-52-363",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,24 @@
+{
+  "brick": "onboarding",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:40:41.902Z",
+  "duration_ms": 33927,
+  "turns": 7,
+  "tools_used": [
+    "Read",
+    "ToolSearch"
+  ],
+  "usage": {
+    "input_tokens": 27,
+    "cache_creation_input_tokens": 16938,
+    "cache_read_input_tokens": 129610,
+    "output_tokens": 1705,
+    "total": 148280
+  },
+  "session_id": "e531a6a3-1084-4e46-8f0a-f6618fd29e7e",
+  "result_block": "## Result\n- **Brick**: onboarding\n- **Mode**: brick\n- **Mini-task**: Identify key onboarding facts from a NestJS monorepo using only project config files\n- **Answer**: N/A — brick tools unavailable\n- **Turns used**: 4\n- **Tools used**: *(none — mcp__focus__* tools not present in session)*\n- **Rough token estimate**: ~1,200\n- **Notes**: `ToolSearch` for `mcp__focus__onb_scan` and `mcp__focus__onb_guide` returned no results; no `mcp__focus__*` tools appear in the deferred tool list or as directly callable tools. The focus MCP server is not configured in this environment. Per task rules, stopping and reporting unavailability.",
+  "workdir": "/tmp/focus-bench/onboarding-brick-2026-04-24T07-40-41-901",
+  "exit_reason": "ok"
+}

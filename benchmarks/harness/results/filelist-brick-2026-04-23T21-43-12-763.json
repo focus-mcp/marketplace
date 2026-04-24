@@ -1,0 +1,29 @@
+{
+  "brick": "filelist",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-23T21:40:43.104Z",
+  "duration_ms": 149659,
+  "turns": 11,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__fl_find",
+    "mcp__focus__fl_glob",
+    "mcp__focus__fl_list",
+    "mcp__focus__fl_tree",
+    "mcp__focus__focus_load"
+  ],
+  "usage": {
+    "input_tokens": 46,
+    "cache_creation_input_tokens": 92585,
+    "cache_read_input_tokens": 251589,
+    "output_tokens": 11016,
+    "total": 355236
+  },
+  "session_id": "d257d38f-7e02-4265-8891-14d4a6ee8d32",
+  "result_block": "## Result\n\n- **Brick**: filelist\n- **Mode**: brick\n- **Mini-task**: Find all *.spec.ts files in the NestJS test-repo and list their paths\n- **Answer**: 384 `.spec.ts` files found across three top-level directories: `sample/` (35 files, unit tests for sample apps), `packages/` (163 files, unit tests for core NestJS packages: common, core, microservices, platform-express, platform-fastify, platform-socket.io, websockets), and `integration/` (186 files, e2e integration tests for hello-world, injector, hooks, microservices, graphql, versioning, scopes, etc.). Notable: `fl_glob` with `**/*.spec.ts` returned no matches (no recursive glob support); `fl_find` with substring `.spec.ts` successfully returned all 384 paths.\n- **Turns used**: 5\n- **Tools used**: Read, ToolSearch, mcp__focus__focus_load, mcp__focus__fl_glob, mcp__focus__fl_list, mcp__focus__fl_tree, mcp__focus__fl_find\n- **Rough token estimate**: ~18,000 tokens (mcp-brick.json read ~500t, fl_tree output ~3,000t, fl_find result ~12,000t for 384 paths, surrounding prompts/overhead ~2,500t)\n- **Notes**: The `fl_glob` tool does not support recursive `**` patterns — it returned `{\"matches\":[]}` for `**/*.spec.ts`. The `fl_find` substring-match tool was the correct tool for this task and worked perfectly. The brick's `glob` tool appears limited to flat single-directory patterns only.\n```",
+  "workdir": "/tmp/focus-bench/filelist-brick-2026-04-23T21-40-43-102",
+  "exit_reason": "ok"
+}

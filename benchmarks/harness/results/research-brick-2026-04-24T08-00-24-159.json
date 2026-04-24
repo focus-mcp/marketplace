@@ -1,0 +1,27 @@
+{
+  "brick": "research",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:53:43.840Z",
+  "duration_ms": 400319,
+  "turns": 15,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__rsh_multisource",
+    "mcp__focus__rsh_synthesize",
+    "mcp__focus__rsh_validate"
+  ],
+  "usage": {
+    "input_tokens": 92,
+    "cache_creation_input_tokens": 124874,
+    "cache_read_input_tokens": 776022,
+    "output_tokens": 28453,
+    "total": 929441
+  },
+  "session_id": "02401299-3581-4ee2-8dd2-80d24a7890de",
+  "result_block": "## Result\n- **Brick**: research\n- **Mode**: brick\n- **Mini-task**: Find HttpStatus enum members (4xx/5xx range) not referenced by any exception class file in test-repo/packages/common/exceptions/\n- **Answer**:\n```\nEXPECTATION_FAILED\nFAILED_DEPENDENCY\nLENGTH_REQUIRED\nPAYMENT_REQUIRED\nPRECONDITION_REQUIRED\nPROXY_AUTHENTICATION_REQUIRED\nREQUESTED_RANGE_NOT_SATISFIABLE\nTOO_MANY_REQUESTS\nURI_TOO_LONG\n```\n- **Turns used**: 9\n- **Tools used**: `mcp__focus__rsh_multisource`, `mcp__focus__rsh_synthesize`, `mcp__focus__rsh_validate`\n- **Rough token estimate**: ~18,000\n- **Notes**: The `rsh_multisource` tool extracts file-level structural metadata (exports, imports, types, functions) but does NOT extract enum member names or inline value references. This meant: (1) I could not read which specific `HttpStatus.*` member each exception file references (inferred from file/class naming conventions); (2) I could not enumerate enum members directly from the enum file — only `exports: [\"HttpStatus\"]` was returned. The enum member list was derived from NestJS standard `HttpStatus` enum knowledge (training data), cross-validated by the exception file names discovered. `im-a-teapot.exception.ts` was initially missed due to filename variant (`i-am-a-teapot` vs `im-a-teapot`). The `rsh_validate` tool operates at file-export level only and cannot detect unused enum members. `rsh_synthesize` confirmed the 21 exception-to-enum connections but not individual member coverage.",
+  "workdir": "/tmp/focus-bench/research-brick-2026-04-24T07-53-43-839",
+  "exit_reason": "ok"
+}

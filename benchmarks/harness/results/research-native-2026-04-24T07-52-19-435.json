@@ -1,0 +1,25 @@
+{
+  "brick": "research",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:50:15.567Z",
+  "duration_ms": 123868,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 53,
+    "cache_creation_input_tokens": 68891,
+    "cache_read_input_tokens": 907346,
+    "output_tokens": 7053,
+    "total": 983343
+  },
+  "session_id": "c455ecac-e157-4e7d-87e7-2b044a06ad75",
+  "result_block": "## Result\n- **Brick**: research\n- **Mode**: native\n- **Mini-task**: Identify pipes with non-standard `HttpStatus` import paths and missing `@publicApi` annotations\n- **Answer**:\n  ```\n  Q1:\n  parse-enum.pipe.ts\n  parse-float.pipe.ts\n  Q2:\n  parse-date.pipe.ts\n  ```\n- **Turns used**: 11\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~6,000\n- **Notes**: All six parse pipes default to `HttpStatus.BAD_REQUEST` for `errorHttpStatusCode`. Two files (`parse-float.pipe.ts`, `parse-enum.pipe.ts`) diverge from the norm by importing `HttpStatus` from the barrel `'../index'` instead of the specific enum path. One file (`parse-date.pipe.ts`) is missing `@publicApi` annotations on both its interface and class, unlike the other five which consistently mark both. These are exactly the kind of cross-file inconsistencies the research brick's `validate` tool is designed to surface.",
+  "mini_task_spec": "Read and analyze the following six pipe source files located in `test-repo/packages/common/pipes/`:\n- `parse-int.pipe.ts`\n- `parse-float.pipe.ts`\n- `parse-bool.pipe.ts`\n- `parse-uuid.pipe.ts`\n- `parse-date.pipe.ts`\n- `parse-enum.pipe.ts`\n\nFor each file, extract:\n1. The name of the exported Options interface and whether it carries a `@publicApi` JSDoc annotation.\n2. The name of the exported class and whether it carries a `@publicApi` JSDoc annotation.\n3. The exact import path used to bring in `HttpStatus` (either `'../enums/http-status.enum'` or `'../index'`).\n\nThen answer these two questions and format the answer exactly as shown:\n\n**Q1** – Which files import `HttpStatus` via the barrel path `'../index'` instead of the direct path `'../enums/http-status.enum'`? List file names (basename only), one per line, sorted alphabetically.\n\n**Q2** – Which files are missing the `@publicApi` JSDoc annotation on their exported class? List file names (basename only), one per line, sorted alphabetically.\n\nExpected answer format:\n```\nQ1:\n<file>\n<file>\nQ2:\n<file>\n```",
+  "workdir": "/tmp/focus-bench/research-native-2026-04-24T07-50-15-567",
+  "exit_reason": "ok"
+}

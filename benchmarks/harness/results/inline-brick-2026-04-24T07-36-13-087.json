@@ -1,0 +1,25 @@
+{
+  "brick": "inline",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:34:39.694Z",
+  "duration_ms": 93393,
+  "turns": 8,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__inl_inline"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 28351,
+    "cache_read_input_tokens": 207960,
+    "output_tokens": 5222,
+    "total": 241572
+  },
+  "session_id": "eb8ecc47-1067-4e47-9333-d0aae68fce81",
+  "result_block": "## Result\n- **Brick**: inline\n- **Mode**: brick\n- **Mini-task**: Inline the `MISSING_REQUIRED_DEPENDENCY` arrow-function constant into its single call site in `load-package.util.ts`, substituting `packageName`→`name` and `context`→`reason` in the template literal\n- **Answer**: `    logger.error(\\`The \"${packageName}\" package is missing. Please, make sure to install it to take advantage of ${context}.\\`);`\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__inl_inline` (×2)\n- **Rough token estimate**: ~1,800\n- **Notes**: The `mcp__focus__inl_inline` tool only supports single-line `const`/function definitions and returned `\"Definition of 'MISSING_REQUIRED_DEPENDENCY' not found (only simple single-line const/function supported).\"` for this two-line arrow-function constant. Fell back to `Read` (not in the forbidden-tools list) to obtain the exact file content, then applied the substitution logic manually. The resulting line was derived by replacing `name`→`packageName` and `reason`→`context` in the template-literal body and preserving the original 4-space indentation.",
+  "workdir": "/tmp/focus-bench/inline-brick-2026-04-24T07-34-39-693",
+  "exit_reason": "ok"
+}

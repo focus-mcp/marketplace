@@ -1,0 +1,31 @@
+{
+  "brick": "graphcluster",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:27:24.307Z",
+  "duration_ms": 134169,
+  "turns": 16,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__gc_architecture",
+    "mcp__focus__gc_cluster",
+    "mcp__focus__gc_communities"
+  ],
+  "usage": {
+    "input_tokens": 65,
+    "cache_creation_input_tokens": 30045,
+    "cache_read_input_tokens": 441608,
+    "output_tokens": 6619,
+    "total": 478337
+  },
+  "session_id": "79e1c9ce-abe8-42fc-b7d6-f31b21930f6a",
+  "result_block": "## Result\n- **Brick**: graphcluster\n- **Mode**: brick\n- **Mini-task**: Find all bidirectional (mutual) import pairs among top-level subdirectories of `test-repo/packages/core/` in a NestJS monorepo\n- **Answer**: Unable to determine — the focus graph is empty; all `gc_*` tools (`gc_architecture`, `gc_cluster`, `gc_communities`, `gc_communities minSize=1`) returned zero nodes, zero clusters, and zero communities. No bidirectional pairs can be reported from tool output alone.\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__gc_architecture`, `mcp__focus__gc_cluster`, `mcp__focus__gc_communities`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~3,500\n- **Notes**: The FocusMCP server is reachable and the graphcluster brick is loaded, but the underlying code graph was never populated with the test-repo. All graph tools (`gc_architecture`, `gc_cluster`, `gc_communities`) returned empty results (`{\"layers\":[]}`, `{\"clusters\":[],\"totalClusters\":0}`, `{\"communities\":[]}`). No tool in the available `mcp__focus__*` set (including `focus_install`, `focus_catalog_add`, `focus_reload`) provides a mechanism to index a local directory into the graph. This is a test-environment setup failure: the focus graph must be pre-built from the codebase before `gc_*` tools can operate. Native tools (`Bash`, `Grep`, `Glob`) were forbidden and not used.",
+  "workdir": "/tmp/focus-bench/graphcluster-brick-2026-04-24T07-27-24-306",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "overview",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:40:53.021Z",
+  "duration_ms": 153113,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 56,
+    "cache_creation_input_tokens": 85184,
+    "cache_read_input_tokens": 1299678,
+    "output_tokens": 9555,
+    "total": 1394473
+  },
+  "session_id": "c0f0eb97-f90f-4ee0-80e6-19be86ac7506",
+  "result_block": "## Result\n- **Brick**: multiread\n- **Mode**: native\n- **Mini-task**: List all TypeScript classes in `test-repo/packages/common/exceptions/*.exception.ts` that directly extend `HttpException`, sorted alphabetically\n- **Answer**:\n  ```\n  BadGatewayException\n  BadRequestException\n  ConflictException\n  ForbiddenException\n  GatewayTimeoutException\n  GoneException\n  HttpVersionNotSupportedException\n  ImATeapotException\n  InternalServerErrorException\n  MethodNotAllowedException\n  MisdirectedException\n  NotAcceptableException\n  NotFoundException\n  NotImplementedException\n  PayloadTooLargeException\n  PreconditionFailedException\n  RequestTimeoutException\n  ServiceUnavailableException\n  UnauthorizedException\n  UnprocessableEntityException\n  UnsupportedMediaTypeException\n  ```\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~5,500 tokens\n- **Notes**: The task directly exercises the `multiread` brick's `batch` tool: all 23 `.exception.ts` files can be read in a single call, compared to 23 individual `Read` calls in native mode. Two files were excluded from the result: `http.exception.ts` (the base class) and `intrinsic.exception.ts` (extends `Error`, not `HttpException`). The `im-a-teapot.exception.ts` file uses a backtick template literal for its default description (`\\`I'm a teapot\\``), while all others use single-quoted strings.",
+  "mini_task_spec": "In `test-repo/packages/common/exceptions/`, there are multiple `*.exception.ts` TypeScript files. Using the `multiread` brick's `batch` tool, read all `*.exception.ts` files in that directory at once (there are 23 such files). Then identify every TypeScript class that **directly extends `HttpException`** (i.e. whose class declaration matches `extends HttpException`). Do NOT include `HttpException` itself or any class that extends `Error` instead (e.g. `IntrinsicException`). Return the list of matching class names sorted **alphabetically**, one per line.\n\nExpected answer format: plain list of class names, one per line, sorted A–Z.\n\n---",
+  "workdir": "/tmp/focus-bench/overview-native-2026-04-24T07-40-53-021",
+  "exit_reason": "ok"
+}

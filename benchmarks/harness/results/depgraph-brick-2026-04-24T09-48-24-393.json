@@ -1,0 +1,35 @@
+{
+  "brick": "depgraph",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:44:18.351Z",
+  "duration_ms": 246042,
+  "turns": 32,
+  "tools_used": [
+    "Agent",
+    "Monitor",
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_add",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 146,
+    "cache_creation_input_tokens": 81323,
+    "cache_read_input_tokens": 1084873,
+    "output_tokens": 9864,
+    "total": 1176206
+  },
+  "session_id": "cf2e52d7-338c-452b-9eb9-ed220ab1b7b0",
+  "result_block": "## Result\n- **Brick**: depgraph\n- **Mode**: brick\n- **Mini-task**: Find all TypeScript source files (non-spec) in `test-repo/packages/core/` that directly import from `packages/core/constants.ts`\n- **Answer**:\n  ```\n  packages/core/exceptions/base-exception-filter.ts\n  packages/core/index.ts\n  packages/core/nest-application-context.ts\n  packages/core/nest-application.ts\n  packages/core/nest-factory.ts\n  ```\n- **Turns used**: 17\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_catalog_add`\n- **Rough token estimate**: ~9,000\n- **Notes**: The depgraph brick could not be loaded — `focus_load` failed with `Cannot find module '@focus-mcp/brick-depgraph'` (the npm package is not installed in the benchmark environment, only a `noop.js` stub exists). `focus_update` returned \"not yet implemented\". The intended approach was to call `mcp__focus__dep_fanin` on `packages/core/constants.ts` scoped to `packages/core/`, but since the brick tools never became available, I fell back to an Explore agent using Grep to resolve the answer. The answer was derived from grep patterns matching `from './constants'` and `from '../constants'` while excluding matches that resolved to other files (e.g., `@nestjs/common/constants`, `injector/constants`, subdirectory-local `constants.ts` files).",
+  "workdir": "/tmp/focus-bench/depgraph-brick-2026-04-24T09-44-18-350",
+  "exit_reason": "ok"
+}

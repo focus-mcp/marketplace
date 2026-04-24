@@ -1,0 +1,26 @@
+{
+  "brick": "repos",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:50:16.011Z",
+  "duration_ms": 30499,
+  "turns": 7,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__repos_register",
+    "mcp__focus__repos_stats"
+  ],
+  "usage": {
+    "input_tokens": 26,
+    "cache_creation_input_tokens": 13196,
+    "cache_read_input_tokens": 123818,
+    "output_tokens": 1140,
+    "total": 138180
+  },
+  "session_id": "025cfc19-1947-46c2-8159-47eb7a9e8852",
+  "result_block": "## Result\n- **Brick**: repos\n- **Mode**: brick\n- **Mini-task**: Register `test-repo/packages/common` and retrieve its total file count and total line count\n- **Answer**:\n  ```\n  Files: 269\n  Lines: 18133\n  ```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__repos_register`, `mcp__focus__repos_stats`\n- **Rough token estimate**: ~1,200\n- **Notes**: Registration succeeded immediately. Stats returned a language breakdown alongside the totals (`.ts`: 238, `.bak`: 21, `.md`: 4, `.json`: 4, `.bak2`: 2). No unexpected behavior.",
+  "workdir": "/tmp/focus-bench/repos-brick-2026-04-24T07-50-16-010",
+  "exit_reason": "ok"
+}

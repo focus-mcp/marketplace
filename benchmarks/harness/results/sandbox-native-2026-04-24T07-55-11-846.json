@@ -1,0 +1,25 @@
+{
+  "brick": "sandbox",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:53:54.634Z",
+  "duration_ms": 77212,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 31,
+    "cache_creation_input_tokens": 13796,
+    "cache_read_input_tokens": 379930,
+    "output_tokens": 3557,
+    "total": 397314
+  },
+  "session_id": "88ff843b-9108-48cb-8e12-c2a28821cd88",
+  "result_block": "## Result\n\n- **Brick**: sandbox\n- **Mode**: native\n- **Mini-task**: Find the NestJS sub-package with the most direct runtime dependencies\n- **Answer**: `@nestjs/platform-fastify` (10 direct runtime dependencies)\n- **Turns used**: 7\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~2,500\n- **Notes**: In native mode this is straightforward with Bash + Python's json module. In brick mode, the `box__run` tool would naturally express this as a JS snippet reading/parsing the 9 package.json files and reducing over dependency counts — a natural fit for the sandbox brick's `run` or `eval` tools.",
+  "mini_task_spec": "The NestJS monorepo at `test-repo/` contains 9 sub-packages under `test-repo/packages/`. Each sub-package has a `package.json` file with a `name` field and a `dependencies` field listing its direct runtime dependencies.\n\n**Task**: Identify which of the 9 sub-packages (located at `test-repo/packages/common`, `test-repo/packages/core`, `test-repo/packages/microservices`, `test-repo/packages/platform-express`, `test-repo/packages/platform-fastify`, `test-repo/packages/platform-socket.io`, `test-repo/packages/platform-ws`, `test-repo/packages/testing`, `test-repo/packages/websockets`) has the **greatest number of entries in its `dependencies` field** in its `package.json`. Report the npm package name of that sub-package exactly as it appears in the `name` field of its `package.json`.\n\nUse the sandbox brick's `run` tool to write and execute a JavaScript snippet (or the `eval` tool for a single expression) that reads and parses each of the 9 `package.json` files, counts the keys in each `dependencies` object, and identifies the package name with the highest count.\n\n**Expected answer format**: A single npm package name string (e.g. `@nestjs/something`).\n\n---",
+  "workdir": "/tmp/focus-bench/sandbox-native-2026-04-24T07-53-54-634",
+  "exit_reason": "ok"
+}

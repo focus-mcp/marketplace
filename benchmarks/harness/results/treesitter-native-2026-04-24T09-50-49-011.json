@@ -1,0 +1,26 @@
+{
+  "brick": "treesitter",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:49:52.145Z",
+  "duration_ms": 56866,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 30977,
+    "cache_read_input_tokens": 426486,
+    "output_tokens": 3060,
+    "total": 460556
+  },
+  "session_id": "22729eff-663e-4b73-85ca-28b14a9ed38e",
+  "result_block": "## Result\n- **Brick**: treesitter\n- **Mode**: native\n- **Mini-task**: List all exported class names in `test-repo/packages/common/exceptions/` sorted alphabetically\n- **Answer**:\n  ```\n  BadGatewayException\n  BadRequestException\n  ConflictException\n  ForbiddenException\n  GatewayTimeoutException\n  GoneException\n  HttpException\n  HttpVersionNotSupportedException\n  ImATeapotException\n  InternalServerErrorException\n  IntrinsicException\n  MethodNotAllowedException\n  MisdirectedException\n  NotAcceptableException\n  NotFoundException\n  NotImplementedException\n  PayloadTooLargeException\n  PreconditionFailedException\n  RequestTimeoutException\n  ServiceUnavailableException\n  UnauthorizedException\n  UnprocessableEntityException\n  UnsupportedMediaTypeException\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: Straightforward grep-based approach. The treesitter brick would expose this via its `index` + symbol query tools, but natively it's a simple `grep \"^export class\"` across the directory. All 23 classes are direct declarations (not re-exports), so the answer is clean and deterministic.",
+  "mini_task_spec": "Using the treesitter brick, index the directory `test-repo/packages/common/exceptions/` and then identify all exported class names defined in the TypeScript files within that directory. Return the list of class names sorted alphabetically, one per line. Do not include class names re-exported from other modules — only those directly declared with `export class` in a `.ts` file under that directory.",
+  "workdir": "/tmp/focus-bench/treesitter-native-2026-04-24T09-49-52-145",
+  "exit_reason": "ok"
+}

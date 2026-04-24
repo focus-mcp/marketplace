@@ -1,0 +1,26 @@
+{
+  "brick": "review",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:51:53.882Z",
+  "duration_ms": 97532,
+  "turns": 10,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__rev_code",
+    "mcp__focus__rev_security"
+  ],
+  "usage": {
+    "input_tokens": 55,
+    "cache_creation_input_tokens": 22954,
+    "cache_read_input_tokens": 238487,
+    "output_tokens": 5366,
+    "total": 266862
+  },
+  "session_id": "5cf5cc8f-7d03-43c2-8d86-58b63d62a85a",
+  "result_block": "## Result\n- **Brick**: review\n- **Mode**: brick\n- **Mini-task**: Use `rev_security` to identify all hardcoded username:password pairs in `test-repo/sample/19-auth-jwt/src/users/users.service.ts`\n- **Answer**:\n  The `rev_security` tool confirmed **two hardcoded credentials** (lines 12 and 17, severity: error), but the tool output does not expose the actual plaintext values — it returns only:\n  ```\n  line 12: \"Hardcoded password detected — use environment variables\"\n  line 17: \"Hardcoded password detected — use environment variables\"\n  ```\n  The actual `username:password` pairs are **not surfaced by any available `mcp__focus__*` tool**. Brick tools alone are insufficient to answer this question as specified.\n- **Turns used**: 6\n- **Tools used**: `mcp__focus__rev_security`, `mcp__focus__rev_code`, `mcp__focus__focus_search`, `mcp__focus__focus_load`\n- **Rough token estimate**: ~1,800\n- **Notes**: The `rev_security` tool detects hardcoded-credential issues and returns line numbers + severity, but deliberately does not echo the actual secret values in findings output. This is reasonable security tool design (avoid leaking secrets in logs/output), but it means the brick cannot fulfill the benchmark's \"list all username:password pairs\" requirement without supplementary file-read access. `rev_code` returned no findings (score 10). `focus_search` only queries the marketplace catalog. No `mcp__focus__*` tool provides raw file content access.",
+  "workdir": "/tmp/focus-bench/review-brick-2026-04-24T07-51-53-881",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "codeedit",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:06:11.253Z",
+  "duration_ms": 23963,
+  "turns": 5,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__ce_safedelete"
+  ],
+  "usage": {
+    "input_tokens": 23,
+    "cache_creation_input_tokens": 14512,
+    "cache_read_input_tokens": 105011,
+    "output_tokens": 1165,
+    "total": 120711
+  },
+  "session_id": "a4629d0a-6dac-446a-8921-e4007238d67f",
+  "result_block": "## Result\n- **Brick**: codeedit\n- **Mode**: brick\n- **Mini-task**: Check if `generateOptionsInjectionToken` can be safely deleted from `test-repo/packages/`\n- **Answer**: `BLOCKED by: packages/common/module-utils/configurable-module.builder.ts`\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__ce_safedelete`\n- **Rough token estimate**: ~1,200 tokens\n- **Notes**: The `safedelete` tool ran cleanly in dry-run mode (`apply: false`). It returned `blocked: true` with one dependent — `common/module-utils/configurable-module.builder.ts` — reported relative to the `dir` (`test-repo/packages`). Prepended `packages/` to form the path relative to `test-repo`.",
+  "workdir": "/tmp/focus-bench/codeedit-brick-2026-04-24T07-06-11-252",
+  "exit_reason": "ok"
+}

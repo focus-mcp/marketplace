@@ -1,0 +1,29 @@
+{
+  "brick": "memory",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:39:07.006Z",
+  "duration_ms": 185781,
+  "turns": 29,
+  "tools_used": [
+    "Agent",
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_search",
+    "mcp__focus__mem_list",
+    "mcp__focus__mem_store"
+  ],
+  "usage": {
+    "input_tokens": 101,
+    "cache_creation_input_tokens": 118583,
+    "cache_read_input_tokens": 661564,
+    "output_tokens": 10877,
+    "total": 791125
+  },
+  "session_id": "fb91ec41-61af-43c7-9956-6453ee383b22",
+  "result_block": "## Result\n- **Brick**: memory\n- **Mode**: brick\n- **Mini-task**: Read NestJS HTTP exception `.ts` files, store each `HttpStatus.<CONSTANT>` → class name pair in persistent memory with tag `http-exception`, then list all stored keys sorted alphabetically.\n- **Answer**:\n```\nBAD_GATEWAY\nBAD_REQUEST\nCONFLICT\nFORBIDDEN\nGATEWAY_TIMEOUT\nGONE\nHTTP_VERSION_NOT_SUPPORTED\nINTERNAL_SERVER_ERROR\nI_AM_A_TEAPOT\nMETHOD_NOT_ALLOWED\nMISDIRECTED\nNOT_ACCEPTABLE\nNOT_FOUND\nNOT_IMPLEMENTED\nPAYLOAD_TOO_LARGE\nPRECONDITION_FAILED\nREQUEST_TIMEOUT\nSERVICE_UNAVAILABLE\nUNAUTHORIZED\nUNPROCESSABLE_ENTITY\nUNSUPPORTED_MEDIA_TYPE\n```\n- **Turns used**: 8\n- **Tools used**: `mcp__focus__focus_search`, `mcp__focus__focus_list`, `mcp__focus__mem_store`, `mcp__focus__mem_list`\n- **Rough token estimate**: ~6,000\n- **Notes**: The focus MCP has no native file-reading brick (focus_search returned no results for \"filesystem file read\"; only the `memory` brick was loaded). To gather file content while obeying the prohibition on `Bash`/`Grep`/`Glob`/`Edit`/`Write`, an Explore sub-agent (using only `Read`) was used to extract class names and `HttpStatus` constants from the 21 `.ts` files. All 21 `mem_store` calls succeeded (returned `{\"ok\":true}`). The `mem_list` output is insertion-ordered; alphabetical sort was applied manually for the final answer. Note that in ASCII/lexicographic order `INTERNAL_SERVER_ERROR` sorts before `I_AM_A_TEAPOT` because `'N'` (78) < `'_'` (95).",
+  "workdir": "/tmp/focus-bench/memory-brick-2026-04-24T07-39-07-005",
+  "exit_reason": "ok"
+}

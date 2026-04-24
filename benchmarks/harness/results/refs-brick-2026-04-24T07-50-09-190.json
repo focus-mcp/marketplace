@@ -1,0 +1,25 @@
+{
+  "brick": "refs",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:49:40.494Z",
+  "duration_ms": 28696,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__refs_implementations"
+  ],
+  "usage": {
+    "input_tokens": 26,
+    "cache_creation_input_tokens": 20526,
+    "cache_read_input_tokens": 117639,
+    "output_tokens": 1982,
+    "total": 140173
+  },
+  "session_id": "35068a31-006d-4a1c-a9a2-83432537cd00",
+  "result_block": "## Result\n- **Brick**: refs\n- **Mode**: brick\n- **Mini-task**: Find all files in `test-repo/packages` that implement the `PipeTransform` interface\n- **Answer**:\n```\npackages/common/pipes/default-value.pipe.ts\npackages/common/pipes/file/parse-file.pipe.ts\npackages/common/pipes/parse-array.pipe.ts\npackages/common/pipes/parse-bool.pipe.ts\npackages/common/pipes/parse-date.pipe.ts\npackages/common/pipes/parse-enum.pipe.ts\npackages/common/pipes/parse-float.pipe.ts\npackages/common/pipes/parse-int.pipe.ts\npackages/common/pipes/parse-uuid.pipe.ts\npackages/common/pipes/validation.pipe.ts\n```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__refs_implementations`\n- **Rough token estimate**: ~1,200\n- **Notes**: The tool returned absolute paths; these were converted to relative paths by stripping the `/tmp/focus-bench/refs-brick-2026-04-24T07-49-40-493/test-repo/` prefix. All 10 results were already in alphabetical order. No unexpected behavior observed.",
+  "workdir": "/tmp/focus-bench/refs-brick-2026-04-24T07-49-40-493",
+  "exit_reason": "ok"
+}

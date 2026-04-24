@@ -1,0 +1,26 @@
+{
+  "brick": "convert",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:09:07.498Z",
+  "duration_ms": 118618,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 47,
+    "cache_creation_input_tokens": 29105,
+    "cache_read_input_tokens": 653804,
+    "output_tokens": 6849,
+    "total": 689805
+  },
+  "session_id": "c7670bb6-aa5e-4bd3-ab84-3ab2193d9ec7",
+  "result_block": "## Result\n\n- **Brick**: convert\n- **Mode**: native\n- **Mini-task**: Convert `decision-http-adapter.json`'s `criteria` array from JSON to CSV\n- **Answer**:\n  ```\n  name,weight\n  Raw throughput performance,9\n  Middleware/plugin ecosystem breadth,8\n  Built-in file-upload support (no extra install),6\n  Adapter implementation simplicity,7\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Glob, Bash\n- **Rough token estimate**: ~1,800\n- **Notes**: The task is a clean, deterministic format-conversion exercise. Natively solved with a small Python snippet inside Bash. The brick's `format` tool (JSON→CSV) does exactly this in one call, making the comparison direct. The `criteria` array is flat (no nested objects), so CSV conversion is unambiguous.",
+  "mini_task_spec": "Read the file `test-repo/decision-http-adapter.json`. Extract the `criteria` array, which is a JSON array of objects each with a `\"name\"` (string) and `\"weight\"` (integer) key. Using the **convert** brick's `format` tool, convert that JSON array to CSV format. Report the resulting CSV exactly as produced by the tool, including the header row. Expected answer format: multi-line CSV text with a header row followed by one data row per criterion, in the same order they appear in the source file.\n\n---",
+  "workdir": "/tmp/focus-bench/convert-native-2026-04-24T07-09-07-498",
+  "exit_reason": "ok"
+}

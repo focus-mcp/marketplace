@@ -1,0 +1,27 @@
+{
+  "brick": "validate",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:14:57.965Z",
+  "duration_ms": 115552,
+  "turns": 26,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 58,
+    "cache_creation_input_tokens": 126165,
+    "cache_read_input_tokens": 1267694,
+    "output_tokens": 7452,
+    "total": 1401369
+  },
+  "session_id": "01ca8df9-7a1e-4929-ba75-a487d6d5b577",
+  "result_block": "## Result\n- **Brick**: validate\n- **Mode**: native\n- **Mini-task**: Lint-check `sample/01-cats-app/src/cats/cats.controller.ts` for console.log, TODO/FIXME, debugger, and unused imports\n- **Answer**:\n  ```\n  console_log: 1\n  todo_fixme: 0\n  debugger: 0\n  unused_imports: none\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Glob, Grep, Bash\n- **Rough token estimate**: ~9,000\n- **Notes**: The file has exactly one `console.log(id)` on line 31 (inside `findOne`). All seven imports from `@nestjs/common` (`Body`, `Controller`, `Get`, `Param`, `Post`, `UseGuards`) and all five local imports (`Roles`, `RolesGuard`, `ParseIntPipe`, `CatsService`, `CreateCatDto`, `Cat`) are actively used in the class body or decorators — none are unused. No TODO/FIXME or debugger statements present. Manually replicating the brick's lint rules via Grep and Read was straightforward.",
+  "mini_task_spec": "Using the **validate** brick's `lint` tool, audit the TypeScript file `test-repo/sample/01-cats-app/src/cats/cats.controller.ts` for lint violations. The `lint` tool checks for: unused imports, `console.log` calls, TODO/FIXME comment count, and `debugger` statements.\n\nReport your findings as exactly four lines in this format:\n```\nconsole_log: <integer>\ntodo_fixme: <integer>\ndebugger: <integer>\nunused_imports: <comma-separated list of import names, or \"none\">\n```\n\nNo surrounding explanation — just those four lines.",
+  "workdir": "/tmp/focus-bench/validate-native-2026-04-24T08-14-57-965",
+  "exit_reason": "ok"
+}

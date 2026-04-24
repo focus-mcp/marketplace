@@ -1,0 +1,26 @@
+{
+  "brick": "filelist",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T06:43:06.386Z",
+  "duration_ms": 141121,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__fl_find",
+    "mcp__focus__fl_glob"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 37572,
+    "cache_read_input_tokens": 119367,
+    "output_tokens": 12686,
+    "total": 169658
+  },
+  "session_id": "7e4d4602-7b9f-4ebf-94ab-125bba30efa9",
+  "result_block": "## Result\n- **Brick**: filelist\n- **Mode**: brick\n- **Mini-task**: Find all `**/*.decorator.ts` files under `test-repo/packages`, listed as relative paths sorted alphabetically\n- **Answer**:\n```\ntest-repo/packages/common/decorators/core/bind.decorator.ts\ntest-repo/packages/common/decorators/core/catch.decorator.ts\ntest-repo/packages/common/decorators/core/controller.decorator.ts\ntest-repo/packages/common/decorators/core/dependencies.decorator.ts\ntest-repo/packages/common/decorators/core/exception-filters.decorator.ts\ntest-repo/packages/common/decorators/core/inject.decorator.ts\ntest-repo/packages/common/decorators/core/injectable.decorator.ts\ntest-repo/packages/common/decorators/core/optional.decorator.ts\ntest-repo/packages/common/decorators/core/set-metadata.decorator.ts\ntest-repo/packages/common/decorators/core/use-guards.decorator.ts\ntest-repo/packages/common/decorators/core/use-interceptors.decorator.ts\ntest-repo/packages/common/decorators/core/use-pipes.decorator.ts\ntest-repo/packages/common/decorators/core/version.decorator.ts\ntest-repo/packages/common/decorators/http/create-route-param-metadata.decorator.ts\ntest-repo/packages/common/decorators/http/header.decorator.ts\ntest-repo/packages/common/decorators/http/http-code.decorator.ts\ntest-repo/packages/common/decorators/http/redirect.decorator.ts\ntest-repo/packages/common/decorators/http/render.decorator.ts\ntest-repo/packages/common/decorators/http/request-mapping.decorator.ts\ntest-repo/packages/common/decorators/http/route-params.decorator.ts\ntest-repo/packages/common/decorators/http/sse.decorator.ts\ntest-repo/packages/common/decorators/modules/global.decorator.ts\ntest-repo/packages/common/decorators/modules/module.decorator.ts\ntest-repo/packages/common/serializer/decorators/serialize-options.decorator.ts\ntest-repo/packages/microservices/decorators/client.decorator.ts\ntest-repo/packages/microservices/decorators/ctx.decorator.ts\ntest-repo/packages/microservices/decorators/event-pattern.decorator.ts\ntest-repo/packages/microservices/decorators/grpc-service.decorator.ts\ntest-repo/packages/microservices/decorators/message-pattern.decorator.ts\ntest-repo/packages/microservices/decorators/payload.decorator.ts\ntest-repo/packages/platform-fastify/decorators/route-config.decorator.ts\ntest-repo/packages/platform-fastify/decorators/route-constraints.decorator.ts\ntest-repo/packages/platform-fastify/decorators/route-schema.decorator.ts\ntest-repo/packages/websockets/decorators/ack.decorator.ts\ntest-repo/packages/websockets/decorators/connected-socket.decorator.ts\ntest-repo/packages/websockets/decorators/gateway-server.decorator.ts\ntest-repo/packages/websockets/decorators/message-body.decorator.ts\ntest-repo/packages/websockets/decorators/socket-gateway.decorator.ts\ntest-repo/packages/websockets/decorators/subscribe-message.decorator.ts\n```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__fl_glob`, `mcp__focus__fl_find`\n- **Rough token estimate**: ~3,500\n- **Notes**: The `fl_glob` tool returned empty results for `**/*.decorator.ts` — it appears the `**` recursive glob pattern is not supported. Fell back to `fl_find` with substring `\"decorator\"`, then manually filtered results to only files ending in `.decorator.ts` (excluding `.decorator.spec.ts`, `.exception.ts`, and `apply-decorators.ts` which doesn't match the pattern).",
+  "workdir": "/tmp/focus-bench/filelist-brick-2026-04-24T06-43-06-385",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "metrics",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:37:01.365Z",
+  "duration_ms": 100009,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 30668,
+    "cache_read_input_tokens": 518026,
+    "output_tokens": 6616,
+    "total": 555349
+  },
+  "session_id": "e0e51c05-317a-4489-816c-85172c006f95",
+  "result_block": "## Result\n\n- **Brick**: metrics\n- **Mode**: native\n- **Mini-task**: Compute session token totals and USD cost for 5 file-read calls against NestJS test-repo config files\n- **Answer**:\n  ```\n  Total input tokens: 250\n  Total output tokens: 3236\n  Total cost: $0.049290\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,500 tokens\n- **Notes**: Native mode solution is straightforward — `wc -c` / `stat` supplies byte counts, then arithmetic yields the same totals the brick's `tokens` + `session` + `costs` tools would accumulate. The brick adds value by persisting per-call records and returning structured JSON; native mode must recompute from scratch each time.",
+  "mini_task_spec": "You are computing estimated session metrics for a 5-call agent session that read 5 configuration files from a NestJS repository. Use the following inputs:\n\n**Files and their exact byte sizes (use `stat -c %s` or `wc -c` to verify):**\n\n| File | Size (bytes) |\n|---|---|\n| `test-repo/package.json` | 8612 |\n| `test-repo/lerna.json` | 118 |\n| `test-repo/tsconfig.json` | 1694 |\n| `test-repo/packages/common/package.json` | 1003 |\n| `test-repo/packages/core/package.json` | 1525 |\n\n**Token estimation rules:**\n- Each Read tool call consumes a fixed **50 input tokens**.\n- Output tokens for each call = `floor(file_size_bytes / 4)`.\n\n**Pricing (default):**\n- Input: $0.003 per 1,000 tokens\n- Output: $0.015 per 1,000 tokens\n\nUsing the metrics brick (tools: `tokens` to record each call, `session` to retrieve totals, `costs` to compute estimated cost), record all 5 tool calls then report the session summary.\n\n**Expected answer format — three values, each on its own line:**\n```\nTotal input tokens: <integer>\nTotal output tokens: <integer>\nTotal cost: $<decimal rounded to 6 places>\n```\n\n---",
+  "workdir": "/tmp/focus-bench/metrics-native-2026-04-24T07-37-01-365",
+  "exit_reason": "ok"
+}

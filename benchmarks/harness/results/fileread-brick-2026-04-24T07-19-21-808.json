@@ -1,0 +1,25 @@
+{
+  "brick": "fileread",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:19:02.597Z",
+  "duration_ms": 19211,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__fr_range"
+  ],
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 12844,
+    "cache_read_input_tokens": 106434,
+    "output_tokens": 1007,
+    "total": 120309
+  },
+  "session_id": "7c82d9c6-df55-46a0-a399-4e0214108536",
+  "result_block": "## Result\n- **Brick**: fileread\n- **Mode**: brick\n- **Mini-task**: Read lines 339–345 of `test-repo/packages/core/injector/container.ts` and identify the `return` statement in `getDynamicMetadataByToken`\n- **Answer**: `return metadataKey ? (metadata?.[metadataKey] ?? []) : metadata;`\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__fr_range`\n- **Rough token estimate**: ~400\n- **Notes**: No issues. The `fr_range` tool returned the exact lines requested in a clean JSON array. The return statement was on the second-to-last line of the range (line 344).",
+  "workdir": "/tmp/focus-bench/fileread-brick-2026-04-24T07-19-02-596",
+  "exit_reason": "ok"
+}

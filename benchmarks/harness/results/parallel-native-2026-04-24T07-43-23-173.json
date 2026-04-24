@@ -1,0 +1,26 @@
+{
+  "brick": "parallel",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:42:38.709Z",
+  "duration_ms": 44464,
+  "turns": 9,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 27,
+    "cache_creation_input_tokens": 9813,
+    "cache_read_input_tokens": 313668,
+    "output_tokens": 2471,
+    "total": 325979
+  },
+  "session_id": "9c5b453d-b8f9-4923-9d3a-65fe8a121591",
+  "result_block": "## Result\n\n- **Brick**: parallel\n- **Mode**: native\n- **Mini-task**: Count non-spec `.ts` files per NestJS package in parallel and merge results\n- **Answer**:\n  ```\n  common: 187\n  core: 179\n  microservices: 135\n  platform-express: 24\n  platform-fastify: 15\n  platform-socket.io: 3\n  platform-ws: 3\n  testing: 12\n  websockets: 43\n  ```\n- **Turns used**: 4\n- **Tools used**: Bash, Glob, Read\n- **Rough token estimate**: ~1,800\n- **Notes**: The parallel brick's `run` + `merge` tools map cleanly onto this task (one `find | wc -l` command per package, all independent). Native mode ran them sequentially in a single Bash loop. The `platform-socket.io` and `platform-ws` packages have only 3 `.ts` files each — both are thin adapter wrappers.",
+  "mini_task_spec": "Using the `parallel` brick, run a count of non-spec TypeScript source files in each of the 9 NestJS packages found under `test-repo/packages/` concurrently, then merge the results into a single sorted report.\n\nSpecifically: for each package directory in `test-repo/packages/` — `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets` — use `par_run` to execute (in parallel, one task per package) the command:\n\n```\nfind test-repo/packages/<pkg> -name \"*.ts\" ! -name \"*.spec.ts\" -type f | wc -l\n```\n\nThen use `par_merge` to combine all outputs into a single result.\n\nReport the file count for each package in the format `<package-name>: <count>`, one entry per line, sorted **alphabetically** by package name. The answer must list all 9 packages.\n\n---",
+  "workdir": "/tmp/focus-bench/parallel-native-2026-04-24T07-42-38-709",
+  "exit_reason": "ok"
+}

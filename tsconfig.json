@@ -28,5 +28,5 @@
         "skipLibCheck": true
     },
     "include": ["scripts/**/*.ts", "bricks/*/src/**/*.ts", "benchmarks/**/*.ts"],
-    "exclude": ["**/node_modules", "**/dist", "**/coverage"]
+    "exclude": ["**/node_modules", "**/dist", "**/coverage", "benchmarks/harness/**"]
 }

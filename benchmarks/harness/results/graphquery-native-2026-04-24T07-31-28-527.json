@@ -1,0 +1,26 @@
+{
+  "brick": "graphquery",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:29:38.477Z",
+  "duration_ms": 110050,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 27524,
+    "cache_read_input_tokens": 678487,
+    "output_tokens": 6646,
+    "total": 712705
+  },
+  "session_id": "c4eae90c-867d-4c57-9d93-da7b41054c68",
+  "result_block": "## Result\n\n- **Brick**: graphquery\n- **Mode**: native\n- **Mini-task**: Find NestJS hub packages with ≥ 3 in-coming peer-dependency edges\n- **Answer**:\n  ```\n  @nestjs/common\n  @nestjs/core\n  @nestjs/websockets\n  ```\n- **Turns used**: 7\n- **Tools used**: Bash, Read, Glob\n- **Rough token estimate**: ~3,500\n- **Notes**: No pre-built graph data file was found in the repo; the graph was constructed on-the-fly from `package.json` `peerDependencies` fields using a short Python script. The `graphquery` brick would handle this via its `filter` + `neighbors` tools on a pre-indexed package dependency graph, making it far faster and less error-prone than manual file parsing. The three hub packages are `@nestjs/common` (8 inbound), `@nestjs/core` (5 inbound), and `@nestjs/websockets` (4 inbound).",
+  "mini_task_spec": "The `test-repo/` directory is a NestJS monorepo whose `packages/` subdirectory contains nine `@nestjs/*` packages, each with a `package.json`. Using the knowledge graph of NestJS packages and their peer-dependency relationships (nodes = packages, directed edges = \"peerDependency\"), identify which `@nestjs/*` package nodes are **\"hubs\"**: packages that appear as a `peerDependency` in **3 or more** other `@nestjs/*` packages found in `test-repo/packages/`.\n\nConcretely: for every `package.json` in `test-repo/packages/*/package.json`, read the `peerDependencies` field, keep only entries whose key starts with `@nestjs/`, and count how many distinct packages list each `@nestjs/*` package as a peer dependency. Report every `@nestjs/*` package whose in-degree count is ≥ 3, **sorted alphabetically**, one name per line. Only count packages that themselves live in `test-repo/packages/` (i.e., are part of this monorepo). Do not include external packages like `rxjs`, `reflect-metadata`, etc.\n\nExpected answer format: one `@nestjs/<name>` per line, sorted alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/graphquery-native-2026-04-24T07-29-38-477",
+  "exit_reason": "ok"
+}

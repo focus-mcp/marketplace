@@ -1,0 +1,25 @@
+{
+  "brick": "sandbox",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:58:08.802Z",
+  "duration_ms": 74339,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 15315,
+    "cache_read_input_tokens": 346993,
+    "output_tokens": 5618,
+    "total": 367955
+  },
+  "session_id": "cf718efa-3f02-4700-8026-7d0afb8993f1",
+  "result_block": "## Result\n- **Brick**: sandbox\n- **Mode**: native\n- **Mini-task**: Trace `normalizePath` from `shared.utils.ts` for 5 distinct inputs\n- **Answer**: `{\"undefined\": \"/\", \"/\": \"/\", \"/foo//bar/\": \"/foo/bar\", \"foo//bar/\": \"/foo//bar\", \"//foo/bar\": \"/foo/bar\"}`\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1 200\n- **Notes**: The key insight surfaced by this task is the asymmetric normalization: paths that do **not** start with `/` go through the `'/' + path.replace(/\\/+$/, '')` branch which strips only trailing slashes but leaves internal double-slashes intact (e.g. `'foo//bar/'` → `'/foo//bar'`), while paths that start with `/` additionally pass through the global `/\\/+/g` replacement and have all consecutive slashes collapsed. In native mode this required careful manual regex tracing; the sandbox brick would verify it by actually running the code in a VM.",
+  "mini_task_spec": "The file `test-repo/packages/common/utils/shared.utils.ts` contains a `normalizePath` utility function implemented in TypeScript. The function signature is:\n\n```ts\nexport const normalizePath = (path?: string): string =>\n  path\n    ? path.startsWith('/')\n      ? ('/' + path.replace(/\\/+$/, '')).replace(/\\/+/g, '/')\n      : '/' + path.replace(/\\/+$/, '')\n    : '/';\n```\n\nUsing the sandbox brick's `run` tool (or `eval`), execute the JavaScript equivalent of this function and report its return value for each of the following five inputs, in order:\n\n1. `undefined`\n2. `'/'`\n3. `'/foo//bar/'`\n4. `'foo//bar/'`\n5. `'//foo/bar'`\n\nReport the answer as a JSON object mapping each input (use the string `\"undefined\"` as key for the `undefined` input) to the returned string value. Example format:\n```json\n{\"undefined\": \"...\", \"/\": \"...\", \"/foo//bar/\": \"...\", \"foo//bar/\": \"...\", \"//foo/bar\": \"...\"}\n```",
+  "workdir": "/tmp/focus-bench/sandbox-native-2026-04-24T07-58-08-802",
+  "exit_reason": "ok"
+}

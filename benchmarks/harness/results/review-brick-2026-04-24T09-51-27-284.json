@@ -1,0 +1,33 @@
+{
+  "brick": "review",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T09:48:46.502Z",
+  "duration_ms": 160782,
+  "turns": 29,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_add",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 137,
+    "cache_creation_input_tokens": 61920,
+    "cache_read_input_tokens": 839328,
+    "output_tokens": 7716,
+    "total": 909101
+  },
+  "session_id": "4fa6ec27-4b66-4e13-9da5-1b6dc5d6d62c",
+  "result_block": "## Result\n- **Brick**: review\n- **Mode**: brick\n- **Mini-task**: Use `rev__code` to review `packages/core/metadata-scanner.ts` and identify all `@deprecated`-annotated methods, returning them sorted alphabetically\n- **Answer**: PARTIAL — brick failed to load; `rev__code` tool was never available\n- **Turns used**: 14\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_catalog_add`, `mcp__focus__focus_remove`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_update`\n- **Rough token estimate**: ~8,000 tokens\n- **Notes**: The focus MCP server is operational, but the `review` brick is broken in this environment. `focus_load \"review\"` fails with `Cannot find module '@focus-mcp/brick-review'` (the noop stub at `.focus/bricks/noop.js` references an npm package that is not installed). `focus_update` is not implemented, `focus_remove` reports no lock entry, and `focus_reload` reports brick not found. No path existed to activate the `rev__code` tool without Bash/npm access. The task could not be completed under the tool constraints.",
+  "workdir": "/tmp/focus-bench/review-brick-2026-04-24T09-48-46-501",
+  "exit_reason": "ok"
+}

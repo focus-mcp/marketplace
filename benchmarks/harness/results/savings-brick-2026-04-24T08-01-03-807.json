@@ -1,0 +1,25 @@
+{
+  "brick": "savings",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:00:45.524Z",
+  "duration_ms": 18283,
+  "turns": 4,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__sav_report"
+  ],
+  "usage": {
+    "input_tokens": 21,
+    "cache_creation_input_tokens": 12930,
+    "cache_read_input_tokens": 87822,
+    "output_tokens": 669,
+    "total": 101442
+  },
+  "session_id": "875c15cb-3ec9-421c-85ca-60a1e3519c9f",
+  "result_block": "## Result\n- **Brick**: savings\n- **Mode**: brick\n- **Mini-task**: Call the savings `report` tool with baseline=129453 tokens and actual=12781 tokens to find the savings percentage for FocusMCP-guided vs naive full-read of HTTP exception classes\n- **Answer**: `90.1%`\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__sav_report`\n- **Rough token estimate**: ~800 tokens\n- **Notes**: The tool returned `percentage: 90.12691865001197`, which rounds to `90.1%`. Also reported `saved: 116672` tokens and `factor: 10.13×` efficiency gain.",
+  "workdir": "/tmp/focus-bench/savings-brick-2026-04-24T08-00-45-523",
+  "exit_reason": "ok"
+}

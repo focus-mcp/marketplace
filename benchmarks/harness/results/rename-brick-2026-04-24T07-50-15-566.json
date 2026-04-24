@@ -1,0 +1,25 @@
+{
+  "brick": "rename",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:49:16.308Z",
+  "duration_ms": 59258,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__ren_preview"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 17821,
+    "cache_read_input_tokens": 118510,
+    "output_tokens": 2994,
+    "total": 139350
+  },
+  "session_id": "030df867-5513-42df-8e03-e1efbfbcb2e2",
+  "result_block": "## Result\n- **Brick**: rename\n- **Mode**: brick\n- **Mini-task**: Find all `.ts` files under `test-repo/packages` containing the symbol `LoggerService` using the rename brick's preview capability\n- **Answer**:\n```\ntest-repo/packages/common/interfaces/modules/provider.interface.ts\ntest-repo/packages/common/interfaces/nest-application-context-options.interface.ts\ntest-repo/packages/common/interfaces/nest-application-context.interface.ts\ntest-repo/packages/common/services/console.service.ts\ntest-repo/packages/common/services/logger-copy.service.ts\ntest-repo/packages/common/services/logger.service.ts\ntest-repo/packages/common/test/services/logger.service.spec.ts\ntest-repo/packages/core/injector/injector.ts\ntest-repo/packages/core/injector/instance-loader.ts\ntest-repo/packages/core/injector/instance-wrapper.ts\ntest-repo/packages/core/nest-application-context.ts\ntest-repo/packages/microservices/server/server.ts\ntest-repo/packages/testing/testing-module.builder.ts\n```\n- **Turns used**: 3\n- **Tools used**: `mcp__focus__ren_preview`\n- **Rough token estimate**: ~2,500\n- **Notes**: The `ren_preview` tool returned 42 total occurrences across 13 unique files (`fileCount: 13`). All returned file paths were `.ts` files (including one `.spec.ts`). Paths were prepended with `test-repo/packages/` (the `dir` used) and sorted using default locale string ordering (`-` ASCII 45 sorts before `.` ASCII 46, so e.g. `nest-application-context-options` sorts before `nest-application-context.interface`).",
+  "workdir": "/tmp/focus-bench/rename-brick-2026-04-24T07-49-16-307",
+  "exit_reason": "ok"
+}

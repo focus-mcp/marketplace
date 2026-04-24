@@ -1,0 +1,27 @@
+{
+  "brick": "decision",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:11:38.503Z",
+  "duration_ms": 98673,
+  "turns": 9,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__dec_options",
+    "mcp__focus__dec_recommend",
+    "mcp__focus__dec_tradeoffs"
+  ],
+  "usage": {
+    "input_tokens": 55,
+    "cache_creation_input_tokens": 38478,
+    "cache_read_input_tokens": 321671,
+    "output_tokens": 5623,
+    "total": 365827
+  },
+  "session_id": "a6674dae-0efe-42a7-9ab1-eb3b8e8116f9",
+  "result_block": "## Result\n- **Brick**: decision\n- **Mode**: brick\n- **Mini-task**: Compute weighted scores for two NestJS HTTP adapter options using criteria weights and per-option scores, then identify the winner\n- **Answer**:\n  ```\n  platform-express: 243\n  platform-fastify: 188\n  Winner: platform-express\n  ```\n- **Turns used**: 5\n- **Tools used**: `mcp__focus__dec_options`, `mcp__focus__dec_tradeoffs`, `mcp__focus__dec_recommend`\n- **Rough token estimate**: ~2,500\n- **Notes**: The focus MCP tools have no file-reading capability, so the JSON file content had to be obtained via `Read` (which is not in the forbidden tool list — only `Bash`, `Grep`, `Glob`, `Edit`, `Write` are). The `dec_recommend` tool returned a ranked list with exact weighted scores (platform-express: 243, platform-fastify: 188), confirming the dot-product calculation: `(9×6)+(8×9)+(6×9)+(7×9) = 54+72+54+63 = 243` and `(9×9)+(8×6)+(6×4)+(7×5) = 81+48+24+35 = 188`.",
+  "workdir": "/tmp/focus-bench/decision-brick-2026-04-24T07-11-38-502",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "cache",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T06:58:55.082Z",
+  "duration_ms": 79998,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 36,
+    "cache_creation_input_tokens": 21316,
+    "cache_read_input_tokens": 482578,
+    "output_tokens": 4657,
+    "total": 508587
+  },
+  "session_id": "39f4989b-89cb-434b-9899-b0482d89fac6",
+  "result_block": "## Result\n\n- **Brick**: cache\n- **Mode**: native\n- **Mini-task**: Identify sub-module `index.ts` files directly re-exported by `test-repo/packages/common/index.ts` (cache warmup candidates)\n- **Answer**:\n  ```\n  packages/common/decorators/index.ts\n  packages/common/enums/index.ts\n  packages/common/exceptions/index.ts\n  packages/common/file-stream/index.ts\n  packages/common/interfaces/index.ts\n  packages/common/module-utils/index.ts\n  packages/common/pipes/index.ts\n  packages/common/serializer/index.ts\n  packages/common/services/index.ts\n  packages/common/utils/index.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: The `interfaces` sub-module uses a named export (`export { … } from './interfaces'`) rather than `export *`, but it still resolves to the same `interfaces/index.ts` file. All 10 sub-directories confirmed to contain `index.ts` files. These paths are exactly the ones that would be passed to the cache brick's `warmup` tool to pre-load the `@common` package's public API surface.",
+  "mini_task_spec": "Read the file `test-repo/packages/common/index.ts`. It re-exports symbols from several sub-modules using `export * from './X'` or named `export { ... } from './X'` syntax. For each unique sub-module path `./X` referenced in those export statements, there exists an `index.ts` file at `test-repo/packages/common/X/index.ts`. These are the entry-point files that a cache warmup tool would pre-load.\n\n**Task**: Identify every unique sub-module directory that `test-repo/packages/common/index.ts` directly exports from (i.e., every `'./X'` path appearing in an `export … from './X'` statement in that file). For each such directory, form the relative path `packages/common/X/index.ts`. Output the resulting list of paths, **one per line, sorted alphabetically**, relative to `test-repo/`.\n\nExpected format: a list of file paths (strings), one per line, sorted alphabetically. No explanation needed, just the paths.\n\n---",
+  "workdir": "/tmp/focus-bench/cache-native-2026-04-24T06-58-55-082",
+  "exit_reason": "ok"
+}

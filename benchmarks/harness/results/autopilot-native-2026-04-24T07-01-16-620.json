@@ -1,0 +1,25 @@
+{
+  "brick": "autopilot",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T06:59:50.865Z",
+  "duration_ms": 85755,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 40,
+    "cache_creation_input_tokens": 24179,
+    "cache_read_input_tokens": 544796,
+    "output_tokens": 4720,
+    "total": 573735
+  },
+  "session_id": "c78f5628-3153-4054-8608-dce4b8f11fb5",
+  "result_block": "## Result\n- **Brick**: autopilot\n- **Mode**: native\n- **Mini-task**: Count and alphabetically list all HTTP route method decorators exported from `packages/common/decorators/http/request-mapping.decorator.ts`\n- **Answer**: 16 decorators: All, Copy, Delete, Get, Head, Lock, Mkcol, Move, Options, Patch, Post, Propfind, Proppatch, Put, Search, Unlock\n- **Turns used**: 8\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: Straightforward read task. The autopilot brick's value here is in planning (figure out which file to read, what to extract) and executing steps with explicit reasoning. No ambiguity in the answer — each exported `const` is trivially identifiable from `createMappingDecorator(RequestMethod.X)` call patterns.",
+  "mini_task_spec": "You are working with the NestJS monorepo in `test-repo/`. Your task is to enumerate all HTTP route method decorators (excluding the base `RequestMapping` decorator itself) that are exported from `test-repo/packages/common/decorators/http/request-mapping.decorator.ts`.\n\nSpecifically: read that file, identify every exported `const` that is created via a call to `createMappingDecorator(...)`, and return them as a sorted alphabetical list (one name per line). Also state the total count of such decorators.\n\nExpected answer format: a single integer count on the first line, followed by the names sorted alphabetically, one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/autopilot-native-2026-04-24T06-59-50-865",
+  "exit_reason": "ok"
+}

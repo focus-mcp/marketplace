@@ -1,0 +1,25 @@
+{
+  "brick": "filediff",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:17:09.319Z",
+  "duration_ms": 45345,
+  "turns": 6,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__fd_diff"
+  ],
+  "usage": {
+    "input_tokens": 26,
+    "cache_creation_input_tokens": 14818,
+    "cache_read_input_tokens": 123168,
+    "output_tokens": 2861,
+    "total": 140873
+  },
+  "session_id": "1dfbf456-f1ce-434c-80c7-4237aabe2a1d",
+  "result_block": "## Result\n- **Brick**: filediff\n- **Mode**: brick\n- **Mini-task**: Unified diff between `packages/platform-express/package.json` (A) and `packages/platform-fastify/package.json` (B), counting added and removed lines\n- **Answer**:\n  ```\n  Added: 21\n  Removed: 10\n  ```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__fd_diff`\n- **Rough token estimate**: ~1,500 tokens\n- **Notes**: The `fd_diff` tool returned a clean unified diff. The diff hunk format used `@@ -L,N +L,N @@` notation. All `+` and `-` content lines were counted manually excluding the `+++`/`---` header lines. No fallbacks were needed.",
+  "workdir": "/tmp/focus-bench/filediff-brick-2026-04-24T07-17-09-318",
+  "exit_reason": "ok"
+}

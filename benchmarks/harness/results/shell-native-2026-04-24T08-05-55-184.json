@@ -1,0 +1,25 @@
+{
+  "brick": "shell",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:04:30.702Z",
+  "duration_ms": 84482,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 28525,
+    "cache_read_input_tokens": 561208,
+    "output_tokens": 4137,
+    "total": 593909
+  },
+  "session_id": "f9c5f804-c77c-4583-9d87-f53d1ef99ff7",
+  "result_block": "## Result\n- **Brick**: shell\n- **Mode**: native\n- **Mini-task**: Count non-spec, non-declaration TypeScript files per package in `test-repo/packages/`, sorted alphabetically\n- **Answer**:\n  ```\n  common: 187\n  core: 179\n  microservices: 135\n  platform-express: 24\n  platform-fastify: 15\n  platform-socket.io: 3\n  platform-ws: 3\n  testing: 12\n  websockets: 43\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~4,500\n- **Notes**: The shell brick's `exec` tool maps directly onto the `find … | wc -l` pattern used here. Native mode solved it with raw Bash. The `tsconfig.build.json` and `tsconfig.json` entries inside `packages/` are files (not directories), so `find -type d` naturally excludes them.",
+  "mini_task_spec": "In the NestJS monorepo located at `test-repo/`, count the number of TypeScript source files (files ending in `.ts`, but **excluding** files that end in `.spec.ts` and files that end in `.d.ts`) inside each package directory under `test-repo/packages/`. There are 9 package directories: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, and `websockets`.\n\nFor each package, report the count as `<package-name>: <count>`, one entry per line, sorted alphabetically by package name. Count files recursively within each package directory.\n\nExpected answer format (example layout, not actual values):\n```\ncommon: N\ncore: N\nmicroservices: N\nplatform-express: N\nplatform-fastify: N\nplatform-socket.io: N\nplatform-ws: N\ntesting: N\nwebsockets: N\n```\n\nUse a shell command such as `find <pkg-dir> -name \"*.ts\" ! -name \"*.spec.ts\" ! -name \"*.d.ts\" | wc -l` for each package.\n\n---",
+  "workdir": "/tmp/focus-bench/shell-native-2026-04-24T08-04-30-702",
+  "exit_reason": "ok"
+}

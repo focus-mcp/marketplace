@@ -1,0 +1,26 @@
+{
+  "brick": "smartread",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:07:37.064Z",
+  "duration_ms": 65119,
+  "turns": 8,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__sr_full",
+    "mcp__focus__sr_imports"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 38868,
+    "cache_read_input_tokens": 186232,
+    "output_tokens": 3989,
+    "total": 229128
+  },
+  "session_id": "a923b608-f627-4c8f-9e8f-8ed43919a47f",
+  "result_block": "## Result\n- **Brick**: smartread\n- **Mode**: brick\n- **Mini-task**: Extract unique external module specifiers from `import … from '…'` statements in `test-repo/packages/core/nest-application.ts`\n- **Answer**:\n```\n@nestjs/common\n@nestjs/common/interfaces\n@nestjs/common/services/logger.service\n@nestjs/common/utils/load-package.util\n@nestjs/common/utils/shared.utils\niterare\nos\n```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__sr_imports`, `mcp__focus__sr_full`\n- **Rough token estimate**: ~3,500\n- **Notes**: The `sr_imports` tool returned incomplete lines for multi-line imports (e.g., just `import {` without the `from '...'` part), missing three external module specifiers (`@nestjs/common`, `@nestjs/common/interfaces`, `@nestjs/common/utils/shared.utils`). A fallback to `sr_full` was required to resolve the module specifiers for those multi-line import blocks. `require()` calls (e.g., `@nestjs/websockets/socket-module`, `@nestjs/microservices/microservices-module`, `@nestjs/microservices`) were excluded per task spec since they are not `import … from '…'` statements.",
+  "workdir": "/tmp/focus-bench/smartread-brick-2026-04-24T08-07-37-063",
+  "exit_reason": "ok"
+}

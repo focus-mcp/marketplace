@@ -1,0 +1,27 @@
+{
+  "brick": "fullaudit",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:23:08.436Z",
+  "duration_ms": 80909,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 43,
+    "cache_creation_input_tokens": 33938,
+    "cache_read_input_tokens": 635964,
+    "output_tokens": 4972,
+    "total": 674917
+  },
+  "session_id": "cf36e652-702d-46f6-a8db-3bc2eec43e81",
+  "result_block": "## Result\n\n- **Brick**: fullaudit\n- **Mode**: native\n- **Mini-task**: Audit the exception class inheritance hierarchy in `test-repo/packages/core/errors/exceptions/`\n- **Answer**:\n  ```\n  CircularDependencyException: RuntimeException\n  InvalidClassException: RuntimeException\n  InvalidClassModuleException: RuntimeException\n  InvalidClassScopeException: RuntimeException\n  InvalidExceptionFilterException: RuntimeException\n  InvalidMiddlewareConfigurationException: RuntimeException\n  InvalidMiddlewareException: RuntimeException\n  InvalidModuleException: RuntimeException\n  RuntimeException: Error\n  UndefinedDependencyException: RuntimeException\n  UndefinedForwardRefException: RuntimeException\n  UndefinedModuleException: RuntimeException\n  UnknownDependenciesException: RuntimeException\n  UnknownElementException: RuntimeException\n  UnknownExportException: RuntimeException\n  UnknownModuleException: RuntimeException\n  UnknownRequestMappingException: RuntimeException\n  ```\n- **Turns used**: 9\n- **Tools used**: Read, Bash, Grep, Glob\n- **Rough token estimate**: ~3,500\n- **Notes**: All 16 concrete exception classes extend `RuntimeException` directly; `RuntimeException` itself extends the native `Error`. The hierarchy is flat (depth 2). No security concerns or architectural anomalies found in the exception module — consistent, uniform pattern throughout.",
+  "mini_task_spec": "Perform an architecture audit of the exception hierarchy in `test-repo/packages/core/errors/exceptions/`. Read every TypeScript file in that directory (excluding `index.ts`) and identify the exported class name and the class it directly extends. Return the results sorted alphabetically by class name, one entry per line in the format `ClassName: ParentClass`.\n\nExpected answer format: a sorted list of `ClassName: ParentClass` pairs, one per line, covering all 17 exception files (including `runtime.exception.ts`).\n\n---",
+  "workdir": "/tmp/focus-bench/fullaudit-native-2026-04-24T07-23-08-436",
+  "exit_reason": "ok"
+}

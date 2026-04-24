@@ -1,0 +1,26 @@
+{
+  "brick": "depgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:12:55.170Z",
+  "duration_ms": 73619,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 42,
+    "cache_creation_input_tokens": 33995,
+    "cache_read_input_tokens": 595234,
+    "output_tokens": 4249,
+    "total": 633520
+  },
+  "session_id": "a0680e58-009f-44a3-b495-3491e5e61c79",
+  "result_block": "## Result\n\n- **Brick**: depgraph\n- **Mode**: native\n- **Mini-task**: Find all non-test `.ts` files in `packages/core/` that directly import `metadata-scanner.ts`\n- **Answer**:\n  ```\n  packages/core/discovery/discovery-module.ts\n  packages/core/index.ts\n  packages/core/middleware/routes-mapper.ts\n  packages/core/nest-factory.ts\n  packages/core/repl/native-functions/methods-repl-fn.ts\n  packages/core/router/paths-explorer.ts\n  packages/core/router/router-explorer.ts\n  packages/core/router/routes-resolver.ts\n  packages/core/scanner.ts\n  ```\n- **Turns used**: 7\n- **Tools used**: `Bash`, `Glob`, `Read`\n- **Rough token estimate**: ~6,000\n- **Notes**: `index.ts` uses `export * from './metadata-scanner'` (re-export rather than a classic `import`), but it is still a direct file dependency that a proper `fanin` tool would capture. All 9 files confirmed with exact line-level grep matching `from '…metadata-scanner'` or `from '…/metadata-scanner'`.",
+  "mini_task_spec": "Using the **depgraph** brick's `fanin` capability, find all non-test TypeScript source files within `test-repo/packages/core/` that directly import (or re-export from) the file `test-repo/packages/core/metadata-scanner.ts`.\n\nSpecifically: search the directory `test-repo/packages/core/` (excluding the `test/` subdirectory and any `*.spec.ts` files) for `.ts` files that contain an `import … from '…metadata-scanner'` or `export … from '…metadata-scanner'` statement referencing that file.\n\nReturn the matching file paths **relative to `test-repo/`**, sorted alphabetically, one per line. Expected format example:\n```\npackages/core/discovery/discovery-module.ts\npackages/core/index.ts\n…\n```",
+  "workdir": "/tmp/focus-bench/depgraph-native-2026-04-24T07-12-55-170",
+  "exit_reason": "ok"
+}

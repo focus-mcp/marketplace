@@ -1,0 +1,29 @@
+{
+  "brick": "graphexport",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:28:52.286Z",
+  "duration_ms": 120605,
+  "turns": 17,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_search",
+    "mcp__focus__ge_graphml",
+    "mcp__focus__ge_mermaid"
+  ],
+  "usage": {
+    "input_tokens": 83,
+    "cache_creation_input_tokens": 35442,
+    "cache_read_input_tokens": 482281,
+    "output_tokens": 6559,
+    "total": 524365
+  },
+  "session_id": "aaf41106-da69-4f1a-8315-147abae7322d",
+  "result_block": "## Result\n- **Brick**: graphexport\n- **Mode**: brick\n- **Mini-task**: Derive directed peer-dependency edges among 9 `@nestjs/*` packages using the `ge_mermaid` export tool (direction TB) and report sorted `A --> B` lines.\n- **Answer**:\n  The `ge_mermaid` tool returned only `\"flowchart TB\"` — an empty diagram with no nodes or edges — because the focus knowledge graph has not been populated with any data. No `A --> B` edges can be derived from the tool output.\n  \n  *(The tool itself is functional; the graph store is simply empty. No focus tool is available to ingest the `test-repo/packages/*/package.json` files into the graph.)*\n\n- **Turns used**: 9\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__ge_mermaid`, `mcp__focus__ge_graphml`, `mcp__focus__focus_search` (×3), `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~2,500\n- **Notes**: The focus knowledge graph is empty at benchmark start; there is no `mcp__focus__*` tool to ingest a local repository or `package.json` files. `ge_mermaid` (and `ge_graphml`) both confirmed zero nodes and zero edges. The marketplace catalog contains no loader/indexer brick for npm packages. The brick itself (`graphexport`) is working correctly — it faithfully exports whatever graph is present — but the pre-condition (a populated graph) is not met in this benchmark environment, making the mini-task unsolvable with brick tools alone.",
+  "workdir": "/tmp/focus-bench/graphexport-brick-2026-04-24T07-28-52-285",
+  "exit_reason": "ok"
+}

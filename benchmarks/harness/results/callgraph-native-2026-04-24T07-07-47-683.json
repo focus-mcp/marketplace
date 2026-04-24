@@ -1,0 +1,26 @@
+{
+  "brick": "callgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:06:40.003Z",
+  "duration_ms": 67680,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 42,
+    "cache_creation_input_tokens": 21230,
+    "cache_read_input_tokens": 582903,
+    "output_tokens": 4208,
+    "total": 608383
+  },
+  "session_id": "a9074163-9143-423c-964c-411beea176aa",
+  "result_block": "## Result\n\n- **Brick**: callgraph\n- **Mode**: native\n- **Mini-task**: Find all `InstanceLoader` methods that call `loadPrototype` in `instance-loader.ts`\n- **Answer**:\n  ```\n  createPrototypesOfControllers\n  createPrototypesOfInjectables\n  createPrototypesOfProviders\n  ```\n- **Turns used**: 7\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~2 500\n- **Notes**: Straightforward grep task; all three callers live in the same file (`instance-loader.ts`). No ambiguity. The `loadPrototype` definition itself is in `injector.ts` (line 109) — not counted as a caller.",
+  "mini_task_spec": "In the file `test-repo/packages/core/injector/instance-loader.ts`, the `InstanceLoader` class has several private methods. Some of those methods directly invoke `this.injector.loadPrototype(...)`.\n\nUsing the callgraph brick's `callers` tool (searching in `test-repo/packages/core/injector/`), find every method of `InstanceLoader` that directly calls `loadPrototype`. Report the method names only (not file paths, not line numbers), sorted alphabetically, one per line.\n\nExpected answer format: a list of method names, one per line, sorted alphabetically.",
+  "workdir": "/tmp/focus-bench/callgraph-native-2026-04-24T07-06-40-003",
+  "exit_reason": "ok"
+}

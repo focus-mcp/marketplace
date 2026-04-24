@@ -1,0 +1,29 @@
+{
+  "brick": "share",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:03:17.117Z",
+  "duration_ms": 196429,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_search",
+    "mcp__focus__shr_context",
+    "mcp__focus__shr_files",
+    "mcp__focus__shr_results"
+  ],
+  "usage": {
+    "input_tokens": 92,
+    "cache_creation_input_tokens": 56335,
+    "cache_read_input_tokens": 507455,
+    "output_tokens": 10083,
+    "total": 573965
+  },
+  "session_id": "525f72b9-480f-4622-8a39-a6d416043fb9",
+  "result_block": "## Result\n- **Brick**: share (prefix: `shr`)\n- **Mode**: brick\n- **Mini-task**: Simulate two agents registering .ts files from NestJS decorator and pipe directories via `shr:files`, then compile a combined deduplicated sorted list of basenames.\n- **Answer**: *(cannot determine)* — The `mcp__focus__*` tools have no filesystem enumeration capability. `shr_files` is a key-value registry that stores and retrieves file paths provided by agents; it does not scan directories. All shared state stores were empty (no pre-populated data). Discovering the actual `.ts` filenames in `test-repo/packages/common/decorators/` and `test-repo/packages/common/pipes/` requires filesystem tools (`Bash`, `Glob`, etc.), which are forbidden. The `shr_files` tool itself works correctly — reads confirmed empty registries — but registration is blocked by missing file-discovery capability.\n- **Turns used**: 9\n- **Tools used**: `mcp__focus__shr_files`, `mcp__focus__focus_search`, `mcp__focus__focus_list`, `mcp__focus__shr_context`, `mcp__focus__shr_results`\n- **Rough token estimate**: ~3,500\n- **Notes**: Critical gap: `shr:files` is purely a state store (register + retrieve), not a filesystem scanner. In a real multi-agent workflow, each agent would first enumerate its directory using native filesystem tools, then register the discovered paths via `shr:files`. The brick benchmark's constraint (no Bash/Grep/Glob + no filesystem-capable focus tools) makes the file-discovery step impossible. `focus_search` searches only the brick marketplace catalog, not the local filesystem. No other `mcp__focus__*` tool bridges this gap.",
+  "workdir": "/tmp/focus-bench/share-brick-2026-04-24T08-03-17-115",
+  "exit_reason": "ok"
+}

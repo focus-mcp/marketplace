@@ -1,0 +1,26 @@
+{
+  "brick": "treesitter",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T08:12:45.563Z",
+  "duration_ms": 56922,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 38,
+    "cache_creation_input_tokens": 20294,
+    "cache_read_input_tokens": 520310,
+    "output_tokens": 2971,
+    "total": 543613
+  },
+  "session_id": "fb1a7e10-eae2-4868-9aa3-d3ecf342f504",
+  "result_block": "## Result\n- **Brick**: treesitter\n- **Mode**: native\n- **Mini-task**: List all exported class names from `packages/core/errors/exceptions/` sorted alphabetically\n- **Answer**:\n  ```\n  CircularDependencyException\n  InvalidClassException\n  InvalidClassModuleException\n  InvalidClassScopeException\n  InvalidExceptionFilterException\n  InvalidMiddlewareConfigurationException\n  InvalidMiddlewareException\n  InvalidModuleException\n  RuntimeException\n  UndefinedDependencyException\n  UndefinedForwardRefException\n  UndefinedModuleException\n  UnknownDependenciesException\n  UnknownElementException\n  UnknownExportException\n  UnknownModuleException\n  UnknownRequestMappingException\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: Straightforward grep-based extraction. The treesitter brick would accomplish the same via `ts_index` + symbol query, which is its primary value-add over raw grep — especially for larger, noisier codebases where regex false-positives are a risk. No unusual blockers encountered.",
+  "mini_task_spec": "Use the treesitter brick to index the directory `test-repo/packages/core/errors/exceptions/` and collect the names of every exported class defined in that directory's `.ts` files (not the barrel `index.ts`, but the actual class declarations). Return the list of class names sorted alphabetically, one per line.\n\nExpected answer format: a plain alphabetically-sorted list of class names, one per line (no file paths, no qualifiers).\n\n---",
+  "workdir": "/tmp/focus-bench/treesitter-native-2026-04-24T08-12-45-563",
+  "exit_reason": "ok"
+}

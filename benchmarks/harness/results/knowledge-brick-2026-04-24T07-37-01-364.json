@@ -1,0 +1,26 @@
+{
+  "brick": "knowledge",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:36:13.630Z",
+  "duration_ms": 47734,
+  "turns": 24,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__kb_index",
+    "mcp__focus__kb_search"
+  ],
+  "usage": {
+    "input_tokens": 90,
+    "cache_creation_input_tokens": 88741,
+    "cache_read_input_tokens": 372614,
+    "output_tokens": 4117,
+    "total": 465562
+  },
+  "session_id": "4775291f-db85-4796-9471-f734b6c2771a",
+  "result_block": "## Result\n- **Brick**: knowledge\n- **Mode**: brick\n- **Mini-task**: Index HTTP method route decorators from NestJS request-mapping file, then search for \"WebDAV\" entries\n- **Answer**:\n  Copy\n  Lock\n  Mkcol\n  Move\n  Propfind\n  Proppatch\n  Unlock\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__kb_index`, `mcp__focus__kb_search`\n- **Rough token estimate**: ~3,500\n- **Notes**: All 16 decorators indexed successfully in a single parallel batch. The search query \"WebDAV\" matched the 7 decorators whose JSDoc descriptions contain \"Webdav\" (case-insensitive match by the search engine). The file used \"Webdav\" (not \"WebDAV\") in the content, but the search still matched correctly.",
+  "workdir": "/tmp/focus-bench/knowledge-brick-2026-04-24T07-36-13-628",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "convert",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:05:01.442Z",
+  "duration_ms": 64826,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 23851,
+    "cache_read_input_tokens": 509673,
+    "output_tokens": 4036,
+    "total": 537599
+  },
+  "session_id": "268626b1-16c1-44ac-b8b2-95665e699eed",
+  "result_block": "## Result\n- **Brick**: convert\n- **Mode**: native\n- **Mini-task**: Convert all 13 exported camelCase names in `shared.utils.ts` to snake_case\n- **Answer**:\n  ```\n  isUndefined -> is_undefined\n  isObject -> is_object\n  isPlainObject -> is_plain_object\n  addLeadingSlash -> add_leading_slash\n  normalizePath -> normalize_path\n  stripEndSlash -> strip_end_slash\n  isFunction -> is_function\n  isString -> is_string\n  isNumber -> is_number\n  isConstructor -> is_constructor\n  isNil -> is_nil\n  isEmpty -> is_empty\n  isSymbol -> is_symbol\n  ```\n- **Turns used**: 5\n- **Tools used**: `Read`, `Bash`, `Grep`\n- **Rough token estimate**: ~2,000\n- **Notes**: Straightforward task. Used `Grep` to extract all `export const` names in file order, then a short Node.js one-liner to apply the camelCase→snake_case regex transform. The `language` brick tool would call `conv_language({text, to: \"snake\"})` for each name, producing the same deterministic output.",
+  "mini_task_spec": "In the file `test-repo/packages/common/utils/shared.utils.ts`, there are 13 top-level exported constants (all named in camelCase). Your task is to list each exported name and its snake_case equivalent, in the order the exports appear in the file.\n\nUse the `conv_language` tool (or equivalent naming-convention converter) with `to: \"snake\"` for each name. Report the results as a list of lines, each in the format `<originalName> -> <snake_case_name>`, one per line, in file order (top to bottom).\n\nThe 13 exported names to convert (in file order) are:\n`isUndefined`, `isObject`, `isPlainObject`, `addLeadingSlash`, `normalizePath`, `stripEndSlash`, `isFunction`, `isString`, `isNumber`, `isConstructor`, `isNil`, `isEmpty`, `isSymbol`.\n\n---",
+  "workdir": "/tmp/focus-bench/convert-native-2026-04-24T07-05-01-442",
+  "exit_reason": "ok"
+}

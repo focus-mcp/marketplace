@@ -1,0 +1,26 @@
+{
+  "brick": "fts",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:23:45.820Z",
+  "duration_ms": 68750,
+  "turns": 7,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__fts_index",
+    "mcp__focus__fts_search"
+  ],
+  "usage": {
+    "input_tokens": 28,
+    "cache_creation_input_tokens": 21296,
+    "cache_read_input_tokens": 149574,
+    "output_tokens": 4178,
+    "total": 175076
+  },
+  "session_id": "60629571-610c-409d-b72a-cefc1cbcb216",
+  "result_block": "## Result\n- **Brick**: fts\n- **Mode**: brick\n- **Mini-task**: Index non-test `.ts` files in `test-repo/packages/core` and search for \"exception filter handler\", reporting top 5 results by relevance\n- **Answer**:\n```\npackages/core/exceptions/index.ts\npackages/core/errors/exceptions/invalid-exception-filter.exception.ts\npackages/core/errors/exceptions/index.ts\npackages/core/exceptions/exceptions-handler.ts\npackages/core/exceptions/external-exception-filter.ts\n```\n- **Turns used**: 4\n- **Tools used**: `mcp__focus__fts_index`, `mcp__focus__fts_search`\n- **Rough token estimate**: ~2,800\n- **Notes**: The `fts_index` glob parameter only supports extension-based filtering (e.g. `*.ts`), not path-based exclusions. As a result, test files (under `test/` subdirectories and ending in `.spec.ts`) were included in the index (259 files total). Test files were filtered out manually from the search results when selecting the top 5. The TF-IDF scores may be marginally affected by including test files in the corpus, but the ranking of non-test files is expected to remain consistent.",
+  "workdir": "/tmp/focus-bench/fts-brick-2026-04-24T07-23-45-819",
+  "exit_reason": "ok"
+}

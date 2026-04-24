@@ -1,0 +1,25 @@
+{
+  "brick": "planning",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:45:34.207Z",
+  "duration_ms": 132426,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 42,
+    "cache_creation_input_tokens": 40769,
+    "cache_read_input_tokens": 586860,
+    "output_tokens": 9441,
+    "total": 637112
+  },
+  "session_id": "f9272838-d135-4355-b6f4-9980bace00da",
+  "result_block": "## Result\n\n- **Brick**: planning  \n- **Mode**: native  \n- **Mini-task**: Build a NestJS middleware migration plan from file listing and calculate total time + blocked steps  \n- **Answer**:\n\n```\nOrdered step titles (one per line):\nModify builder.ts\nModify container.ts\nModify middleware-module.ts\nModify resolver.ts\nModify route-info-path-extractor.ts\nModify routes-mapper.ts\nModify utils.ts\nWrite unit tests\nUpdate PACKAGE.md\n\nTotal estimated time: 570 minutes (9h 30m)\nBlocked steps: 2\n```\n\n- **Turns used**: 6  \n- **Tools used**: Read, Bash  \n- **Rough token estimate**: ~2 500  \n- **Notes**: Fully deterministic — file list drives step count, simple arithmetic drives time total, dependency structure drives blocked-step count. No ambiguity in native mode; the planning brick would exercise `plan:create`, `plan:steps` (×9), `plan:dependencies` (×8), and `plan:estimate` to produce the same answer.",
+  "mini_task_spec": "Using only the `test-repo/packages/core/middleware/` directory, list every TypeScript file (`.ts`) in that directory **except `index.ts`**, sort them alphabetically, and build a structured migration plan as follows:\n\n- **One step per file** (step title = `Modify <filename>`, time estimate = `1h`)  \n- **One trailing step**: `Write unit tests`, estimate `2h`  \n- **One final step**: `Update PACKAGE.md`, estimate `30m`  \n- **Dependencies**:  \n  - `Write unit tests` depends on *all* file-modification steps  \n  - `Update PACKAGE.md` depends on `Write unit tests`  \n\nAssuming **no steps are yet complete**, report the following three things (in this format):\n\n```\nOrdered step titles (one per line):\n<list>\n\nTotal estimated time: <N> minutes (<Hh Mm>)\nBlocked steps: <count>\n```\n\nThe file-modification steps must appear in alphabetical order by filename. The two trailing steps (`Write unit tests`, then `Update PACKAGE.md`) follow after all file steps.\n\n---",
+  "workdir": "/tmp/focus-bench/planning-native-2026-04-24T07-45-34-206",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "onboarding",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:38:47.889Z",
+  "duration_ms": 114012,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 41,
+    "cache_creation_input_tokens": 37982,
+    "cache_read_input_tokens": 565563,
+    "output_tokens": 5300,
+    "total": 608886
+  },
+  "session_id": "5a4f45ce-e408-4ae6-b38c-c0c8ccfcfb4d",
+  "result_block": "## Result\n\n- **Brick**: onboarding\n- **Mode**: native\n- **Mini-task**: Discover key onboarding facts (packages, TS config, test runner, monorepo tool) from the NestJS monorepo's config files\n- **Answer**:\n  1. **Package names** (alphabetical):\n     ```\n     @nestjs/common\n     @nestjs/core\n     @nestjs/microservices\n     @nestjs/platform-express\n     @nestjs/platform-fastify\n     @nestjs/platform-socket.io\n     @nestjs/platform-ws\n     @nestjs/testing\n     @nestjs/websockets\n     ```\n  2. **TypeScript target**: `ES2021`\n  3. **TypeScript module**: `commonjs`\n  4. **Test runner**: `mocha`\n  5. **Monorepo tool**: `lerna`\n- **Turns used**: 8\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: All facts were deterministically sourced from `packages/*/package.json`, root `tsconfig.json`, root `package.json`, and `lerna.json`. No ambiguity encountered. The test-repo is a shallow clone of the NestJS framework source, version 11.1.x.",
+  "mini_task_spec": "You are onboarding into a NestJS monorepo located at `test-repo/`. Using only project configuration files (no running code), identify the following key onboarding facts:\n\n1. **Package names**: List the `name` field from each `packages/*/package.json` file, sorted alphabetically (one per line).\n2. **TypeScript compilation target**: The `target` value in the root `tsconfig.json`.\n3. **TypeScript module system**: The `module` value in the root `tsconfig.json`.\n4. **Test runner**: The binary/tool name used in the `test` script of the root `package.json`.\n5. **Monorepo management tool**: The tool whose config file is present at the repo root (hint: look for `lerna.json`).\n\nExpected answer format: five labeled facts in order, exactly as described above (package list one per line, then four individual values).\n\n---",
+  "workdir": "/tmp/focus-bench/onboarding-native-2026-04-24T07-38-47-889",
+  "exit_reason": "ok"
+}

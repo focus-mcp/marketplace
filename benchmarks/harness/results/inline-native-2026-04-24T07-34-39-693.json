@@ -1,0 +1,27 @@
+{
+  "brick": "inline",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:33:08.389Z",
+  "duration_ms": 91304,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 46,
+    "cache_creation_input_tokens": 22343,
+    "cache_read_input_tokens": 632178,
+    "output_tokens": 5558,
+    "total": 660125
+  },
+  "session_id": "35ca6d07-d5a5-4016-a22f-14148d9e9a0e",
+  "result_block": "## Result\n\n- **Brick**: inline\n- **Mode**: native\n- **Mini-task**: Inline the `MISSING_REQUIRED_DEPENDENCY` arrow-function constant in `load-package.util.ts`\n- **Answer**: `    logger.error(\\`The \"${packageName}\" package is missing. Please, make sure to install it to take advantage of ${context}.\\`);`\n- **Turns used**: 5\n- **Tools used**: Read, Glob, Bash, Grep\n- **Rough token estimate**: ~2 500\n- **Notes**: The constant is not exported and appears only in one file; the single call site makes this a canonical inline candidate. The `load-adapter.ts` file in `packages/core` has an identically-named constant but is a separate definition — no cross-file conflict.",
+  "mini_task_spec": "In `test-repo/packages/common/utils/load-package.util.ts`, the arrow-function constant `MISSING_REQUIRED_DEPENDENCY` is defined on lines 3–4 and called exactly once on line 16 (inside the `catch` block of `loadPackage`). Using the `inline` tool (or equivalent inline-refactoring logic), inline `MISSING_REQUIRED_DEPENDENCY`: substitute the actual arguments (`packageName`, `context`) for the parameters (`name`, `reason`) in the template-literal body, remove the constant definition, and report the **exact resulting `logger.error(…)` call line** as it would appear in the file after inlining (preserve original indentation). The answer must be a single line of TypeScript code.\n\n---",
+  "workdir": "/tmp/focus-bench/inline-native-2026-04-24T07-33-08-389",
+  "exit_reason": "ok"
+}

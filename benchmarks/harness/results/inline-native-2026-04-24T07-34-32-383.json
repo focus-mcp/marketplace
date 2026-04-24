@@ -1,0 +1,26 @@
+{
+  "brick": "inline",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:33:21.758Z",
+  "duration_ms": 70625,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 38,
+    "cache_creation_input_tokens": 24178,
+    "cache_read_input_tokens": 521174,
+    "output_tokens": 4570,
+    "total": 549960
+  },
+  "session_id": "5bf2fa52-767f-4bb8-b23e-89b63fcb1829",
+  "result_block": "## Result\n- **Brick**: inline\n- **Mode**: native\n- **Mini-task**: Inline the single-use `hash` variable in `generate-options-injection-token.util.ts` and report the resulting file content\n- **Answer**:\n```typescript\nimport { randomStringGenerator } from '../../utils/random-string-generator.util';\n\nexport function generateOptionsInjectionToken() {\n  return `CONFIGURABLE_MODULE_OPTIONS[${randomStringGenerator()}]`;\n}\n```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,000\n- **Notes**: The file is 6 lines long; `hash` appears on exactly 2 lines (declaration + usage), making this a clean, deterministic inline with no ambiguity. The import is unchanged since `randomStringGenerator` was already imported.",
+  "mini_task_spec": "Look at the file `test-repo/packages/common/module-utils/utils/generate-options-injection-token.util.ts`. It contains a function `generateOptionsInjectionToken()` with a local variable `hash` that is assigned once (to the result of `randomStringGenerator()`) and used exactly once (inside a template literal). Using the `inline` tool from the **inline** brick, inline the variable `hash` — that is, replace its single usage with its definition (`randomStringGenerator()`) and remove the variable declaration. Report the **complete resulting file content** after applying the inline refactoring. The expected answer format is the full file text, showing all lines including imports and the modified function body.",
+  "workdir": "/tmp/focus-bench/inline-native-2026-04-24T07-33-21-758",
+  "exit_reason": "ok"
+}

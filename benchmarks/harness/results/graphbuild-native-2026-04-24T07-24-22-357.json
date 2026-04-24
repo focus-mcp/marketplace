@@ -1,0 +1,26 @@
+{
+  "brick": "graphbuild",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:23:02.881Z",
+  "duration_ms": 79476,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 43604,
+    "cache_read_input_tokens": 534370,
+    "output_tokens": 4905,
+    "total": 582916
+  },
+  "session_id": "19ce511b-7288-4e6e-a8d1-b6a7b6d6d50a",
+  "result_block": "## Result\n\n- **Brick**: graphbuild\n- **Mode**: native\n- **Mini-task**: List all intra-directory import/re-export edges in `test-repo/packages/core/discovery/`\n- **Answer**:\n  ```\n  discovery-module -> discovery-service\n  discovery-service -> discoverable-meta-host-collection\n  index -> discovery-module\n  index -> discovery-service\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~4,500\n- **Notes**: All four files in the directory were read in full. The edges were confirmed with a targeted `Grep` on relative-path imports (`./`). The result is fully deterministic — no ambiguity in the source files.",
+  "mini_task_spec": "Using the `graphbuild` brick, build a knowledge graph for the directory `test-repo/packages/core/discovery/` and identify all **intra-directory import/re-export edges** — that is, every relationship where a TypeScript file in that directory imports or re-exports another TypeScript file in the same directory. Output each edge as `<source-filename> -> <target-filename>` (filenames only, no directory prefix, no `.ts` extension), one per line, sorted alphabetically. Include `export * from` statements as edges. Do NOT include imports from external packages (`@nestjs/common`, `uid`, etc.) or from other directories (`../injector/…`, `../metadata-scanner`, etc.).",
+  "workdir": "/tmp/focus-bench/graphbuild-native-2026-04-24T07-23-02-881",
+  "exit_reason": "ok"
+}

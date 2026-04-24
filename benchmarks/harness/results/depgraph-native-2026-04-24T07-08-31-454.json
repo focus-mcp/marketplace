@@ -1,0 +1,26 @@
+{
+  "brick": "depgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:06:37.753Z",
+  "duration_ms": 113701,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 49,
+    "cache_creation_input_tokens": 33204,
+    "cache_read_input_tokens": 734071,
+    "output_tokens": 5475,
+    "total": 772799
+  },
+  "session_id": "8b0be4c3-9f22-4900-b551-a2efca419735",
+  "result_block": "## Result\n- **Brick**: depgraph\n- **Mode**: native\n- **Mini-task**: Find all non-test `.ts` files in `packages/core` that import/re-export from `metadata-scanner.ts`\n- **Answer**:\n  ```\n  packages/core/discovery/discovery-module.ts\n  packages/core/index.ts\n  packages/core/middleware/routes-mapper.ts\n  packages/core/nest-factory.ts\n  packages/core/repl/native-functions/methods-repl-fn.ts\n  packages/core/router/paths-explorer.ts\n  packages/core/router/router-explorer.ts\n  packages/core/router/routes-resolver.ts\n  packages/core/scanner.ts\n  ```\n- **Turns used**: 13\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: `packages/core/index.ts` uses `export * from './metadata-scanner'` (a re-export, not a bare `import`), but it still creates a hard module dependency so it is correctly included by any fanin/dependency analysis tool. All five test files (`*.spec.ts` under `test/`) are excluded from the answer per the task definition.",
+  "mini_task_spec": "Using the `depgraph` brick's **`fanin`** tool, determine which non-test TypeScript source files inside `test-repo/packages/core` import (or re-export from) the file `test-repo/packages/core/metadata-scanner.ts`.\n\nSpecifically: search across all `.ts` files in `test-repo/packages/core`, **excluding** any files under the `test-repo/packages/core/test/` subdirectory (i.e., `*.spec.ts` / test files), and list every file that has a `from` clause pointing at `metadata-scanner` (whether via `import { ... } from '…/metadata-scanner'` or `export * from '…/metadata-scanner'`).\n\nReturn the result as a list of file paths **relative to `test-repo/`**, one per line, sorted alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/depgraph-native-2026-04-24T07-06-37-753",
+  "exit_reason": "ok"
+}

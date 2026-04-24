@@ -1,0 +1,25 @@
+{
+  "brick": "planning",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T07:43:39.437Z",
+  "duration_ms": 111099,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 14259,
+    "cache_read_input_tokens": 448799,
+    "output_tokens": 6322,
+    "total": 469415
+  },
+  "session_id": "c51c5f3b-9450-4ad0-9d94-f55b31db9d1d",
+  "result_block": "## Result\n- **Brick**: planning\n- **Mode**: native\n- **Mini-task**: Design a `.bak`-file cleanup plan for `packages/common/exceptions/` with step-level dependencies and time estimates\n- **Answer**: 22 total steps (21 × \"Delete `<file>.bak`\" steps at 5m each, 1 × \"Verify build passes\" at 15m, with the verify step depending on all 21 delete steps); total estimated time = **120 minutes**\n- **Turns used**: 9\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~2,000 tokens\n- **Notes**: The exceptions directory contains 21 `.bak` files and 2 `.bak2` files; only the `.bak` files are in scope. The planning brick's `estimate` summary would show: 22 total steps, 0 completed, 1 blocked (the verify step), 120 minutes remaining. The native solve is entirely mechanical — list and count files, then apply the arithmetic from the task rules.",
+  "mini_task_spec": "Inspect `test-repo/packages/common/exceptions/` to find all files with the `.bak` extension (files ending in exactly `.bak` — exclude `.bak2`). Using the planning tools, create a plan titled `\"Clean up .bak files in packages/common/exceptions\"`. Add one step per `.bak` file named `\"Delete <filename>\"` (using only the base filename, e.g. `\"Delete bad-gateway.exception.bak\"`), each with estimate `\"5m\"`. Add the delete steps in alphabetical order by filename. Add one final step named `\"Verify build passes\"` with estimate `\"15m\"`. Define dependencies so that `\"Verify build passes\"` (the last step, index 21) depends on every one of the 21 delete steps. Then call the `estimate` tool and report: (1) total number of steps, (2) total estimated time in minutes. Expected answer format: two integers — total steps and total estimated time in minutes.",
+  "workdir": "/tmp/focus-bench/planning-native-2026-04-24T07-43-39-437",
+  "exit_reason": "ok"
+}
