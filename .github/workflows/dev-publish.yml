@@ -4,10 +4,8 @@
 name: Dev Publish
 
 on:
-  push:
-    branches: [develop]
-    paths:
-      - "bricks/**"
+  # Auto-trigger temporarily disabled to stop 68-brick publish spam on every push.
+  # Re-enabled in ci/dev-publish-only-modified once per-brick git-diff logic lands.
   workflow_dispatch:
 
 permissions:
