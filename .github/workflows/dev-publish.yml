@@ -4,8 +4,10 @@
 name: Dev Publish
 
 on:
-  # Auto-trigger temporarily disabled to stop 68-brick publish spam on every push.
-  # Re-enabled in ci/dev-publish-only-modified once per-brick git-diff logic lands.
+  push:
+    branches: [develop]
+    paths:
+      - 'bricks/**'
   workflow_dispatch:
 
 permissions:
@@ -33,6 +35,29 @@ jobs:
           registry-url: https://registry.npmjs.org
           scope: '@focusmcp'
       - run: pnpm install --frozen-lockfile
+
+      - name: Detect modified bricks since last commit
+        id: modified
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] \
+             || [ -z "$BEFORE" ] \
+             || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            # First push / force-push / manual dispatch — publish everything to catch up
+            echo "Catch-up mode: publishing all bricks"
+            BRICKS=$(ls -d bricks/*/ | sed 's|bricks/||; s|/||')
+          else
+            # Only bricks with source changes between before..after
+            BRICKS=$(git diff --name-only "${BEFORE}...${AFTER}" -- 'bricks/*/' \
+              | awk -F/ '{print $2}' | sort -u)
+          fi
+
+          echo "Modified bricks: ${BRICKS:-<none>}"
+          echo "bricks=$(echo "$BRICKS" | tr '\n' ' ' | xargs)" >> "$GITHUB_OUTPUT"
+
       - name: Compute dev number
         id: devnum
         run: |
@@ -40,39 +65,61 @@ jobs:
           DEV_NUM=$(git rev-list --count ${LAST_TAG}..HEAD)
           echo "num=${DEV_NUM}" >> "$GITHUB_OUTPUT"
           echo "Dev number: ${DEV_NUM}"
-      - name: Set per-brick dev versions
+
+      - name: Set per-brick dev versions (modified only)
         env:
           DEV_NUM: ${{ steps.devnum.outputs.num }}
+          BRICKS_LIST: ${{ steps.modified.outputs.bricks }}
         run: |
-          for dir in bricks/*/; do
-            if [ -f "${dir}package.json" ]; then
-              node -e "
-                const fs = require('fs');
-                const pkg = JSON.parse(fs.readFileSync('${dir}package.json', 'utf-8'));
-                if (pkg.private === true) process.exit(0);
-                const base = pkg.version.split('-')[0];
-                pkg.version = base + '-dev.' + process.env.DEV_NUM;
-                fs.writeFileSync('${dir}package.json', JSON.stringify(pkg, null, 4) + '\n');
-                console.log('  -> ' + pkg.name + '@' + pkg.version);
-              "
-            fi
+          if [ -z "$BRICKS_LIST" ]; then
+            echo "No bricks modified — skipping version bump."
+            exit 0
+          fi
+          for name in $BRICKS_LIST; do
+            dir="bricks/${name}"
+            [ -f "${dir}/package.json" ] || continue
+            node -e "
+              const fs = require('fs');
+              const pkg = JSON.parse(fs.readFileSync('${dir}/package.json', 'utf-8'));
+              if (pkg.private === true) process.exit(0);
+              const base = pkg.version.split('-')[0];
+              pkg.version = base + '-dev.' + process.env.DEV_NUM;
+              fs.writeFileSync('${dir}/package.json', JSON.stringify(pkg, null, 4) + '\n');
+              console.log('  -> ' + pkg.name + '@' + pkg.version);
+            "
           done
-      - name: Build all bricks
-        run: pnpm build
+
+      - name: Build modified bricks
+        env:
+          BRICKS_LIST: ${{ steps.modified.outputs.bricks }}
+        run: |
+          if [ -z "$BRICKS_LIST" ]; then
+            echo "No bricks modified — skipping build."
+            exit 0
+          fi
+          FILTERS=""
+          for name in $BRICKS_LIST; do
+            FILTERS="$FILTERS --filter @focusmcp/${name}"
+          done
+          pnpm $FILTERS run build
+
       - run: pnpm build:catalog
-      - name: Publish all bricks with dev tag
+
+      - name: Publish modified bricks with dev tag
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          BRICKS_LIST: ${{ steps.modified.outputs.bricks }}
         run: |
-          for dir in bricks/*/; do
-            if [ -f "${dir}package.json" ]; then
-              PRIVATE=$(node -e "console.log(require('./${dir}package.json').private)")
-              if [ "$PRIVATE" != "true" ]; then
-                NAME=$(node -e "console.log(require('./${dir}package.json').name)")
-                echo "Publishing ${NAME}..."
-                cd "$dir"
-                npm publish --tag dev --access public 2>&1 || echo "  -> skipped"
-                cd ../..
-              fi
-            fi
+          if [ -z "$BRICKS_LIST" ]; then
+            echo "No bricks modified — skipping publish."
+            exit 0
+          fi
+          for name in $BRICKS_LIST; do
+            dir="bricks/${name}"
+            [ -f "${dir}/package.json" ] || continue
+            PRIVATE=$(node -e "console.log(require('./${dir}/package.json').private)")
+            [ "$PRIVATE" = "true" ] && echo "  skip (private): ${name}" && continue
+            NAME=$(node -e "console.log(require('./${dir}/package.json').name)")
+            echo "Publishing ${NAME}..."
+            (cd "$dir" && npm publish --tag dev --access public) || echo "  -> skipped"
           done
