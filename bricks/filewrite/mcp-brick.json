@@ -33,12 +33,23 @@
         },
         {
             "name": "create",
-            "description": "Create a file only if it does not already exist",
+            "description": "Create a new file. Fails if the file already exists by default (safe). Pass options.force=true to overwrite an existing file.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string" },
-                    "content": { "type": "string" }
+                    "path": { "type": "string", "description": "Absolute file path" },
+                    "content": { "type": "string", "description": "Content to write" },
+                    "options": {
+                        "type": "object",
+                        "description": "Optional creation options",
+                        "properties": {
+                            "force": {
+                                "type": "boolean",
+                                "description": "If true, overwrite the file if it already exists. Default: false."
+                            }
+                        },
+                        "additionalProperties": false
+                    }
                 },
                 "required": ["path", "content"],
                 "additionalProperties": false

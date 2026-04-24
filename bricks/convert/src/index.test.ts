@@ -190,6 +190,37 @@ describe('convFormat — errors', () => {
     });
 });
 
+// ─── convFormat — null-guard regression ──────────────────────────────────────
+
+describe('convFormat — null-guard in CSV serializer', () => {
+    it('handles JSON array with null field values without throwing', () => {
+        // Regression: val.includes was called on null/undefined values from real JSON inputs.
+        // JSON.stringify drops undefined values, so only null fields are serialized.
+        const data = JSON.stringify([
+            { name: 'Alice', score: null },
+            { name: 'Bob', score: 42 },
+        ]);
+        // Should not throw TypeError: val.includes is not a function
+        expect(() => convFormat({ data, from: 'json', to: 'csv' })).not.toThrow();
+        const out = convFormat({ data, from: 'json', to: 'csv' });
+        expect(out.result).toContain('Alice');
+        expect(out.result).toContain('Bob');
+        // null should be serialized as empty string, not throw
+        expect(out.result).toContain('name,score');
+    });
+
+    it('handles JSON array with numeric field values', () => {
+        const data = JSON.stringify([
+            { id: 1, value: 3.14, label: 'pi' },
+            { id: 2, value: 2.71, label: 'e' },
+        ]);
+        expect(() => convFormat({ data, from: 'json', to: 'csv' })).not.toThrow();
+        const out = convFormat({ data, from: 'json', to: 'csv' });
+        expect(out.result).toContain('3.14');
+        expect(out.result).toContain('pi');
+    });
+});
+
 // ─── convLanguage ─────────────────────────────────────────────────────────────
 
 describe('convLanguage — to snake_case', () => {

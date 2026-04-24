@@ -15,6 +15,12 @@ export interface GraphEdge {
     readonly type: string;
 }
 
+/** Inline graph payload accepted by ge_input and all export tools via the optional `graph` param. */
+export interface GraphJson {
+    readonly nodes: readonly GraphNode[];
+    readonly edges: readonly GraphEdge[];
+}
+
 export const nodes: Map<string, GraphNode> = new Map();
 export const edges: GraphEdge[] = [];
 
@@ -30,14 +36,66 @@ export function resetGraph(): void {
     edges.length = 0;
 }
 
+// ─── geInput — load an inline graph into ambient state ───────────────────────
+
+export interface GeInputInput {
+    readonly graph: GraphJson;
+}
+
+export interface GeInputOutput {
+    readonly loaded: true;
+    readonly nodeCount: number;
+    readonly edgeCount: number;
+}
+
+/**
+ * Load an inline graph (nodes + edges JSON) into the ambient state so that
+ * subsequent export tools can use it without requiring an upstream graphbuild
+ * or callgraph brick.
+ */
+export function geInput(input: GeInputInput): GeInputOutput {
+    setGraph([...input.graph.nodes] as GraphNode[], [...input.graph.edges] as GraphEdge[]);
+    return { loaded: true, nodeCount: nodes.size, edgeCount: edges.length };
+}
+
+// ─── Helpers to resolve graph from optional inline payload or ambient state ───
+
+function resolveNodes(graph?: GraphJson): readonly GraphNode[] {
+    if (graph) return graph.nodes;
+    return [...nodes.values()];
+}
+
+function resolveEdges(graph?: GraphJson): readonly GraphEdge[] {
+    if (graph) return graph.edges;
+    return edges;
+}
+
 // ─── Input types ─────────────────────────────────────────────────────────────
 
 export interface GeHtmlInput {
     readonly title?: string;
+    readonly graph?: GraphJson;
 }
 
 export interface GeMermaidInput {
     readonly direction?: string;
+    readonly graph?: GraphJson;
+}
+
+export interface GeGraphmlInput {
+    readonly graph?: GraphJson;
+}
+
+export interface GeCypherInput {
+    readonly graph?: GraphJson;
+}
+
+export interface GeObsidianInput {
+    readonly graph?: GraphJson;
+}
+
+export interface GeWikiInput {
+    readonly graph?: GraphJson;
 }
 
 // ─── HTML helpers ─────────────────────────────────────────────────────────────
@@ -109,9 +167,10 @@ const SVG_DEFS = `  <defs>
 
 export function geHtml(input: GeHtmlInput): string {
     const title = input.title ?? 'Knowledge Graph';
-    const nodeList = [...nodes.values()];
+    const nodeList = [...resolveNodes(input.graph)];
+    const edgeList = [...resolveEdges(input.graph)];
     const positions = computeNodePositions(nodeList);
-    const svgEdges = renderSvgEdges(edges, positions);
+    const svgEdges = renderSvgEdges(edgeList, positions);
     const svgNodes = renderSvgNodes(nodeList, positions);
 
     return [
@@ -147,12 +206,12 @@ export function geMermaid(input: GeMermaidInput): string {
     const dir = ALLOWED_DIRECTIONS.has(rawDir) ? rawDir : 'TB';
     const lines: string[] = [`flowchart ${dir}`];
 
-    for (const node of nodes.values()) {
+    for (const node of resolveNodes(input.graph)) {
         const safeId = sanitizeMermaidId(node.id);
         lines.push(`  ${safeId}["${node.label}"]`);
     }
 
-    for (const edge of edges) {
+    for (const edge of resolveEdges(input.graph)) {
         const fromId = sanitizeMermaidId(edge.from);
         const toId = sanitizeMermaidId(edge.to);
         lines.push(`  ${fromId} -->|${edge.type}| ${toId}`);
@@ -171,8 +230,8 @@ function xmlEscape(value: string): string {
         .replace(/"/g, '&quot;');
 }
 
-function renderGraphmlNodes(): string {
-    return [...nodes.values()]
+function renderGraphmlNodes(nodeList: readonly GraphNode[]): string {
+    return [...nodeList]
         .map((node) =>
             [
                 `    <node id="${xmlEscape(node.id)}">`,
@@ -184,8 +243,8 @@ function renderGraphmlNodes(): string {
         .join('\n');
 }
 
-function renderGraphmlEdges(): string {
-    return edges
+function renderGraphmlEdges(edgeList: readonly GraphEdge[]): string {
+    return [...edgeList]
         .map((edge, i) =>
             [
                 `    <edge id="e${i}" source="${xmlEscape(edge.from)}" target="${xmlEscape(edge.to)}">`,
@@ -205,11 +264,11 @@ const GRAPHML_HEADER = [
     '  <graph id="G" edgedefault="directed">',
 ].join('\n');
 
-export function geGraphml(): string {
+export function geGraphml(input: GeGraphmlInput = {}): string {
     return [
         GRAPHML_HEADER,
-        renderGraphmlNodes(),
-        renderGraphmlEdges(),
+        renderGraphmlNodes(resolveNodes(input.graph)),
+        renderGraphmlEdges(resolveEdges(input.graph)),
         '  </graph>',
         '</graphml>',
     ].join('\n');
@@ -221,15 +280,15 @@ function cypherEscape(value: string): string {
     return value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 }
 
-function renderCypherNodes(): string[] {
-    return [...nodes.values()].map(
+function renderCypherNodes(nodeList: readonly GraphNode[]): string[] {
+    return [...nodeList].map(
         (node) =>
             `CREATE (n_${sanitizeMermaidId(node.id)}:${node.type} {id: '${cypherEscape(node.id)}', label: '${cypherEscape(node.label)}'})`,
     );
 }
 
-function renderCypherEdges(): string[] {
-    return edges.map((edge) => {
+function renderCypherEdges(edgeList: readonly GraphEdge[]): string[] {
+    return [...edgeList].map((edge) => {
         const fromVar = `n_${sanitizeMermaidId(edge.from)}`;
         const toVar = `n_${sanitizeMermaidId(edge.to)}`;
         const relType = edge.type.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
@@ -237,21 +296,32 @@ function renderCypherEdges(): string[] {
     });
 }
 
-export function geCypher(): string {
-    return [...renderCypherNodes(), ...renderCypherEdges()].join('\n');
+export function geCypher(input: GeCypherInput = {}): string {
+    return [
+        ...renderCypherNodes(resolveNodes(input.graph)),
+        ...renderCypherEdges(resolveEdges(input.graph)),
+    ].join('\n');
 }
 
 // ─── geObsidian ───────────────────────────────────────────────────────────────
 
-function getNeighborLabels(nodeId: string): string[] {
-    const neighborIds = edges
+function getNeighborLabels(
+    nodeId: string,
+    edgeList: readonly GraphEdge[],
+    nodeMap: ReadonlyMap<string, GraphNode>,
+): string[] {
+    const neighborIds = edgeList
         .filter((e) => e.from === nodeId || e.to === nodeId)
         .map((e) => (e.from === nodeId ? e.to : e.from));
-    return neighborIds.map((id) => nodes.get(id)?.label ?? id);
+    return neighborIds.map((id) => nodeMap.get(id)?.label ?? id);
 }
 
-function renderObsidianFile(node: GraphNode): string {
-    const neighborLabels = getNeighborLabels(node.id);
+function renderObsidianFile(
+    node: GraphNode,
+    edgeList: readonly GraphEdge[],
+    nodeMap: ReadonlyMap<string, GraphNode>,
+): string {
+    const neighborLabels = getNeighborLabels(node.id, edgeList, nodeMap);
     const linksSection =
         neighborLabels.length > 0
             ? neighborLabels.map((label) => `- [[${label}]]`).join('\n')
@@ -260,34 +330,41 @@ function renderObsidianFile(node: GraphNode): string {
     return [`# ${node.label}`, `Type: ${node.type}`, '', '## Links', linksSection].join('\n');
 }
 
-export function geObsidian(): Record<string, string> {
+export function geObsidian(input: GeObsidianInput = {}): Record<string, string> {
+    const nodeList = resolveNodes(input.graph);
+    const edgeList = resolveEdges(input.graph);
+    const nodeMap: Map<string, GraphNode> = new Map(nodeList.map((n) => [n.id, n]));
     const files: Record<string, string> = {};
-    for (const node of nodes.values()) {
+    for (const node of nodeList) {
         const filename = `${node.label.replace(/[/\\?%*:|"<>]/g, '-')}.md`;
-        files[filename] = renderObsidianFile(node);
+        files[filename] = renderObsidianFile(node, edgeList, nodeMap);
     }
     return files;
 }
 
 // ─── geWiki ──────────────────────────────────────────────────────────────────
 
-function getOutgoingEdges(nodeId: string): GraphEdge[] {
-    return edges.filter((e) => e.from === nodeId);
+function getOutgoingEdges(nodeId: string, edgeList: readonly GraphEdge[]): GraphEdge[] {
+    return [...edgeList].filter((e) => e.from === nodeId);
 }
 
-function getIncomingEdges(nodeId: string): GraphEdge[] {
-    return edges.filter((e) => e.to === nodeId);
+function getIncomingEdges(nodeId: string, edgeList: readonly GraphEdge[]): GraphEdge[] {
+    return [...edgeList].filter((e) => e.to === nodeId);
 }
 
-function renderWikiSection(node: GraphNode): string {
-    const outgoing = getOutgoingEdges(node.id);
-    const incoming = getIncomingEdges(node.id);
+function renderWikiSection(
+    node: GraphNode,
+    edgeList: readonly GraphEdge[],
+    nodeMap: ReadonlyMap<string, GraphNode>,
+): string {
+    const outgoing = getOutgoingEdges(node.id, edgeList);
+    const incoming = getIncomingEdges(node.id, edgeList);
 
     const outLines =
         outgoing.length > 0
             ? outgoing
                   .map((e) => {
-                      const target = nodes.get(e.to)?.label ?? e.to;
+                      const target = nodeMap.get(e.to)?.label ?? e.to;
                       return `- —[${e.type}]→ **${target}**`;
                   })
                   .join('\n')
@@ -297,7 +374,7 @@ function renderWikiSection(node: GraphNode): string {
         incoming.length > 0
             ? incoming
                   .map((e) => {
-                      const source = nodes.get(e.from)?.label ?? e.from;
+                      const source = nodeMap.get(e.from)?.label ?? e.from;
                       return `- **${source}** —[${e.type}]→`;
                   })
                   .join('\n')
@@ -317,7 +394,10 @@ function renderWikiSection(node: GraphNode): string {
     ].join('\n');
 }
 
-export function geWiki(): string {
-    const sections = [...nodes.values()].map(renderWikiSection);
+export function geWiki(input: GeWikiInput = {}): string {
+    const nodeList = resolveNodes(input.graph);
+    const edgeList = resolveEdges(input.graph);
+    const nodeMap: Map<string, GraphNode> = new Map(nodeList.map((n) => [n.id, n]));
+    const sections = [...nodeList].map((n) => renderWikiSection(n, edgeList, nodeMap));
     return ['# Knowledge Graph', '', ...sections].join('\n\n');
 }

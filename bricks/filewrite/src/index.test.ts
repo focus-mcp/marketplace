@@ -62,10 +62,27 @@ describe('fwCreate', () => {
         expect(content).toBe('initial');
     });
 
-    it('throws if file already exists', async () => {
+    it('throws if file already exists (safe default)', async () => {
         const path = join(testDir, 'exists.txt');
         await fwWrite({ path, content: 'existing' });
         await expect(fwCreate({ path, content: 'new' })).rejects.toThrow('File already exists');
+    });
+
+    it('overwrites file when force: true', async () => {
+        const path = join(testDir, 'force-overwrite.txt');
+        await fwWrite({ path, content: 'original' });
+        const result = await fwCreate({ path, content: 'forced', options: { force: true } });
+        expect(result.created).toBe(true);
+        const content = await readFile(path, 'utf-8');
+        expect(content).toBe('forced');
+    });
+
+    it('creates file with force: true even when file does not exist', async () => {
+        const path = join(testDir, 'force-new.txt');
+        const result = await fwCreate({ path, content: 'new', options: { force: true } });
+        expect(result.created).toBe(true);
+        const content = await readFile(path, 'utf-8');
+        expect(content).toBe('new');
     });
 });
 
