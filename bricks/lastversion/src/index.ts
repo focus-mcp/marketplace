@@ -47,16 +47,26 @@ const brick: Brick = {
     start(ctx) {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
-        unsubscribers.push(ctx.bus.handle('lv:latest', (data) => lvLatest(data as LvLatestInput)));
         unsubscribers.push(
-            ctx.bus.handle('lv:versions', (data) => lvVersions(data as LvVersionsInput)),
+            ctx.bus.handle('lastversion:latest', (data) => lvLatest(data as LvLatestInput)),
         );
-        unsubscribers.push(ctx.bus.handle('lv:diff', (data) => lvDiff(data as LvDiffInput)));
         unsubscribers.push(
-            ctx.bus.handle('lv:changelog', (data) => lvChangelog(data as LvChangelogInput)),
+            ctx.bus.handle('lastversion:versions', (data) => lvVersions(data as LvVersionsInput)),
         );
-        unsubscribers.push(ctx.bus.handle('lv:check', (data) => lvCheck(data as LvCheckInput)));
-        unsubscribers.push(ctx.bus.handle('lv:audit', (data) => lvAudit(data as LvAuditInput)));
+        unsubscribers.push(
+            ctx.bus.handle('lastversion:diff', (data) => lvDiff(data as LvDiffInput)),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('lastversion:changelog', (data) =>
+                lvChangelog(data as LvChangelogInput),
+            ),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('lastversion:check', (data) => lvCheck(data as LvCheckInput)),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('lastversion:audit', (data) => lvAudit(data as LvAuditInput)),
+        );
     },
     stop() {
         for (const unsub of unsubscribers) unsub();
