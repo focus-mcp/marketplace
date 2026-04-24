@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-24T13:09:55.599Z",
+  "updated": "2026-04-24T13:49:25.356Z",
   "bricks": [
     {
       "name": "agent",
@@ -358,7 +358,7 @@
     },
     {
       "name": "cache",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "In-memory file cache — avoid redundant disk reads with mtime-based invalidation.",
       "tags": [
         "cache",
@@ -458,7 +458,7 @@
     },
     {
       "name": "callgraph",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Call graph analysis — callers, callees, call chains.",
       "tags": [
         "callgraph",
@@ -1461,7 +1461,7 @@
     },
     {
       "name": "depgraph",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Dependency graph analysis — imports, exports, circular deps, fan-in/out.",
       "tags": [
         "depgraph",
@@ -6179,7 +6179,7 @@
     },
     {
       "name": "symbol",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Symbol lookup in source files — find, get, bulk, body.",
       "tags": [
         "symbols",
@@ -6789,7 +6789,7 @@
     },
     {
       "name": "treesitter",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Regex-based code indexer for TypeScript/JavaScript — parses symbols, imports, exports.",
       "tags": [
         "ast",
