@@ -1,5 +1,11 @@
 # @focus-mcp/brick-treesitter
 
+## 1.1.1
+
+### Patch Changes
+
+- Add required `version` field to mcp-brick.json. Without it, CLI 1.4.0's SemVer validator rejects the manifest on focus start.
+
 ## 1.1.0
 
 ### Minor Changes
