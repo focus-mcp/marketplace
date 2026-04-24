@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-convert",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Convert between formats and units — unit conversion, encoding, format transformation, naming conventions.",
     "license": "MIT",

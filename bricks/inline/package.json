@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-inline",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Inline, extract, and move refactoring — inline variables/functions, extract code to new functions, move between files.",
     "license": "MIT",

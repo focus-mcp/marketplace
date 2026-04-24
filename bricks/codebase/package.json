@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-codebase",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Complete codebase intelligence — loads treesitter, symbol, outline, callgraph, depgraph, refs.",
     "license": "MIT",

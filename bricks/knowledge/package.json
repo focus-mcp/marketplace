@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-knowledge",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Knowledge base — index documents, search by content, fetch entries, purge stale data, rank by relevance.",
     "license": "MIT",
