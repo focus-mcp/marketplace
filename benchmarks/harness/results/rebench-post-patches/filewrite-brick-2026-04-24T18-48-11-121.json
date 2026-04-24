@@ -1,0 +1,31 @@
+{
+  "brick": "filewrite",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:44:14.551Z",
+  "duration_ms": 236570,
+  "turns": 18,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 106,
+    "cache_creation_input_tokens": 121167,
+    "cache_read_input_tokens": 994873,
+    "output_tokens": 13879,
+    "total": 1130025
+  },
+  "session_id": "e187f2d1-b05b-48e7-879c-1c71a07d15a8",
+  "result_block": "## Result\n- **Brick**: filewrite\n- **Mode**: brick\n- **Mini-task**: Create `too-many-requests.exception.ts` following the strict NestJS HttpException pattern used by sibling exception files in `test-repo/packages/common/exceptions/`\n- **Answer**:\n\n```typescript\nimport { HttpStatus } from '../enums/http-status.enum';\nimport { HttpException, HttpExceptionOptions } from './http.exception';\n\nexport class TooManyRequestsException extends HttpException {\n  constructor(\n    descriptionOrOptions: string | HttpExceptionOptions = 'Too Many Requests',\n    options?: HttpExceptionOptions,\n  ) {\n    const { description, httpExceptionOptions } =\n      HttpException.extractDescriptionAndOptionsFrom(descriptionOrOptions, options);\n\n    super(\n      HttpException.createBody(description, 'Too Many Requests', HttpStatus.TOO_MANY_REQUESTS),\n      HttpStatus.TOO_MANY_REQUESTS,\n      httpExceptionOptions,\n    );\n  }\n}\n```\n\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`\n- **Rough token estimate**: ~6,000\n- **Notes**: The filewrite brick is listed as installed (version `^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-filewrite'` — the npm package is not present in the environment. The brick's tools (write, create, append) never appeared in the deferred-tool registry, so the file could **not** be created using brick tools. `focus_update` returned \"not yet implemented.\" File content above is inferred from the task description and the standard NestJS HTTP exception pattern (matching what sibling files like `not-found.exception.ts` would look like); the exact content could not be verified against existing files due to the Read-once constraint.",
+  "workdir": "/tmp/focus-bench/filewrite-brick-2026-04-24T18-44-14-549",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "depgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:45:45.412Z",
+  "duration_ms": 68447,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 45,
+    "cache_creation_input_tokens": 30405,
+    "cache_read_input_tokens": 638100,
+    "output_tokens": 4915,
+    "total": 673465
+  },
+  "session_id": "08dd740f-d474-4416-bf09-1d110f48f3b7",
+  "result_block": "## Result\n- **Brick**: depgraph\n- **Mode**: native\n- **Mini-task**: Find all non-test TypeScript files in `packages/core` that directly import `packages/core/injector/module.ts` (fan-in), sorted alphabetically\n- **Answer**:\n```\npackages/core/discovery/discovery-service.ts\npackages/core/errors/exceptions/undefined-dependency.exception.ts\npackages/core/errors/exceptions/unknown-dependencies.exception.ts\npackages/core/errors/messages.ts\npackages/core/hooks/before-app-shutdown.hook.ts\npackages/core/hooks/on-app-bootstrap.hook.ts\npackages/core/hooks/on-app-shutdown.hook.ts\npackages/core/hooks/on-module-destroy.hook.ts\npackages/core/hooks/on-module-init.hook.ts\npackages/core/injector/abstract-instance-resolver.ts\npackages/core/injector/container.ts\npackages/core/injector/injector.ts\npackages/core/injector/instance-links-host.ts\npackages/core/injector/instance-loader.ts\npackages/core/injector/instance-wrapper.ts\npackages/core/injector/module-ref.ts\npackages/core/injector/modules-container.ts\npackages/core/inspector/graph-inspector.ts\npackages/core/middleware/middleware-module.ts\npackages/core/middleware/resolver.ts\npackages/core/middleware/routes-mapper.ts\npackages/core/nest-application-context.ts\npackages/core/repl/repl-context.ts\npackages/core/router/router-explorer.ts\npackages/core/router/router-module.ts\npackages/core/scanner.ts\n```\n(26 files total)\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: Within the `injector/` subdirectory, files use `from './module'` (relative), while files outside use `from '../injector/module'` or `from './injector/module'`. Both patterns were required for a complete fan-in result. No test files were found importing module.ts.",
+  "mini_task_spec": "Using the depgraph brick's **fanin** tool, find every TypeScript source file (non-test, i.e. exclude any path containing `/test/`) inside `test-repo/packages/core` that directly imports from `test-repo/packages/core/injector/module.ts`.\n\nReport the results as a sorted, alphabetical list of file paths **relative to `test-repo/`**, one per line. Do not include `test-repo/packages/core/injector/module.ts` itself in the answer.\n\nThe brick call required is `fanin(file=<abs-path-to packages/core/injector/module.ts>, dir=<abs-path-to packages/core>)`, filtering out test files from the results and sorting alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/depgraph-native-2026-04-24T18-45-45-412",
+  "exit_reason": "ok"
+}

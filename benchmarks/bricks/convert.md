@@ -8,16 +8,16 @@
 
 | | Native | Brick | Δ |
 |---|---:|---:|---:|
-| Total tokens | 689,805 | 237,875 | -65.5% |
-| cache_creation | 29,105 | 26,161 | |
-| cache_read | 653,804 | 208,315 | |
-| output | 6,849 | 3,366 | |
-| Turns (SDK) | 17 | 8 | |
-| Duration (s) | 118.6 | 55.8 | -53% |
+| Total tokens | 464,685 | 875,667 | +88.4% ⚠️ |
+| cache_creation | 19,349 | 78,164 | |
+| cache_read | 441,968 | 788,103 | |
+| output | 3,333 | 9,287 | |
+| Turns (SDK) | 12 | 22 | |
+| Duration (s) | 59.1 | 166.9 | +182% ⚠️ |
 
 ## Mini-task (iso)
 
-Read the file `test-repo/decision-http-adapter.json`. Extract the `criteria` array, which is a JSON array of objects each with a `"name"` (string) and `"weight"` (integer) key. Using the **convert** brick's `format` tool, convert that JSON array to CSV format. Report the resulting CSV exactly as produced by the tool, including the header row. Expected answer format: multi-line CSV text with a header row followed by one data row per criterion, in the same order they appear in the source file.
+Read the file `test-repo/decision-http-adapter.json`. Extract the value of the top-level `criteria` key, which is a JSON array of objects each having `name` (string) and `weight` (integer) fields. Convert that JSON array to YAML format using the `conv_format` tool (source format: `json`, target format: `yaml`). Report the full YAML output, preserving original key order (`name` before `weight`) and original array order. Expected answer format: a YAML list, each item on its own line with a leading `- `, sub-keys indented by two spaces, no trailing newline shown (exact whitespace as produced by a standard YAML serializer with `default_flow_style=False`).
 
 ---
 
@@ -25,44 +25,45 @@ Read the file `test-repo/decision-http-adapter.json`. Extract the `criteria` arr
 
 - `conv_units` : not called ⚠️
 - `conv_encoding` : not called ⚠️
-- `conv_format` : called ✓
+- `conv_format` : not called ⚠️
 - `conv_language` : not called ⚠️
 
-**Coverage score**: 1/4 tools used
+**Coverage score**: 0/4 tools used
 
 ## Answers comparison
 
 **Native answer**: ```
-  name,weight
-  Raw throughput performance,9
-  Middleware/plugin ecosystem breadth,8
-  Built-in file-upload support (no extra install),6
-  Adapter implementation simplicity,7
-... (6 total)
+- name: Raw throughput performance
+  weight: 9
+- name: Middleware/plugin ecosystem breadth
+  weight: 8
+- name: Built-in file-upload support (no extra install)
+... (8 total)
 ```
 
 **Brick answer**: ```
-name,weight
-Raw throughput performance,9
-Middleware/plugin ecosystem breadth,8
-Built-in file-upload support (no extra install),6
-Adapter implementation simplicity,7
+- name: Raw throughput performance
+  weight: 9
+- name: Middleware/plugin ecosystem breadth
+  weight: 8
+- name: Built-in file-upload support (no extra install)
+... (8 total)
 ```
 
-**Match**: ✓ same set (order may differ)
+**Match**: ✓ identical
 
 ## Observations
 
-- Good token savings (Δ=-65.5%) and wall-clock improvement (duration ratio 0.47x). Agent completed the task with 1/4 tools (`conv_format`). Answer matches native ✓. The brick provides genuine leverage for format conversion tasks.
-- The first call to `conv_format` failed with a runtime bug (`val.includes is not a function` in CSV serializer), but a retry succeeded — the final result is correct.
+_(empty — to be filled in the qualitative analysis pass)_
 
 ## Auto-detected issues
 
-- Tools not called: `conv_units`, `conv_encoding`, `conv_language`
-- Turns > 15 (native): 17
-- Brick notes flagged: bug, failed, error — "The first call to `mcp__focus__conv_format` failed with `val.includes is not a function` — this is a bug in the brick's CSV serializer: it calls `.includes()` on each field value to check for quoting "
+- Tools not called: `conv_units`, `conv_encoding`, `conv_format`, `conv_language`
+- Turns > 15 (brick): 22
+- Brick notes flagged: failed — "The `conv_format` brick tool could **not** be invoked. The `convert` brick is registered as installed (`^0.0.0`) but `focus_load` consistently failed with `Cannot find module '@focus-mcp/brick-convert"
+- Brick slower than native by 182% (UX concern)
+- Brick uses MORE tokens than native (875,667 vs 464,685)
 
 ## Recommendations
 
-- 🔧 Fix the CSV serializer bug in `conv_format` — input arrays need to be coerced to strings before `.includes()` is called.
-- 🟢 Once the bug is fixed, savings and correctness are solid for format conversion tasks.
+_(empty — to be filled after analysis)_

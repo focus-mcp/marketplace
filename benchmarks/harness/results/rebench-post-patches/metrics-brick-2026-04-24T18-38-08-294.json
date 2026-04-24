@@ -1,0 +1,32 @@
+{
+  "brick": "metrics",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:35:35.013Z",
+  "duration_ms": 153281,
+  "turns": 18,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 78,
+    "cache_creation_input_tokens": 39349,
+    "cache_read_input_tokens": 533796,
+    "output_tokens": 7378,
+    "total": 580601
+  },
+  "session_id": "50a4b052-fdaa-466b-a2cb-08882aaf9305",
+  "result_block": "## Result\n- **Brick**: metrics\n- **Mode**: brick\n- **Mini-task**: Count `.ts` (non-declaration) files under `test-repo/packages/`, sum their lines, estimate input tokens (chars÷4), and compute USD cost at $0.003/1k tokens\n- **Answer**:\n  ```\n  File count: N/A\n  Total lines: N/A\n  Estimated tokens: N/A\n  Estimated cost (USD): N/A\n  ```\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_remove`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~2,500\n- **Notes**:\n  1. **Brick load failure**: `focus_load(\"metrics\")` failed with `Cannot find module '@focus-mcp/brick-metrics'`. The brick is registered as installed at version `^0.0.0` but the npm module is missing from disk — the local stub was never populated with real code.\n  2. **No upgrade path**: `focus_update` returned `\"not yet implemented\"`; `focus_remove` failed with `\"Lock entry not found for brick 'metrics'\"`; reinstalling the same version is a no-op. The catalog shows `metrics@1.1.0` available from the marketplace, but there is no working mechanism to upgrade from the broken local install.\n  3. **Metric brick tools are session-observability tools, not file-analysis tools**: Even if the brick had loaded successfully, its four tools (`session`, `tokens`, `costs`, `duration`) track token usage and wall-clock time of the *current agent session* — they cannot scan the filesystem for `.ts` files or count lines. There is therefore no focus-tool path to the required file metrics regardless of load status.\n  4. **Focus management tools are scoped to brick management**: The remaining `mcp__focus__*` tools (`focus_search`, `focus_catalog_list`, etc.) manage the brick marketplace catalog; they do not expose file-system queries. Combined with the prohibition on `Read` (beyond the one-time use for `mcp-brick.json`), `Bash`, `Grep`, and `Glob`, the mini-task cannot be completed within the stated constraints.",
+  "workdir": "/tmp/focus-bench/metrics-brick-2026-04-24T18-35-35-011",
+  "exit_reason": "ok"
+}

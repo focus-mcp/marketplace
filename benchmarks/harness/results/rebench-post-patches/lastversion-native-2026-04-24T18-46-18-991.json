@@ -1,0 +1,25 @@
+{
+  "brick": "lastversion",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:44:53.825Z",
+  "duration_ms": 85166,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 32,
+    "cache_creation_input_tokens": 39866,
+    "cache_read_input_tokens": 440984,
+    "output_tokens": 5189,
+    "total": 486071
+  },
+  "session_id": "2670a59b-2bd7-42bf-a373-b04a832d0a02",
+  "result_block": "## Result\n- **Brick**: lastversion\n- **Mode**: native\n- **Mini-task**: Find outdated production dependencies in test-repo/package.json by comparing pinned versions against latest npm stable releases\n- **Answer**: `file-type: 21.3.4 → 22.0.1`\n- **Turns used**: 9\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~3,500\n- **Notes**: All 19 production dependencies were checked against npm registry via `curl` + inline Node.js JSON parsing. Only `file-type` is behind (major version bump: 21 → 22). The brick's `check` tool would handle this elegantly in one call per package; the native approach required raw HTTP calls to the npm registry.",
+  "mini_task_spec": "Inspect the `dependencies` field (production dependencies only, not `devDependencies`) in `test-repo/package.json`. For each of the 19 packages listed there, check the latest stable version available on npm. Identify every package whose pinned version is **strictly lower** than the latest stable version on npm. For each outdated package, report its name, the pinned version from package.json, and the latest stable npm version. Sort results alphabetically by package name. Answer format: one line per outdated package using the pattern `<package-name>: <pinned-version> → <latest-version>`. If no packages are outdated, report \"none\".",
+  "workdir": "/tmp/focus-bench/lastversion-native-2026-04-24T18-44-53-825",
+  "exit_reason": "ok"
+}

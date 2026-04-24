@@ -1,0 +1,32 @@
+{
+  "brick": "fileops",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:38:12.477Z",
+  "duration_ms": 131098,
+  "turns": 21,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 106,
+    "cache_creation_input_tokens": 47262,
+    "cache_read_input_tokens": 633655,
+    "output_tokens": 6654,
+    "total": 687677
+  },
+  "session_id": "19d52e86-b7ca-43ad-b102-bba11f9f70ed",
+  "result_block": "## Result\n- **Brick**: fileops\n- **Mode**: brick\n- **Mini-task**: Delete `test-repo/packages/common/services/logger-copy.service.ts` (duplicate of `logger.service.ts`) and list remaining files in that directory\n- **Answer**: INCOMPLETE — the fileops brick could not be loaded; the delete operation was not performed\n- **Turns used**: 11\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_install`, `mcp__focus__focus_search`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_unload` (schema-fetched only)\n- **Rough token estimate**: ~4,500\n- **Notes**: The focus MCP server is available and responding, but the fileops brick's underlying npm module (`@focus-mcp/brick-fileops`) is not installed on disk. `focus_load` fails with `Cannot find module '@focus-mcp/brick-fileops'`. `focus_update` is not implemented. `focus_remove` fails with \"Lock entry not found\". The brick appears registered in the manifest (focus_install reports \"already installed ^0.0.0\") but no actual module is present. As a result, the `delete` tool (and all other fileops tools) could not be activated, and no file operation was possible within the mcp__focus__* constraint. No native tools were used.",
+  "workdir": "/tmp/focus-bench/fileops-brick-2026-04-24T18-38-12-475",
+  "exit_reason": "ok"
+}
