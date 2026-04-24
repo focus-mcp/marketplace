@@ -31,6 +31,8 @@ jobs:
           registry-url: https://registry.npmjs.org
           scope: '@focus-mcp'
       - run: pnpm install --frozen-lockfile
+      - name: Build all bricks
+        run: pnpm build
       - run: pnpm build:catalog
       - name: Publish all bricks with latest tag
         run: |

@@ -5,18 +5,20 @@
     "description": "Structured decision-making — define options, analyze tradeoffs, recommend, and record decisions.",
     "license": "MIT",
     "type": "module",
-    "main": "./src/index.ts",
+    "main": "./dist/index.js",
     "exports": {
-        ".": "./src/index.ts"
+        ".": "./dist/index.js",
+        "./mcp-brick.json": "./mcp-brick.json"
     },
     "files": [
-        "src",
+        "dist",
         "mcp-brick.json",
         "mcp-brick.json.license",
         "README.md"
     ],
     "scripts": {
-        "test": "vitest run"
+        "test": "vitest run",
+        "build": "tsc -p tsconfig.json"
     },
     "publishConfig": {
         "access": "public",
@@ -52,5 +54,6 @@
         "@focus-mcp/core": {
             "optional": true
         }
-    }
+    },
+    "types": "./dist/index.d.ts"
 }
