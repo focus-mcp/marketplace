@@ -81,7 +81,11 @@
     },
     "overrides": [
         {
-            "includes": ["scripts/build-catalog.ts", "scripts/build-docs.ts"],
+            "includes": [
+                "scripts/build-catalog.ts",
+                "scripts/build-docs.ts",
+                "scripts/check-changeset-alignment.ts"
+            ],
             "linter": {
                 "rules": {
                     "suspicious": {
