@@ -7,14 +7,11 @@
     "tools": [
         {
             "name": "run",
-            "description": "Execute a JavaScript or TypeScript snippet in a sandboxed VM context. TypeScript is auto-transpiled via esbuild. Returns the result of the last expression.",
+            "description": "Execute a JavaScript code snippet in a sandboxed VM context. Returns the result of the last expression.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "code": {
-                        "type": "string",
-                        "description": "JavaScript or TypeScript code to execute"
-                    },
+                    "code": { "type": "string", "description": "JavaScript code to execute" },
                     "timeout": {
                         "type": "number",
                         "description": "Execution timeout in ms (default 5000)"
@@ -42,13 +39,13 @@
         },
         {
             "name": "eval",
-            "description": "Evaluate a JavaScript or TypeScript expression and return its value. Lighter than run — single expression only. TypeScript is auto-transpiled via esbuild.",
+            "description": "Evaluate an expression and return its value. Lighter than run — single expression only.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
                     "expression": {
                         "type": "string",
-                        "description": "JavaScript or TypeScript expression to evaluate"
+                        "description": "JavaScript expression to evaluate"
                     },
                     "timeout": { "type": "number", "description": "Timeout in ms (default 2000)" }
                 },
@@ -64,23 +61,8 @@
                 "properties": {},
                 "additionalProperties": false
             }
-        },
-        {
-            "name": "read",
-            "description": "Read a file from the current working directory (bounded — no absolute paths, no ../ escapes). Returns the file contents as a string. Use this to load source files from the codebase before processing them in the sandbox.",
-            "inputSchema": {
-                "type": "object",
-                "properties": {
-                    "path": {
-                        "type": "string",
-                        "description": "Relative path to the file within the working directory (e.g. 'src/utils.ts'). Absolute paths and directory traversal are rejected."
-                    }
-                },
-                "required": ["path"],
-                "additionalProperties": false
-            }
         }
     ],
-    "tags": ["sandbox", "execution", "vm", "javascript", "typescript", "devtools"],
+    "tags": ["sandbox", "execution", "vm", "javascript", "devtools"],
     "license": "MIT"
 }

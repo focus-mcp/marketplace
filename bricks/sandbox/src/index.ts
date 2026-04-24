@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: MIT
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
-import type { BoxEvalInput, BoxFileInput, BoxReadInput, BoxRunInput } from './operations.ts';
-import { boxEval, boxFile, boxLanguages, boxRead, boxRun } from './operations.ts';
+import type { BoxEvalInput, BoxFileInput, BoxRunInput } from './operations.ts';
+import { boxEval, boxFile, boxLanguages, boxRun } from './operations.ts';
 
 interface BrickBus {
     on(
@@ -44,7 +44,6 @@ const brick: Brick = {
         unsubscribers.push(ctx.bus.handle('sandbox:file', (data) => boxFile(data as BoxFileInput)));
         unsubscribers.push(ctx.bus.handle('sandbox:eval', (data) => boxEval(data as BoxEvalInput)));
         unsubscribers.push(ctx.bus.handle('sandbox:languages', () => boxLanguages()));
-        unsubscribers.push(ctx.bus.handle('sandbox:read', (data) => boxRead(data as BoxReadInput)));
     },
     stop() {
         for (const unsub of unsubscribers) unsub();

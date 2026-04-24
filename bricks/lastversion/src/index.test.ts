@@ -710,12 +710,12 @@ describe('lastversion brick registration', () => {
 
         await brick.start({ bus });
         expect(bus.handle).toHaveBeenCalledTimes(6);
-        expect(bus.handle).toHaveBeenCalledWith('lastversion:latest', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('lastversion:versions', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('lastversion:diff', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('lastversion:changelog', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('lastversion:check', expect.any(Function));
-        expect(bus.handle).toHaveBeenCalledWith('lastversion:audit', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('lv:latest', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('lv:versions', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('lv:diff', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('lv:changelog', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('lv:check', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('lv:audit', expect.any(Function));
 
         await brick.stop();
         for (const unsub of unsubbers) {
