@@ -60,5 +60,6 @@
         }
     ],
     "tags": ["ast", "parser", "symbols", "typescript"],
-    "license": "MIT"
+    "license": "MIT",
+    "version": "1.1.1"
 }

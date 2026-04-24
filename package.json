@@ -29,6 +29,7 @@
         "test": "vitest run --config config/vitest.config.ts",
         "test:watch": "vitest --config config/vitest.config.ts",
         "test:coverage": "vitest run --coverage --config config/vitest.config.ts",
+        "check:changeset": "tsx scripts/check-changeset-alignment.ts",
         "reuse": "reuse lint",
         "changeset": "changeset",
         "version": "changeset version",

@@ -67,5 +67,6 @@
         }
     ],
     "tags": ["depgraph", "imports", "analysis", "circular"],
-    "license": "MIT"
+    "license": "MIT",
+    "version": "1.1.1"
 }

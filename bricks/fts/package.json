@@ -1,22 +1,24 @@
 {
     "name": "@focus-mcp/brick-fts",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": false,
     "description": "Full-text search with TF-IDF ranking — index files, search with relevance scoring, suggest completions.",
     "license": "MIT",
     "type": "module",
-    "main": "./src/index.ts",
+    "main": "./dist/index.js",
     "exports": {
-        ".": "./src/index.ts"
+        ".": "./dist/index.js",
+        "./mcp-brick.json": "./mcp-brick.json"
     },
     "files": [
-        "src",
+        "dist",
         "mcp-brick.json",
         "mcp-brick.json.license",
         "README.md"
     ],
     "scripts": {
-        "test": "vitest run"
+        "test": "vitest run",
+        "build": "tsc -p tsconfig.json"
     },
     "publishConfig": {
         "access": "public",
@@ -52,5 +54,6 @@
         "@focus-mcp/core": {
             "optional": true
         }
-    }
+    },
+    "types": "./dist/index.d.ts"
 }

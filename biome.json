@@ -84,8 +84,7 @@
             "includes": [
                 "scripts/build-catalog.ts",
                 "scripts/build-docs.ts",
-                "benchmarks/src/measure.ts",
-                "benchmarks/src/report.ts"
+                "scripts/check-changeset-alignment.ts"
             ],
             "linter": {
                 "rules": {
