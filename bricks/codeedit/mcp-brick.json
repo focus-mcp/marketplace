@@ -7,7 +7,7 @@
     "tools": [
         {
             "name": "replacebody",
-            "description": "Replace the body of a function or method by name. Finds the function and replaces its entire body.",
+            "description": "Replace the body of a function or method by name. Uses AST parsing for PHP; brace-matching for TS/JS/Python/Go/Rust/Java. Returns found=false with error if language is unsupported.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -17,7 +17,11 @@
                         "type": "string",
                         "description": "New function body content (without braces)"
                     },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                    "apply": { "type": "boolean", "description": "Apply changes (default false)" },
+                    "dryRun": {
+                        "type": "boolean",
+                        "description": "When true, return preview only — never write to disk"
+                    }
                 },
                 "required": ["path", "name", "newBody"],
                 "additionalProperties": false
@@ -25,7 +29,7 @@
         },
         {
             "name": "insertafter",
-            "description": "Insert code after a specific line number or after a pattern match.",
+            "description": "Insert code after a specific line number or after a pattern match. If the pattern matches multiple lines, returns inserted=false with a matches list; disambiguate via lineHint.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -38,8 +42,16 @@
                         "type": "string",
                         "description": "Regex pattern to insert after (alternative to line number)"
                     },
+                    "lineHint": {
+                        "type": "number",
+                        "description": "Preferred line number when pattern has multiple matches — picks the closest match"
+                    },
                     "content": { "type": "string", "description": "Content to insert" },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                    "apply": { "type": "boolean", "description": "Apply changes (default false)" },
+                    "dryRun": {
+                        "type": "boolean",
+                        "description": "When true, return diff only — never write to disk"
+                    }
                 },
                 "required": ["path", "content"],
                 "additionalProperties": false
@@ -47,7 +59,7 @@
         },
         {
             "name": "insertbefore",
-            "description": "Insert code before a specific line number or before a pattern match.",
+            "description": "Insert code before a specific line number or before a pattern match. If the pattern matches multiple lines, returns inserted=false with a matches list; disambiguate via lineHint.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -60,8 +72,16 @@
                         "type": "string",
                         "description": "Regex pattern to insert before"
                     },
+                    "lineHint": {
+                        "type": "number",
+                        "description": "Preferred line number when pattern has multiple matches — picks the closest match"
+                    },
                     "content": { "type": "string", "description": "Content to insert" },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                    "apply": { "type": "boolean", "description": "Apply changes (default false)" },
+                    "dryRun": {
+                        "type": "boolean",
+                        "description": "When true, return diff only — never write to disk"
+                    }
                 },
                 "required": ["path", "content"],
                 "additionalProperties": false
@@ -83,7 +103,11 @@
                         "type": "boolean",
                         "description": "Delete even if dependents exist (default false)"
                     },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                    "apply": { "type": "boolean", "description": "Apply changes (default false)" },
+                    "dryRun": {
+                        "type": "boolean",
+                        "description": "When true, return diff only — never write to disk"
+                    }
                 },
                 "required": ["path", "name"],
                 "additionalProperties": false

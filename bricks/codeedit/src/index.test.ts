@@ -11,6 +11,8 @@ import {
     ceInsertBefore,
     ceReplaceBody,
     findFunctionBounds,
+    findPhpFunctionBounds,
+    makeDiff,
 } from './operations.ts';
 
 let testDir: string;
@@ -68,6 +70,57 @@ describe('findFunctionBounds', () => {
     });
 });
 
+// ─── findPhpFunctionBounds — Bug B reproduction ───────────────────────────────
+
+describe('findPhpFunctionBounds', () => {
+    it('finds a compact single-line PHP method body (Bug B reproduction)', () => {
+        const text = `<?php
+class GitRepository {
+    public function hasAnyChange(): bool
+    {
+        return !empty($this->getChanges());
+    }
+}`;
+        const bounds = findPhpFunctionBounds(text, 'hasAnyChange');
+        expect(bounds).not.toBeNull();
+        expect(bounds?.startLine).toBeGreaterThan(0);
+        expect(bounds?.endLine).toBeGreaterThan(bounds?.startLine ?? 0);
+    });
+
+    it('finds a multi-line PHP method', () => {
+        const text = `<?php
+class Foo {
+    public function compute(int $x): int
+    {
+        $a = $x * 2;
+        $b = $a + 1;
+        return $b;
+    }
+}`;
+        const bounds = findPhpFunctionBounds(text, 'compute');
+        expect(bounds).not.toBeNull();
+        expect(bounds?.startLine).toBeGreaterThan(0);
+    });
+
+    it('finds a standalone PHP function', () => {
+        const text = `<?php
+function greet(string $name): string {
+    return 'Hello ' . $name;
+}`;
+        const bounds = findPhpFunctionBounds(text, 'greet');
+        expect(bounds).not.toBeNull();
+    });
+
+    it('returns null for an unknown function name', () => {
+        const text = `<?php
+function foo(): void {
+    echo 'hello';
+}`;
+        const bounds = findPhpFunctionBounds(text, 'bar');
+        expect(bounds).toBeNull();
+    });
+});
+
 // ─── ceReplaceBody ────────────────────────────────────────────────────────────
 
 describe('ceReplaceBody', () => {
@@ -106,7 +159,6 @@ describe('ceReplaceBody', () => {
 
         expect(result.found).toBe(true);
         expect(result.startLine).toBe(1);
-        // File should be unchanged
         const content = await readFile(filePath, 'utf-8');
         expect(content).toBe(original);
     });
@@ -145,6 +197,73 @@ describe('ceReplaceBody', () => {
         expect(result.found).toBe(true);
         expect(result.preview.before).toContain('x * 2');
         expect(result.preview.after).toContain('x * 3');
+    });
+
+    it('dryRun returns preview without writing', async () => {
+        const original = 'export function foo() {\n    return 1;\n}\n';
+        const filePath = await makeFile('sample.ts', original);
+
+        const result = await ceReplaceBody({
+            path: filePath,
+            name: 'foo',
+            newBody: '    return 99;',
+            dryRun: true,
+            apply: true,
+        });
+
+        expect(result.found).toBe(true);
+        const content = await readFile(filePath, 'utf-8');
+        expect(content).toBe(original);
+    });
+
+    it('replaces PHP single-line method body (Bug B fix)', async () => {
+        const original = `<?php
+class GitRepository {
+    public function hasAnyChange(): bool
+    {
+        return !empty($this->getChanges());
+    }
+}
+`;
+        const filePath = await makeFile('GitRepository.php', original);
+
+        const result = await ceReplaceBody({
+            path: filePath,
+            name: 'hasAnyChange',
+            newBody: '        return true;',
+            apply: false,
+        });
+
+        expect(result.found).toBe(true);
+        expect(result.startLine).toBeGreaterThan(0);
+        expect(result.endLine).toBeGreaterThan(result.startLine);
+        expect(result.preview.before).toContain('hasAnyChange');
+    });
+
+    it('replaces PHP multi-line method body', async () => {
+        const original = `<?php
+class Foo {
+    public function compute(int $x): int
+    {
+        $a = $x * 2;
+        $b = $a + 1;
+        return $b;
+    }
+}
+`;
+        const filePath = await makeFile('Foo.php', original);
+
+        const result = await ceReplaceBody({
+            path: filePath,
+            name: 'compute',
+            newBody: '        return $x * 10;',
+            apply: true,
+        });
+
+        expect(result.found).toBe(true);
+        const content = await readFile(filePath, 'utf-8');
+        expect(content).toContain('$x * 10');
+        expect(content).not.toContain('$x * 2');
     });
 });
 
@@ -204,6 +323,82 @@ describe('ceInsertAfter', () => {
         const content = await readFile(filePath, 'utf-8');
         expect(content).toBe(original);
     });
+
+    it('returns inserted=false with matches list when pattern is ambiguous (Bug A fix)', async () => {
+        const fileContent = [
+            '<?php',
+            'class Foo {',
+            '    public function hasAnyChange(): bool',
+            '    {',
+            '        return !empty($this->changes);',
+            '    }',
+            '',
+            '    public function commit(): void',
+            '    {',
+            '        if ($this->hasAnyChange()) {',
+            '            $this->doCommit();',
+            '        }',
+            '    }',
+            '}',
+        ].join('\n');
+
+        const filePath = await makeFile('Repo.php', fileContent);
+
+        const result = await ceInsertAfter({
+            path: filePath,
+            pattern: 'hasAnyChange',
+            content: '    // injected code',
+            apply: true,
+        });
+
+        expect(result.inserted).toBe(false);
+        expect(result.error).toMatch(/Ambiguous pattern/);
+        expect(result.matches).toBeDefined();
+        expect((result.matches ?? []).length).toBeGreaterThan(1);
+        const content = await readFile(filePath, 'utf-8');
+        expect(content).toBe(fileContent);
+    });
+
+    it('disambiguates with lineHint and inserts at correct location', async () => {
+        const fileContent = [
+            'function hasAnyChange() { return true; }',
+            'const x = 1;',
+            'const y = hasAnyChange();',
+        ].join('\n');
+
+        const filePath = await makeFile('sample.ts', fileContent);
+
+        const result = await ceInsertAfter({
+            path: filePath,
+            pattern: 'hasAnyChange',
+            lineHint: 1,
+            content: '// after definition',
+            apply: true,
+        });
+
+        expect(result.inserted).toBe(true);
+        const content = await readFile(filePath, 'utf-8');
+        const lines = content.split('\n');
+        expect(lines[1]).toBe('// after definition');
+    });
+
+    it('dryRun returns diff without writing', async () => {
+        const original = 'a\nb\nc\n';
+        const filePath = await makeFile('file.ts', original);
+
+        const result = await ceInsertAfter({
+            path: filePath,
+            after: 1,
+            content: 'inserted',
+            dryRun: true,
+        });
+
+        expect(result.inserted).toBe(true);
+        expect(result.diff).toBeDefined();
+        expect(result.diff).toContain('+inserted');
+        const content = await readFile(filePath, 'utf-8');
+        expect(content).toBe(original);
+    });
 });
 
 // ─── ceInsertBefore ───────────────────────────────────────────────────────────
@@ -258,6 +453,61 @@ describe('ceInsertBefore', () => {
         const original = 'line1\nline2\n';
         const filePath = await makeFile('file.ts', original);
         await ceInsertBefore({ path: filePath, before: 1, content: 'inserted', apply: false });
+        const content = await readFile(filePath, 'utf-8');
+        expect(content).toBe(original);
+    });
+
+    it('returns inserted=false with matches list when ambiguous pattern', async () => {
+        const fileContent = 'foo\nfoo\nbar\n';
+        const filePath = await makeFile('file.ts', fileContent);
+
+        const result = await ceInsertBefore({
+            path: filePath,
+            pattern: 'foo',
+            content: 'injected',
+            apply: true,
+        });
+
+        expect(result.inserted).toBe(false);
+        expect(result.error).toMatch(/Ambiguous pattern/);
+        expect((result.matches ?? []).length).toBe(2);
+        const content = await readFile(filePath, 'utf-8');
+        expect(content).toBe(fileContent);
+    });
+
+    it('disambiguates insertBefore with lineHint', async () => {
+        const fileContent = 'foo\nbar\nfoo\n';
+        const filePath = await makeFile('file.ts', fileContent);
+
+        const result = await ceInsertBefore({
+            path: filePath,
+            pattern: 'foo',
+            lineHint: 3,
+            content: 'injected',
+            apply: true,
+        });
+
+        expect(result.inserted).toBe(true);
+        const content = await readFile(filePath, 'utf-8');
+        const lines = content.split('\n');
+        const injIdx = lines.indexOf('injected');
+        const fooIdx2 = lines.lastIndexOf('foo');
+        expect(fooIdx2).toBe(injIdx + 1);
+    });
+
+    it('dryRun returns diff without writing', async () => {
+        const original = 'a\nb\n';
+        const filePath = await makeFile('file.ts', original);
+
+        const result = await ceInsertBefore({
+            path: filePath,
+            before: 2,
+            content: 'x',
+            dryRun: true,
+        });
+
+        expect(result.inserted).toBe(true);
+        expect(result.diff).toContain('+x');
         const content = await readFile(filePath, 'utf-8');
         expect(content).toBe(original);
     });
@@ -333,6 +583,41 @@ describe('ceDeleteSafe', () => {
         await ceDeleteSafe({ path: filePath, name: 'solo', apply: false });
         const content = await readFile(filePath, 'utf-8');
         expect(content).toBe(original);
+    });
+
+    it('dryRun returns diff without writing', async () => {
+        const original = 'export function solo() {\n    return 1;\n}\n';
+        const filePath = await makeFile('lib.ts', original);
+
+        const result = await ceDeleteSafe({
+            path: filePath,
+            name: 'solo',
+            dryRun: true,
+        });
+
+        expect(result.deleted).toBe(true);
+        expect(result.diff).toBeDefined();
+        expect(result.diff).toContain('-export function solo');
+        const content = await readFile(filePath, 'utf-8');
+        expect(content).toBe(original);
+    });
+});
+
+// ─── makeDiff ─────────────────────────────────────────────────────────────────
+
+describe('makeDiff', () => {
+    it('produces a diff showing additions and removals', () => {
+        const orig = ['a', 'b', 'c'];
+        const next = ['a', 'x', 'c'];
+        const diff = makeDiff(orig, next, 'file.ts');
+        expect(diff).toContain('-b');
+        expect(diff).toContain('+x');
+    });
+
+    it('returns header lines only for identical arrays', () => {
+        const orig = ['a', 'b'];
+        const diff = makeDiff(orig, orig, 'file.ts');
+        expect(diff).not.toContain('@@');
     });
 });
 
