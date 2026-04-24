@@ -106,6 +106,43 @@ Maintainers check:
 - manifest conformance to the JSON Schema;
 - coherence of the generated catalog.
 
+## Bumping bricks
+
+### Rule: scope changesets to bricks you actually modified
+
+A changeset file **must list only the bricks whose source was actually changed**:
+
+- `bricks/<name>/src/**` — TypeScript sources
+- `bricks/<name>/mcp-brick.json` — manifest
+- `bricks/<name>/package.json` — package metadata (not the `version` field — that is managed by Changesets)
+
+**Never bump all 68 bricks in a single changeset unless there is a cross-cutting reason** (see below). Each `bricks/*/package.json` version change triggers one `npm publish`. Bumping unchanged bricks:
+
+- wastes npm registry entries
+- pollutes install choices (`npm install @focus-mcp/brick-shell` returns a new version with no meaningful change)
+- adds noise to per-brick changelogs for downstream users
+
+### Exception: cross-cutting infra changes
+
+Bumping all bricks in one go is acceptable when a change affects every brick's build output — e.g. a tsconfig change, a tooling upgrade, a license/header update, or a build-pipeline fix (like PR #48). In that case:
+
+1. The PR description must include the line `Cross-cutting: <reason>`.
+2. The changeset file must be named `.changeset/cross-cutting-<slug>.md` — this keyword bypasses the CI alignment check.
+
+### Correct changeset format (one brick, minor bump)
+
+```markdown
+---
+"@focus-mcp/brick-shell": minor
+---
+
+Add shell_env tool that exposes safe read-only environment variables.
+```
+
+### CI alignment check
+
+CI runs `scripts/check-changeset-alignment.ts` on every PR. For each path `bricks/<name>/**` in the diff, the changeset markdowns in the PR must reference `@focus-mcp/brick-<name>`. The check is **skipped** when a file named `.changeset/cross-cutting-*.md` is present in the PR diff.
+
 ## Security
 
 Vulnerabilities must be reported **privately** — see [SECURITY.md](./SECURITY.md).
