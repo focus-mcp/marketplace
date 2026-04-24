@@ -6,6 +6,8 @@ name: Dev Publish
 on:
   push:
     branches: [develop]
+    paths:
+      - "bricks/**"
   workflow_dispatch:
 
 permissions:
