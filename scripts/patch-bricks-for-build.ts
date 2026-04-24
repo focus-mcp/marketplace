@@ -35,7 +35,12 @@ interface PackageJson {
 }
 
 function writeIfDifferent(filePath: string, content: string): 'written' | 'skipped' {
-    const existing = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf-8') : null;
+    let existing: string | null = null;
+    try {
+        existing = fs.readFileSync(filePath, 'utf-8');
+    } catch (err) {
+        if ((err as NodeJS.ErrnoException).code !== 'ENOENT') throw err;
+    }
     if (existing === content) return 'skipped';
     fs.writeFileSync(filePath, content, 'utf-8');
     return 'written';
@@ -78,13 +83,26 @@ function patchPackageJson(brickDir: string, _brickName: string): 'written' | 'sk
 
 function patchTsConfig(brickDir: string): 'written' | 'skipped' {
     const tscPath = path.join(brickDir, 'tsconfig.json');
-    const tsconfig = {
-        extends: '../../tsconfig.build.json',
-        compilerOptions: { outDir: './dist', rootDir: './src' },
-        include: ['src/**/*.ts'],
-        exclude: ['node_modules', 'dist', '**/*.test.ts', '**/*.spec.ts'],
-    };
-    return writeIfDifferent(tscPath, `${JSON.stringify(tsconfig, null, 4)}\n`);
+    // Content is hand-formatted to match Biome's output (expanded arrays)
+    // so the script stays idempotent after lint-staged runs.
+    const content = `{
+    "extends": "../../tsconfig.build.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src"
+    },
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "**/*.test.ts",
+        "**/*.spec.ts"
+    ]
+}
+`;
+    return writeIfDifferent(tscPath, content);
 }
 
 function patchTsConfigLicense(brickDir: string): 'written' | 'skipped' {
