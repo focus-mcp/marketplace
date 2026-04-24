@@ -223,7 +223,9 @@ function rowsToCsv(rows: JsonRow[]): string {
         lines.push(
             headers
                 .map((h) => {
-                    const val = row[h] ?? '';
+                    // Coerce to string before calling .includes to guard against
+                    // null / number values that can appear in real JSON inputs.
+                    const val = String(row[h] ?? '');
                     return val.includes(',') ? `"${val}"` : val;
                 })
                 .join(','),

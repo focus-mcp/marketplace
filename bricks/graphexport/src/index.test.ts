@@ -6,6 +6,7 @@ import {
     geCypher,
     geGraphml,
     geHtml,
+    geInput,
     geMermaid,
     geObsidian,
     geWiki,
@@ -25,6 +26,14 @@ const sampleEdges = [
     { from: 'n1', to: 'n2', type: 'imports' },
     { from: 'n2', to: 'n3', type: 'calls' },
 ];
+
+const inlineGraph = {
+    nodes: [
+        { id: 'a', label: 'NodeA', type: 'Module' },
+        { id: 'b', label: 'NodeB', type: 'Module' },
+    ],
+    edges: [{ from: 'a', to: 'b', type: 'uses' }],
+};
 
 beforeEach(() => {
     setGraph(sampleNodes, sampleEdges);
@@ -50,6 +59,59 @@ describe('setGraph / resetGraph', () => {
         expect(edges.length).toBe(0);
         // Restore for subsequent tests
         setGraph(sampleNodes, sampleEdges);
+    });
+});
+
+// ─── geInput ─────────────────────────────────────────────────────────────────
+
+describe('geInput', () => {
+    it('loads an inline graph into ambient state', async () => {
+        const result = geInput({ graph: inlineGraph });
+        expect(result.loaded).toBe(true);
+        expect(result.nodeCount).toBe(2);
+        expect(result.edgeCount).toBe(1);
+
+        const { nodes, edges } = await import('./operations.ts');
+        expect(nodes.size).toBe(2);
+        expect(edges.length).toBe(1);
+
+        // Restore
+        setGraph(sampleNodes, sampleEdges);
+    });
+
+    it('replaces previous graph state', async () => {
+        // State has 3 nodes from beforeEach
+        geInput({ graph: inlineGraph });
+        const { nodes } = await import('./operations.ts');
+        expect(nodes.size).toBe(2);
+        setGraph(sampleNodes, sampleEdges);
+    });
+});
+
+// ─── geMermaid with inline graph (standalone use) ────────────────────────────
+
+describe('geMermaid — inline graph param', () => {
+    it('returns a Mermaid block with the provided nodes and edges', () => {
+        // Reset ambient state so this test is truly standalone
+        resetGraph();
+        const md = geMermaid({ graph: inlineGraph });
+        expect(md.startsWith('flowchart TB')).toBe(true);
+        expect(md).toContain('NodeA');
+        expect(md).toContain('NodeB');
+        expect(md).toContain('-->|uses|');
+        setGraph(sampleNodes, sampleEdges);
+    });
+
+    it('overrides ambient graph when graph param is provided', () => {
+        // Ambient state has 3 nodes; inline graph has 2
+        const md = geMermaid({ graph: inlineGraph });
+        expect(md).toContain('NodeA');
+        expect(md).not.toContain('Alpha');
+    });
+
+    it('falls back to ambient graph when no graph param', () => {
+        const md = geMermaid({});
+        expect(md).toContain('Alpha');
     });
 });
 
@@ -85,6 +147,14 @@ describe('geHtml', () => {
         const html = geHtml({});
         expect(html).toContain('<!DOCTYPE html>');
         expect(html).not.toContain('<circle');
+        setGraph(sampleNodes, sampleEdges);
+    });
+
+    it('uses inline graph when provided', () => {
+        resetGraph();
+        const html = geHtml({ graph: inlineGraph });
+        expect(html).toContain('NodeA');
+        expect(html).toContain('NodeB');
         setGraph(sampleNodes, sampleEdges);
     });
 });
@@ -155,6 +225,13 @@ describe('geGraphml', () => {
         expect(xml).toContain('&lt;Test&gt;');
         setGraph(sampleNodes, sampleEdges);
     });
+
+    it('uses inline graph when provided', () => {
+        resetGraph();
+        const xml = geGraphml({ graph: inlineGraph });
+        expect(xml).toContain('NodeA');
+        setGraph(sampleNodes, sampleEdges);
+    });
 });
 
 // ─── geCypher ────────────────────────────────────────────────────────────────
@@ -176,6 +253,14 @@ describe('geCypher', () => {
         resetGraph();
         const cypher = geCypher();
         expect(cypher.trim()).toBe('');
+        setGraph(sampleNodes, sampleEdges);
+    });
+
+    it('uses inline graph when provided', () => {
+        resetGraph();
+        const cypher = geCypher({ graph: inlineGraph });
+        expect(cypher).toContain('NodeA');
+        expect(cypher).toContain('NodeB');
         setGraph(sampleNodes, sampleEdges);
     });
 });
@@ -208,6 +293,13 @@ describe('geObsidian', () => {
         setGraph([{ id: 'solo', label: 'Solo', type: 'X' }], []);
         const files = geObsidian();
         expect(files['Solo.md']).toContain('_No connections._');
+        setGraph(sampleNodes, sampleEdges);
+    });
+
+    it('uses inline graph when provided', () => {
+        resetGraph();
+        const files = geObsidian({ graph: inlineGraph });
+        expect(files['NodeA.md']).toBeDefined();
         setGraph(sampleNodes, sampleEdges);
     });
 });
@@ -246,12 +338,20 @@ describe('geWiki', () => {
         expect(wiki.trim()).toBe('# Knowledge Graph');
         setGraph(sampleNodes, sampleEdges);
     });
+
+    it('uses inline graph when provided', () => {
+        resetGraph();
+        const wiki = geWiki({ graph: inlineGraph });
+        expect(wiki).toContain('NodeA');
+        expect(wiki).toContain('NodeB');
+        setGraph(sampleNodes, sampleEdges);
+    });
 });
 
 // ─── Brick lifecycle ──────────────────────────────────────────────────────────
 
 describe('graphexport brick', () => {
-    it('registers 6 handlers on start and unregisters on stop', async () => {
+    it('registers 7 handlers on start and unregisters on stop', async () => {
         const { default: brick } = await import('./index.ts');
         const unsubbers: Array<() => void> = [];
         const bus = {
@@ -264,7 +364,8 @@ describe('graphexport brick', () => {
         };
 
         await brick.start({ bus });
-        expect(bus.handle).toHaveBeenCalledTimes(6);
+        expect(bus.handle).toHaveBeenCalledTimes(7);
+        expect(bus.handle).toHaveBeenCalledWith('graphexport:input', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('graphexport:html', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('graphexport:mermaid', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('graphexport:graphml', expect.any(Function));
