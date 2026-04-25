@@ -1,0 +1,8 @@
+name: dsp_cancel/happy
+tool: dsp_cancel
+description: >
+  Send a task then cancel it. Verifies cancelled=true and the task
+  no longer appears in the pending queue.
+input:
+  id: "<task-id>"
+tags: [happy, stateful, sequenced]

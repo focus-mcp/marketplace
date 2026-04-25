@@ -1,0 +1,8 @@
+name: agt_capabilities/happy
+tool: agt_capabilities
+description: >
+  Register two agents with different capabilities then query by one capability.
+  Verifies that only the matching agent is returned (count=1).
+input:
+  capability: "read"
+tags: [happy, stateful, sequenced]

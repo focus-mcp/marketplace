@@ -1,0 +1,9 @@
+name: agt_register/happy
+tool: agt_register
+description: >
+  Register an agent with a name and capabilities list. Verifies that an agentId
+  is returned and the returned fields match the input.
+input:
+  name: "test-agent-alpha"
+  capabilities: ["read", "write", "execute"]
+tags: [happy, stateful]

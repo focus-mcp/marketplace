@@ -1,0 +1,5 @@
+name: kb_fetch/happy
+tool: kb_fetch
+description: >
+  Sequenced: index a doc, fetch by its returned id. Verifies full entry returned with id, title, content.
+tags: [happy, stateful, sequenced]

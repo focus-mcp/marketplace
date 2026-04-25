@@ -1,0 +1,10 @@
+name: dsp_send/happy
+tool: dsp_send
+description: >
+  Send a task to the dispatch queue. Verifies taskId returned, type matches,
+  and initial status is 'pending'.
+input:
+  type: "review"
+  payload:
+    pr: 42
+tags: [happy, stateful]

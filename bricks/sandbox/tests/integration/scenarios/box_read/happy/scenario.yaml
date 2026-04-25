@@ -1,0 +1,8 @@
+name: box_read/happy
+tool: box_read
+description: >
+  Read a file created in the working directory. Verifies content matches written
+  value, path is resolved, no error. Checks output size <= 2048B.
+input:
+  path: "sandbox-integ-read-test.txt"
+tags: [happy, stateless, requires-fixture]

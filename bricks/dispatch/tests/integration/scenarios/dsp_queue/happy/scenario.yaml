@@ -1,0 +1,7 @@
+name: dsp_queue/happy
+tool: dsp_queue
+description: >
+  Send 2 tasks then list the queue. Verifies count=2 and each task
+  entry has required fields.
+input: {}
+tags: [happy, stateful, sequenced]

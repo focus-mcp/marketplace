@@ -1,0 +1,6 @@
+name: cache_warmup/happy
+tool: cache_warmup
+description: >
+  cache_warmup with 3 FS files, then cache_stats.
+  Verifies loaded=3, failed=0, entries=3 in stats.
+tags: [happy, stateful]

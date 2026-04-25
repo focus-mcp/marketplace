@@ -1,0 +1,9 @@
+name: shr_broadcast/happy
+tool: shr_broadcast
+description: >
+  Broadcast a message with from field. Verifies delivered count, message echoed, timestamp present.
+  Output size must be under 2048 bytes.
+input:
+  message: "hello from agent-1"
+  from: "agent-1"
+tags: [happy, stateful]

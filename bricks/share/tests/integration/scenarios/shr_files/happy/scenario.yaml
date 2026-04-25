@@ -1,0 +1,6 @@
+name: shr_files/happy
+tool: shr_files
+description: >
+  Sequenced: shr_files with agentId+files to register, then shr_files with agentId only to read.
+  Verifies files array matches and count is correct.
+tags: [happy, stateful, sequenced]

@@ -1,0 +1,6 @@
+name: cache_get/cache-miss-from-fs
+tool: cache_get
+description: >
+  cache_get on a path not in cache. Must read from FS (hit=false)
+  and populate the store for subsequent reads.
+tags: [happy, stateful]

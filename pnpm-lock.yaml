@@ -74,6 +74,10 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/aiteam:
     dependencies:
@@ -86,18 +90,30 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/batch:
     dependencies:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/cache:
     dependencies:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/callgraph:
     dependencies:
@@ -157,12 +173,20 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/decision:
     dependencies:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/depgraph:
     dependencies:
@@ -187,6 +211,10 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/echo:
     dependencies:
@@ -337,6 +365,10 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/knowledgebase:
     dependencies:
@@ -355,6 +387,10 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/metrics:
     dependencies:
@@ -391,12 +427,20 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/planning:
     dependencies:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/refs:
     dependencies:
@@ -446,6 +490,10 @@ importers:
       esbuild:
         specifier: ^0.28.0
         version: 0.28.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/savings:
     dependencies:
@@ -468,12 +516,20 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/share:
     dependencies:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/shell:
     dependencies:
@@ -520,6 +576,10 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/tokenbudget:
     dependencies:

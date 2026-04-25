@@ -1,0 +1,6 @@
+name: mem_recall/happy
+tool: mem_recall
+description: >
+  Sequenced: mem_store then mem_recall. Verifies value matches,
+  tags is an array, storedAt is a non-empty string.
+tags: [happy, stateful, sequenced]

@@ -1,0 +1,7 @@
+name: thk_think/happy
+tool: thk_think
+description: >
+  Add a thought to a new reasoning chain. Verifies chainId is returned and stepIndex=0.
+input:
+  thought: "The problem requires a systematic approach"
+tags: [happy, stateful]

@@ -1,0 +1,8 @@
+name: mem_recall/non-existent
+tool: mem_recall
+description: >
+  Adversarial: recall a key that was never stored.
+  Verifies value=null and tags=[].
+input:
+  key: "no-such-key"
+tags: [adversarial, stateful]

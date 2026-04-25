@@ -1,0 +1,8 @@
+name: box_run/syntax-error
+tool: box_run
+description: >
+  Execute code with invalid syntax. Verifies error field defined, result='undefined',
+  no crash. Checks output size <= 2048B.
+input:
+  code: "invalid {syntax {"
+tags: [adversarial, stateless]

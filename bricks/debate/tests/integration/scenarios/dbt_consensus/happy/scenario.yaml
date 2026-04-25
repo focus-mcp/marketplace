@@ -1,0 +1,7 @@
+name: dbt_consensus/happy
+tool: dbt_consensus
+description: >
+  Sequenced: create debate + score + consensus. Verifies commonTerms and agreementAreas returned.
+input:
+  debateId: "<from dbt_debate>"
+tags: [happy, stateful, sequenced]

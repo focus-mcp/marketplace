@@ -1,0 +1,8 @@
+name: auto_status/happy
+tool: auto_status
+description: >
+  Create a plan, execute one step, then query status. Verifies completed>=1
+  and totalSteps >= completed.
+input:
+  planId: "<plan-id>"
+tags: [happy, stateful, sequenced]

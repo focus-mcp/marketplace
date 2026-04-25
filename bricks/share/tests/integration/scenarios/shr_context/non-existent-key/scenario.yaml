@@ -1,0 +1,7 @@
+name: shr_context/non-existent-key
+tool: shr_context
+description: >
+  Adversarial: shr_context with a key that was never set. Verifies value=undefined and set=false.
+input:
+  key: "no-such-key"
+tags: [adversarial, stateful]

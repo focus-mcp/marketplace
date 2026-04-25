@@ -1,0 +1,7 @@
+name: box_languages/happy
+tool: box_languages
+description: >
+  List supported languages. Verifies languages array non-empty, contains javascript
+  and typescript both marked supported. Checks output size <= 2048B.
+input: {}
+tags: [happy, stateless]

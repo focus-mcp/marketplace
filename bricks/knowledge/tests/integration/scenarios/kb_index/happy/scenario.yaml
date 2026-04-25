@@ -1,0 +1,8 @@
+name: kb_index/happy
+tool: kb_index
+description: >
+  Index a document with title and content. Verifies id returned, title matches, tokenCount is a number.
+input:
+  title: "Test Document"
+  content: "This is test content for indexing"
+tags: [happy, stateful]

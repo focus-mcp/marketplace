@@ -1,0 +1,6 @@
+name: cache_invalidate/happy
+tool: cache_invalidate
+description: >
+  Sequenced: cache_set, cache_invalidate, cache_get.
+  After invalidation, get must be a cache miss and read the FS content.
+tags: [happy, stateful, sequenced]
