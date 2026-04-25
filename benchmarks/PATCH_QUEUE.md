@@ -52,14 +52,46 @@ Each entry: brick + observed signal + suspected root cause + proposed action + p
 - Consider: is `cache` even benchmarkable in an iso-task single-agent setup? If not, exclude from sweep and note in report as "stateful brick — not measurable this way".
 **Priority** : ⚠️ (also methodology discussion)
 
-### ⚠️ `fileops` — +35% tokens, +164% latence
+### 🚨 `fileops` — +379% tokens, 5.82× latence (Phase C3 SMOKING GUN — confirmed)
 
-**Signal** : overhead on file operations (copy/move/delete/rename).
-**Suspected** : MCP roundtrip per file op is heavier than a Bash `mv`/`cp`. Native Bash batches trivially, brick does one round-trip each.
-**Action** :
-- Add bulk variants (`fileops.bulk_copy`, `fileops.bulk_move`) that accept arrays
-- OR add a `fileops.script` tool accepting a list of ops
-**Priority** : ⚠️
+**Signal** : sweep-log-2026-04-24T06-57-42 reports +379% tokens and 5.82× duration.
+The fiche `benchmarks/bricks/fileops.md` confirms the agent produced a **wrong-directory answer**
+(10 files in a different dir instead of 6 files in the expected dir).
+
+**Root cause confirmed** (Phase C3 investigation — 2026-04-25):
+
+`_workRoot` in `bricks/fileops/src/operations.ts` defaults to `resolve(process.cwd())` at
+**module load time** — i.e. the directory the MCP server process was started from.
+In the benchmark harness the server is started from the marketplace root, not from
+`test-repo/`. The agent calls `fo_copy`/`fo_rename` with relative paths like
+`test-repo/packages/common/services/logger.service.ts`, which the brick resolves against
+the marketplace root → ENOENT or wrong directory. The agent retries, calls extra tools,
+diverges entirely. Token explosion and duration explosion are both retries/misdirection,
+NOT payload bloat (each tool response is < 200 B).
+
+**Secondary finding**: `fileops:setRoot` tool exists but the agent is never prompted to
+call it. Tool description does not advertise it as a required initialisation step.
+
+**Fix options** (do NOT implement in this PR — flag only):
+1. **🚨 P0 — setRoot guard**: if `_workRoot` is still the default CWD and the first
+   incoming path does not exist under it, throw a descriptive error:
+   `"workRoot not set — call fileops:setRoot first with the absolute path to your workspace"`.
+   This surfaces the bug immediately instead of silently operating on the wrong dir.
+2. **⚠️ P1 — manifest description**: add to every tool description:
+   `"Requires fileops:setRoot to be called first with the workspace root path."`.
+   Agents will then invoke setRoot before any op.
+3. **🔧 P2 — per-call root**: accept an optional `root` field on every tool input
+   (analogous to `cwd` in shell commands). When present, override `_workRoot` for
+   that call only. Avoids global state side-effects.
+
+**Payload size**: confirmed < 200 B per response — NOT the cause of the regression.
+`outputSizeUnder(2048)` invariant added in Phase C3 as safety net, but would NOT catch
+this class of bug. A `setRoot` pre-condition guard (option 1) is the right sentinel.
+
+**Files** : `bricks/fileops/src/operations.ts` (lines 15-16, 30-53)
+
+**Priority** : 🚨 — confirmed production bug, causes silent wrong-directory operations
+for any agent that does not explicitly call `fileops:setRoot` first.
 
 ### ⚠️ `memory` — +22% tokens, +110% latence
 
