@@ -1,0 +1,7 @@
+name: rsh_validate/happy
+tool: rsh_validate
+description: >
+  Sequenced: multisource + validate → issues[], valid boolean.
+input:
+  sources: "<from rsh_multisource>"
+tags: [happy, sequenced]

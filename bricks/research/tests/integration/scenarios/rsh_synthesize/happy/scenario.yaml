@@ -1,0 +1,7 @@
+name: rsh_synthesize/happy
+tool: rsh_synthesize
+description: >
+  Sequenced: multisource + synthesize → sharedTypes, commonDeps, apiSurface, connections.
+input:
+  sources: "<from rsh_multisource>"
+tags: [happy, sequenced]

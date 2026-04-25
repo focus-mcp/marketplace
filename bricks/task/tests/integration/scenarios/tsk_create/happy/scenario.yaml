@@ -1,0 +1,8 @@
+name: tsk_create/happy
+tool: tsk_create
+description: >
+  Create task with title+description. Verifies taskId truthy, status=pending.
+input:
+  title: "Implement feature X"
+  description: "Full implementation of feature X with tests"
+tags: [happy, stateful]

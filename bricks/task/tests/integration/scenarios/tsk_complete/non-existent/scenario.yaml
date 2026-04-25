@@ -1,0 +1,7 @@
+name: tsk_complete/non-existent
+tool: tsk_complete
+description: >
+  Adversarial: complete on a non-existent taskId → throws error with clear message.
+input:
+  id: "non-existent-id-12345"
+tags: [adversarial, stateful]

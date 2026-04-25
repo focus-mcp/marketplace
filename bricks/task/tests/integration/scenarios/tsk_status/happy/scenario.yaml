@@ -1,0 +1,6 @@
+name: tsk_status/happy
+tool: tsk_status
+description: >
+  Sequenced: 3× create + status (no filter). Verifies tasks.length=3, count=3.
+input: {}
+tags: [happy, stateful, sequenced]
