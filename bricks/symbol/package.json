@@ -17,8 +17,7 @@
         "README.md"
     ],
     "scripts": {
-        "test": "vitest run src",
-        "test:integration": "vitest run tests/integration",
+        "test": "vitest run",
         "build": "tsc -p tsconfig.json"
     },
     "publishConfig": {
@@ -54,8 +53,5 @@
             "optional": true
         }
     },
-    "types": "./dist/index.d.ts",
-    "devDependencies": {
-        "@focus-mcp/marketplace-testing": "workspace:*"
-    }
+    "types": "./dist/index.d.ts"
 }
