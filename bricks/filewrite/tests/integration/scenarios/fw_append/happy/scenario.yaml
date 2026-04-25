@@ -1,0 +1,8 @@
+# Happy path: append content to existing file
+tool: fw_append
+prompt: |
+    Append content to an existing file.
+    Return appended=true and the resolved path.
+input:
+    path: <sandbox>/append-me.txt
+    content: "Appended line\n"
