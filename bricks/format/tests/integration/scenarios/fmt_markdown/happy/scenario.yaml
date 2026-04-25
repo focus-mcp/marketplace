@@ -1,0 +1,8 @@
+# Happy path: convert JSON object to markdown list
+tool: fmt_markdown
+prompt: |
+    Convert the JSON string '{"name":"Alice","role":"admin"}' to markdown (list style).
+    Expect markdown list output with bold keys and their values.
+input:
+    data: '{"name":"Alice","role":"admin"}'
+    style: list

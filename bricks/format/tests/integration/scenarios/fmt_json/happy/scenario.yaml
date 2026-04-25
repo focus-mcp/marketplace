@@ -1,0 +1,7 @@
+# Happy path: pretty-print JSON object with nested array
+tool: fmt_json
+prompt: |
+    Format and pretty-print the JSON string '{"a":1,"b":[2,3]}'.
+    Expect multi-line formatted output with indentation.
+input:
+    data: '{"a":1,"b":[2,3]}'

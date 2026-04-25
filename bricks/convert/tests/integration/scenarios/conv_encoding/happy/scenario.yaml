@@ -1,0 +1,8 @@
+# Happy path: base64-encode "hello" → "aGVsbG8="
+tool: conv_encoding
+prompt: |
+    Encode the string "hello" using base64.
+    Expect result to be "aGVsbG8=".
+input:
+    text: hello
+    operation: base64encode

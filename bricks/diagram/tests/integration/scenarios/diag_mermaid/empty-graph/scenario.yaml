@@ -1,0 +1,9 @@
+# Adversarial: empty nodes and edges → output minimal valide ou erreur cohérente
+tool: diag_mermaid
+prompt: |
+    Generate a Mermaid flowchart with no nodes and no edges.
+    Expect either a minimal valid diagram or a coherent empty output.
+input:
+    type: flowchart
+    nodes: []
+    edges: []

@@ -1,0 +1,16 @@
+# Happy path: flowchart with 2 nodes and 1 edge → valid Mermaid output
+tool: diag_mermaid
+prompt: |
+    Generate a Mermaid flowchart with nodes A and B, and an edge from A to B.
+    Expect output starting with "flowchart" or "graph".
+input:
+    type: flowchart
+    nodes:
+        - id: A
+          label: Start
+        - id: B
+          label: End
+    edges:
+        - from: A
+          to: B
+          label: next
