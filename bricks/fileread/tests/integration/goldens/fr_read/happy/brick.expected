@@ -1,0 +1,3 @@
+{
+  "content": "// SPDX-FileCopyrightText: 2026 FocusMCP contributors\n// SPDX-License-Identifier: MIT\n\nimport { Injectable } from '@nestjs/common';\n\n@Injectable()\nexport class AppService {\n    private readonly greeting = 'Hello World!';\n\n    getHello(): string {\n        return this.greeting;\n    }\n\n    getVersion(): string {\n        return '1.0.0';\n    }\n}\n"
+}

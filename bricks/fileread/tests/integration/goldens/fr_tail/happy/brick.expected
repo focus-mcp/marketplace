@@ -1,0 +1,9 @@
+{
+  "lines": [
+    "    getVersion(): string {",
+    "        return '1.0.0';",
+    "    }",
+    "}",
+    ""
+  ]
+}

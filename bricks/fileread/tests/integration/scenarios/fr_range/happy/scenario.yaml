@@ -1,0 +1,9 @@
+# Happy path: read lines 3 to 8 (1-based, inclusive)
+tool: fr_range
+prompt: |
+    Read lines 3 through 8 (1-based, inclusive) of the sample.ts fixture file.
+    Return lines as an array of strings.
+input:
+    path: ./fixtures/sample.ts
+    from: 3
+    to: 8
