@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: inl_inline/happy
+tool: inl_inline
+description: >
+  Inlines the constant "GREETING" into its usage site and removes the definition.
+  Expects inlined === true, usagesReplaced >= 1, definitionRemoved === true, non-empty preview.
+input:
+  path: "{{SANDBOX}}/inline-target.ts"
+  name: "GREETING"
+  apply: true

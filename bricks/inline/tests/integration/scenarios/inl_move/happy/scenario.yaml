@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: inl_move/happy
+tool: inl_move
+description: >
+  Moves function "helperFn" from move-source.ts to an empty move-dest.ts.
+  Expects moved === true, sourceUpdated === true, targetUpdated === true, non-empty preview.
+input:
+  sourcePath: "{{SANDBOX}}/move-source.ts"
+  targetPath: "{{SANDBOX}}/move-dest.ts"
+  name: "helperFn"
+  apply: true

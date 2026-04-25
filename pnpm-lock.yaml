@@ -135,6 +135,10 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/contextpack:
     dependencies:
@@ -267,12 +271,20 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/fullaudit:
     dependencies:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/graphbuild:
     dependencies:
@@ -315,6 +327,10 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/knowledge:
     dependencies:
@@ -411,6 +427,10 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/routes:
     dependencies:
@@ -432,6 +452,10 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/semanticsearch:
     dependencies:

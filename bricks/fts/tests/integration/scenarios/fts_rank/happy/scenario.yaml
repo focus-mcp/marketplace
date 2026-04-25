@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: fts_rank/happy
+tool: fts_rank
+description: >
+  Ranks two synthetic fixture files by relevance to "Injectable".
+  Expects ranked array with the same count as input files, each with file and score fields.
+input:
+  query: "Injectable"
+  files:
+    - "{{FIXTURES_DIR}}/app.service.ts"
+    - "{{FIXTURES_DIR}}/utils.ts"

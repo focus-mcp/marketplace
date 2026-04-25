@@ -1,0 +1,8 @@
+name: audit_report/after-run-markdown
+tool: audit_report
+description: >
+  Sequenced: audit_run first, then audit_report (default markdown format).
+  Verifies the report string contains expected markdown sections.
+input:
+  format: "markdown"
+tags: [happy, stateful, sequenced]

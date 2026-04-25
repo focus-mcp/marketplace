@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: inl_extract/not-found
+tool: inl_extract
+description: >
+  Attempts to extract an invalid line range (9999-10000) that does not exist in the file.
+  Expects extracted === false with a non-empty error message in preview. File must be unchanged.
+input:
+  path: "{{SANDBOX}}/extract-target.ts"
+  startLine: 9999
+  endLine: 10000
+  functionName: "ghostFn"
+  apply: true

@@ -1,0 +1,9 @@
+name: audit_run/happy-all-checks
+tool: audit_run
+description: >
+  Run a full audit on a mini synthetic project (3 files).
+  Default checks (all three). Expects output shape with files, codeFindings,
+  securityFindings, score, and checks fields.
+input:
+  dir: "{{FIXTURES_DIR}}"
+tags: [happy, stateful]

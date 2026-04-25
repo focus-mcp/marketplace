@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: rev_security/happy
+tool: rev_security
+description: >
+  Reviews a file containing a hardcoded fake API key (sk_test_xxx).
+  Expects a hardcoded-api-key finding and riskLevel high or critical.
+input:
+  path: "{{FIXTURES_DIR}}/secret-leak.ts"

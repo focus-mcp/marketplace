@@ -1,0 +1,7 @@
+name: sav_roi/happy
+tool: sav_roi
+description: >
+  Sequenced: 2 sav_report calls, then sav_roi({ costPerToken: 0.000003 }).
+  Verifies tokensSaved, costSaved (in USD), timeOverhead, netBenefit fields.
+  costSaved > 0, tokensSaved > 0.
+tags: [happy, stateful, sequenced]
