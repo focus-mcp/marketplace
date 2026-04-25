@@ -1,0 +1,9 @@
+# Happy path: convert 100 km to miles → ~62.14
+tool: conv_units
+prompt: |
+    Convert 100 MB to KB.
+    Expect result to be 102400 KB.
+input:
+    value: 100
+    from: mb
+    to: kb

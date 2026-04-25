@@ -1,0 +1,8 @@
+# Happy path: convert "myVariableName" (camelCase) to snake_case
+tool: conv_language
+prompt: |
+    Convert the identifier "myVariableName" to snake_case.
+    Expect result to be "my_variable_name".
+input:
+    text: myVariableName
+    to: snake

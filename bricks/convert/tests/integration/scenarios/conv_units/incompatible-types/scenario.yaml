@@ -1,0 +1,9 @@
+# Adversarial: convert kb (bytes) to ms (time) → must throw with unsupported conversion error
+tool: conv_units
+prompt: |
+    Attempt to convert 100 kb to ms.
+    Expect an error: incompatible unit types (bytes vs time).
+input:
+    value: 100
+    from: kb
+    to: ms

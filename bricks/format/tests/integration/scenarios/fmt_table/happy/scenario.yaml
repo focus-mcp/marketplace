@@ -1,0 +1,8 @@
+# Happy path: render ASCII table with 2 columns and 2 rows
+tool: fmt_table
+prompt: |
+    Render an ASCII table with headers ["Name", "Role"] and rows [["Alice", "admin"], ["Bob", "user"]].
+    Expect a table with +--+ borders and aligned columns.
+input:
+    headers: ["Name", "Role"]
+    rows: [["Alice", "admin"], ["Bob", "user"]]
