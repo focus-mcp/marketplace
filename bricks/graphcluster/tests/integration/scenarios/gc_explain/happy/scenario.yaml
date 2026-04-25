@@ -1,0 +1,8 @@
+name: gc_explain/happy
+tool: gc_explain
+description: >
+  Sequenced: setGraph with 6 nodes, gc_cluster, then gc_explain(clusterId=0)
+  → members non-empty, commonTypes/hubNodes/edgeTypes are arrays.
+input:
+  clusterId: 0
+tags: [happy, stateful, sequenced]

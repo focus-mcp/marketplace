@@ -1,0 +1,7 @@
+name: ge_html/happy
+tool: ge_html
+description: >
+  Sequenced: ge_input(tiny graph) + ge_html → HTML string with <!DOCTYPE html>,
+  contains node labels. Output size < 8192 bytes.
+input: {}
+tags: [happy, stateful, sequenced, output-size]

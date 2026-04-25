@@ -1,0 +1,8 @@
+name: gb_update/happy
+tool: gb_update
+description: >
+  Sequenced: gb_build on sandbox dir, then gb_update on one file after adding an export.
+  Verifies updated=1 and nodeCount increases.
+input:
+  files: ["<sandbox>/main.ts"]
+tags: [happy, stateful, filesystem, sequenced]

@@ -1,0 +1,7 @@
+name: ge_graphml/happy
+tool: ge_graphml
+description: >
+  Sequenced: ge_input(tiny graph) + ge_graphml → XML string starting with '<?xml',
+  contains graphml namespace. Output size < 4096 bytes.
+input: {}
+tags: [happy, stateful, sequenced, output-size]

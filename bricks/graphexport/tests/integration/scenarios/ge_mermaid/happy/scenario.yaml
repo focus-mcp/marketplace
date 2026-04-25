@@ -1,0 +1,7 @@
+name: ge_mermaid/happy
+tool: ge_mermaid
+description: >
+  Sequenced: ge_input(tiny graph) + ge_mermaid → string starting with 'flowchart',
+  contains node labels. Output size < 4096 bytes.
+input: {}
+tags: [happy, stateful, sequenced, output-size]
