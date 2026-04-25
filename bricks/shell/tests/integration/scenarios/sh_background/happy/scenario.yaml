@@ -1,0 +1,8 @@
+name: sh_background/happy
+tool: sh_background
+description: >
+  Start "sleep 60" in background — returns id (uuid), pid (number), command string.
+  Sequenced with sh_kill to clean up.
+input:
+  command: "sleep 60"
+tags: [happy, shell, stateful, sequenced]

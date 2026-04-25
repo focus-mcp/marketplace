@@ -1,0 +1,9 @@
+name: lv_latest/happy
+tool: lv_latest
+description: >
+  Fetch the latest version of "react" from npm registry.
+  Verifies version is a non-empty semver string and url is present.
+input:
+  source: "npm"
+  target: "react"
+tags: [happy, http]

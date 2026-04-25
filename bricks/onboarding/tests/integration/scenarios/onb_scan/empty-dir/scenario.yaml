@@ -1,0 +1,8 @@
+name: onb_scan/empty-dir
+tool: onb_scan
+description: >
+  Adversarial: scan an empty directory — output must be coherent (no crash,
+  summary string present, keyFiles=[], language/framework fallback to unknown).
+input:
+  dir: "<empty-sandbox>"
+tags: [adversarial, filesystem]

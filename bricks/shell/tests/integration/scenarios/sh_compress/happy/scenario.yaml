@@ -1,0 +1,8 @@
+name: sh_compress/happy
+tool: sh_compress
+description: >
+  Execute a multi-line echo command — output is trimmed and compressed,
+  lines count matches, truncated=false.
+input:
+  command: "printf 'a\nb\nc\n'"
+tags: [happy, shell]
