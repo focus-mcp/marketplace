@@ -1,0 +1,8 @@
+name: box_file/happy
+tool: box_file
+description: >
+  Execute a JS file containing a simple expression. Verifies result=42, no error,
+  duration >= 0. Checks output size <= 2048B.
+input:
+  path: "<tmpfile>"
+tags: [happy, stateless, requires-fixture]

@@ -490,6 +490,10 @@ importers:
       esbuild:
         specifier: ^0.28.0
         version: 0.28.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/savings:
     dependencies:

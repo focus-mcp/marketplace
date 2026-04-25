@@ -14,6 +14,39 @@ Each entry: brick + observed signal + suspected root cause + proposed action + p
 
 ## Regressions confirmed (brick worse than native)
 
+### ⚠️ `sandbox` — +42% tokens, 4.14× latence (Wave 4.4 smoking gun)
+
+**Signal** : sweep Phase 2a reports +42% tokens, coverage 3/4.
+**Suspected root cause** : `box_run` and `box_file` return a `logs: string[]` field with **no size cap**.
+Any code that calls `console.log` inside the VM produces entries appended to `logs` with no truncation.
+The entire `logs` array (all stdout lines) is serialised into the JSON response and goes into the agent context.
+For code with verbose logging, this directly inflates the MCP response payload — and therefore tokens consumed.
+Additionally `box_read` returns `content: string` (raw file contents) without truncation — reading a large file
+bloats the response proportionally.
+
+**Code confirmed** (Wave 4.4 investigation — 2026-04-25):
+- `bricks/sandbox/src/operations.ts` line 116-127: `logs.push(...)` with no length guard.
+- `bricks/sandbox/src/operations.ts` line 155-161: `result = JSON.stringify(raw)` with no size guard.
+- `bricks/sandbox/src/operations.ts` line 298: `content = await readFile(...)` returned as-is.
+
+**State analysis** : sandbox is **stateless** — each `boxRun` / `boxEval` call creates a fresh `vm.createContext`.
+No module-level `runs` Map or history accumulation. Not a state issue.
+
+**VM isolation** : confirmed safe. `vm.createContext` with explicit whitelist (no `process`, `require`, `fs`, `global`).
+
+**Proposed fix (DO NOT implement here — flag only)**:
+- P0: cap `logs` array to N entries (e.g. 50) with a `[... N more lines truncated]` sentinel.
+- P0: cap each log entry to M chars (e.g. 200) with `[truncated]` suffix.
+- P1: cap `result` string length to K chars (e.g. 1024) with `[truncated]` suffix.
+- P1: cap `content` in `boxRead` to K chars (e.g. 4096) with a `[truncated after N bytes]` sentinel.
+
+**Integration guard** : `outputSizeUnder(2048)` added to all 6 sandbox scenarios in Wave 4.4.
+
+**Files** : `bricks/sandbox/src/operations.ts` (lines 94-172 boxRun, 197-251 boxEval, 292-307 boxRead)
+**Priority** : ⚠️ — +42% tokens confirmed. Real payload bloat on verbose code or large file reads.
+
+---
+
 ### 🚨 `parallel` — +79% tokens, +874% latence (9× slower)
 
 **Signal** : biggest latency regression. Agent wait-times dominate.
