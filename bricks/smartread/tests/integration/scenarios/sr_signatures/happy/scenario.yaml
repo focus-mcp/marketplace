@@ -1,0 +1,6 @@
+tool: sr_signatures
+prompt: |
+    Read ./fixtures/nestjs/packages/core/injector/compiler.ts in signatures mode —
+    return only exported function/class signatures.
+input:
+    path: ./fixtures/nestjs/packages/core/injector/compiler.ts

@@ -1,0 +1,6 @@
+tool: out_file
+prompt: |
+    Outline ./fixtures/nestjs/packages/core/injector/compiler.ts — list exported
+    symbols with line numbers, kinds, and signatures.
+input:
+    path: ./fixtures/nestjs/packages/core/injector/compiler.ts

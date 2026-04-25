@@ -1,0 +1,5 @@
+tool: sr_full
+prompt: |
+    Read ./fixtures/nestjs/packages/core/injector/compiler.ts in full mode.
+input:
+    path: ./fixtures/nestjs/packages/core/injector/compiler.ts

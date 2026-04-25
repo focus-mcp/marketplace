@@ -1,0 +1,6 @@
+tool: out_structure
+prompt: |
+    Get the directory structure of ./fixtures/nestjs/packages/core/injector —
+    return folder tree with file counts and extension breakdown.
+input:
+    dir: ./fixtures/nestjs/packages/core/injector

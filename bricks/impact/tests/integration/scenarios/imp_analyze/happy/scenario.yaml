@@ -1,0 +1,8 @@
+tool: imp_analyze
+prompt: |
+    Analyze the impact of changing
+    ./fixtures/nestjs/packages/core/injector/compiler.ts in the injector directory.
+    Find direct and indirect dependents.
+input:
+    file: ./fixtures/nestjs/packages/core/injector/compiler.ts
+    dir: ./fixtures/nestjs/packages/core/injector
