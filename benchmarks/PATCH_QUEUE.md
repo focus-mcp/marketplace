@@ -24,6 +24,32 @@ Each entry: brick + observed signal + suspected root cause + proposed action + p
 - Look at tool descriptions — maybe the agent uses the wrong tool for the task
 **Priority** : 🚨 — FocusMCP claim broken on this brick, must fix or deprecate
 
+**Wave 4.3 investigation finding (2026-04-25)** :
+Code-read of `bricks/parallel/src/operations.ts` reveals two suspects:
+
+1. **Full results stored in `runs` Map** — `parRun` executes ALL tasks synchronously before returning,
+   then stores the complete `ParallelRun` object (including all stdout/stderr per task) in the in-process
+   `runs: Map<string, ParallelRun>`. The `parCollect` tool then returns `run.results` directly —
+   the entire stdout/stderr of every task. For N tasks with verbose output, this can be large.
+   `outputSizeUnder(2048)` added in Wave 4.3 integration tests to catch this at the test level.
+
+2. **`parRun` is actually synchronous-looking to the MCP transport** — it awaits all tasks inside
+   the tool call and only returns a compact `{ runId, taskCount, completed, failed }`. The agent
+   must call `parCollect` in a second round-trip to get results. This forced two-step pattern
+   (run → collect) doubles MCP round-trips vs. a single batch call, explaining the latency spike.
+
+**Root cause summary** : the 2-tool run/collect split forces 2 MCP round-trips. The `runs` Map
+accumulates full stdout/stderr per run without any size cap or TTL eviction.
+
+**Proposed fix (DO NOT implement here — flag only)** :
+- P0: add size cap on `TaskResult.stdout` / `TaskResult.stderr` (e.g. 1KB per field, truncate with `[truncated]`).
+- P1: collapse run+collect into a single `par_run` response that returns results inline (deprecate
+  the 2-step pattern), OR expose `par_run` with `await=true` option.
+- P2: add TTL eviction on `runs` Map to prevent unbounded growth across multiple par_run calls.
+
+**Files** : `bricks/parallel/src/operations.ts` (lines 91-97 state, 203-237 parRun, 241-256 parCollect)
+**Integration guard** : `outputSizeUnder(2048)` added to all 4 parallel scenarios in Wave 4.3.
+
 ### 🚨 `lastversion` — +392% tokens, +99% latence
 
 **Signal** : **biggest token regression** (tokens nearly 5× native). 6 tools, only 1/6 used.

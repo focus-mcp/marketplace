@@ -1,0 +1,8 @@
+name: bat_multi/happy
+tool: bat_multi
+description: >
+  Run two independent echo commands. Verifies results array has 2 entries
+  each with exitCode=0 and non-empty stdout.
+input:
+  commands: ["echo a", "echo b"]
+tags: [happy, stateless]

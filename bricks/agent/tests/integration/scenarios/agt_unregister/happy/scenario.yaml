@@ -1,0 +1,8 @@
+name: agt_unregister/happy
+tool: agt_unregister
+description: >
+  Register then unregister an agent. Verifies removed=true and the list
+  becomes empty afterwards.
+input:
+  id: "<registered-id>"
+tags: [happy, stateful, sequenced]

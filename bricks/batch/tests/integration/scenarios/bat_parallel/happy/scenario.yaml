@@ -1,0 +1,8 @@
+name: bat_parallel/happy
+tool: bat_parallel
+description: >
+  Run two echo commands in parallel. Verifies results array has 2 entries
+  each with exitCode=0, and a duration field at the output level.
+input:
+  commands: ["echo a", "echo b"]
+tags: [happy, stateless]

@@ -1,0 +1,12 @@
+name: par_merge/happy
+tool: par_merge
+description: >
+  Merge two output items into one string. Verifies merged is non-empty
+  and lineCount >= 1. Checks output size <= 2048B.
+input:
+  outputs:
+    - id: "a"
+      content: "line1"
+    - id: "b"
+      content: "line2"
+tags: [happy, stateless]

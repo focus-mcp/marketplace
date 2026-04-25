@@ -1,0 +1,8 @@
+name: dsp_status/happy
+tool: dsp_status
+description: >
+  Send a task then query its status. Verifies the returned task has
+  matching id, type, and a coherent status field.
+input:
+  id: "<task-id>"
+tags: [happy, stateful, sequenced]

@@ -1,0 +1,12 @@
+name: par_run/happy
+tool: par_run
+description: >
+  Run two tasks in parallel (echo commands). Verifies runId returned,
+  taskCount=2, and completed+failed=taskCount. Checks output size <= 2048B.
+input:
+  tasks:
+    - id: "t1"
+      command: "echo hello"
+    - id: "t2"
+      command: "echo world"
+tags: [happy, stateful]
