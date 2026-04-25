@@ -4,3 +4,4 @@
  */
 
 export { type InvariantResult, outputHasField } from './output-field.js';
+export { fileSyntaxValid } from './post-mutation.js';
