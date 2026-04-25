@@ -25,12 +25,12 @@ export function check(output: unknown): InvariantResult[] {
         })(),
         (() => {
             if (typeof output !== 'string') return { ok: true };
-            const lines = output.split('\n').filter((l) => l.trim().length > 0);
+            const creates = output.split('\n').filter((l) => l.trim().startsWith('CREATE'));
             // 5 nodes + 4 edges = 9 CREATE statements
-            if (lines.length !== 9) {
+            if (creates.length !== 9) {
                 return {
                     ok: false,
-                    reason: `expected 9 CREATE lines (5 nodes + 4 edges), got ${lines.length}`,
+                    reason: `expected 9 CREATE statements (5 nodes + 4 edges), got ${creates.length}`,
                 };
             }
             return { ok: true };

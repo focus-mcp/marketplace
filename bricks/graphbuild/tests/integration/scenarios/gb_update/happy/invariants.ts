@@ -24,7 +24,7 @@ export function check(output: unknown, nodeCountBefore: number): InvariantResult
             if (typeof o.nodeCount !== 'number' || o.nodeCount < nodeCountBefore) {
                 return {
                     ok: false,
-                    reason: `expected nodeCount >= ${nodeCountBefore} (increased after update), got ${String(o.nodeCount)}`,
+                    reason: `expected nodeCount >= ${nodeCountBefore} (must not lose nodes on update), got ${String(o.nodeCount)}`,
                 };
             }
             return { ok: true };

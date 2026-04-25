@@ -83,8 +83,10 @@ describe('gc_architecture integration', () => {
 describe('gc_explain integration', () => {
     it('happy: setGraph + cluster + explain(clusterId=0) → members non-empty, arrays present', async () => {
         setGraph(SIX_NODE_GRAPH);
-        // cluster first to confirm at least 1 cluster exists, then explain cluster 0
-        await runTool(brick, 'cluster', {});
+        // cluster first to confirm at least 1 cluster exists before explaining
+        const clusterOutput = await runTool(brick, 'cluster', {});
+        const { totalClusters } = clusterOutput as { totalClusters: number };
+        if (totalClusters === 0) throw new Error('Expected at least 1 cluster before explain');
         const output = await runTool(brick, 'explain', { clusterId: 0 });
         assertInvariants(checkGcExplainHappy(output, 0));
     });
