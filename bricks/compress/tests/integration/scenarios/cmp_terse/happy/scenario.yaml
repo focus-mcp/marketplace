@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: cmp_terse/happy
+tool: cmp_terse
+description: >
+  Makes a TypeScript file terse — keeps only identifiers and type names.
+  Expects a short string listing function/const names.
+input:
+  text: |
+    export interface UserService {
+      findAll(): User[];
+    }
+    export const MAX_USERS = 100;
+    export function createUser(name: string): User {
+      return { name };
+    }
+    type UserId = string;

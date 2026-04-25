@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: cmp_response/happy
+tool: cmp_response
+description: >
+  Compresses a JSON object with null values and verbose keys.
+  Expects the compressed JSON to be shorter than the original.
+input:
+  json: '{"status":"ok","error":null,"data":{"userId":"abc123","userDisplayName":"Alice","userEmail":null,"userAge":null,"result":"success"}}'

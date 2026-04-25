@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: cmp_output/empty-input
+tool: cmp_output
+description: >
+  Adversarial: compresses an empty string.
+  Expects empty compressed output with no error.
+input:
+  text: ""

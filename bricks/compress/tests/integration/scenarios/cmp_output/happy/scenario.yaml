@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: cmp_output/happy
+tool: cmp_output
+description: >
+  Compresses a TypeScript snippet with comments and blank lines at level=medium.
+  Expects a shorter output with correct ratio.
+input:
+  text: |
+    // This is a line comment
+    /* Block comment */
+    const x = 1;
+
+    const y = 2;
+
+    console.log(x + y);
+  level: medium
