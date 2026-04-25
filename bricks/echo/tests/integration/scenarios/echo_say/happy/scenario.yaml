@@ -1,0 +1,7 @@
+name: echo_say/happy
+tool: echo_say
+description: >
+  Send a message to echo_say. Verifies the message is returned as-is.
+input:
+  message: "hello"
+tags: [happy, pure]

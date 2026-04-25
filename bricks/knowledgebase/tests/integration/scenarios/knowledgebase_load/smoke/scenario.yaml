@@ -1,0 +1,7 @@
+name: knowledgebase_load/smoke
+tool: (none — composite)
+description: >
+  Smoke test for the knowledgebase composite brick. Verifies that the manifest
+  is coherent, start() and stop() are safe no-ops, and no handler is registered
+  on the bus (tools are delegated to dependency bricks at runtime).
+tags: [smoke, composite, meta-bundle]
