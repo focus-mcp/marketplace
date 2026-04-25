@@ -34,7 +34,9 @@ export function insertedNearAnchor(input: InsertedNearAnchorInput): InvariantRes
     const lines = input.fileContent.split('\n');
     let anchorLine: number | null = null;
     for (let i = 0; i < lines.length; i++) {
-        const m = lines[i].match(pattern);
+        const line = lines[i];
+        if (line === undefined) continue;
+        const m = line.match(pattern);
         // First capture or second capture (TS pattern has two)
         const name = m?.[1] ?? m?.[2];
         if (name === input.anchorFunctionName) {
