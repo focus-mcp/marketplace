@@ -1,0 +1,8 @@
+name: onb_scan/happy
+tool: onb_scan
+description: >
+  Scan a real project directory — discovers structure, framework, language,
+  package manager, key files, and builds a summary.
+input:
+  dir: "<sandbox>"
+tags: [happy, filesystem]

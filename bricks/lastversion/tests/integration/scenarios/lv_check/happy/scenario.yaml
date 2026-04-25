@@ -1,0 +1,10 @@
+name: lv_check/happy
+tool: lv_check
+description: >
+  Check react@17.0.0 against npm — must be stale (latest is much higher),
+  bump type is major, daysBehind > 0.
+input:
+  source: "npm"
+  target: "react"
+  current: "17.0.0"
+tags: [happy, http, stateful]

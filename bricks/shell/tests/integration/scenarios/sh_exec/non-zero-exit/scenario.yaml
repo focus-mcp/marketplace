@@ -1,0 +1,7 @@
+name: sh_exec/non-zero-exit
+tool: sh_exec
+description: >
+  Adversarial: execute "false" — exitCode=1, no fatal error thrown, stdout is empty.
+input:
+  command: "false"
+tags: [adversarial, shell]

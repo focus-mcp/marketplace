@@ -1,0 +1,8 @@
+name: onb_guide/happy
+tool: onb_guide
+description: >
+  Sequenced: scan a project dir, then generate a contributor guide.
+  Guide must be a non-empty markdown string with expected sections.
+input:
+  dir: "<sandbox>"
+tags: [happy, stateful, sequenced, filesystem]

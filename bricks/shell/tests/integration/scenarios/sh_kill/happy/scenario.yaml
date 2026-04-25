@@ -1,0 +1,8 @@
+name: sh_kill/happy
+tool: sh_kill
+description: >
+  Sequenced after sh_background: kill the background process by id.
+  killed=true, id matches the one returned by background.
+input:
+  id: "<from-background>"
+tags: [happy, shell, stateful, sequenced]
