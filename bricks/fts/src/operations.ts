@@ -161,6 +161,15 @@ function computeTfIdf(queryTerms: string[], filePath: string): number {
     return score;
 }
 
+// ─── Test helpers ────────────────────────────────────────────────────────────
+
+/** Clears all module-level index state. Use in test beforeEach/afterEach for isolation. */
+export function _resetFtsIndex(): void {
+    invertedIndex.clear();
+    documentLengths.clear();
+    indexedFiles.clear();
+}
+
 // ─── ftsIndex ────────────────────────────────────────────────────────────────
 
 export async function ftsIndex(input: FtsIndexInput): Promise<FtsIndexOutput> {

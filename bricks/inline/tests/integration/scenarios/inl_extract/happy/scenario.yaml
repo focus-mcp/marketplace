@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: inl_extract/happy
+tool: inl_extract
+description: >
+  Extracts lines 5-8 from a synthetic TypeScript file into a new function "processLoop".
+  Expects extracted === true with a non-empty functionSignature and preview.
+input:
+  path: "{{SANDBOX}}/extract-target.ts"
+  startLine: 5
+  endLine: 8
+  functionName: "processLoop"
+  apply: true

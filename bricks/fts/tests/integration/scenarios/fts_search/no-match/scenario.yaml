@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: fts_search/no-match
+tool: fts_search
+description: >
+  Searches for a nonexistent term in an indexed directory.
+  Expects empty results array and total === 0, no error thrown.
+input:
+  query: "XYZZY_NONEXISTENT_TERM_12345"
