@@ -100,7 +100,6 @@ function isConventionsOutput(val: unknown): val is RawConventions {
 
 const KEY_FILE_NAMES = [
     'README.md',
-    'CLAUDE.md',
     'AGENTS.md',
     'CONTRIBUTING.md',
     'package.json',
@@ -475,7 +474,7 @@ export async function onbGuide(
     // Section 1: What to read first
     sections.push('What to read first');
     const readFirst: string[] = [];
-    const readFirstNames = ['README.md', 'CLAUDE.md', 'AGENTS.md', 'CONTRIBUTING.md'];
+    const readFirstNames = ['README.md', 'AGENTS.md', 'CONTRIBUTING.md'];
     for (const name of readFirstNames) {
         const match = keyFiles.find((f) => f.endsWith(name));
         if (match) readFirst.push(`- \`${match}\``);
