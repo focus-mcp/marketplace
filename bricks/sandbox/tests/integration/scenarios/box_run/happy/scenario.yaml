@@ -1,0 +1,8 @@
+name: box_run/happy
+tool: box_run
+description: >
+  Execute simple arithmetic code in VM sandbox. Verifies result=2, no error,
+  duration >= 0, logs empty. Checks output size <= 2048B.
+input:
+  code: "1 + 1"
+tags: [happy, stateless]

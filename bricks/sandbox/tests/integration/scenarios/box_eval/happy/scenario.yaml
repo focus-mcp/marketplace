@@ -1,0 +1,8 @@
+name: box_eval/happy
+tool: box_eval
+description: >
+  Evaluate a simple numeric expression. Verifies value='4', type='number', no error.
+  Checks output size <= 2048B.
+input:
+  expression: "2 + 2"
+tags: [happy, stateless]
