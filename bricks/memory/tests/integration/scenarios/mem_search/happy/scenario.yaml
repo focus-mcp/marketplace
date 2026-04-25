@@ -1,0 +1,8 @@
+name: mem_search/happy
+tool: mem_search
+description: >
+  Store 3 keys (2 with prefix 'proj:', 1 other), search for 'proj'.
+  Verifies 2 results — proj:alpha and proj:beta.
+input:
+  query: "proj"
+tags: [happy, stateful, sequenced]

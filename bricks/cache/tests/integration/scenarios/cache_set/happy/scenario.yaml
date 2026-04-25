@@ -1,0 +1,9 @@
+name: cache_set/happy
+tool: cache_set
+description: >
+  Set a path+content into the cache store.
+  Verifies ok=true.
+input:
+  path: "/tmp/test.txt"
+  content: "hello world"
+tags: [happy, stateful]

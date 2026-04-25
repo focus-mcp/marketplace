@@ -1,0 +1,5 @@
+name: mem_list/happy
+tool: mem_list
+description: >
+  Store 3 keys, then mem_list. Verifies keys array has 3 entries.
+tags: [happy, stateful, sequenced]

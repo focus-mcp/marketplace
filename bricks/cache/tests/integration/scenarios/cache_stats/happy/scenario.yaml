@@ -1,0 +1,5 @@
+name: cache_stats/happy
+tool: cache_stats
+description: >
+  Initial stats on empty store — hits=0, misses=0, entries=0, hitRate=0.
+tags: [happy, stateful]
