@@ -1,0 +1,9 @@
+# Happy path: find all *.module.ts files in NestJS
+tool: fl_glob
+prompt: |
+    In the ./fixtures/nestjs repository, find all files matching the pattern
+    '**/*.module.ts' under the 'packages/core' directory. Return the list of
+    paths, one per line, sorted alphabetically, relative to ./fixtures/nestjs/.
+input:
+    path: ./fixtures/nestjs/packages/core
+    pattern: "**/*.module.ts"
