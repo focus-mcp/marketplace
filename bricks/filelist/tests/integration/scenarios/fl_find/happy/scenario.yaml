@@ -1,0 +1,7 @@
+tool: fl_find
+prompt: |
+    In ./fixtures/nestjs, find all files whose basename contains 'interceptor'
+    under packages/. Return the result structure.
+input:
+    path: ./fixtures/nestjs/packages
+    name: interceptor

@@ -1,4 +1,5 @@
 packages:
   - 'bricks/*'
   - 'modules/*'
+  - 'packages/*'
   - 'scripts'

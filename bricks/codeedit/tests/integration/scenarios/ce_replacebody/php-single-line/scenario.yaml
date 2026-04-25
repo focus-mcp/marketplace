@@ -1,0 +1,10 @@
+tool: ce_replacebody
+prompt: |
+    In single-line.php, replace the body of the hasAnyChange function with
+    'return count($this->getChanges()) > 0;'. The function is compact
+    (one-line body) — make sure the parser handles this correctly.
+input:
+    path: single-line.php
+    name: hasAnyChange
+    newBody: "        return count($this->getChanges()) > 0;"
+    apply: true

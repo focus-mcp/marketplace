@@ -85,7 +85,8 @@
             "includes": [
                 "scripts/build-catalog.ts",
                 "scripts/build-docs.ts",
-                "scripts/check-changeset-alignment.ts"
+                "scripts/check-changeset-alignment.ts",
+                "scripts/curate-golden.ts"
             ],
             "linter": {
                 "rules": {

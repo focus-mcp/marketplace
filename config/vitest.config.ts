@@ -17,7 +17,7 @@ export default defineConfig({
             'bricks/**/*.{test,spec}.ts',
             'bricks/**/__tests__/**/*.ts',
         ],
-        exclude: ['**/node_modules/**', '**/dist/**', '**/fixtures/**'],
+        exclude: ['**/node_modules/**', '**/dist/**', '**/fixtures/**', '**/tests/integration/**'],
         reporters: ['default'],
         coverage: {
             provider: 'v8',
