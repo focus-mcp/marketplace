@@ -160,4 +160,6 @@ Short version:
 4. Reference the scenario from a Vitest test under `bricks/<brick>/tests/integration/<tool>.test.ts`.
 5. The test runs offline — **no LLM at runtime**.
 
+Official bricks support every language by default — no `supportedLanguages` declaration is needed in `mcp-brick.json`. External (third-party) bricks may declare `supportedLanguages` to restrict which fixtures the test runner exercises. See `docs/testing/integration-tests.md#language-scope` for details.
+
 No CI is wired yet (Phase 0 of the integration tests POC). Tests run via `pnpm -r --filter "./bricks/**" run test:integration` locally.

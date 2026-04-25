@@ -70,10 +70,27 @@ If a tool's output should change intentionally, re-run curate-golden and commit 
 
 Tests run locally via `pnpm -r --filter "./bricks/**" run test:integration`. CI wiring comes in Phase 1 (advisory only) and Phase 2 (publish gate), after we've built confidence the framework is stable.
 
+## Language scope
+
+FocusMCP-official bricks support **every language by default** — no manifest declaration is needed.
+
+External (third-party) bricks MAY declare `supportedLanguages: string[]` in their `mcp-brick.json` to opt in to scoping:
+
+```json
+{
+  "supportedLanguages": ["typescript", "javascript"]
+}
+```
+
+When the field is **present**, the test runner will skip fixture/language pairs whose primary language is not in the list.  
+When the field is **absent** (the default for all official bricks), the test framework runs on every available fixture.
+
+`supportedFrameworks` is **not** a recognised manifest field — do not add it.
+
 ## Phase A status (POC)
 
 - ✅ `filelist` brick — fl_glob (happy + adversarial), fl_find (happy)
 - ✅ `codeedit` brick — ce_insertafter (ambiguous-anchor invariant validated to catch wrong-location bug class), ce_replacebody (PHP single-line via php-parser AST)
 - 🔍 Discovered bug: `flGlob` uses regex against `entry.name` only — `**/*.module.ts` does not recurse. Reported in PATCH_QUEUE.
 
-Next: Phase B (add a JS/TS-only brick to validate `supportedFrameworks` pruning).
+Next: Phase B (add the `testMultiLanguage` helper; demonstrate opt-in scoping for external bricks).

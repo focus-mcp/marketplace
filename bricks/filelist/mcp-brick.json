@@ -58,7 +58,5 @@
         }
     ],
     "tags": ["file", "list", "directory"],
-    "supportedFrameworks": ["nestjs"],
-    "supportedLanguages": ["agnostic"],
     "license": "MIT"
 }
