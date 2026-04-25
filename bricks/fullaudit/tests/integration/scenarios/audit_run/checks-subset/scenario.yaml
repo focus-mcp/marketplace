@@ -1,0 +1,9 @@
+name: audit_run/checks-subset
+tool: audit_run
+description: >
+  Run audit with checks=["security"] only. Code findings must be absent/empty.
+  Security findings array is present. Checks array contains only "security".
+input:
+  dir: "{{FIXTURES_DIR}}"
+  checks: ["security"]
+tags: [subset, stateful]
