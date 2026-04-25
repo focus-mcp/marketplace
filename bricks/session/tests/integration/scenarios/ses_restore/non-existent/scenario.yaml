@@ -1,0 +1,7 @@
+name: ses_restore/non-existent
+tool: ses_restore
+description: >
+  Adversarial: restore a session name that was never saved. Verifies data=null and savedAt=null.
+input:
+  name: "no-such-session"
+tags: [adversarial, stateful]

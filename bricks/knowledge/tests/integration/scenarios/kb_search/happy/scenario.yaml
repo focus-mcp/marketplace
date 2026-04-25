@@ -1,0 +1,6 @@
+name: kb_search/happy
+tool: kb_search
+description: >
+  Sequenced: index 3 docs sharing the word 'protocol', then search for 'protocol'.
+  Verifies at least 1 result with score > 0.
+tags: [happy, stateful, sequenced]

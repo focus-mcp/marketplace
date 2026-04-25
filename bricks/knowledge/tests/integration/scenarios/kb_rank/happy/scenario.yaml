@@ -1,0 +1,5 @@
+name: kb_rank/happy
+tool: kb_rank
+description: >
+  Sequenced: index 3 docs sharing a word, rank by query. Verifies ordered results list with scores.
+tags: [happy, stateful, sequenced]

@@ -1,0 +1,6 @@
+name: shr_context/happy
+tool: shr_context
+description: >
+  Sequenced: shr_context with key+value to set, then shr_context with key only to read.
+  Verifies value matches and set=true on write, set=false on read.
+tags: [happy, stateful, sequenced]

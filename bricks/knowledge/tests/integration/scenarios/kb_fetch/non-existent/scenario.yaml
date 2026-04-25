@@ -1,0 +1,7 @@
+name: kb_fetch/non-existent
+tool: kb_fetch
+description: >
+  Adversarial: fetch an id that was never indexed. Verifies error field is returned.
+input:
+  id: "00000000-0000-0000-0000-000000000000"
+tags: [adversarial, stateful]

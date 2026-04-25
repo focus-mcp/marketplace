@@ -1,0 +1,6 @@
+name: shr_results/happy
+tool: shr_results
+description: >
+  Sequenced: shr_results with taskId+result to store, then shr_results with taskId only to read.
+  Verifies result matches and stored=true on write.
+tags: [happy, stateful, sequenced]

@@ -1,0 +1,5 @@
+name: ses_history/happy
+tool: ses_history
+description: >
+  Sequenced: 3x ses_save then ses_history. Verifies sessions array has 3 entries.
+tags: [happy, stateful, sequenced]

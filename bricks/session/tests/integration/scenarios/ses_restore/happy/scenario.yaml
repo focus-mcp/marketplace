@@ -1,0 +1,5 @@
+name: ses_restore/happy
+tool: ses_restore
+description: >
+  Sequenced: ses_save then ses_restore with same name. Verifies data is identical and savedAt is returned.
+tags: [happy, stateful, sequenced]

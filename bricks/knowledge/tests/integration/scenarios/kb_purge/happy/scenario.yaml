@@ -1,0 +1,6 @@
+name: kb_purge/happy
+tool: kb_purge
+description: >
+  Sequenced: index 3 docs with tag 'temp', purge by tag 'temp', search → empty results.
+  Verifies purged=3 and remaining=0.
+tags: [happy, stateful, sequenced]

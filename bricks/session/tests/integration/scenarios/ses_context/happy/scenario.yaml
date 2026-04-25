@@ -1,0 +1,6 @@
+name: ses_context/happy
+tool: ses_context
+description: >
+  Get the current in-memory session context. Verifies operations, filesAccessed and startedAt are present.
+input: {}
+tags: [happy, stateful]
