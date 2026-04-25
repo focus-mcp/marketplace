@@ -1,0 +1,6 @@
+# Happy path: track 2 files within 1s window then get patterns
+# Sequenced: hm_track × 2 (same window) → hm_patterns
+tool: hm_patterns
+prompt: |
+    Track "src/app.ts" then "src/main.ts" quickly (same second).
+    Expect coAccessed array with one entry containing both files.

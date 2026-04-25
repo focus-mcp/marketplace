@@ -1,0 +1,7 @@
+name: repos_stats/happy
+tool: repos_stats
+description: >
+  Sequenced: register + stats. Verifies files>=0, lines>=0, languages object.
+input:
+  name: "my-repo"
+tags: [happy, stateful, sequenced]

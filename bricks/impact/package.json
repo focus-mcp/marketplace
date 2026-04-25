@@ -17,7 +17,8 @@
         "README.md"
     ],
     "scripts": {
-        "test": "vitest run",
+        "test": "vitest run src",
+        "test:integration": "vitest run tests/integration",
         "build": "tsc -p tsconfig.json"
     },
     "publishConfig": {
@@ -45,6 +46,9 @@
         "type": "git",
         "url": "git+https://github.com/focus-mcp/marketplace.git",
         "directory": "bricks/impact"
+    },
+    "devDependencies": {
+        "@focus-mcp/marketplace-testing": "workspace:*"
     },
     "peerDependencies": {
         "@focus-mcp/core": "^1.0.0"

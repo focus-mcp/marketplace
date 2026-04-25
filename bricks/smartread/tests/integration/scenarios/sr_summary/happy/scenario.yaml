@@ -1,0 +1,6 @@
+tool: sr_summary
+prompt: |
+    Read ./fixtures/nestjs/packages/core/injector/compiler.ts in summary mode —
+    return one entry per function/class with name and line range.
+input:
+    path: ./fixtures/nestjs/packages/core/injector/compiler.ts

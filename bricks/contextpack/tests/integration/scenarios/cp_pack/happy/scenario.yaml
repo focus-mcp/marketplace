@@ -1,0 +1,11 @@
+# Happy path: pack 3 NestJS files → bundle with signatures
+tool: cp_pack
+prompt: |
+    Pack 3 TypeScript files using default signatures mode.
+    Expect a bundle string with file count = 3 and positive token count.
+input:
+    files:
+        - fixtures/nestjs/packages/common/index.ts
+        - fixtures/nestjs/packages/testing/index.ts
+        - fixtures/nestjs/packages/platform-ws/index.ts
+    mode: signatures

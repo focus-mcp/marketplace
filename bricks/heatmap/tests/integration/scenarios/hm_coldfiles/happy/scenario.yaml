@@ -1,0 +1,7 @@
+# Happy path: track 1 file, then coldfiles with threshold=0 → that file is cold
+# Sequenced: hm_track → hm_coldfiles(threshold=0)
+tool: hm_coldfiles
+prompt: |
+    Track "src/old.ts" once, then call coldfiles with threshold=0ms.
+    With threshold=0, all previously tracked files should be cold.
+    Expect count >= 1 and files array includes "src/old.ts".

@@ -1,0 +1,6 @@
+tool: sr_map
+prompt: |
+    Read ./fixtures/nestjs/packages/core/injector/compiler.ts in map mode — return
+    only function/class/interface/type/const declarations.
+input:
+    path: ./fixtures/nestjs/packages/core/injector/compiler.ts

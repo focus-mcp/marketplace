@@ -1,0 +1,58 @@
+{
+  "references": [
+    {
+      "file": "/home/samuelds/projects/focusmcp/marketplace/fixtures/nestjs/packages/core/injector/compiler.ts",
+      "line": 14,
+      "snippet": "export class ModuleCompiler {",
+      "kind": "usage"
+    },
+    {
+      "file": "/home/samuelds/projects/focusmcp/marketplace/fixtures/nestjs/packages/core/injector/container.ts",
+      "line": 18,
+      "snippet": "import { ModuleCompiler, ModuleFactory } from './compiler';",
+      "kind": "import"
+    },
+    {
+      "file": "/home/samuelds/projects/focusmcp/marketplace/fixtures/nestjs/packages/core/injector/container.ts",
+      "line": 40,
+      "snippet": "private moduleCompiler: ModuleCompiler;",
+      "kind": "usage"
+    },
+    {
+      "file": "/home/samuelds/projects/focusmcp/marketplace/fixtures/nestjs/packages/core/injector/container.ts",
+      "line": 59,
+      "snippet": "this.moduleCompiler = new ModuleCompiler(moduleOpaqueKeyFactory);",
+      "kind": "usage"
+    },
+    {
+      "file": "/home/samuelds/projects/focusmcp/marketplace/fixtures/nestjs/packages/core/injector/container.ts",
+      "line": 226,
+      "snippet": "public getModuleCompiler(): ModuleCompiler {",
+      "kind": "usage"
+    },
+    {
+      "file": "/home/samuelds/projects/focusmcp/marketplace/fixtures/nestjs/packages/core/injector/internal-core-module/internal-core-module-factory.ts",
+      "line": 9,
+      "snippet": "import { ModuleCompiler } from '../compiler';",
+      "kind": "import"
+    },
+    {
+      "file": "/home/samuelds/projects/focusmcp/marketplace/fixtures/nestjs/packages/core/injector/internal-core-module/internal-core-module-factory.ts",
+      "line": 21,
+      "snippet": "moduleCompiler: ModuleCompiler,",
+      "kind": "usage"
+    },
+    {
+      "file": "/home/samuelds/projects/focusmcp/marketplace/fixtures/nestjs/packages/core/injector/lazy-module-loader/lazy-module-loader.ts",
+      "line": 4,
+      "snippet": "import { ModuleCompiler } from '../compiler';",
+      "kind": "import"
+    },
+    {
+      "file": "/home/samuelds/projects/focusmcp/marketplace/fixtures/nestjs/packages/core/injector/lazy-module-loader/lazy-module-loader.ts",
+      "line": 16,
+      "snippet": "private readonly moduleCompiler: ModuleCompiler,",
+      "kind": "usage"
+    }
+  ]
+}

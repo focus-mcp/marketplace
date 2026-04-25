@@ -1,0 +1,6 @@
+{
+  "lines": [
+    "import {",
+    "import { ModuleOpaqueKeyFactory } from './opaque-key-factory/interfaces/module-opaque-key-factory.interface';"
+  ]
+}

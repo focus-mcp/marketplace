@@ -1,0 +1,9 @@
+# Happy path: convert JSON {"a":1} to YAML → "a: 1"
+tool: conv_format
+prompt: |
+    Convert JSON string '{"a":1}' to YAML format.
+    Expect result to contain "a: 1".
+input:
+    data: '{"a":1}'
+    from: json
+    to: yaml

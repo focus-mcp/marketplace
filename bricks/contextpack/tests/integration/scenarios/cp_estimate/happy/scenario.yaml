@@ -1,0 +1,10 @@
+# Happy path: estimate token count for NestJS files
+tool: cp_estimate
+prompt: |
+    Estimate token count for 3 NestJS files without packing them.
+    Expect estimatedTokens > 0 and perFile array with 3 entries.
+input:
+    files:
+        - fixtures/nestjs/packages/common/index.ts
+        - fixtures/nestjs/packages/testing/index.ts
+        - fixtures/nestjs/packages/platform-ws/index.ts

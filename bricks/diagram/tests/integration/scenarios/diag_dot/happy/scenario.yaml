@@ -1,0 +1,15 @@
+# Happy path: directed DOT graph with 2 nodes and 1 edge → starts with "digraph"
+tool: diag_dot
+prompt: |
+    Generate a DOT diagram with nodes A and B, and a directed edge from A to B.
+    Expect output starting with "digraph".
+input:
+    nodes:
+        - id: A
+          label: Start
+        - id: B
+          label: End
+    edges:
+        - from: A
+          to: B
+    directed: true

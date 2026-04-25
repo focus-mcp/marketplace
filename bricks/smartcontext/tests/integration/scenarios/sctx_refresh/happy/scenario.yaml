@@ -1,0 +1,8 @@
+# Happy path: sequenced load + refresh → refresh returns valid stats
+tool: sctx_refresh
+prompt: |
+    After loading context, refresh the same directory.
+    Expect changed, refreshed, tokensUsed fields to be numbers >= 0.
+input:
+    dir: <fixtures>
+    budget: 2000

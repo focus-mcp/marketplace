@@ -1,0 +1,8 @@
+# Adversarial: path that does not exist → tool throws or returns an error
+tool: mr_batch
+prompt: |
+    Attempt to batch-read a file that does not exist.
+    The tool must throw an error (readFile rejects for missing paths).
+input:
+    paths:
+        - /this/path/does/not/exist/nope.ts

@@ -1,0 +1,8 @@
+name: gc_communities/happy
+tool: gc_communities
+description: >
+  Sequenced: setGraph with a 6-node graph, then gc_communities(minSize=2)
+  → communities is a non-empty array, each entry has id/members/size/density.
+input:
+  minSize: 2
+tags: [happy, stateful, sequenced]

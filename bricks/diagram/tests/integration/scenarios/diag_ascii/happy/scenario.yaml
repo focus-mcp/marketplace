@@ -1,0 +1,18 @@
+# Happy path: ASCII chain diagram A → B → C → non-empty ASCII art
+tool: diag_ascii
+prompt: |
+    Generate an ASCII diagram for a chain: A → B → C.
+    Expect non-empty ASCII art with box characters.
+input:
+    nodes:
+        - id: A
+          label: Start
+        - id: B
+          label: Middle
+        - id: C
+          label: End
+    edges:
+        - from: A
+          to: B
+        - from: B
+          to: C

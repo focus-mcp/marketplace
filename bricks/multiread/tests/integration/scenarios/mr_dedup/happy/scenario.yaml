@@ -1,0 +1,9 @@
+# Happy path: dedup paths with shared imports → sharedImports non-empty, files deduplicated
+tool: mr_dedup
+prompt: |
+    Deduplicate imports from 2 NestJS fixture files that share common import statements.
+    Expect sharedImports to be non-empty and deduplicated content in files.
+input:
+    paths:
+        - <fixtures>/nestjs/packages/core/injector/compiler.ts
+        - <fixtures>/nestjs/packages/core/injector/container.ts

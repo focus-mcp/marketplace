@@ -1,0 +1,7 @@
+# Happy path: estimate token count for a short text string
+tool: tb_estimate
+prompt: |
+    Estimate token count for the text "Hello world".
+    Expect tokens > 0, chars > 0, lines >= 1.
+input:
+    text: Hello world

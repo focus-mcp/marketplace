@@ -1,0 +1,7 @@
+tool: refs_implementations
+prompt: |
+    In ./fixtures/nestjs/packages/core/injector, find all implementations
+    of the interface 'ModuleOpaqueKeyFactory'. Return the list of implementations.
+input:
+    name: ModuleOpaqueKeyFactory
+    dir: ./fixtures/nestjs/packages/core/injector

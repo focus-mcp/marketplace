@@ -1,0 +1,7 @@
+tool: imp_propagate
+prompt: |
+    Trace how a change to ./fixtures/nestjs/packages/core/injector/compiler.ts
+    propagates through the injector dependency graph.
+input:
+    file: ./fixtures/nestjs/packages/core/injector/compiler.ts
+    dir: ./fixtures/nestjs/packages/core/injector

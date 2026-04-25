@@ -1,0 +1,9 @@
+name: lv_versions/happy
+tool: lv_versions
+description: >
+  List stable versions of "lodash" from npm — must return an array
+  of version objects with at least one entry and a total count.
+input:
+  source: "npm"
+  target: "lodash"
+tags: [happy, http]

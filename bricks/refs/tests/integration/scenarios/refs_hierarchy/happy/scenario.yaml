@@ -1,0 +1,7 @@
+tool: refs_hierarchy
+prompt: |
+    In ./fixtures/nestjs/packages/core/injector, retrieve the inheritance chain
+    for 'ModuleRef'. Return its parents and children.
+input:
+    name: ModuleRef
+    dir: ./fixtures/nestjs/packages/core/injector

@@ -1,0 +1,7 @@
+name: sh_exec/happy
+tool: sh_exec
+description: >
+  Execute "echo hello" — stdout="hello", exitCode=0, duration>=0.
+input:
+  command: "echo hello"
+tags: [happy, shell]

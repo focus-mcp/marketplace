@@ -1,0 +1,7 @@
+tool: refs_references
+prompt: |
+    In ./fixtures/nestjs/packages/core/injector, find all callers/references
+    of the symbol 'ModuleCompiler'. Return the list of references.
+input:
+    name: ModuleCompiler
+    dir: ./fixtures/nestjs/packages/core/injector

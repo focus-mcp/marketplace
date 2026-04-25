@@ -1,0 +1,18 @@
+name: ge_input/happy
+tool: ge_input
+description: >
+  Load a tiny 5-node graph inline. Verifies loaded=true, nodeCount=5, edgeCount=4.
+input:
+  graph:
+    nodes:
+      - { id: "n1", label: "NodeA", type: "file" }
+      - { id: "n2", label: "NodeB", type: "function" }
+      - { id: "n3", label: "NodeC", type: "class" }
+      - { id: "n4", label: "NodeD", type: "export" }
+      - { id: "n5", label: "NodeE", type: "import" }
+    edges:
+      - { from: "n1", to: "n2", type: "imports" }
+      - { from: "n2", to: "n3", type: "calls" }
+      - { from: "n3", to: "n4", type: "exports" }
+      - { from: "n4", to: "n5", type: "depends" }
+tags: [happy, stateful]

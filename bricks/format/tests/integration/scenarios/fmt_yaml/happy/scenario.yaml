@@ -1,0 +1,7 @@
+# Happy path: convert JSON {"a":1,"b":[2,3]} to YAML
+tool: fmt_yaml
+prompt: |
+    Convert the JSON string '{"a":1,"b":[2,3]}' to YAML format.
+    Expect a YAML string with keys "a" and "b".
+input:
+    data: '{"a":1,"b":[2,3]}'

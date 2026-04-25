@@ -1,0 +1,7 @@
+name: tsk_assign/happy
+tool: tsk_assign
+description: >
+  Sequenced: create + assign. Verifies assignedTo matches agentId, status=assigned.
+input:
+  agentId: "agent-001"
+tags: [happy, stateful, sequenced]

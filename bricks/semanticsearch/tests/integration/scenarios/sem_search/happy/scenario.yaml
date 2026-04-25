@@ -1,0 +1,17 @@
+# Happy path: corpus of 4 docs + query → sorted results with top relevant doc
+tool: sem_search
+prompt: |
+    Search a synthetic corpus of 4 documents about different topics.
+    Query for "authentication login" should return the auth document first.
+input:
+    corpus:
+        - id: doc-auth
+          text: "User authentication login password security credentials JWT token"
+        - id: doc-db
+          text: "Database SQL query table schema migration index performance"
+        - id: doc-ui
+          text: "React component render JSX props state hooks UI interface"
+        - id: doc-api
+          text: "REST API endpoint HTTP request response status JSON"
+    query: "authentication login"
+    limit: 4

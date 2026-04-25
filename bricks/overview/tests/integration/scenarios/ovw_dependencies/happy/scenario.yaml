@@ -1,0 +1,6 @@
+tool: ovw_dependencies
+prompt: |
+    Parse ./fixtures/nestjs package.json and list production and dev dependencies,
+    plus detect framework, testRunner, linter, and bundler.
+input:
+    dir: ./fixtures/nestjs

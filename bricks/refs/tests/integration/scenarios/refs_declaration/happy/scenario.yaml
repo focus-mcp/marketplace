@@ -1,0 +1,7 @@
+tool: refs_declaration
+prompt: |
+    In ./fixtures/nestjs/packages/core/injector, find where 'ModuleCompiler'
+    is declared. Return the declaration location and signature.
+input:
+    name: ModuleCompiler
+    dir: ./fixtures/nestjs/packages/core/injector

@@ -1,0 +1,8 @@
+tool: imp_affected
+prompt: |
+    List all files affected by changing
+    ./fixtures/nestjs/packages/core/injector/compiler.ts in the injector directory.
+input:
+    files:
+        - ./fixtures/nestjs/packages/core/injector/compiler.ts
+    dir: ./fixtures/nestjs/packages/core/injector

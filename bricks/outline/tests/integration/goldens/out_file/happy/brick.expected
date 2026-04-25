@@ -1,0 +1,27 @@
+{
+  "symbols": [
+    {
+      "name": "ModuleFactory",
+      "kind": "interface",
+      "line": 8,
+      "signature": "export interface ModuleFactory {",
+      "exported": true
+    },
+    {
+      "name": "ModuleCompiler",
+      "kind": "class",
+      "line": 14,
+      "signature": "export class ModuleCompiler {",
+      "exported": true
+    }
+  ],
+  "imports": [
+    {
+      "from": "./opaque-key-factory/interfaces/module-opaque-key-factory.interface",
+      "names": [
+        "ModuleOpaqueKeyFactory"
+      ]
+    }
+  ],
+  "lineCount": 71
+}

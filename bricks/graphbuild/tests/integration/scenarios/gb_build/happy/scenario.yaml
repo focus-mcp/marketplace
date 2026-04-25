@@ -1,0 +1,8 @@
+name: gb_build/happy
+tool: gb_build
+description: >
+  Build a graph from a sandbox directory containing 3 trivial TS files.
+  Verifies nodeCount > 0, edgeCount >= 0, and files = 3.
+input:
+  dir: "<sandbox>"
+tags: [happy, stateful, filesystem]

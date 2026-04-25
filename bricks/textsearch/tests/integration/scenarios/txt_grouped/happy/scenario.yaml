@@ -1,0 +1,8 @@
+# Happy path: grouped search for "Injectable" → results grouped per file
+tool: txt_grouped
+prompt: |
+    Search for "Injectable" in fixtures dir and get results grouped by file.
+    Expect groups array with at least 2 file entries each having count and lines.
+input:
+    dir: <fixtures>
+    pattern: "Injectable"

@@ -1,0 +1,6 @@
+name: met_costs/happy
+tool: met_costs
+description: >
+  Sequenced: track tokens then compute costs with default prices. Verifies inputCost, outputCost, totalCost.
+input: {}
+tags: [happy, stateful, sequenced]
