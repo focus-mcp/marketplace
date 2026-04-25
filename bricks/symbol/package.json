@@ -18,6 +18,7 @@
     ],
     "scripts": {
         "test": "vitest run",
+        "test:integration": "vitest run tests/integration",
         "build": "tsc -p tsconfig.json"
     },
     "publishConfig": {
@@ -53,5 +54,8 @@
             "optional": true
         }
     },
-    "types": "./dist/index.d.ts"
+    "types": "./dist/index.d.ts",
+    "devDependencies": {
+        "@focus-mcp/marketplace-testing": "workspace:*"
+    }
 }
