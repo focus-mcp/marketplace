@@ -1,0 +1,17 @@
+# Happy path: corpus + targetId → similar docs excluding target
+tool: sem_similar
+prompt: |
+    Find documents similar to doc-auth in a corpus of 4 documents.
+    The doc-api should rank higher than unrelated docs.
+input:
+    corpus:
+        - id: doc-auth
+          text: "User authentication login password security credentials JWT token"
+        - id: doc-db
+          text: "Database SQL query table schema migration index performance"
+        - id: doc-ui
+          text: "React component render JSX props state hooks UI interface"
+        - id: doc-api
+          text: "API security endpoint authentication token authorization bearer"
+    targetId: doc-auth
+    limit: 3

@@ -1,0 +1,10 @@
+# Happy path: load context for a 2-file mini sandbox → context + stats
+tool: sctx_load
+prompt: |
+    Load composite context for a mini sandbox project with 2 TypeScript files.
+    Uses mocked bus for dependent bricks (overview, tokenbudget, cache).
+    Expect context string, filesIncluded >= 0, tokensUsed >= 0.
+input:
+    task: "understand the alpha/beta module structure"
+    dir: <fixtures>
+    budget: 2000

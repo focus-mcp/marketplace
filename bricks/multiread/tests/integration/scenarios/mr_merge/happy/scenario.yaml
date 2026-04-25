@@ -1,0 +1,9 @@
+# Happy path: merge 2 files → merged content with file separators
+tool: mr_merge
+prompt: |
+    Merge 2 NestJS fixture files into a single string with filename separators.
+    Expect output.content to contain the separator headers and content from both files.
+input:
+    paths:
+        - <fixtures>/nestjs/packages/core/injector/compiler.ts
+        - <fixtures>/nestjs/packages/core/injector/constants.ts

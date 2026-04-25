@@ -1,0 +1,10 @@
+# Happy path: batch-read 3 files → files record with non-empty content
+tool: mr_batch
+prompt: |
+    Read 3 TypeScript files from the NestJS fixtures directory.
+    Expect a files record where each key maps to non-empty content.
+input:
+    paths:
+        - <fixtures>/nestjs/packages/core/injector/compiler.ts
+        - <fixtures>/nestjs/packages/core/injector/container.ts
+        - <fixtures>/nestjs/packages/core/injector/constants.ts

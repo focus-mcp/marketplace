@@ -1,0 +1,9 @@
+# Happy path: regex search for class declaration pattern → matches class names
+tool: txt_regex
+prompt: |
+    Search using regex pattern "class\s+\w+Service" in the fixtures directory.
+    Expect matches against AppService and UserService class declarations.
+input:
+    dir: <fixtures>
+    pattern: "class\\s+\\w+Service"
+    flags: "i"
