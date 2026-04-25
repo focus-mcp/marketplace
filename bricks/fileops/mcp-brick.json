@@ -2,12 +2,12 @@
     "name": "fileops",
     "version": "0.0.0",
     "prefix": "fo",
-    "description": "File operations — move, copy, delete, rename.",
+    "description": "File operations — move, copy, delete, rename. Call fileops:setRoot first with the absolute path to your workspace, otherwise tools will fail-fast on the first non-existent path.",
     "dependencies": [],
     "tools": [
         {
             "name": "move",
-            "description": "Move a file or directory to a new path",
+            "description": "Move a file or directory to a new path. Requires fileops:setRoot to be called first with the workspace root path.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -20,7 +20,7 @@
         },
         {
             "name": "copy",
-            "description": "Copy a file to a new path",
+            "description": "Copy a file to a new path. Requires fileops:setRoot to be called first with the workspace root path.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -33,7 +33,7 @@
         },
         {
             "name": "delete",
-            "description": "Delete a file or empty directory",
+            "description": "Delete a file or empty directory. Requires fileops:setRoot to be called first with the workspace root path.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -45,7 +45,7 @@
         },
         {
             "name": "rename",
-            "description": "Rename a file within its parent directory",
+            "description": "Rename a file within its parent directory. Requires fileops:setRoot to be called first with the workspace root path.",
             "inputSchema": {
                 "type": "object",
                 "properties": {

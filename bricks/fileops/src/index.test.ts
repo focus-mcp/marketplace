@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
+    _resetWorkRootFlag,
     foBatch,
     foCopy,
     foDelete,
@@ -158,6 +159,63 @@ describe('foBatch', () => {
                 ],
             }),
         ).rejects.toThrow();
+    });
+});
+
+// ─── setRoot guard (P0 — fail-fast) ──────────────────────────────────────────
+
+describe('setRoot guard', () => {
+    let guardTestDir: string;
+    let savedRoot: string;
+
+    beforeEach(async () => {
+        guardTestDir = await mkdtemp(join(tmpdir(), 'focusmcp-guard-test-'));
+        savedRoot = getWorkRoot();
+        // Restore to a fresh "not explicitly set" state for each test
+        _resetWorkRootFlag();
+    });
+
+    afterEach(async () => {
+        setWorkRoot(savedRoot); // also sets _workRootExplicitlySet = true, fine for cleanup
+        _resetWorkRootFlag();
+        // Re-pin to testDir from outer scope (afterEach of outer suite will do final cleanup)
+        setWorkRoot(testDir);
+        await rm(guardTestDir, { recursive: true, force: true });
+    });
+
+    it('case 1: path exists under default workRoot → passes (retro-compat)', async () => {
+        // Use the outer testDir which IS the current workRoot; source.txt already exists there
+        // We need workRoot = testDir but _workRootExplicitlySet = false
+        // Set workRoot via the internal setter without flag:
+        // Trick: setWorkRoot sets flag, so we reset after
+        setWorkRoot(testDir);
+        _resetWorkRootFlag();
+
+        await writeFile(join(testDir, 'retro.txt'), 'retro content');
+        // Should NOT throw — path exists under default workRoot
+        const result = await foCopy({ from: './retro.txt', to: './retro.copy.txt' });
+        expect(result.copied).toBe(true);
+    });
+
+    it('case 2: path does not exist under default workRoot, setRoot NOT called → throws descriptive error', async () => {
+        // workRoot = testDir (default), _workRootExplicitlySet = false
+        setWorkRoot(testDir);
+        _resetWorkRootFlag();
+
+        await expect(foCopy({ from: './does-not-exist.txt', to: './dest.txt' })).rejects.toThrow(
+            /workRoot not set: call fileops:setRoot first/,
+        );
+    });
+
+    it('case 3: path does not exist under default workRoot, setRoot called with correct dir → passes', async () => {
+        // guardTestDir has the file, but workRoot is testDir by default (flag NOT set yet)
+        // Now call setRoot (which sets the flag) pointing to guardTestDir
+        await writeFile(join(guardTestDir, 'target.txt'), 'target content');
+        setWorkRoot(guardTestDir); // sets _workRootExplicitlySet = true
+
+        // Should NOT throw — workRoot is explicitly set and file exists there
+        const result = await foCopy({ from: './target.txt', to: './target.copy.txt' });
+        expect(result.copied).toBe(true);
     });
 });
 
