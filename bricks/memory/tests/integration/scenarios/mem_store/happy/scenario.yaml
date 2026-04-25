@@ -1,0 +1,8 @@
+name: mem_store/happy
+tool: mem_store
+description: >
+  Store a key=value pair. Verifies ok=true.
+input:
+  key: "test-key"
+  value: "test-value"
+tags: [happy, stateful]

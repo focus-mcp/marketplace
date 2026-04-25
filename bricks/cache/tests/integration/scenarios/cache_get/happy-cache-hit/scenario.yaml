@@ -1,0 +1,6 @@
+name: cache_get/happy-cache-hit
+tool: cache_get
+description: >
+  cache_set followed by cache_get on the same path.
+  Verifies hit=true — content served from in-memory store.
+tags: [happy, stateful, sequenced]

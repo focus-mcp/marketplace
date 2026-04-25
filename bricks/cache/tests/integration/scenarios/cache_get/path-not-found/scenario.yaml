@@ -1,0 +1,6 @@
+name: cache_get/path-not-found
+tool: cache_get
+description: >
+  Adversarial: cache_get on a path that does not exist on FS.
+  Must throw a clear error — not return a partial result.
+tags: [adversarial, stateful]
