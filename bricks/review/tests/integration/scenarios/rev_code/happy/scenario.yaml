@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: rev_code/happy
+tool: rev_code
+description: >
+  Reviews a short NestJS service file.
+  Expects at least one finding (TODO comment + console.log present in fixture).
+input:
+  path: "{{FIXTURES_DIR}}/nestjs-service.ts"

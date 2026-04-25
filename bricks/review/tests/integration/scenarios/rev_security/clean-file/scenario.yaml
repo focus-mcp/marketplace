@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: rev_security/clean-file
+tool: rev_security
+description: >
+  Adversarial: reviews a clean file with no security issues.
+  Expects empty findings array and riskLevel === "low".
+input:
+  path: "{{FIXTURES_DIR}}/clean.ts"

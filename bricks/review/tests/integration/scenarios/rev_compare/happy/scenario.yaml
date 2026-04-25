@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: rev_compare/happy
+tool: rev_compare
+description: >
+  Compares two versions of a file in sandbox (v1 has fewer exports, v2 adds one).
+  Expects additions, similarity < 1, and at least one change.
+input:
+  pathA: "{{SANDBOX_DIR}}/v1.ts"
+  pathB: "{{SANDBOX_DIR}}/v2.ts"

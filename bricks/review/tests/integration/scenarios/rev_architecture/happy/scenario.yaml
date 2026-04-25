@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: rev_architecture/happy
+tool: rev_architecture
+description: >
+  Reviews a sandbox directory structured with controllers/, services/, models/.
+  Expects MVC or similar pattern detected with at least one layer.
+input:
+  dir: "{{SANDBOX_DIR}}"
