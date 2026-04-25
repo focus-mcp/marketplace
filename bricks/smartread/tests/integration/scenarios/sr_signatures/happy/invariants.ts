@@ -19,10 +19,16 @@ export function check(output: unknown): InvariantResult[] {
         (() => {
             const out = output as Record<string, unknown>;
             const lines = (out['lines'] as unknown[]) ?? [];
+            if (lines.length === 0) {
+                return {
+                    ok: false,
+                    reason: 'lines must be non-empty — compiler.ts has exported declarations',
+                };
+            }
             const allExported = lines.every(
                 (l) => typeof l === 'string' && l.trimStart().startsWith('export '),
             );
-            if (lines.length > 0 && !allExported) {
+            if (!allExported) {
                 return {
                     ok: false,
                     reason: 'sr_signatures should only return exported declarations',

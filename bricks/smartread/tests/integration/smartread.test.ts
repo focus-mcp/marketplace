@@ -45,7 +45,7 @@ describe('sr_full integration', () => {
 });
 
 describe('sr_map integration', () => {
-    it('happy: map compiler.ts → class/function declarations only', async () => {
+    it('happy: map compiler.ts → class/function/type/const declarations', async () => {
         const output = await runTool(brick, 'map', {
             path: NESTJS_INJECTOR_COMPILER,
         });
