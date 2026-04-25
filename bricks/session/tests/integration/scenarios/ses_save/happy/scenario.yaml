@@ -1,0 +1,8 @@
+name: ses_save/happy
+tool: ses_save
+description: >
+  Save a session with name='test' and data={x:1}. Verifies ok=true and path is returned.
+input:
+  name: "test"
+  data: { context: "hello" }
+tags: [happy, stateful]
