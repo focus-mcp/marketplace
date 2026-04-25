@@ -14,13 +14,29 @@ import { dirname, join, resolve } from 'node:path';
  */
 let _workRoot: string = resolve(process.cwd());
 
+/**
+ * Tracks whether setWorkRoot() has been called explicitly (by the agent via
+ * fileops:setRoot, or by tests). When false, the brick uses the default CWD
+ * and applies a fail-fast guard on paths that do not exist under that default.
+ */
+let _workRootExplicitlySet: boolean = false;
+
 export function getWorkRoot(): string {
     return _workRoot;
 }
 
-/** Override the work root (useful for tests and the setRoot tool). */
+/** Override the work root (used by tests and the setRoot tool). */
 export function setWorkRoot(root: string): void {
     _workRoot = resolve(root);
+    _workRootExplicitlySet = true;
+}
+
+/**
+ * Reset the explicit-set flag (for test isolation only).
+ * @internal
+ */
+export function _resetWorkRootFlag(): void {
+    _workRootExplicitlySet = false;
 }
 
 /**
@@ -51,6 +67,37 @@ async function safePath(input: string): Promise<string> {
     }
 
     return canonical;
+}
+
+/**
+ * Resolve a **source** path and apply the fail-fast guard when workRoot has not
+ * been explicitly set. Source paths must already exist on disk.
+ *
+ * - If `_workRootExplicitlySet === true` → delegate to safePath (normal flow).
+ * - If `_workRootExplicitlySet === false` AND the resolved path exists → delegate
+ *   to safePath (retro-compatible: CLI usage where cwd IS the workspace).
+ * - If `_workRootExplicitlySet === false` AND the resolved path does NOT exist →
+ *   throw a descriptive error instructing the agent to call fileops:setRoot first.
+ *
+ * Use `safePath` directly for destination paths (new files that do not yet exist).
+ */
+async function _resolveAndCheck(input: string): Promise<string> {
+    if (_workRootExplicitlySet) {
+        return safePath(input);
+    }
+
+    // Default CWD path — check whether the resolved source path actually exists
+    const joined = resolve(_workRoot, input);
+    try {
+        await stat(joined);
+        // Path exists under the default workRoot → retro-compatible, proceed
+        return safePath(input);
+    } catch {
+        // Path does not exist under the default workRoot → fail-fast
+        throw new Error(
+            `workRoot not set: call fileops:setRoot first with the absolute path to your workspace. Current default workRoot is '${_workRoot}' and the resolved path '${joined}' does not exist.`,
+        );
+    }
 }
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -98,8 +145,8 @@ export interface FoBatchOutput {
 export async function foMove(
     input: FoMoveInput,
 ): Promise<{ moved: boolean; from: string; to: string }> {
-    const from = await safePath(input.from);
-    const to = await safePath(input.to);
+    const from = await _resolveAndCheck(input.from);
+    const to = await safePath(input.to); // destination: new path, may not exist yet
     await rename(from, to);
     return { moved: true, from, to };
 }
@@ -107,14 +154,14 @@ export async function foMove(
 export async function foCopy(
     input: FoCopyInput,
 ): Promise<{ copied: boolean; from: string; to: string }> {
-    const from = await safePath(input.from);
-    const to = await safePath(input.to);
+    const from = await _resolveAndCheck(input.from);
+    const to = await safePath(input.to); // destination: new path, may not exist yet
     await copyFile(from, to);
     return { copied: true, from, to };
 }
 
 export async function foDelete(input: FoDeleteInput): Promise<{ deleted: boolean; path: string }> {
-    const target = await safePath(input.path);
+    const target = await _resolveAndCheck(input.path);
     const info = await stat(target);
     if (info.isDirectory()) {
         await rm(target, { recursive: false });
@@ -127,7 +174,7 @@ export async function foDelete(input: FoDeleteInput): Promise<{ deleted: boolean
 export async function foRename(
     input: FoRenameInput,
 ): Promise<{ renamed: boolean; from: string; to: string }> {
-    const from = await safePath(input.path);
+    const from = await _resolveAndCheck(input.path);
     const to = join(dirname(from), input.name);
     // Ensure the rename target also stays inside workRoot
     if (!to.startsWith(`${_workRoot}/`) && to !== _workRoot) {
