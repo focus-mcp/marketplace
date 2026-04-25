@@ -1,0 +1,6 @@
+{
+  "compressed": "const x = 1;\nconst y = 2;\nconsole.log(x + y);",
+  "originalLength": 93,
+  "compressedLength": 45,
+  "ratio": 0.48
+}
