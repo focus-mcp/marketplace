@@ -1,0 +1,7 @@
+name: dec_recommend/happy
+tool: dec_recommend
+description: >
+  Sequenced: options + tradeoffs + recommend. Verifies ranking and recommended choice returned.
+input:
+  decisionId: "<from dec_options>"
+tags: [happy, stateful, sequenced]

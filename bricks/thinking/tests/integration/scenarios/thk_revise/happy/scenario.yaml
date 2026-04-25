@@ -1,0 +1,10 @@
+name: thk_revise/happy
+tool: thk_revise
+description: >
+  Sequenced: think then revise step 0. Verifies original and revised thought returned.
+input:
+  chainId: "<from thk_think>"
+  stepIndex: 0
+  revision: "A systematic approach with clear phases"
+  reason: "Added more specificity"
+tags: [happy, stateful, sequenced]

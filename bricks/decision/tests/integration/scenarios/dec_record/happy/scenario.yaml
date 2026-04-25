@@ -1,0 +1,9 @@
+name: dec_record/happy
+tool: dec_record
+description: >
+  Sequenced: options + tradeoffs + recommend + record. Verifies saved=false (no outputPath), chosen matches.
+input:
+  decisionId: "<from dec_options>"
+  chosen: "PostgreSQL"
+  rationale: "Best fit for our relational data needs and team expertise"
+tags: [happy, stateful, sequenced]

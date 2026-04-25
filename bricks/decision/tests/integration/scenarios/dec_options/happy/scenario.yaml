@@ -1,0 +1,17 @@
+name: dec_options/happy
+tool: dec_options
+description: >
+  Create a decision with a question and 3 options. Verifies decisionId returned and optionCount=3.
+input:
+  question: "Which database should we use?"
+  options:
+    - label: "PostgreSQL"
+      pros: ["ACID compliance", "Mature ecosystem"]
+      cons: ["Complex setup"]
+    - label: "MongoDB"
+      pros: ["Flexible schema", "Easy scaling"]
+      cons: ["No joins", "Eventual consistency"]
+    - label: "SQLite"
+      pros: ["Zero config", "Embedded"]
+      cons: ["Not for production scale"]
+tags: [happy, stateful]

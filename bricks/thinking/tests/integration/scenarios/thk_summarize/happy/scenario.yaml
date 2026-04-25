@@ -1,0 +1,7 @@
+name: thk_summarize/happy
+tool: thk_summarize
+description: >
+  Sequenced: 3× think then summarize. Verifies steps=3, conclusion non-empty.
+input:
+  chainId: "<from thk_think>"
+tags: [happy, stateful, sequenced]

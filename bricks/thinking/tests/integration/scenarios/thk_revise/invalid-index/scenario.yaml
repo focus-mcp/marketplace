@@ -1,0 +1,10 @@
+name: thk_revise/invalid-index
+tool: thk_revise
+description: >
+  Adversarial: think once then revise with out-of-range index → clear error thrown.
+input:
+  chainId: "<from thk_think>"
+  stepIndex: 99
+  revision: "should fail"
+  reason: "testing error handling"
+tags: [adversarial, stateful]
