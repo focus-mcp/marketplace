@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-25T11:22:08.967Z",
+  "updated": "2026-04-25T12:33:30.609Z",
   "bricks": [
     {
       "name": "agent",
@@ -2122,8 +2122,8 @@
     },
     {
       "name": "fileops",
-      "version": "1.2.0",
-      "description": "File operations — move, copy, delete, rename.",
+      "version": "1.3.0",
+      "description": "File operations — move, copy, delete, rename. Call fileops:setRoot first with the absolute path to your workspace, otherwise tools will fail-fast on the first non-existent path.",
       "tags": [
         "file",
         "move",
@@ -2134,7 +2134,7 @@
       "tools": [
         {
           "name": "move",
-          "description": "Move a file or directory to a new path",
+          "description": "Move a file or directory to a new path. Requires fileops:setRoot to be called first with the workspace root path.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -2156,7 +2156,7 @@
         },
         {
           "name": "copy",
-          "description": "Copy a file to a new path",
+          "description": "Copy a file to a new path. Requires fileops:setRoot to be called first with the workspace root path.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -2176,7 +2176,7 @@
         },
         {
           "name": "delete",
-          "description": "Delete a file or empty directory",
+          "description": "Delete a file or empty directory. Requires fileops:setRoot to be called first with the workspace root path.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -2193,7 +2193,7 @@
         },
         {
           "name": "rename",
-          "description": "Rename a file within its parent directory",
+          "description": "Rename a file within its parent directory. Requires fileops:setRoot to be called first with the workspace root path.",
           "inputSchema": {
             "type": "object",
             "properties": {
