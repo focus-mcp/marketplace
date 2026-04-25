@@ -1,0 +1,10 @@
+tool: ren_symbol
+prompt: |
+    In a sandbox copy of ./fixtures/nestjs/integration/hello-world/src/hello,
+    rename symbol 'HelloService' to 'GreetService' across all files (apply: true).
+    Verify the rename is reflected in the output.
+input:
+    dir: <sandbox>
+    oldName: HelloService
+    newName: GreetService
+    apply: true

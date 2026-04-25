@@ -1,0 +1,14 @@
+tool: ren_bulk
+prompt: |
+    In a sandbox copy of ./fixtures/nestjs/integration/hello-world/src/hello,
+    perform a bulk rename: 'HelloService' -> 'GreetService' and
+    'HelloController' -> 'GreetController' (apply: false — dry run).
+    Verify both renames are reported in the results.
+input:
+    dir: <sandbox>
+    renames:
+        - oldName: HelloService
+          newName: GreetService
+        - oldName: HelloController
+          newName: GreetController
+    apply: false

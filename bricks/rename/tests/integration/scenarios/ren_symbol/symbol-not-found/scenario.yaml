@@ -1,0 +1,10 @@
+tool: ren_symbol
+prompt: |
+    In ./fixtures/nestjs/packages/core/injector, rename a non-existent symbol
+    'NonExistentSymbol9x' to 'NewName'. The tool should return a coherent output
+    with zero changes rather than an error.
+input:
+    dir: ./fixtures/nestjs/packages/core/injector
+    oldName: NonExistentSymbol9x
+    newName: NewName
+    apply: false

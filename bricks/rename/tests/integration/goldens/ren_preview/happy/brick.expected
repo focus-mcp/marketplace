@@ -1,0 +1,51 @@
+{
+  "occurrences": [
+    {
+      "file": "compiler.ts",
+      "line": 14,
+      "context": "export class ModuleCompiler {"
+    },
+    {
+      "file": "container.ts",
+      "line": 18,
+      "context": "import { ModuleCompiler, ModuleFactory } from './compiler';"
+    },
+    {
+      "file": "container.ts",
+      "line": 40,
+      "context": "private moduleCompiler: ModuleCompiler;"
+    },
+    {
+      "file": "container.ts",
+      "line": 59,
+      "context": "this.moduleCompiler = new ModuleCompiler(moduleOpaqueKeyFactory);"
+    },
+    {
+      "file": "container.ts",
+      "line": 226,
+      "context": "public getModuleCompiler(): ModuleCompiler {"
+    },
+    {
+      "file": "internal-core-module/internal-core-module-factory.ts",
+      "line": 9,
+      "context": "import { ModuleCompiler } from '../compiler';"
+    },
+    {
+      "file": "internal-core-module/internal-core-module-factory.ts",
+      "line": 21,
+      "context": "moduleCompiler: ModuleCompiler,"
+    },
+    {
+      "file": "lazy-module-loader/lazy-module-loader.ts",
+      "line": 4,
+      "context": "import { ModuleCompiler } from '../compiler';"
+    },
+    {
+      "file": "lazy-module-loader/lazy-module-loader.ts",
+      "line": 16,
+      "context": "private readonly moduleCompiler: ModuleCompiler,"
+    }
+  ],
+  "fileCount": 4,
+  "total": 9
+}

@@ -1,0 +1,59 @@
+{
+  "folders": [
+    {
+      "path": "helpers",
+      "fileCount": 3,
+      "extensions": [
+        ".ts"
+      ]
+    },
+    {
+      "path": "inquirer",
+      "fileCount": 3,
+      "extensions": [
+        ".ts"
+      ]
+    },
+    {
+      "path": "internal-core-module",
+      "fileCount": 3,
+      "extensions": [
+        ".ts"
+      ]
+    },
+    {
+      "path": "lazy-module-loader",
+      "fileCount": 2,
+      "extensions": [
+        ".ts"
+      ]
+    },
+    {
+      "path": "opaque-key-factory",
+      "fileCount": 2,
+      "extensions": [
+        ".ts"
+      ]
+    },
+    {
+      "path": "opaque-key-factory/interfaces",
+      "fileCount": 1,
+      "extensions": [
+        ".ts"
+      ]
+    },
+    {
+      "path": "topology-tree",
+      "fileCount": 2,
+      "extensions": [
+        ".ts"
+      ]
+    }
+  ],
+  "patterns": [
+    "module-based"
+  ],
+  "entryPoints": [
+    "index.ts"
+  ]
+}

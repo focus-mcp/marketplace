@@ -1,0 +1,6 @@
+tool: ovw_conventions
+prompt: |
+    Read sample files from ./fixtures/nestjs/packages/core/injector and detect
+    coding conventions: indent style, quotes, semicolons, import style, line ending.
+input:
+    dir: ./fixtures/nestjs/packages/core/injector

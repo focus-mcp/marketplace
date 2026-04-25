@@ -1,0 +1,6 @@
+tool: ovw_project
+prompt: |
+    Scan ./fixtures/nestjs to detect project metadata: name, framework, language,
+    type, scripts, and packageManager.
+input:
+    dir: ./fixtures/nestjs
