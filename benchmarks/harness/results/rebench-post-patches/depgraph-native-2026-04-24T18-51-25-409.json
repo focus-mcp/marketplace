@@ -1,0 +1,25 @@
+{
+  "brick": "depgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:48:26.050Z",
+  "duration_ms": 179359,
+  "turns": 30,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 83,
+    "cache_creation_input_tokens": 66479,
+    "cache_read_input_tokens": 1711449,
+    "output_tokens": 12969,
+    "total": 1790980
+  },
+  "session_id": "fa556f26-757e-47ea-9b6c-8381e72901d0",
+  "result_block": "## Result\n- **Brick**: depgraph\n- **Mode**: native\n- **Mini-task**: List all non-test files in `packages/core` that directly import `injector/container.ts` (fan-in analysis)\n- **Answer**:\n```\npackages/core/exceptions/base-exception-filter-context.ts\npackages/core/exceptions/external-exception-filter-context.ts\npackages/core/guards/guards-context-creator.ts\npackages/core/helpers/external-context-creator.ts\npackages/core/injector/instance-links-host.ts\npackages/core/injector/instance-loader.ts\npackages/core/injector/internal-core-module/internal-core-module-factory.ts\npackages/core/injector/module-ref.ts\npackages/core/injector/module.ts\npackages/core/inspector/graph-inspector.ts\npackages/core/interceptors/interceptors-context-creator.ts\npackages/core/middleware/container.ts\npackages/core/middleware/middleware-module.ts\npackages/core/middleware/routes-mapper.ts\npackages/core/nest-application-context.ts\npackages/core/nest-application.ts\npackages/core/nest-factory.ts\npackages/core/pipes/pipes-context-creator.ts\npackages/core/router/router-exception-filters.ts\npackages/core/router/router-explorer.ts\npackages/core/router/routes-resolver.ts\npackages/core/scanner.ts\n```\n- **Turns used**: 8\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~10,000\n- **Notes**: `packages/core/injector/index.ts` re-exports (`export * from './container'`) but contains no `import` statements pointing to `container.ts`, so it is excluded. `packages/core/repl/repl-context.ts` imports `NestContainer` via the barrel `../injector` (not directly from `../injector/container`), so it is also excluded from the direct-import fan-in count.",
+  "mini_task_spec": "Using the **depgraph** brick's `fanin` tool, find all non-test TypeScript (`.ts`) source files within `test-repo/packages/core/` that directly import from `test-repo/packages/core/injector/container.ts`. \"Directly import\" means any `import ... from '...'` statement that resolves to that file (e.g. `from './container'`, `from '../container'`, `from '../injector/container'`, `from './injector/container'`). Exclude any file whose path contains `/test/`, and exclude `index.ts` re-export-only files (i.e., files that only have `export * from '...'` without any `import` statement referencing container). Return paths relative to `test-repo/`, sorted alphabetically, one per line.",
+  "workdir": "/tmp/focus-bench/depgraph-native-2026-04-24T18-48-26-050",
+  "exit_reason": "ok"
+}

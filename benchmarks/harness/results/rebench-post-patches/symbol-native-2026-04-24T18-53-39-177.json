@@ -1,0 +1,25 @@
+{
+  "brick": "symbol",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:52:27.197Z",
+  "duration_ms": 71980,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 41,
+    "cache_creation_input_tokens": 17684,
+    "cache_read_input_tokens": 551880,
+    "output_tokens": 3608,
+    "total": 573213
+  },
+  "session_id": "149ea106-a910-4a45-802b-258dc8d182a8",
+  "result_block": "## Result\n\n- **Brick**: symbol\n- **Mode**: native\n- **Mini-task**: List all 26 public methods of `DependenciesScanner` in `test-repo/packages/core/scanner.ts`, sorted alphabetically\n- **Answer**:\n```\naddScopedEnhancersMetadata\napplyApplicationProviders\ncalculateModulesDistance\ngetApplyProvidersMap\ngetApplyRequestProvidersMap\ninsertController\ninsertExportedProviderOrModule\ninsertImport\ninsertInjectable\ninsertModule\ninsertProvider\nisCustomProvider\nisDynamicModule\nreflectControllers\nreflectDynamicMetadata\nreflectExports\nreflectImports\nreflectInjectables\nreflectKeyMetadata\nreflectMetadata\nreflectParamInjectables\nreflectProviders\nregisterCoreModule\nscan\nscanForModules\nscanModulesForDependencies\n```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep (via Bash)\n- **Rough token estimate**: ~2,500\n- **Notes**: The task straightforwardly exercises the brick's `find`/`get`/`bulk` tools for symbol discovery. In native mode, a single `grep -n \"^  public \"` on the file extracted all public method declarations cleanly. The brick's `find` tool would locate each method by name substring match; `bulk` would retrieve all signatures in one call. No ambiguity — there is exactly one class in the file and 26 public methods.",
+  "mini_task_spec": "**Task**: Using the `test-repo/packages/core/scanner.ts` file, identify all public methods of the `DependenciesScanner` class (the only exported class in that file). Report the method names sorted alphabetically, one per line. Do not include private, protected, or constructor entries — only methods declared with the `public` keyword. The `async` modifier does not affect whether a method is public; include async public methods as well.\n\n**Expected answer format**: A sorted alphabetical list of method names, one per line (26 entries total). Do not include parentheses, parameters, return types, or any other text — just the bare method name.\n\n---",
+  "workdir": "/tmp/focus-bench/symbol-native-2026-04-24T18-52-27-197",
+  "exit_reason": "ok"
+}

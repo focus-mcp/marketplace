@@ -1,0 +1,32 @@
+{
+  "brick": "callgraph",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:44:20.759Z",
+  "duration_ms": 119397,
+  "turns": 25,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 106,
+    "cache_creation_input_tokens": 35222,
+    "cache_read_input_tokens": 684181,
+    "output_tokens": 6222,
+    "total": 725731
+  },
+  "session_id": "04e91dd0-49ad-4b59-98bf-9221d0196eff",
+  "result_block": "## Result\n- **Brick**: callgraph\n- **Mode**: brick\n- **Mini-task**: Find all non-test methods in `test-repo/packages/core/` `.ts` files that directly call `resolveConstructorParams`, sorted alphabetically by method name\n- **Answer**: *(unable to determine — brick tools not functional)*\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_load`, `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_update`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_remove`, `mcp__focus__focus_unload` (schema-fetched but not invoked), `mcp__focus__focus_catalog_add` (schema-fetched but not invoked)\n- **Rough token estimate**: ~6,000\n- **Notes**: The callgraph brick is registered at version `^0.0.0` (a noop stub) but the actual npm package `@focus-mcp/brick-callgraph` is not installed in the environment. `focus_load` fails with `Cannot find module '@focus-mcp/brick-callgraph'`. `focus_update` is not implemented. `focus_remove` fails with \"Lock entry not found\". Installing `codebase` (which bundles callgraph) succeeded but loaded with zero tools. No callgraph tools (`callers`, `callees`, `chain`, `depth`) became available at any point. Since native filesystem tools are forbidden in brick mode, the task could not be completed.",
+  "workdir": "/tmp/focus-bench/callgraph-brick-2026-04-24T18-44-20-757",
+  "exit_reason": "ok"
+}

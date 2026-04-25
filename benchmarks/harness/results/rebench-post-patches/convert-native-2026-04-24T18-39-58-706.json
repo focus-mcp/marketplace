@@ -1,0 +1,25 @@
+{
+  "brick": "convert",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:38:55.998Z",
+  "duration_ms": 62708,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 34,
+    "cache_creation_input_tokens": 17032,
+    "cache_read_input_tokens": 448341,
+    "output_tokens": 3782,
+    "total": 469189
+  },
+  "session_id": "d8e46a08-04d1-4ba7-9822-388ed1e3471a",
+  "result_block": "## Result\n\n- **Brick**: convert\n- **Mode**: native\n- **Mini-task**: Convert the 5 camelCase property names of `NestApplicationOptions` to snake_case\n- **Answer**:\n  ```\n  bodyParser → body_parser\n  cors → cors\n  forceCloseConnections → force_close_connections\n  httpsOptions → https_options\n  rawBody → raw_body\n  ```\n- **Turns used**: 9\n- **Tools used**: Read, Bash, Glob, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: Two initial `Read` calls failed due to permissions before finding the correct absolute path. The camelCase→snake_case conversion was done inline with Python's `re` module since the `mcp__focus__conv_language` tool is forbidden in native mode. All five property names are straightforward conversions; `cors` maps to itself (single lowercase word, no change).",
+  "mini_task_spec": "In the NestJS codebase located at `test-repo/packages/common/interfaces/nest-application-options.interface.ts`, the `NestApplicationOptions` interface directly declares five optional properties (excluding inherited ones from `NestApplicationContextOptions`): `cors`, `bodyParser`, `httpsOptions`, `rawBody`, and `forceCloseConnections`.\n\nUsing the `convert` brick's `language` tool, convert each of these five property names from their current camelCase format to snake_case. Report the results as one mapping per line, in the format `originalName → snake_name`, sorted alphabetically by the original camelCase name.\n\nExpected answer format — five lines, e.g.:\n```\nbodyParser → body_parser\ncors → cors\nforceCloseConnections → force_close_connections\nhttpsOptions → https_options\nrawBody → raw_body\n```\n\n---",
+  "workdir": "/tmp/focus-bench/convert-native-2026-04-24T18-38-55-998",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "depgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:42:50.476Z",
+  "duration_ms": 113171,
+  "turns": 21,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 57,
+    "cache_creation_input_tokens": 41608,
+    "cache_read_input_tokens": 944300,
+    "output_tokens": 7802,
+    "total": 993767
+  },
+  "session_id": "70e11da4-2faf-4fb0-b181-f08328dd206f",
+  "result_block": "## Result\n\n- **Brick**: depgraph\n- **Mode**: native\n- **Mini-task**: Fan-in analysis — find all files in `packages/core/` that import `packages/core/injector/module.ts`\n- **Answer**:\n  ```\n  packages/core/discovery/discovery-service.ts\n  packages/core/errors/exceptions/undefined-dependency.exception.ts\n  packages/core/errors/exceptions/unknown-dependencies.exception.ts\n  packages/core/errors/messages.ts\n  packages/core/hooks/before-app-shutdown.hook.ts\n  packages/core/hooks/on-app-bootstrap.hook.ts\n  packages/core/hooks/on-app-shutdown.hook.ts\n  packages/core/hooks/on-module-destroy.hook.ts\n  packages/core/hooks/on-module-init.hook.ts\n  packages/core/injector/abstract-instance-resolver.ts\n  packages/core/injector/container.ts\n  packages/core/injector/injector.ts\n  packages/core/injector/instance-links-host.ts\n  packages/core/injector/instance-loader.ts\n  packages/core/injector/instance-wrapper.ts\n  packages/core/injector/lazy-module-loader/lazy-module-loader.ts\n  packages/core/injector/module-ref.ts\n  packages/core/injector/modules-container.ts\n  packages/core/injector/topology-tree/topology-tree.ts\n  packages/core/inspector/graph-inspector.ts\n  packages/core/middleware/middleware-module.ts\n  packages/core/middleware/resolver.ts\n  packages/core/middleware/routes-mapper.ts\n  packages/core/nest-application-context.ts\n  packages/core/repl/repl-context.ts\n  packages/core/router/router-explorer.ts\n  packages/core/router/router-module.ts\n  packages/core/scanner.ts\n  ```\n  (28 files total)\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~4,500\n- **Notes**: Native mode required careful regex crafting to distinguish `./module` from `./module-ref`, `./modules-container`, etc. Three separate grep patterns were needed to capture all import styles: `injector/module` (from outside), `./module` (from flat files inside injector/), and `../module` (from subdirectories inside injector/). The brick's `fanin` tool should handle all of these automatically via AST-level resolution.",
+  "mini_task_spec": "Using the depgraph brick's `fanin` tool, find all non-test TypeScript files within `test-repo/packages/core/` (searching recursively) that directly import `test-repo/packages/core/injector/module.ts` as a module dependency.\n\nExclude any `.spec.ts` test files. Return the results as a list of file paths relative to `test-repo/`, one per line, sorted alphabetically.\n\nThe expected answer format is a plain sorted list like:\n```\npackages/core/discovery/discovery-service.ts\npackages/core/errors/exceptions/undefined-dependency.exception.ts\n...\n```\n\nUse the `fanin` tool with `file` set to the absolute path of `test-repo/packages/core/injector/module.ts` and `dir` set to the absolute path of `test-repo/packages/core/`.\n\n---",
+  "workdir": "/tmp/focus-bench/depgraph-native-2026-04-24T18-42-50-476",
+  "exit_reason": "ok"
+}
