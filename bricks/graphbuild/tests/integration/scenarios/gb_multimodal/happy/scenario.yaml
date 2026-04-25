@@ -1,0 +1,8 @@
+name: gb_multimodal/happy
+tool: gb_multimodal
+description: >
+  Sequenced: gb_build on sandbox, then gb_multimodal(format=full).
+  Verifies format='full', nodes and edges are arrays (non-empty).
+input:
+  format: "full"
+tags: [happy, stateful, sequenced]

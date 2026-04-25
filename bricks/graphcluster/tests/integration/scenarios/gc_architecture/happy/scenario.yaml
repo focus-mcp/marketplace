@@ -1,0 +1,7 @@
+name: gc_architecture/happy
+tool: gc_architecture
+description: >
+  Sequenced: setGraph with nodes that have path-like IDs (src/a, src/b, lib/c),
+  then gc_architecture → layers non-empty, each layer has name/nodes/dependsOn.
+input: {}
+tags: [happy, stateful, sequenced]

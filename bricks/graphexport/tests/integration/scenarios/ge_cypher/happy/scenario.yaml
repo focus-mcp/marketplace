@@ -1,0 +1,7 @@
+name: ge_cypher/happy
+tool: ge_cypher
+description: >
+  Sequenced: ge_input(tiny graph) + ge_cypher → string containing 'CREATE',
+  5 node CREATE statements + 4 edge CREATE statements. Output size < 2048 bytes.
+input: {}
+tags: [happy, stateful, sequenced, output-size]

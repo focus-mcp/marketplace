@@ -1,0 +1,10 @@
+name: gb_add/happy
+tool: gb_add
+description: >
+  Add a node manually to the graph. Verifies added='node', id matches.
+input:
+  node:
+    id: "manual-node-1"
+    type: "file"
+    label: "ManualNode"
+tags: [happy, stateful]

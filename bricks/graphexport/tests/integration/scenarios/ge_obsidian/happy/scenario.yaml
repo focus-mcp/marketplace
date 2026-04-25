@@ -1,0 +1,7 @@
+name: ge_obsidian/happy
+tool: ge_obsidian
+description: >
+  Sequenced: ge_input(tiny graph) + ge_obsidian → object with 5 markdown files,
+  each contains wikilinks [[...]]. Output size < 4096 bytes.
+input: {}
+tags: [happy, stateful, sequenced, output-size]

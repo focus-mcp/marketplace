@@ -319,18 +319,30 @@ importers:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/graphcluster:
     dependencies:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/graphexport:
     dependencies:
       '@focus-mcp/core':
         specifier: ^1.0.0
         version: 1.0.0
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/graphquery:
     dependencies:

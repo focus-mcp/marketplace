@@ -1,0 +1,7 @@
+name: gc_cluster/happy
+tool: gc_cluster
+description: >
+  Sequenced: setGraph with a 6-node graph that has two clear groups,
+  then gc_cluster → clusters non-empty, totalClusters > 0.
+input: {}
+tags: [happy, stateful, sequenced]
