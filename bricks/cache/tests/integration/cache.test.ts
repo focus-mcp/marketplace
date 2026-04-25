@@ -25,8 +25,8 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-    await rm(testDir, { recursive: true, force: true });
     _resetCacheStore();
+    await rm(testDir, { recursive: true, force: true });
 });
 
 // ─── cache_set ────────────────────────────────────────────────────────────────

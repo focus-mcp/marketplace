@@ -29,5 +29,25 @@ export function check(output: unknown): InvariantResult[] {
             }
             return { ok: true };
         })(),
+        (() => {
+            const o = output as Record<string, unknown>;
+            if (!('storedAt' in o)) {
+                return {
+                    ok: false,
+                    reason: 'expected storedAt field in non-existent recall response',
+                };
+            }
+            return { ok: true };
+        })(),
+        (() => {
+            const o = output as { storedAt: unknown };
+            if (o.storedAt !== '') {
+                return {
+                    ok: false,
+                    reason: `expected storedAt to be empty string, got '${String(o.storedAt)}'`,
+                };
+            }
+            return { ok: true };
+        })(),
     ];
 }

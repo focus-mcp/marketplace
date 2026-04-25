@@ -21,10 +21,10 @@ export function check(output: unknown): InvariantResult[] {
         })(),
         (() => {
             const o = output as { content: unknown };
-            if (typeof o.content !== 'string') {
+            if (o.content !== 'cached content') {
                 return {
                     ok: false,
-                    reason: `expected content to be a string, got ${typeof o.content}`,
+                    reason: `expected content 'cached content', got '${String(o.content)}'`,
                 };
             }
             return { ok: true };
