@@ -1,0 +1,8 @@
+# Happy path: create a new file in sandbox
+tool: fw_create
+prompt: |
+    Create a new file at the given path with the provided content.
+    The file does not exist yet. Return created=true and the resolved path.
+input:
+    path: <sandbox>/new-file.txt
+    content: "Hello from fw_create\n"

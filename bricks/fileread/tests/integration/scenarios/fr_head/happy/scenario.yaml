@@ -1,0 +1,8 @@
+# Happy path: read first 10 lines of a file
+tool: fr_head
+prompt: |
+    Read the first 10 lines of the sample.ts fixture file.
+    Return lines as an array of strings.
+input:
+    path: ./fixtures/sample.ts
+    lines: 10
