@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: fts_index/happy
+tool: fts_index
+description: >
+  Indexes a synthetic TypeScript fixtures directory.
+  Expects filesIndexed > 0 and termsIndexed > 0.
+input:
+  dir: "{{FIXTURES_DIR}}"

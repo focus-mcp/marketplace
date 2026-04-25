@@ -30,14 +30,17 @@ export function check(output: unknown, originalJsonLength: number): InvariantRes
         (() => {
             const o = output as { compressed: string };
             // Nulls should be stripped — use structural walk to avoid false positives on strings like "status:null"
-            const parsed = JSON.parse(o.compressed) as unknown;
+            let parsed: unknown;
+            try {
+                parsed = JSON.parse(o.compressed);
+            } catch {
+                return { ok: true }; // already reported invalid JSON above
+            }
             function hasNullValue(value: unknown): boolean {
                 if (value === null) return true;
                 if (Array.isArray(value)) return value.some(hasNullValue);
-                if (typeof value === 'object' && value !== null) {
-                    return Object.values(value as Record<string, unknown>).some(hasNullValue);
-                }
-                return false;
+                if (typeof value !== 'object') return false;
+                return Object.values(value as Record<string, unknown>).some(hasNullValue);
             }
             if (hasNullValue(parsed)) {
                 return { ok: false, reason: 'compressed JSON should not contain null values' };

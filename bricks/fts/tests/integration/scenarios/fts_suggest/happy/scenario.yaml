@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: fts_suggest/happy
+tool: fts_suggest
+description: >
+  Suggests completions for prefix "inj" in an indexed directory.
+  Expects at least one suggestion starting with "inj" with documentCount > 0.
+input:
+  prefix: "inj"

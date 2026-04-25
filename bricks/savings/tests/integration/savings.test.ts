@@ -49,15 +49,27 @@ describe('sav_report integration', () => {
 describe('sav_compare integration', () => {
     it('happy: session A (80%) beats session B (50%)', async () => {
         // Build session state in the shared module singleton
-        const reportA = (await runTool(brick, 'report', {
+        const reportARaw = await runTool(brick, 'report', {
             baselineTokens: 10000,
             actualTokens: 2000, // 80%
-        })) as { sessionId: string };
+        });
+        if (typeof (reportARaw as Record<string, unknown>).sessionId !== 'string') {
+            throw new Error(
+                `sav_report did not return a sessionId (got ${JSON.stringify(reportARaw)})`,
+            );
+        }
+        const reportA = reportARaw as { sessionId: string };
 
-        const reportB = (await runTool(brick, 'report', {
+        const reportBRaw = await runTool(brick, 'report', {
             baselineTokens: 10000,
             actualTokens: 5000, // 50%
-        })) as { sessionId: string };
+        });
+        if (typeof (reportBRaw as Record<string, unknown>).sessionId !== 'string') {
+            throw new Error(
+                `sav_report did not return a sessionId (got ${JSON.stringify(reportBRaw)})`,
+            );
+        }
+        const reportB = reportBRaw as { sessionId: string };
 
         const output = await runTool(brick, 'compare', {
             sessionA: reportA.sessionId,

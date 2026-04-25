@@ -4,8 +4,9 @@
  */
 import { resolve } from 'node:path';
 import { expectMatchesGolden, runTool } from '@focus-mcp/marketplace-testing';
-import { describe, it } from 'vitest';
+import { afterEach, beforeEach, describe, it } from 'vitest';
 import brick from '../../src/index.js';
+import { _resetFtsIndex } from '../../src/operations.js';
 import { check as checkFtsIndexHappy } from './scenarios/fts_index/happy/invariants.js';
 import { check as checkFtsRankHappy } from './scenarios/fts_rank/happy/invariants.js';
 import { check as checkFtsSearchHappy } from './scenarios/fts_search/happy/invariants.js';
@@ -14,6 +15,14 @@ import { check as checkFtsSuggestHappy } from './scenarios/fts_suggest/happy/inv
 
 const FIXTURES_DIR = resolve(import.meta.dirname, 'fixtures/synthetic');
 const GOLDENS_DIR = resolve(import.meta.dirname, 'goldens');
+
+beforeEach(() => {
+    _resetFtsIndex();
+});
+
+afterEach(() => {
+    _resetFtsIndex();
+});
 
 describe('fts_index integration', () => {
     it('happy: indexes synthetic fixtures directory', async () => {

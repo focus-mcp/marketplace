@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 FocusMCP contributors
+# SPDX-License-Identifier: MIT
+id: fts_search/happy
+tool: fts_search
+description: >
+  Searches for "Injectable" in an indexed synthetic fixtures directory.
+  Expects at least one result with matching file, score, and matches fields.
+input:
+  query: "Injectable"
