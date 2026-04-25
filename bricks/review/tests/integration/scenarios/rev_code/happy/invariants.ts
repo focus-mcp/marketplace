@@ -39,7 +39,6 @@ export function check(output: unknown): InvariantResult[] {
             };
             if (!Array.isArray(o.findings) || o.findings.length === 0) return { ok: true };
             const first = o.findings[0];
-            if (!first) return { ok: true };
             if (typeof first.type !== 'string') {
                 return { ok: false, reason: 'finding must have a string "type" field' };
             }

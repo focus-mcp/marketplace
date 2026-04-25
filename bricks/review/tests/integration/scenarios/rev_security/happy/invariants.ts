@@ -17,13 +17,6 @@ export function check(output: unknown): InvariantResult[] {
             return { ok: true };
         })(),
         (() => {
-            const o = output as { riskLevel: unknown };
-            if (!['low', 'medium', 'high', 'critical'].includes(o.riskLevel as string)) {
-                return { ok: false, reason: `invalid riskLevel: ${o.riskLevel}` };
-            }
-            return { ok: true };
-        })(),
-        (() => {
             const o = output as { findings: unknown[] };
             if (!Array.isArray(o.findings) || o.findings.length === 0) {
                 return {

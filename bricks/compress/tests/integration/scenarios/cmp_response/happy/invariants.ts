@@ -26,22 +26,20 @@ export function check(output: unknown, originalJsonLength: number): InvariantRes
             }
             return { ok: true };
         })(),
+        inv.outputLengthLessThan('compressed', originalJsonLength)(output),
         (() => {
             const o = output as { compressed: string };
-            if (o.compressed.length >= originalJsonLength) {
-                return {
-                    ok: false,
-                    reason: `expected compressed length (${o.compressed.length}) < original (${originalJsonLength})`,
-                };
+            // Nulls should be stripped — use structural walk to avoid false positives on strings like "status:null"
+            const parsed = JSON.parse(o.compressed) as unknown;
+            function hasNullValue(value: unknown): boolean {
+                if (value === null) return true;
+                if (Array.isArray(value)) return value.some(hasNullValue);
+                if (typeof value === 'object' && value !== null) {
+                    return Object.values(value as Record<string, unknown>).some(hasNullValue);
+                }
+                return false;
             }
-            return { ok: true };
-        })(),
-        (() => {
-            const o = output as { compressed: string };
-            // Nulls should be stripped
-            const parsed = JSON.parse(o.compressed) as Record<string, unknown>;
-            const hasNulls = JSON.stringify(parsed).includes(':null');
-            if (hasNulls) {
+            if (hasNullValue(parsed)) {
                 return { ok: false, reason: 'compressed JSON should not contain null values' };
             }
             return { ok: true };
