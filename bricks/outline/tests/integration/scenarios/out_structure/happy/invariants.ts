@@ -43,6 +43,21 @@ export function check(output: unknown): InvariantResult[] {
             }
             return { ok: true };
         })(),
+        (() => {
+            const out = output as Record<string, unknown>;
+            const tree = (out['tree'] as unknown[]) ?? [];
+            // NestJS injector has known subdirs: helpers, inquirer, internal-core-module, lazy-module-loader, etc.
+            const knownSubdirs = ['helpers', 'inquirer', 'opaque-key-factory'];
+            const paths = tree.map((t) => String((t as Record<string, unknown>)['path'] ?? ''));
+            const foundSubdir = knownSubdirs.some((sub) => paths.some((p) => p.includes(sub)));
+            if (!foundSubdir) {
+                return {
+                    ok: false,
+                    reason: `expected at least one known injector subdir (${knownSubdirs.join(', ')}) in tree — tests recursive traversal`,
+                };
+            }
+            return { ok: true };
+        })(),
         inv.outputSizeUnder(4096)(output),
     ];
 }

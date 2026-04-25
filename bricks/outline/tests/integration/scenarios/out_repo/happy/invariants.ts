@@ -59,6 +59,33 @@ export function check(output: unknown): InvariantResult[] {
             }
             return { ok: true };
         })(),
+        (() => {
+            const out = output as Record<string, unknown>;
+            const files = (out['files'] as unknown[]) ?? [];
+            const totalFiles = out['totalFiles'];
+            if (typeof totalFiles === 'number' && totalFiles !== files.length) {
+                return {
+                    ok: false,
+                    reason: `totalFiles (${totalFiles}) must equal files.length (${files.length})`,
+                };
+            }
+            return { ok: true };
+        })(),
+        (() => {
+            const out = output as Record<string, unknown>;
+            const files = (out['files'] as unknown[]) ?? [];
+            const hasCompiler = files.some((f) => {
+                const entry = f as Record<string, unknown>;
+                return typeof entry['path'] === 'string' && entry['path'].includes('compiler');
+            });
+            if (!hasCompiler) {
+                return {
+                    ok: false,
+                    reason: 'expected compiler.ts to appear in repo outline — it is a core injector file',
+                };
+            }
+            return { ok: true };
+        })(),
         inv.outputSizeUnder(8192)(output),
     ];
 }

@@ -56,6 +56,33 @@ export function check(output: unknown): InvariantResult[] {
             }
             return { ok: true };
         })(),
+        (() => {
+            const out = output as Record<string, unknown>;
+            const affected = (out['affected'] as unknown[]) ?? [];
+            // compiler.ts is imported by container.ts — expect at least one affected file
+            if (affected.length === 0) {
+                return {
+                    ok: false,
+                    reason: 'expected at least one affected file — container.ts imports compiler.ts',
+                };
+            }
+            return { ok: true };
+        })(),
+        (() => {
+            const out = output as Record<string, unknown>;
+            const affected = (out['affected'] as unknown[]) ?? [];
+            const hasContainer = affected.some((a) => {
+                const entry = a as Record<string, unknown>;
+                return typeof entry['file'] === 'string' && entry['file'].includes('container');
+            });
+            if (!hasContainer) {
+                return {
+                    ok: false,
+                    reason: 'expected container.ts in affected list — it directly imports compiler.ts',
+                };
+            }
+            return { ok: true };
+        })(),
         inv.outputSizeUnder(8192)(output),
     ];
 }

@@ -74,6 +74,37 @@ export function check(output: unknown): InvariantResult[] {
             }
             return { ok: true };
         })(),
+        (() => {
+            const out = output as Record<string, unknown>;
+            const direct = (out['directDependents'] as unknown[]) ?? [];
+            const hasContainer = direct.some((d) => {
+                const entry = d as Record<string, unknown>;
+                return typeof entry['file'] === 'string' && entry['file'].includes('container');
+            });
+            if (!hasContainer) {
+                return {
+                    ok: false,
+                    reason: 'expected container.ts in directDependents — it directly imports compiler.ts',
+                };
+            }
+            return { ok: true };
+        })(),
+        (() => {
+            const out = output as Record<string, unknown>;
+            const direct = (out['directDependents'] as unknown[]) ?? [];
+            const indirect = (out['indirectDependents'] as unknown[]) ?? [];
+            const totalAffected = out['totalAffected'];
+            if (
+                typeof totalAffected === 'number' &&
+                totalAffected !== direct.length + indirect.length
+            ) {
+                return {
+                    ok: false,
+                    reason: `totalAffected (${totalAffected}) must equal directDependents.length (${direct.length}) + indirectDependents.length (${indirect.length})`,
+                };
+            }
+            return { ok: true };
+        })(),
         inv.outputSizeUnder(8192)(output),
     ];
 }
