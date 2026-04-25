@@ -1,0 +1,7 @@
+tool: ovw_architecture
+prompt: |
+    Scan ./fixtures/nestjs/packages/core/injector directory structure,
+    count files per folder, and detect architectural patterns.
+input:
+    dir: ./fixtures/nestjs/packages/core/injector
+    maxDepth: 2

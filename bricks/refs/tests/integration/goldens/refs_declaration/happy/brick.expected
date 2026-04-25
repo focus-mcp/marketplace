@@ -1,0 +1,8 @@
+{
+  "declaration": {
+    "file": "/home/samuelds/projects/focusmcp/marketplace/fixtures/nestjs/packages/core/injector/compiler.ts",
+    "line": 14,
+    "signature": "export class ModuleCompiler {",
+    "kind": "class"
+  }
+}

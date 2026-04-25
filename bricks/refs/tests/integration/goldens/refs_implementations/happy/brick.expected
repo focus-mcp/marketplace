@@ -1,0 +1,14 @@
+{
+  "implementations": [
+    {
+      "file": "/home/samuelds/projects/focusmcp/marketplace/fixtures/nestjs/packages/core/injector/opaque-key-factory/by-reference-module-opaque-key-factory.ts",
+      "line": 10,
+      "snippet": "export class ByReferenceModuleOpaqueKeyFactory implements ModuleOpaqueKeyFactory {"
+    },
+    {
+      "file": "/home/samuelds/projects/focusmcp/marketplace/fixtures/nestjs/packages/core/injector/opaque-key-factory/deep-hashed-module-opaque-key-factory.ts",
+      "line": 13,
+      "snippet": "export class DeepHashedModuleOpaqueKeyFactory implements ModuleOpaqueKeyFactory {"
+    }
+  ]
+}

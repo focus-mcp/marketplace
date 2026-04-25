@@ -1,0 +1,10 @@
+tool: ren_file
+prompt: |
+    In a sandbox copy of ./fixtures/nestjs/integration/hello-world/src/hello,
+    rename file 'hello.service.ts' to 'greet.service.ts' and update imports
+    in all callers (apply: true).
+input:
+    path: <sandbox>/hello.service.ts
+    newName: greet.service.ts
+    dir: <sandbox>
+    apply: true

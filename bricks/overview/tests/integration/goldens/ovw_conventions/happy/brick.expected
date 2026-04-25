@@ -1,0 +1,7 @@
+{
+  "indent": "spaces:2",
+  "quotes": "single",
+  "semicolons": true,
+  "importStyle": "esm",
+  "lineEnding": "lf"
+}

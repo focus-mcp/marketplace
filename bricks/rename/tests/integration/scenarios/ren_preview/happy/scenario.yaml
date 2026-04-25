@@ -1,0 +1,8 @@
+tool: ren_preview
+prompt: |
+    In ./fixtures/nestjs/packages/core/injector, preview all occurrences of
+    'ModuleCompiler' that would be affected by a rename. Return occurrences,
+    fileCount, and total without modifying any file.
+input:
+    dir: ./fixtures/nestjs/packages/core/injector
+    oldName: ModuleCompiler
