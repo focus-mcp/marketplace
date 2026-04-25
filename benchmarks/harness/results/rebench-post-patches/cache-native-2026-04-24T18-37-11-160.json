@@ -1,0 +1,26 @@
+{
+  "brick": "cache",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:36:03.672Z",
+  "duration_ms": 67488,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 34,
+    "cache_creation_input_tokens": 25578,
+    "cache_read_input_tokens": 448594,
+    "output_tokens": 4188,
+    "total": 478394
+  },
+  "session_id": "be0cd110-534c-4b65-859b-81e351b9cf0b",
+  "result_block": "## Result\n\n- **Brick**: cache\n- **Mode**: native\n- **Mini-task**: Find all TypeScript source files in packages/common that export a class\n- **Answer**:\n```\npackages/common/exceptions/bad-gateway.exception.ts\npackages/common/exceptions/bad-request.exception.ts\npackages/common/exceptions/conflict.exception.ts\npackages/common/exceptions/forbidden.exception.ts\npackages/common/exceptions/gateway-timeout.exception.ts\npackages/common/exceptions/gone.exception.ts\npackages/common/exceptions/http-version-not-supported.exception.ts\npackages/common/exceptions/http.exception.ts\npackages/common/exceptions/im-a-teapot.exception.ts\npackages/common/exceptions/internal-server-error.exception.ts\npackages/common/exceptions/intrinsic.exception.ts\npackages/common/exceptions/method-not-allowed.exception.ts\npackages/common/exceptions/misdirected.exception.ts\npackages/common/exceptions/not-acceptable.exception.ts\npackages/common/exceptions/not-found.exception.ts\npackages/common/exceptions/not-implemented.exception.ts\npackages/common/exceptions/payload-too-large.exception.ts\npackages/common/exceptions/precondition-failed.exception.ts\npackages/common/exceptions/request-timeout.exception.ts\npackages/common/exceptions/service-unavailable.exception.ts\npackages/common/exceptions/unauthorized.exception.ts\npackages/common/exceptions/unprocessable-entity.exception.ts\npackages/common/exceptions/unsupported-media-type.exception.ts\npackages/common/file-stream/streamable-file.ts\npackages/common/interfaces/nest-application-context-options.interface.ts\npackages/common/module-utils/configurable-module.builder.ts\npackages/common/pipes/default-value.pipe.ts\npackages/common/pipes/file/file-type.validator.ts\npackages/common/pipes/file/max-file-size.validator.ts\npackages/common/pipes/file/parse-file-pipe.builder.ts\npackages/common/pipes/file/parse-file.pipe.ts\npackages/common/pipes/parse-array.pipe.ts\npackages/common/pipes/parse-bool.pipe.ts\npackages/common/pipes/parse-date.pipe.ts\npackages/common/pipes/parse-enum.pipe.ts\npackages/common/pipes/parse-float.pipe.ts\npackages/common/pipes/parse-int.pipe.ts\npackages/common/pipes/parse-uuid.pipe.ts\npackages/common/pipes/validation.pipe.ts\npackages/common/serializer/class-serializer.interceptor.ts\npackages/common/services/console.service.ts\npackages/common/services/logger-copy.service.ts\npackages/common/services/logger.service.ts\npackages/common/utils/validate-each.util.ts\n```\n- **Turns used**: 5\n- **Tools used**: Bash, Read, Glob\n- **Rough token estimate**: ~6,000\n- **Notes**: The Glob tool did not find files (possibly due to working directory resolution), so Bash `find` + `grep -rl` was used instead. The task cleanly maps to the cache brick's warmup→get workflow: an agent in brick mode would warmup all ~180 `.ts` files, then call `get` on each to scan for `export class` with cache hits rather than disk reads.",
+  "mini_task_spec": "You are working with the NestJS monorepo shallow clone located at `test-repo/`. Your task is:\n\n**Find every TypeScript source file under `test-repo/packages/common/` that contains at least one `export class` declaration. Exclude test files (`*.spec.ts`) and declaration files (`*.d.ts`). List the matching file paths relative to `test-repo/` (i.e., starting with `packages/common/…`), one per line, sorted alphabetically.**\n\nIn brick mode you should use the `cache` brick: call `warmup` to pre-load all eligible `.ts` files from `test-repo/packages/common/` into the in-memory cache, then call `get` on each file path to retrieve its content from cache (avoiding redundant disk reads), and filter to those whose content contains the string `export class`. Report the file paths relative to `test-repo/`, sorted alphabetically.\n\nExpected answer format: a plain list of file paths, one per line, sorted alphabetically (e.g., `packages/common/exceptions/bad-gateway.exception.ts` on the first line, etc.). There are 44 matching files total.\n\n---",
+  "workdir": "/tmp/focus-bench/cache-native-2026-04-24T18-36-03-672",
+  "exit_reason": "ok"
+}

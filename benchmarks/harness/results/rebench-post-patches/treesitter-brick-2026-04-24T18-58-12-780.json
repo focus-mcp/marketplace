@@ -1,0 +1,31 @@
+{
+  "brick": "treesitter",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:56:20.781Z",
+  "duration_ms": 111999,
+  "turns": 19,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 84,
+    "cache_creation_input_tokens": 27602,
+    "cache_read_input_tokens": 472827,
+    "output_tokens": 5325,
+    "total": 505838
+  },
+  "session_id": "20967933-ea69-4756-9bda-f77784883bf3",
+  "result_block": "## Result\n- **Brick**: treesitter\n- **Mode**: brick\n- **Mini-task**: Index `test-repo/packages/common/enums/` and return alphabetically sorted names of all `export enum` declarations in `.ts` files\n- **Answer**: *(unavailable — brick failed to load; ts_index tool was never registered)*\n- **Turns used**: 9\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_add` (schema fetch only)\n- **Rough token estimate**: ~3,500\n- **Notes**: The treesitter brick is registered as installed (version `^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-treesitter'`. The brick stub at `.focus/bricks/noop.js` references the npm package which is absent from the benchmark environment. As a result none of the brick's tools (`ts_index`, `ts_status`, `ts_langs`, `ts_cleanup`, `ts_reindex`) appear in the deferred tool registry and cannot be called. `focus_update` returned \"not yet implemented\". No fallback path is available within the `mcp__focus__*`-only constraint.",
+  "workdir": "/tmp/focus-bench/treesitter-brick-2026-04-24T18-56-20-779",
+  "exit_reason": "ok"
+}

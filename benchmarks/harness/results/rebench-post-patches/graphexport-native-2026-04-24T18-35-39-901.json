@@ -1,0 +1,25 @@
+{
+  "brick": "graphexport",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:34:17.092Z",
+  "duration_ms": 82809,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 46,
+    "cache_creation_input_tokens": 29887,
+    "cache_read_input_tokens": 664737,
+    "output_tokens": 4821,
+    "total": 699491
+  },
+  "session_id": "b6b2723d-c0de-45ac-979b-2c3b3ecb79ad",
+  "result_block": "## Result\n\n- **Brick**: contextpack\n- **Mode**: native\n- **Mini-task**: List all exported Go type names from the non-test .go files in `test-repo/pkg/scheduler/framework/`\n- **Answer**:\n  ```\n  CycleState\n  Diagnosis\n  FitError\n  Framework\n  NodeInfo\n  NodeToStatus\n  PodGroupInfo\n  PodGroupPostFilterPlugin\n  PodInfo\n  PodsToActivate\n  QueuedPodGroupInfo\n  QueuedPodInfo\n  Resource\n  SortedScoredNodes\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~1,200\n- **Notes**: The test-repo is a Kubernetes Go monorepo (not NestJS as the prompt mentioned). The task is well-suited to the `contextpack` brick: in brick mode the agent would call `pack` with `mode: \"signatures\"` on the four source files to extract only their exported type declarations without reading full file content — a clear token-saving win over native grep. `events.go` exports zero types; all 14 types come from the other three files.",
+  "mini_task_spec": "Identify all exported Go types (top-level `type` declarations whose name begins with an uppercase letter) defined in the non-test `.go` files located **directly** in `test-repo/pkg/scheduler/framework/` — do not recurse into subdirectories, and exclude any file whose name ends with `_test.go`. The files to examine are: `cycle_state.go`, `events.go`, `interface.go`, and `types.go`.\n\nReport the **type names only**, one per line, sorted alphabetically. Do not include the keyword `type`, the underlying kind (`struct`, `interface`, etc.), or any line numbers.\n\nExpected answer format example:\n```\nBar\nFoo\nQuux\n```\n\n---",
+  "workdir": "/tmp/focus-bench/graphexport-native-2026-04-24T18-34-17-091",
+  "exit_reason": "ok"
+}

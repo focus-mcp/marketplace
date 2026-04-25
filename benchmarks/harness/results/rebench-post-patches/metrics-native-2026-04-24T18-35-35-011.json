@@ -1,0 +1,25 @@
+{
+  "brick": "metrics",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:34:16.253Z",
+  "duration_ms": 78757,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 54330,
+    "cache_read_input_tokens": 480764,
+    "output_tokens": 4913,
+    "total": 540046
+  },
+  "session_id": "8f41075b-0c03-44c6-b350-6fb5ea6ae0e0",
+  "result_block": "## Result\n\n- **Brick**: metrics\n- **Mode**: native\n- **Mini-task**: Estimate token count & cost to ingest all `.ts` source files in `test-repo/packages/`\n- **Answer**:\n  ```\n  File count: 824\n  Total lines: 78,407\n  Estimated tokens: 603,321\n  Estimated cost (USD): $1.81\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,500 tokens\n- **Notes**: The brick's `tokens` tool would be used to record per-file or per-batch token ingestion, `costs` would apply the default `inputPricePer1k: 0.003` rate, and `session` would return the running total — all of which map cleanly to the arithmetic done natively here. No blocking issues.",
+  "mini_task_spec": "Using only the TypeScript source files (`.ts` files, excluding `.d.ts` declaration files) inside `test-repo/packages/`, compute the following metrics as a cost-estimation exercise:\n\n1. **File count** — How many `.ts` (non-declaration) files exist under `test-repo/packages/`?\n2. **Total lines** — What is the combined line count across all those files?\n3. **Estimated input tokens** — Using the rule **1 token ≈ 4 characters**, compute the estimated total input-token count from the total byte size of those files.\n4. **Estimated USD cost** — Using the metrics brick's default input price of **$0.003 per 1,000 input tokens**, compute the cost rounded to two decimal places.\n\nReport all four answers as a simple list:\n```\nFile count: <integer>\nTotal lines: <integer>\nEstimated tokens: <integer, floor of chars/4>\nEstimated cost (USD): $<X.XX>\n```\n\n---",
+  "workdir": "/tmp/focus-bench/metrics-native-2026-04-24T18-34-16-252",
+  "exit_reason": "ok"
+}

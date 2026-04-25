@@ -1,0 +1,26 @@
+{
+  "brick": "treesitter",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:51:35.388Z",
+  "duration_ms": 68406,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 30982,
+    "cache_read_input_tokens": 522824,
+    "output_tokens": 4186,
+    "total": 558029
+  },
+  "session_id": "96d1fc11-be60-437e-adef-5e5dd6622fae",
+  "result_block": "## Result\n- **Brick**: treesitter\n- **Mode**: native\n- **Mini-task**: List all unique public method names in `NestApplication` class (nest-application.ts), sorted alphabetically\n- **Answer**:\n  ```\n  applyOptions\n  connectMicroservice\n  createServer\n  enableCors\n  enableVersioning\n  getHttpAdapter\n  getHttpServer\n  getMicroservices\n  getUnderlyingHttpServer\n  getUrl\n  init\n  listen\n  registerHttpServer\n  registerModules\n  registerParserMiddleware\n  registerRouter\n  registerRouterHooks\n  registerWsModule\n  setBaseViewsDir\n  setGlobalPrefix\n  setViewEngine\n  startAllMicroservices\n  use\n  useBodyParser\n  useGlobalFilters\n  useGlobalGuards\n  useGlobalInterceptors\n  useGlobalPipes\n  useStaticAssets\n  useWebSocketAdapter\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~6,500\n- **Notes**: The file has three overloaded declarations of `listen` and two of `useStaticAssets`; these were deduplicated. The task maps cleanly to the treesitter brick's symbol-extraction strength (parsing exported classes and their members from TS files).",
+  "mini_task_spec": "Using the treesitter brick, index the file `test-repo/packages/core/nest-application.ts` and extract all unique public method names declared in the `NestApplication` class (methods preceded by the `public` keyword, including `public async` variants). Overloaded methods (same name declared multiple times) should appear only once. Report the names sorted alphabetically, one per line.\n\nExpected answer format: a sorted list of method names, one per line, with no duplicates.\n\n---",
+  "workdir": "/tmp/focus-bench/treesitter-native-2026-04-24T18-51-35-388",
+  "exit_reason": "ok"
+}

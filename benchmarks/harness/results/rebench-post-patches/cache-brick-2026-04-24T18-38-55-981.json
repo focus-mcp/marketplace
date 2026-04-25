@@ -1,0 +1,31 @@
+{
+  "brick": "cache",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:37:11.162Z",
+  "duration_ms": 104819,
+  "turns": 16,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 76,
+    "cache_creation_input_tokens": 42877,
+    "cache_read_input_tokens": 382295,
+    "output_tokens": 4144,
+    "total": 429392
+  },
+  "session_id": "d170c544-1ede-47f2-ab45-4cbf1418b3e0",
+  "result_block": "## Result\n- **Brick**: cache\n- **Mode**: brick\n- **Mini-task**: Find all TypeScript source files under `test-repo/packages/common/` containing `export class` (excluding `*.spec.ts` and `*.d.ts`), using `warmup` + `get` from the cache brick\n- **Answer**: UNAVAILABLE — the cache brick could not be loaded (`Cannot find module '@focus-mcp/brick-cache'`); its tools `warmup` and `get` were never registered, so the task could not be completed using brick tools only\n- **Turns used**: 9\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_update`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~3,500\n- **Notes**: The focus MCP server is reachable and functional (all `focus_*` meta-tools respond). However, the `cache` brick's npm package (`@focus-mcp/brick-cache`) is missing from node_modules. `focus_install` reports it's already installed at `^0.0.0`, and `focus_update` is not yet implemented, leaving no way to resolve the module. Without `warmup`/`get` available, and with Bash/Grep/Glob forbidden, the file enumeration and content-filtering task cannot be completed in brick mode.",
+  "workdir": "/tmp/focus-bench/cache-brick-2026-04-24T18-37-11-161",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "treesitter",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:55:28.319Z",
+  "duration_ms": 52460,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 42,
+    "cache_creation_input_tokens": 28898,
+    "cache_read_input_tokens": 550036,
+    "output_tokens": 3805,
+    "total": 582781
+  },
+  "session_id": "b6d58461-d8d5-4e7a-a470-5c929f2221e3",
+  "result_block": "## Result\n- **Brick**: treesitter\n- **Mode**: native\n- **Mini-task**: List all exported enum names in `test-repo/packages/common/enums/`\n- **Answer**:\n  ```\n  HttpStatus\n  RequestMethod\n  RouteParamtypes\n  ShutdownSignal\n  VersioningType\n  ```\n- **Turns used**: 6\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The `index.ts` barrel file in that directory uses `export * from '...'` but does **not** re-export `RouteParamtypes` (it's missing from the barrel). The task focuses on declared symbols rather than barrel re-exports, so `RouteParamtypes` is still included. Native mode required only reading files and a single grep; the treesitter brick would accomplish the same via its `index` + symbol-listing capability.",
+  "mini_task_spec": "Using the treesitter brick, index the directory `test-repo/packages/common/enums/` and identify every TypeScript `enum` symbol that is exported (i.e. declared with `export enum`). Return the enum names sorted alphabetically, one per line. Only include enum names as declared in `.ts` files directly inside that directory (not transitive re-exports via barrel `index.ts`). Expected format is a plain alphabetically-sorted list of identifier names, one per line.",
+  "workdir": "/tmp/focus-bench/treesitter-native-2026-04-24T18-55-28-318",
+  "exit_reason": "ok"
+}

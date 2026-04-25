@@ -1,0 +1,27 @@
+{
+  "brick": "symbol",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:49:09.362Z",
+  "duration_ms": 111268,
+  "turns": 22,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 54,
+    "cache_creation_input_tokens": 61876,
+    "cache_read_input_tokens": 932365,
+    "output_tokens": 4732,
+    "total": 999027
+  },
+  "session_id": "b40ed3f5-2bed-4dcd-94d1-67adc3028489",
+  "result_block": "## Result\n- **Brick**: symbol\n- **Mode**: native\n- **Mini-task**: List all public methods of `RoutesResolver` with their start line numbers\n- **Answer**:\n  ```\n  resolve:71\n  registerRouters:88\n  registerNotFoundHandler:146\n  registerExceptionHandler:162\n  mapExternalException:185\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep, Glob\n- **Rough token estimate**: ~4,500\n- **Notes**: The task is clean and deterministic — Grep on `^\\s+public ` with line numbers gives the answer in one shot. The symbol brick's `find` + `get` tools would do the equivalent lookup without needing to know the file path in advance, demonstrating their advantage for codebase-wide navigation.",
+  "mini_task_spec": "In the NestJS repository at `test-repo/packages/core/router/routes-resolver.ts`, the `RoutesResolver` class has several public methods. Using symbol lookup tools, identify all public methods of the `RoutesResolver` class. Report each method's name and its start line number (1-based), in order of appearance in the file. Format the answer as a list of `name:line` pairs, one per line, sorted by ascending line number. Example format:\n\n```\nmethodName:42\nanotherMethod:87\n```\n\nDo not include private or protected methods — only `public` methods.\n\n---",
+  "workdir": "/tmp/focus-bench/symbol-native-2026-04-24T18-49-09-362",
+  "exit_reason": "ok"
+}

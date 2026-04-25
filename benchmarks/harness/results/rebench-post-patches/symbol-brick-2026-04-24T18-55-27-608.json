@@ -1,0 +1,31 @@
+{
+  "brick": "symbol",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:53:39.179Z",
+  "duration_ms": 108429,
+  "turns": 18,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 84,
+    "cache_creation_input_tokens": 50545,
+    "cache_read_input_tokens": 505878,
+    "output_tokens": 5861,
+    "total": 562368
+  },
+  "session_id": "2cdb8d83-7fd1-419f-a1af-00c20946dfd7",
+  "result_block": "## Result\n- **Brick**: symbol (prefix: `sym`)\n- **Mode**: brick\n- **Mini-task**: Identify all public methods of `DependenciesScanner` class in `test-repo/packages/core/scanner.ts`, sorted alphabetically\n- **Answer**: *(unavailable — brick tools failed to load; see Notes)*\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~4,000\n- **Notes**: The symbol brick is registered as installed (`focus_install` confirmed \"already installed, version ^0.0.0\"), but `focus_load` fails with `Cannot find module '@focus-mcp/brick-symbol'` — the npm package is present in the manifest but not actually installed on disk. The brick-specific tools (`sym_find`, `sym_get`, `sym_bulk`, `sym_body`) never became available, and they do not appear in the deferred tool registry. `focus_update` returned \"not yet implemented\". With native filesystem tools (Bash, Grep, Glob, Read beyond manifest) forbidden by the benchmark rules, the task cannot be solved. This is a brick environment packaging failure, not a tool-design issue.",
+  "workdir": "/tmp/focus-bench/symbol-brick-2026-04-24T18-53-39-178",
+  "exit_reason": "ok"
+}

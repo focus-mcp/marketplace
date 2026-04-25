@@ -1,0 +1,25 @@
+{
+  "brick": "callgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:36:03.681Z",
+  "duration_ms": 132719,
+  "turns": 23,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 54,
+    "cache_creation_input_tokens": 48301,
+    "cache_read_input_tokens": 905207,
+    "output_tokens": 8342,
+    "total": 961904
+  },
+  "session_id": "4448905d-5e0e-4a1a-928a-97763bdd9ea6",
+  "result_block": "## Result\n- **Brick**: contextpack\n- **Mode**: native\n- **Mini-task**: List exported top-level Go identifiers from 3 scheduler package files, alphabetically sorted\n- **Answer**:\n```\nAdmissionCheck\nAdmissionResult\nErrNoNodesAvailable\nFailureHandlerFn\nFrameworkCapturer\nHTTPExtender\nNew\nNewHTTPExtender\nNewInformerFactory\nOption\nScheduleResult\nScheduler\nWithBuildFrameworkCapturer\nWithClock\nWithComponentConfigVersion\nWithExtenders\nWithFrameworkOutOfTreeRegistry\nWithKubeConfig\nWithParallelism\nWithPercentageOfNodesToScore\nWithPodInitialBackoffSeconds\nWithPodMaxBackoffSeconds\nWithPodMaxInUnschedulablePodsDuration\nWithProfiles\n```\n- **Turns used**: 9\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~3,500\n- **Notes**: The test-repo is a Kubernetes Go monorepo (not NestJS as mentioned in the prompt template — that appears to be a generic description). The `New` function in `scheduler.go` has a multi-line signature; only its first line was captured by the grep pattern, but the identifier name `New` is unambiguous. The `pack(signatures)` brick mode likely does the same — extract the first line of each exported declaration. No blockers encountered.",
+  "mini_task_spec": "You are working with the **contextpack** FocusMCP brick, which provides a `pack` tool that bundles multiple files into a compressed context string. Its `signatures` mode extracts only the exported top-level declarations from source files, reducing token usage while preserving the public API surface.\n\n**Task**: Use the `pack` tool in `signatures` mode on the following three Go source files from the scheduler package:\n\n- `test-repo/pkg/scheduler/extender.go`\n- `test-repo/pkg/scheduler/eventhandlers.go`\n- `test-repo/pkg/scheduler/scheduler.go`\n\nExtract every exported top-level Go declaration — that is, every line at the start of the file that begins with `func [A-Z]`, `type [A-Z]`, `var [A-Z]`, or `const [A-Z]` (uppercase first character after the keyword). Report **only the identifier names** (e.g. `Scheduler`, `New`, `HTTPExtender`), one per line, sorted **alphabetically**. Do not include test files. Do not include subdirectory files.\n\nExpected answer format: a plain list of exported identifier names, one per line, sorted alphabetically (A→Z).\n\n---",
+  "workdir": "/tmp/focus-bench/callgraph-native-2026-04-24T18-36-03-681",
+  "exit_reason": "ok"
+}

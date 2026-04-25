@@ -1,0 +1,26 @@
+{
+  "brick": "callgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:43:07.527Z",
+  "duration_ms": 73230,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 47,
+    "cache_creation_input_tokens": 34201,
+    "cache_read_input_tokens": 683767,
+    "output_tokens": 4417,
+    "total": 722432
+  },
+  "session_id": "820a7863-3793-4540-b5a7-33ad0c279acd",
+  "result_block": "## Result\n\n- **Brick**: callgraph\n- **Mode**: native\n- **Mini-task**: Find all non-test methods that directly call `resolveConstructorParams` in `packages/core`\n- **Answer**:\n  ```\n  instantiateClass (packages/core/injector/module-ref.ts)\n  loadInstance (packages/core/injector/injector.ts)\n  ```\n- **Turns used**: 7\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The test file `packages/core/test/injector/injector.spec.ts` also references `resolveConstructorParams` but was excluded per the \"non-test\" constraint. Both callers are async methods; `loadInstance` is inside the main `Injector` class while `instantiateClass` is in `ModuleRef`.",
+  "mini_task_spec": "Using the NestJS shallow clone in `test-repo/packages/core/injector/`, identify all **non-test** method names that directly call `resolveConstructorParams`. Search only `.ts` files within `test-repo/packages/core/` (exclude any file paths containing `/test/`). For each caller, provide the method name and the file path (relative to `test-repo/`), one per line, sorted alphabetically by method name.\n\nExpected answer format:\n```\n<method_name> (<file_path>)\n```\n\n---",
+  "workdir": "/tmp/focus-bench/callgraph-native-2026-04-24T18-43-07-526",
+  "exit_reason": "ok"
+}

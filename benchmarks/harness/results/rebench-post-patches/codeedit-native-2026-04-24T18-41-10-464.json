@@ -1,0 +1,27 @@
+{
+  "brick": "codeedit",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:38:25.181Z",
+  "duration_ms": 165283,
+  "turns": 21,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 51,
+    "cache_creation_input_tokens": 57098,
+    "cache_read_input_tokens": 839995,
+    "output_tokens": 9826,
+    "total": 906970
+  },
+  "session_id": "c66004f5-6e45-41c5-a298-05ffcbbd810c",
+  "result_block": "## Result\n\n- **Brick**: codeedit\n- **Mode**: native\n- **Mini-task**: Find inclusive line range of `getStatusByMethod` body in `router-response-controller.ts` using brace-matching\n- **Answer**:\n  ```\n  start_line: 74\n  end_line: 79\n  ```\n- **Turns used**: 9\n- **Tools used**: `Read`, `Bash`, `Glob`, `Grep`\n- **Rough token estimate**: ~6,000\n- **Notes**: The method body contains a nested `switch { }` block, so a naive \"find first `}`\" approach would incorrectly return line 79 (the switch's closing brace) instead of line 80 (the method's closing brace). This specifically exercises the brace-depth tracking that `replacebody` uses. Native mode required manually reading the file and visually tracing brace depth; the `replacebody` brick tool would do this via language-aware AST or brace-counting automatically.",
+  "mini_task_spec": "In the file `packages/core/router/router-response-controller.ts`, find the method named `getStatusByMethod` inside the `RouterResponseController` class. Using brace-matching (not just text search), determine the exact inclusive line numbers of the method's body — that is, the lines of content between (but **not** including) the line containing the opening `{` of the method and the line containing the matching closing `}`.\n\nReport the answer in the exact format:\n```\nstart_line: N\nend_line: M\n```\n\nwhere N is the first line of body content and M is the last line of body content (both 1-based, inclusive). Do **not** count the method signature line (which ends with `{`) or the method's closing `}` line.\n\n---",
+  "workdir": "/tmp/focus-bench/codeedit-native-2026-04-24T18-38-25-181",
+  "exit_reason": "ok"
+}

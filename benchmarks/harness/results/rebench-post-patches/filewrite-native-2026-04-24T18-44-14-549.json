@@ -1,0 +1,26 @@
+{
+  "brick": "filewrite",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-24T18:42:59.860Z",
+  "duration_ms": 74689,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 44,
+    "cache_creation_input_tokens": 19980,
+    "cache_read_input_tokens": 582172,
+    "output_tokens": 4689,
+    "total": 606885
+  },
+  "session_id": "a9bb6bec-6f8b-42a6-94ee-01ef40a8b065",
+  "result_block": "## Result\n- **Brick**: filewrite\n- **Mode**: native\n- **Mini-task**: Create `too-many-requests.exception.ts` following existing NestJS exception patterns\n- **Answer**:\n```typescript\nimport { HttpStatus } from '../enums/http-status.enum';\nimport { HttpException, HttpExceptionOptions } from './http.exception';\n\n/**\n * Defines an HTTP exception for *Too Many Requests* type errors.\n *\n * @see [Built-in HTTP exceptions](https://docs.nestjs.com/exception-filters#built-in-http-exceptions)\n *\n * @publicApi\n */\nexport class TooManyRequestsException extends HttpException {\n  /**\n   * Instantiate a `TooManyRequestsException` Exception.\n   *\n   * @example\n   * `throw new TooManyRequestsException()`\n   *\n   * @usageNotes\n   * The HTTP response status code will be 429.\n   * - The `objectOrError` argument defines the JSON response body or the message string.\n   * - The `descriptionOrOptions` argument contains either a short description of the HTTP error or an options object used to provide an underlying error cause.\n   *\n   * By default, the JSON response body contains two properties:\n   * - `statusCode`: this will be the value 429.\n   * - `message`: the string `'Too Many Requests'` by default; override this by supplying\n   * a string in the `objectOrError` parameter.\n   *\n   * If the parameter `objectOrError` is a string, the response body will contain an\n   * additional property, `error`, with a short description of the HTTP error. To override the\n   * entire JSON response body, pass an object instead. Nest will serialize the object\n   * and return it as the JSON response body.\n   *\n   * @param objectOrError string or object describing the error condition.\n   * @param descriptionOrOptions either a short description of the HTTP error or an options object used to provide an underlying error cause\n   */\n  constructor(\n    objectOrError?: any,\n    descriptionOrOptions: string | HttpExceptionOptions = 'Too Many Requests',\n  ) {\n    const { description, httpExceptionOptions } =\n      HttpException.extractDescriptionAndOptionsFrom(descriptionOrOptions);\n\n    super(\n      HttpException.createBody(\n        objectOrError,\n        description!,\n        HttpStatus.TOO_MANY_REQUESTS,\n      ),\n      HttpStatus.TOO_MANY_REQUESTS,\n      httpExceptionOptions,\n    );\n  }\n}\n```\n- **Turns used**: 7\n- **Tools used**: Bash, Read, Glob\n- **Rough token estimate**: ~3,500\n- **Notes**: The file `too-many-requests.exception.ts` was genuinely missing from the repo despite `HttpStatus.TOO_MANY_REQUESTS = 429` existing in the enum, making this a natural real-world addition. The brick's `create` tool maps cleanly to this task. In native mode, Bash heredoc was used instead of the brick's `create` tool.",
+  "mini_task_spec": "The `test-repo/packages/common/exceptions/` directory contains NestJS HTTP exception classes (e.g. `not-found.exception.ts`, `payload-too-large.exception.ts`). Each file follows a strict pattern: it imports `HttpStatus` from `../enums/http-status.enum` and `HttpException`/`HttpExceptionOptions` from `./http.exception`, defines a class extending `HttpException`, and has a constructor that calls `HttpException.extractDescriptionAndOptionsFrom` and `HttpException.createBody` with the appropriate `HttpStatus` member.\n\nThe `HttpStatus` enum in `test-repo/packages/common/enums/http-status.enum.ts` includes `TOO_MANY_REQUESTS = 429`, but the exceptions directory has **no** corresponding `too-many-requests.exception.ts` file.\n\n**Task**: Create the file `test-repo/packages/common/exceptions/too-many-requests.exception.ts` with a `TooManyRequestsException` class that exactly follows the same pattern as the existing exception files. Use `HttpStatus.TOO_MANY_REQUESTS` for the status code and `'Too Many Requests'` as the default description string. The class name must be `TooManyRequestsException`.\n\n**Expected answer format**: The exact content of the created file `test-repo/packages/common/exceptions/too-many-requests.exception.ts`, reproduced verbatim.\n\n---",
+  "workdir": "/tmp/focus-bench/filewrite-native-2026-04-24T18-42-59-860",
+  "exit_reason": "ok"
+}
