@@ -40,6 +40,10 @@ export function check(output: unknown, expectedFiles: number, repoPath: string):
             ) {
                 return { ok: false, reason: `expected languages to be an object` };
             }
+            const langs = o.languages as Record<string, unknown>;
+            if (!('ts' in langs) && !('.ts' in langs)) {
+                return { ok: false, reason: `expected languages to contain ts entries` };
+            }
             return { ok: true };
         })(),
     ];

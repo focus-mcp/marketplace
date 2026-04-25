@@ -9,7 +9,7 @@ import { flushPending, resetMetrics } from '../../src/operations.js';
 import { check as checkMetCostsHappy } from './scenarios/met_costs/happy/invariants.js';
 import { check as checkMetDurationHappy } from './scenarios/met_duration/happy/invariants.js';
 import { check as checkMetSessionInitial } from './scenarios/met_session/initial/invariants.js';
-import { check as checkMetSessionNonEmpty } from './scenarios/met_session/non-empty/invariants.js';
+import { check as checkMetSessionPostReset } from './scenarios/met_session/post-reset/invariants.js';
 import { check as checkMetTokensHappy } from './scenarios/met_tokens/happy/invariants.js';
 
 function assertInvariants(results: Array<{ ok: boolean; reason?: string }>): void {
@@ -37,13 +37,13 @@ describe('met_session/initial integration', () => {
     });
 });
 
-// ─── met_session/non-empty (adversarial) ─────────────────────────────────────
+// ─── met_session/post-reset (adversarial) ────────────────────────────────────
 
-describe('met_session/non-empty integration', () => {
+describe('met_session/post-reset integration', () => {
     it('adversarial: session without prior tracking → toolCalls=0 (cohérent)', async () => {
         // No tracking done — session must return empty cohérent state
         const output = await runTool(brick, 'session', {});
-        assertInvariants(checkMetSessionNonEmpty(output));
+        assertInvariants(checkMetSessionPostReset(output));
     });
 });
 

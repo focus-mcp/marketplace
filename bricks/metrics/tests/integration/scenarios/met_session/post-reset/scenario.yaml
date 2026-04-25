@@ -1,4 +1,4 @@
-name: met_session/non-empty
+name: met_session/post-reset
 tool: met_session
 description: >
   Adversarial: met_session called without prior tracking — verifies empty cohérent (toolCalls=0).

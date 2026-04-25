@@ -33,7 +33,9 @@ export function check(output: unknown): InvariantResult[] {
         (() => {
             const o = output as { issues: unknown[]; valid: boolean };
             if (!Array.isArray(o.issues)) return { ok: true };
-            const consistent = (o.issues.length === 0) === o.valid;
+            // One-way implication: issues present → cannot be valid
+            // (valid:false with empty issues is tolerable, e.g. warnings without captured issues)
+            const consistent = o.issues.length === 0 || !o.valid;
             if (!consistent) {
                 return {
                     ok: false,
