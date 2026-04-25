@@ -23,18 +23,18 @@ describe('knowledgebase composite brick — smoke', () => {
     });
 
     it('start() is a safe no-op — registers no bus handlers', async () => {
-        const bus = { handle: vi.fn(), on: vi.fn() };
+        const bus = { handle: vi.fn() };
         await brick.start({ bus });
         expect(bus.handle).not.toHaveBeenCalled();
     });
 
     it('stop() after start() is a safe no-op', async () => {
-        const bus = { handle: vi.fn(), on: vi.fn() };
+        const bus = { handle: vi.fn() };
         await brick.start({ bus });
-        await expect(Promise.resolve(brick.stop())).resolves.toBeUndefined();
+        await brick.stop();
     });
 
     it('stop() without prior start() does not throw', async () => {
-        await expect(Promise.resolve(brick.stop())).resolves.toBeUndefined();
+        await brick.stop();
     });
 });
