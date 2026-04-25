@@ -146,3 +146,18 @@ CI runs `scripts/check-changeset-alignment.ts` on every PR. For each path `brick
 ## Security
 
 Vulnerabilities must be reported **privately** — see [SECURITY.md](./SECURITY.md).
+
+## Authoring integration tests
+
+See `docs/testing/integration-tests.md` for the full guide.
+
+Short version:
+1. Add a scenario under `bricks/<brick>/tests/integration/scenarios/<tool>/<scenario-name>/`:
+   - `scenario.yaml` — tool, prompt, input
+   - `invariants.ts` — exports `check(output): InvariantResult[]`
+2. Curate goldens: `pnpm test:curate-golden -- --brick X --tool Y --scenario Z` (or hand-write for deterministic cases)
+3. Review the produced `native.expected`, `brick.expected`, `metrics.json` in the PR diff.
+4. Reference the scenario from a Vitest test under `bricks/<brick>/tests/integration/<tool>.test.ts`.
+5. The test runs offline — **no LLM at runtime**.
+
+No CI is wired yet (Phase 0 of the integration tests POC). Tests run via `pnpm -r --filter "./bricks/**" run test:integration` locally.
