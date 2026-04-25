@@ -52,7 +52,7 @@ Each entry: brick + observed signal + suspected root cause + proposed action + p
 - Consider: is `cache` even benchmarkable in an iso-task single-agent setup? If not, exclude from sweep and note in report as "stateful brick — not measurable this way".
 **Priority** : ⚠️ (also methodology discussion)
 
-### ~~🚨~~ `fileops` — +379% tokens, 5.82× latence (Phase C3 SMOKING GUN — **[FIXED in 1.3.0 — see PR #<num>]**)
+### ~~🚨~~ `fileops` — +379% tokens, 5.82× latence (Phase C3 SMOKING GUN — **[FIXED in 1.3.0 — see PR #111]**)
 
 > **Status**: FIXED. P0 guard + P1 descriptions implemented. Re-bench expected next sweep.
 > Historical doc preserved below.
