@@ -1,0 +1,6 @@
+name: met_session/non-empty
+tool: met_session
+description: >
+  Adversarial: met_session called without prior tracking — verifies empty cohérent (toolCalls=0).
+input: {}
+tags: [adversarial, stateful]

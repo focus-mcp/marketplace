@@ -1,0 +1,7 @@
+name: rsh_multisource/happy
+tool: rsh_multisource
+description: >
+  paths=[2 TypeScript files] → sources[2] with exports, imports, types, functions.
+input:
+  paths: ["<file-a>", "<file-b>"]
+tags: [happy]

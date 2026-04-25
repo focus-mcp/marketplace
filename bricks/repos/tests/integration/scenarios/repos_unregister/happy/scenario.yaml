@@ -1,0 +1,7 @@
+name: repos_unregister/happy
+tool: repos_unregister
+description: >
+  Sequenced: register + unregister + list (empty). Verifies ok=true and list is empty.
+input:
+  name: "my-repo"
+tags: [happy, stateful, sequenced]

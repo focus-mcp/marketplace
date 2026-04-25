@@ -1,0 +1,7 @@
+name: tsk_complete/happy
+tool: tsk_complete
+description: >
+  Sequenced: create + complete + status → task appears with status=done.
+input:
+  result: "Feature X implemented successfully"
+tags: [happy, stateful, sequenced]

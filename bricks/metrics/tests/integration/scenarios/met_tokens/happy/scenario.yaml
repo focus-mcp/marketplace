@@ -1,0 +1,9 @@
+name: met_tokens/happy
+tool: met_tokens
+description: >
+  Sequenced: track 2 tool calls, verify cumulative stats after each.
+input:
+  tool: "search"
+  inputTokens: 100
+  outputTokens: 50
+tags: [happy, stateful, sequenced]

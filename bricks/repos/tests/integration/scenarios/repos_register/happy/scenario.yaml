@@ -1,0 +1,8 @@
+name: repos_register/happy
+tool: repos_register
+description: >
+  Register a repo by name+path. Verifies ok=true and repo appears in list.
+input:
+  name: "my-repo"
+  path: "<tmpdir>"
+tags: [happy, stateful]

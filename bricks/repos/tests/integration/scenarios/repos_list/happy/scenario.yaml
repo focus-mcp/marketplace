@@ -1,0 +1,6 @@
+name: repos_list/happy
+tool: repos_list
+description: >
+  Sequenced: 3× register + list. Verifies repos.length=3.
+input: {}
+tags: [happy, stateful, sequenced]

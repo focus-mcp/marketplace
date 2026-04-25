@@ -1,0 +1,6 @@
+name: met_session/initial
+tool: met_session
+description: >
+  Empty session — no tracking beforehand. Verifies toolCalls=0, totalTokens=0, startedAt>0.
+input: {}
+tags: [happy, stateful]

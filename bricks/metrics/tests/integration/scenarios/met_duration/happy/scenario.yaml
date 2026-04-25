@@ -1,0 +1,6 @@
+name: met_duration/happy
+tool: met_duration
+description: >
+  Sequenced: track tokens with duration, then retrieve duration stats. Verifies calls, avg, min, max.
+input: {}
+tags: [happy, stateful, sequenced]
