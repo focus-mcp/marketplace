@@ -18,7 +18,13 @@ export function check(output: unknown): InvariantResult[] {
                 cacheHits: unknown;
                 cacheMisses: unknown;
             };
-            for (const [field, val] of Object.entries(out)) {
+            const checks: Array<[string, unknown]> = [
+                ['filesLoaded', out.filesLoaded],
+                ['tokensUsed', out.tokensUsed],
+                ['cacheHits', out.cacheHits],
+                ['cacheMisses', out.cacheMisses],
+            ];
+            for (const [field, val] of checks) {
                 if (typeof val !== 'number') {
                     return { ok: false, reason: `field "${field}" must be a number` };
                 }

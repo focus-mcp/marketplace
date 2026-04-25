@@ -40,6 +40,9 @@ export function check(output: unknown): InvariantResult[] {
         (() => {
             const out = output as { results: unknown[] };
             if (!Array.isArray(out.results)) return { ok: true };
+            if (out.results.length === 0) {
+                return { ok: false, reason: 'expected at least 1 similar result' };
+            }
             const hasTarget = out.results.some((r) => (r as { id: string }).id === 'doc-auth');
             if (hasTarget) {
                 return {

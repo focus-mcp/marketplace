@@ -16,19 +16,6 @@ const NESTJS_INJECTOR = resolve(
     'fixtures/nestjs/packages/core/injector',
 );
 
-let sandboxPath: string;
-let cleanupSandbox: () => Promise<void>;
-
-beforeEach(async () => {
-    const sb = await createSandbox('fmcp-mr-itest-');
-    sandboxPath = sb.path;
-    cleanupSandbox = sb.cleanup;
-});
-
-afterEach(async () => {
-    await cleanupSandbox();
-});
-
 describe('mr_batch integration', () => {
     it('happy: batch 3 NestJS files → files record with non-empty content', async () => {
         const paths = [
@@ -42,12 +29,27 @@ describe('mr_batch integration', () => {
         }
     });
 
-    it('adversarial: non-existent path → throws error', async () => {
-        await expect(
-            runTool(brick, 'batch', {
-                paths: [resolve(sandboxPath, 'does-not-exist.ts')],
-            }),
-        ).rejects.toThrow();
+    describe('adversarial', () => {
+        let sandboxPath: string;
+        let cleanupSandbox: () => Promise<void>;
+
+        beforeEach(async () => {
+            const sb = await createSandbox('fmcp-mr-itest-');
+            sandboxPath = sb.path;
+            cleanupSandbox = sb.cleanup;
+        });
+
+        afterEach(async () => {
+            await cleanupSandbox();
+        });
+
+        it('non-existent path → throws error', async () => {
+            await expect(
+                runTool(brick, 'batch', {
+                    paths: [resolve(sandboxPath, 'does-not-exist.ts')],
+                }),
+            ).rejects.toThrow();
+        });
     });
 });
 

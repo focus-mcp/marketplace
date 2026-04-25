@@ -12,7 +12,12 @@ export function check(output: unknown): InvariantResult[] {
         inv.outputHasField(output, 'tokensUsed'),
         (() => {
             const out = output as { changed: unknown; refreshed: unknown; tokensUsed: unknown };
-            for (const [field, val] of Object.entries(out)) {
+            const checks: Array<[string, unknown]> = [
+                ['changed', out.changed],
+                ['refreshed', out.refreshed],
+                ['tokensUsed', out.tokensUsed],
+            ];
+            for (const [field, val] of checks) {
                 if (typeof val !== 'number') {
                     return { ok: false, reason: `field "${field}" must be a number` };
                 }
