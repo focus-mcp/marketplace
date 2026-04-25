@@ -1,0 +1,8 @@
+# Happy path: track a single file access
+tool: hm_track
+prompt: |
+    Track a read access to "src/app.ts".
+    Expect file="src/app.ts" and totalAccesses=1.
+input:
+    file: src/app.ts
+    type: read

@@ -1,0 +1,11 @@
+# Happy path: prioritize files by relevance to a query
+tool: cp_prioritize
+prompt: |
+    Rank NestJS files by relevance to the query "testing".
+    Expect testing/index.ts ranked first with score > 0.
+input:
+    files:
+        - fixtures/nestjs/packages/common/index.ts
+        - fixtures/nestjs/packages/testing/index.ts
+        - fixtures/nestjs/packages/platform-ws/index.ts
+    query: testing

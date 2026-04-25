@@ -1,0 +1,8 @@
+# Happy path: optimize file reading plan for budget=5000
+tool: tb_optimize
+prompt: |
+    Generate a reading plan for NestJS fixtures within a 5000-token budget.
+    Expect plan array with mode assignments, totalEstimate >= 0, fits boolean.
+input:
+    budget: 5000
+    dir: fixtures/nestjs

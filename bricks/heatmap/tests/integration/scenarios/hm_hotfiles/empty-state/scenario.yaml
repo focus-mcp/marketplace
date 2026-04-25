@@ -1,0 +1,5 @@
+# Adversarial: hotfiles with no prior tracking → empty files array
+tool: hm_hotfiles
+prompt: |
+    Call hotfiles without any prior tracking.
+    Expect files to be an empty array (no crash, no stale state).

@@ -1,0 +1,11 @@
+# Happy path: fit NestJS files within 5000 token budget
+tool: cp_budget
+prompt: |
+    Pack as many files as possible from NestJS fixtures within a 5000-token budget.
+    Expect at least 1 file included and tokensUsed <= 5000.
+input:
+    files:
+        - fixtures/nestjs/packages/common/index.ts
+        - fixtures/nestjs/packages/testing/index.ts
+        - fixtures/nestjs/packages/platform-ws/index.ts
+    budget: 5000
