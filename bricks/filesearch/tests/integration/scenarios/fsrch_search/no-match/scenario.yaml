@@ -1,0 +1,8 @@
+# Adversarial: search for a pattern that matches nothing → empty matches, no error
+tool: fsrch_search
+prompt: |
+    Search for a pattern that does not exist in any file in the directory.
+    The tool must return an empty matches array rather than throwing.
+input:
+    path: <fixtures>/synthetic
+    pattern: "XYZZY_NONEXISTENT_PATTERN_12345"
