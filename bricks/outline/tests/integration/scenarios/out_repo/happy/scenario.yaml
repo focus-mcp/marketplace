@@ -1,0 +1,6 @@
+tool: out_repo
+prompt: |
+    Outline the entire ./fixtures/nestjs/packages/core/injector directory — return
+    a per-file summary of symbols, exports, imports, and line counts.
+input:
+    dir: ./fixtures/nestjs/packages/core/injector

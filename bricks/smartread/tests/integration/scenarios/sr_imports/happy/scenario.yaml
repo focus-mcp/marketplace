@@ -1,0 +1,6 @@
+tool: sr_imports
+prompt: |
+    Read ./fixtures/nestjs/packages/core/injector/compiler.ts in imports mode —
+    return only import/require lines.
+input:
+    path: ./fixtures/nestjs/packages/core/injector/compiler.ts

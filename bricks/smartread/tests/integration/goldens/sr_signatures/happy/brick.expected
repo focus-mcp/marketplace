@@ -1,0 +1,6 @@
+{
+  "lines": [
+    "export interface ModuleFactory {",
+    "export class ModuleCompiler {"
+  ]
+}

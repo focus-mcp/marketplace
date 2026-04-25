@@ -1,0 +1,9 @@
+{
+  "lines": [
+    "export interface ModuleFactory {",
+    "export class ModuleCompiler {",
+    "    const { type, dynamicMetadata } = this.extractMetadata(moduleClsOrDynamic);",
+    "    const token = dynamicMetadata",
+    "    const { module: type, ...dynamicMetadata } = moduleClsOrDynamic;"
+  ]
+}
