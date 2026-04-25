@@ -10,6 +10,12 @@ import { check as checkMrBatchHappy } from './scenarios/mr_batch/happy/invariant
 import { check as checkMrDedupHappy } from './scenarios/mr_dedup/happy/invariants.js';
 import { check as checkMrMergeHappy } from './scenarios/mr_merge/happy/invariants.js';
 
+function assertInvariants(results: { ok: boolean; reason?: string }[]): void {
+    for (const r of results) {
+        if (!r.ok) throw new Error(`Invariant violated: ${r.reason}`);
+    }
+}
+
 const NESTJS_INJECTOR = resolve(
     import.meta.dirname,
     '../../../..',
@@ -24,9 +30,7 @@ describe('mr_batch integration', () => {
             resolve(NESTJS_INJECTOR, 'constants.ts'),
         ];
         const output = await runTool(brick, 'batch', { paths });
-        for (const i of checkMrBatchHappy(output)) {
-            if (!i.ok) throw new Error(`Invariant violated: ${i.reason}`);
-        }
+        assertInvariants(checkMrBatchHappy(output));
     });
 
     describe('adversarial', () => {
@@ -60,9 +64,7 @@ describe('mr_dedup integration', () => {
             resolve(NESTJS_INJECTOR, 'container.ts'),
         ];
         const output = await runTool(brick, 'dedup', { paths });
-        for (const i of checkMrDedupHappy(output)) {
-            if (!i.ok) throw new Error(`Invariant violated: ${i.reason}`);
-        }
+        assertInvariants(checkMrDedupHappy(output));
     });
 });
 
@@ -73,9 +75,7 @@ describe('mr_merge integration', () => {
             resolve(NESTJS_INJECTOR, 'constants.ts'),
         ];
         const output = await runTool(brick, 'merge', { paths });
-        for (const i of checkMrMergeHappy(output)) {
-            if (!i.ok) throw new Error(`Invariant violated: ${i.reason}`);
-        }
+        assertInvariants(checkMrMergeHappy(output));
         const out = output as { content: string };
         expect(out.content).toContain('compiler.ts');
         expect(out.content).toContain('constants.ts');
