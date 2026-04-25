@@ -67,5 +67,16 @@ export function check(output: unknown, sessionCount: number): InvariantResult[] 
             }
             return { ok: true };
         })(),
+        // trend direction must be "improving" for 10%→40%→80% data
+        (() => {
+            const o = output as { trend: unknown };
+            if (o.trend !== 'improving') {
+                return {
+                    ok: false,
+                    reason: `expected trend="improving" for 10%→40%→80% data, got "${String(o.trend)}"`,
+                };
+            }
+            return { ok: true };
+        })(),
     ];
 }
