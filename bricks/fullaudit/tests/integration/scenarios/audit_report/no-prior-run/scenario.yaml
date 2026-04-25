@@ -1,0 +1,8 @@
+name: audit_report/no-prior-run
+tool: audit_report
+description: >
+  Adversarial: audit_report called without a prior audit_run.
+  Expected: clear error message in report string, no exception thrown.
+  Format defaults to markdown.
+input: {}
+tags: [adversarial, stateful]

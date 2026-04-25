@@ -1,0 +1,9 @@
+name: sav_report/no-savings
+tool: sav_report
+description: >
+  Adversarial: actual > baseline (1000 actual, 2000 baseline) — negative savings.
+  Tool must not throw. saved is negative, percentage is negative.
+input:
+  baselineTokens: 1000
+  actualTokens: 2000
+tags: [adversarial, stateless]

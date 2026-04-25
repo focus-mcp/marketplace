@@ -1,0 +1,7 @@
+name: sav_compare/happy
+tool: sav_compare
+description: >
+  Sequenced: two sav_report calls, then sav_compare(sessionA, sessionB).
+  Session A: 8000 saved (80%). Session B: 5000 saved (50%).
+  Expects better=sessionA, improvement≈30, correct details for each session.
+tags: [happy, stateful, sequenced]

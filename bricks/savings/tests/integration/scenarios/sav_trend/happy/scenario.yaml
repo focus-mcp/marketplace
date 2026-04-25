@@ -1,0 +1,6 @@
+name: sav_trend/happy
+tool: sav_trend
+description: >
+  Sequenced: 3 sav_report calls with decreasing actual tokens (improving trend),
+  then sav_trend(last=3). Verifies sessions array, avgSavingsPercent, and trend direction.
+tags: [happy, stateful, sequenced]

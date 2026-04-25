@@ -1,0 +1,4 @@
+{
+  "report": "No audit data available. Run `audit:run` first.",
+  "format": "markdown"
+}

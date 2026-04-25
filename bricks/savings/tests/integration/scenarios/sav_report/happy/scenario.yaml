@@ -1,0 +1,9 @@
+name: sav_report/happy
+tool: sav_report
+description: >
+  Pure compute: 10000 baseline, 2000 actual — 80% savings.
+  Verifies sessionId, saved, percentage, factor fields.
+input:
+  baselineTokens: 10000
+  actualTokens: 2000
+tags: [happy, stateless]
