@@ -1,0 +1,8 @@
+# Happy path: search for @Injectable in synthetic fixtures directory
+tool: fsrch_search
+prompt: |
+    Search for the @Injectable decorator pattern in the synthetic fixtures directory.
+    Expect at least one match returned in the matches array.
+input:
+    path: <fixtures>/synthetic
+    pattern: "@Injectable"
