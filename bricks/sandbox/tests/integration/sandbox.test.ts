@@ -17,17 +17,8 @@ import { check as checkBoxRunSyntaxError } from './scenarios/box_run/syntax-erro
 
 // Sandbox is stateless — each call creates a fresh vm.createContext. No reset needed.
 
-let testDir: string;
-let cwd: string;
-
-beforeEach(async () => {
-    testDir = await mkdtemp(join(tmpdir(), 'focusmcp-sandbox-integ-'));
-    cwd = process.cwd();
-});
-
-afterEach(async () => {
-    await rm(testDir, { recursive: true, force: true });
-});
+// cwd captured once — used by box_read which needs a relative path within process.cwd()
+const cwd = process.cwd();
 
 // ─── box_run ─────────────────────────────────────────────────────────────────
 
@@ -91,6 +82,16 @@ describe('box_read integration', () => {
 // ─── box_file ────────────────────────────────────────────────────────────────
 
 describe('box_file integration', () => {
+    let testDir: string;
+
+    beforeEach(async () => {
+        testDir = await mkdtemp(join(tmpdir(), 'focusmcp-sandbox-integ-'));
+    });
+
+    afterEach(async () => {
+        await rm(testDir, { recursive: true, force: true });
+    });
+
     it('happy: file({path}) executes JS returning 42 → result="42", no error, size<=2048B', async () => {
         const filePath = join(testDir, 'script.js');
         await writeFile(filePath, '42', 'utf-8');

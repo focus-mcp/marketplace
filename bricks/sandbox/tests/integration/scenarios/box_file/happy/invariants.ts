@@ -33,5 +33,11 @@ export function check(output: unknown): InvariantResult[] {
             }
             return { ok: true };
         })(),
+        (() => {
+            if (!Array.isArray(o.logs)) {
+                return { ok: false, reason: `expected logs to be an array, got ${typeof o.logs}` };
+            }
+            return { ok: true };
+        })(),
     ];
 }
