@@ -1,0 +1,8 @@
+# Happy path: compute in-memory delta between two strings (no FS)
+tool: fd_delta
+prompt: |
+    Compute the delta between two short strings.
+    Expect a delta array with removed (-) and added (+) lines.
+input:
+    before: "line1\nline2\nline3"
+    after: "line1\nline2b\nline3"

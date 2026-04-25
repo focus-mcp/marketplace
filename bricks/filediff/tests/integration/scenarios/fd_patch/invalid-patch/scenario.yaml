@@ -1,0 +1,8 @@
+# Adversarial: apply a malformed patch → error or no-op, file unchanged
+tool: fd_patch
+prompt: |
+    Attempt to apply a completely malformed patch string (no valid unified diff header).
+    The tool should either throw a clear error or leave the file unchanged.
+input:
+    path: <sandbox>/untouched.ts
+    patch: "this is not a valid patch at all @@@ garbage"

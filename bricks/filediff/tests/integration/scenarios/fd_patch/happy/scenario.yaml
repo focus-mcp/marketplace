@@ -1,0 +1,9 @@
+# Happy path: apply valid unified diff patch to a sandbox file
+tool: fd_patch
+prompt: |
+    Apply a unified diff patch to a file in the sandbox.
+    The patch changes "Hello World" to "Hello FocusMCP".
+    Expect the file content to be updated correctly.
+input:
+    path: <sandbox>/patchable.ts
+    patch: "--- a/patchable.ts\n+++ b/patchable.ts\n@@ -1,1 +1,1 @@\n-Hello World\n+Hello FocusMCP"
