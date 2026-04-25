@@ -1,0 +1,7 @@
+tool: sym_find
+prompt: |
+    In ./fixtures/nestjs/packages/core/injector, find all exported symbols whose
+    name contains 'Module'. Return the result structure.
+input:
+    name: Module
+    dir: ./fixtures/nestjs/packages/core/injector

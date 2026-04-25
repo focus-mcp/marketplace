@@ -8,18 +8,16 @@
 
 | | Native | Brick | Δ |
 |---|---:|---:|---:|
-| Total tokens | 573,213 | 562,368 | -1.9% |
-| cache_creation | 17,684 | 50,545 | |
-| cache_read | 551,880 | 505,878 | |
-| output | 3,608 | 5,861 | |
-| Turns (SDK) | 16 | 18 | |
-| Duration (s) | 72.0 | 108.4 | +51% ⚠️ |
+| Total tokens | 628,115 | 603,717 | -3.9% |
+| cache_creation | 22,507 | 32,881 | |
+| cache_read | 601,347 | 564,126 | |
+| output | 4,217 | 6,628 | |
+| Turns (SDK) | 16 | 22 | |
+| Duration (s) | 95.2 | 128.6 | +35% ⚠️ |
 
 ## Mini-task (iso)
 
-**Task**: Using the `test-repo/packages/core/scanner.ts` file, identify all public methods of the `DependenciesScanner` class (the only exported class in that file). Report the method names sorted alphabetically, one per line. Do not include private, protected, or constructor entries — only methods declared with the `public` keyword. The `async` modifier does not affect whether a method is public; include async public methods as well.
-
-**Expected answer format**: A sorted alphabetical list of method names, one per line (26 entries total). Do not include parentheses, parameters, return types, or any other text — just the bare method name.
+In the NestJS test repository, find all **public method names** defined in the `Injector` class located at `test-repo/packages/core/injector/injector.ts`. Report the method names as a sorted alphabetical list, one name per line. Do not include access modifier keywords (`public`, `async`), return types, generic type parameters, or parameters — only the bare method name. Constructors and private/protected members should not be included.
 
 ---
 
@@ -35,29 +33,34 @@
 ## Answers comparison
 
 **Native answer**: ```
-addScopedEnhancersMetadata
-applyApplicationProviders
-calculateModulesDistance
-getApplyProvidersMap
-getApplyRequestProvidersMap
-... (26 total)
+applyProperties
+applySettlementSignal
+getClassDependencies
+getFactoryProviderDependencies
+instantiateClass
+... (28 total)
 ```
 
-**Brick answer**: *(unavailable — brick tools failed to load; see Notes)*
+**Brick answer**: *(unavailable — see Notes)*
 
 **Match**: divergent (manual check needed)
 
 ## Observations
 
-_(empty — to be filled in the qualitative analysis pass)_
+- Brick is near-neutral with slight regression: -3.9% tokens (minimal savings), +35% duration, 0/4 coverage. The `symbol` brick could not be loaded (`@focus-mcp/brick-symbol` npm package absent) — all overhead is from failed load attempts (22 turns vs 16 native).
+- Three distinct failure modes were encountered across brick loading, indicating a systemic env issue in this bench run. Despite the failure, the agent completed the task via native fallback (brick answer unavailable).
+- The near-zero savings (-3.9%) suggests the native agent also struggled with this task (16 turns, large output), so the reduced context provided minimal benefit.
 
 ## Auto-detected issues
 
 - Tools not called: `sym_find`, `sym_get`, `sym_bulk`, `sym_body`
-- Turns > 15 (brick): 18
+- Turns > 15 (brick): 22
 - Turns > 15 (native): 16
-- Brick slower than native by 51% (UX concern)
+- Brick notes flagged: failed — "The `symbol` brick could not be loaded. Three distinct failure modes were encountered across all installed bricks:
+  1. **`symbol`** — `Cannot find module '@focus-mcp/brick-symbol'` (npm package not p"
+- Brick slower than native by 35% (UX concern)
 
 ## Recommendations
 
-_(empty — to be filled after analysis)_
+- 🔧 Ensure `@focus-mcp/brick-symbol` is published to npm and pre-installed in bench environment.
+- 📝 Exclude from Phase 1 summary stats — result measures load-failure overhead, not symbol-lookup performance.

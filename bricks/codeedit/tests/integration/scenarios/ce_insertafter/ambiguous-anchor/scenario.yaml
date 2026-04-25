@@ -1,0 +1,10 @@
+tool: ce_insertafter
+prompt: |
+    In the file ambiguous.php, insert the line '// INSERTED MARKER' after the
+    hasAnyChange function definition. The anchor string 'hasAnyChange' appears
+    in three places in the file — choose the right one (the function definition)
+    or refuse with inserted=false.
+input:
+    path: ambiguous.php
+    pattern: "hasAnyChange"
+    content: "    // INSERTED MARKER"

@@ -8,22 +8,27 @@
 
 | | Native | Brick | Δ |
 |---|---:|---:|---:|
-| Total tokens | 478,394 | 429,392 | -10.2% |
-| cache_creation | 25,578 | 42,877 | |
-| cache_read | 448,594 | 382,295 | |
-| output | 4,188 | 4,144 | |
-| Turns (SDK) | 12 | 16 | |
-| Duration (s) | 67.5 | 104.8 | +55% ⚠️ |
+| Total tokens | 474,822 | 722,678 | +52.2% ⚠️ |
+| cache_creation | 13,569 | 51,859 | |
+| cache_read | 457,061 | 661,298 | |
+| output | 4,156 | 9,413 | |
+| Turns (SDK) | 14 | 20 | |
+| Duration (s) | 75.4 | 191.4 | +154% ⚠️ |
 
 ## Mini-task (iso)
 
-You are working with the NestJS monorepo shallow clone located at `test-repo/`. Your task is:
+**Context**: You are working with a NestJS monorepo located at `test-repo/`. Each NestJS package under `test-repo/packages/` exposes a top-level `index.ts` barrel file. These barrel files are the most repeatedly-read files during a build pipeline and are the ideal candidates to pre-load using the cache brick's `warmup` tool.
 
-**Find every TypeScript source file under `test-repo/packages/common/` that contains at least one `export class` declaration. Exclude test files (`*.spec.ts`) and declaration files (`*.d.ts`). List the matching file paths relative to `test-repo/` (i.e., starting with `packages/common/…`), one per line, sorted alphabetically.**
+**Task**: Find all `index.ts` files located exactly one level deep inside `test-repo/packages/` (i.e., matching the pattern `test-repo/packages/<package-name>/index.ts`). List their paths relative to `test-repo/`, one per line, sorted alphabetically. These are the paths that should be passed to `warmup`.
 
-In brick mode you should use the `cache` brick: call `warmup` to pre-load all eligible `.ts` files from `test-repo/packages/common/` into the in-memory cache, then call `get` on each file path to retrieve its content from cache (avoiding redundant disk reads), and filter to those whose content contains the string `export class`. Report the file paths relative to `test-repo/`, sorted alphabetically.
+**Expected answer format**: A list of relative file paths (relative to `test-repo/`), one per line, sorted alphabetically. Example format:
+```
+packages/common/index.ts
+packages/core/index.ts
+...
+```
 
-Expected answer format: a plain list of file paths, one per line, sorted alphabetically (e.g., `packages/common/exceptions/bad-gateway.exception.ts` on the first line, etc.). There are 44 matching files total.
+Do not include paths deeper than one level inside `packages/` (e.g., `packages/common/utils/index.ts` should not appear).
 
 ---
 
@@ -40,28 +45,34 @@ Expected answer format: a plain list of file paths, one per line, sorted alphabe
 ## Answers comparison
 
 **Native answer**: ```
-packages/common/exceptions/bad-gateway.exception.ts
-packages/common/exceptions/bad-request.exception.ts
-packages/common/exceptions/conflict.exception.ts
-packages/common/exceptions/forbidden.exception.ts
-packages/common/exceptions/gateway-timeout.exception.ts
-... (44 total)
+  packages/common/index.ts
+  packages/core/index.ts
+  packages/microservices/index.ts
+  packages/platform-express/index.ts
+  packages/platform-fastify/index.ts
+... (10 total)
 ```
 
-**Brick answer**: UNAVAILABLE — the cache brick could not be loaded (`Cannot find module '@focus-mcp/brick-cache'`); its tools `warmup` and `get` were never registered, so the task could not be completed using brick tools only
+**Brick answer**: _Unable to determine_ — the cache brick could not be loaded (manifest version `^0.0.0` fails SemVer 2.0 validation; `focus_update` is not yet implemented; `focus_remove` returned "Lock entry not found"). None of the available `mcp__focus__*` tools enumerate the local filesystem, so the `index.ts` paths could not be discovered.
 
-**Match**: divergent (manual check needed)
+**Match**: partial
 
 ## Observations
 
-_(empty — to be filled in the qualitative analysis pass)_
+- Stateful brick — designed for caching repeated file reads across turns. Single-task iso-bench cannot exercise state accumulation, so gains/losses here are not representative.
+- The brick failed to load (manifest version `^0.0.0` fails SemVer validation) — 0/5 tool coverage and a regressive result (+52.2% tokens, +154% duration) caused by failed load attempts consuming turns.
+- The regression is entirely a loading-failure artifact, not evidence that caching adds overhead when functional.
 
 ## Auto-detected issues
 
 - Tools not called: `cache_get`, `cache_set`, `cache_invalidate`, `cache_warmup`, `cache_stats`
-- Turns > 15 (brick): 16
-- Brick slower than native by 55% (UX concern)
+- Turns > 15 (brick): 20
+- Brick answer is partial/not found
+- Brick slower than native by 154% (UX concern)
+- Brick uses MORE tokens than native (722,678 vs 474,822)
 
 ## Recommendations
 
-_(empty — to be filled after analysis)_
+- 🔧 Fix manifest version to a valid semver string before re-benching; the regression is a loading artifact.
+- 🔧 Re-bench in Phase 2b multi-task scenario (multiple reads of the same files across tasks) to measure real cache hit savings.
+- 📝 Do not use single-task numbers for marketing on this brick.

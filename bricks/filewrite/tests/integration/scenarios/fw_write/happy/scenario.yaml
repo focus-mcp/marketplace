@@ -1,0 +1,8 @@
+# Happy path: overwrite existing file
+tool: fw_write
+prompt: |
+    Overwrite an existing file with new content.
+    Return written=true and the resolved path.
+input:
+    path: <sandbox>/overwrite-me.txt
+    content: "Overwritten content\n"

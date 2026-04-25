@@ -1,0 +1,4 @@
+[submodule "fixtures/nestjs"]
+	path = fixtures/nestjs
+	url = https://github.com/nestjs/nest.git
+	branch = master

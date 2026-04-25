@@ -1,0 +1,9 @@
+# Adversarial: replace pattern that matches nothing → file must remain unchanged
+tool: fsrch_replace
+prompt: |
+    Attempt to replace a pattern that does not exist in the file.
+    The tool must return replacements=0 and the file content must be identical to before (fail-safe).
+input:
+    path: <sandbox>/unchanged.ts
+    pattern: "XYZZY_NONEXISTENT_12345"
+    replacement: "SHOULD_NEVER_APPEAR"

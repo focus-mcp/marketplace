@@ -1,0 +1,9 @@
+# Happy path: replace pattern in sandbox file, verify mutation
+tool: fsrch_replace
+prompt: |
+    Replace all occurrences of "Hello World!" with "Hello FocusMCP!" in the given file.
+    Expect replacements=1 and the file content to be updated.
+input:
+    path: <sandbox>/replace-me.ts
+    pattern: "Hello World!"
+    replacement: "Hello FocusMCP!"

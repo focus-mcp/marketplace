@@ -1,0 +1,8 @@
+# Adversarial: create on existing path without force → must throw
+tool: fw_create
+prompt: |
+    Attempt to create a file at a path that already exists, without setting force=true.
+    The tool should throw an error protecting against silent overwrite.
+input:
+    path: <sandbox>/existing.txt
+    content: "NEW content that should NOT overwrite"

@@ -1,0 +1,8 @@
+# Happy path: compute unified diff between two file versions
+tool: fd_diff
+prompt: |
+    Compute the unified diff between version-a.ts and version-b.ts.
+    Expect a non-empty diff string containing the changed lines.
+input:
+    a: <fixtures>/synthetic/version-a.ts
+    b: <fixtures>/synthetic/version-b.ts

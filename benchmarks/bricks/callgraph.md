@@ -8,21 +8,18 @@
 
 | | Native | Brick | Δ |
 |---|---:|---:|---:|
-| Total tokens | 722,432 | 725,731 | +0.5% ⚠️ |
-| cache_creation | 34,201 | 35,222 | |
-| cache_read | 683,767 | 684,181 | |
-| output | 4,417 | 6,222 | |
-| Turns (SDK) | 17 | 25 | |
-| Duration (s) | 73.2 | 119.4 | +63% ⚠️ |
+| Total tokens | 642,134 | 759,335 | +18.3% ⚠️ |
+| cache_creation | 70,126 | 54,479 | |
+| cache_read | 566,408 | 697,799 | |
+| output | 5,559 | 6,955 | |
+| Turns (SDK) | 14 | 24 | |
+| Duration (s) | 97.6 | 128.5 | +32% ⚠️ |
 
 ## Mini-task (iso)
 
-Using the NestJS shallow clone in `test-repo/packages/core/injector/`, identify all **non-test** method names that directly call `resolveConstructorParams`. Search only `.ts` files within `test-repo/packages/core/` (exclude any file paths containing `/test/`). For each caller, provide the method name and the file path (relative to `test-repo/`), one per line, sorted alphabetically by method name.
+Using the **callgraph** brick's `callers` tool, find all methods within the `NestFactoryStatic` class in `test-repo/packages/core/nest-factory.ts` that directly call `this.initialize(`. Search the directory `test-repo/packages/core`. Report the distinct public method names (not overload signatures, just unique names) sorted alphabetically, one per line.
 
-Expected answer format:
-```
-<method_name> (<file_path>)
-```
+Expected answer format: a list of method names, sorted alphabetically, one per line.
 
 ---
 
@@ -38,27 +35,30 @@ Expected answer format:
 ## Answers comparison
 
 **Native answer**: ```
-  instantiateClass (packages/core/injector/module-ref.ts)
-  loadInstance (packages/core/injector/injector.ts)
+  create
+  createApplicationContext
+  createMicroservice
   ```
 ```
 
-**Brick answer**: *(unable to determine — brick tools not functional)*
+**Brick answer**: Unable to determine — the callgraph brick's `callers` tool could not be loaded
 
 **Match**: divergent (manual check needed)
 
 ## Observations
 
-_(empty — to be filled in the qualitative analysis pass)_
+- Brick is in Cat C (regressive): +18.3% tokens, +32% duration, 0/4 tool coverage. The brick could not be loaded (npm package absent from bench environment) — all metrics reflect failed load attempts.
+- The regression is entirely a loading-failure artifact: the agent spent extra turns attempting to load the brick before falling back to native tools.
+- Despite the failure, the task was completed correctly by native fallback. The callgraph domain requires a functioning index to provide value.
 
 ## Auto-detected issues
 
 - Tools not called: `cg_callers`, `cg_callees`, `cg_chain`, `cg_depth`
-- Turns > 15 (brick): 25
-- Turns > 15 (native): 17
-- Brick slower than native by 63% (UX concern)
-- Brick uses MORE tokens than native (725,731 vs 722,432)
+- Turns > 15 (brick): 24
+- Brick slower than native by 32% (UX concern)
+- Brick uses MORE tokens than native (759,335 vs 642,134)
 
 ## Recommendations
 
-_(empty — to be filled after analysis)_
+- 🔧 Ensure `@focus-mcp/brick-callgraph` is published to npm and pre-installed in the bench environment before re-running.
+- 📝 Exclude from Phase 1 summary stats — the result measures load-failure overhead, not brick value.

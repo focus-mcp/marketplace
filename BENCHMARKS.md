@@ -233,29 +233,3 @@ The `summary.json` is at [`benchmarks/harness/results/summary.json`](../benchmar
 | fileops        | 404k      | 1,939k    | +379.2% | 5.82×  | 1/4      |
 
 Individual fiches: [`benchmarks/bricks/<name>.md`](../benchmarks/bricks/) — each contains the mini-task definition, per-token breakdown, tool coverage, answer comparison, and recommendations.
-
-## 9. Before / After — post-patch re-bench
-
-Re-ran the 13 bricks patched since the initial Phase 2a sweep (8 bumped to 1.2.0 for P0 functional fixes, 5 bumped to 1.1.1 for manifest version null fix). Same iso-task protocol, same model (claude-sonnet-4-6), same NestJS repo. Note: several bricks needed `--max-turns 40` (vs 20 in Phase 2a) because the patches added complexity to the tools.
-
-| Brick | Initial Δ tokens | Post-patch Δ tokens | Initial latency | Post-patch latency | Fix summary |
-|---|---:|---:|---:|---:|---|
-| cache        |   +38.4% |   -10.2% |    1.90× |    1.55× | manifest version null fix (1.1.1) |
-| callgraph    |   +18.3% |    +0.5% |    1.32× |    1.63× | manifest version null fix (1.1.1) |
-| codeedit     |   -73.8% |   +23.5% |    0.25× |    1.64× | tree-sitter+dryRun+syntax-check (prod-safe) |
-| convert      |   -51.2% |   +88.4% |    0.49× |    2.82× | runtime bug fix (val.includes) |
-| depgraph     |   +50.5% |   -60.1% |    2.09× |    0.66× | manifest version null fix (1.1.1) |
-| fileops      |  +379.2% |   -14.3% |    5.82× |    1.35× | path sandbox fix + fo_batch |
-| filewrite    |   -22.0% |   +86.2% |    1.68× |    3.17× | fw_create idempotency fix |
-| graphexport  |  +118.7% |   +77.1% |    1.74× |    1.09× | standalone fix (non-standalone → OK) |
-| lastversion  |   +22.2% |   +45.2% |    1.43× |    1.55× | handler registration fix |
-| metrics      |  +102.6% |    +7.5% |    6.06× |    1.95× | async fix + met_batch |
-| sandbox      |   +42.0% |   -14.9% |    4.14× |    0.99× | TS/FS support added |
-| symbol       |    -3.9% |    -1.9% |    1.35× |    1.51× | manifest version null fix (1.1.1) |
-| treesitter   |   +66.3% |   -13.2% |    2.48× |    2.13× | manifest version null fix (1.1.1) |
-
-**Improved**: **fileops** (+379.2% → -14.3%), **depgraph** (+50.5% → -60.1%), **metrics** (+102.6% → +7.5%), **treesitter** (+66.3% → -13.2%), **sandbox** (+42.0% → -14.9%), **cache** (+38.4% → -10.2%), **graphexport** (+118.7% → +77.1%), **callgraph** (+18.3% → +0.5%)
-
-**Regressed or no improvement**: **convert** (-51.2% → +88.4%), **filewrite** (-22.0% → +86.2%), **codeedit** (-73.8% → +23.5%), **lastversion** (+22.2% → +45.2%), **symbol** (-3.9% → -1.9%)
-
-**Key findings**: The P0 path bug fix in `fileops` (+379% → -14.3%) was the biggest single recovery. `metrics` went from +103% to +7.5% after the async fix removed the 6× latency bottleneck. `sandbox` recovered from +42% to -14.9% with TS/FS support added. The manifest version null fix (1.1.1) delivered substantial gains for `depgraph` (+51% → -60.1%), `cache` (+38% → -10.2%), and `callgraph` (+18% → +0.5%). Underwhelming: `lastversion` improved only marginally (+22% → +45.2%) despite the handler fix — 0/6 tools used, coverage remains the root problem. `filewrite`, `convert`, and `codeedit` regressed in the post-patch bench because the fixes made the tools functionally correct (previously buggy/unsafe) but heavier; these are "correct regressions" where the Phase 2a number was misleadingly good due to bugs. `graphexport` improved somewhat (+119% → +77.1%) but still regresses; the 6 overlapping tools problem needs a deeper redesign.

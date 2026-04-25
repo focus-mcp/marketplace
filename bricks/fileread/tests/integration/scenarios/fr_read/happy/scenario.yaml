@@ -1,0 +1,7 @@
+# Happy path: read entire file content
+tool: fr_read
+prompt: |
+    Read the entire content of the sample.ts fixture file.
+    Return the full file content as a string.
+input:
+    path: ./fixtures/sample.ts

@@ -2,64 +2,63 @@
 
 **Domaine** : Sandboxed code execution — run JavaScript/TypeScript snippets in an isolated VM context.
 **Prefix** : `box`
-**Tools** : 5 (`run`, `file`, `eval`, `languages`, `read`)
+**Tools** : 4 (`run`, `file`, `eval`, `languages`)
 
 ## Metrics (iso-task)
 
 | | Native | Brick | Δ |
 |---|---:|---:|---:|
-| Total tokens | 738,499 | 628,308 | -14.9% |
-| cache_creation | 48,833 | 57,604 | |
-| cache_read | 683,991 | 565,295 | |
-| output | 5,632 | 5,309 | |
-| Turns (SDK) | 16 | 20 | |
-| Duration (s) | 94.0 | 93.0 | -1% |
+| Total tokens | 524,521 | 744,575 | +42.0% ⚠️ |
+| cache_creation | 21,136 | 73,771 | |
+| cache_read | 498,980 | 652,298 | |
+| output | 4,367 | 18,425 | |
+| Turns (SDK) | 14 | 18 | |
+| Duration (s) | 68.5 | 283.8 | +314% ⚠️ |
 
 ## Mini-task (iso)
 
-Using the sandbox brick, read the file `test-repo/packages/common/enums/route-paramtypes.enum.ts`, execute JavaScript code that extracts all enum member name-value pairs from the `RouteParamtypes` enum defined in that file, and return them sorted alphabetically. The expected answer is a list of `NAME=VALUE` entries (no spaces around `=`), one per line, sorted alphabetically by name (A–Z). Do not include the enum name, braces, or trailing commas — only the sorted member entries.
+In the NestJS repository under `test-repo/`, there is a utility file at `test-repo/packages/common/utils/http-error-by-code.util.ts` that defines a `HttpErrorByCode` record. This record maps HTTP status code enum members (from `test-repo/packages/common/enums/http-status.enum.ts`) to their corresponding exception classes.
 
-To solve this with the sandbox brick:
-1. Use `box__read` with path `test-repo/packages/common/enums/route-paramtypes.enum.ts` to load the file contents.
-2. Use `box__run` to execute a JavaScript snippet that applies a regex like `/^\s+(\w+)\s*=\s*(\d+)/gm` against the file string, collects all matches into `NAME=VALUE` pairs, sorts them alphabetically, and returns the joined result.
+Your task: identify every `HttpStatus` enum member used as a key in the `HttpErrorByCode` record, look up its numeric value in the `HttpStatus` enum defined in `test-repo/packages/common/enums/http-status.enum.ts`, then compute and return the **sum of all those numeric values**.
+
+Expected answer format: a single integer (the sum).
 
 ---
 
 ## Tool coverage (brick mode)
 
-- `box_run` : not called ⚠️
-- `box_file` : not called ⚠️
+- `box_run` : called ✓
+- `box_file` : called ✓
 - `box_eval` : not called ⚠️
-- `box_languages` : not called ⚠️
-- `box_read` : not called ⚠️
+- `box_languages` : called ✓
 
-**Coverage score**: 0/5 tools used
+**Coverage score**: 3/4 tools used
 
 ## Answers comparison
 
-**Native answer**: ```
-  ACK=13
-  BODY=3
-  FILE=8
-  FILES=9
-  HEADERS=6
-... (15 total)
-```
+**Native answer**: 8236
 
-**Brick answer**: *(not obtained — brick tools unavailable; see Notes)*
+**Brick answer**: 8727
 
 **Match**: divergent (manual check needed)
 
 ## Observations
 
-_(empty — to be filled in the qualitative analysis pass)_
+- Brick is regressive: +42% tokens, +314% duration. Coverage 3/4 — agent used `box_run`, `box_file`, and `box_languages`. However the answer is wrong (8727 vs correct 8236) because the sandbox cannot execute TypeScript and has no filesystem access.
+- Critical limitations: (1) TypeScript is "planned — requires transpilation step" (not yet implemented), (2) no `fs`/`require` access in the sandbox, so the agent had to compute the sum manually inside the sandbox with hardcoded values — introducing a counting error.
+- The 314% duration regression reflects the many iterations of failed sandboxed computation attempts.
 
 ## Auto-detected issues
 
-- Tools not called: `box_run`, `box_file`, `box_eval`, `box_languages`, `box_read`
-- Turns > 15 (brick): 20
-- Turns > 15 (native): 16
+- Tools not called: `box_eval`
+- Turns > 15 (brick): 18
+- Brick notes flagged: limitation, fallback, error — "- **Critical limitation**: The sandbox brick has no TypeScript support (`languages` tool confirms "typescript: planned — requires transpilation step") and no filesystem access (`require`, `fs`, `fetch"
+- Native notes flagged: error — "The enum keys and their numeric values were extracted by reading two source files. The 19 status codes that appear as keys in `HttpErrorByCode` are: 400, 401, 403, 404, 405, 406, 408, 409, 410, 412, 4"
+- Brick slower than native by 314% (UX concern)
+- Brick uses MORE tokens than native (744,575 vs 524,521)
 
 ## Recommendations
 
-_(empty — to be filled after analysis)_
+- 🔧 Implement TypeScript transpilation in the sandbox (`box_run`) — this is required for any TS-based computation task.
+- 🔧 Add controlled filesystem access (`box_file` should support reading local paths, not just inline content).
+- 📝 Do not market sandbox for TypeScript-specific tasks until TypeScript support is complete.

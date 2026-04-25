@@ -1,0 +1,8 @@
+# Adversarial: empty directory, pattern that should not match anything
+tool: fl_glob
+prompt: |
+    In the directory created by the test setup (empty), find all files matching
+    the pattern '**/*.nonexistent'. Return the result structure.
+input:
+    path: __EMPTY_TMP__
+    pattern: "**/*.nonexistent"
