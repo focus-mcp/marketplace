@@ -52,6 +52,11 @@ Each entry: brick + observed signal + suspected root cause + proposed action + p
 - Consider: is `cache` even benchmarkable in an iso-task single-agent setup? If not, exclude from sweep and note in report as "stateful brick — not measurable this way".
 **Priority** : ⚠️ (also methodology discussion)
 
+### ~~🚨~~ `fileops` — +379% tokens, 5.82× latence (Phase C3 SMOKING GUN — **[FIXED in 1.3.0 — see PR #111]**)
+
+> **Status**: FIXED. P0 guard + P1 descriptions implemented. Re-bench expected next sweep.
+> Historical doc preserved below.
+
 ### 🚨 `fileops` — +379% tokens, 5.82× latence (Phase C3 SMOKING GUN — confirmed)
 
 **Signal** : sweep-log-2026-04-24T06-57-42 reports +379% tokens and 5.82× duration.
@@ -72,7 +77,18 @@ NOT payload bloat (each tool response is < 200 B).
 **Secondary finding**: `fileops:setRoot` tool exists but the agent is never prompted to
 call it. Tool description does not advertise it as a required initialisation step.
 
-**Fix options** (do NOT implement in this PR — flag only):
+**Fix implemented** (P0 + P1 — 2026-04-25, v1.3.0):
+1. **✅ P0 — setRoot guard**: `_resolveAndCheck()` helper added. When `_workRootExplicitlySet`
+   is false and the resolved path does not exist, throws:
+   `"workRoot not set: call fileops:setRoot first with the absolute path to your workspace. Current default workRoot is '<cwd>' and the resolved path '<resolvedPath>' does not exist."`.
+   All ops (`fo_move`, `fo_copy`, `fo_delete`, `fo_rename`) use this helper.
+2. **✅ P1 — manifest description**: Every tool in `mcp-brick.json` now advertises:
+   `"Requires fileops:setRoot to be called first with the workspace root path."`.
+3. **📌 P2 — per-call root**: NOT implemented (too invasive, deferred).
+
+**Retro-compat**: path that exists under default workRoot still passes (no setRoot required for CLI usage where cwd IS the workspace).
+
+**Fix options** (historical, do NOT implement in this PR — flag only):
 1. **🚨 P0 — setRoot guard**: if `_workRoot` is still the default CWD and the first
    incoming path does not exist under it, throw a descriptive error:
    `"workRoot not set — call fileops:setRoot first with the absolute path to your workspace"`.
