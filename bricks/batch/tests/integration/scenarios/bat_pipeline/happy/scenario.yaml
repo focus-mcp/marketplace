@@ -1,0 +1,8 @@
+name: bat_pipeline/happy
+tool: bat_pipeline
+description: >
+  Pipe two commands: echo "hello" | cat. Verifies exitCode=0
+  and stdout contains the piped output.
+input:
+  commands: ["echo hello", "cat"]
+tags: [happy, stateless]

@@ -1,0 +1,8 @@
+name: bat_sequential/happy
+tool: bat_sequential
+description: >
+  Run two echo commands sequentially. Verifies 2 ordered results
+  each with exitCode=0 and no stoppedAt field.
+input:
+  commands: ["echo 1", "echo 2"]
+tags: [happy, stateless]

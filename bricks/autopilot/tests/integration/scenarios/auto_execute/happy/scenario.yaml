@@ -1,0 +1,9 @@
+name: auto_execute/happy
+tool: auto_execute
+description: >
+  Create a plan then execute the first step. Verifies step index=0,
+  status=done, and result is non-empty. No shell commands involved —
+  autoExecute marks steps as done without IO.
+input:
+  planId: "<plan-id>"
+tags: [happy, stateful, sequenced]

@@ -1,0 +1,8 @@
+name: par_collect/happy
+tool: par_collect
+description: >
+  Run two tasks then collect results. Verifies results array has 2 entries
+  each with id, exitCode, and stdout. Checks output size <= 2048B.
+input:
+  runId: "<run-id>"
+tags: [happy, stateful, sequenced]

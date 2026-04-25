@@ -1,0 +1,7 @@
+name: par_timeout/happy
+tool: par_timeout
+description: >
+  Query the default timeout configuration. Verifies defaultMs is a
+  positive number. Checks output size <= 2048B.
+input: {}
+tags: [happy, stateless]

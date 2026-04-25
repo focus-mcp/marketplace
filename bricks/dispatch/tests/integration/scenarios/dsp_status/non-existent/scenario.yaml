@@ -1,0 +1,8 @@
+name: dsp_status/non-existent
+tool: dsp_status
+description: >
+  Query status of a non-existent task ID. Verifies that the response
+  contains an error field rather than a task object.
+input:
+  id: "00000000-0000-0000-0000-000000000000"
+tags: [adversarial, stateful]

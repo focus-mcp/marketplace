@@ -1,0 +1,8 @@
+name: auto_plan/happy
+tool: auto_plan
+description: >
+  Create an execution plan for a short task. Verifies planId is returned
+  and steps array is non-empty with valid shape.
+input:
+  task: "add a hello world function"
+tags: [happy, stateful]

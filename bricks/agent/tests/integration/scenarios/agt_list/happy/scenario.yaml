@@ -1,0 +1,7 @@
+name: agt_list/happy
+tool: agt_list
+description: >
+  Register 3 agents then list all. Verifies count=3 and each agent entry
+  has id, name, capabilities fields.
+input: {}
+tags: [happy, stateful, sequenced]
