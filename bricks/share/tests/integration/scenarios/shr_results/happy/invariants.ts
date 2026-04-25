@@ -31,6 +31,16 @@ export function checkRead(output: unknown, expectedResult: unknown): InvariantRe
         inv.outputHasField(output, 'result'),
         inv.outputHasField(output, 'stored'),
         (() => {
+            const o = output as { stored: unknown };
+            if (o.stored !== false) {
+                return {
+                    ok: false,
+                    reason: `expected stored=false on read, got ${String(o.stored)}`,
+                };
+            }
+            return { ok: true };
+        })(),
+        (() => {
             const o = output as { result: unknown };
             if (JSON.stringify(o.result) !== JSON.stringify(expectedResult)) {
                 return {

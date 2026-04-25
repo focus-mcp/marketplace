@@ -31,6 +31,27 @@ export function check(output: unknown, minResults: number): InvariantResult[] {
             return { ok: true };
         })(),
         (() => {
+            const o = output as {
+                results: Array<{ id: unknown; title: unknown; score: unknown; snippet: unknown }>;
+            };
+            if (!Array.isArray(o.results)) return { ok: true };
+            for (const r of o.results) {
+                if (typeof r.id !== 'string') {
+                    return { ok: false, reason: `rank result entry missing string id` };
+                }
+                if (typeof r.score !== 'number' || r.score <= 0) {
+                    return {
+                        ok: false,
+                        reason: `rank result entry score must be > 0, got ${String(r.score)}`,
+                    };
+                }
+                if (typeof r.snippet !== 'string') {
+                    return { ok: false, reason: `rank result entry missing string snippet` };
+                }
+            }
+            return { ok: true };
+        })(),
+        (() => {
             const o = output as { results: Array<{ score: unknown }> };
             if (!Array.isArray(o.results) || o.results.length < 2) return { ok: true };
             for (let i = 0; i < o.results.length - 1; i++) {

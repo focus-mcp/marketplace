@@ -22,13 +22,12 @@ export function checkWrite(output: unknown, expectedFiles: string[]): InvariantR
             return { ok: true };
         })(),
         (() => {
-            const o = output as { files: unknown[]; count: unknown };
+            const o = output as { files: unknown[] };
             if (!Array.isArray(o.files)) return { ok: true };
-            if (o.files.length !== expectedFiles.length) {
-                return {
-                    ok: false,
-                    reason: `expected ${expectedFiles.length} files, got ${o.files.length}`,
-                };
+            const actual = JSON.stringify([...o.files].sort());
+            const expected = JSON.stringify([...expectedFiles].sort());
+            if (actual !== expected) {
+                return { ok: false, reason: `expected files=${expected}, got ${actual}` };
             }
             return { ok: true };
         })(),

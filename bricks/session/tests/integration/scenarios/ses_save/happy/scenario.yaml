@@ -4,5 +4,5 @@ description: >
   Save a session with name='test' and data={x:1}. Verifies ok=true and path is returned.
 input:
   name: "test"
-  data: {}
+  data: { context: "hello" }
 tags: [happy, stateful]
