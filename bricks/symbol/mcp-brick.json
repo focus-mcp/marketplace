@@ -64,7 +64,5 @@
     ],
     "tags": ["symbols", "code-intel", "search"],
     "license": "MIT",
-    "version": "1.1.1",
-    "supportedFrameworks": ["nestjs"],
-    "supportedLanguages": ["typescript", "javascript"]
+    "version": "1.1.1"
 }
