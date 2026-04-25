@@ -1,0 +1,8 @@
+name: echo_say/empty-message
+tool: echo_say
+description: >
+  Send an empty string to echo_say. Verifies no error is thrown and the
+  empty string is returned as-is.
+input:
+  message: ""
+tags: [adversarial, edge-case]
