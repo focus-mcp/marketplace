@@ -1,0 +1,8 @@
+name: plan_estimate/happy
+tool: plan_estimate
+description: >
+  Sequenced: create plan, add 2 steps with estimates, call estimate.
+  Verifies estimatedMinutes is numeric and nextAvailable is set.
+input:
+  planId: "<from plan_create>"
+tags: [happy, stateful, sequenced]

@@ -35,6 +35,13 @@ export interface Debate {
 
 export const debates: Map<string, Debate> = new Map();
 
+/**
+ * @internal — test helper only. Clears all in-memory debate state.
+ */
+export function resetDebates(): void {
+    debates.clear();
+}
+
 // ─── Input/Output types ───────────────────────────────────────────────────────
 
 export interface DbtDebateInput {

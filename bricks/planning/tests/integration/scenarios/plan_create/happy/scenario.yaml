@@ -1,0 +1,7 @@
+name: plan_create/happy
+tool: plan_create
+description: >
+  Create a plan with a title. Verifies planId is returned and title matches.
+input:
+  title: "Build new feature"
+tags: [happy, stateful]

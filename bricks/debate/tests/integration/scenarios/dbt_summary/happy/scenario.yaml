@@ -1,0 +1,7 @@
+name: dbt_summary/happy
+tool: dbt_summary
+description: >
+  Sequenced: create debate + score + summary. Verifies topic, winner, keyPoints non-empty.
+input:
+  debateId: "<from dbt_debate>"
+tags: [happy, stateful, sequenced]

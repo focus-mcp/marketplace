@@ -1,0 +1,19 @@
+name: dec_tradeoffs/happy
+tool: dec_tradeoffs
+description: >
+  Sequenced: options + tradeoffs. Verifies criteriaCount and scored count returned.
+input:
+  decisionId: "<from dec_options>"
+  criteria:
+    - name: "performance"
+      weight: 0.4
+    - name: "ease of use"
+      weight: 0.6
+  scores:
+    - option: "PostgreSQL"
+      scores: [8, 7]
+    - option: "MongoDB"
+      scores: [7, 9]
+    - option: "SQLite"
+      scores: [5, 10]
+tags: [happy, stateful, sequenced]

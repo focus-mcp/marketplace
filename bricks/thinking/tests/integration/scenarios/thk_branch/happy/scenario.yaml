@@ -1,0 +1,9 @@
+name: thk_branch/happy
+tool: thk_branch
+description: >
+  Sequenced: think then branch alternative. Verifies branchIndex and label returned.
+input:
+  chainId: "<from thk_think>"
+  label: "alternative approach"
+  thought: "We could also consider a different strategy"
+tags: [happy, stateful, sequenced]

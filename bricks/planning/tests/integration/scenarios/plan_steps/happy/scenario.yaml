@@ -1,0 +1,12 @@
+name: plan_steps/happy
+tool: plan_steps
+description: >
+  Sequenced: create a plan then add 2 steps. Verifies steps array shape and total count.
+input:
+  planId: "<from plan_create>"
+  add:
+    - title: "Step one"
+      estimate: "30m"
+    - title: "Step two"
+      estimate: "1h"
+tags: [happy, stateful, sequenced]

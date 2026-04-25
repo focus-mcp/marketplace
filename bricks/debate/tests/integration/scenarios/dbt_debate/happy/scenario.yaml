@@ -1,0 +1,12 @@
+name: dbt_debate/happy
+tool: dbt_debate
+description: >
+  Create a debate with topic and 2 positions. Verifies debateId returned and positionCount=2.
+input:
+  topic: "Should we adopt microservices?"
+  positions:
+    - role: "advocate"
+      argument: "Microservices enable independent scaling and deployment of individual components"
+    - role: "skeptic"
+      argument: "Monoliths are simpler to develop and operate without distributed system complexity"
+tags: [happy, stateful]
