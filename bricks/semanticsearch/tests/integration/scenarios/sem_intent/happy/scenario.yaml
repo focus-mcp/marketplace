@@ -1,0 +1,23 @@
+# Happy path: query + intents → bestIntent matches most similar intent
+tool: sem_intent
+prompt: |
+    Match query "how do I log in to my account" against 3 intents.
+    The login_help intent should win.
+input:
+    query: "how do I log in to my account"
+    intents:
+        - label: login_help
+          examples:
+              - "I cannot log in to my account"
+              - "how to sign in"
+              - "login not working password reset"
+        - label: billing_inquiry
+          examples:
+              - "how much does the plan cost"
+              - "invoice payment subscription"
+              - "refund request"
+        - label: technical_support
+          examples:
+              - "app is crashing bug error"
+              - "feature not working broken"
+              - "server down outage"

@@ -1,0 +1,6 @@
+# Happy path: status after load → state info with numeric fields
+tool: sctx_status
+prompt: |
+    After loading context, query the status.
+    Expect filesLoaded, tokensUsed, cacheHits, cacheMisses as numbers.
+input: {}

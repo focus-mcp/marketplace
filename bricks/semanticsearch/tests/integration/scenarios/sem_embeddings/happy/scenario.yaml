@@ -1,0 +1,10 @@
+# Happy path: texts → embeddings with vector shape (array of Record<string,number>)
+tool: sem_embeddings
+prompt: |
+    Generate TF-IDF embeddings for 3 text strings.
+    Expect an array of 3 embedding entries each with text, vector (object), and dimensions (number).
+input:
+    texts:
+        - "machine learning neural network deep learning model"
+        - "web development JavaScript TypeScript frontend backend"
+        - "database SQL NoSQL query performance optimization"

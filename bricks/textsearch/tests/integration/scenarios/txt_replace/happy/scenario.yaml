@@ -1,0 +1,10 @@
+# Happy path: replace in sandbox file → changes recorded + file content updated
+tool: txt_replace
+prompt: |
+    Replace "Hello World!" with "Hello FocusMCP!" in a sandbox file.
+    The tool must record the change and apply it to the file when apply=true.
+input:
+    dir: <sandbox>
+    pattern: "Hello World!"
+    replacement: "Hello FocusMCP!"
+    apply: true

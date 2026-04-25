@@ -1,0 +1,8 @@
+# Happy path: search for "Injectable" in fixtures dir → at least 2 matches
+tool: txt_search
+prompt: |
+    Search for the string "Injectable" in the fixtures directory.
+    Expect matches in both app.service.ts and user.service.ts.
+input:
+    dir: <fixtures>
+    pattern: "Injectable"
