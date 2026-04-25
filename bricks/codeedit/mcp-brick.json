@@ -115,5 +115,7 @@
         }
     ],
     "tags": ["edit", "code", "refactoring", "insert", "delete", "codemod"],
-    "license": "MIT"
+    "license": "MIT",
+    "supportedFrameworks": ["nestjs"],
+    "supportedLanguages": ["typescript", "javascript", "php", "python"]
 }

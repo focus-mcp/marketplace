@@ -119,6 +119,10 @@ importers:
       php-parser:
         specifier: ^3.5.1
         version: 3.5.1
+    devDependencies:
+      '@focus-mcp/marketplace-testing':
+        specifier: workspace:*
+        version: link:../../packages/marketplace-testing
 
   bricks/codemod:
     dependencies:
