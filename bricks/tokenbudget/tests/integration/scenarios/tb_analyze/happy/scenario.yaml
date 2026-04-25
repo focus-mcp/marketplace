@@ -1,0 +1,8 @@
+# Happy path: analyze token cost of NestJS fixtures directory
+tool: tb_analyze
+prompt: |
+    Analyze token cost of the fixtures/nestjs directory.
+    Expect totalTokens > 0, files array non-empty, top10 array present.
+input:
+    dir: fixtures/nestjs
+    maxFiles: 20

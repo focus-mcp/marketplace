@@ -1,0 +1,6 @@
+# Happy path: track same file 3× then retrieve hotfiles
+# Sequenced: hm_track × 3 → hm_hotfiles
+tool: hm_hotfiles
+prompt: |
+    Track "src/app.ts" 3 times (read), then call hotfiles.
+    Expect files array with "src/app.ts" at the top with count=3.

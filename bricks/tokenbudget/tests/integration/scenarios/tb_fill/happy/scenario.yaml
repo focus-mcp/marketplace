@@ -1,0 +1,12 @@
+# Happy path: fill token budget with NestJS files
+tool: tb_fill
+prompt: |
+    Select NestJS files that fit in a 5000-token budget using signatures mode.
+    Expect at least 1 selected file, used <= 5000, remaining >= 0.
+input:
+    budget: 5000
+    files:
+        - fixtures/nestjs/packages/common/index.ts
+        - fixtures/nestjs/packages/testing/index.ts
+        - fixtures/nestjs/packages/platform-ws/index.ts
+    mode: signatures
