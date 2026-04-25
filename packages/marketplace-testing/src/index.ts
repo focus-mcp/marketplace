@@ -3,5 +3,4 @@
  * SPDX-License-Identifier: MIT
  */
 
-// Helpers will be added in subsequent tasks.
-export {};
+export { type BrickLike, runTool } from './run-tool.js';
