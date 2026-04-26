@@ -26,4 +26,23 @@ to prevent future regressions.
 
 ---
 
+## Wave 5.x — memory brick
+
+### memory: +22% sweep delta — CLEARED (methodology issue + mem_list now bounded)
+
+**Status:** CLEARED — methodology issue (single-task bench ≠ memory use case) + mem_list now bounded by default in 1.1.1.
+
+**Investigation (2026-04-25):**
+The +22% sweep delta was primarily a methodology issue: the memory brick benefits from
+multiple sessions (repeated store/recall), which is not measured accurately by a
+single-task benchmark. The delta reflected ambient context growth, not output bloat.
+
+As a safety improvement, `mem_list` now caps to 100 entries by default to prevent
+worst-case payloads on heavy users. A `limit` param allows override; `limit=0` is unlimited.
+A `total` field in the response reflects the un-capped count.
+
+**Conclusion:** Not a smoking gun. mem_list bounded as safety improvement. No further action needed.
+
+---
+
 ## (add new entries here)

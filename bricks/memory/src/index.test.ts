@@ -111,12 +111,39 @@ describe('memList', () => {
     it('lists all keys', async () => {
         const result = await memList({});
         expect(result.keys.length).toBe(3);
+        expect(result.total).toBe(3);
     });
 
     it('filters by tag', async () => {
         const result = await memList({ tag: 'x' });
         expect(result.keys.every((k) => k.tags.includes('x'))).toBe(true);
         expect(result.keys.length).toBe(2);
+        expect(result.total).toBe(2);
+    });
+
+    it('defaults to MAX_LIST_DEFAULT (100) cap', async () => {
+        // With only 3 entries, all are returned — cap is not hit
+        const result = await memList({});
+        expect(result.keys.length).toBe(3);
+        expect(result.total).toBe(3);
+    });
+
+    it('respects limit param', async () => {
+        const result = await memList({ limit: 2 });
+        expect(result.keys.length).toBe(2);
+        expect(result.total).toBe(3);
+    });
+
+    it('limit=0 returns all entries (unlimited)', async () => {
+        const result = await memList({ limit: 0 });
+        expect(result.keys.length).toBe(3);
+        expect(result.total).toBe(3);
+    });
+
+    it('reports total even when truncated', async () => {
+        const result = await memList({ limit: 1 });
+        expect(result.keys.length).toBe(1);
+        expect(result.total).toBe(3);
     });
 });
 

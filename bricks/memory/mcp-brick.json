@@ -62,11 +62,15 @@
         },
         {
             "name": "list",
-            "description": "List all memory keys, optionally filtered by tag.",
+            "description": "List all memory keys, optionally filtered by tag. Returns up to 100 entries by default; set limit=0 for unlimited.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "tag": { "type": "string", "description": "Filter by tag (optional)" }
+                    "tag": { "type": "string", "description": "Filter by tag (optional)" },
+                    "limit": {
+                        "type": "number",
+                        "description": "Max entries to return (default 100, set 0 for unlimited)"
+                    }
                 },
                 "additionalProperties": false
             }
