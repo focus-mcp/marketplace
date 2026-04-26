@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-25T20:23:04.589Z",
+  "updated": "2026-04-26T06:47:59.763Z",
   "bricks": [
     {
       "name": "agent",
@@ -4566,7 +4566,7 @@
     },
     {
       "name": "parallel",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Parallel execution coordination — run tasks concurrently, collect results, merge outputs, handle timeouts.",
       "tags": [
         "parallel",
@@ -5506,7 +5506,7 @@
     },
     {
       "name": "sandbox",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "Sandboxed code execution — run JavaScript/TypeScript snippets in an isolated VM context.",
       "tags": [
         "sandbox",
