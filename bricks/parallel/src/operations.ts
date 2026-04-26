@@ -86,6 +86,11 @@ export interface ParTimeoutOutput {
     timedOut?: string[];
 }
 
+// ─── Constants ───────────────────────────────────────────────────────────────
+
+const MAX_OUTPUT_BYTES = 4096;
+const MAX_RUNS = 100;
+
 // ─── State ───────────────────────────────────────────────────────────────────
 
 const runs = new Map<string, ParallelRun>();
@@ -97,6 +102,12 @@ export function resetParallel(): void {
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
+
+export function truncateOutput(output: string, maxBytes: number = MAX_OUTPUT_BYTES): string {
+    if (Buffer.byteLength(output, 'utf8') <= maxBytes) return output;
+    const truncated = output.slice(0, maxBytes);
+    return `${truncated}\n[truncated, original ${Buffer.byteLength(output, 'utf8')} bytes]`;
+}
 
 function parseCommand(command: string): { file: string; args: string[] } {
     const parts = command.split(/\s+/);
@@ -125,8 +136,8 @@ async function runTask(
         const result = await execFileAsync(file, args, buildExecOptions(cwd, timeoutMs));
         return {
             id: task.id,
-            stdout: result.stdout,
-            stderr: result.stderr,
+            stdout: truncateOutput(result.stdout),
+            stderr: truncateOutput(result.stderr),
             exitCode: 0,
             duration: Date.now() - start,
             timedOut: false,
@@ -142,8 +153,8 @@ async function runTask(
         const timedOut = e.killed === true || e.signal === 'SIGTERM';
         return {
             id: task.id,
-            stdout: e.stdout ?? '',
-            stderr: e.stderr ?? '',
+            stdout: truncateOutput(e.stdout ?? ''),
+            stderr: truncateOutput(e.stderr ?? ''),
             exitCode: typeof e.code === 'number' ? e.code : 1,
             duration: Date.now() - start,
             timedOut,
@@ -225,6 +236,10 @@ export async function parRun(input: ParRunInput): Promise<ParRunOutput> {
         results: allResults,
         defaultTimeoutMs: timeoutMs,
     };
+    if (runs.size >= MAX_RUNS) {
+        const firstKey = runs.keys().next().value;
+        if (firstKey) runs.delete(firstKey);
+    }
     runs.set(runId, run);
 
     const failed = allResults.filter((r) => r.exitCode !== 0).length;
