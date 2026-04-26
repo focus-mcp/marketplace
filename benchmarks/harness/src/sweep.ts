@@ -111,6 +111,35 @@ interface BrickSummary {
 // Run one brick with retry + timeout
 // ---------------------------------------------------------------------------
 
+/**
+ * Run the brick-mode only with a fresh timeout sized to `maxTurns`.
+ * Called when the brick run hits max_turns on attempt 1, so we reuse the
+ * already-completed nativeResult / taskSpec without re-paying for native.
+ */
+async function runBrickModeWithEscalation(
+    brick: string,
+    outDir: string,
+    nativeResult: RunResult,
+    taskSpec: string,
+    maxTurns: number,
+    manifest: BrickManifest,
+): Promise<{ native: RunResult; brick: RunResult | null; error?: string }> {
+    const timeoutMs = Math.round(BRICK_TIMEOUT_MS_BASE * (maxTurns / 20));
+    const timeout = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error(`Timeout after ${timeoutMs / 1000}s`)), timeoutMs),
+    );
+    try {
+        const brickResult = await Promise.race([
+            runOneMode({ brick, mode: 'brick', framing: 'minimal', maxTurns, outDir, taskSpec, manifest }),
+            timeout,
+        ]);
+        return { native: nativeResult, brick: brickResult };
+    } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        return { native: nativeResult, brick: null, error: msg };
+    }
+}
+
 async function runBrickWithRetry(
     brick: string,
     outDir: string,
@@ -121,11 +150,11 @@ async function runBrickWithRetry(
 
     // Per-brick hint: use max(global, manifest.bench.maxTurns)
     const effectiveMaxTurns = Math.max(maxTurns, manifest.bench?.maxTurns ?? 0);
-    if (effectiveMaxTurns > maxTurns) {
+    if (effectiveMaxTurns > maxTurns && attempt === 1) {
         console.log(`  [adaptive] ${brick}: using maxTurns=${effectiveMaxTurns} from manifest`);
     }
 
-    // Scale timeout proportionally with effectiveMaxTurns (base=10 min for 20 turns)
+    // Each call creates its own correctly-sized timeout so escalated retries get full budget.
     const timeoutMs = Math.round(BRICK_TIMEOUT_MS_BASE * (effectiveMaxTurns / 20));
     const timeout = new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error(`Timeout after ${timeoutMs / 1000}s`)), timeoutMs),
@@ -139,7 +168,7 @@ async function runBrickWithRetry(
                     brick, mode: 'native', framing: 'minimal', maxTurns: effectiveMaxTurns, outDir, manifest,
                 });
 
-                // Auto-retry on max_turns: escalate to effectiveMaxTurns × 2 (clamp 80), attempt 1 only
+                // Auto-retry native on max_turns: escalate, full restart (new native + brick)
                 if (nativeResult.exit_reason === 'max_turns' && attempt === 1) {
                     const escalated = Math.min(effectiveMaxTurns * 2, 80);
                     console.log(`  [escalate] ${brick} native hit max_turns=${effectiveMaxTurns}, retrying with ${escalated}`);
@@ -157,11 +186,11 @@ async function runBrickWithRetry(
                     brick, mode: 'brick', framing: 'minimal', maxTurns: effectiveMaxTurns, outDir, taskSpec, manifest,
                 });
 
-                // Auto-retry on max_turns for brick run as well
+                // Auto-retry brick only on max_turns: reuse nativeResult, fresh timeout
                 if (brickResult.exit_reason === 'max_turns' && attempt === 1) {
                     const escalated = Math.min(effectiveMaxTurns * 2, 80);
-                    console.log(`  [escalate] ${brick} brick hit max_turns=${effectiveMaxTurns}, retrying with ${escalated}`);
-                    return runBrickWithRetry(brick, outDir, 2, escalated);
+                    console.log(`  [escalate] ${brick} brick hit max_turns=${effectiveMaxTurns}, retrying brick with ${escalated}`);
+                    return runBrickModeWithEscalation(brick, outDir, nativeResult, taskSpec, escalated, manifest);
                 }
 
                 return { native: nativeResult, brick: brickResult };

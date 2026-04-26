@@ -6,54 +6,22 @@
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import path from 'node:path';
-import os from 'node:os';
-import { loadManifest, BRICKS_DIR, type BrickManifest } from './runner.js';
+import { loadManifest, type BrickManifest } from './runner.js';
 
 // ---------------------------------------------------------------------------
-// Helpers
+// Test: real manifests for parallel and sandbox have bench.maxTurns=40
 // ---------------------------------------------------------------------------
 
-function withTempManifest(data: object, fn: (brickName: string) => void): void {
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'bench-test-'));
-    const brickDir = path.join(tmpDir, 'testbrick');
-    fs.mkdirSync(brickDir, { recursive: true });
-    fs.writeFileSync(path.join(brickDir, 'mcp-brick.json'), JSON.stringify(data));
+test('parallel manifest declares bench.maxTurns=40', () => {
+    const m = loadManifest('parallel');
+    assert.equal(m.bench?.maxTurns, 40,
+        'parallel/mcp-brick.json must declare bench.maxTurns=40');
+});
 
-    // Temporarily point BRICKS_DIR to tmpDir by monkey-patching via env
-    const origBricksDir = process.env['_TEST_BRICKS_DIR_OVERRIDE'];
-    try {
-        fn(tmpDir);
-    } finally {
-        if (origBricksDir === undefined) {
-            delete process.env['_TEST_BRICKS_DIR_OVERRIDE'];
-        } else {
-            process.env['_TEST_BRICKS_DIR_OVERRIDE'] = origBricksDir;
-        }
-        fs.rmSync(tmpDir, { recursive: true, force: true });
-    }
-}
-
-// ---------------------------------------------------------------------------
-// Test: loadManifest reads bench.maxTurns hint
-// ---------------------------------------------------------------------------
-
-test('loadManifest reads bench.maxTurns hint', () => {
-    const manifestData = {
-        name: 'parallel',
-        prefix: 'par',
-        description: 'Parallel execution',
-        tools: [],
-        tags: [],
-        license: 'MIT',
-        bench: { maxTurns: 40 },
-    };
-
-    // Verify the BrickManifest type accepts bench.maxTurns
-    const manifest = manifestData as BrickManifest;
-    assert.equal(manifest.bench?.maxTurns, 40,
-        'manifest.bench.maxTurns should be 40');
+test('sandbox manifest declares bench.maxTurns=40', () => {
+    const m = loadManifest('sandbox');
+    assert.equal(m.bench?.maxTurns, 40,
+        'sandbox/mcp-brick.json must declare bench.maxTurns=40');
 });
 
 // ---------------------------------------------------------------------------
@@ -84,17 +52,19 @@ test('effective maxTurns is max(global, manifest)', () => {
 });
 
 // ---------------------------------------------------------------------------
-// Test: real manifests for parallel and sandbox have bench.maxTurns=40
+// Test: manifests without bench hint use global maxTurns unchanged
 // ---------------------------------------------------------------------------
 
-test('parallel manifest declares bench.maxTurns=40', () => {
-    const m = loadManifest('parallel');
-    assert.equal(m.bench?.maxTurns, 40,
-        'parallel/mcp-brick.json must declare bench.maxTurns=40');
-});
-
-test('sandbox manifest declares bench.maxTurns=40', () => {
-    const m = loadManifest('sandbox');
-    assert.equal(m.bench?.maxTurns, 40,
-        'sandbox/mcp-brick.json must declare bench.maxTurns=40');
+test('manifest without bench hint does not override global maxTurns', () => {
+    // Load any manifest that doesn't have bench set (e.g. filelist)
+    // We verify the formula: max(20, undefined ?? 0) === 20
+    const noHintManifest: BrickManifest = {
+        name: 'dummy',
+        prefix: 'dum',
+        description: 'no hint',
+        tools: [],
+    };
+    const globalTurns = 20;
+    const effective = Math.max(globalTurns, noHintManifest.bench?.maxTurns ?? 0);
+    assert.equal(effective, 20, 'Without bench hint, effectiveMaxTurns should equal global');
 });
