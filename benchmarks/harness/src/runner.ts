@@ -20,6 +20,7 @@ export interface BrickManifest {
     prefix: string;
     description: string;
     tools: Array<{ name: string; description: string }>;
+    bench?: { maxTurns?: number };
     [key: string]: unknown;
 }
 
