@@ -41,6 +41,16 @@ pnpm run --brick filelist --mode brick
 
 ## Output
 
+Result files are **always written**, even when the Claude SDK throws an exception
+mid-stream (network timeout, malformed response, etc.). This prevents data-loss
+during long sweeps.
+
+- `exit_reason: "ok"` — completed successfully
+- `exit_reason: "max_turns"` — max turns reached, partial result captured
+- `exit_reason: "missing_spec"` — native run succeeded but no `## Mini-task spec` found
+- `exit_reason: "error"` — SDK threw an exception; read `focus_stderr` for the full
+  stack trace (prefixed with `[runner] SDK exception:`)
+
 Each run writes `<out-dir>/<brick>-<mode>-<ISOstamp>.json`:
 
 ```json
