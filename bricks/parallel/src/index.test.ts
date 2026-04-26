@@ -2,7 +2,14 @@
 // SPDX-License-Identifier: MIT
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { parCollect, parMerge, parRun, parTimeout, resetParallel } from './operations.ts';
+import {
+    parCollect,
+    parMerge,
+    parRun,
+    parTimeout,
+    resetParallel,
+    truncateOutput,
+} from './operations.ts';
 
 beforeEach(() => {
     resetParallel();
@@ -223,6 +230,61 @@ describe('parTimeout', () => {
         expect(result.defaultMs).toBe(10_000);
         expect(Array.isArray(result.timedOut)).toBe(true);
     });
+});
+
+// ─── truncateOutput ──────────────────────────────────────────────────────────
+
+describe('truncateOutput', () => {
+    it('returns output unchanged when under MAX_OUTPUT_BYTES', () => {
+        const small = 'hello world';
+        expect(truncateOutput(small)).toBe(small);
+    });
+
+    it('truncates stdout > MAX_OUTPUT_BYTES and adds truncation marker', () => {
+        const big = 'x'.repeat(5000);
+        const result = truncateOutput(big);
+        const beforeMarker = result.split('\n[truncated')[0] ?? '';
+        expect(Buffer.byteLength(beforeMarker, 'utf8')).toBeLessThanOrEqual(4096);
+        expect(result).toContain('[truncated, original 5000 bytes]');
+    });
+
+    it('truncation marker contains original byte size', () => {
+        const content = 'a'.repeat(8000);
+        const result = truncateOutput(content);
+        expect(result).toContain('[truncated, original 8000 bytes]');
+    });
+
+    it('respects custom maxBytes parameter', () => {
+        const content = 'abcdef';
+        const result = truncateOutput(content, 3);
+        expect(result).toContain('[truncated, original 6 bytes]');
+        expect(result.startsWith('abc')).toBe(true);
+    });
+
+    it('truncates by bytes, not characters (UTF-8 safe)', () => {
+        const emoji = '😀'.repeat(2000); // 4 bytes per emoji = 8000 bytes
+        const result = truncateOutput(emoji, 4096);
+        expect(Buffer.byteLength(result, 'utf8')).toBeLessThanOrEqual(4096 + 50); // +marker
+        expect(result).toContain('[truncated, original 8000 bytes]');
+    });
+});
+
+// ─── runs Map eviction ────────────────────────────────────────────────────────
+
+describe('runs Map eviction', () => {
+    it('evicts oldest entry when exceeding MAX_RUNS (100)', async () => {
+        // Run 105 tasks; Map should not exceed 100 entries
+        const firstRunId = (await parRun({ tasks: [{ id: 'seed', command: 'echo seed' }] })).runId;
+
+        // Fill up to exactly MAX_RUNS - 1 more (we already have 1)
+        for (let i = 0; i < 104; i++) {
+            await parRun({ tasks: [{ id: `task-${i}`, command: 'echo x' }] });
+        }
+
+        // After 105 runs, the first entry should have been evicted
+        const firstCollected = parCollect({ runId: firstRunId });
+        expect(firstCollected.results).toHaveLength(0);
+    }, 30_000);
 });
 
 // ─── parallel brick (index.ts) ───────────────────────────────────────────────

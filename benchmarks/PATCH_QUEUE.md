@@ -14,7 +14,7 @@ Each entry: brick + observed signal + suspected root cause + proposed action + p
 
 ## Regressions confirmed (brick worse than native)
 
-### ⚠️ `sandbox` — +42% tokens, 4.14× latence (Wave 4.4 smoking gun)
+### ~~⚠️~~ `sandbox` — +42% tokens, 4.14× latence (Wave 4.4 smoking gun) [FIXED in 1.2.1 — see PR fix/sandbox-payload-cap]
 
 **Signal** : sweep Phase 2a reports +42% tokens, coverage 3/4.
 **Suspected root cause** : `box_run` and `box_file` return a `logs: string[]` field with **no size cap**.
@@ -46,6 +46,11 @@ No module-level `runs` Map or history accumulation. Not a state issue.
 **Priority** : ⚠️ — +42% tokens confirmed. Real payload bloat on verbose code or large file reads.
 
 ---
+
+### ~~🚨~~ `parallel` — +79% tokens, +874% latence (9× slower) [FIXED in 1.2.0 — see PR fix/parallel-payload-cap]
+
+> **Status**: FIXED. P0 payload cap implemented (stdout/stderr capped at 4KB, runs Map bounded to 100 entries FIFO). Double round-trip API change deferred as P2. Re-bench expected next sweep.
+> Historical doc preserved below.
 
 ### 🚨 `parallel` — +79% tokens, +874% latence (9× slower)
 
