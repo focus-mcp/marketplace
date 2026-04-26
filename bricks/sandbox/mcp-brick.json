@@ -82,5 +82,6 @@
         }
     ],
     "tags": ["sandbox", "execution", "vm", "javascript", "typescript", "devtools"],
-    "license": "MIT"
+    "license": "MIT",
+    "bench": { "maxTurns": 40 }
 }

@@ -133,5 +133,6 @@
         }
     ],
     "tags": ["parallel", "concurrent", "merge", "orchestration"],
-    "license": "MIT"
+    "license": "MIT",
+    "bench": { "maxTurns": 40 }
 }

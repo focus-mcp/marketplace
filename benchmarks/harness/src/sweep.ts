@@ -119,8 +119,14 @@ async function runBrickWithRetry(
 ): Promise<{ native: RunResult | null; brick: RunResult | null; error?: string }> {
     const manifest = loadManifest(brick);
 
-    // Scale timeout proportionally with maxTurns (base=10 min for 20 turns)
-    const timeoutMs = Math.round(BRICK_TIMEOUT_MS_BASE * (maxTurns / 20));
+    // Per-brick hint: use max(global, manifest.bench.maxTurns)
+    const effectiveMaxTurns = Math.max(maxTurns, manifest.bench?.maxTurns ?? 0);
+    if (effectiveMaxTurns > maxTurns) {
+        console.log(`  [adaptive] ${brick}: using maxTurns=${effectiveMaxTurns} from manifest`);
+    }
+
+    // Scale timeout proportionally with effectiveMaxTurns (base=10 min for 20 turns)
+    const timeoutMs = Math.round(BRICK_TIMEOUT_MS_BASE * (effectiveMaxTurns / 20));
     const timeout = new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error(`Timeout after ${timeoutMs / 1000}s`)), timeoutMs),
     );
@@ -130,8 +136,15 @@ async function runBrickWithRetry(
             (async () => {
                 // Native run
                 const nativeResult = await runOneMode({
-                    brick, mode: 'native', framing: 'minimal', maxTurns, outDir, manifest,
+                    brick, mode: 'native', framing: 'minimal', maxTurns: effectiveMaxTurns, outDir, manifest,
                 });
+
+                // Auto-retry on max_turns: escalate to effectiveMaxTurns × 2 (clamp 80), attempt 1 only
+                if (nativeResult.exit_reason === 'max_turns' && attempt === 1) {
+                    const escalated = Math.min(effectiveMaxTurns * 2, 80);
+                    console.log(`  [escalate] ${brick} native hit max_turns=${effectiveMaxTurns}, retrying with ${escalated}`);
+                    return runBrickWithRetry(brick, outDir, 2, escalated);
+                }
 
                 if (nativeResult.exit_reason === 'error' || nativeResult.exit_reason === 'missing_spec') {
                     return { native: nativeResult, brick: null, error: `native exit=${nativeResult.exit_reason}` };
@@ -141,8 +154,15 @@ async function runBrickWithRetry(
 
                 // Brick run
                 const brickResult = await runOneMode({
-                    brick, mode: 'brick', framing: 'minimal', maxTurns, outDir, taskSpec, manifest,
+                    brick, mode: 'brick', framing: 'minimal', maxTurns: effectiveMaxTurns, outDir, taskSpec, manifest,
                 });
+
+                // Auto-retry on max_turns for brick run as well
+                if (brickResult.exit_reason === 'max_turns' && attempt === 1) {
+                    const escalated = Math.min(effectiveMaxTurns * 2, 80);
+                    console.log(`  [escalate] ${brick} brick hit max_turns=${effectiveMaxTurns}, retrying with ${escalated}`);
+                    return runBrickWithRetry(brick, outDir, 2, escalated);
+                }
 
                 return { native: nativeResult, brick: brickResult };
             })(),
