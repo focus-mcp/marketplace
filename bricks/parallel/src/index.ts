@@ -3,7 +3,7 @@
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
 import type { ParCollectInput, ParMergeInput, ParRunInput, ParTimeoutInput } from './operations.ts';
-import { parCollect, parMerge, parRun, parTimeout } from './operations.ts';
+import { parCollect, parMerge, parRun, parRunInline, parTimeout } from './operations.ts';
 
 interface BrickBus {
     on(
@@ -49,6 +49,9 @@ const brick: Brick = {
         );
         unsubscribers.push(
             ctx.bus.handle('parallel:timeout', (data) => parTimeout(data as ParTimeoutInput)),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('parallel:run_inline', (data) => parRunInline(data as ParRunInput)),
         );
     },
     stop() {

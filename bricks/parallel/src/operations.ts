@@ -274,6 +274,20 @@ export function parCollect(input: ParCollectInput): ParCollectOutput {
     };
 }
 
+// ─── parRunInline ────────────────────────────────────────────────────────────
+
+export interface ParRunInlineOutput {
+    runId: string;
+    results: TaskResult[];
+    summary: CollectSummary;
+}
+
+export async function parRunInline(input: ParRunInput): Promise<ParRunInlineOutput> {
+    const { runId } = await parRun(input);
+    const collected = parCollect({ runId });
+    return { runId, results: collected.results, summary: collected.summary };
+}
+
 // ─── parMerge ────────────────────────────────────────────────────────────────
 
 export function parMerge(input: ParMergeInput): ParMergeOutput {

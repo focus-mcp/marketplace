@@ -1,0 +1,12 @@
+name: par_run_inline/happy
+tool: run_inline
+description: >
+  Run two tasks inline (echo commands). Verifies runId returned, results array
+  has 2 entries with id/exitCode/stdout. Checks output size <= 2048B.
+input:
+  tasks:
+    - id: "t1"
+      command: "echo hello"
+    - id: "t2"
+      command: "echo world"
+tags: [happy, inline]
