@@ -1,0 +1,7 @@
+name: val_lint/happy
+tool: val_lint
+description: >
+  Lint a clean TS file (no console.log, no debugger, no TODO). Verifies findings=[], clean=true, size<=2048B.
+input:
+  path: "<dynamic>"
+tags: [happy, fs]

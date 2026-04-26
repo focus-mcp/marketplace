@@ -1,0 +1,6 @@
+name: ts_cleanup/happy
+tool: ts_cleanup
+description: >
+  Clear the index after indexing 1 file. Verifies removed >= 1, size<=1024B.
+input: {}
+tags: [happy, stateful]

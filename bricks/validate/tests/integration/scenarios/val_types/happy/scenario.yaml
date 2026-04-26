@@ -1,0 +1,7 @@
+name: val_types/happy
+tool: val_types
+description: >
+  Check TypeScript type annotations of a well-typed file. Verifies issues=[], score=100, size<=2048B.
+input:
+  path: "<dynamic>"
+tags: [happy, fs]

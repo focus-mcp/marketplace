@@ -1,0 +1,14 @@
+name: val_schema/happy
+tool: val_schema
+description: >
+  Validate JSON data against a simple schema (object with required name:string).
+  Verifies valid=true, no errors, size<=2048B.
+input:
+  data: '{"name":"Alice"}'
+  schema:
+    type: object
+    required: ["name"]
+    properties:
+      name:
+        type: string
+tags: [happy, stateless]

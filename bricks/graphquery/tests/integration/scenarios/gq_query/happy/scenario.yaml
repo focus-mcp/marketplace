@@ -1,0 +1,7 @@
+name: gq_query/happy
+tool: gq_query
+description: >
+  Query graph for nodes matching 'alpha'. Verifies count=1, result has id/type/label, size<=2048B.
+input:
+  pattern: "alpha"
+tags: [happy, stateful]

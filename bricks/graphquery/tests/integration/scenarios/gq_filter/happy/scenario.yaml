@@ -1,0 +1,7 @@
+name: gq_filter/happy
+tool: gq_filter
+description: >
+  Filter graph to 'concept' node type only. Verifies nodeCount=2, all nodes are concept type, size<=2048B.
+input:
+  nodeTypes: ["concept"]
+tags: [happy, stateful]

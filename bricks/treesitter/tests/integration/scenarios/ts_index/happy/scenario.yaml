@@ -1,0 +1,8 @@
+name: ts_index/happy
+tool: ts_index
+description: >
+  Index a dir with 1 TS file containing 2 exported functions.
+  Verifies files=1, symbols >= 2, size<=2048B.
+input:
+  dir: "<dynamic>"
+tags: [happy, stateful, fs]
