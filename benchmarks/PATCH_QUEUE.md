@@ -47,6 +47,11 @@ No module-level `runs` Map or history accumulation. Not a state issue.
 
 ---
 
+### ~~🚨~~ `parallel` — +79% tokens, +874% latence (9× slower) [FIXED in 1.2.0 — see PR fix/parallel-payload-cap]
+
+> **Status**: FIXED. P0 payload cap implemented (stdout/stderr capped at 4KB, runs Map bounded to 100 entries FIFO). Double round-trip API change deferred as P2. Re-bench expected next sweep.
+> Historical doc preserved below.
+
 ### 🚨 `parallel` — +79% tokens, +874% latence (9× slower)
 
 **Signal** : biggest latency regression. Agent wait-times dominate.
