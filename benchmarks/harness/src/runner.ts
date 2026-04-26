@@ -236,11 +236,10 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
                   disallowedTools: [] as string[],
               }
             : {
-                  allowedTools: [
-                      'Read',
-                      ...manifest.tools.map((t) => `mcp__focus__${manifest.prefix}_${t.name}`),
-                  ] as string[],
-                  disallowedTools: ['Bash', 'Grep', 'Glob', 'Edit', 'Write'] as string[],
+                  allowedTools: manifest.tools.map(
+                      (t) => `mcp__focus__${manifest.prefix}_${t.name}`,
+                  ) as string[],
+                  disallowedTools: ['Read', 'Bash', 'Grep', 'Glob', 'Edit', 'Write'] as string[],
                   mcpServers: {
                       focus: {
                           command: 'focus',
