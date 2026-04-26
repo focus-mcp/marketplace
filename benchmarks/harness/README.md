@@ -101,6 +101,35 @@ escalates to `min(effectiveMaxTurns × 2, 80)` and retries once:
 Escalation is capped at **80 turns** and limited to **1 extra attempt**. If the re-run also hits
 `max_turns`, the result is accepted as a failure (partial/failed status in the summary).
 
+## Brick mode tool isolation
+
+**Brick mode exposes ONLY the brick's own MCP tools** — no native tools (`Read`, `Bash`, `Grep`, etc.).
+
+### Why no Read in brick mode
+
+Before this was fixed, `allowedTools` in brick mode included `Read` alongside the brick's MCP tools:
+
+```typescript
+// BEFORE (leaky) — Phase 2a sweeps
+allowedTools: ['Read', ...manifest.tools.map((t) => `mcp__focus__${prefix}_${t.name}`)]
+```
+
+This caused three measurement problems:
+
+1. **Inflated token counts** — the agent used `Read` to validate or compensate for unclear brick outputs, adding extra turns and tokens that had nothing to do with the brick.
+2. **Hidden design defects** — bricks with incomprehensible outputs were rescued by `Read` fallbacks. The bench score looked acceptable when it shouldn't have.
+3. **Wrong attribution** — `tools_used` contained `[Read, mcp__focus__par_collect, ...]`, making it impossible to tell what the brick actually did.
+
+The fix is strict:
+
+```typescript
+// AFTER (strict) — Phase 2b and beyond
+allowedTools: manifest.tools.map((t) => `mcp__focus__${prefix}_${t.name}`)
+disallowedTools: ['Read', 'Bash', 'Grep', 'Glob', 'Edit', 'Write']
+```
+
+**Expected consequence:** some bricks will fail or score worse post-fix. This is intentional — it reveals real brick design defects (missing feedback fields, opaque outputs, no path/content snippets in results). Phase 2a sweeps are no longer comparable to post-fix sweeps.
+
 ## Isolation
 
 Each run gets `/tmp/focus-bench/<brick>-<mode>-<stamp>/` with:

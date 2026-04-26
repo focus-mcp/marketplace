@@ -7,7 +7,7 @@
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { loadManifest, extractResultBlock, extractMiniTaskSpec, isoStamp, type BrickManifest } from './runner.js';
+import { loadManifest, BRICK_DISALLOWED_TOOLS, extractResultBlock, extractMiniTaskSpec, isoStamp, type BrickManifest } from './runner.js';
 
 // ---------------------------------------------------------------------------
 // Test: real manifests for parallel and sandbox have bench.maxTurns=40
@@ -68,6 +68,53 @@ test('manifest without bench hint does not override global maxTurns', () => {
     const globalTurns = 20;
     const effective = Math.max(globalTurns, noHintManifest.bench?.maxTurns ?? 0);
     assert.equal(effective, 20, 'Without bench hint, effectiveMaxTurns should equal global');
+});
+
+// ---------------------------------------------------------------------------
+// Test: brick mode allowedTools contains ONLY mcp__focus__* entries (no Read leakage)
+// ---------------------------------------------------------------------------
+
+test('brick mode allowedTools must not include Read', () => {
+    const manifest: BrickManifest = {
+        name: 'parallel',
+        prefix: 'par',
+        description: 'parallel brick',
+        tools: [
+            { name: 'run', description: 'run' },
+            { name: 'collect', description: 'collect' },
+            { name: 'merge', description: 'merge' },
+        ],
+    };
+
+    // Replicate the brick mode allowedTools logic from runner.ts
+    const allowedTools = manifest.tools.map(
+        (t) => `mcp__focus__${manifest.prefix}_${t.name}`,
+    );
+
+    assert.ok(
+        !allowedTools.includes('Read'),
+        'brick mode allowedTools must NOT include Read (would allow native fallback)',
+    );
+    assert.ok(
+        !allowedTools.some((t) => !t.startsWith('mcp__focus__')),
+        'brick mode allowedTools must contain ONLY mcp__focus__* entries',
+    );
+    assert.deepEqual(allowedTools, [
+        'mcp__focus__par_run',
+        'mcp__focus__par_collect',
+        'mcp__focus__par_merge',
+    ]);
+});
+
+test('BRICK_DISALLOWED_TOOLS blocks all native tools including ToolSearch', () => {
+    // ToolSearch was confirmed in traces: parallel-brick used it as a fallback alongside Read
+    const required = ['Read', 'ToolSearch', 'Bash', 'Grep', 'Glob', 'Edit', 'Write'];
+    for (const tool of required) {
+        assert.ok(
+            (BRICK_DISALLOWED_TOOLS as readonly string[]).includes(tool),
+            `${tool} must be in BRICK_DISALLOWED_TOOLS (runner.ts)`,
+        );
+    }
 });
 
 // ---------------------------------------------------------------------------
