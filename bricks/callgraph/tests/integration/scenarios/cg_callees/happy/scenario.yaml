@@ -1,0 +1,11 @@
+name: cg_callees/happy
+tool: cg_callees
+description: >
+  Find callees of function main in a temp file.
+  Verifies callees array contains expected function names, size<=4096B.
+input:
+  name: "main"
+  file: "<dynamic>"
+  startLine: 1
+  endLine: 4
+tags: [happy, fs]

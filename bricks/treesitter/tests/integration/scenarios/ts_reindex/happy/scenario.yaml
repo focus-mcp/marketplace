@@ -1,0 +1,7 @@
+name: ts_reindex/happy
+tool: ts_reindex
+description: >
+  Re-index a single TS file with 1 exported function. Verifies symbols >= 1, size<=2048B.
+input:
+  path: "<dynamic>"
+tags: [happy, stateful, fs]

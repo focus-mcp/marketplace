@@ -1,0 +1,6 @@
+name: ts_langs/happy
+tool: ts_langs
+description: >
+  List supported languages. Verifies array contains typescript and javascript, size<=1024B.
+input: {}
+tags: [happy, stateless]

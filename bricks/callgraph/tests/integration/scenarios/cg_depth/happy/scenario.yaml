@@ -1,0 +1,9 @@
+name: cg_depth/happy
+tool: cg_depth
+description: >
+  Find max call depth of function 'top' in a 3-level chain.
+  Verifies depth >= 2, size<=2048B.
+input:
+  name: "top"
+  dir: "<dynamic>"
+tags: [happy, fs]

@@ -1,0 +1,8 @@
+name: rt_frameworks/happy
+tool: rt_frameworks
+description: >
+  Detect frameworks from package.json with express dep.
+  Verifies frameworks has 1 entry with name=express, size<=2048B.
+input:
+  dir: "<dynamic>"
+tags: [happy, fs]

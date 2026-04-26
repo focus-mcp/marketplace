@@ -1,0 +1,8 @@
+name: rt_scan/happy
+tool: rt_scan
+description: >
+  Scan an Express project dir for GET/POST routes. Verifies total=2, framework=express, size<=4096B.
+input:
+  dir: "<dynamic>"
+  framework: "express"
+tags: [happy, fs]

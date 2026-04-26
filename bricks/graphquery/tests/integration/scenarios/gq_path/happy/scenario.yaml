@@ -1,0 +1,8 @@
+name: gq_path/happy
+tool: gq_path
+description: >
+  Find shortest path from 'a' to 'c' in a 3-node chain. Verifies path=[a,b,c], length=2, size<=2048B.
+input:
+  from: "a"
+  to: "c"
+tags: [happy, stateful]

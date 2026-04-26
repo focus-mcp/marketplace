@@ -1,0 +1,7 @@
+name: val_json/happy
+tool: val_json
+description: >
+  Validate a valid JSON string. Verifies valid=true, parsed non-null, no error, size<=2048B.
+input:
+  text: '{"name":"test","value":42}'
+tags: [happy, stateless]

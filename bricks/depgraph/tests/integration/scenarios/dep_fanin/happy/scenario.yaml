@@ -1,0 +1,9 @@
+name: dep_fanin/happy
+tool: dep_fanin
+description: >
+  Find files that import a target file in a temp dir.
+  Verifies fanin count >= 1 and fanin array non-empty, size<=4096B.
+input:
+  file: "<dynamic>"
+  dir: "<dynamic>"
+tags: [happy, fs]

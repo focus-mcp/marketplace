@@ -1,0 +1,10 @@
+name: cg_chain/happy
+tool: cg_chain
+description: >
+  Find call chain from function 'a' to 'c' via 'b' in a temp dir.
+  Verifies chain is non-null, contains start and end, size<=4096B.
+input:
+  from: "a"
+  to: "c"
+  dir: "<dynamic>"
+tags: [happy, fs]

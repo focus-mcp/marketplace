@@ -1,0 +1,8 @@
+name: dep_circular/happy
+tool: dep_circular
+description: >
+  Detect circular deps in a dir with 2 files that import each other.
+  Verifies cycles array is non-empty, size<=4096B.
+input:
+  dir: "<dynamic>"
+tags: [happy, fs]

@@ -1,0 +1,7 @@
+name: gq_node/happy
+tool: gq_node
+description: >
+  Get full details of node 'a' including edges. Verifies node fields + outEdges count, size<=2048B.
+input:
+  id: "a"
+tags: [happy, stateful]
