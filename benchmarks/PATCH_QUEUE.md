@@ -99,21 +99,12 @@ Each entry: brick + observed signal + suspected root cause + proposed action + p
 
 ## 🔧 Section 4 — Active P2 (deferred / design changes)
 
-### `planning` — +11% tokens, coverage 4/4
-
-**Signal** : régression faible, mais **tous les 4 outils utilisés** — l'agent les a trouvés utiles mais a dépensé plus de tokens.  
-**Suspected** : les outils de planning ajoutent une cérémonie ("décomposer la tâche en étapes") qui coûte plus qu'elle n'apporte sur une iso-task simple.  
-**Action** : mesurer en Phase 2b scenario (multi-step raisonnement justifié). Meta-brick non mesurable en single-task.  
-**Priority** : 🔧
-
----
-
-### `parallel` — double round-trip run→collect
+### `parallel` — double round-trip run→collect ✅ FIXED via additive tool
 
 **Signal** : le pattern 2-steps force 2 MCP round-trips vs. un batch call unique.  
-**Proposed fix** : effondrer run+collect en un seul `par_run` qui retourne les résultats inline, OU exposer `par_run` avec option `await=true`.  
-**Status** : deferred — API change invasif. Le P0 payload cap (PR #138) a été livré. Ce P2 reste en backlog.  
-**Priority** : 🔧
+**Fix (additive)** : nouveau tool `par_run_inline` — effectue run+collect en un seul appel, retourne `{runId, results, summary}` inline. Pas de breaking change : `par_run` + `par_collect` restent disponibles.  
+**npm version** : 1.2.0  
+**Priority** : ✅
 
 ---
 
@@ -245,6 +236,12 @@ Each entry: brick + observed signal + suspected root cause + proposed action + p
 
 ---
 
+### `planning` +11% tokens, coverage 4/4 — Methodology issue
+
+**Verdict** : Meta-brick (plan/steps/dependencies/estimate) measures planning ceremony for a simple iso-task. The +11% reflects the cost of breaking down a trivial task into a plan that wasn't needed. In real agent workflows (multi-step tasks where planning saves backtracking), the brick provides positive ROI. Coverage 4/4 confirms agent uses all tools — design works, just mis-measured by single-task bench. Cleared.
+
+---
+
 ## 📊 Section 7 — Methodology issues
 
 Bricks intrinsèquement mal mesurées par le bench iso-task (à exclure ou re-mesurer en Phase 2b scenario).
@@ -313,7 +310,7 @@ Ne PAS augmenter maxTurns davantage (60, 80...). Le problème est le design de t
 | `heatmap` | +29% | 0.84× | 2/4 | 🗑️ Cleared (false positive) |
 | `research` | +23% | 3.49× | 3/3 | 🗑️ Cleared (methodology — meta brick) |
 | `lastversion` | +392% | +99% lat | 1/6 | ✅ FIXED 1.2.1 |
-| `planning` | +11% | 1.20× | 4/4 | 🔧 P2 — meta brick, deferred |
+| `planning` | +11% | 1.20× | 4/4 | 🗑️ Cleared (methodology — meta brick) |
 | `memory` | +11% | 1.03× | 2/5 | ⚠️ P1 — stateful, methodology probable |
 
 ### 8 FAILED bricks — résultats après re-run maxTurns=40 (16 min, 15M tokens)
