@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-26T11:21:36.828Z",
+  "updated": "2026-04-26T12:25:20.364Z",
   "bricks": [
     {
       "name": "agent",
@@ -4570,7 +4570,7 @@
     },
     {
       "name": "parallel",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "description": "Parallel execution coordination — run tasks concurrently, collect results, merge outputs, handle timeouts.",
       "tags": [
         "parallel",
@@ -4692,6 +4692,46 @@
                 "description": "Check timeout status of a run"
               }
             },
+            "additionalProperties": false
+          }
+        },
+        {
+          "name": "run_inline",
+          "description": "Run parallel tasks and return results inline in a single response (combines run + collect, avoids 2 round-trips). Use this when you need results immediately rather than polling collect later.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "tasks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "command": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "command"
+                  ]
+                },
+                "description": "Tasks to run"
+              },
+              "concurrency": {
+                "type": "number",
+                "description": "Max concurrent tasks (default: all)"
+              },
+              "cwd": {
+                "type": "string",
+                "description": "Working directory"
+              }
+            },
+            "required": [
+              "tasks"
+            ],
             "additionalProperties": false
           }
         }
