@@ -9,6 +9,7 @@ import { resetParallel } from '../../src/operations.js';
 import { check as checkParCollectHappy } from './scenarios/par_collect/happy/invariants.js';
 import { check as checkParMergeHappy } from './scenarios/par_merge/happy/invariants.js';
 import { check as checkParRunHappy } from './scenarios/par_run/happy/invariants.js';
+import { check as checkParRunInlineHappy } from './scenarios/par_run_inline/happy/invariants.js';
 import { check as checkParTimeoutHappy } from './scenarios/par_timeout/happy/invariants.js';
 
 beforeEach(() => {
@@ -75,6 +76,22 @@ describe('par_timeout integration', () => {
     it('happy: timeout config check → defaultMs > 0, size<=2048B', async () => {
         const output = await runTool(brick, 'timeout', {});
         for (const i of checkParTimeoutHappy(output)) {
+            if (!i.ok) throw new Error(`Invariant violated: ${i.reason}`);
+        }
+    });
+});
+
+// ─── par_run_inline ────────────────────────────────────────────────────────────
+
+describe('par_run_inline integration', () => {
+    it('happy: run_inline({tasks: [t1, t2]}) → runId + results[2] + summary, size<=2048B', async () => {
+        const output = await runTool(brick, 'run_inline', {
+            tasks: [
+                { id: 't1', command: 'echo hello' },
+                { id: 't2', command: 'echo world' },
+            ],
+        });
+        for (const i of checkParRunInlineHappy(output)) {
             if (!i.ok) throw new Error(`Invariant violated: ${i.reason}`);
         }
     });

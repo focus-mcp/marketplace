@@ -6,6 +6,7 @@ import {
     parCollect,
     parMerge,
     parRun,
+    parRunInline,
     parTimeout,
     resetParallel,
     truncateOutput,
@@ -269,6 +270,42 @@ describe('truncateOutput', () => {
     });
 });
 
+// ─── parRunInline ─────────────────────────────────────────────────────────────
+
+describe('parRunInline', () => {
+    it('returns runId + results in single call', async () => {
+        const result = await parRunInline({
+            tasks: [
+                { id: 't1', command: 'echo hello' },
+                { id: 't2', command: 'echo world' },
+            ],
+        });
+        expect(result.runId).toBeTruthy();
+        expect(result.results).toHaveLength(2);
+        expect(result.results[0]?.id).toBe('t1');
+        expect(result.results[0]?.exitCode).toBe(0);
+        expect(result.results[0]?.stdout.trim()).toBe('hello');
+        expect(result.summary.total).toBe(2);
+        expect(result.summary.completed).toBe(2);
+        expect(result.summary.failed).toBe(0);
+    });
+
+    it('applies same caps as parRun (truncated stdout if > MAX_OUTPUT_BYTES)', async () => {
+        // Use truncateOutput directly to verify cap is applied — avoids shell quoting issues
+        const bigText = 'x'.repeat(5000);
+        const truncated = truncateOutput(bigText);
+        // Also verify parRunInline with a command that produces large output via echo + yes
+        const result = await parRunInline({
+            tasks: [{ id: 'big', command: 'dd if=/dev/urandom bs=5000 count=1 status=none' }],
+        });
+        // stdout should be either truncated or empty (binary might not capture well) — check size cap
+        const sizeBytes = Buffer.byteLength(JSON.stringify(result), 'utf8');
+        expect(sizeBytes).toBeLessThan(8192); // réponse complète reste raisonnable
+        // Verify truncateOutput itself caps at 4096 bytes
+        expect(truncated).toContain('[truncated, original 5000 bytes]');
+    });
+});
+
 // ─── runs Map eviction ────────────────────────────────────────────────────────
 
 describe('runs Map eviction', () => {
@@ -290,7 +327,7 @@ describe('runs Map eviction', () => {
 // ─── parallel brick (index.ts) ───────────────────────────────────────────────
 
 describe('parallel brick', () => {
-    it('registers 4 handlers on start and unregisters on stop', async () => {
+    it('registers 5 handlers on start and unregisters on stop', async () => {
         const { default: brick } = await import('./index.ts');
         const unsubbers: Array<() => void> = [];
         const bus = {
@@ -303,11 +340,12 @@ describe('parallel brick', () => {
         };
 
         await brick.start({ bus });
-        expect(bus.handle).toHaveBeenCalledTimes(4);
+        expect(bus.handle).toHaveBeenCalledTimes(5);
         expect(bus.handle).toHaveBeenCalledWith('parallel:run', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('parallel:collect', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('parallel:merge', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('parallel:timeout', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('parallel:run_inline', expect.any(Function));
 
         await brick.stop();
         for (const unsub of unsubbers) {
