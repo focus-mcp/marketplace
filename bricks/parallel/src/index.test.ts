@@ -260,6 +260,13 @@ describe('truncateOutput', () => {
         expect(result).toContain('[truncated, original 6 bytes]');
         expect(result.startsWith('abc')).toBe(true);
     });
+
+    it('truncates by bytes, not characters (UTF-8 safe)', () => {
+        const emoji = '😀'.repeat(2000); // 4 bytes per emoji = 8000 bytes
+        const result = truncateOutput(emoji, 4096);
+        expect(Buffer.byteLength(result, 'utf8')).toBeLessThanOrEqual(4096 + 50); // +marker
+        expect(result).toContain('[truncated, original 8000 bytes]');
+    });
 });
 
 // ─── runs Map eviction ────────────────────────────────────────────────────────

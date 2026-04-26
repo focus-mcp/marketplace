@@ -104,9 +104,13 @@ export function resetParallel(): void {
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 export function truncateOutput(output: string, maxBytes: number = MAX_OUTPUT_BYTES): string {
-    if (Buffer.byteLength(output, 'utf8') <= maxBytes) return output;
-    const truncated = output.slice(0, maxBytes);
-    return `${truncated}\n[truncated, original ${Buffer.byteLength(output, 'utf8')} bytes]`;
+    const bytes = Buffer.byteLength(output, 'utf8');
+    if (bytes <= maxBytes) return output;
+
+    const buf = Buffer.from(output, 'utf8');
+    const sliced = buf.subarray(0, maxBytes);
+    const decoded = new TextDecoder('utf-8', { fatal: false }).decode(sliced);
+    return `${decoded}\n[truncated, original ${bytes} bytes]`;
 }
 
 function parseCommand(command: string): { file: string; args: string[] } {

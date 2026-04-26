@@ -1,5 +1,5 @@
 ---
-"@focus-mcp/brick-parallel": minor
+"@focus-mcp/brick-parallel": patch
 ---
 
 fix(parallel): cap stdout/stderr per task at 4KB + evict oldest runs above 100 entries
