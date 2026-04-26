@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-sandbox",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "private": false,
     "description": "Sandboxed code execution — run JavaScript/TypeScript snippets in an isolated VM context.",
     "license": "MIT",

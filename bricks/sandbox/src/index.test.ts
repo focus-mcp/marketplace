@@ -292,6 +292,78 @@ describe('boxRead', () => {
     });
 });
 
+// ─── payload caps ────────────────────────────────────────────────────────────
+
+describe('payload caps — logs', () => {
+    it('logs > MAX_LOG_LINES is truncated', async () => {
+        // Generate 300 console.log calls — exceeds the 256-line cap
+        const code = `for (let i = 0; i < 300; i++) { console.log('line ' + i); }`;
+        const out = await boxRun({ code });
+        expect(out.error).toBeUndefined();
+        // logs must be capped to MAX_LOG_LINES (256) + 1 sentinel entry = 257
+        expect(out.logs.length).toBe(257);
+        expect(out.logs[256]).toMatch(/\[truncated 44 lines\]/);
+    });
+
+    it('log line > MAX_LINE_BYTES is truncated', async () => {
+        // Generate a log line of 2000 bytes (> 1024 cap)
+        const code = `console.log('A'.repeat(2000));`;
+        const out = await boxRun({ code });
+        expect(out.error).toBeUndefined();
+        expect(out.logs).toHaveLength(1);
+        const line0 = out.logs[0] ?? '';
+        expect(line0).toContain('[truncated, original');
+        // Capped line must not exceed 1024 bytes + sentinel overhead
+        expect(Buffer.byteLength(line0, 'utf8')).toBeLessThan(1024 + 200);
+    });
+});
+
+describe('payload caps — result', () => {
+    it('result > MAX_RESULT_BYTES is truncated', async () => {
+        // Generate a result string larger than 4096 bytes
+        const code = `'X'.repeat(5000)`;
+        const out = await boxRun({ code });
+        expect(out.error).toBeUndefined();
+        expect(out.result).toContain('[truncated, original');
+        expect(Buffer.byteLength(out.result, 'utf8')).toBeLessThan(4096 + 200);
+    });
+});
+
+describe('payload caps — boxRead content', () => {
+    it('boxRead content > MAX_CONTENT_BYTES is truncated', async () => {
+        // Write a file larger than 16384 bytes
+        const rel = 'sandbox-test-large.txt';
+        const abs = join(process.cwd(), rel);
+        const bigContent = 'B'.repeat(20000);
+        await writeFile(abs, bigContent);
+        try {
+            const out = await boxRead({ path: rel });
+            expect(out.error).toBeUndefined();
+            expect(out.content).toContain('[truncated, original');
+            expect(Buffer.byteLength(out.content, 'utf8')).toBeLessThan(16384 + 200);
+        } finally {
+            await rm(abs, { force: true });
+        }
+    });
+});
+
+describe('payload caps — UTF-8 safety', () => {
+    it('UTF-8 multi-byte chars (emoji 4-byte) do not break truncation', async () => {
+        // Each emoji is 4 bytes. Generate enough to exceed MAX_LINE_BYTES (1024).
+        // 260 emojis × 4 bytes = 1040 bytes > 1024.
+        const code = `console.log('\u{1F600}'.repeat(260));`;
+        const out = await boxRun({ code });
+        expect(out.error).toBeUndefined();
+        expect(out.logs).toHaveLength(1);
+        const emojiLine = out.logs[0] ?? '';
+        // Must have been truncated
+        expect(emojiLine).toContain('[truncated, original');
+        // The truncated portion must not contain a replacement character (no broken code-point)
+        const truncatedPart = emojiLine.split('\n[truncated')[0] ?? '';
+        expect(truncatedPart).not.toContain('�');
+    });
+});
+
 // ─── brick registration ───────────────────────────────────────────────────────
 
 describe('sandbox brick', () => {

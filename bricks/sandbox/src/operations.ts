@@ -6,6 +6,40 @@ import { isAbsolute, normalize, resolve } from 'node:path';
 import * as vm from 'node:vm';
 import { transform } from 'esbuild';
 
+// ─── Output size caps ────────────────────────────────────────────────────────
+
+const MAX_LOG_LINES = 256; // truncate logs[] to N lines
+const MAX_LINE_BYTES = 1024; // each log line capped
+const MAX_CONTENT_BYTES = 16384; // for boxRead content
+const MAX_RESULT_BYTES = 4096; // for serialized result
+
+/**
+ * Truncate a string to at most `maxBytes` UTF-8 bytes, appending a sentinel
+ * when truncation occurs. Uses Buffer + TextDecoder to avoid splitting a
+ * multi-byte code point.
+ */
+function truncateBytes(s: string, maxBytes: number): string {
+    const bytes = Buffer.byteLength(s, 'utf8');
+    if (bytes <= maxBytes) return s;
+    const buf = Buffer.from(s, 'utf8');
+    const sliced = buf.subarray(0, maxBytes);
+    const decoded = new TextDecoder('utf-8', { fatal: false }).decode(sliced);
+    return `${decoded}\n[truncated, original ${bytes} bytes]`;
+}
+
+/**
+ * Cap a logs array: truncate each line to MAX_LINE_BYTES, then cap the array
+ * to MAX_LOG_LINES entries (appending a sentinel if lines were dropped).
+ */
+function capLogs(logs: string[]): string[] {
+    const capped = logs.map((line) => truncateBytes(line, MAX_LINE_BYTES));
+    if (capped.length > MAX_LOG_LINES) {
+        const dropped = capped.length - MAX_LOG_LINES;
+        return [...capped.slice(0, MAX_LOG_LINES), `[truncated ${dropped} lines]`];
+    }
+    return capped;
+}
+
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 export interface BoxRunInput {
@@ -114,13 +148,23 @@ export async function boxRun(
         const sandbox: vm.Context = {
             console: {
                 log: (...args: unknown[]) => {
-                    logs.push(args.map((a) => String(a)).join(' '));
+                    logs.push(truncateBytes(args.map((a) => String(a)).join(' '), MAX_LINE_BYTES));
                 },
                 error: (...args: unknown[]) => {
-                    logs.push(`[error] ${args.map((a) => String(a)).join(' ')}`);
+                    logs.push(
+                        truncateBytes(
+                            `[error] ${args.map((a) => String(a)).join(' ')}`,
+                            MAX_LINE_BYTES,
+                        ),
+                    );
                 },
                 warn: (...args: unknown[]) => {
-                    logs.push(`[warn] ${args.map((a) => String(a)).join(' ')}`);
+                    logs.push(
+                        truncateBytes(
+                            `[warn] ${args.map((a) => String(a)).join(' ')}`,
+                            MAX_LINE_BYTES,
+                        ),
+                    );
                 },
             },
             JSON,
@@ -158,13 +202,14 @@ export async function boxRun(
         } catch {
             result = String(raw);
         }
+        result = truncateBytes(result, MAX_RESULT_BYTES);
 
-        return { result, logs, duration };
+        return { result, logs: capLogs(logs), duration };
     } catch (err) {
         const duration = Date.now() - start;
         return {
             result: 'undefined',
-            logs,
+            logs: capLogs(logs),
             duration,
             error: err instanceof Error ? err.message : String(err),
         };
@@ -295,7 +340,8 @@ export async function boxRead(input: BoxReadInput): Promise<BoxReadOutput> {
         return { content: '', path: input.path, error: safe.error };
     }
     try {
-        const content = await readFile(safe.resolved, 'utf-8');
+        const raw = await readFile(safe.resolved, 'utf-8');
+        const content = truncateBytes(raw, MAX_CONTENT_BYTES);
         return { content, path: safe.resolved };
     } catch (err) {
         return {
