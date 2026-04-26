@@ -35,6 +35,7 @@ export interface MemForgetInput {
 
 export interface MemListInput {
     readonly tag?: string;
+    readonly limit?: number; // default MAX_LIST_DEFAULT; 0 = unlimited
 }
 
 // ─── State (overridable for tests) ───────────────────────────────────────────
@@ -175,17 +176,25 @@ export async function memForget(input: MemForgetInput): Promise<{ deleted: boole
     }
 }
 
+// ─── Constants ───────────────────────────────────────────────────────────────
+
+const MAX_LIST_DEFAULT = 100;
+
 // ─── memList ─────────────────────────────────────────────────────────────────
 
 export async function memList(
     input: MemListInput,
-): Promise<{ keys: Array<{ key: string; tags: string[]; storedAt: string }> }> {
+): Promise<{ keys: Array<{ key: string; tags: string[]; storedAt: string }>; total: number }> {
     const dir = getMemoryDir();
     const entries = await listEntries(dir);
     const filtered = input.tag
         ? entries.filter((e) => e.tags.includes(input.tag as string))
         : entries;
+    const limit = input.limit === 0 ? filtered.length : (input.limit ?? MAX_LIST_DEFAULT);
     return {
-        keys: filtered.map((e) => ({ key: e.key, tags: e.tags, storedAt: e.storedAt })),
+        keys: filtered
+            .slice(0, limit)
+            .map((e) => ({ key: e.key, tags: e.tags, storedAt: e.storedAt })),
+        total: filtered.length,
     };
 }
