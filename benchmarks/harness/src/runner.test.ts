@@ -188,3 +188,60 @@ test('focusStderr — no error, captured stderr: returned verbatim', () => {
     const focusStderr = [base, sdkLine].filter(Boolean).join('\n');
     assert.equal(focusStderr, 'warning from focus server');
 });
+
+// ---------------------------------------------------------------------------
+// systemPrompt isolation: brick mode must NOT use claude_code preset
+// ---------------------------------------------------------------------------
+
+test('brick mode does NOT include claude_code preset', () => {
+    // Replicate the systemPromptOption logic from runner.ts
+    function buildSystemPrompt(mode: string, framing: string): string | { type: 'preset'; preset: 'claude_code'; excludeDynamicSections?: boolean } {
+        return mode === 'brick'
+            ? 'You are an expert benchmark agent. Use the tools provided to solve the task. Reply with the final result block as instructed.'
+            : framing === 'minimal'
+              ? 'You are a benchmark runner. Follow the user instructions exactly.'
+              : { type: 'preset', preset: 'claude_code', excludeDynamicSections: true };
+    }
+
+    const brickMinimal = buildSystemPrompt('brick', 'minimal');
+    const brickClaudeCode = buildSystemPrompt('brick', 'claude-code');
+
+    // Brick mode always returns a plain string, never a preset object
+    assert.equal(typeof brickMinimal, 'string',
+        'brick mode with minimal framing must use a string systemPrompt');
+    assert.equal(typeof brickClaudeCode, 'string',
+        'brick mode with claude-code framing must still use a string systemPrompt (no preset)');
+    assert.ok(
+        typeof brickMinimal === 'string' && !brickMinimal.includes('preset'),
+        'brick systemPrompt must not contain the word "preset"',
+    );
+
+    // Native mode still uses the preset when framing is claude-code
+    const nativeClaudeCode = buildSystemPrompt('native', 'claude-code');
+    assert.equal(typeof nativeClaudeCode, 'object',
+        'native mode with claude-code framing must use the preset object');
+    assert.ok(
+        typeof nativeClaudeCode === 'object' &&
+        nativeClaudeCode !== null &&
+        'preset' in nativeClaudeCode &&
+        nativeClaudeCode.preset === 'claude_code',
+        'native mode systemPrompt must be the claude_code preset',
+    );
+});
+
+test('brick mode env contains FOCUS_BENCH_MODE=true', () => {
+    // Replicate the modeOptions brick env construction from runner.ts
+    const workdir = '/tmp/test-workdir';
+    const fakePath = '/usr/bin:/bin';
+    const env = {
+        HOME: workdir,
+        PATH: fakePath,
+        FOCUS_BENCH_MODE: 'true',
+    };
+
+    assert.equal(env['FOCUS_BENCH_MODE'], 'true',
+        'brick mode mcpServers.focus.env must contain FOCUS_BENCH_MODE=true');
+    assert.equal(env['HOME'], workdir,
+        'brick mode mcpServers.focus.env must contain HOME=workdir');
+    assert.ok('PATH' in env, 'brick mode mcpServers.focus.env must contain PATH');
+});

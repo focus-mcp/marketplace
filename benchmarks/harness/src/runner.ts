@@ -226,10 +226,18 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
     let exitReason: ExitReason = 'ok';
     let numTurns = 0;
 
+    // Native mode uses the claude_code preset (controlled by `framing`) to
+    // replicate what a Claude Code agent would do natively.
+    // Brick mode uses a minimal string prompt — no claude_code preset — to
+    // avoid loading global MCP servers (Agent, Monitor, Skill, WebFetch,
+    // mcp__fileread__*, mcp__shell__*) that bypass allowedTools and pollute
+    // the token count.
     const systemPromptOption: string | { type: 'preset'; preset: 'claude_code'; excludeDynamicSections?: boolean } =
-        framing === 'minimal'
-            ? 'You are a benchmark runner. Follow the user instructions exactly.'
-            : { type: 'preset', preset: 'claude_code', excludeDynamicSections: true };
+        mode === 'brick'
+            ? 'You are an expert benchmark agent. Use the tools provided to solve the task. Reply with the final result block as instructed.'
+            : framing === 'minimal'
+              ? 'You are a benchmark runner. Follow the user instructions exactly.'
+              : { type: 'preset', preset: 'claude_code', excludeDynamicSections: true };
 
     const commonOptions = {
         model: 'claude-sonnet-4-6',
@@ -263,7 +271,13 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
                       focus: {
                           command: 'focus',
                           args: ['start'],
-                          env: { HOME: workdir, PATH: process.env.PATH ?? '' },
+                          env: {
+                              HOME: workdir,
+                              PATH: process.env.PATH ?? '',
+                              // Tell the CLI to skip meta tools (focus_list, focus_install,
+                              // etc.) so bench agents see only the brick's own tools.
+                              FOCUS_BENCH_MODE: 'true',
+                          },
                       },
                   },
               };
