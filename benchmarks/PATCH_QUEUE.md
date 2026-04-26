@@ -12,247 +12,144 @@ Each entry: brick + observed signal + suspected root cause + proposed action + p
 
 ---
 
-## Regressions confirmed (brick worse than native)
+## ✅ Section 1 — FIXED (smoking guns confirmés, fixés sur npm)
 
-### ~~⚠️~~ `sandbox` — +42% tokens, 4.14× latence (Wave 4.4 smoking gun) [FIXED in 1.2.1 — see PR fix/sandbox-payload-cap]
+### `fileops` 1.3.0 — +379% tokens, 5.82× latence
 
-**Signal** : sweep Phase 2a reports +42% tokens, coverage 3/4.
-**Suspected root cause** : `box_run` and `box_file` return a `logs: string[]` field with **no size cap**.
-Any code that calls `console.log` inside the VM produces entries appended to `logs` with no truncation.
-The entire `logs` array (all stdout lines) is serialised into the JSON response and goes into the agent context.
-For code with verbose logging, this directly inflates the MCP response payload — and therefore tokens consumed.
-Additionally `box_read` returns `content: string` (raw file contents) without truncation — reading a large file
-bloats the response proportionally.
+**npm version** : 1.3.0  
+**Root cause** : `_workRoot` initialisé à `resolve(process.cwd())` au chargement du module (directory du serveur MCP, pas du repo de tâche). Le brick résolvait les chemins relatifs contre le mauvais répertoire → ENOENT → l'agent retryait, appelait des outils supplémentaires, divergeait. Le token explosion et le spike de durée étaient des retries/misdirection, PAS du bloat payload (chaque réponse outil < 200 B).
 
-**Code confirmed** (Wave 4.4 investigation — 2026-04-25):
-- `bricks/sandbox/src/operations.ts` line 116-127: `logs.push(...)` with no length guard.
-- `bricks/sandbox/src/operations.ts` line 155-161: `result = JSON.stringify(raw)` with no size guard.
-- `bricks/sandbox/src/operations.ts` line 298: `content = await readFile(...)` returned as-is.
+**Fix (PR #111)** :
+1. ✅ P0 — guard `_resolveAndCheck()` : si `_workRootExplicitlySet` est false et le path résolu n'existe pas, throw : `"workRoot not set: call fileops:setRoot first..."`.
+2. ✅ P1 — manifest descriptions : chaque outil annonce `"Requires fileops:setRoot to be called first with the workspace root path."`.
+3. 📌 P2 — per-call root : NOT implemented (trop invasif, deferred).
 
-**State analysis** : sandbox is **stateless** — each `boxRun` / `boxEval` call creates a fresh `vm.createContext`.
-No module-level `runs` Map or history accumulation. Not a state issue.
-
-**VM isolation** : confirmed safe. `vm.createContext` with explicit whitelist (no `process`, `require`, `fs`, `global`).
-
-**Proposed fix (DO NOT implement here — flag only)**:
-- P0: cap `logs` array to N entries (e.g. 50) with a `[... N more lines truncated]` sentinel.
-- P0: cap each log entry to M chars (e.g. 200) with `[truncated]` suffix.
-- P1: cap `result` string length to K chars (e.g. 1024) with `[truncated]` suffix.
-- P1: cap `content` in `boxRead` to K chars (e.g. 4096) with a `[truncated after N bytes]` sentinel.
-
-**Integration guard** : `outputSizeUnder(2048)` added to all 6 sandbox scenarios in Wave 4.4.
-
-**Files** : `bricks/sandbox/src/operations.ts` (lines 94-172 boxRun, 197-251 boxEval, 292-307 boxRead)
-**Priority** : ⚠️ — +42% tokens confirmed. Real payload bloat on verbose code or large file reads.
+**Retro-compat** : path qui existe sous le default workRoot passe toujours (pas de setRoot requis pour CLI où cwd EST le workspace).  
+**Files** : `bricks/fileops/src/operations.ts` (lines 15-16, 30-53)
 
 ---
 
-### ~~🚨~~ `parallel` — +79% tokens, +874% latence (9× slower) [FIXED in 1.2.0 — see PR fix/parallel-payload-cap]
+### `parallel` 1.1.1 — +79% tokens, +874% latence (9× slower)
 
-> **Status**: FIXED. P0 payload cap implemented (stdout/stderr capped at 4KB, runs Map bounded to 100 entries FIFO). Double round-trip API change deferred as P2. Re-bench expected next sweep.
-> Historical doc preserved below.
+**npm version** : 1.1.1  
+**Root cause** : la Map `runs` stockait les `ParallelRun` complets (stdout/stderr entier de chaque tâche) sans borne de taille ni TTL. Pour N tâches avec output verbeux, la Map grossissait indéfiniment. Le pattern 2-steps run→collect forçait 2 MCP round-trips (explique le spike de latence).
 
-### 🚨 `parallel` — +79% tokens, +874% latence (9× slower)
-
-**Signal** : biggest latency regression. Agent wait-times dominate.
-**Suspected** : brick probably serializes internally what advertises as parallel, or spawns subprocesses with big startup cost, or calls back into focus MCP inefficiently.
-**Action** :
-- Read `bricks/parallel/src/*` — profile where time is spent
-- Check if tools have `async` behavior that forces sequential MCP round-trips
-- Look at tool descriptions — maybe the agent uses the wrong tool for the task
-**Priority** : 🚨 — FocusMCP claim broken on this brick, must fix or deprecate
-
-**Wave 4.3 investigation finding (2026-04-25)** :
-Code-read of `bricks/parallel/src/operations.ts` reveals two suspects:
-
-1. **Full results stored in `runs` Map** — `parRun` executes ALL tasks synchronously before returning,
-   then stores the complete `ParallelRun` object (including all stdout/stderr per task) in the in-process
-   `runs: Map<string, ParallelRun>`. The `parCollect` tool then returns `run.results` directly —
-   the entire stdout/stderr of every task. For N tasks with verbose output, this can be large.
-   `outputSizeUnder(2048)` added in Wave 4.3 integration tests to catch this at the test level.
-
-2. **`parRun` is actually synchronous-looking to the MCP transport** — it awaits all tasks inside
-   the tool call and only returns a compact `{ runId, taskCount, completed, failed }`. The agent
-   must call `parCollect` in a second round-trip to get results. This forced two-step pattern
-   (run → collect) doubles MCP round-trips vs. a single batch call, explaining the latency spike.
-
-**Root cause summary** : the 2-tool run/collect split forces 2 MCP round-trips. The `runs` Map
-accumulates full stdout/stderr per run without any size cap or TTL eviction.
-
-**Proposed fix (DO NOT implement here — flag only)** :
-- P0: add size cap on `TaskResult.stdout` / `TaskResult.stderr` (e.g. 1KB per field, truncate with `[truncated]`).
-- P1: collapse run+collect into a single `par_run` response that returns results inline (deprecate
-  the 2-step pattern), OR expose `par_run` with `await=true` option.
-- P2: add TTL eviction on `runs` Map to prevent unbounded growth across multiple par_run calls.
+**Fix (PR #138)** :
+- ✅ P0 — cap UTF-8 byte-safe : `TaskResult.stdout` / `TaskResult.stderr` capés à 4KB par champ, `[truncated]` suffix.
+- ✅ P0 — FIFO eviction : Map `runs` bornée à 100 entries maximum.
+- 📌 P2 — effondrement run+collect en un seul appel : deferred (API change invasif — voir Section 4).
 
 **Files** : `bricks/parallel/src/operations.ts` (lines 91-97 state, 203-237 parRun, 241-256 parCollect)
-**Integration guard** : `outputSizeUnder(2048)` added to all 4 parallel scenarios in Wave 4.3.
 
-### 🚨 `lastversion` — +392% tokens, +99% latence
+---
 
-**Signal** : **biggest token regression** (tokens nearly 5× native). 6 tools, only 1/6 used.
-**Suspected** : tools return verbose output that dumps into agent context; or the agent has to read the manifest repeatedly because descriptions are unclear.
+### `sandbox` 1.2.1 — +42% tokens, 4.14× latence
+
+**npm version** : 1.2.1  
+**Root cause** : `box_run` et `box_file` retournaient `logs: string[]` sans aucun cap de taille. Tout `console.log` dans la VM s'ajoutait à `logs` sans troncature — la totalité était sérialisée dans la réponse JSON. `box_read` retournait `content: string` (contenu brut du fichier) sans troncature non plus.
+
+**Fix (PR #139)** :
+- ✅ P0 — cap `logs` : 256 lignes max, `[... N more lines truncated]` sentinel.
+- ✅ P0 — cap entrée log : 1KB par ligne, `[truncated]` suffix.
+- ✅ P1 — cap `result` : 4KB max, `[truncated]` suffix.
+- ✅ P1 — cap `content` (boxRead) : 16KB max, `[truncated after N bytes]` sentinel.
+
+**State** : sandbox est stateless — chaque `boxRun`/`boxEval` crée un `vm.createContext` frais. Pas d'accumulation d'état inter-appels. VM isolation confirmée sûre (whitelist explicite, pas de `process`/`require`/`fs`/`global`).  
+**Files** : `bricks/sandbox/src/operations.ts` (lines 94-172 boxRun, 197-251 boxEval, 292-307 boxRead)
+
+---
+
+## 🚨 Section 2 — Active P0 (à fixer urgent)
+
+### `lastversion` — +392% tokens, +99% latence — [FIXED in 1.2.1 — see PR #TBD]
+
+**npm version** : 1.2.1  
+**Root cause** (confirmée par inspection du code) :
+1. `lv_versions` — default `limit=50` pour npm/pypi (lodash npm = 200+ versions stables) → dump 50 entrées avec dates en JSON.
+2. `lv_changelog` — bodies des GitHub Releases retournés entiers sans cap : release notes longues = 5-10KB chacune × 20 releases = 100-200KB total de markdown dans le contexte agent.
+3. `lv_audit` — toutes les CVEs retournées sans troncature.
+
+**Fix (PR #TBD)** :
+- ✅ P0 — `lv_versions` : default `limit=20` (était 50), `total` préservé dans la réponse.
+- ✅ P0 — `lv_changelog` : budget 8KB réparti entre les release bodies (UTF-8 byte-safe), sentinel `[truncated]`.
+- ✅ P0 — `lv_audit` : top 10 entries par severity DESC, `count` préservé dans la réponse.
+- ✅ — `truncateBytes` helper : Buffer + TextDecoder{fatal:false} — safe sur Unicode 4-byte.
+- ✅ — 8 nouveaux tests unitaires couvrant tous les caps + boundary UTF-8.
+
+**Files** : `bricks/lastversion/src/operations.ts` (constants lines 3-22, lvVersions, lvChangelog, lvAudit)
+
+**Priority** : ~~🚨~~ ✅
+
+---
+
+## ⚠️ Section 3 — Active P1 (à investiguer/fixer après P0)
+
+### `memory` — +22% tokens, +110% latence
+
+**Signal** : brick stateful, cas similaire à `cache`.  
+**Suspected** : bench iso-task single-agent ≠ use-case de memory. L'agent n'a pas de mémoire de session antérieure à rappeler.  
+**Status** : non investigué — probablement un faux positif de méthodologie (voir Section 7).
+
 **Action** :
-- Inspect 1 run JSON — what content does the brick echo back per call?
-- Review tool descriptions for clarity — why does the agent only pick 1/6?
-- Check if there's pagination/truncation missing on list-like outputs
-**Priority** : 🚨
+- Exclure du bench single-task (brick stateful) OU concevoir un scénario Phase 2b qui s'étend sur plusieurs tâches.
 
-### ⚠️ `graphexport` — +119% tokens, +74% latence, coverage 1/6
+**Priority** : 🔧 méthodologie
 
-**Signal** : high token cost, low tool coverage, slow.
-**Suspected** : similar to lastversion — verbose output dumps + agent confused by 6 similar tools.
-**Action** :
-- Sample one run, look at payloads
-- Collapse/clarify the 6 tools if they overlap
-**Priority** : ⚠️
+---
 
-### ⚠️ `cache` — +52% tokens, +154% latence, **coverage 0/5**
+## 🔧 Section 4 — Active P2 (deferred / design changes)
 
-**Signal** : agent **never** calls a `cache_*` tool (0/5 coverage). Brick loads but is dead weight.
-**Suspected** : the cache brick only makes sense across multiple turns with state — single-task bench does not exercise it. OR descriptions do not hint when to use cache (agent can't discover utility from manifest alone).
-**Action** :
-- Review cache tool descriptions for "when to use this" cues
-- Consider: is `cache` even benchmarkable in an iso-task single-agent setup? If not, exclude from sweep and note in report as "stateful brick — not measurable this way".
-**Priority** : ⚠️ (also methodology discussion)
+### `planning` — +11% tokens, coverage 4/4
 
-### ~~🚨~~ `fileops` — +379% tokens, 5.82× latence (Phase C3 SMOKING GUN — **[FIXED in 1.3.0 — see PR #111]**)
-
-> **Status**: FIXED. P0 guard + P1 descriptions implemented. Re-bench expected next sweep.
-> Historical doc preserved below.
-
-### 🚨 `fileops` — +379% tokens, 5.82× latence (Phase C3 SMOKING GUN — confirmed)
-
-**Signal** : sweep-log-2026-04-24T06-57-42 reports +379% tokens and 5.82× duration.
-The fiche `benchmarks/bricks/fileops.md` confirms the agent produced a **wrong-directory answer**
-(10 files in a different dir instead of 6 files in the expected dir).
-
-**Root cause confirmed** (Phase C3 investigation — 2026-04-25):
-
-`_workRoot` in `bricks/fileops/src/operations.ts` defaults to `resolve(process.cwd())` at
-**module load time** — i.e. the directory the MCP server process was started from.
-In the benchmark harness the server is started from the marketplace root, not from
-`test-repo/`. The agent calls `fo_copy`/`fo_rename` with relative paths like
-`test-repo/packages/common/services/logger.service.ts`, which the brick resolves against
-the marketplace root → ENOENT or wrong directory. The agent retries, calls extra tools,
-diverges entirely. Token explosion and duration explosion are both retries/misdirection,
-NOT payload bloat (each tool response is < 200 B).
-
-**Secondary finding**: `fileops:setRoot` tool exists but the agent is never prompted to
-call it. Tool description does not advertise it as a required initialisation step.
-
-**Fix implemented** (P0 + P1 — 2026-04-25, v1.3.0):
-1. **✅ P0 — setRoot guard**: `_resolveAndCheck()` helper added. When `_workRootExplicitlySet`
-   is false and the resolved path does not exist, throws:
-   `"workRoot not set: call fileops:setRoot first with the absolute path to your workspace. Current default workRoot is '<cwd>' and the resolved path '<resolvedPath>' does not exist."`.
-   All ops (`fo_move`, `fo_copy`, `fo_delete`, `fo_rename`) use this helper.
-2. **✅ P1 — manifest description**: Every tool in `mcp-brick.json` now advertises:
-   `"Requires fileops:setRoot to be called first with the workspace root path."`.
-3. **📌 P2 — per-call root**: NOT implemented (too invasive, deferred).
-
-**Retro-compat**: path that exists under default workRoot still passes (no setRoot required for CLI usage where cwd IS the workspace).
-
-**Fix options** (historical, do NOT implement in this PR — flag only):
-1. **🚨 P0 — setRoot guard**: if `_workRoot` is still the default CWD and the first
-   incoming path does not exist under it, throw a descriptive error:
-   `"workRoot not set — call fileops:setRoot first with the absolute path to your workspace"`.
-   This surfaces the bug immediately instead of silently operating on the wrong dir.
-2. **⚠️ P1 — manifest description**: add to every tool description:
-   `"Requires fileops:setRoot to be called first with the workspace root path."`.
-   Agents will then invoke setRoot before any op.
-3. **🔧 P2 — per-call root**: accept an optional `root` field on every tool input
-   (analogous to `cwd` in shell commands). When present, override `_workRoot` for
-   that call only. Avoids global state side-effects.
-
-**Payload size**: confirmed < 200 B per response — NOT the cause of the regression.
-`outputSizeUnder(2048)` invariant added in Phase C3 as safety net, but would NOT catch
-this class of bug. A `setRoot` pre-condition guard (option 1) is the right sentinel.
-
-**Files** : `bricks/fileops/src/operations.ts` (lines 15-16, 30-53)
-
-**Priority** : 🚨 — confirmed production bug, causes silent wrong-directory operations
-for any agent that does not explicitly call `fileops:setRoot` first.
-
-### ⚠️ `memory` — +22% tokens, +110% latence
-
-**Signal** : stateful brick, similar issue to cache.
-**Suspected** : single-task bench ≠ memory use case. Agent has no prior session memory to recall.
-**Action** :
-- Likely exclude from single-task bench (stateful brick)
-- OR design Phase 2b scenario that spans tasks to let memory shine
-**Priority** : 🔧 methodology
-
-### 🔧 `planning` — +11% tokens, coverage 4/4
-
-**Signal** : mild regression, but **all 4 tools used** — agent found them useful but spent more tokens.
-**Suspected** : planning tools add ceremony ("break task into steps") that for a simple iso-task costs more than just doing it.
-**Action** :
-- Planning is a meta-brick. May not make sense on a simple single-task bench.
-- Consider scenario-bench (Phase 2b) only.
+**Signal** : régression faible, mais **tous les 4 outils utilisés** — l'agent les a trouvés utiles mais a dépensé plus de tokens.  
+**Suspected** : les outils de planning ajoutent une cérémonie ("décomposer la tâche en étapes") qui coûte plus qu'elle n'apporte sur une iso-task simple.  
+**Action** : mesurer en Phase 2b scenario (multi-step raisonnement justifié). Meta-brick non mesurable en single-task.  
 **Priority** : 🔧
 
 ---
 
-## Regressions in latency only (tokens OK, UX hurt)
+### `parallel` — double round-trip run→collect
 
-Bricks that save tokens but waste wall-clock. Candidate for latency optimization (batching, caching, fewer round-trips).
-
-| Brick | Δ tokens | Δ latence |
-|---|---:|---:|
-| `graphbuild` | –11% | **+113%** |
-| `graphquery` | –22% | –9% (mild) |
-| `diagram` | –52% | +57% |
-| `filewrite` | –22% | +68% |
-| `inline` | –63% | +2% |
-| `graphcluster` | –31% | +19% |
-
-**Action template** : identify the slow tool call(s), reduce MCP round-trips or batch operations.
+**Signal** : le pattern 2-steps force 2 MCP round-trips vs. un batch call unique.  
+**Proposed fix** : effondrer run+collect en un seul `par_run` qui retourne les résultats inline, OU exposer `par_run` avec option `await=true`.  
+**Status** : deferred — API change invasif. Le P0 payload cap (PR #138) a été livré. Ce P2 reste en backlog.  
+**Priority** : 🔧
 
 ---
 
-## Known CLI bugs (runtime / infra)
+## 📝 Section 5 — CLI / UX issues (non-brick)
 
 ### ⚠️ No auto-install of brick dependencies
 
-**Signal** : when a brick's `mcp-brick.json` declares `"dependencies": ["fileread", "symbol", ...]` (e.g. bundle bricks like `codebase`, `aiteam`, `codemod`), `focus add <bundle>` does not cascade-install the deps. At `focus start` the user gets:
-```
-error: Missing dependency "fileread"
-```
-and the MCP server aborts.
+**Signal** : quand le `mcp-brick.json` d'un brick déclare `"dependencies": ["fileread", "symbol", ...]` (e.g. bundle bricks `codebase`, `aiteam`, `codemod`), `focus add <bundle>` ne cascade pas l'installation des deps. Au `focus start` l'utilisateur reçoit `error: Missing dependency "fileread"` et le serveur MCP s'arrête.
 
-**Fix options**:
-1. **Auto-install on add**: when `focus add X` runs, recursively install any dep listed in X's `mcp-brick.json`. Log what's being cascaded.
-2. **Fail early on add**: refuse `focus add X` if deps are not installed, with a helpful `focus add X <dep-a> <dep-b>` suggestion.
-3. **Fail clearer on start**: current message is fine but should list ALL missing deps at once (not one at a time) + suggest the exact `focus add ...` command.
+**Fix options** :
+1. **Auto-install on add** : quand `focus add X` tourne, installer récursivement les deps listées dans `mcp-brick.json`. Logger ce qui est cascadé.
+2. **Fail early on add** : refuser `focus add X` si les deps ne sont pas installées, avec suggestion `focus add X <dep-a> <dep-b>`.
+3. **Fail clearer on start** : lister TOUTES les deps manquantes d'un coup (pas une par une) + suggérer la commande exacte `focus add ...`.
 
-**Priority**: ⚠️ — real user friction confirmed in production.
+**Priority** : ⚠️ — friction utilisateur réelle confirmée en production.
 
 ---
 
 ### 🔧 Missing `focus upgrade` / `focus upgrade-all` command
 
-**Signal** : no way for users to upgrade installed bricks to latest catalog version without manually running `focus remove X && focus add X` for each. Also no `focus self-upgrade` for the CLI (users need `npm install -g @focus-mcp/cli@latest`).
+**Signal** : pas de moyen pour les utilisateurs de mettre à jour les bricks installés sans `focus remove X && focus add X` manuellement.
 
 **Fix** :
-- Add `focus upgrade <name>` — re-installs a single brick at the latest version from the catalog. Essentially `remove + add` in one command, but preserves the enabled state and optional config.
-- Add `focus upgrade --all` — does the above for every brick in `center.json`.
-- Optional: `focus self-upgrade` that wraps `npm install -g @focus-mcp/cli@latest` (bonus — might be out of scope if users prefer their package manager directly).
+- `focus upgrade <name>` — réinstalle un brick unique à la dernière version du catalogue (remove + add en une commande, préserve l'état enabled et la config optionnelle).
+- `focus upgrade --all` — idem pour chaque brick dans `center.json`.
+- Optionnel : `focus self-upgrade` qui wrappe `npm install -g @focus-mcp/cli@latest`.
 
-**Priority** : 🔧 — daily friction for users, not blocking first install.
+**Priority** : 🔧 — friction quotidienne, non bloquant au premier install.
 
 ---
 
+### 🔧 `center.lock` schema incomplet (CLI 1.2.0)
 
+**Observed** : le lockfile généré par `focus add/remove` manque des champs standardisés par les lockfiles npm-style : pas de `version` à la racine (schema versioning), pas de `resolved` par brick (URL absolue du tarball npm), pas de `integrity` (hash SHA).
 
-### 🔧 `center.lock` schema incomplete (CLI 1.2.0)
-
-**Observed** : the lockfile generated by `focus add/remove` lacks fields that npm-style lockfiles standardize on:
-
-- No `version` at the root (schema versioning)
-- No `resolved` field per brick (absolute URL of the npm tarball, used for reproducible installs)
-- Optionally missing `integrity` (SHA hash of the tarball)
-
-Current shape:
+**Current shape** :
 ```json
 {
   "bricks": {
@@ -261,7 +158,7 @@ Current shape:
 }
 ```
 
-Target shape (inspired by package-lock.json):
+**Target shape** (inspiré de package-lock.json) :
 ```json
 {
   "lockfileVersion": 1,
@@ -278,169 +175,163 @@ Target shape (inspired by package-lock.json):
 }
 ```
 
-**Fix** : in `parseLockEntry` / `writeCenterLock`, add optional `lockfileVersion` at root (accept legacy files without it) and populate `resolved` + `integrity` after a successful `npm install` (the data is available in the install response).
-
-**Priority** : 🔧 — non-blocking for install/load flow but needed for reproducibility and future migration. Ship in CLI 1.4.0 after the current 1.3.0 default-URL fix lands.
-
-### Secondary note
-
-A stale `catalogUrl: "http://localhost:8642/catalog.json"` was seen in a user's center.lock — residual from a local test install. Not a code bug, but worth a small guard: warn on install if `catalogUrl` is `localhost` or a private IP.
+**Fix** : dans `parseLockEntry` / `writeCenterLock`, ajouter `lockfileVersion` optionnel à la racine (accepter les fichiers legacy sans lui) et peupler `resolved` + `integrity` après un `npm install` réussi.  
+**Secondary note** : un `catalogUrl: "http://localhost:8642/catalog.json"` résiduel a été vu dans un `center.lock` utilisateur. Pas un bug de code, mais ajouter un warn à l'install si `catalogUrl` est `localhost` ou une IP privée.  
+**Priority** : 🔧 — non-bloquant pour le flow install/load mais requis pour la reproductibilité. Ship en CLI 1.4.0 après le fix default-URL 1.3.0.
 
 ---
-
-
 
 ### ✅ `focus add` + `FilesystemBrickSource` layout mismatch — FIXED (PR focus-mcp/cli#38)
 
-**Signal** : reproduced autonomously by Continue.dev (external AI agent) while attempting `focus add codebase` + `focus_load`. No human intervention — Continue hit the bug on its own, tried remove/install recovery, got stuck. This is an **external third-party reproduction** confirming the issue blocks real-world agent adoption.
+**Signal** : reproduit de façon autonome par Continue.dev (agent AI externe) lors d'un `focus add codebase` + `focus_load`. Layout observé : `~/.focus/bricks/` se termine avec `node_modules/@focus-mcp/brick-<name>/mcp-brick.json` (layout npm) alors que `FilesystemBrickSource.readManifest()` cherche `<bricksDir>/<name>/mcp-brick.json` → manifest jamais trouvé, `focus_load` échoue.
 
-Observed layout: `~/.focus/bricks/` ends up with `node_modules/@focus-mcp/brick-<name>/mcp-brick.json` (npm layout) while `FilesystemBrickSource.readManifest()` (cli/dist/bin/focus.js:2504) looks for `<bricksDir>/<name>/mcp-brick.json` → manifest never found, `focus_load` fails, brick "installed" but unreachable.
+**Root cause** : `focus add <name>` lance `npm install @focus-mcp/brick-<name>` dans `~/.focus/bricks/`. npm stocke sous `node_modules/<scope>/<pkg>/`. Le resolver était écrit pour un layout plat.
 
-**Root cause** : `focus add <name>` runs `npm install @focus-mcp/brick-<name>` in `~/.focus/bricks/`. npm stores modules under `node_modules/<scope>/<pkg>/`. The resolver was written assuming a flat layout.
-
-**Fix options** :
-1. **Canonical** : change `FilesystemBrickSource` to use `require.resolve('@focus-mcp/brick-' + name + '/mcp-brick.json', { paths: [bricksDir] })`. Follows node_modules nesting natively. No duplication.
-2. **Simple** : post-install copy/symlink `node_modules/@focus-mcp/brick-<name>/` → `<bricksDir>/<name>/`. Easier to debug but duplicates files.
-
-**Impact on bench** : none. Our harness copies the right layout manually for each run.
-
-**Priority** : 🚨 — core CLI bug, blocks any real user's `focus add` → `focus start` flow.
+**Fix** : `FilesystemBrickSource` utilise `require.resolve('@focus-mcp/brick-' + name + '/mcp-brick.json', { paths: [bricksDir] })`.  
+**Impact bench** : aucun. Le harness copie le bon layout manuellement pour chaque run.
 
 ---
 
-## Known brick bugs (implementation issues)
+### 🔧 `filelist.fl_glob` — ne supporte pas les globs `**` récursifs
 
-### 🔧 `filelist.fl_glob` — does not support `**` recursive globs
-
-**Signal** : agent called `fl_glob("**/*.decorator.ts")`, got empty, fell back to `fl_find` + manual filter.
-**Action** : support globstar (`**`) in `fl_glob`. Most glob libraries support it via an option.
-**File** : `bricks/filelist/src/glob.ts` (or wherever the glob impl lives)
+**Signal** : l'agent a appelé `fl_glob("**/*.decorator.ts")`, a obtenu empty, est tombé en fallback sur `fl_find` + filtre manuel.  
+**Action** : supporter globstar (`**`) dans `fl_glob`. La plupart des librairies glob le supportent via une option.  
+**File** : `bricks/filelist/src/glob.ts`  
 **Priority** : 🔧
 
 ---
 
-## Manifest / description improvements
+## 🗑️ Section 6 — Cleared (false positives confirmés)
 
-Bricks where agent picks poorly among tools or ignores some → descriptions unclear.
+### `graphexport` — +119% tokens, +74% latence
 
-Candidates identified from the sweep (coverage < 50% AND delta < -30% meaning brick still wins despite under-use — room to do even better):
-
-- `fullaudit` : 0/2 used, but still -88% tokens. Good sign but verify tools are useful in manifest.
-- `onboarding` : 0/2 used, -77% tokens. Same.
-- `autopilot` : 0/3 used, -58%.
-- `outline` : 1/3 used, -80%.
-- `impact` : 1/3 used, -84%.
-- `refs` : 1/4, -80%.
-- `rename` : 1/4, -84%.
-- `contextpack` : 1/4, -85%.
-
-**Action template** : for each, review tool descriptions to ensure differentiation. When one tool handles the common case and siblings are edge-case, that's fine. When the agent simply misses siblings, the descriptions need trigger-words.
-
-**Priority** : 📝 (after regressions fixed)
+**Wave** : Wave 5.2  
+**Verdict** : false positive. Les outputs sont proportionnels à la taille du graph (pas de bloat). Le delta venait du contexte ambiant Phase 2a verbeux, pas d'un bug de brick.
 
 ---
 
-## Methodology patches (bench itself)
+### `metrics` — +103% tokens, 6.06× latence
 
-### ⚠️ Stateful bricks are mis-measured by single-task bench
-
-`cache`, `memory`, and possibly `session`, `share`, `knowledge` need **multi-turn or multi-task** scenarios to show their value. Iso-task single-agent bench systematically makes them look bad.
-
-**Action** : flag these bricks in the report as "not measurable in single-task iso-task", and measure them in Phase 2b scenario instead (where tasks span a session and memory/cache can accumulate).
-
-**Candidate stateful bricks** (to verify post-sweep):
-- `cache` (confirmed non-functional this mode)
-- `memory` (confirmed regression this mode)
-- `session`, `share`, `knowledge`, `knowledgebase` (to verify)
-
-### 🔧 Meta bricks (orchestrator-style) under-measured
-
-`planning`, `agent`, `dispatch`, `autopilot`, `aiteam` (bundle), `debate`, `thinking`, `research` — these add reasoning meta-tools. On a simple iso-task, they add overhead.
-
-**Action** : same as stateful — measure in Phase 2b scenario where multi-step reasoning is actually warranted.
-
-### 📝 Bench-prompt: coverage-inducing task design
-
-When agent designs the mini-task, it tends to pick a task that exercises **one** tool of the brick. Coverage is naturally low.
-
-**Option** : add to `BENCH_DESIGN_AND_SOLVE.md`: "Prefer a task that would naturally exercise 2-3 tools of the brick, not just one — but don't force contrivance."
-
-**Trade-off** : more coverage = better diagnostic, but longer mini-tasks = more tokens per run → worse if we care about comparing to native.
-
-**Decision** : defer until after first full sweep is analyzed. If many bricks show coverage < 30% AND negative delta, consider the patch for a second pass.
+**Wave** : Wave 5.6a  
+**Verdict** : false positive. `met_session` retourne un summary O(1), pas l'historique complet. Cleared.
 
 ---
 
-## Not yet completed (sweep in progress)
+### `share` — +51% tokens, 2.23× latence
 
-`callgraph`, `depgraph`, `fts` — results pending (likely retries due to max-turns).
-
-`graphcluster`, `graphquery` — fiches present but only partial data visible.
-
-Will re-audit after sweep completion.
+**Wave** : Wave 4.1b  
+**Verdict** : false positive. Pas de bug visible. `outputSizeUnder` posé en safety net. Cleared.
 
 ---
 
-## Full sweep summary (62 bricks, 81 min wall clock, 51.4M tokens)
+### `cache` — +38% tokens, +154% latence, coverage 0/5
 
-- ✅ **54 OK** — delta measured
-- 🔴 **8 FAILED** — native hit max-turns (20), retry also failed
+**Wave** : Wave 4.1a  
+**Verdict** : false positive. Map bornée + slice limité. Pas de bug visible. La coverage 0/5 est un artefact de méthodologie (brick stateful, non mesurable en single-task iso-task — voir Section 7).
+
+---
+
+### `heatmap` — +29% tokens
+
+**Wave** : Wave 5.5  
+**Verdict** : false positive. `hmHotfiles` slice à `limit=10`. Pas de bloat. Le delta venait de l'absence d'isolation (singleton entre runs). Cleared.
+
+---
+
+### `research` — +23% tokens, 3.49× latence
+
+**Wave** : Wave 5.6a  
+**Verdict** : false positive. Output borné strictement par source count. Pas de leak. La latence est inhérente à la nature multi-source (meta-brick — voir Section 7).
+
+---
+
+## 📊 Section 7 — Methodology issues
+
+Bricks intrinsèquement mal mesurées par le bench iso-task (à exclure ou re-mesurer en Phase 2b scenario).
+
+### Stateful bricks — single-task ne reflète pas leur use-case
+
+`cache`, `memory`, `session`, `share`, `knowledge`, `knowledgebase` — le bench iso-task single-agent mesure leur overhead de démarrage mais pas leur valeur réelle (accumulation de contexte sur plusieurs tâches).
+
+**Action** : flaguer dans le rapport comme "non mesurables en single-task iso-task". Mesurer en Phase 2b scenario (tâches qui s'étendent sur une session).
+
+---
+
+### Meta bricks — orchestrateurs non adaptés à la tâche unique
+
+`planning`, `agent`, `dispatch`, `autopilot`, `aiteam` (bundle), `debate`, `thinking`, `research` — ajoutent une surcharge de raisonnement qui ne se rentabilise pas sur une iso-task simple.
+
+**Action** : même traitement que stateful — Phase 2b scenario uniquement.
+
+---
+
+### Bench prompt design — couverture d'outils
+
+L'agent concepteur de mini-task tend à choisir une tâche qui n'exerce qu'**un seul** outil du brick. La coverage est naturellement basse.
+
+**Option** : ajouter à `BENCH_DESIGN_AND_SOLVE.md` : "Préférer une tâche qui exercerait naturellement 2-3 outils du brick, sans forcer la contrivance."  
+**Trade-off** : plus de coverage = meilleur diagnostic, mais tâches plus longues = plus de tokens par run.  
+**Decision** : différé jusqu'à analyse du premier sweep complet. Si beaucoup de bricks montrent coverage < 30% ET delta négatif, considérer le patch pour un second passage.
+
+---
+
+### Category C bricks — task-design flaw (pas des bugs brick)
+
+`callgraph` +18%, `depgraph` +51%, `treesitter` +66% — iso-task générée par l'agent natif était solvable par grep/read trivial. Pas des bugs brick ; le bench a choisi une tâche trop facile pour leur force.
+
+**Action** : redesigner les iso-tasks pour forcer l'analyse structurelle que grep ne peut pas faire :
+- `callgraph` : "Find all callee chains of depth ≥ 3 starting from `Module.onModuleInit`" (grep ne peut pas traverser).
+- `depgraph` : "Compute reverse-dependency closure for `@nestjs/common/cache` across all packages" (grep ne fait pas de closure).
+- `treesitter` : "Count all `async` arrow functions nested inside class methods" (grep a des faux positifs lourds).
+
+Ne PAS augmenter maxTurns davantage (60, 80...). Le problème est le design de tâche, pas le budget de tours.
+
+---
+
+## 📊 Section 8 — Full sweep summary (62 bricks, 81 min wall clock, 51.4M tokens)
+
+- ✅ **54 OK** — delta mesuré
+- 🔴 **8 FAILED** — native hit max-turns (20), retry aussi échoué
 
 ### Distribution (54 OK)
 
 - **25 bricks excellent** (≥60% savings)
 - **15 bricks moderate** (20-60% savings)
-- **14 bricks regressing** (brick worse than native on tokens, latency, or both)
+- **14 bricks regressing** (brick pire que native sur tokens, latency, ou les deux)
 
-### 14 regressions — all need analysis
+### 14 regressions — toutes analysées
 
-| Brick | Δ tokens | Duration ratio | Coverage | Signal |
+| Brick | Δ tokens | Duration ratio | Coverage | Status |
 |---|---:|---:|---|---|
-| `fileops` | +379% | 5.82× | 1/4 | Batch-ops missing |
-| `graphexport` | +119% | 1.74× | 1/6 | Tool bloat / 6 redundant |
-| `metrics` | +103% | **6.06×** | 2/4 | Very slow computation or verbose output |
-| `parallel` | +79% | **9.74×** | 3/4 | Severe latency — serialization issue |
-| `share` | +51% | 2.23× | 3/4 | Stateful? |
-| `sandbox` | +42% | 4.14× | 3/4 | Sandbox overhead dominates |
-| `cache` | +38% | 1.90× | **0/5** | Stateful — not measurable single-task |
-| `heatmap` | +29% | 0.84× | 2/4 | Tokens verbose |
-| `research` | +23% | 3.49× | 3/3 | Meta brick / multi-step overhead |
-| `lastversion` | +22% | 1.43× | 2/6 | Previously flagged at ~+392% pre-correction, corrected now |
-| `planning` | +11% | 1.20× | 4/4 | Meta-brick |
-| `memory` | +11% | 1.03× | 2/5 | Stateful — not measurable single-task |
+| `fileops` | +379% | 5.82× | 1/4 | ✅ FIXED 1.3.0 |
+| `graphexport` | +119% | 1.74× | 1/6 | 🗑️ Cleared (false positive) |
+| `metrics` | +103% | **6.06×** | 2/4 | 🗑️ Cleared (false positive) |
+| `parallel` | +79% | **9.74×** | 3/4 | ✅ FIXED 1.1.1 (P2 run→collect deferred) |
+| `share` | +51% | 2.23× | 3/4 | 🗑️ Cleared (false positive) |
+| `sandbox` | +42% | 4.14× | 3/4 | ✅ FIXED 1.2.1 |
+| `cache` | +38% | 1.90× | **0/5** | 🗑️ Cleared (methodology — stateful) |
+| `heatmap` | +29% | 0.84× | 2/4 | 🗑️ Cleared (false positive) |
+| `research` | +23% | 3.49× | 3/3 | 🗑️ Cleared (methodology — meta brick) |
+| `lastversion` | +392% | +99% lat | 1/6 | ✅ FIXED 1.2.1 |
+| `planning` | +11% | 1.20× | 4/4 | 🔧 P2 — meta brick, deferred |
+| `memory` | +11% | 1.03× | 2/5 | ⚠️ P1 — stateful, methodology probable |
 
-### 8 FAILED bricks — RESULTS AFTER maxTurns=40 re-run (16 min, 15M tokens)
+### 8 FAILED bricks — résultats après re-run maxTurns=40 (16 min, 15M tokens)
 
-Re-run confirmed: with more turns, native **always finishes**. The "brick-only viable" marketing angle does NOT hold in iso-task.
+Re-run confirmé : avec plus de tours, le natif **termine toujours**. L'angle marketing "brick-only viable" ne tient pas en iso-task.
 
-**5 wins** (Category A):
+**5 wins (Category A)** :
 - `graphquery` **–67%**
 - `validate` **–65%**
 - `review` –40%
 - `routes` –20%
 - `symbol` –4% (marginal)
 
-**0 Category B** — no native run truly impossible with Claude Sonnet 4.6 at 40 turns.
+**0 Category B** — aucun run natif vraiment impossible avec Claude Sonnet 4.6 à 40 tours.
 
-**3 new regressions** (Category C — brick net-worse, *task-design flaw*):
-- `callgraph` +18%
-- `depgraph` +51%
-- `treesitter` +66%
+**3 regressions (Category C — task-design flaw)** : `callgraph` +18%, `depgraph` +51%, `treesitter` +66%. Voir Section 7 pour les redesigns de tâches.
 
-**Why C**: the iso-task generated by the native agent was solvable by trivial grep/read — it didn't require structural analysis. Not a brick bug; the bench picked a too-easy task for these bricks' strength.
-
-**Action for C**: redesign the iso-task to force structural analysis that grep cannot do. Examples:
-- `callgraph`: "Find all callee chains of depth ≥ 3 starting from `Module.onModuleInit`" (grep cannot traverse).
-- `depgraph`: "Compute reverse-dependency closure for `@nestjs/common/cache` across all packages" (grep can't do closure).
-- `treesitter`: "Count all `async` arrow functions nested inside class methods" (grep false-positives heavily).
-
-Do NOT bump maxTurns further (60, 80...). The issue is task-design, not turn budget.
-
-**Notes**:
-- Coverage 0/N for all 8 in the re-run — harness artifact: the bootstrap `focus_install`/`focus_load` tools don't count as "brick tools used". Present in Phase 2a too. Cosmetic measurement issue.
-- `symbol` had a transient maxTurns=40 failure on attempt 1 that succeeded on retry in 16 turns → task-generation variance. Not a brick issue.
-
-### Top 10 wins (validated)
+### Top 10 wins (validés)
 
 | Brick | Δ tokens | Duration ratio |
 |---|---:|---:|
@@ -455,15 +346,30 @@ Do NOT bump maxTurns further (60, 80...). The issue is task-design, not turn bud
 | `fts` | –80% | 0.56× |
 | `refs` | –79% | 0.47× |
 
-**Note**: top winners also **faster** (ratio < 1x). Counter to earlier concern that brick mode is slower.
+**Note** : les top winners sont aussi **plus rapides** (ratio < 1×). Contredit l'inquiétude initiale que le mode brick serait plus lent.
 
-### Methodology flags
+### Manifest / description improvements (low priority)
 
-- **Stateful bricks** (`cache`, `memory`, `session`, `share`, `knowledge`) systematically under-measured by iso-task single-agent bench → measure in Phase 2b scenario instead.
-- **Meta bricks** (`agent`, `autopilot`, `dispatch`, `planning`, `research`, `debate`, `thinking`) add reasoning overhead that does not pay off on simple iso-tasks → measure in Phase 2b scenario.
-- **Low coverage** (< 50%): 32/54 bricks. Normal, task exercises only 1-2 tools. If we want tool-level diagnostic we'd need multi-task per brick — deferred.
+Bricks où l'agent choisit mal parmi les outils ou en ignore certains — descriptions peu claires.
+Candidats identifiés du sweep (coverage < 50% ET delta < –30% — encore de la marge d'amélioration) :
 
-**Claim defensibility** : strong.
-- Median savings: ~–60% on single-task iso-bench.
-- Best-of-class: –80 to –85% on the top 10.
-- Clean narrative: "FocusMCP bricks win on most common tasks, with anti-patterns clearly identified and being patched."
+- `fullaudit` : 0/2 used, –88% tokens.
+- `onboarding` : 0/2 used, –77% tokens.
+- `autopilot` : 0/3 used, –58%.
+- `outline` : 1/3 used, –80%.
+- `impact` : 1/3 used, –84%.
+- `refs` : 1/4, –80%.
+- `rename` : 1/4, –84%.
+- `contextpack` : 1/4, –85%.
+
+**Action template** : pour chacun, revoir les descriptions pour assurer la différenciation. Quand un outil couvre le cas commun et les autres sont edge-case, c'est OK. Quand l'agent rate simplement les outils siblings, les descriptions ont besoin de trigger-words.  
+**Priority** : 📝 (après les régressions fixées)
+
+---
+
+### Pending (sweep partiel)
+
+`callgraph`, `depgraph`, `fts` — résultats en attente (probables retries dûs à max-turns).  
+`graphcluster`, `graphquery` — fiches présentes mais données partielles visibles.
+
+Re-audit après complétion du sweep.

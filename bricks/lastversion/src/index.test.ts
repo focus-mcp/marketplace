@@ -693,6 +693,164 @@ describe('lvAudit', () => {
     });
 });
 
+// ─── Payload cap tests ────────────────────────────────────────────────────────
+
+describe('lv_versions payload cap', () => {
+    it('defaults to 20 versions when no limit specified', async () => {
+        // Build a mock with 30 stable versions
+        const manyVersions: Record<string, object> = {};
+        const manyTime: Record<string, string> = {};
+        for (let i = 1; i <= 30; i++) {
+            const v = `1.0.${i}`;
+            manyVersions[v] = {};
+            manyTime[v] = `2024-01-${String(i).padStart(2, '0')}T00:00:00.000Z`;
+        }
+        const bigNpmData = {
+            'dist-tags': { latest: '1.0.30' },
+            versions: manyVersions,
+            time: manyTime,
+        };
+        mockFetch.mockResolvedValueOnce(makeResponse(bigNpmData));
+
+        const result = await lvVersions({ source: 'npm', target: 'big-package' });
+
+        expect(result.versions.length).toBe(20);
+        expect(result.total).toBe(30);
+    });
+
+    it('accepts explicit limit to override default', async () => {
+        const manyVersions: Record<string, object> = {};
+        const manyTime: Record<string, string> = {};
+        for (let i = 1; i <= 30; i++) {
+            const v = `1.0.${i}`;
+            manyVersions[v] = {};
+            manyTime[v] = `2024-01-${String(i).padStart(2, '0')}T00:00:00.000Z`;
+        }
+        const bigNpmData = {
+            'dist-tags': { latest: '1.0.30' },
+            versions: manyVersions,
+            time: manyTime,
+        };
+        mockFetch.mockResolvedValueOnce(makeResponse(bigNpmData));
+
+        const result = await lvVersions({ source: 'npm', target: 'big-package', limit: 5 });
+
+        expect(result.versions.length).toBe(5);
+    });
+});
+
+describe('lv_changelog payload cap', () => {
+    it('truncates long release bodies to stay under per-body cap', async () => {
+        const longBody = 'x'.repeat(20000); // 20KB body
+        const githubReleases = [
+            {
+                tag_name: 'v1.0.0',
+                name: 'Release 1.0.0',
+                prerelease: false,
+                published_at: '2024-01-01T00:00:00Z',
+                body: longBody,
+                html_url: 'https://github.com/owner/repo/releases/tag/v1.0.0',
+            },
+        ];
+        mockFetch.mockResolvedValueOnce(makeResponse(githubReleases));
+
+        const result = await lvChangelog({ repo: 'owner/repo' });
+
+        const body = result.releases[0]?.body ?? '';
+        const bodyBytes = Buffer.byteLength(body, 'utf8');
+        // 8192 bytes budget / 1 release = 8192 per body cap (+ sentinel overhead)
+        expect(bodyBytes).toBeLessThan(9000);
+        expect(body).toContain('[truncated');
+    });
+
+    it('does not truncate short bodies', async () => {
+        const shortBody = 'Bug fixes and improvements.';
+        const githubReleases = [
+            {
+                tag_name: 'v1.0.0',
+                name: 'Release 1.0.0',
+                prerelease: false,
+                published_at: '2024-01-01T00:00:00Z',
+                body: shortBody,
+                html_url: 'https://github.com/owner/repo/releases/tag/v1.0.0',
+            },
+        ];
+        mockFetch.mockResolvedValueOnce(makeResponse(githubReleases));
+
+        const result = await lvChangelog({ repo: 'owner/repo' });
+
+        expect(result.releases[0]?.body).toBe(shortBody);
+    });
+});
+
+describe('lv_audit payload cap', () => {
+    it('slices to MAX_AUDIT_ENTRIES (10) when more advisories returned', async () => {
+        const vulns = Array.from({ length: 15 }, (_, i) => ({
+            id: `GHSA-${String(i).padStart(4, '0')}`,
+            summary: `Vuln ${i}`,
+            database_specific: { severity: 'LOW' },
+        }));
+        mockFetch.mockResolvedValueOnce(makeResponse({ vulns }));
+
+        const result = await lvAudit({ source: 'npm', target: 'some-pkg' });
+
+        expect(result.advisories.length).toBe(10);
+        expect(result.count).toBe(15); // total is preserved
+    });
+
+    it('sorts by severity DESC before slicing', async () => {
+        const vulns = [
+            { id: 'LOW-1', summary: 'Low', database_specific: { severity: 'LOW' } },
+            { id: 'CRIT-1', summary: 'Critical', database_specific: { severity: 'CRITICAL' } },
+            { id: 'HIGH-1', summary: 'High', database_specific: { severity: 'HIGH' } },
+            { id: 'MED-1', summary: 'Medium', database_specific: { severity: 'MEDIUM' } },
+        ];
+        mockFetch.mockResolvedValueOnce(makeResponse({ vulns }));
+
+        const result = await lvAudit({ source: 'npm', target: 'some-pkg' });
+
+        expect(result.advisories[0]?.id).toBe('CRIT-1');
+        expect(result.advisories[1]?.id).toBe('HIGH-1');
+        expect(result.advisories[2]?.id).toBe('MED-1');
+        expect(result.advisories[3]?.id).toBe('LOW-1');
+    });
+});
+
+describe('truncateBytes UTF-8 multi-byte safety', () => {
+    it('does not throw on 4-byte emoji at truncation boundary and appends sentinel', async () => {
+        // Build a body with 4-byte emojis (🎉 = U+1F389, 4 bytes in UTF-8)
+        // Fill up near the cap then add emojis
+        const prefix = 'a'.repeat(8190); // 8190 ASCII bytes
+        const emoji = '🎉'; // 4 bytes — at offset 8190, bytes 8190-8193
+        const body = prefix + emoji + emoji + emoji;
+        const githubReleases = [
+            {
+                tag_name: 'v1.0.0',
+                prerelease: false,
+                published_at: '2024-01-01T00:00:00Z',
+                body,
+                html_url: 'https://github.com/owner/repo/releases/tag/v1.0.0',
+            },
+        ];
+        mockFetch.mockResolvedValueOnce(makeResponse(githubReleases));
+
+        // Must not throw — that's the main safety guarantee
+        const result = await lvChangelog({ repo: 'owner/repo' });
+
+        const resultBody = result.releases[0]?.body ?? '';
+        // Sentinel must be present
+        expect(resultBody).toContain('[truncated');
+        // Result must be a valid JS string (no thrown exception means UTF-8 safe decoding happened)
+        expect(typeof resultBody).toBe('string');
+        // The truncated content (before sentinel) must be at most the cap size.
+        // TextDecoder({ fatal: false }) may emit a U+FFFD replacement (3 bytes) for a
+        // partially-cut multi-byte sequence, so we allow up to cap + 3 bytes.
+        const sentinelIdx = resultBody.indexOf('\n[truncated');
+        const contentPart = sentinelIdx >= 0 ? resultBody.slice(0, sentinelIdx) : resultBody;
+        expect(Buffer.byteLength(contentPart, 'utf8')).toBeLessThanOrEqual(8192 + 3);
+    });
+});
+
 // ─── Brick registration tests ─────────────────────────────────────────────────
 
 describe('lastversion brick registration', () => {
