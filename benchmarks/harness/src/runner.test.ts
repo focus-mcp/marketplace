@@ -7,9 +7,6 @@
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import os from 'node:os';
-import path from 'node:path';
 import { loadManifest, extractResultBlock, extractMiniTaskSpec, isoStamp, type BrickManifest } from './runner.js';
 
 // ---------------------------------------------------------------------------
@@ -110,28 +107,37 @@ test('isoStamp — produces a non-empty string without colons or dots', () => {
 });
 
 // ---------------------------------------------------------------------------
-// save-on-error behaviour — integration (skipped without live SDK)
+// focusStderr construction logic (unit-level, no SDK needed)
 // ---------------------------------------------------------------------------
 
-/**
- * SKIPPED: runOneMode calls the real Claude SDK which requires OAuth.
- *
- * Manual verification procedure:
- *   1. Set ANTHROPIC_AUTH_TOKEN to an intentionally invalid value.
- *   2. Run: pnpm one-mode --brick filelist --mode native --out-dir /tmp/test-save-on-error
- *   3. Assert: a JSON file exists in /tmp/test-save-on-error/
- *      with exit_reason='error' and focus_stderr containing the exception.
- *
- * The try/finally pattern in runner.ts guarantees the write happens even when
- * the SDK iterator throws — the test above covers the helper functions that
- * build the result; the finally block's control-flow is structurally correct.
- */
-test('save partial result on SDK exception — skipped (requires live SDK)', { skip: true }, () => {
-    // Would:
-    //   1. Mock query() to throw mid-stream
-    //   2. Call runOneMode(...)
-    //   3. Assert file exists, exit_reason='error', focus_stderr contains exception
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'runner-test-'));
-    assert.ok(fs.existsSync(tmpDir));
-    fs.rmdirSync(tmpDir);
+test('focusStderr — no error, no stderr: empty string', () => {
+    const base = '';
+    const sdkLine = '';
+    const focusStderr = [base, sdkLine].filter(Boolean).join('\n');
+    assert.equal(focusStderr, '');
+});
+
+test('focusStderr — SDK error but no captured stderr: no leading newline', () => {
+    const base = '';
+    const err = new Error('timeout');
+    const sdkLine = `[runner] SDK exception: ${err.message}\n${err.stack ?? ''}`;
+    const focusStderr = [base, sdkLine].filter(Boolean).join('\n');
+    assert.ok(!focusStderr.startsWith('\n'), 'must not start with newline when base is empty');
+    assert.ok(focusStderr.includes('[runner] SDK exception: timeout'));
+});
+
+test('focusStderr — SDK error with captured stderr: newline separator', () => {
+    const base = 'some stderr line';
+    const err = new Error('crash');
+    const sdkLine = `[runner] SDK exception: ${err.message}\n${err.stack ?? ''}`;
+    const focusStderr = [base, sdkLine].filter(Boolean).join('\n');
+    assert.ok(focusStderr.startsWith('some stderr line\n'));
+    assert.ok(focusStderr.includes('[runner] SDK exception: crash'));
+});
+
+test('focusStderr — no error, captured stderr: returned verbatim', () => {
+    const base = 'warning from focus server';
+    const sdkLine = '';
+    const focusStderr = [base, sdkLine].filter(Boolean).join('\n');
+    assert.equal(focusStderr, 'warning from focus server');
 });

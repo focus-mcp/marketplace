@@ -254,7 +254,6 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
     const startMs = Date.now();
 
     let lastError: Error | null = null;
-    let result: RunResult | undefined;
 
     try {
         const q = query({ prompt, options: { ...commonOptions, ...modeOptions } });
@@ -306,65 +305,69 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
         console.error(`\n  ERROR: SDK threw: ${lastError.message}`);
     } finally {
         process.stdout.write('\n');
+    }
 
-        const resultBlock = extractResultBlock(lastAssistantText);
-        if (!resultBlock && !lastError) {
-            console.warn('  WARNING: No ## Result block found');
+    const resultBlock = extractResultBlock(lastAssistantText);
+    if (!resultBlock && !lastError) {
+        console.warn('  WARNING: No ## Result block found');
+    }
+
+    // For native runs, extract the Mini-task spec
+    let miniTaskSpec: string | undefined;
+    if (mode === 'native') {
+        const spec = extractMiniTaskSpec(lastAssistantText);
+        if (spec) {
+            miniTaskSpec = spec;
+        } else if (exitReason === 'ok') {
+            exitReason = 'missing_spec';
+            console.error('  ERROR: ## Mini-task spec section not found in native output');
         }
+    }
 
-        // For native runs, extract the Mini-task spec
-        let miniTaskSpec: string | undefined;
-        if (mode === 'native') {
-            const spec = extractMiniTaskSpec(lastAssistantText);
-            if (spec) {
-                miniTaskSpec = spec;
-            } else if (exitReason === 'ok') {
-                exitReason = 'missing_spec';
-                console.error('  ERROR: ## Mini-task spec section not found in native output');
-            }
-        }
+    const durationMs = Date.now() - startMs;
+    const total =
+        usage.input_tokens +
+        usage.cache_creation_input_tokens +
+        usage.cache_read_input_tokens +
+        usage.output_tokens;
 
-        const durationMs = Date.now() - startMs;
-        const total =
-            usage.input_tokens +
-            usage.cache_creation_input_tokens +
-            usage.cache_read_input_tokens +
-            usage.output_tokens;
+    const focusStderrBase = focusStderrLines.join('').trim();
+    const sdkExceptionLine = lastError
+        ? `[runner] SDK exception: ${lastError.message}\n${lastError.stack ?? ''}`
+        : '';
+    const focusStderr = [focusStderrBase, sdkExceptionLine].filter(Boolean).join('\n');
 
-        const focusStderrBase = focusStderrLines.join('').trim();
-        const focusStderr = lastError
-            ? [focusStderrBase, `\n[runner] SDK exception: ${lastError.message}\n${lastError.stack ?? ''}`]
-                  .filter(Boolean)
-                  .join('\n')
-            : focusStderrBase;
+    const result: RunResult = {
+        brick,
+        mode,
+        model: 'claude-sonnet-4-6',
+        framing,
+        started_at: startedAt,
+        duration_ms: durationMs,
+        turns: numTurns,
+        tools_used: Array.from(toolsUsed).sort(),
+        usage: { ...usage, total },
+        session_id: sessionId,
+        result_block: resultBlock,
+        ...(miniTaskSpec !== undefined ? { mini_task_spec: miniTaskSpec } : {}),
+        workdir,
+        exit_reason: exitReason,
+        ...(focusStderr ? { focus_stderr: focusStderr } : {}),
+    };
 
-        result = {
-            brick,
-            mode,
-            model: 'claude-sonnet-4-6',
-            framing,
-            started_at: startedAt,
-            duration_ms: durationMs,
-            turns: numTurns,
-            tools_used: Array.from(toolsUsed).sort(),
-            usage: { ...usage, total },
-            session_id: sessionId,
-            result_block: resultBlock,
-            ...(miniTaskSpec !== undefined ? { mini_task_spec: miniTaskSpec } : {}),
-            workdir,
-            exit_reason: exitReason,
-            ...(focusStderr ? { focus_stderr: focusStderr } : {}),
-        };
-
-        // Write JSON — always, even on SDK exception (partial result)
+    // Write JSON — always, even on SDK exception (partial result).
+    // Wrapped in try/catch so a write failure does not swallow the original SDK error.
+    try {
         fs.mkdirSync(path.resolve(outDir), { recursive: true });
         const stamp = isoStamp();
         const outFile = path.join(path.resolve(outDir), `${brick}-${mode}-${stamp}.json`);
         fs.writeFileSync(outFile, JSON.stringify(result, null, 2));
         console.log(`  → ${outFile}`);
+    } catch (writeErr) {
+        console.error(`  WARNING: could not write result file: ${String(writeErr)}`);
     }
 
     if (lastError) throw lastError;
 
-    return result!;
+    return result;
 }

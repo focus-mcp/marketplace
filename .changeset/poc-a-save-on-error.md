@@ -1,4 +1,5 @@
 ---
+"@focusmcp/bench-harness": patch
 ---
 
 chore(bench): runner saves partial result on SDK exception (try/finally)
