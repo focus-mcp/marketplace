@@ -61,20 +61,24 @@ Each entry: brick + observed signal + suspected root cause + proposed action + p
 
 ## 🚨 Section 2 — Active P0 (à fixer urgent)
 
-### `lastversion` — +392% tokens, +99% latence
+### `lastversion` — +392% tokens, +99% latence — [FIXED in 1.2.1 — see PR #TBD]
 
-**Signal** : plus grosse régression tokens (tokens ~5× native). 6 outils, seulement 1/6 utilisé.  
-**Suspected** : outils retournent un output verbeux qui dump dans le contexte agent ; ou l'agent doit relire le manifest à répétition car les descriptions sont floues.  
-**Status** : non investigué — root cause pas encore débuggée.
+**npm version** : 1.2.1  
+**Root cause** (confirmée par inspection du code) :
+1. `lv_versions` — default `limit=50` pour npm/pypi (lodash npm = 200+ versions stables) → dump 50 entrées avec dates en JSON.
+2. `lv_changelog` — bodies des GitHub Releases retournés entiers sans cap : release notes longues = 5-10KB chacune × 20 releases = 100-200KB total de markdown dans le contexte agent.
+3. `lv_audit` — toutes les CVEs retournées sans troncature.
 
-**Action** :
-- Inspecter 1 run JSON — quel contenu le brick retourne-t-il par appel ?
-- Revoir les descriptions d'outils — pourquoi l'agent ne choisit que 1/6 ?
-- Vérifier si pagination/troncature manquante sur les outputs list-like.
+**Fix (PR #TBD)** :
+- ✅ P0 — `lv_versions` : default `limit=20` (était 50), `total` préservé dans la réponse.
+- ✅ P0 — `lv_changelog` : budget 8KB réparti entre les release bodies (UTF-8 byte-safe), sentinel `[truncated]`.
+- ✅ P0 — `lv_audit` : top 10 entries par severity DESC, `count` préservé dans la réponse.
+- ✅ — `truncateBytes` helper : Buffer + TextDecoder{fatal:false} — safe sur Unicode 4-byte.
+- ✅ — 8 nouveaux tests unitaires couvrant tous les caps + boundary UTF-8.
 
-**Priority** : 🚨
+**Files** : `bricks/lastversion/src/operations.ts` (constants lines 3-22, lvVersions, lvChangelog, lvAudit)
 
-> **Note** : le tableau de sweep final (Section 8) affiche `lastversion` à +22% après correction — le chiffre +392% correspond au signal initial pré-correction. La root cause reste à investiguer.
+**Priority** : ~~🚨~~ ✅
 
 ---
 
@@ -308,7 +312,7 @@ Ne PAS augmenter maxTurns davantage (60, 80...). Le problème est le design de t
 | `cache` | +38% | 1.90× | **0/5** | 🗑️ Cleared (methodology — stateful) |
 | `heatmap` | +29% | 0.84× | 2/4 | 🗑️ Cleared (false positive) |
 | `research` | +23% | 3.49× | 3/3 | 🗑️ Cleared (methodology — meta brick) |
-| `lastversion` | +392% | +99% lat | 1/6 | 🚨 P0 — non investigué |
+| `lastversion` | +392% | +99% lat | 1/6 | ✅ FIXED 1.2.1 |
 | `planning` | +11% | 1.20× | 4/4 | 🔧 P2 — meta brick, deferred |
 | `memory` | +11% | 1.03× | 2/5 | ⚠️ P1 — stateful, methodology probable |
 
