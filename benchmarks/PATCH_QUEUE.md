@@ -14,7 +14,7 @@ Each entry: brick + observed signal + suspected root cause + proposed action + p
 
 ## Regressions confirmed (brick worse than native)
 
-### ⚠️ `sandbox` — +42% tokens, 4.14× latence (Wave 4.4 smoking gun)
+### ~~⚠️~~ `sandbox` — +42% tokens, 4.14× latence (Wave 4.4 smoking gun) [FIXED in 1.2.1 — see PR fix/sandbox-payload-cap]
 
 **Signal** : sweep Phase 2a reports +42% tokens, coverage 3/4.
 **Suspected root cause** : `box_run` and `box_file` return a `logs: string[]` field with **no size cap**.
