@@ -117,6 +117,44 @@ test('BRICK_DISALLOWED_TOOLS blocks all native tools including ToolSearch', () =
     }
 });
 
+test('BRICK_DISALLOWED_TOOLS contains Agent, Monitor, WebFetch, etc.', () => {
+    // Claude Agent SDK builtin tools bypass allowedTools whitelist — must be explicitly blocked
+    const sdkBuiltins = ['Agent', 'Monitor', 'PushNotification', 'Skill', 'WebFetch', 'WebSearch'];
+    for (const tool of sdkBuiltins) {
+        assert.ok(
+            (BRICK_DISALLOWED_TOOLS as readonly string[]).includes(tool),
+            `${tool} must be in BRICK_DISALLOWED_TOOLS (SDK builtin that bypasses allowedTools)`,
+        );
+    }
+});
+
+test('brick mode disallowedTools includes all SDK builtins', () => {
+    // Verifies the complete set of SDK builtin tools that must be blocked in brick mode.
+    // These tools are injected by the Claude Agent SDK and bypass the allowedTools whitelist.
+    const allSDKBuiltins = [
+        'Agent',
+        'Monitor',
+        'PushNotification',
+        'Skill',
+        'WebFetch',
+        'WebSearch',
+        'ScheduleWakeup',
+        'TaskCreate',
+        'TaskList',
+        'TaskGet',
+        'TaskUpdate',
+        'TaskStop',
+        'TaskOutput',
+    ];
+    const disallowed = BRICK_DISALLOWED_TOOLS as readonly string[];
+    const missing = allSDKBuiltins.filter((t) => !disallowed.includes(t));
+    assert.deepEqual(
+        missing,
+        [],
+        `Missing SDK builtins in BRICK_DISALLOWED_TOOLS: ${missing.join(', ')}`,
+    );
+});
+
 // ---------------------------------------------------------------------------
 // Pure helpers
 // ---------------------------------------------------------------------------

@@ -168,13 +168,28 @@ export function extractMiniTaskSpec(text: string): string | null {
  * redeclare their own copy.
  */
 export const BRICK_DISALLOWED_TOOLS = [
+    // Native filesystem/shell
     'Read',
-    'ToolSearch',
     'Bash',
     'Grep',
     'Glob',
     'Edit',
     'Write',
+    'ToolSearch',
+    // Claude Agent SDK builtin tools (bypass allowedTools whitelist)
+    'Agent',
+    'Monitor',
+    'PushNotification',
+    'Skill',
+    'WebFetch',
+    'WebSearch',
+    'ScheduleWakeup',
+    'TaskCreate',
+    'TaskList',
+    'TaskGet',
+    'TaskUpdate',
+    'TaskStop',
+    'TaskOutput',
 ] as const;
 
 // ---------------------------------------------------------------------------
