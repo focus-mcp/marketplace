@@ -1,6 +1,26 @@
 // SPDX-FileCopyrightText: 2026 FocusMCP contributors
 // SPDX-License-Identifier: MIT
 
+// ─── Payload caps ────────────────────────────────────────────────────────────
+
+const MAX_VERSIONS_DEFAULT = 20;
+const MAX_CHANGELOG_BYTES = 8192;
+const MAX_AUDIT_ENTRIES = 10;
+
+/**
+ * Truncate a string to at most `maxBytes` UTF-8 bytes, appending a sentinel
+ * when truncation occurs. Uses Buffer + TextDecoder to avoid splitting a
+ * multi-byte code point.
+ */
+function truncateBytes(s: string, maxBytes: number): string {
+    const bytes = Buffer.byteLength(s, 'utf8');
+    if (bytes <= maxBytes) return s;
+    const buf = Buffer.from(s, 'utf8');
+    const sliced = buf.subarray(0, maxBytes);
+    const decoded = new TextDecoder('utf-8', { fatal: false }).decode(sliced);
+    return `${decoded}\n[truncated, original ${bytes} bytes]`;
+}
+
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 export type Source = 'npm' | 'pypi' | 'github' | 'gitlab' | 'cargo' | 'rubygems' | 'gomod';
@@ -634,7 +654,7 @@ export async function lvLatest(input: LvLatestInput): Promise<LvLatestOutput> {
 }
 
 export async function lvVersions(input: LvVersionsInput): Promise<LvVersionsOutput> {
-    const limit = input.limit ?? 50;
+    const limit = input.limit ?? MAX_VERSIONS_DEFAULT;
     const stable = input.stable ?? true;
     switch (input.source) {
         case 'npm':
@@ -718,12 +738,19 @@ export async function lvChangelog(input: LvChangelogInput): Promise<LvChangelogO
     }
 
     const sliced = filtered.slice(0, limit);
+
+    // Budget: MAX_CHANGELOG_BYTES spread across all release bodies.
+    // Each body is capped individually so no single entry dominates.
+    const perBodyCap = Math.floor(MAX_CHANGELOG_BYTES / Math.max(sliced.length, 1));
+
     const result: LvReleaseEntry[] = sliced.map((r) => {
+        const rawBody = r.body !== undefined && r.body !== '' ? r.body : undefined;
+        const body = rawBody !== undefined ? truncateBytes(rawBody, perBodyCap) : undefined;
         const entry: LvReleaseEntry = {
             tag: r.tag_name,
             ...(r.name !== undefined && r.name !== '' ? { name: r.name } : {}),
             ...(r.published_at !== undefined ? { publishedAt: r.published_at } : {}),
-            ...(r.body !== undefined && r.body !== '' ? { body: r.body } : {}),
+            ...(body !== undefined ? { body } : {}),
             ...(r.html_url !== undefined ? { url: r.html_url } : {}),
         };
         return entry;
@@ -795,11 +822,26 @@ export async function lvCheck(input: LvCheckInput): Promise<LvCheckOutput> {
     };
 }
 
+const SEVERITY_ORDER: Record<string, number> = {
+    CRITICAL: 4,
+    HIGH: 3,
+    MEDIUM: 2,
+    LOW: 1,
+    UNKNOWN: 0,
+};
+
 export async function lvAudit(input: LvAuditInput): Promise<LvAuditOutput> {
     const ecosystem = sourceToOsvEcosystem(input.source);
     if (ecosystem === null) {
         throw new Error(`Source '${input.source}' is not supported for audit`);
     }
-    const advisories = await fetchOsvAdvisories(input.target, ecosystem, input.version);
-    return { advisories, count: advisories.length };
+    const all = await fetchOsvAdvisories(input.target, ecosystem, input.version);
+    // Sort by severity DESC, then cap to MAX_AUDIT_ENTRIES
+    const sorted = all.slice().sort((a, b) => {
+        const sa = SEVERITY_ORDER[a.severity.toUpperCase()] ?? 0;
+        const sb = SEVERITY_ORDER[b.severity.toUpperCase()] ?? 0;
+        return sb - sa;
+    });
+    const advisories = sorted.slice(0, MAX_AUDIT_ENTRIES);
+    return { advisories, count: all.length };
 }

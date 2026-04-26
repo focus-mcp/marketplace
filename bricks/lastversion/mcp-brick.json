@@ -30,7 +30,7 @@
         },
         {
             "name": "versions",
-            "description": "List all versions of a package, optionally filtered by semver range or stable-only.",
+            "description": "List recent versions of a package, optionally filtered by semver range or stable-only.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -40,7 +40,7 @@
                     },
                     "target": { "type": "string", "description": "Package name or owner/repo" },
                     "range": { "type": "string", "description": "Semver range (e.g. '>=18.0.0')" },
-                    "limit": { "type": "number", "description": "Max results (default 50)" },
+                    "limit": { "type": "number", "description": "Max results (default 20)" },
                     "stable": {
                         "type": "boolean",
                         "description": "Stable only (filter pre-releases). Default true."
@@ -108,7 +108,7 @@
         },
         {
             "name": "audit",
-            "description": "Fetch security advisories for a package version (GitHub Advisory DB via OSV.dev).",
+            "description": "Fetch security advisories for a package version (GitHub Advisory DB via OSV.dev). Returns top 10 entries by severity DESC.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
