@@ -1,0 +1,8 @@
+name: dep_fanout/happy
+tool: dep_fanout
+description: >
+  Count imports of a file with 2 ESM imports.
+  Verifies fanout=2 and imports array has 2 entries, size<=4096B.
+input:
+  file: "<dynamic>"
+tags: [happy, fs]

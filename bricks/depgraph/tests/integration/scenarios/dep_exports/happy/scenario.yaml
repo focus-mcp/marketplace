@@ -1,0 +1,8 @@
+name: dep_exports/happy
+tool: dep_exports
+description: >
+  List exports of a TS file with 2 exported functions.
+  Verifies exports array contains both function names, size<=4096B.
+input:
+  file: "<dynamic>"
+tags: [happy, fs]

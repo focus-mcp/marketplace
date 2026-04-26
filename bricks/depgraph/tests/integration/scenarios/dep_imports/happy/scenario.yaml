@@ -1,0 +1,8 @@
+name: dep_imports/happy
+tool: dep_imports
+description: >
+  List imports of a TS file with 2 ESM imports.
+  Verifies imports array has 2 entries with correct from/kind, size<=4096B.
+input:
+  file: "<dynamic>"
+tags: [happy, fs]

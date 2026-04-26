@@ -1,0 +1,6 @@
+name: ts_status/happy
+tool: ts_status
+description: >
+  Get index status after indexing 1 file. Verifies files=1, symbols >= 2, langs non-empty, size<=2048B.
+input: {}
+tags: [happy, stateful]

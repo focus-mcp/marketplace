@@ -1,0 +1,8 @@
+name: rt_search/happy
+tool: rt_search
+description: >
+  Search routes matching '/users'. Verifies total=2, all routes contain '/users', size<=4096B.
+input:
+  dir: "<dynamic>"
+  pattern: "/users"
+tags: [happy, fs]

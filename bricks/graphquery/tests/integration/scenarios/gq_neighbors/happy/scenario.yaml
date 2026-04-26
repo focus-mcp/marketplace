@@ -1,0 +1,7 @@
+name: gq_neighbors/happy
+tool: gq_neighbors
+description: >
+  Find all neighbors of node 'b' in both directions. Verifies neighbors has 2 entries (a+c), size<=2048B.
+input:
+  id: "b"
+tags: [happy, stateful]

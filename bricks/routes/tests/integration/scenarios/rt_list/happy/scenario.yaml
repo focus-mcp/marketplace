@@ -1,0 +1,7 @@
+name: rt_list/happy
+tool: rt_list
+description: >
+  List all routes as a compact table. Verifies total=2, table contains METHOD/PATH headers, size<=4096B.
+input:
+  dir: "<dynamic>"
+tags: [happy, fs]
