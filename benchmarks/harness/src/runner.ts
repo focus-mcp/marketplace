@@ -159,6 +159,25 @@ export function extractMiniTaskSpec(text: string): string | null {
 }
 
 // ---------------------------------------------------------------------------
+// Brick mode tool isolation
+// ---------------------------------------------------------------------------
+
+/**
+ * Native tools explicitly blocked in brick mode.
+ * Exported for test verification — tests should import this constant, not
+ * redeclare their own copy.
+ */
+export const BRICK_DISALLOWED_TOOLS = [
+    'Read',
+    'ToolSearch',
+    'Bash',
+    'Grep',
+    'Glob',
+    'Edit',
+    'Write',
+] as const;
+
+// ---------------------------------------------------------------------------
 // Core run function
 // ---------------------------------------------------------------------------
 
@@ -239,7 +258,7 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
                   allowedTools: manifest.tools.map(
                       (t) => `mcp__focus__${manifest.prefix}_${t.name}`,
                   ) as string[],
-                  disallowedTools: ['Read', 'Bash', 'Grep', 'Glob', 'Edit', 'Write'] as string[],
+                  disallowedTools: [...BRICK_DISALLOWED_TOOLS] as string[],
                   mcpServers: {
                       focus: {
                           command: 'focus',

@@ -6,7 +6,7 @@
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { loadManifest, type BrickManifest } from './runner.js';
+import { loadManifest, BRICK_DISALLOWED_TOOLS, type BrickManifest } from './runner.js';
 
 // ---------------------------------------------------------------------------
 // Test: real manifests for parallel and sandbox have bench.maxTurns=40
@@ -105,12 +105,13 @@ test('brick mode allowedTools must not include Read', () => {
     ]);
 });
 
-test('brick mode disallowedTools includes Read', () => {
-    // Ensure Read is explicitly blocked in brick mode
-    const disallowedTools = ['Read', 'Bash', 'Grep', 'Glob', 'Edit', 'Write'];
-
-    assert.ok(
-        disallowedTools.includes('Read'),
-        'Read must be in disallowedTools to enforce strict tool isolation',
-    );
+test('BRICK_DISALLOWED_TOOLS blocks all native tools including ToolSearch', () => {
+    // ToolSearch was confirmed in traces: parallel-brick used it as a fallback alongside Read
+    const required = ['Read', 'ToolSearch', 'Bash', 'Grep', 'Glob', 'Edit', 'Write'];
+    for (const tool of required) {
+        assert.ok(
+            (BRICK_DISALLOWED_TOOLS as readonly string[]).includes(tool),
+            `${tool} must be in BRICK_DISALLOWED_TOOLS (runner.ts)`,
+        );
+    }
 });
