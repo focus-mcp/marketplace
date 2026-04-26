@@ -271,54 +271,62 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
     const startedAt = new Date().toISOString();
     const startMs = Date.now();
 
-    const q = query({ prompt, options: { ...commonOptions, ...modeOptions } });
+    let lastError: Error | null = null;
 
-    for await (const message of q) {
-        switch (message.type) {
-            case 'assistant': {
-                const msg = message.message;
-                if (msg?.usage) accumulateUsage(usage, msg.usage as BetaUsageLike);
-                let text = '';
-                if (Array.isArray(msg?.content)) {
-                    for (const block of msg.content) {
-                        if (block.type === 'text') text += block.text;
-                        else if (block.type === 'tool_use') toolsUsed.add(block.name as string);
+    try {
+        const q = query({ prompt, options: { ...commonOptions, ...modeOptions } });
+
+        for await (const message of q) {
+            switch (message.type) {
+                case 'assistant': {
+                    const msg = message.message;
+                    if (msg?.usage) accumulateUsage(usage, msg.usage as BetaUsageLike);
+                    let text = '';
+                    if (Array.isArray(msg?.content)) {
+                        for (const block of msg.content) {
+                            if (block.type === 'text') text += block.text;
+                            else if (block.type === 'tool_use') toolsUsed.add(block.name as string);
+                        }
                     }
-                }
-                if (text) {
-                    lastAssistantText = text;
-                    process.stdout.write('.');
-                }
-                if (!sessionId && message.session_id) sessionId = message.session_id;
-                break;
-            }
-            case 'result': {
-                if (message.usage) accumulateUsage(usage, message.usage as BetaUsageLike);
-                if (!sessionId && message.session_id) sessionId = message.session_id;
-                numTurns = message.num_turns;
-                if (message.subtype === 'success') {
-                    if ('result' in message && typeof message.result === 'string') {
-                        lastAssistantText = message.result;
+                    if (text) {
+                        lastAssistantText = text;
+                        process.stdout.write('.');
                     }
-                } else if (message.subtype === 'error_max_turns') {
-                    exitReason = 'max_turns';
-                    console.warn('\n  WARNING: max turns reached');
-                } else {
-                    exitReason = 'error';
-                    console.error(`\n  ERROR: result subtype=${message.subtype}`);
-                    if ('errors' in message && Array.isArray(message.errors)) {
-                        console.error('  Details:', message.errors);
-                    }
+                    if (!sessionId && message.session_id) sessionId = message.session_id;
+                    break;
                 }
-                break;
+                case 'result': {
+                    if (message.usage) accumulateUsage(usage, message.usage as BetaUsageLike);
+                    if (!sessionId && message.session_id) sessionId = message.session_id;
+                    numTurns = message.num_turns;
+                    if (message.subtype === 'success') {
+                        if ('result' in message && typeof message.result === 'string') {
+                            lastAssistantText = message.result;
+                        }
+                    } else if (message.subtype === 'error_max_turns') {
+                        exitReason = 'max_turns';
+                        console.warn('\n  WARNING: max turns reached');
+                    } else {
+                        exitReason = 'error';
+                        console.error(`\n  ERROR: result subtype=${message.subtype}`);
+                        if ('errors' in message && Array.isArray(message.errors)) {
+                            console.error('  Details:', message.errors);
+                        }
+                    }
+                    break;
+                }
             }
         }
+    } catch (err) {
+        lastError = err instanceof Error ? err : new Error(String(err));
+        exitReason = 'error';
+        console.error(`\n  ERROR: SDK threw: ${lastError.message}`);
+    } finally {
+        process.stdout.write('\n');
     }
 
-    process.stdout.write('\n');
-
     const resultBlock = extractResultBlock(lastAssistantText);
-    if (!resultBlock) {
+    if (!resultBlock && !lastError) {
         console.warn('  WARNING: No ## Result block found');
     }
 
@@ -341,7 +349,11 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
         usage.cache_read_input_tokens +
         usage.output_tokens;
 
-    const focusStderr = focusStderrLines.join('').trim();
+    const focusStderrBase = focusStderrLines.join('').trim();
+    const sdkExceptionLine = lastError
+        ? `[runner] SDK exception: ${lastError.message}\n${lastError.stack ?? ''}`
+        : '';
+    const focusStderr = [focusStderrBase, sdkExceptionLine].filter(Boolean).join('\n');
 
     const result: RunResult = {
         brick,
@@ -361,12 +373,19 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
         ...(focusStderr ? { focus_stderr: focusStderr } : {}),
     };
 
-    // Write JSON
-    fs.mkdirSync(path.resolve(outDir), { recursive: true });
-    const stamp = isoStamp();
-    const outFile = path.join(path.resolve(outDir), `${brick}-${mode}-${stamp}.json`);
-    fs.writeFileSync(outFile, JSON.stringify(result, null, 2));
-    console.log(`  → ${outFile}`);
+    // Write JSON — always, even on SDK exception (partial result).
+    // Wrapped in try/catch so a write failure does not swallow the original SDK error.
+    try {
+        fs.mkdirSync(path.resolve(outDir), { recursive: true });
+        const stamp = isoStamp();
+        const outFile = path.join(path.resolve(outDir), `${brick}-${mode}-${stamp}.json`);
+        fs.writeFileSync(outFile, JSON.stringify(result, null, 2));
+        console.log(`  → ${outFile}`);
+    } catch (writeErr) {
+        console.error(`  WARNING: could not write result file: ${String(writeErr)}`);
+    }
+
+    if (lastError) throw lastError;
 
     return result;
 }
