@@ -39,6 +39,16 @@ import './parsers/python.ts';
 import './parsers/go.ts';
 import './parsers/rust.ts';
 import './parsers/java.ts';
+// New languages — @cursorless/tree-sitter-wasms bundle
+import './parsers/yaml.ts';
+import './parsers/html.ts';
+import './parsers/markdown.ts';
+import './parsers/scss.ts';
+import './parsers/css.ts';
+import './parsers/json.ts';
+import './parsers/toml.ts';
+import './parsers/twig.ts';
+import './parsers/generic-lang.ts';
 
 import { parseSource, supportedExtensions, supportedLanguageNames } from './parsers/registry.ts';
 
