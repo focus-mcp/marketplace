@@ -1,0 +1,76 @@
+# Promptfoo config — FocusMCP eval test
+# Compare 2 modes: native file read vs mock sr_signatures brick
+description: "FocusMCP: compare token usage — full file read vs sr_signatures brick"
+
+providers:
+  - id: anthropic:messages:claude-haiku-4-5
+    config:
+      max_tokens: 2048
+      temperature: 0
+
+prompts:
+  - id: native-read
+    label: "Mode A: native file read"
+    raw: |
+      You have access to the Read tool. Please read the file at path:
+      /home/samuelds/benchmarks/test-repo/packages/core/injector/injector.ts
+
+      After reading it, answer: What are the public method signatures of the Injector class?
+      List each signature on its own line. Be concise — just the signatures, no implementation details.
+
+  - id: mock-brick
+    label: "Mode B: sr_signatures brick (mock)"
+    raw: |
+      The tool sr_signatures has been called for you with:
+        path: /home/samuelds/benchmarks/test-repo/packages/core/injector/injector.ts
+
+      It returned the following public method signatures:
+
+      loadPrototype<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>): void
+      loadInstance<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>
+      loadMiddleware(wrapper: InstanceWrapper, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>
+      loadController(wrapper: InstanceWrapper<Controller>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>
+      loadInjectable<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>
+      loadProvider(wrapper: InstanceWrapper, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>
+      applySettlementSignal<T>(settlementSignal: SettlementSignal, wrapper: InstanceWrapper<T>): InstanceWrapper<T>
+      resolveConstructorParams<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject: InjectorDependency[], callback: (args: unknown[]) => void | Promise<void>, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>
+      getClassDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]
+      getFactoryProviderDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]
+      reflectConstructorParams<T>(type: Type<T>): any[]
+      reflectOptionalParams<T>(type: Type<T>): any[]
+      reflectSelfParams<T>(type: Type<T>): any[]
+      resolveSingleParam<T>(wrapper: InstanceWrapper<T>, param: unknown, dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>
+      resolveParamToken<T>(wrapper: InstanceWrapper<T>, param: Type<any> | string | symbol | any): Type<any> | string | symbol | any
+      resolveComponentWrapper<T>(dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId: ContextId, inquirer: InstanceWrapper): Promise<InstanceWrapper>
+      resolveComponentHost<T>(moduleRef: Module, instanceWrapper: InstanceWrapper<T | Promise<T>>, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper>
+      lookupComponent<T = any>(instances: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, dependencyContext: InjectorDependencyContext, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>
+      lookupComponentInParentModules<T = any>(dependencyContext: InjectorDependencyContext, moduleRef: Module, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>
+      lookupComponentInImports(moduleRef: Module, name: InjectionToken, wrapper: InstanceWrapper, moduleRegistry?: any[], contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number, isTraversed?: boolean): Promise<InstanceWrapper>
+      resolveProperties<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject?: InjectionToken[], contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<PropertyDependency[]>
+      reflectProperties<T>(type: Type<T>): PropertyDependency[]
+      applyProperties<T = any>(instance: T, properties: PropertyDependency[]): void
+      instantiateClass<T = any>(instances: any[], wrapper: InstanceWrapper, targetMetatype: InstanceWrapper, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<T>
+      loadPerContext<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, collection: Map<InjectionToken, InstanceWrapper>, ctx: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper<T>>
+      loadEnhancersPerContext(wrapper: InstanceWrapper, ctx: ContextId, collection: Map<string, InstanceWrapper>): Promise<void>
+      loadCtorMetadata(metadata: InstanceWrapper[], contextId: ContextId, inquirer: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<any[]>
+      loadPropertiesMetadata(metadata: PropertyMetadata[], contextId: ContextId, inquirer: InstanceWrapper): Promise<Array<PropertyDependency>>
+
+      Now answer: What are the public method signatures of the Injector class?
+      List each signature on its own line. Be concise — just the signatures.
+
+tests:
+  - description: "Extract public method signatures"
+    vars: {}
+    assert:
+      - type: contains
+        value: "loadPrototype"
+      - type: contains
+        value: "loadInstance"
+      - type: contains
+        value: "resolveConstructorParams"
+      - type: javascript
+        value: |
+          // Check that response lists at least 10 method signatures
+          const lines = output.split('\n').filter(l => l.trim().length > 0);
+          const sigLines = lines.filter(l => l.includes('('));
+          return sigLines.length >= 10;
