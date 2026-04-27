@@ -5,15 +5,14 @@
  * - native: reads full file (~4000+ tokens input)
  * - brick: receives only signatures (~400 tokens input)
  */
-const fs = require("fs");
+const fs = require('node:fs');
 
 // Approximate tokenizer: ~4 chars per token (rough estimate for code)
 function estimateTokens(text) {
-  return Math.ceil(text.length / 4);
+    return Math.ceil(text.length / 4);
 }
 
-const INJECTOR_PATH =
-  "/home/samuelds/benchmarks/test-repo/packages/core/injector/injector.ts";
+const INJECTOR_PATH = '/home/samuelds/benchmarks/test-repo/packages/core/injector/injector.ts';
 
 const SIGNATURES_ONLY = `loadPrototype<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>): void
 loadInstance<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>
@@ -45,61 +44,60 @@ loadCtorMetadata(metadata: InstanceWrapper[], contextId: ContextId, inquirer: In
 loadPropertiesMetadata(metadata: PropertyMetadata[], contextId: ContextId, inquirer: InstanceWrapper): Promise<Array<PropertyDependency>>`;
 
 function createNativeProvider() {
-  return {
-    id: () => "mock-native-file-read",
-    callApi: async (prompt) => {
-      const fileContent = fs.readFileSync(INJECTOR_PATH, "utf-8");
-      const systemPrompt =
-        "You are an expert TypeScript developer. Answer questions about code.";
-      const fullPrompt =
-        systemPrompt + "\n" + prompt + "\n\nFile content:\n" + fileContent;
-      const inputTokens = estimateTokens(fullPrompt);
-      const outputTokens = estimateTokens(SIGNATURES_ONLY) + 50;
+    return {
+        id: () => 'mock-native-file-read',
+        callApi: async (prompt) => {
+            const fileContent = fs.readFileSync(INJECTOR_PATH, 'utf-8');
+            const systemPrompt =
+                'You are an expert TypeScript developer. Answer questions about code.';
+            const fullPrompt = `${systemPrompt}\n${prompt}\n\nFile content:\n${fileContent}`;
+            const inputTokens = estimateTokens(fullPrompt);
+            const outputTokens = estimateTokens(SIGNATURES_ONLY) + 50;
 
-      return {
-        output: SIGNATURES_ONLY,
-        tokenUsage: {
-          total: inputTokens + outputTokens,
-          prompt: inputTokens,
-          completion: outputTokens,
+            return {
+                output: SIGNATURES_ONLY,
+                tokenUsage: {
+                    total: inputTokens + outputTokens,
+                    prompt: inputTokens,
+                    completion: outputTokens,
+                },
+            };
         },
-      };
-    },
-  };
+    };
 }
 
 function createBrickProvider() {
-  return {
-    id: () => "mock-brick-sr-signatures",
-    callApi: async (prompt) => {
-      const systemPrompt =
-        "You are an expert TypeScript developer. Answer questions about code.";
-      const fullPrompt =
-        systemPrompt +
-        "\n" +
-        prompt +
-        "\n\nBrick sr_signatures output:\n" +
-        SIGNATURES_ONLY;
-      const inputTokens = estimateTokens(fullPrompt);
-      const outputTokens = estimateTokens(SIGNATURES_ONLY) + 50;
+    return {
+        id: () => 'mock-brick-sr-signatures',
+        callApi: async (prompt) => {
+            const systemPrompt =
+                'You are an expert TypeScript developer. Answer questions about code.';
+            const fullPrompt =
+                systemPrompt +
+                '\n' +
+                prompt +
+                '\n\nBrick sr_signatures output:\n' +
+                SIGNATURES_ONLY;
+            const inputTokens = estimateTokens(fullPrompt);
+            const outputTokens = estimateTokens(SIGNATURES_ONLY) + 50;
 
-      return {
-        output: SIGNATURES_ONLY,
-        tokenUsage: {
-          total: inputTokens + outputTokens,
-          prompt: inputTokens,
-          completion: outputTokens,
+            return {
+                output: SIGNATURES_ONLY,
+                tokenUsage: {
+                    total: inputTokens + outputTokens,
+                    prompt: inputTokens,
+                    completion: outputTokens,
+                },
+            };
         },
-      };
-    },
-  };
+    };
 }
 
 // Promptfoo v0.121+ expects a default export function that returns provider object
-module.exports = function (options) {
-  const mode = (options && options.config && options.config.mode) || "native";
-  if (mode === "brick") {
-    return createBrickProvider();
-  }
-  return createNativeProvider();
+module.exports = (options) => {
+    const mode = options?.config?.mode ?? 'native';
+    if (mode === 'brick') {
+        return createBrickProvider();
+    }
+    return createNativeProvider();
 };

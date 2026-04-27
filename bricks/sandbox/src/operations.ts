@@ -328,7 +328,7 @@ function resolveSafePath(inputPath: string): { resolved: string } | { error: str
     const cwd = process.cwd();
     const resolved = resolve(cwd, normalised);
     // Double-check after resolve
-    if (!resolved.startsWith(cwd + '/') && resolved !== cwd) {
+    if (!resolved.startsWith(`${cwd}/`) && resolved !== cwd) {
         return { error: 'Path must not escape the working directory.' };
     }
     return { resolved };

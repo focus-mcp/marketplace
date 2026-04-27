@@ -18,7 +18,7 @@ export async function expectMatchesGolden(actual: string, goldenPath: string): P
     const expected = await readFile(goldenPath, 'utf-8');
     if (actual === expected) return;
 
-    const preview = (s: string) => (s.length > 200 ? s.slice(0, 200) + '...' : s);
+    const preview = (s: string) => (s.length > 200 ? `${s.slice(0, 200)}...` : s);
     throw new Error(
         `Golden mismatch at ${goldenPath}\n` +
             `--- expected (${expected.length} chars) ---\n${preview(expected)}\n` +
