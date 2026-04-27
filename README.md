@@ -76,6 +76,22 @@ Static, reproducible benchmark on 29 tools (no LLM, no variance):
 
 Reproduce: `pnpm --filter @focusmcp/bench-harness exec tsx src/equivalence.ts`
 
+## Break-even by tool category
+
+Some bricks save tokens immediately, others need multiple calls to amortize their fixed cost
+(manifest loaded once per session = fixed overhead M+D).
+
+| Category | Tools | Break-even | Example |
+|---|---|---|---|
+| Always wins | outline, smartread, refs, compress, fts, textsearch, filesearch, overview, rename | N=1 | `outline.out_repo` saves 23,226 tokens/call |
+| Wins fast (≤10 calls) | — | ≤ 10 | — |
+| Wins eventually (≤100 calls) | — | ≤ 100 | — |
+| Never wins (single-shot) | fileread, filelist, multiread, filediff, format | ∞ | JSON envelope > operation savings |
+
+**Session projection** (50 varied calls, top-quartile mix): ~80% token savings vs native.
+
+See [full math model report](./benchmarks/equivalence-math-report.md).
+
 ## Contribute a brick
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).
