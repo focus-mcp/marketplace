@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-treesitter",
     "version": "1.1.1",
     "private": false,
-    "description": "Regex-based code indexer for TypeScript/JavaScript — parses symbols, imports, exports.",
+    "description": "Tree-sitter based multi-language code indexer — parses symbols, imports, exports for TS, JS, PHP, Python, Go, Rust, Java.",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",
@@ -35,7 +35,15 @@
         "ast",
         "parser",
         "symbols",
-        "typescript"
+        "typescript",
+        "javascript",
+        "php",
+        "python",
+        "go",
+        "rust",
+        "java",
+        "multi-language",
+        "tree-sitter"
     ],
     "author": "FocusMCP contributors",
     "homepage": "https://github.com/focus-mcp/marketplace/tree/main/bricks/treesitter#readme",
@@ -58,5 +66,8 @@
     "devDependencies": {
         "@focus-mcp/marketplace-testing": "workspace:*"
     },
-    "types": "./dist/index.d.ts"
+    "types": "./dist/index.d.ts",
+    "dependencies": {
+        "@vscode/tree-sitter-wasm": "^0.3.1"
+    }
 }

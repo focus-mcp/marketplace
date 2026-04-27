@@ -1,12 +1,12 @@
 {
     "name": "treesitter",
     "prefix": "ts",
-    "description": "Regex-based code indexer for TypeScript/JavaScript — parses symbols, imports, exports.",
+    "description": "Tree-sitter based multi-language code indexer — supports TS, JS, PHP, Python, Go, Rust, Java.",
     "dependencies": [],
     "tools": [
         {
             "name": "index",
-            "description": "Index a directory: parse all TS/JS files and store symbols in memory.",
+            "description": "Index a directory: parse all supported files (TS, JS, PHP, Python, Go, Rust, Java) and store symbols in memory.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -59,7 +59,19 @@
             }
         }
     ],
-    "tags": ["ast", "parser", "symbols", "typescript"],
+    "tags": [
+        "ast",
+        "parser",
+        "symbols",
+        "typescript",
+        "javascript",
+        "php",
+        "python",
+        "go",
+        "rust",
+        "java",
+        "multi-language"
+    ],
     "license": "MIT",
     "version": "1.1.1"
 }
