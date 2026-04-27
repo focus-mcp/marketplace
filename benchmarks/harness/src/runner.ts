@@ -163,12 +163,20 @@ export function extractMiniTaskSpec(text: string): string | null {
 // ---------------------------------------------------------------------------
 
 /**
- * Native tools explicitly blocked in brick mode.
- * Exported for test verification — tests should import this constant, not
- * redeclare their own copy.
+ * SDK `tools: []` (empty array) is the canonical way to disable ALL built-in
+ * tools in the Claude Agent SDK (v0.2.118+). It maps to `--tools ""` in the
+ * Claude CLI subprocess, which strips every builtin before MCP tools are added.
+ *
+ * `BRICK_BUILTIN_TOOLS` is kept for reference / documentation only — it is the
+ * exhaustive list of SDK builtins that `tools: []` displaces. It is NOT passed
+ * to `disallowedTools` anymore; using it as a blacklist was inherently fragile
+ * (whack-a-mole: NotebookEdit, RemoteTrigger, TodoWrite, mcp__claude_ai_Context7__*
+ * kept slipping through even after repeated additions).
+ *
+ * @see sdk.mjs — if(V6.length===0) l.push("--tools","")
  */
-export const BRICK_DISALLOWED_TOOLS = [
-    // Native filesystem/shell
+export const BRICK_BUILTIN_TOOLS = [
+    // Native filesystem/shell (Claude Code defaults)
     'Read',
     'Bash',
     'Grep',
@@ -176,7 +184,8 @@ export const BRICK_DISALLOWED_TOOLS = [
     'Edit',
     'Write',
     'ToolSearch',
-    // Claude Agent SDK builtin tools (bypass allowedTools whitelist)
+    'NotebookEdit',
+    // Claude Agent SDK lifecycle tools (bypass allowedTools whitelist)
     'Agent',
     'Monitor',
     'PushNotification',
@@ -190,7 +199,16 @@ export const BRICK_DISALLOWED_TOOLS = [
     'TaskUpdate',
     'TaskStop',
     'TaskOutput',
+    'RemoteTrigger',
+    'TodoWrite',
+    'TodoRead',
 ] as const;
+
+/**
+ * @deprecated Use `tools: []` in SDK options instead (true isolation).
+ * Kept as a type alias for backward-compat with any external consumers.
+ */
+export const BRICK_DISALLOWED_TOOLS = BRICK_BUILTIN_TOOLS;
 
 // ---------------------------------------------------------------------------
 // Core run function
@@ -278,10 +296,19 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
                   disallowedTools: [] as string[],
               }
             : {
+                  // `tools: []` passes `--tools ""` to the Claude CLI subprocess,
+                  // which disables ALL SDK built-in tools before MCP tools are loaded.
+                  // This is the only reliable way to achieve strict isolation —
+                  // a disallowedTools blacklist is inherently fragile (new builtins
+                  // like NotebookEdit, RemoteTrigger, TodoWrite, mcp__*__Context7__*
+                  // slip through each SDK update).
+                  tools: [] as string[],
+                  // allowedTools is still set so the SDK grants auto-permission to
+                  // the brick's MCP tools (no permission prompt during bench runs).
                   allowedTools: manifest.tools.map(
                       (t) => `mcp__focus__${manifest.prefix}_${t.name}`,
                   ) as string[],
-                  disallowedTools: [...BRICK_DISALLOWED_TOOLS] as string[],
+                  disallowedTools: [] as string[],
                   mcpServers: {
                       focus: {
                           command: 'focus',
