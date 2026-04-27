@@ -1,0 +1,53 @@
+# Promptfoo config — FocusMCP eval test (MOCK — no API key needed)
+# Compare 2 modes: native file read vs mock sr_signatures brick
+# This measures the TOOL, not the LLM response quality
+description: "FocusMCP: token comparison — full file read vs sr_signatures brick (mock)"
+
+providers:
+  - id: "file://mock-provider.js"
+    label: "native-read"
+    config:
+      mode: "native"
+  - id: "file://mock-provider.js"
+    label: "brick-sr-signatures"
+    config:
+      mode: "brick"
+
+prompts:
+  - "What are the public method signatures of the Injector class? List each on its own line."
+
+tests:
+  - description: "Run 1: Extract public method signatures"
+    vars: {}
+    assert:
+      - type: contains
+        value: "loadPrototype"
+      - type: contains
+        value: "loadInstance"
+      - type: contains
+        value: "resolveConstructorParams"
+      - type: javascript
+        value: |
+          const lines = output.split('\n').filter(l => l.trim().length > 0);
+          const sigLines = lines.filter(l => l.includes('('));
+          return sigLines.length >= 10;
+
+  - description: "Run 2: Extract public method signatures"
+    vars: {}
+    assert:
+      - type: contains
+        value: "loadPrototype"
+      - type: contains
+        value: "loadInstance"
+      - type: contains
+        value: "resolveConstructorParams"
+
+  - description: "Run 3: Extract public method signatures"
+    vars: {}
+    assert:
+      - type: contains
+        value: "loadPrototype"
+      - type: contains
+        value: "loadInstance"
+      - type: contains
+        value: "resolveConstructorParams"
