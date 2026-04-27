@@ -82,15 +82,19 @@ async function ensureInit(): Promise<VsCodeTreeSitter> {
 // Language cache
 // ──────────────────────────────────────────────────────────────────────────────
 
-const _langCache = new Map<string, TsLanguage>();
+// Store Promises (not values) to prevent double-load on concurrent first calls
+const _langPromiseCache = new Map<string, Promise<TsLanguage>>();
 
 async function loadLanguage(wasmName: string): Promise<TsLanguage> {
-    const cached = _langCache.get(wasmName);
-    if (cached) return cached;
-    const { Language } = await ensureInit();
-    const lang = await Language.load(join(WASM_DIR, wasmName));
-    _langCache.set(wasmName, lang);
-    return lang;
+    let p = _langPromiseCache.get(wasmName);
+    if (!p) {
+        p = (async () => {
+            const { Language } = await ensureInit();
+            return Language.load(join(WASM_DIR, wasmName));
+        })();
+        _langPromiseCache.set(wasmName, p);
+    }
+    return p;
 }
 
 // ──────────────────────────────────────────────────────────────────────────────

@@ -195,6 +195,22 @@ describe('parseFile — multi-language', () => {
         expect(names).toContain('public');
     });
 
+    it('includes underscore-prefixed methods (intentional — tree-sitter indexes all symbols)', async () => {
+        // Unlike the old regex parser which excluded _private methods,
+        // tree-sitter indexes all methods including underscore-prefixed ones.
+        // This is intentional: downstream bricks (callgraph, refs) need full symbol coverage.
+        const content = [
+            'export class MyClass {',
+            '    _private() {}',
+            '    publicMethod() {}',
+            '}',
+        ].join('\n');
+        const result = await parseFile('/test.ts', content, 0);
+        const names = result.symbols.filter((s) => s.kind === 'method').map((s) => s.name);
+        expect(names).toContain('_private');
+        expect(names).toContain('publicMethod');
+    });
+
     it('handles class followed by standalone function in TypeScript', async () => {
         const content = [
             'export class Box {',
