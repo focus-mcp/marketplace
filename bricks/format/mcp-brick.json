@@ -94,5 +94,11 @@
         }
     ],
     "tags": ["format", "json", "yaml", "markdown", "table", "output"],
-    "license": "MIT"
+    "license": "MIT",
+    "bench": {
+        "tools": {
+            "json": { "delta": 0.002 }
+        },
+        "source": "static-equivalence-2026-04-27"
+    }
 }

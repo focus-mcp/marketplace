@@ -2,6 +2,16 @@
 
 Rename refactoring — rename symbols across files, rename files with import updates, bulk rename with preview.
 
+## Measured economy
+
+Static benchmark — no LLM, no variance, reproducible:
+
+| Tool | Native equivalent | Brick output | Savings |
+|---|---:|---:|---:|
+| `ren_preview` | 2,678 tokens | 1,401 tokens | **-47.3%** |
+
+Conditions: payload-only measurement (iso-call). Multi-turn agent dynamics not modeled. See [global benchmark](../../benchmarks/equivalence-report.md) for methodology and full per-tool table.
+
 ## Tools
 
 | Tool | Exposed as | Description |

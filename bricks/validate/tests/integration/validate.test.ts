@@ -79,6 +79,7 @@ describe('val_lint integration', () => {
             filePath,
             [
                 'export function greet(name: string): string {',
+                // biome-ignore lint/suspicious/noTemplateCurlyInString: intentional — writing TS source code that contains a template literal
                 '    return `Hello, ${name}`;',
                 '}',
             ].join('\n'),

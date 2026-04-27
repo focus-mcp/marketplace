@@ -49,6 +49,54 @@ curl https://raw.githubusercontent.com/focus-mcp/marketplace/main/publish/catalo
 
 (This list is for humans — the full catalog is at `catalog.json`)
 
+## Measured economy
+
+Static, reproducible benchmark on 29 tools (no LLM, no variance):
+
+| | Tokens |
+|---|---:|
+| Native equivalent (raw `Read`, `Grep`, etc.) | 169,225 |
+| FocusMCP bricks output | 57,725 |
+| **Saved** | **111,500 (−65.9%)** |
+
+**Top 5 most efficient tools** (best replacement for native operations):
+
+| Tool | Native | Brick | Δ |
+|---|---:|---:|---:|
+| `smartread.sr_summary` | 8,522 | 20 | **−99.8%** |
+| `refs.refs_hierarchy` | 2,678 | 7 | **−99.7%** |
+| `smartread.sr_signatures` | 8,522 | 44 | **−99.5%** |
+| `outline.out_repo` | 23,712 | 436 | **−98.1%** |
+| `smartread.sr_imports` | 8,522 | 198 | **−97.6%** |
+
+**Caveats** (full transparency):
+- 4 tools show marginal overhead (+2 to +28%) on tiny outputs where JSON envelope weighs more than the operation. Examples: `fl_list`, `fr_head`, `fr_range`, `fmt_json`.
+- This is iso-call measurement: it captures payload economy, not multi-turn agent dynamics. Real agent sessions have variance and exploration costs that this benchmark doesn't model.
+- See [`benchmarks/equivalence-report.md`](./benchmarks/equivalence-report.md) for the full per-tool table and methodology.
+
+Reproduce: `pnpm --filter @focusmcp/bench-harness exec tsx src/equivalence.ts`
+
+## Break-even by tool category
+
+Some bricks save tokens immediately, others need multiple calls to amortize their fixed cost
+(manifest loaded once per session = fixed overhead M+D).
+
+| Category | Tools | Break-even | Example |
+|---|---|---|---|
+| Always wins | outline, smartread, refs, compress, fts, textsearch, filesearch, overview, rename | N=1 | `outline.out_repo` saves 23,226 tokens/call |
+| Wins fast (≤10 calls) | — | ≤ 10 | — |
+| Wins eventually (≤100 calls) | — | ≤ 100 | — |
+| Never wins (single-shot) | fileread, filelist, multiread, filediff, format | ∞ | JSON envelope > operation savings |
+
+**Session projection** (50 varied calls, top-quartile mix): ~80% token savings vs native.
+
+See [full math model report](./benchmarks/equivalence-math-report.md).
+
+## Roadmap & improvements
+
+Enhancement opportunities tracked in [`IMPROVEMENTS.md`](./IMPROVEMENTS.md) — architecture, performance, and new capabilities.
+Bugs and patches are in [`benchmarks/PATCH_QUEUE.md`](./benchmarks/PATCH_QUEUE.md).
+
 ## Contribute a brick
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).

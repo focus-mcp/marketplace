@@ -48,5 +48,13 @@
         }
     ],
     "tags": ["outline", "symbols", "structure", "navigation"],
-    "license": "MIT"
+    "license": "MIT",
+    "bench": {
+        "tools": {
+            "repo": { "delta": -0.981 },
+            "file": { "delta": -0.961 },
+            "structure": { "delta": -0.829 }
+        },
+        "source": "static-equivalence-2026-04-27"
+    }
 }

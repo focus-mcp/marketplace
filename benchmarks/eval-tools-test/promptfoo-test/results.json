@@ -1,0 +1,834 @@
+{
+    "evalId": "eval-baW-2026-04-27T08:22:59",
+    "results": {
+        "version": 3,
+        "timestamp": "2026-04-27T08:22:59.179Z",
+        "prompts": [
+            {
+                "id": "4dada792ea81d9dcda2affdc97abb3de15202bbee34cd55483112adffc218834",
+                "raw": "What are the public method signatures of the Injector class? List each on its own line.",
+                "label": "What are the public method signatures of the Injector class? List each on its own line.",
+                "provider": "native-read",
+                "metrics": {
+                    "score": 3,
+                    "testPassCount": 3,
+                    "testFailCount": 0,
+                    "testErrorCount": 0,
+                    "assertPassCount": 10,
+                    "assertFailCount": 0,
+                    "totalLatencyMs": 11,
+                    "tokenUsage": {
+                        "prompt": 24861,
+                        "completion": 3300,
+                        "cached": 0,
+                        "total": 28161,
+                        "numRequests": 3,
+                        "completionDetails": {
+                            "reasoning": 0,
+                            "acceptedPrediction": 0,
+                            "rejectedPrediction": 0,
+                            "cacheReadInputTokens": 0,
+                            "cacheCreationInputTokens": 0
+                        },
+                        "assertions": {
+                            "total": 0,
+                            "prompt": 0,
+                            "completion": 0,
+                            "cached": 0,
+                            "numRequests": 0,
+                            "completionDetails": {
+                                "reasoning": 0,
+                                "acceptedPrediction": 0,
+                                "rejectedPrediction": 0,
+                                "cacheReadInputTokens": 0,
+                                "cacheCreationInputTokens": 0
+                            }
+                        }
+                    },
+                    "namedScores": {},
+                    "namedScoresCount": {},
+                    "namedScoreWeights": {},
+                    "cost": 0
+                }
+            },
+            {
+                "id": "4dada792ea81d9dcda2affdc97abb3de15202bbee34cd55483112adffc218834",
+                "raw": "What are the public method signatures of the Injector class? List each on its own line.",
+                "label": "What are the public method signatures of the Injector class? List each on its own line.",
+                "provider": "brick-sr-signatures",
+                "metrics": {
+                    "score": 3,
+                    "testPassCount": 3,
+                    "testFailCount": 0,
+                    "testErrorCount": 0,
+                    "assertPassCount": 10,
+                    "assertFailCount": 0,
+                    "totalLatencyMs": 10,
+                    "tokenUsage": {
+                        "prompt": 3291,
+                        "completion": 3300,
+                        "cached": 0,
+                        "total": 6591,
+                        "numRequests": 3,
+                        "completionDetails": {
+                            "reasoning": 0,
+                            "acceptedPrediction": 0,
+                            "rejectedPrediction": 0,
+                            "cacheReadInputTokens": 0,
+                            "cacheCreationInputTokens": 0
+                        },
+                        "assertions": {
+                            "total": 0,
+                            "prompt": 0,
+                            "completion": 0,
+                            "cached": 0,
+                            "numRequests": 0,
+                            "completionDetails": {
+                                "reasoning": 0,
+                                "acceptedPrediction": 0,
+                                "rejectedPrediction": 0,
+                                "cacheReadInputTokens": 0,
+                                "cacheCreationInputTokens": 0
+                            }
+                        }
+                    },
+                    "namedScores": {},
+                    "namedScoresCount": {},
+                    "namedScoreWeights": {},
+                    "cost": 0
+                }
+            }
+        ],
+        "results": [
+            {
+                "cost": 0,
+                "gradingResult": {
+                    "pass": true,
+                    "score": 1,
+                    "reason": "All assertions passed",
+                    "namedScores": {},
+                    "tokensUsed": {
+                        "total": 0,
+                        "prompt": 0,
+                        "completion": 0,
+                        "cached": 0,
+                        "numRequests": 0
+                    },
+                    "componentResults": [
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "loadPrototype"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "loadInstance"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "resolveConstructorParams"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "javascript",
+                                "value": "const lines = output.split('\\n').filter(l => l.trim().length > 0);\nconst sigLines = lines.filter(l => l.includes('('));\nreturn sigLines.length >= 10;\n"
+                            }
+                        }
+                    ]
+                },
+                "id": "3aa51568-8ba8-4363-9bc6-2b297cd33b55",
+                "latencyMs": 5,
+                "namedScores": {},
+                "prompt": {
+                    "raw": "What are the public method signatures of the Injector class? List each on its own line.",
+                    "label": "What are the public method signatures of the Injector class? List each on its own line.",
+                    "config": {}
+                },
+                "promptId": "4dada792ea81d9dcda2affdc97abb3de15202bbee34cd55483112adffc218834",
+                "promptIdx": 0,
+                "provider": {
+                    "id": "mock-native-file-read",
+                    "label": "native-read"
+                },
+                "response": {
+                    "output": "loadPrototype<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>): void\nloadInstance<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadMiddleware(wrapper: InstanceWrapper, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadController(wrapper: InstanceWrapper<Controller>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadInjectable<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>\nloadProvider(wrapper: InstanceWrapper, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\napplySettlementSignal<T>(settlementSignal: SettlementSignal, wrapper: InstanceWrapper<T>): InstanceWrapper<T>\nresolveConstructorParams<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject: InjectorDependency[], callback: (args: unknown[]) => void | Promise<void>, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>\ngetClassDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]\ngetFactoryProviderDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]\nreflectConstructorParams<T>(type: Type<T>): any[]\nreflectOptionalParams<T>(type: Type<T>): any[]\nreflectSelfParams<T>(type: Type<T>): any[]\nresolveSingleParam<T>(wrapper: InstanceWrapper<T>, param: unknown, dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nresolveParamToken<T>(wrapper: InstanceWrapper<T>, param: Type<any> | string | symbol | any): Type<any> | string | symbol | any\nresolveComponentWrapper<T>(dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId: ContextId, inquirer: InstanceWrapper): Promise<InstanceWrapper>\nresolveComponentHost<T>(moduleRef: Module, instanceWrapper: InstanceWrapper<T | Promise<T>>, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper>\nlookupComponent<T = any>(instances: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, dependencyContext: InjectorDependencyContext, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nlookupComponentInParentModules<T = any>(dependencyContext: InjectorDependencyContext, moduleRef: Module, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nlookupComponentInImports(moduleRef: Module, name: InjectionToken, wrapper: InstanceWrapper, moduleRegistry?: any[], contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number, isTraversed?: boolean): Promise<InstanceWrapper>\nresolveProperties<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject?: InjectionToken[], contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<PropertyDependency[]>\nreflectProperties<T>(type: Type<T>): PropertyDependency[]\napplyProperties<T = any>(instance: T, properties: PropertyDependency[]): void\ninstantiateClass<T = any>(instances: any[], wrapper: InstanceWrapper, targetMetatype: InstanceWrapper, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<T>\nloadPerContext<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, collection: Map<InjectionToken, InstanceWrapper>, ctx: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper<T>>\nloadEnhancersPerContext(wrapper: InstanceWrapper, ctx: ContextId, collection: Map<string, InstanceWrapper>): Promise<void>\nloadCtorMetadata(metadata: InstanceWrapper[], contextId: ContextId, inquirer: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<any[]>\nloadPropertiesMetadata(metadata: PropertyMetadata[], contextId: ContextId, inquirer: InstanceWrapper): Promise<Array<PropertyDependency>>",
+                    "tokenUsage": {
+                        "total": 9387,
+                        "prompt": 8287,
+                        "completion": 1100
+                    }
+                },
+                "score": 1,
+                "success": true,
+                "testCase": {
+                    "description": "Run 1: Extract public method signatures",
+                    "vars": {},
+                    "assert": [
+                        {
+                            "type": "contains",
+                            "value": "loadPrototype"
+                        },
+                        {
+                            "type": "contains",
+                            "value": "loadInstance"
+                        },
+                        {
+                            "type": "contains",
+                            "value": "resolveConstructorParams"
+                        },
+                        {
+                            "type": "javascript",
+                            "value": "const lines = output.split('\\n').filter(l => l.trim().length > 0);\nconst sigLines = lines.filter(l => l.includes('('));\nreturn sigLines.length >= 10;\n"
+                        }
+                    ],
+                    "options": {},
+                    "metadata": {}
+                },
+                "testIdx": 0,
+                "vars": {},
+                "metadata": {
+                    "_promptfooFileMetadata": {}
+                },
+                "failureReason": 0
+            },
+            {
+                "cost": 0,
+                "gradingResult": {
+                    "pass": true,
+                    "score": 1,
+                    "reason": "All assertions passed",
+                    "namedScores": {},
+                    "tokensUsed": {
+                        "total": 0,
+                        "prompt": 0,
+                        "completion": 0,
+                        "cached": 0,
+                        "numRequests": 0
+                    },
+                    "componentResults": [
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "loadPrototype"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "loadInstance"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "resolveConstructorParams"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "javascript",
+                                "value": "const lines = output.split('\\n').filter(l => l.trim().length > 0);\nconst sigLines = lines.filter(l => l.includes('('));\nreturn sigLines.length >= 10;\n"
+                            }
+                        }
+                    ]
+                },
+                "id": "778b68d6-bd58-4c76-8ac6-95bbbb22cce5",
+                "latencyMs": 4,
+                "namedScores": {},
+                "prompt": {
+                    "raw": "What are the public method signatures of the Injector class? List each on its own line.",
+                    "label": "What are the public method signatures of the Injector class? List each on its own line.",
+                    "config": {}
+                },
+                "promptId": "4dada792ea81d9dcda2affdc97abb3de15202bbee34cd55483112adffc218834",
+                "promptIdx": 1,
+                "provider": {
+                    "id": "mock-brick-sr-signatures",
+                    "label": "brick-sr-signatures"
+                },
+                "response": {
+                    "output": "loadPrototype<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>): void\nloadInstance<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadMiddleware(wrapper: InstanceWrapper, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadController(wrapper: InstanceWrapper<Controller>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadInjectable<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>\nloadProvider(wrapper: InstanceWrapper, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\napplySettlementSignal<T>(settlementSignal: SettlementSignal, wrapper: InstanceWrapper<T>): InstanceWrapper<T>\nresolveConstructorParams<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject: InjectorDependency[], callback: (args: unknown[]) => void | Promise<void>, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>\ngetClassDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]\ngetFactoryProviderDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]\nreflectConstructorParams<T>(type: Type<T>): any[]\nreflectOptionalParams<T>(type: Type<T>): any[]\nreflectSelfParams<T>(type: Type<T>): any[]\nresolveSingleParam<T>(wrapper: InstanceWrapper<T>, param: unknown, dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nresolveParamToken<T>(wrapper: InstanceWrapper<T>, param: Type<any> | string | symbol | any): Type<any> | string | symbol | any\nresolveComponentWrapper<T>(dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId: ContextId, inquirer: InstanceWrapper): Promise<InstanceWrapper>\nresolveComponentHost<T>(moduleRef: Module, instanceWrapper: InstanceWrapper<T | Promise<T>>, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper>\nlookupComponent<T = any>(instances: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, dependencyContext: InjectorDependencyContext, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nlookupComponentInParentModules<T = any>(dependencyContext: InjectorDependencyContext, moduleRef: Module, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nlookupComponentInImports(moduleRef: Module, name: InjectionToken, wrapper: InstanceWrapper, moduleRegistry?: any[], contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number, isTraversed?: boolean): Promise<InstanceWrapper>\nresolveProperties<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject?: InjectionToken[], contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<PropertyDependency[]>\nreflectProperties<T>(type: Type<T>): PropertyDependency[]\napplyProperties<T = any>(instance: T, properties: PropertyDependency[]): void\ninstantiateClass<T = any>(instances: any[], wrapper: InstanceWrapper, targetMetatype: InstanceWrapper, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<T>\nloadPerContext<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, collection: Map<InjectionToken, InstanceWrapper>, ctx: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper<T>>\nloadEnhancersPerContext(wrapper: InstanceWrapper, ctx: ContextId, collection: Map<string, InstanceWrapper>): Promise<void>\nloadCtorMetadata(metadata: InstanceWrapper[], contextId: ContextId, inquirer: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<any[]>\nloadPropertiesMetadata(metadata: PropertyMetadata[], contextId: ContextId, inquirer: InstanceWrapper): Promise<Array<PropertyDependency>>",
+                    "tokenUsage": {
+                        "total": 2197,
+                        "prompt": 1097,
+                        "completion": 1100
+                    }
+                },
+                "score": 1,
+                "success": true,
+                "testCase": {
+                    "description": "Run 1: Extract public method signatures",
+                    "vars": {},
+                    "assert": [
+                        {
+                            "type": "contains",
+                            "value": "loadPrototype"
+                        },
+                        {
+                            "type": "contains",
+                            "value": "loadInstance"
+                        },
+                        {
+                            "type": "contains",
+                            "value": "resolveConstructorParams"
+                        },
+                        {
+                            "type": "javascript",
+                            "value": "const lines = output.split('\\n').filter(l => l.trim().length > 0);\nconst sigLines = lines.filter(l => l.includes('('));\nreturn sigLines.length >= 10;\n"
+                        }
+                    ],
+                    "options": {},
+                    "metadata": {}
+                },
+                "testIdx": 0,
+                "vars": {},
+                "metadata": {
+                    "_promptfooFileMetadata": {}
+                },
+                "failureReason": 0
+            },
+            {
+                "cost": 0,
+                "gradingResult": {
+                    "pass": true,
+                    "score": 1,
+                    "reason": "All assertions passed",
+                    "namedScores": {},
+                    "tokensUsed": {
+                        "total": 0,
+                        "prompt": 0,
+                        "completion": 0,
+                        "cached": 0,
+                        "numRequests": 0
+                    },
+                    "componentResults": [
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "loadPrototype"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "loadInstance"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "resolveConstructorParams"
+                            }
+                        }
+                    ]
+                },
+                "id": "cdf1bff7-bcfb-4574-aac3-46de054f07ef",
+                "latencyMs": 4,
+                "namedScores": {},
+                "prompt": {
+                    "raw": "What are the public method signatures of the Injector class? List each on its own line.",
+                    "label": "What are the public method signatures of the Injector class? List each on its own line.",
+                    "config": {}
+                },
+                "promptId": "4dada792ea81d9dcda2affdc97abb3de15202bbee34cd55483112adffc218834",
+                "promptIdx": 0,
+                "provider": {
+                    "id": "mock-native-file-read",
+                    "label": "native-read"
+                },
+                "response": {
+                    "output": "loadPrototype<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>): void\nloadInstance<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadMiddleware(wrapper: InstanceWrapper, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadController(wrapper: InstanceWrapper<Controller>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadInjectable<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>\nloadProvider(wrapper: InstanceWrapper, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\napplySettlementSignal<T>(settlementSignal: SettlementSignal, wrapper: InstanceWrapper<T>): InstanceWrapper<T>\nresolveConstructorParams<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject: InjectorDependency[], callback: (args: unknown[]) => void | Promise<void>, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>\ngetClassDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]\ngetFactoryProviderDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]\nreflectConstructorParams<T>(type: Type<T>): any[]\nreflectOptionalParams<T>(type: Type<T>): any[]\nreflectSelfParams<T>(type: Type<T>): any[]\nresolveSingleParam<T>(wrapper: InstanceWrapper<T>, param: unknown, dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nresolveParamToken<T>(wrapper: InstanceWrapper<T>, param: Type<any> | string | symbol | any): Type<any> | string | symbol | any\nresolveComponentWrapper<T>(dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId: ContextId, inquirer: InstanceWrapper): Promise<InstanceWrapper>\nresolveComponentHost<T>(moduleRef: Module, instanceWrapper: InstanceWrapper<T | Promise<T>>, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper>\nlookupComponent<T = any>(instances: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, dependencyContext: InjectorDependencyContext, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nlookupComponentInParentModules<T = any>(dependencyContext: InjectorDependencyContext, moduleRef: Module, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nlookupComponentInImports(moduleRef: Module, name: InjectionToken, wrapper: InstanceWrapper, moduleRegistry?: any[], contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number, isTraversed?: boolean): Promise<InstanceWrapper>\nresolveProperties<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject?: InjectionToken[], contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<PropertyDependency[]>\nreflectProperties<T>(type: Type<T>): PropertyDependency[]\napplyProperties<T = any>(instance: T, properties: PropertyDependency[]): void\ninstantiateClass<T = any>(instances: any[], wrapper: InstanceWrapper, targetMetatype: InstanceWrapper, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<T>\nloadPerContext<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, collection: Map<InjectionToken, InstanceWrapper>, ctx: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper<T>>\nloadEnhancersPerContext(wrapper: InstanceWrapper, ctx: ContextId, collection: Map<string, InstanceWrapper>): Promise<void>\nloadCtorMetadata(metadata: InstanceWrapper[], contextId: ContextId, inquirer: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<any[]>\nloadPropertiesMetadata(metadata: PropertyMetadata[], contextId: ContextId, inquirer: InstanceWrapper): Promise<Array<PropertyDependency>>",
+                    "tokenUsage": {
+                        "total": 9387,
+                        "prompt": 8287,
+                        "completion": 1100
+                    }
+                },
+                "score": 1,
+                "success": true,
+                "testCase": {
+                    "description": "Run 2: Extract public method signatures",
+                    "vars": {},
+                    "assert": [
+                        {
+                            "type": "contains",
+                            "value": "loadPrototype"
+                        },
+                        {
+                            "type": "contains",
+                            "value": "loadInstance"
+                        },
+                        {
+                            "type": "contains",
+                            "value": "resolveConstructorParams"
+                        }
+                    ],
+                    "options": {},
+                    "metadata": {}
+                },
+                "testIdx": 1,
+                "vars": {},
+                "metadata": {
+                    "_promptfooFileMetadata": {}
+                },
+                "failureReason": 0
+            },
+            {
+                "cost": 0,
+                "gradingResult": {
+                    "pass": true,
+                    "score": 1,
+                    "reason": "All assertions passed",
+                    "namedScores": {},
+                    "tokensUsed": {
+                        "total": 0,
+                        "prompt": 0,
+                        "completion": 0,
+                        "cached": 0,
+                        "numRequests": 0
+                    },
+                    "componentResults": [
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "loadPrototype"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "loadInstance"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "resolveConstructorParams"
+                            }
+                        }
+                    ]
+                },
+                "id": "5b5262e8-a441-4510-af39-1b78ef3f272f",
+                "latencyMs": 4,
+                "namedScores": {},
+                "prompt": {
+                    "raw": "What are the public method signatures of the Injector class? List each on its own line.",
+                    "label": "What are the public method signatures of the Injector class? List each on its own line.",
+                    "config": {}
+                },
+                "promptId": "4dada792ea81d9dcda2affdc97abb3de15202bbee34cd55483112adffc218834",
+                "promptIdx": 1,
+                "provider": {
+                    "id": "mock-brick-sr-signatures",
+                    "label": "brick-sr-signatures"
+                },
+                "response": {
+                    "output": "loadPrototype<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>): void\nloadInstance<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadMiddleware(wrapper: InstanceWrapper, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadController(wrapper: InstanceWrapper<Controller>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadInjectable<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>\nloadProvider(wrapper: InstanceWrapper, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\napplySettlementSignal<T>(settlementSignal: SettlementSignal, wrapper: InstanceWrapper<T>): InstanceWrapper<T>\nresolveConstructorParams<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject: InjectorDependency[], callback: (args: unknown[]) => void | Promise<void>, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>\ngetClassDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]\ngetFactoryProviderDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]\nreflectConstructorParams<T>(type: Type<T>): any[]\nreflectOptionalParams<T>(type: Type<T>): any[]\nreflectSelfParams<T>(type: Type<T>): any[]\nresolveSingleParam<T>(wrapper: InstanceWrapper<T>, param: unknown, dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nresolveParamToken<T>(wrapper: InstanceWrapper<T>, param: Type<any> | string | symbol | any): Type<any> | string | symbol | any\nresolveComponentWrapper<T>(dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId: ContextId, inquirer: InstanceWrapper): Promise<InstanceWrapper>\nresolveComponentHost<T>(moduleRef: Module, instanceWrapper: InstanceWrapper<T | Promise<T>>, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper>\nlookupComponent<T = any>(instances: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, dependencyContext: InjectorDependencyContext, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nlookupComponentInParentModules<T = any>(dependencyContext: InjectorDependencyContext, moduleRef: Module, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nlookupComponentInImports(moduleRef: Module, name: InjectionToken, wrapper: InstanceWrapper, moduleRegistry?: any[], contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number, isTraversed?: boolean): Promise<InstanceWrapper>\nresolveProperties<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject?: InjectionToken[], contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<PropertyDependency[]>\nreflectProperties<T>(type: Type<T>): PropertyDependency[]\napplyProperties<T = any>(instance: T, properties: PropertyDependency[]): void\ninstantiateClass<T = any>(instances: any[], wrapper: InstanceWrapper, targetMetatype: InstanceWrapper, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<T>\nloadPerContext<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, collection: Map<InjectionToken, InstanceWrapper>, ctx: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper<T>>\nloadEnhancersPerContext(wrapper: InstanceWrapper, ctx: ContextId, collection: Map<string, InstanceWrapper>): Promise<void>\nloadCtorMetadata(metadata: InstanceWrapper[], contextId: ContextId, inquirer: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<any[]>\nloadPropertiesMetadata(metadata: PropertyMetadata[], contextId: ContextId, inquirer: InstanceWrapper): Promise<Array<PropertyDependency>>",
+                    "tokenUsage": {
+                        "total": 2197,
+                        "prompt": 1097,
+                        "completion": 1100
+                    }
+                },
+                "score": 1,
+                "success": true,
+                "testCase": {
+                    "description": "Run 2: Extract public method signatures",
+                    "vars": {},
+                    "assert": [
+                        {
+                            "type": "contains",
+                            "value": "loadPrototype"
+                        },
+                        {
+                            "type": "contains",
+                            "value": "loadInstance"
+                        },
+                        {
+                            "type": "contains",
+                            "value": "resolveConstructorParams"
+                        }
+                    ],
+                    "options": {},
+                    "metadata": {}
+                },
+                "testIdx": 1,
+                "vars": {},
+                "metadata": {
+                    "_promptfooFileMetadata": {}
+                },
+                "failureReason": 0
+            },
+            {
+                "cost": 0,
+                "gradingResult": {
+                    "pass": true,
+                    "score": 1,
+                    "reason": "All assertions passed",
+                    "namedScores": {},
+                    "tokensUsed": {
+                        "total": 0,
+                        "prompt": 0,
+                        "completion": 0,
+                        "cached": 0,
+                        "numRequests": 0
+                    },
+                    "componentResults": [
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "loadPrototype"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "loadInstance"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "resolveConstructorParams"
+                            }
+                        }
+                    ]
+                },
+                "id": "2e1ed709-1eba-404c-baac-8386e6503867",
+                "latencyMs": 2,
+                "namedScores": {},
+                "prompt": {
+                    "raw": "What are the public method signatures of the Injector class? List each on its own line.",
+                    "label": "What are the public method signatures of the Injector class? List each on its own line.",
+                    "config": {}
+                },
+                "promptId": "4dada792ea81d9dcda2affdc97abb3de15202bbee34cd55483112adffc218834",
+                "promptIdx": 0,
+                "provider": {
+                    "id": "mock-native-file-read",
+                    "label": "native-read"
+                },
+                "response": {
+                    "output": "loadPrototype<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>): void\nloadInstance<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadMiddleware(wrapper: InstanceWrapper, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadController(wrapper: InstanceWrapper<Controller>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadInjectable<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>\nloadProvider(wrapper: InstanceWrapper, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\napplySettlementSignal<T>(settlementSignal: SettlementSignal, wrapper: InstanceWrapper<T>): InstanceWrapper<T>\nresolveConstructorParams<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject: InjectorDependency[], callback: (args: unknown[]) => void | Promise<void>, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>\ngetClassDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]\ngetFactoryProviderDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]\nreflectConstructorParams<T>(type: Type<T>): any[]\nreflectOptionalParams<T>(type: Type<T>): any[]\nreflectSelfParams<T>(type: Type<T>): any[]\nresolveSingleParam<T>(wrapper: InstanceWrapper<T>, param: unknown, dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nresolveParamToken<T>(wrapper: InstanceWrapper<T>, param: Type<any> | string | symbol | any): Type<any> | string | symbol | any\nresolveComponentWrapper<T>(dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId: ContextId, inquirer: InstanceWrapper): Promise<InstanceWrapper>\nresolveComponentHost<T>(moduleRef: Module, instanceWrapper: InstanceWrapper<T | Promise<T>>, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper>\nlookupComponent<T = any>(instances: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, dependencyContext: InjectorDependencyContext, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nlookupComponentInParentModules<T = any>(dependencyContext: InjectorDependencyContext, moduleRef: Module, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nlookupComponentInImports(moduleRef: Module, name: InjectionToken, wrapper: InstanceWrapper, moduleRegistry?: any[], contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number, isTraversed?: boolean): Promise<InstanceWrapper>\nresolveProperties<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject?: InjectionToken[], contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<PropertyDependency[]>\nreflectProperties<T>(type: Type<T>): PropertyDependency[]\napplyProperties<T = any>(instance: T, properties: PropertyDependency[]): void\ninstantiateClass<T = any>(instances: any[], wrapper: InstanceWrapper, targetMetatype: InstanceWrapper, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<T>\nloadPerContext<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, collection: Map<InjectionToken, InstanceWrapper>, ctx: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper<T>>\nloadEnhancersPerContext(wrapper: InstanceWrapper, ctx: ContextId, collection: Map<string, InstanceWrapper>): Promise<void>\nloadCtorMetadata(metadata: InstanceWrapper[], contextId: ContextId, inquirer: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<any[]>\nloadPropertiesMetadata(metadata: PropertyMetadata[], contextId: ContextId, inquirer: InstanceWrapper): Promise<Array<PropertyDependency>>",
+                    "tokenUsage": {
+                        "total": 9387,
+                        "prompt": 8287,
+                        "completion": 1100
+                    }
+                },
+                "score": 1,
+                "success": true,
+                "testCase": {
+                    "description": "Run 3: Extract public method signatures",
+                    "vars": {},
+                    "assert": [
+                        {
+                            "type": "contains",
+                            "value": "loadPrototype"
+                        },
+                        {
+                            "type": "contains",
+                            "value": "loadInstance"
+                        },
+                        {
+                            "type": "contains",
+                            "value": "resolveConstructorParams"
+                        }
+                    ],
+                    "options": {},
+                    "metadata": {}
+                },
+                "testIdx": 2,
+                "vars": {},
+                "metadata": {
+                    "_promptfooFileMetadata": {}
+                },
+                "failureReason": 0
+            },
+            {
+                "cost": 0,
+                "gradingResult": {
+                    "pass": true,
+                    "score": 1,
+                    "reason": "All assertions passed",
+                    "namedScores": {},
+                    "tokensUsed": {
+                        "total": 0,
+                        "prompt": 0,
+                        "completion": 0,
+                        "cached": 0,
+                        "numRequests": 0
+                    },
+                    "componentResults": [
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "loadPrototype"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "loadInstance"
+                            }
+                        },
+                        {
+                            "pass": true,
+                            "score": 1,
+                            "reason": "Assertion passed",
+                            "assertion": {
+                                "type": "contains",
+                                "value": "resolveConstructorParams"
+                            }
+                        }
+                    ]
+                },
+                "id": "b2bb91ba-1dfb-4eec-bb81-9382675a99b0",
+                "latencyMs": 2,
+                "namedScores": {},
+                "prompt": {
+                    "raw": "What are the public method signatures of the Injector class? List each on its own line.",
+                    "label": "What are the public method signatures of the Injector class? List each on its own line.",
+                    "config": {}
+                },
+                "promptId": "4dada792ea81d9dcda2affdc97abb3de15202bbee34cd55483112adffc218834",
+                "promptIdx": 1,
+                "provider": {
+                    "id": "mock-brick-sr-signatures",
+                    "label": "brick-sr-signatures"
+                },
+                "response": {
+                    "output": "loadPrototype<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>): void\nloadInstance<T>(wrapper: InstanceWrapper<T>, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadMiddleware(wrapper: InstanceWrapper, collection: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadController(wrapper: InstanceWrapper<Controller>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\nloadInjectable<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>\nloadProvider(wrapper: InstanceWrapper, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<void>\napplySettlementSignal<T>(settlementSignal: SettlementSignal, wrapper: InstanceWrapper<T>): InstanceWrapper<T>\nresolveConstructorParams<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject: InjectorDependency[], callback: (args: unknown[]) => void | Promise<void>, contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<void>\ngetClassDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]\ngetFactoryProviderDependencies<T>(wrapper: InstanceWrapper<T>): [InjectorDependency[], number[]]\nreflectConstructorParams<T>(type: Type<T>): any[]\nreflectOptionalParams<T>(type: Type<T>): any[]\nreflectSelfParams<T>(type: Type<T>): any[]\nresolveSingleParam<T>(wrapper: InstanceWrapper<T>, param: unknown, dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nresolveParamToken<T>(wrapper: InstanceWrapper<T>, param: Type<any> | string | symbol | any): Type<any> | string | symbol | any\nresolveComponentWrapper<T>(dependencyContext: InjectorDependencyContext, moduleRef: Module, contextId: ContextId, inquirer: InstanceWrapper): Promise<InstanceWrapper>\nresolveComponentHost<T>(moduleRef: Module, instanceWrapper: InstanceWrapper<T | Promise<T>>, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper>\nlookupComponent<T = any>(instances: Map<InjectionToken, InstanceWrapper>, moduleRef: Module, dependencyContext: InjectorDependencyContext, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nlookupComponentInParentModules<T = any>(dependencyContext: InjectorDependencyContext, moduleRef: Module, wrapper: InstanceWrapper<T>, contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number): Promise<InstanceWrapper>\nlookupComponentInImports(moduleRef: Module, name: InjectionToken, wrapper: InstanceWrapper, moduleRegistry?: any[], contextId?: ContextId, inquirer?: InstanceWrapper, keyOrIndex?: symbol | string | number, isTraversed?: boolean): Promise<InstanceWrapper>\nresolveProperties<T>(wrapper: InstanceWrapper<T>, moduleRef: Module, inject?: InjectionToken[], contextId?: ContextId, inquirer?: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<PropertyDependency[]>\nreflectProperties<T>(type: Type<T>): PropertyDependency[]\napplyProperties<T = any>(instance: T, properties: PropertyDependency[]): void\ninstantiateClass<T = any>(instances: any[], wrapper: InstanceWrapper, targetMetatype: InstanceWrapper, contextId?: ContextId, inquirer?: InstanceWrapper): Promise<T>\nloadPerContext<T = any>(wrapper: InstanceWrapper<T>, moduleRef: Module, collection: Map<InjectionToken, InstanceWrapper>, ctx: ContextId, inquirer?: InstanceWrapper): Promise<InstanceWrapper<T>>\nloadEnhancersPerContext(wrapper: InstanceWrapper, ctx: ContextId, collection: Map<string, InstanceWrapper>): Promise<void>\nloadCtorMetadata(metadata: InstanceWrapper[], contextId: ContextId, inquirer: InstanceWrapper, parentInquirer?: InstanceWrapper): Promise<any[]>\nloadPropertiesMetadata(metadata: PropertyMetadata[], contextId: ContextId, inquirer: InstanceWrapper): Promise<Array<PropertyDependency>>",
+                    "tokenUsage": {
+                        "total": 2197,
+                        "prompt": 1097,
+                        "completion": 1100
+                    }
+                },
+                "score": 1,
+                "success": true,
+                "testCase": {
+                    "description": "Run 3: Extract public method signatures",
+                    "vars": {},
+                    "assert": [
+                        {
+                            "type": "contains",
+                            "value": "loadPrototype"
+                        },
+                        {
+                            "type": "contains",
+                            "value": "loadInstance"
+                        },
+                        {
+                            "type": "contains",
+                            "value": "resolveConstructorParams"
+                        }
+                    ],
+                    "options": {},
+                    "metadata": {}
+                },
+                "testIdx": 2,
+                "vars": {},
+                "metadata": {
+                    "_promptfooFileMetadata": {}
+                },
+                "failureReason": 0
+            }
+        ],
+        "stats": {
+            "successes": 6,
+            "failures": 0,
+            "errors": 0,
+            "tokenUsage": {
+                "prompt": 28152,
+                "completion": 6600,
+                "cached": 0,
+                "total": 34752,
+                "numRequests": 6,
+                "completionDetails": {
+                    "reasoning": 0,
+                    "acceptedPrediction": 0,
+                    "rejectedPrediction": 0,
+                    "cacheReadInputTokens": 0,
+                    "cacheCreationInputTokens": 0
+                },
+                "assertions": {
+                    "total": 0,
+                    "prompt": 0,
+                    "completion": 0,
+                    "cached": 0,
+                    "numRequests": 0,
+                    "completionDetails": {
+                        "reasoning": 0,
+                        "acceptedPrediction": 0,
+                        "rejectedPrediction": 0,
+                        "cacheReadInputTokens": 0,
+                        "cacheCreationInputTokens": 0
+                    }
+                }
+            },
+            "durationMs": 44,
+            "evaluationDurationMs": 44
+        }
+    },
+    "config": {
+        "tags": {},
+        "description": "FocusMCP: token comparison — full file read vs sr_signatures brick (mock)",
+        "prompts": [
+            "What are the public method signatures of the Injector class? List each on its own line."
+        ],
+        "providers": [
+            {
+                "id": "file://mock-provider.js",
+                "label": "native-read",
+                "config": {
+                    "mode": "native"
+                }
+            },
+            {
+                "id": "file://mock-provider.js",
+                "label": "brick-sr-signatures",
+                "config": {
+                    "mode": "brick"
+                }
+            }
+        ],
+        "tests": [
+            {
+                "description": "Run 1: Extract public method signatures",
+                "vars": {},
+                "assert": [
+                    {
+                        "type": "contains",
+                        "value": "loadPrototype"
+                    },
+                    {
+                        "type": "contains",
+                        "value": "loadInstance"
+                    },
+                    {
+                        "type": "contains",
+                        "value": "resolveConstructorParams"
+                    },
+                    {
+                        "type": "javascript",
+                        "value": "const lines = output.split('\\n').filter(l => l.trim().length > 0);\nconst sigLines = lines.filter(l => l.includes('('));\nreturn sigLines.length >= 10;\n"
+                    }
+                ]
+            },
+            {
+                "description": "Run 2: Extract public method signatures",
+                "vars": {},
+                "assert": [
+                    {
+                        "type": "contains",
+                        "value": "loadPrototype"
+                    },
+                    {
+                        "type": "contains",
+                        "value": "loadInstance"
+                    },
+                    {
+                        "type": "contains",
+                        "value": "resolveConstructorParams"
+                    }
+                ]
+            },
+            {
+                "description": "Run 3: Extract public method signatures",
+                "vars": {},
+                "assert": [
+                    {
+                        "type": "contains",
+                        "value": "loadPrototype"
+                    },
+                    {
+                        "type": "contains",
+                        "value": "loadInstance"
+                    },
+                    {
+                        "type": "contains",
+                        "value": "resolveConstructorParams"
+                    }
+                ]
+            }
+        ],
+        "scenarios": [],
+        "env": {},
+        "outputPath": ["results.json"],
+        "extensions": [],
+        "metadata": {},
+        "evaluateOptions": {}
+    },
+    "shareableUrl": null,
+    "metadata": {
+        "promptfooVersion": "0.121.8",
+        "nodeVersion": "v24.13.1",
+        "platform": "linux",
+        "arch": "x64",
+        "exportedAt": "2026-04-27T08:22:59.354Z",
+        "evaluationCreatedAt": "2026-04-27T08:22:59.179Z"
+    }
+}

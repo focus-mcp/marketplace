@@ -97,5 +97,12 @@
         }
     ],
     "tags": ["search", "text", "regex", "replace", "refactoring"],
-    "license": "MIT"
+    "license": "MIT",
+    "bench": {
+        "tools": {
+            "grouped": { "delta": -0.824 },
+            "search": { "delta": -0.526 }
+        },
+        "source": "static-equivalence-2026-04-27"
+    }
 }

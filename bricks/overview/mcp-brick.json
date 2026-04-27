@@ -62,5 +62,12 @@
         }
     ],
     "tags": ["overview", "project", "architecture", "conventions"],
-    "license": "MIT"
+    "license": "MIT",
+    "bench": {
+        "tools": {
+            "project": { "delta": -0.667 },
+            "dependencies": { "delta": -0.451 }
+        },
+        "source": "static-equivalence-2026-04-27"
+    }
 }

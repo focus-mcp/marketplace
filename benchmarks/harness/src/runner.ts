@@ -20,6 +20,7 @@ export interface BrickManifest {
     prefix: string;
     description: string;
     tools: Array<{ name: string; description: string }>;
+    bench?: { maxTurns?: number };
     [key: string]: unknown;
 }
 
@@ -158,6 +159,58 @@ export function extractMiniTaskSpec(text: string): string | null {
 }
 
 // ---------------------------------------------------------------------------
+// Brick mode tool isolation
+// ---------------------------------------------------------------------------
+
+/**
+ * SDK `tools: []` (empty array) is the canonical way to disable ALL built-in
+ * tools in the Claude Agent SDK (v0.2.118+). It maps to `--tools ""` in the
+ * Claude CLI subprocess, which strips every builtin before MCP tools are added.
+ *
+ * `BRICK_BUILTIN_TOOLS` is kept for reference / documentation only — it is the
+ * exhaustive list of SDK builtins that `tools: []` displaces. It is NOT passed
+ * to `disallowedTools` anymore; using it as a blacklist was inherently fragile
+ * (whack-a-mole: NotebookEdit, RemoteTrigger, TodoWrite, mcp__claude_ai_Context7__*
+ * kept slipping through even after repeated additions).
+ *
+ * @see sdk.mjs — if(V6.length===0) l.push("--tools","")
+ */
+export const BRICK_BUILTIN_TOOLS = [
+    // Native filesystem/shell (Claude Code defaults)
+    'Read',
+    'Bash',
+    'Grep',
+    'Glob',
+    'Edit',
+    'Write',
+    'ToolSearch',
+    'NotebookEdit',
+    // Claude Agent SDK lifecycle tools (bypass allowedTools whitelist)
+    'Agent',
+    'Monitor',
+    'PushNotification',
+    'Skill',
+    'WebFetch',
+    'WebSearch',
+    'ScheduleWakeup',
+    'TaskCreate',
+    'TaskList',
+    'TaskGet',
+    'TaskUpdate',
+    'TaskStop',
+    'TaskOutput',
+    'RemoteTrigger',
+    'TodoWrite',
+    'TodoRead',
+] as const;
+
+/**
+ * @deprecated Use `tools: []` in SDK options instead (true isolation).
+ * Kept as a type alias for backward-compat with any external consumers.
+ */
+export const BRICK_DISALLOWED_TOOLS = BRICK_BUILTIN_TOOLS;
+
+// ---------------------------------------------------------------------------
 // Core run function
 // ---------------------------------------------------------------------------
 
@@ -206,10 +259,18 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
     let exitReason: ExitReason = 'ok';
     let numTurns = 0;
 
+    // Native mode uses the claude_code preset (controlled by `framing`) to
+    // replicate what a Claude Code agent would do natively.
+    // Brick mode uses a minimal string prompt — no claude_code preset — to
+    // avoid loading global MCP servers (Agent, Monitor, Skill, WebFetch,
+    // mcp__fileread__*, mcp__shell__*) that bypass allowedTools and pollute
+    // the token count.
     const systemPromptOption: string | { type: 'preset'; preset: 'claude_code'; excludeDynamicSections?: boolean } =
-        framing === 'minimal'
-            ? 'You are a benchmark runner. Follow the user instructions exactly.'
-            : { type: 'preset', preset: 'claude_code', excludeDynamicSections: true };
+        mode === 'brick'
+            ? 'You are an expert benchmark agent. Use the tools provided to solve the task. Reply with the final result block as instructed.'
+            : framing === 'minimal'
+              ? 'You are a benchmark runner. Follow the user instructions exactly.'
+              : { type: 'preset', preset: 'claude_code', excludeDynamicSections: true };
 
     const commonOptions = {
         model: 'claude-sonnet-4-6',
@@ -235,16 +296,30 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
                   disallowedTools: [] as string[],
               }
             : {
-                  allowedTools: [
-                      'Read',
-                      ...manifest.tools.map((t) => `mcp__focus__${manifest.prefix}_${t.name}`),
-                  ] as string[],
-                  disallowedTools: ['Bash', 'Grep', 'Glob', 'Edit', 'Write'] as string[],
+                  // `tools: []` passes `--tools ""` to the Claude CLI subprocess,
+                  // which disables ALL SDK built-in tools before MCP tools are loaded.
+                  // This is the only reliable way to achieve strict isolation —
+                  // a disallowedTools blacklist is inherently fragile (new builtins
+                  // like NotebookEdit, RemoteTrigger, TodoWrite, mcp__*__Context7__*
+                  // slip through each SDK update).
+                  tools: [] as string[],
+                  // allowedTools is still set so the SDK grants auto-permission to
+                  // the brick's MCP tools (no permission prompt during bench runs).
+                  allowedTools: manifest.tools.map(
+                      (t) => `mcp__focus__${manifest.prefix}_${t.name}`,
+                  ) as string[],
+                  disallowedTools: [] as string[],
                   mcpServers: {
                       focus: {
                           command: 'focus',
                           args: ['start'],
-                          env: { HOME: workdir, PATH: process.env.PATH ?? '' },
+                          env: {
+                              HOME: workdir,
+                              PATH: process.env.PATH ?? '',
+                              // Tell the CLI to skip meta tools (focus_list, focus_install,
+                              // etc.) so bench agents see only the brick's own tools.
+                              FOCUS_BENCH_MODE: 'true',
+                          },
                       },
                   },
               };
@@ -252,54 +327,62 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
     const startedAt = new Date().toISOString();
     const startMs = Date.now();
 
-    const q = query({ prompt, options: { ...commonOptions, ...modeOptions } });
+    let lastError: Error | null = null;
 
-    for await (const message of q) {
-        switch (message.type) {
-            case 'assistant': {
-                const msg = message.message;
-                if (msg?.usage) accumulateUsage(usage, msg.usage as BetaUsageLike);
-                let text = '';
-                if (Array.isArray(msg?.content)) {
-                    for (const block of msg.content) {
-                        if (block.type === 'text') text += block.text;
-                        else if (block.type === 'tool_use') toolsUsed.add(block.name as string);
+    try {
+        const q = query({ prompt, options: { ...commonOptions, ...modeOptions } });
+
+        for await (const message of q) {
+            switch (message.type) {
+                case 'assistant': {
+                    const msg = message.message;
+                    if (msg?.usage) accumulateUsage(usage, msg.usage as BetaUsageLike);
+                    let text = '';
+                    if (Array.isArray(msg?.content)) {
+                        for (const block of msg.content) {
+                            if (block.type === 'text') text += block.text;
+                            else if (block.type === 'tool_use') toolsUsed.add(block.name as string);
+                        }
                     }
-                }
-                if (text) {
-                    lastAssistantText = text;
-                    process.stdout.write('.');
-                }
-                if (!sessionId && message.session_id) sessionId = message.session_id;
-                break;
-            }
-            case 'result': {
-                if (message.usage) accumulateUsage(usage, message.usage as BetaUsageLike);
-                if (!sessionId && message.session_id) sessionId = message.session_id;
-                numTurns = message.num_turns;
-                if (message.subtype === 'success') {
-                    if ('result' in message && typeof message.result === 'string') {
-                        lastAssistantText = message.result;
+                    if (text) {
+                        lastAssistantText = text;
+                        process.stdout.write('.');
                     }
-                } else if (message.subtype === 'error_max_turns') {
-                    exitReason = 'max_turns';
-                    console.warn('\n  WARNING: max turns reached');
-                } else {
-                    exitReason = 'error';
-                    console.error(`\n  ERROR: result subtype=${message.subtype}`);
-                    if ('errors' in message && Array.isArray(message.errors)) {
-                        console.error('  Details:', message.errors);
-                    }
+                    if (!sessionId && message.session_id) sessionId = message.session_id;
+                    break;
                 }
-                break;
+                case 'result': {
+                    if (message.usage) accumulateUsage(usage, message.usage as BetaUsageLike);
+                    if (!sessionId && message.session_id) sessionId = message.session_id;
+                    numTurns = message.num_turns;
+                    if (message.subtype === 'success') {
+                        if ('result' in message && typeof message.result === 'string') {
+                            lastAssistantText = message.result;
+                        }
+                    } else if (message.subtype === 'error_max_turns') {
+                        exitReason = 'max_turns';
+                        console.warn('\n  WARNING: max turns reached');
+                    } else {
+                        exitReason = 'error';
+                        console.error(`\n  ERROR: result subtype=${message.subtype}`);
+                        if ('errors' in message && Array.isArray(message.errors)) {
+                            console.error('  Details:', message.errors);
+                        }
+                    }
+                    break;
+                }
             }
         }
+    } catch (err) {
+        lastError = err instanceof Error ? err : new Error(String(err));
+        exitReason = 'error';
+        console.error(`\n  ERROR: SDK threw: ${lastError.message}`);
+    } finally {
+        process.stdout.write('\n');
     }
 
-    process.stdout.write('\n');
-
     const resultBlock = extractResultBlock(lastAssistantText);
-    if (!resultBlock) {
+    if (!resultBlock && !lastError) {
         console.warn('  WARNING: No ## Result block found');
     }
 
@@ -322,7 +405,11 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
         usage.cache_read_input_tokens +
         usage.output_tokens;
 
-    const focusStderr = focusStderrLines.join('').trim();
+    const focusStderrBase = focusStderrLines.join('').trim();
+    const sdkExceptionLine = lastError
+        ? `[runner] SDK exception: ${lastError.message}\n${lastError.stack ?? ''}`
+        : '';
+    const focusStderr = [focusStderrBase, sdkExceptionLine].filter(Boolean).join('\n');
 
     const result: RunResult = {
         brick,
@@ -342,12 +429,19 @@ export async function runOneMode(opts: RunOneModeOptions): Promise<RunResult> {
         ...(focusStderr ? { focus_stderr: focusStderr } : {}),
     };
 
-    // Write JSON
-    fs.mkdirSync(path.resolve(outDir), { recursive: true });
-    const stamp = isoStamp();
-    const outFile = path.join(path.resolve(outDir), `${brick}-${mode}-${stamp}.json`);
-    fs.writeFileSync(outFile, JSON.stringify(result, null, 2));
-    console.log(`  → ${outFile}`);
+    // Write JSON — always, even on SDK exception (partial result).
+    // Wrapped in try/catch so a write failure does not swallow the original SDK error.
+    try {
+        fs.mkdirSync(path.resolve(outDir), { recursive: true });
+        const stamp = isoStamp();
+        const outFile = path.join(path.resolve(outDir), `${brick}-${mode}-${stamp}.json`);
+        fs.writeFileSync(outFile, JSON.stringify(result, null, 2));
+        console.log(`  → ${outFile}`);
+    } catch (writeErr) {
+        console.error(`  WARNING: could not write result file: ${String(writeErr)}`);
+    }
+
+    if (lastError) throw lastError;
 
     return result;
 }

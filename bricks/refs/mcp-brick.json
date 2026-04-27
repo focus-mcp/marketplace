@@ -59,5 +59,13 @@
         }
     ],
     "tags": ["references", "cross-references", "symbols", "navigation"],
-    "license": "MIT"
+    "license": "MIT",
+    "bench": {
+        "tools": {
+            "hierarchy": { "delta": -0.997 },
+            "references": { "delta": -0.82 },
+            "declaration": { "delta": -0.355 }
+        },
+        "source": "static-equivalence-2026-04-27"
+    }
 }
