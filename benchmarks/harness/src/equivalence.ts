@@ -11,8 +11,8 @@
  */
 
 import { spawnSync } from 'node:child_process';
-import { readFile, writeFile, copyFile, rename as fsRename, rm, mkdir } from 'node:fs/promises';
-import { join, resolve, dirname } from 'node:path';
+import { readFile, writeFile, appendFile, copyFile, rename as fsRename, rm, mkdir } from 'node:fs/promises';
+import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { randomUUID } from 'node:crypto';
 
@@ -376,8 +376,6 @@ const SKIPPED: SkippedEntry[] = [
     { brick: 'review', tool: 'rev_security', reason: 'AI-assisted review' },
     { brick: 'review', tool: 'rev_architecture', reason: 'AI-assisted review' },
     { brick: 'review', tool: 'rev_compare', reason: 'AI-assisted review' },
-    // compress cmp_response
-    { brick: 'compress', tool: 'cmp_response', reason: 'compute pure transform' },
 ];
 
 // ─── Build pairs ──────────────────────────────────────────────────────────────
@@ -594,7 +592,7 @@ async function buildPairs(): Promise<EquivalencePair[]> {
                 const dir = await makeTmpDir();
                 const p = join(dir, 'native.ts');
                 await writeFile(p, '// line1\n', 'utf-8');
-                await writeFile(p, '// line1\n// line2\n', 'utf-8');
+                await appendFile(p, '// line2\n', 'utf-8');
                 return `appended:${p}`;
             },
             brickOp: async () => {
@@ -1519,8 +1517,8 @@ ${tableRows}
 | Errors | ${errors.length} |
 | Skipped (no native equivalent) | ${skipped.length} |
 | Total tools in scope (ok + errors) | ${ok.length + errors.length} |
-| Total catalog tools (243) | 243 |
-| Coverage % | **${(((ok.length + errors.length) / 243) * 100).toFixed(1)}%** |
+| Total catalog tools | ${ok.length + errors.length + skipped.length} |
+| Coverage % | **${(((ok.length + errors.length) / (ok.length + errors.length + skipped.length)) * 100).toFixed(1)}%** |
 | Average Δ% (ok tools) | **${avgDelta.toFixed(1)}%** |
 | Total native tokens | ${totalNative.toLocaleString()} |
 | Total brick tokens | ${totalBrick.toLocaleString()} |
