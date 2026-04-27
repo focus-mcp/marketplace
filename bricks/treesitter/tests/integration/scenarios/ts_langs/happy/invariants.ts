@@ -36,5 +36,14 @@ export function check(output: unknown): InvariantResult[] {
             }
             return { ok: true };
         })(),
+        (() => {
+            if (!Array.isArray(langs) || !langs.includes('yaml')) {
+                return {
+                    ok: false,
+                    reason: `expected 'yaml' in langs, got ${JSON.stringify(langs)}`,
+                };
+            }
+            return { ok: true };
+        })(),
     ];
 }

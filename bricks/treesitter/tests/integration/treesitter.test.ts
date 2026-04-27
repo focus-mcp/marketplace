@@ -87,10 +87,35 @@ describe('ts_cleanup integration', () => {
 // ─── ts_langs ─────────────────────────────────────────────────────────────────
 
 describe('ts_langs integration', () => {
-    it('happy: langs() → array with typescript+javascript, size<=1024B', async () => {
+    it('happy: langs() → array with typescript+javascript+yaml, size<=1024B', async () => {
         const output = await runTool(brick, 'langs', {});
         for (const inv of checkTsLangsHappy(output)) {
             if (!inv.ok) throw new Error(`Invariant violated: ${inv.reason}`);
         }
+    });
+});
+
+// ─── YAML indexing ────────────────────────────────────────────────────────────
+
+describe('ts_index YAML integration', () => {
+    it('happy: index a YAML k8s manifest → extracts top-level keys as symbols', async () => {
+        await writeFile(
+            join(testDir, 'deployment.yaml'),
+            [
+                'apiVersion: apps/v1',
+                'kind: Deployment',
+                'metadata:',
+                '  name: my-app',
+                'spec:',
+                '  replicas: 3',
+            ].join('\n'),
+        );
+        const output = await runTool(brick, 'index', { dir: testDir });
+        const o = output as { files?: number; symbols?: number };
+        if (o.files !== 1) throw new Error(`expected files=1, got ${String(o.files)}`);
+        if (typeof o.symbols !== 'number' || o.symbols < 4)
+            throw new Error(
+                `expected symbols>=4 (apiVersion, kind, metadata, spec), got ${String(o.symbols)}`,
+            );
     });
 });

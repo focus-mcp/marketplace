@@ -93,7 +93,9 @@ async function loadLanguage(wasmName: string): Promise<TsLanguage> {
     if (!p) {
         p = (async () => {
             const { Language } = await ensureInit();
-            return Language.load(join(WASM_DIR, wasmName));
+            // If wasmName is an absolute path, use it directly; otherwise resolve from WASM_DIR
+            const wasmPath = wasmName.startsWith('/') ? wasmName : join(WASM_DIR, wasmName);
+            return Language.load(wasmPath);
         })();
         _langPromiseCache.set(wasmName, p);
     }
@@ -139,7 +141,7 @@ export function supportedExtensions(): string[] {
     return [..._registry.keys()];
 }
 
-// Maps wasm grammar names to canonical language names
+// Maps wasm grammar names (basename) to canonical language names
 const WASM_TO_LANG: Record<string, string> = {
     'tree-sitter-typescript.wasm': 'typescript',
     'tree-sitter-tsx.wasm': 'typescript', // tsx uses the same typescript grammar variant
@@ -149,14 +151,18 @@ const WASM_TO_LANG: Record<string, string> = {
     'tree-sitter-go.wasm': 'go',
     'tree-sitter-rust.wasm': 'rust',
     'tree-sitter-java.wasm': 'java',
+    'tree-sitter-yaml.wasm': 'yaml',
 };
 
 export function supportedLanguageNames(): string[] {
     const seen = new Set<string>();
     for (const entry of _registry.values()) {
+        // wasmName may be an absolute path — extract just the basename for lookup
+        const basename = entry.wasmName.includes('/')
+            ? (entry.wasmName.split('/').at(-1) ?? entry.wasmName)
+            : entry.wasmName;
         const lang =
-            WASM_TO_LANG[entry.wasmName] ??
-            entry.wasmName.replace('tree-sitter-', '').replace('.wasm', '');
+            WASM_TO_LANG[basename] ?? basename.replace('tree-sitter-', '').replace('.wasm', '');
         seen.add(lang);
     }
     return [...seen].sort();

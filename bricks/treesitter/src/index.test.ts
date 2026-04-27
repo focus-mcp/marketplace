@@ -166,6 +166,10 @@ describe('tsLangs', () => {
         expect(langs).toContain('rust');
         expect(langs).toContain('java');
     });
+
+    it('includes yaml', () => {
+        expect(tsLangs()).toContain('yaml');
+    });
 });
 
 describe('parseFile — multi-language', () => {
@@ -294,6 +298,36 @@ describe('parseFile — multi-language', () => {
         expect(result.symbols).toHaveLength(0);
         expect(result.imports).toHaveLength(0);
         expect(result.exports).toHaveLength(0);
+    });
+
+    it('parses YAML top-level keys from a k8s-style manifest', async () => {
+        const content = [
+            'apiVersion: apps/v1',
+            'kind: Deployment',
+            'metadata:',
+            '  name: my-app',
+            '  namespace: production',
+            'spec:',
+            '  replicas: 3',
+        ].join('\n');
+        const result = await parseFile('/deployment.yaml', content, 0);
+        const names = result.symbols.map((s) => s.name);
+        expect(names).toContain('apiVersion');
+        expect(names).toContain('kind');
+        expect(names).toContain('metadata');
+        expect(names).toContain('spec');
+        // nested keys should NOT appear as top-level symbols
+        expect(names).not.toContain('name');
+        expect(names).not.toContain('replicas');
+    });
+
+    it('parses YAML top-level keys from .yml extension', async () => {
+        const content = ['name: my-workflow', 'on: [push]', 'jobs:'].join('\n');
+        const result = await parseFile('/workflow.yml', content, 0);
+        const names = result.symbols.map((s) => s.name);
+        expect(names).toContain('name');
+        expect(names).toContain('on');
+        expect(names).toContain('jobs');
     });
 });
 

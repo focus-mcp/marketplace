@@ -1,8 +1,8 @@
 {
     "name": "@focus-mcp/brick-treesitter",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "private": false,
-    "description": "Tree-sitter based multi-language code indexer — parses symbols, imports, exports for TS, JS, PHP, Python, Go, Rust, Java.",
+    "description": "Tree-sitter based multi-language code indexer — parses symbols, imports, exports for TS, JS, PHP, Python, Go, Rust, Java, YAML.",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",
@@ -42,6 +42,7 @@
         "go",
         "rust",
         "java",
+        "yaml",
         "multi-language",
         "tree-sitter"
     ],
@@ -68,6 +69,7 @@
     },
     "types": "./dist/index.d.ts",
     "dependencies": {
+        "@tree-sitter-grammars/tree-sitter-yaml": "0.7.1",
         "@vscode/tree-sitter-wasm": "^0.3.1"
     }
 }

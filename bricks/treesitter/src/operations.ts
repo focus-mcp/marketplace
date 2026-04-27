@@ -39,6 +39,7 @@ import './parsers/python.ts';
 import './parsers/go.ts';
 import './parsers/rust.ts';
 import './parsers/java.ts';
+import './parsers/yaml.ts';
 
 import { parseSource, supportedExtensions, supportedLanguageNames } from './parsers/registry.ts';
 

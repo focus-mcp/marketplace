@@ -1,12 +1,12 @@
 {
     "name": "treesitter",
     "prefix": "ts",
-    "description": "Tree-sitter based multi-language code indexer — supports TS, JS, PHP, Python, Go, Rust, Java.",
+    "description": "Tree-sitter based multi-language code indexer — supports TS, JS, PHP, Python, Go, Rust, Java, YAML.",
     "dependencies": [],
     "tools": [
         {
             "name": "index",
-            "description": "Index a directory: parse all supported files (TS, JS, PHP, Python, Go, Rust, Java) and store symbols in memory.",
+            "description": "Index a directory: parse all supported files (TS, JS, PHP, Python, Go, Rust, Java, YAML) and store symbols in memory.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -70,8 +70,9 @@
         "go",
         "rust",
         "java",
+        "yaml",
         "multi-language"
     ],
     "license": "MIT",
-    "version": "1.1.1"
+    "version": "1.2.0"
 }
