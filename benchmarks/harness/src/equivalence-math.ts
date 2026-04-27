@@ -43,6 +43,7 @@ interface EquivalenceRow {
 
 interface McpBrickManifest {
     name: string;
+    prefix?: string;
     description?: string;
     tools?: Array<{
         name: string;
@@ -279,15 +280,11 @@ async function main(): Promise<void> {
 
         if (manifest) {
             M = approxTokens(JSON.stringify(manifest));
-            const toolDef = manifest.tools?.find(
-                (t) => t.name === row.tool || `${manifest.prefix ?? manifest.name}_${t.name}` === row.tool,
+            // Match tool by short name OR prefixed name (e.g. "summary" OR "sr_summary")
+            const brickPrefix = manifest.prefix ?? manifest.name;
+            const resolvedTool = manifest.tools?.find(
+                (t) => t.name === row.tool || `${brickPrefix}_${t.name}` === row.tool,
             );
-            // Also try matching by stripping brick prefix
-            const toolDefFallback = manifest.tools?.find((t) => {
-                const prefix = manifest.name ?? '';
-                return row.tool === `${prefix}_${t.name}` || row.tool === t.name;
-            });
-            const resolvedTool = toolDef ?? toolDefFallback;
             D = approxTokens(resolvedTool?.description ?? '');
         }
 
@@ -309,7 +306,6 @@ async function main(): Promise<void> {
     // 5. Table rows
     const tableRows = sorted
         .map((r) => {
-            const md_str = `${fmtN(r.M + r.D)}`;
             const delta_str = r.delta_per_call <= 0
                 ? `**−${fmtN(Math.abs(r.delta_per_call))} (overhead)**`
                 : `−${fmtN(r.delta_per_call)}`;
