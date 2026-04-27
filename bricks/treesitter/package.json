@@ -95,7 +95,7 @@
     "dependencies": {
         "@cursorless/tree-sitter-wasms": "^0.8.1",
         "@tree-sitter-grammars/tree-sitter-toml": "^0.7.0",
-        "@tree-sitter-grammars/tree-sitter-yaml": "^0.7.0",
+        "@tree-sitter-grammars/tree-sitter-yaml": "^0.7.1",
         "@vscode/tree-sitter-wasm": "^0.3.1",
         "tree-sitter-twig": "^0.8.2"
     }
