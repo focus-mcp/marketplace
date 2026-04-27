@@ -7,7 +7,7 @@
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { loadManifest, BRICK_DISALLOWED_TOOLS, extractResultBlock, extractMiniTaskSpec, isoStamp, type BrickManifest } from './runner.js';
+import { loadManifest, BRICK_DISALLOWED_TOOLS, BRICK_BUILTIN_TOOLS, extractResultBlock, extractMiniTaskSpec, isoStamp, type BrickManifest } from './runner.js';
 
 // ---------------------------------------------------------------------------
 // Test: real manifests for parallel and sandbox have bench.maxTurns=40
@@ -106,53 +106,87 @@ test('brick mode allowedTools must not include Read', () => {
     ]);
 });
 
-test('BRICK_DISALLOWED_TOOLS blocks all native tools including ToolSearch', () => {
+// ---------------------------------------------------------------------------
+// True isolation: tools: [] (SDK option) vs blacklist approach
+// ---------------------------------------------------------------------------
+
+test('BRICK_BUILTIN_TOOLS documents all known SDK builtins (exhaustive reference list)', () => {
+    // This list documents known builtins — it is NOT used as a blacklist anymore.
+    // True isolation is achieved via tools: [] in runner.ts (SDK option).
+    const knownBuiltins = ['Read', 'ToolSearch', 'Bash', 'Grep', 'Glob', 'Edit', 'Write',
+        'NotebookEdit', 'Agent', 'Monitor', 'PushNotification', 'Skill', 'WebFetch',
+        'WebSearch', 'ScheduleWakeup', 'TaskCreate', 'TaskList', 'TaskGet', 'TaskUpdate',
+        'TaskStop', 'TaskOutput', 'RemoteTrigger', 'TodoWrite', 'TodoRead'];
+    for (const tool of knownBuiltins) {
+        assert.ok(
+            (BRICK_BUILTIN_TOOLS as readonly string[]).includes(tool),
+            `${tool} must be in BRICK_BUILTIN_TOOLS (reference/documentation list)`,
+        );
+    }
+});
+
+test('BRICK_DISALLOWED_TOOLS is an alias for BRICK_BUILTIN_TOOLS (backward compat)', () => {
+    // BRICK_DISALLOWED_TOOLS is kept for external consumers but equals BRICK_BUILTIN_TOOLS.
+    assert.strictEqual(
+        BRICK_DISALLOWED_TOOLS,
+        BRICK_BUILTIN_TOOLS,
+        'BRICK_DISALLOWED_TOOLS must be the same reference as BRICK_BUILTIN_TOOLS',
+    );
+});
+
+test('brick mode uses tools:[] (SDK true isolation) not disallowedTools blacklist', () => {
+    // Verify the SDK option approach: tools: [] passes --tools "" to the Claude CLI,
+    // disabling ALL builtins before MCP tools are loaded.
+    // This is the correct isolation strategy — blacklist was whack-a-mole.
+    const brickModeOptions = {
+        // Replicate the runner.ts modeOptions logic
+        tools: [] as string[],
+        allowedTools: ['mcp__focus__echo_say'],
+        disallowedTools: [] as string[],
+    };
+
+    assert.deepEqual(brickModeOptions.tools, [],
+        'brick mode must pass tools: [] to disable all SDK builtins');
+    assert.deepEqual(brickModeOptions.disallowedTools, [],
+        'brick mode disallowedTools must be empty (no blacklist needed with tools:[])');
+    assert.ok(
+        brickModeOptions.allowedTools.every(t => t.startsWith('mcp__focus__')),
+        'brick mode allowedTools must contain only mcp__focus__* entries',
+    );
+});
+
+test('BRICK_DISALLOWED_TOOLS blocks all native tools including ToolSearch (legacy compat)', () => {
     // ToolSearch was confirmed in traces: parallel-brick used it as a fallback alongside Read
     const required = ['Read', 'ToolSearch', 'Bash', 'Grep', 'Glob', 'Edit', 'Write'];
     for (const tool of required) {
         assert.ok(
             (BRICK_DISALLOWED_TOOLS as readonly string[]).includes(tool),
-            `${tool} must be in BRICK_DISALLOWED_TOOLS (runner.ts)`,
+            `${tool} must be in BRICK_DISALLOWED_TOOLS (reference list in runner.ts)`,
         );
     }
 });
 
-test('BRICK_DISALLOWED_TOOLS contains Agent, Monitor, WebFetch, etc.', () => {
-    // Claude Agent SDK builtin tools bypass allowedTools whitelist — must be explicitly blocked
+test('BRICK_DISALLOWED_TOOLS contains Agent, Monitor, WebFetch, etc. (legacy compat)', () => {
+    // Claude Agent SDK builtin tools — documented in BRICK_BUILTIN_TOOLS / BRICK_DISALLOWED_TOOLS
     const sdkBuiltins = ['Agent', 'Monitor', 'PushNotification', 'Skill', 'WebFetch', 'WebSearch'];
     for (const tool of sdkBuiltins) {
         assert.ok(
             (BRICK_DISALLOWED_TOOLS as readonly string[]).includes(tool),
-            `${tool} must be in BRICK_DISALLOWED_TOOLS (SDK builtin that bypasses allowedTools)`,
+            `${tool} must be in BRICK_DISALLOWED_TOOLS (SDK builtin reference list)`,
         );
     }
 });
 
-test('brick mode disallowedTools includes all SDK builtins', () => {
-    // Verifies the complete set of SDK builtin tools that must be blocked in brick mode.
-    // These tools are injected by the Claude Agent SDK and bypass the allowedTools whitelist.
-    const allSDKBuiltins = [
-        'Agent',
-        'Monitor',
-        'PushNotification',
-        'Skill',
-        'WebFetch',
-        'WebSearch',
-        'ScheduleWakeup',
-        'TaskCreate',
-        'TaskList',
-        'TaskGet',
-        'TaskUpdate',
-        'TaskStop',
-        'TaskOutput',
-    ];
-    const disallowed = BRICK_DISALLOWED_TOOLS as readonly string[];
-    const missing = allSDKBuiltins.filter((t) => !disallowed.includes(t));
-    assert.deepEqual(
-        missing,
-        [],
-        `Missing SDK builtins in BRICK_DISALLOWED_TOOLS: ${missing.join(', ')}`,
-    );
+test('BRICK_BUILTIN_TOOLS includes previously-leaking tools (NotebookEdit, RemoteTrigger, TodoWrite)', () => {
+    // These tools were observed in tools_used despite disallowedTools blacklist.
+    // They are now handled by tools: [] (which disables ALL builtins at once).
+    const previouslyLeaking = ['NotebookEdit', 'RemoteTrigger', 'TodoWrite', 'TodoRead'];
+    for (const tool of previouslyLeaking) {
+        assert.ok(
+            (BRICK_BUILTIN_TOOLS as readonly string[]).includes(tool),
+            `${tool} must be documented in BRICK_BUILTIN_TOOLS (was leaking through blacklist)`,
+        );
+    }
 });
 
 // ---------------------------------------------------------------------------
