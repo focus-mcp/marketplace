@@ -71,7 +71,10 @@ async function ensureInit(): Promise<VsCodeTreeSitter> {
                 locateFile: (name: string) => join(WASM_DIR, name),
             });
             _parserModule = mod;
-        })();
+        })().catch((err) => {
+            _initPromise = null; // allow retry on next call
+            throw err;
+        });
     }
     await _initPromise;
     if (!_parserModule) throw new Error('tree-sitter init failed');

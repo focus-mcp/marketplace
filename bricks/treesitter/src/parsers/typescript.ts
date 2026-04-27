@@ -256,7 +256,7 @@ interface TsCtx {
     exports: string[];
 }
 
-function visitTs(node: TsNode, ctx: TsCtx, parentClass?: string): void {
+function visitTs(node: TsNode, ctx: TsCtx): void {
     if (node.type === 'export_statement') {
         const decl = node.children.find((c) => EXPORTED_DECL_TYPES.has(c.type));
         if (decl) processDecl(decl, ctx.filePath, true, ctx.symbols, ctx.exports);
@@ -264,11 +264,12 @@ function visitTs(node: TsNode, ctx: TsCtx, parentClass?: string): void {
         if (exportClause) handleExportClause(exportClause, ctx.exports);
         return;
     }
-    if (node.type === 'class_body' && parentClass) {
-        ctx.symbols.push(...extractClassMethods(node, ctx.filePath, parentClass));
+    // Process non-exported top-level declarations so `exported: false` is reachable
+    if (EXPORTED_DECL_TYPES.has(node.type)) {
+        processDecl(node, ctx.filePath, false, ctx.symbols, ctx.exports);
         return;
     }
-    for (const child of node.children) visitTs(child, ctx, parentClass);
+    for (const child of node.children) visitTs(child, ctx);
 }
 
 function collectSymbols(
