@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-24T12:07:41.254Z",
+  "updated": "2026-04-27T08:49:46.954Z",
   "bricks": [
     {
       "name": "agent",
@@ -358,7 +358,7 @@
     },
     {
       "name": "cache",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "In-memory file cache — avoid redundant disk reads with mtime-based invalidation.",
       "tags": [
         "cache",
@@ -458,7 +458,7 @@
     },
     {
       "name": "callgraph",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Call graph analysis — callers, callees, call chains.",
       "tags": [
         "callgraph",
@@ -611,7 +611,7 @@
     },
     {
       "name": "codeedit",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "description": "Precise code editing — replace function bodies, insert before/after, safe delete with dependency check.",
       "tags": [
         "edit",
@@ -625,7 +625,7 @@
       "tools": [
         {
           "name": "replacebody",
-          "description": "Replace the body of a function or method by name. Finds the function and replaces its entire body.",
+          "description": "Replace the body of a function or method by name. Uses AST parsing for PHP; brace-matching for TS/JS/Python/Go/Rust/Java. Returns found=false with error if language is unsupported.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -644,6 +644,10 @@
               "apply": {
                 "type": "boolean",
                 "description": "Apply changes (default false)"
+              },
+              "dryRun": {
+                "type": "boolean",
+                "description": "When true, return preview only — never write to disk"
               }
             },
             "required": [
@@ -656,7 +660,7 @@
         },
         {
           "name": "insertafter",
-          "description": "Insert code after a specific line number or after a pattern match.",
+          "description": "Insert code after a specific line number or after a pattern match. If the pattern matches multiple lines, returns inserted=false with a matches list; disambiguate via lineHint.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -672,6 +676,10 @@
                 "type": "string",
                 "description": "Regex pattern to insert after (alternative to line number)"
               },
+              "lineHint": {
+                "type": "number",
+                "description": "Preferred line number when pattern has multiple matches — picks the closest match"
+              },
               "content": {
                 "type": "string",
                 "description": "Content to insert"
@@ -679,6 +687,10 @@
               "apply": {
                 "type": "boolean",
                 "description": "Apply changes (default false)"
+              },
+              "dryRun": {
+                "type": "boolean",
+                "description": "When true, return diff only — never write to disk"
               }
             },
             "required": [
@@ -690,7 +702,7 @@
         },
         {
           "name": "insertbefore",
-          "description": "Insert code before a specific line number or before a pattern match.",
+          "description": "Insert code before a specific line number or before a pattern match. If the pattern matches multiple lines, returns inserted=false with a matches list; disambiguate via lineHint.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -706,6 +718,10 @@
                 "type": "string",
                 "description": "Regex pattern to insert before"
               },
+              "lineHint": {
+                "type": "number",
+                "description": "Preferred line number when pattern has multiple matches — picks the closest match"
+              },
               "content": {
                 "type": "string",
                 "description": "Content to insert"
@@ -713,6 +729,10 @@
               "apply": {
                 "type": "boolean",
                 "description": "Apply changes (default false)"
+              },
+              "dryRun": {
+                "type": "boolean",
+                "description": "When true, return diff only — never write to disk"
               }
             },
             "required": [
@@ -747,6 +767,10 @@
               "apply": {
                 "type": "boolean",
                 "description": "Apply changes (default false)"
+              },
+              "dryRun": {
+                "type": "boolean",
+                "description": "When true, return diff only — never write to disk"
               }
             },
             "required": [
@@ -994,7 +1018,7 @@
     },
     {
       "name": "convert",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "description": "Convert between formats and units — unit conversion, encoding, format transformation, naming conventions.",
       "tags": [
         "convert",
@@ -1461,7 +1485,7 @@
     },
     {
       "name": "depgraph",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Dependency graph analysis — imports, exports, circular deps, fan-in/out.",
       "tags": [
         "depgraph",
@@ -2098,8 +2122,8 @@
     },
     {
       "name": "fileops",
-      "version": "1.1.0",
-      "description": "File operations — move, copy, delete, rename.",
+      "version": "1.3.0",
+      "description": "File operations — move, copy, delete, rename. Call fileops:setRoot first with the absolute path to your workspace, otherwise tools will fail-fast on the first non-existent path.",
       "tags": [
         "file",
         "move",
@@ -2110,7 +2134,7 @@
       "tools": [
         {
           "name": "move",
-          "description": "Move a file or directory to a new path",
+          "description": "Move a file or directory to a new path. Requires fileops:setRoot to be called first with the workspace root path.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -2132,7 +2156,7 @@
         },
         {
           "name": "copy",
-          "description": "Copy a file to a new path",
+          "description": "Copy a file to a new path. Requires fileops:setRoot to be called first with the workspace root path.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -2152,7 +2176,7 @@
         },
         {
           "name": "delete",
-          "description": "Delete a file or empty directory",
+          "description": "Delete a file or empty directory. Requires fileops:setRoot to be called first with the workspace root path.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -2169,7 +2193,7 @@
         },
         {
           "name": "rename",
-          "description": "Rename a file within its parent directory",
+          "description": "Rename a file within its parent directory. Requires fileops:setRoot to be called first with the workspace root path.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -2393,7 +2417,7 @@
     },
     {
       "name": "filewrite",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "description": "Write files — create, overwrite, append.",
       "tags": [
         "file",
@@ -2446,15 +2470,28 @@
         },
         {
           "name": "create",
-          "description": "Create a file only if it does not already exist",
+          "description": "Create a new file. Fails if the file already exists by default (safe). Pass options.force=true to overwrite an existing file.",
           "inputSchema": {
             "type": "object",
             "properties": {
               "path": {
-                "type": "string"
+                "type": "string",
+                "description": "Absolute file path"
               },
               "content": {
-                "type": "string"
+                "type": "string",
+                "description": "Content to write"
+              },
+              "options": {
+                "type": "object",
+                "description": "Optional creation options",
+                "properties": {
+                  "force": {
+                    "type": "boolean",
+                    "description": "If true, overwrite the file if it already exists. Default: false."
+                  }
+                },
+                "additionalProperties": false
               }
             },
             "required": [
@@ -2975,8 +3012,8 @@
     },
     {
       "name": "graphexport",
-      "version": "1.1.0",
-      "description": "Knowledge graph export — generate HTML, Mermaid, GraphML, Cypher, Obsidian, and wiki formats.",
+      "version": "1.2.0",
+      "description": "Generate visualizations from a provided or upstream graph. For upstream graphs, use with graphbuild/callgraph/depgraph first. Alternatively, load an inline graph via ge_input(graph) to use standalone.",
       "tags": [
         "graph",
         "export",
@@ -2988,14 +3025,93 @@
       "dependencies": [],
       "tools": [
         {
+          "name": "input",
+          "description": "Load an inline graph (nodes + edges JSON) into ambient state for subsequent export tools. Use this to make graphexport standalone without an upstream graphbuild/callgraph/depgraph brick.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "graph": {
+                "type": "object",
+                "description": "Inline graph with nodes and edges arrays",
+                "properties": {
+                  "nodes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "label",
+                        "type"
+                      ]
+                    }
+                  },
+                  "edges": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "from",
+                        "to",
+                        "type"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "nodes",
+                  "edges"
+                ]
+              }
+            },
+            "required": [
+              "graph"
+            ],
+            "additionalProperties": false
+          }
+        },
+        {
           "name": "html",
-          "description": "Export graph as a standalone HTML page with a simple SVG visualization.",
+          "description": "Export graph as a standalone HTML page with a simple SVG visualization. Pass graph inline or rely on upstream graphbuild/callgraph/depgraph context.",
           "inputSchema": {
             "type": "object",
             "properties": {
               "title": {
                 "type": "string",
                 "description": "Page title (default 'Knowledge Graph')"
+              },
+              "graph": {
+                "type": "object",
+                "description": "Optional inline graph (overrides upstream context)",
+                "properties": {
+                  "nodes": {
+                    "type": "array"
+                  },
+                  "edges": {
+                    "type": "array"
+                  }
+                }
               }
             },
             "additionalProperties": false
@@ -3003,13 +3119,25 @@
         },
         {
           "name": "mermaid",
-          "description": "Export graph as Mermaid diagram syntax.",
+          "description": "Export graph as Mermaid diagram syntax. Pass graph inline or rely on upstream graphbuild/callgraph/depgraph context.",
           "inputSchema": {
             "type": "object",
             "properties": {
               "direction": {
                 "type": "string",
                 "description": "TB, LR, BT, RL (default TB)"
+              },
+              "graph": {
+                "type": "object",
+                "description": "Optional inline graph (overrides upstream context)",
+                "properties": {
+                  "nodes": {
+                    "type": "array"
+                  },
+                  "edges": {
+                    "type": "array"
+                  }
+                }
               }
             },
             "additionalProperties": false
@@ -3017,37 +3145,89 @@
         },
         {
           "name": "graphml",
-          "description": "Export graph as GraphML XML format.",
+          "description": "Export graph as GraphML XML format. Pass graph inline or rely on upstream graphbuild/callgraph/depgraph context.",
           "inputSchema": {
             "type": "object",
-            "properties": {},
+            "properties": {
+              "graph": {
+                "type": "object",
+                "description": "Optional inline graph (overrides upstream context)",
+                "properties": {
+                  "nodes": {
+                    "type": "array"
+                  },
+                  "edges": {
+                    "type": "array"
+                  }
+                }
+              }
+            },
             "additionalProperties": false
           }
         },
         {
           "name": "cypher",
-          "description": "Export graph as Cypher CREATE statements (Neo4j compatible).",
+          "description": "Export graph as Cypher CREATE statements (Neo4j compatible). Pass graph inline or rely on upstream graphbuild/callgraph/depgraph context.",
           "inputSchema": {
             "type": "object",
-            "properties": {},
+            "properties": {
+              "graph": {
+                "type": "object",
+                "description": "Optional inline graph (overrides upstream context)",
+                "properties": {
+                  "nodes": {
+                    "type": "array"
+                  },
+                  "edges": {
+                    "type": "array"
+                  }
+                }
+              }
+            },
             "additionalProperties": false
           }
         },
         {
           "name": "obsidian",
-          "description": "Export graph as Obsidian-compatible markdown files with [[wikilinks]].",
+          "description": "Export graph as Obsidian-compatible markdown files with [[wikilinks]]. Pass graph inline or rely on upstream graphbuild/callgraph/depgraph context.",
           "inputSchema": {
             "type": "object",
-            "properties": {},
+            "properties": {
+              "graph": {
+                "type": "object",
+                "description": "Optional inline graph (overrides upstream context)",
+                "properties": {
+                  "nodes": {
+                    "type": "array"
+                  },
+                  "edges": {
+                    "type": "array"
+                  }
+                }
+              }
+            },
             "additionalProperties": false
           }
         },
         {
           "name": "wiki",
-          "description": "Export graph as a single wiki-style markdown document with sections per node.",
+          "description": "Export graph as a single wiki-style markdown document with sections per node. Pass graph inline or rely on upstream graphbuild/callgraph/depgraph context.",
           "inputSchema": {
             "type": "object",
-            "properties": {},
+            "properties": {
+              "graph": {
+                "type": "object",
+                "description": "Optional inline graph (overrides upstream context)",
+                "properties": {
+                  "nodes": {
+                    "type": "array"
+                  },
+                  "edges": {
+                    "type": "array"
+                  }
+                }
+              }
+            },
             "additionalProperties": false
           }
         }
@@ -3663,7 +3843,7 @@
     },
     {
       "name": "lastversion",
-      "version": "1.1.0",
+      "version": "1.2.1",
       "description": "Package version intelligence — latest version, diff, changelog, audit across npm/pypi/github/gitlab.",
       "tags": [
         "version",
@@ -3705,7 +3885,7 @@
         },
         {
           "name": "versions",
-          "description": "List all versions of a package, optionally filtered by semver range or stable-only.",
+          "description": "List recent versions of a package, optionally filtered by semver range or stable-only.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -3723,7 +3903,7 @@
               },
               "limit": {
                 "type": "number",
-                "description": "Max results (default 50)"
+                "description": "Max results (default 20)"
               },
               "stable": {
                 "type": "boolean",
@@ -3827,7 +4007,7 @@
         },
         {
           "name": "audit",
-          "description": "Fetch security advisories for a package version (GitHub Advisory DB via OSV.dev).",
+          "description": "Fetch security advisories for a package version (GitHub Advisory DB via OSV.dev). Returns top 10 entries by severity DESC.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -3860,7 +4040,7 @@
     },
     {
       "name": "memory",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Persistent key-value memory — store and recall information across sessions as JSON files.",
       "tags": [
         "memory",
@@ -3956,13 +4136,17 @@
         },
         {
           "name": "list",
-          "description": "List all memory keys, optionally filtered by tag.",
+          "description": "List all memory keys, optionally filtered by tag. Returns up to 100 entries by default; set limit=0 for unlimited.",
           "inputSchema": {
             "type": "object",
             "properties": {
               "tag": {
                 "type": "string",
                 "description": "Filter by tag (optional)"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Max entries to return (default 100, set 0 for unlimited)"
               }
             },
             "additionalProperties": false
@@ -3977,7 +4161,7 @@
     },
     {
       "name": "metrics",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "description": "Session metrics tracking — token usage, costs, duration, and per-tool statistics.",
       "tags": [
         "metrics",
@@ -4386,7 +4570,7 @@
     },
     {
       "name": "parallel",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "description": "Parallel execution coordination — run tasks concurrently, collect results, merge outputs, handle timeouts.",
       "tags": [
         "parallel",
@@ -4508,6 +4692,46 @@
                 "description": "Check timeout status of a run"
               }
             },
+            "additionalProperties": false
+          }
+        },
+        {
+          "name": "run_inline",
+          "description": "Run parallel tasks and return results inline in a single response (combines run + collect, avoids 2 round-trips). Use this when you need results immediately rather than polling collect later.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "tasks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "command": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "command"
+                  ]
+                },
+                "description": "Tasks to run"
+              },
+              "concurrency": {
+                "type": "number",
+                "description": "Max concurrent tasks (default: all)"
+              },
+              "cwd": {
+                "type": "string",
+                "description": "Working directory"
+              }
+            },
+            "required": [
+              "tasks"
+            ],
             "additionalProperties": false
           }
         }
@@ -5326,26 +5550,27 @@
     },
     {
       "name": "sandbox",
-      "version": "1.1.0",
+      "version": "1.2.1",
       "description": "Sandboxed code execution — run JavaScript/TypeScript snippets in an isolated VM context.",
       "tags": [
         "sandbox",
         "execution",
         "vm",
         "javascript",
+        "typescript",
         "devtools"
       ],
       "dependencies": [],
       "tools": [
         {
           "name": "run",
-          "description": "Execute a JavaScript code snippet in a sandboxed VM context. Returns the result of the last expression.",
+          "description": "Execute a JavaScript or TypeScript snippet in a sandboxed VM context. TypeScript is auto-transpiled via esbuild. Returns the result of the last expression.",
           "inputSchema": {
             "type": "object",
             "properties": {
               "code": {
                 "type": "string",
-                "description": "JavaScript code to execute"
+                "description": "JavaScript or TypeScript code to execute"
               },
               "timeout": {
                 "type": "number",
@@ -5381,13 +5606,13 @@
         },
         {
           "name": "eval",
-          "description": "Evaluate an expression and return its value. Lighter than run — single expression only.",
+          "description": "Evaluate a JavaScript or TypeScript expression and return its value. Lighter than run — single expression only. TypeScript is auto-transpiled via esbuild.",
           "inputSchema": {
             "type": "object",
             "properties": {
               "expression": {
                 "type": "string",
-                "description": "JavaScript expression to evaluate"
+                "description": "JavaScript or TypeScript expression to evaluate"
               },
               "timeout": {
                 "type": "number",
@@ -5406,6 +5631,23 @@
           "inputSchema": {
             "type": "object",
             "properties": {},
+            "additionalProperties": false
+          }
+        },
+        {
+          "name": "read",
+          "description": "Read a file from the current working directory (bounded — no absolute paths, no ../ escapes). Returns the file contents as a string. Use this to load source files from the codebase before processing them in the sandbox.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Relative path to the file within the working directory (e.g. 'src/utils.ts'). Absolute paths and directory traversal are rejected."
+              }
+            },
+            "required": [
+              "path"
+            ],
             "additionalProperties": false
           }
         }
@@ -6179,7 +6421,7 @@
     },
     {
       "name": "symbol",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Symbol lookup in source files — find, get, bulk, body.",
       "tags": [
         "symbols",
@@ -6789,7 +7031,7 @@
     },
     {
       "name": "treesitter",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Regex-based code indexer for TypeScript/JavaScript — parses symbols, imports, exports.",
       "tags": [
         "ast",

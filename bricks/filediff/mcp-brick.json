@@ -43,5 +43,11 @@
         }
     ],
     "tags": ["file", "diff", "patch"],
-    "license": "MIT"
+    "license": "MIT",
+    "bench": {
+        "tools": {
+            "diff": { "delta": -0.005 }
+        },
+        "source": "static-equivalence-2026-04-27"
+    }
 }

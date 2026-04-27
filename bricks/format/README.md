@@ -2,6 +2,16 @@
 
 Format data into various output formats — pretty JSON, YAML, markdown, ASCII tables.
 
+## Measured economy
+
+Static benchmark — no LLM, no variance, reproducible:
+
+| Tool | Native equivalent | Brick output | Δ% |
+|---|---:|---:|---:|
+| `fmt_json` | 2,415 tokens | 2,421 tokens | **+0.2%** |
+
+Conditions: payload-only measurement (iso-call). Multi-turn agent dynamics not modeled. See [global benchmark](../../benchmarks/equivalence-report.md) for methodology and full per-tool table.
+
 ## Tools
 
 | Tool | Exposed as | Description |

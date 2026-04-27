@@ -2,6 +2,16 @@
 
 Full-text search with TF-IDF ranking — index files, search with relevance scoring, suggest completions.
 
+## Measured economy
+
+Static benchmark — no LLM, no variance, reproducible:
+
+| Tool | Native equivalent | Brick output | Savings |
+|---|---:|---:|---:|
+| `fts_search` | 5,560 tokens | 370 tokens | **-93.3%** |
+
+Conditions: payload-only measurement (iso-call). Multi-turn agent dynamics not modeled. See [global benchmark](../../benchmarks/equivalence-report.md) for methodology and full per-tool table.
+
 ## Tools
 
 | Tool | Exposed as | Description |

@@ -81,5 +81,11 @@
         }
     ],
     "tags": ["rename", "refactoring", "symbol", "codemod"],
-    "license": "MIT"
+    "license": "MIT",
+    "bench": {
+        "tools": {
+            "preview": { "delta": -0.473 }
+        },
+        "source": "static-equivalence-2026-04-27"
+    }
 }
