@@ -35,5 +35,11 @@
         }
     ],
     "tags": ["file", "search", "replace", "regex"],
-    "license": "MIT"
+    "license": "MIT",
+    "bench": {
+        "tools": {
+            "search": { "savings": -0.446 }
+        },
+        "source": "static-equivalence-2026-04-27"
+    }
 }

@@ -59,5 +59,14 @@
         }
     ],
     "tags": ["file", "read", "io"],
-    "license": "MIT"
+    "license": "MIT",
+    "bench": {
+        "tools": {
+            "tail": { "savings": -0.038 },
+            "read": { "savings": 0.034 },
+            "range": { "savings": 0.083 },
+            "head": { "savings": 0.154 }
+        },
+        "source": "static-equivalence-2026-04-27"
+    }
 }

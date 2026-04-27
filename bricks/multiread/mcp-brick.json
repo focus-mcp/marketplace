@@ -49,5 +49,12 @@
         }
     ],
     "tags": ["file", "read", "batch", "tokens"],
-    "license": "MIT"
+    "license": "MIT",
+    "bench": {
+        "tools": {
+            "merge": { "savings": 0.035 },
+            "batch": { "savings": 0.043 }
+        },
+        "source": "static-equivalence-2026-04-27"
+    }
 }
