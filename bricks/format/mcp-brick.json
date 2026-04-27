@@ -97,7 +97,7 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "json": { "savings": 0.124 }
+            "json": { "delta": 0.002 }
         },
         "source": "static-equivalence-2026-04-27"
     }

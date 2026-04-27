@@ -52,8 +52,8 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "merge": { "savings": 0.035 },
-            "batch": { "savings": 0.043 }
+            "merge": { "delta": 0.003 },
+            "batch": { "delta": 0.01 }
         },
         "source": "static-equivalence-2026-04-27"
     }

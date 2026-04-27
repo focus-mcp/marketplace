@@ -51,9 +51,9 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "repo": { "savings": -0.981 },
-            "file": { "savings": -0.961 },
-            "structure": { "savings": -0.829 }
+            "repo": { "delta": -0.981 },
+            "file": { "delta": -0.961 },
+            "structure": { "delta": -0.829 }
         },
         "source": "static-equivalence-2026-04-27"
     }

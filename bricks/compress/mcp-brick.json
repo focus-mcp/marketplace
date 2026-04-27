@@ -51,8 +51,8 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "terse": { "savings": -0.972 },
-            "output": { "savings": -0.199 }
+            "terse": { "delta": -0.972 },
+            "output": { "delta": -0.199 }
         },
         "source": "static-equivalence-2026-04-27"
     }

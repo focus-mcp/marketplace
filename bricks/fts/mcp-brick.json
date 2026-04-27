@@ -76,7 +76,7 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "search": { "savings": -0.933 }
+            "search": { "delta": -0.933 }
         },
         "source": "static-equivalence-2026-04-27"
     }

@@ -60,10 +60,10 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "summary": { "savings": -0.998 },
-            "signatures": { "savings": -0.995 },
-            "imports": { "savings": -0.976 },
-            "map": { "savings": -0.843 }
+            "summary": { "delta": -0.998 },
+            "signatures": { "delta": -0.995 },
+            "imports": { "delta": -0.976 },
+            "map": { "delta": -0.843 }
         },
         "source": "static-equivalence-2026-04-27"
     }

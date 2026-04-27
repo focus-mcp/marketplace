@@ -6,9 +6,9 @@ File comparison tools for FocusMCP — diff, patch, delta.
 
 Static benchmark — no LLM, no variance, reproducible:
 
-| Tool | Native equivalent | Brick output | Savings |
+| Tool | Native equivalent | Brick output | Δ% |
 |---|---:|---:|---:|
-| `fd_diff` | 1,161 tokens | 1,155 tokens | **+2.7%** |
+| `fd_diff` | 1,161 tokens | 1,155 tokens | **-0.5%** |
 
 Conditions: payload-only measurement (iso-call). Multi-turn agent dynamics not modeled. See [global benchmark](../../benchmarks/equivalence-report.md) for methodology and full per-tool table.
 

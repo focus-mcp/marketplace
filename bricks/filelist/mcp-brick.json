@@ -61,8 +61,8 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "glob": { "savings": 0.024 },
-            "list": { "savings": 0.276 }
+            "glob": { "delta": 0.012 },
+            "list": { "delta": 0.2 }
         },
         "source": "static-equivalence-2026-04-27"
     }

@@ -65,8 +65,8 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "project": { "savings": -0.667 },
-            "dependencies": { "savings": -0.451 }
+            "project": { "delta": -0.667 },
+            "dependencies": { "delta": -0.451 }
         },
         "source": "static-equivalence-2026-04-27"
     }

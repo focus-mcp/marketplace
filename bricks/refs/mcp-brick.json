@@ -62,9 +62,9 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "hierarchy": { "savings": -0.997 },
-            "references": { "savings": -0.82 },
-            "declaration": { "savings": -0.355 }
+            "hierarchy": { "delta": -0.997 },
+            "references": { "delta": -0.82 },
+            "declaration": { "delta": -0.355 }
         },
         "source": "static-equivalence-2026-04-27"
     }

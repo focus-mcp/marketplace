@@ -46,7 +46,7 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "diff": { "savings": 0.027 }
+            "diff": { "delta": -0.005 }
         },
         "source": "static-equivalence-2026-04-27"
     }

@@ -100,8 +100,8 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "grouped": { "savings": -0.824 },
-            "search": { "savings": -0.526 }
+            "grouped": { "delta": -0.824 },
+            "search": { "delta": -0.526 }
         },
         "source": "static-equivalence-2026-04-27"
     }
