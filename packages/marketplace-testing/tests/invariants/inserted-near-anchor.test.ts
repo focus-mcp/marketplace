@@ -29,7 +29,7 @@ describe('invariant insertedNearAnchor', () => {
     });
 
     it('fails when the inserted line is too far from the anchor function', () => {
-        const far = SAMPLE + '\n' + '\n'.repeat(100) + '// FAR INSERT\n';
+        const far = `${SAMPLE}\n${'\n'.repeat(100)}// FAR INSERT\n`;
         const res = insertedNearAnchor({
             fileContent: far,
             insertedLine: far.split('\n').length - 1,
