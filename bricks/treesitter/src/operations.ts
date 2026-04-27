@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: MIT
 
 import { readdir, readFile, stat } from 'node:fs/promises';
-import { join, resolve } from 'node:path';
+import { extname, join, resolve } from 'node:path';
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Public types (API contract — DO NOT change shape)
+// ──────────────────────────────────────────────────────────────────────────────
 
 export interface SymbolInfo {
     name: string;
@@ -23,182 +27,56 @@ export interface IndexedFile {
     mtime: number;
 }
 
+// ──────────────────────────────────────────────────────────────────────────────
+// Parser registry (side-effect registrations via imports)
+// ──────────────────────────────────────────────────────────────────────────────
+
+// These imports register language parsers into the global registry.
+// Each file calls registerLanguage() on load.
+import './parsers/typescript.ts';
+import './parsers/php.ts';
+import './parsers/python.ts';
+import './parsers/go.ts';
+import './parsers/rust.ts';
+import './parsers/java.ts';
+
+import { parseSource, supportedExtensions, supportedLanguageNames } from './parsers/registry.ts';
+
+// ──────────────────────────────────────────────────────────────────────────────
+// In-memory index
+// ──────────────────────────────────────────────────────────────────────────────
+
 export const indexStore = new Map<string, IndexedFile>();
 
-const SUPPORTED_EXTS = new Set(['.ts', '.tsx', '.js', '.jsx']);
+// ──────────────────────────────────────────────────────────────────────────────
+// Core parse entry point
+// ──────────────────────────────────────────────────────────────────────────────
 
-const rExportFunction = /^export\s+(async\s+)?function\s+(\w+)/;
-const rExportClass = /^export\s+(default\s+)?class\s+(\w+)/;
-const rExportInterface = /^export\s+interface\s+(\w+)/;
-const rExportType = /^export\s+type\s+(\w+)/;
-const rExportConst = /^export\s+const\s+(\w+)/;
-const rImport = /^import\s+.*\s+from\s+['"]([^'"]+)['"]/;
-const rNamedImport = /\{\s*([^}]+)\s*\}/;
-const rMethod = /^\s{4}(async\s+)?(\w+)\s*\(/;
+export async function parseFile(
+    filePath: string,
+    content: string,
+    mtime: number,
+): Promise<IndexedFile> {
+    const ext = extname(filePath).toLowerCase();
+    const result = await parseSource(content, filePath, ext);
 
-interface ParseContext {
-    filePath: string;
-    symbols: SymbolInfo[];
-    imports: Array<{ from: string; names: string[] }>;
-    fileExports: string[];
-    currentClass: string | undefined;
-    classDepth: number;
-}
-
-function braceBalance(line: string): number {
-    return (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
-}
-
-function parseImportLine(ctx: ParseContext, line: string): boolean {
-    const mImport = rImport.exec(line);
-    if (!mImport) return false;
-    const from = mImport[1] ?? '';
-    const mNamed = rNamedImport.exec(line);
-    const names = mNamed
-        ? (mNamed[1] ?? '')
-              .split(',')
-              .map((n) => n.trim().split(' as ')[0]?.trim() ?? '')
-              .filter(Boolean)
-        : [];
-    ctx.imports.push({ from, names });
-    return true;
-}
-
-function parseExportLine(ctx: ParseContext, line: string, lineNum: number): boolean {
-    const mFn = rExportFunction.exec(line);
-    if (mFn) {
-        const name = mFn[2] ?? '';
-        ctx.symbols.push({
-            name,
-            kind: 'function',
-            file: ctx.filePath,
-            line: lineNum,
-            endLine: lineNum,
-            signature: line.trim(),
-            exported: true,
-        });
-        ctx.fileExports.push(name);
-        return true;
-    }
-    const mClass = rExportClass.exec(line);
-    if (mClass) {
-        const name = mClass[2] ?? '';
-        ctx.symbols.push({
-            name,
-            kind: 'class',
-            file: ctx.filePath,
-            line: lineNum,
-            endLine: lineNum,
-            signature: line.trim(),
-            exported: true,
-        });
-        ctx.fileExports.push(name);
-        ctx.currentClass = name;
-        ctx.classDepth = braceBalance(line);
-        return true;
-    }
-    const mIface = rExportInterface.exec(line);
-    if (mIface) {
-        const name = mIface[1] ?? '';
-        ctx.symbols.push({
-            name,
-            kind: 'interface',
-            file: ctx.filePath,
-            line: lineNum,
-            endLine: lineNum,
-            signature: line.trim(),
-            exported: true,
-        });
-        ctx.fileExports.push(name);
-        return true;
-    }
-    const mType = rExportType.exec(line);
-    if (mType) {
-        const name = mType[1] ?? '';
-        ctx.symbols.push({
-            name,
-            kind: 'type',
-            file: ctx.filePath,
-            line: lineNum,
-            endLine: lineNum,
-            signature: line.trim(),
-            exported: true,
-        });
-        ctx.fileExports.push(name);
-        return true;
-    }
-    const mConst = rExportConst.exec(line);
-    if (mConst) {
-        const name = mConst[1] ?? '';
-        ctx.symbols.push({
-            name,
-            kind: 'variable',
-            file: ctx.filePath,
-            line: lineNum,
-            endLine: lineNum,
-            signature: line.trim(),
-            exported: true,
-        });
-        ctx.fileExports.push(name);
-        return true;
-    }
-    return false;
-}
-
-function parseMethodLine(ctx: ParseContext, line: string, lineNum: number): void {
-    const mMethod = rMethod.exec(line);
-    if (!mMethod) return;
-    const name = mMethod[2] ?? '';
-    if (name !== 'constructor' && !name.startsWith('_') && ctx.currentClass) {
-        ctx.symbols.push({
-            name,
-            kind: 'method',
-            file: ctx.filePath,
-            line: lineNum,
-            endLine: lineNum,
-            signature: line.trim(),
-            exported: false,
-            parent: ctx.currentClass,
-        });
-    }
-}
-
-export function parseFile(filePath: string, content: string, mtime: number): IndexedFile {
-    const lines = content.split('\n');
-    const ctx: ParseContext = {
-        filePath,
-        symbols: [],
-        imports: [],
-        fileExports: [],
-        currentClass: undefined,
-        classDepth: 0,
-    };
-
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i] ?? '';
-        const lineNum = i + 1;
-
-        if (ctx.currentClass) {
-            ctx.classDepth += braceBalance(line);
-            if (ctx.classDepth <= 0) {
-                ctx.currentClass = undefined;
-                ctx.classDepth = 0;
-            }
-        }
-
-        if (parseImportLine(ctx, line)) continue;
-        if (parseExportLine(ctx, line, lineNum)) continue;
-        if (ctx.currentClass) parseMethodLine(ctx, line, lineNum);
+    if (!result) {
+        // Unsupported extension — return empty record
+        return { path: filePath, symbols: [], imports: [], exports: [], mtime };
     }
 
     return {
         path: filePath,
-        symbols: ctx.symbols,
-        imports: ctx.imports,
-        exports: ctx.fileExports,
+        symbols: result.symbols,
+        imports: result.imports,
+        exports: result.exports,
         mtime,
     };
 }
+
+// ──────────────────────────────────────────────────────────────────────────────
+// MCP tool inputs
+// ──────────────────────────────────────────────────────────────────────────────
 
 export interface TsIndexInput {
     readonly dir: string;
@@ -208,6 +86,10 @@ export interface TsReindexInput {
     readonly path: string;
 }
 
+// ──────────────────────────────────────────────────────────────────────────────
+// MCP tool implementations
+// ──────────────────────────────────────────────────────────────────────────────
+
 export async function tsIndex(input: TsIndexInput): Promise<{ files: number; symbols: number }> {
     const abs = resolve(input.dir);
     const files = await collectFiles(abs);
@@ -215,7 +97,7 @@ export async function tsIndex(input: TsIndexInput): Promise<{ files: number; sym
     for (const f of files) {
         const content = await readFile(f, 'utf-8');
         const s = await stat(f);
-        const indexed = parseFile(f, content, s.mtimeMs);
+        const indexed = await parseFile(f, content, s.mtimeMs);
         indexStore.set(f, indexed);
         symbolCount += indexed.symbols.length;
     }
@@ -226,7 +108,7 @@ export async function tsReindex(input: TsReindexInput): Promise<{ symbols: numbe
     const abs = resolve(input.path);
     const content = await readFile(abs, 'utf-8');
     const s = await stat(abs);
-    const indexed = parseFile(abs, content, s.mtimeMs);
+    const indexed = await parseFile(abs, content, s.mtimeMs);
     indexStore.set(abs, indexed);
     return { symbols: indexed.symbols.length };
 }
@@ -244,20 +126,26 @@ export function tsCleanup(): { removed: number } {
 }
 
 export function tsLangs(): string[] {
-    return ['typescript', 'javascript'];
+    return supportedLanguageNames();
 }
+
+// ──────────────────────────────────────────────────────────────────────────────
+// File collection
+// ──────────────────────────────────────────────────────────────────────────────
+
+const SUPPORTED_EXTS = new Set(supportedExtensions());
 
 async function collectFiles(dir: string): Promise<string[]> {
     const entries = await readdir(dir, { withFileTypes: true });
     const results: string[] = [];
     for (const e of entries) {
-        if (e.name.startsWith('.') || e.name === 'node_modules') continue;
+        if (e.name.startsWith('.') || e.name === 'node_modules' || e.name === 'vendor') continue;
         const full = join(dir, e.name);
         if (e.isDirectory()) {
             const sub = await collectFiles(full);
             results.push(...sub);
         } else {
-            const ext = e.name.slice(e.name.lastIndexOf('.'));
+            const ext = extname(e.name).toLowerCase();
             if (SUPPORTED_EXTS.has(ext)) results.push(full);
         }
     }

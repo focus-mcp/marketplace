@@ -28,8 +28,8 @@ afterEach(async () => {
 });
 
 describe('parseFile', () => {
-    it('parses export function', () => {
-        const result = parseFile('/test.ts', 'export function hello(): void {}', 0);
+    it('parses export function', async () => {
+        const result = await parseFile('/test.ts', 'export function hello(): void {}', 0);
         expect(result.symbols).toHaveLength(1);
         expect(result.symbols[0]).toMatchObject({
             name: 'hello',
@@ -38,50 +38,51 @@ describe('parseFile', () => {
         });
     });
 
-    it('parses export async function', () => {
-        const result = parseFile(
+    it('parses export async function', async () => {
+        const result = await parseFile(
             '/test.ts',
             'export async function fetchData(): Promise<void> {}',
             0,
         );
+        expect(result.symbols.length).toBeGreaterThanOrEqual(1);
         expect(result.symbols[0]).toMatchObject({ name: 'fetchData', kind: 'function' });
     });
 
-    it('parses export class', () => {
-        const result = parseFile('/test.ts', 'export class MyClass {}', 0);
+    it('parses export class', async () => {
+        const result = await parseFile('/test.ts', 'export class MyClass {}', 0);
         expect(result.symbols[0]).toMatchObject({ name: 'MyClass', kind: 'class', exported: true });
     });
 
-    it('parses export interface', () => {
-        const result = parseFile('/test.ts', 'export interface MyInterface {}', 0);
+    it('parses export interface', async () => {
+        const result = await parseFile('/test.ts', 'export interface MyInterface {}', 0);
         expect(result.symbols[0]).toMatchObject({ name: 'MyInterface', kind: 'interface' });
     });
 
-    it('parses export type', () => {
-        const result = parseFile('/test.ts', 'export type MyType = string | number;', 0);
+    it('parses export type', async () => {
+        const result = await parseFile('/test.ts', 'export type MyType = string | number;', 0);
         expect(result.symbols[0]).toMatchObject({ name: 'MyType', kind: 'type' });
     });
 
-    it('parses export const', () => {
-        const result = parseFile('/test.ts', 'export const MY_CONST = 42;', 0);
+    it('parses export const', async () => {
+        const result = await parseFile('/test.ts', 'export const MY_CONST = 42;', 0);
         expect(result.symbols[0]).toMatchObject({ name: 'MY_CONST', kind: 'variable' });
     });
 
-    it('parses imports', () => {
-        const result = parseFile('/test.ts', "import { foo, bar } from './utils.ts';", 0);
+    it('parses imports', async () => {
+        const result = await parseFile('/test.ts', "import { foo, bar } from './utils.ts';", 0);
         expect(result.imports).toHaveLength(1);
         expect(result.imports[0]).toMatchObject({ from: './utils.ts', names: ['foo', 'bar'] });
     });
 
-    it('returns exports list', () => {
+    it('returns exports list', async () => {
         const content = 'export function a() {}\nexport const b = 1;';
-        const result = parseFile('/test.ts', content, 0);
+        const result = await parseFile('/test.ts', content, 0);
         expect(result.exports).toContain('a');
         expect(result.exports).toContain('b');
     });
 
-    it('stores mtime', () => {
-        const result = parseFile('/test.ts', '', 12345);
+    it('stores mtime', async () => {
+        const result = await parseFile('/test.ts', '', 12345);
         expect(result.mtime).toBe(12345);
     });
 });
@@ -151,63 +152,132 @@ describe('tsCleanup', () => {
 });
 
 describe('tsLangs', () => {
-    it('returns typescript and javascript', () => {
-        expect(tsLangs()).toEqual(['typescript', 'javascript']);
+    it('includes typescript and javascript', () => {
+        const langs = tsLangs();
+        expect(langs).toContain('typescript');
+        expect(langs).toContain('javascript');
+    });
+
+    it('includes multi-language support', () => {
+        const langs = tsLangs();
+        expect(langs).toContain('php');
+        expect(langs).toContain('python');
+        expect(langs).toContain('go');
+        expect(langs).toContain('rust');
+        expect(langs).toContain('java');
     });
 });
 
-describe('parseFile — method and class branch coverage', () => {
-    it('parses public methods inside a class', () => {
+describe('parseFile — multi-language', () => {
+    it('parses public methods inside a TypeScript class', async () => {
         const content = [
             'export class MyService {',
             '    doSomething() {}',
             '    helper() {}',
             '}',
         ].join('\n');
-        const result = parseFile('/test.ts', content, 0);
+        const result = await parseFile('/test.ts', content, 0);
         const methods = result.symbols.filter((s) => s.kind === 'method');
         expect(methods.length).toBeGreaterThanOrEqual(1);
         expect(methods.some((m) => m.name === 'doSomething')).toBe(true);
     });
 
-    it('skips constructor and underscore-prefixed methods', () => {
+    it('skips constructor methods in TypeScript', async () => {
         const content = [
             'export class MyClass {',
             '    constructor() {}',
-            '    _private() {}',
             '    public() {}',
             '}',
         ].join('\n');
-        const result = parseFile('/test.ts', content, 0);
+        const result = await parseFile('/test.ts', content, 0);
         const names = result.symbols.filter((s) => s.kind === 'method').map((s) => s.name);
         expect(names).not.toContain('constructor');
-        expect(names).not.toContain('_private');
         expect(names).toContain('public');
     });
 
-    it('closes currentClass when closing brace is encountered', () => {
+    it('handles class followed by standalone function in TypeScript', async () => {
         const content = [
             'export class Box {',
             '    getValue() {}',
             '}',
             'export function standalone(): void {}',
         ].join('\n');
-        const result = parseFile('/test.ts', content, 0);
-        // standalone should be a function symbol, not a method of Box
+        const result = await parseFile('/test.ts', content, 0);
         const fn = result.symbols.find((s) => s.name === 'standalone');
         expect(fn).toBeDefined();
         expect(fn?.kind).toBe('function');
     });
 
-    it('parseFile handles line with no matching pattern (null branch)', () => {
+    it('parses PHP class and functions', async () => {
         const content = [
-            'export class Outer {',
-            '    // just a comment inside class',
-            '    helper() {}',
+            '<?php',
+            'namespace App;',
+            'function helper(): string { return "hi"; }',
+            'class MyController {',
+            '    public function index(): void {}',
             '}',
         ].join('\n');
-        const result = parseFile('/test.ts', content, 0);
-        expect(result.symbols.some((s) => s.kind === 'class')).toBe(true);
+        const result = await parseFile('/controller.php', content, 0);
+        const classes = result.symbols.filter((s) => s.kind === 'class');
+        const funcs = result.symbols.filter((s) => s.kind === 'function');
+        expect(classes.some((c) => c.name === 'MyController')).toBe(true);
+        expect(funcs.some((f) => f.name === 'helper')).toBe(true);
+    });
+
+    it('parses Python functions and classes', async () => {
+        const content = [
+            'def my_func(x: str) -> None:',
+            '    pass',
+            'class MyClass:',
+            '    def method(self) -> str:',
+            '        return "hi"',
+        ].join('\n');
+        const result = await parseFile('/module.py', content, 0);
+        expect(result.symbols.some((s) => s.name === 'my_func' && s.kind === 'function')).toBe(
+            true,
+        );
+        expect(result.symbols.some((s) => s.name === 'MyClass' && s.kind === 'class')).toBe(true);
+        expect(result.symbols.some((s) => s.name === 'method' && s.kind === 'method')).toBe(true);
+    });
+
+    it('parses Go functions and types', async () => {
+        const content = [
+            'package main',
+            'func Add(a, b int) int { return a + b }',
+            'type MyStruct struct { Name string }',
+        ].join('\n');
+        const result = await parseFile('/main.go', content, 0);
+        expect(result.symbols.some((s) => s.name === 'Add' && s.kind === 'function')).toBe(true);
+        expect(result.symbols.some((s) => s.name === 'MyStruct' && s.kind === 'class')).toBe(true);
+    });
+
+    it('parses Rust functions and structs', async () => {
+        const content = [
+            'pub fn add(a: i32, b: i32) -> i32 { a + b }',
+            'pub struct MyStruct { name: String }',
+        ].join('\n');
+        const result = await parseFile('/lib.rs', content, 0);
+        expect(result.symbols.some((s) => s.name === 'add' && s.kind === 'function')).toBe(true);
+        expect(result.symbols.some((s) => s.name === 'MyStruct' && s.kind === 'class')).toBe(true);
+    });
+
+    it('parses Java class and methods', async () => {
+        const content = [
+            'package com.example;',
+            'public class MyClass {',
+            '    public void myMethod() {}',
+            '}',
+        ].join('\n');
+        const result = await parseFile('/MyClass.java', content, 0);
+        expect(result.symbols.some((s) => s.name === 'MyClass' && s.kind === 'class')).toBe(true);
+        expect(result.symbols.some((s) => s.name === 'myMethod' && s.kind === 'method')).toBe(true);
+    });
+
+    it('returns empty result for unsupported extension', async () => {
+        const result = await parseFile('/readme.md', '# Hello world', 0);
+        expect(result.symbols).toHaveLength(0);
+        expect(result.imports).toHaveLength(0);
+        expect(result.exports).toHaveLength(0);
     });
 });
 
