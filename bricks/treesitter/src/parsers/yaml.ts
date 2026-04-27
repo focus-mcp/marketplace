@@ -11,16 +11,15 @@
  */
 
 import { createRequire } from 'node:module';
-import { dirname, join } from 'node:path';
 import type { SymbolInfo } from '../operations.ts';
 import type { ParseResult, TsNode } from './registry.ts';
 import { registerLanguage } from './registry.ts';
 
 const _require = createRequire(import.meta.url);
-const _yamlPkgPath: string = _require.resolve(
+// Resolve the wasm file directly — robust under any CWD or Vitest mode
+const YAML_WASM_PATH: string = _require.resolve(
     '@tree-sitter-grammars/tree-sitter-yaml/tree-sitter-yaml.wasm',
 );
-const YAML_WASM_PATH: string = join(dirname(_yamlPkgPath), 'tree-sitter-yaml.wasm');
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Helpers

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 import { createRequire } from 'node:module';
-import { dirname, join } from 'node:path';
+import { dirname, isAbsolute, join } from 'node:path';
 import type { SymbolInfo } from '../operations.ts';
 
 const _require = createRequire(import.meta.url);
@@ -94,7 +94,7 @@ async function loadLanguage(wasmName: string): Promise<TsLanguage> {
         p = (async () => {
             const { Language } = await ensureInit();
             // If wasmName is an absolute path, use it directly; otherwise resolve from WASM_DIR
-            const wasmPath = wasmName.startsWith('/') ? wasmName : join(WASM_DIR, wasmName);
+            const wasmPath = isAbsolute(wasmName) ? wasmName : join(WASM_DIR, wasmName);
             return Language.load(wasmPath);
         })();
         _langPromiseCache.set(wasmName, p);
@@ -158,8 +158,8 @@ export function supportedLanguageNames(): string[] {
     const seen = new Set<string>();
     for (const entry of _registry.values()) {
         // wasmName may be an absolute path — extract just the basename for lookup
-        const basename = entry.wasmName.includes('/')
-            ? (entry.wasmName.split('/').at(-1) ?? entry.wasmName)
+        const basename = isAbsolute(entry.wasmName)
+            ? (entry.wasmName.split(/[\\/]/).at(-1) ?? entry.wasmName)
             : entry.wasmName;
         const lang =
             WASM_TO_LANG[basename] ?? basename.replace('tree-sitter-', '').replace('.wasm', '');
