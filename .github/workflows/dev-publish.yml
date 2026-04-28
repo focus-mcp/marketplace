@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   publish-dev:
-    name: Publish @focusmcp/* bricks@dev
+    name: Publish @focus-mcp/* bricks@dev
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -33,80 +33,17 @@ jobs:
           node-version: 22
           cache: pnpm
           registry-url: https://registry.npmjs.org
-          scope: '@focusmcp'
+          scope: '@focus-mcp'
       - run: pnpm install --frozen-lockfile
-
-      - name: Detect modified bricks since last commit
-        id: modified
-        env:
-          BEFORE: ${{ github.event.before }}
-          AFTER: ${{ github.sha }}
-          EVENT_NAME: ${{ github.event_name }}
+      - name: Apply changeset snapshot versions
         run: |
-          if [ "$EVENT_NAME" = "workflow_dispatch" ] \
-             || [ -z "$BEFORE" ] \
-             || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
-            # First push / force-push / manual dispatch — publish everything to catch up
-            echo "Catch-up mode: publishing all bricks"
-            BRICKS=$(ls -d bricks/*/ | sed 's|bricks/||; s|/||')
-          else
-            # Only bricks with source changes between before..after
-            BRICKS=$(git diff --name-only "${BEFORE}...${AFTER}" -- 'bricks/*/' \
-              | awk -F/ '{print $2}' | sort -u)
-          fi
-
-          echo "Modified bricks: ${BRICKS:-<none>}"
-          echo "bricks=$(echo "$BRICKS" | tr '\n' ' ' | xargs)" >> "$GITHUB_OUTPUT"
-
-      - name: Apply changeset snapshot versions (modified bricks only)
-        env:
-          BRICKS_LIST: ${{ steps.modified.outputs.bricks }}
-        run: |
-          if [ -z "$BRICKS_LIST" ]; then
-            echo "No bricks modified — skipping version bump."
-            exit 0
-          fi
-          # Build the --filter flags for modified bricks only
-          FILTERS=""
-          for name in $BRICKS_LIST; do
-            FILTERS="$FILTERS --filter @focusmcp/${name}"
-          done
-          # Snapshot mode: produces versions like 0.5.0-dev-20260428-abc1234
-          # from pending changesets for the matching packages.
-          # Falls back gracefully when no changesets are pending (no-op).
-          pnpm $FILTERS changeset version --snapshot dev || true
-
-      - name: Build modified bricks
-        env:
-          BRICKS_LIST: ${{ steps.modified.outputs.bricks }}
-        run: |
-          if [ -z "$BRICKS_LIST" ]; then
-            echo "No bricks modified — skipping build."
-            exit 0
-          fi
-          FILTERS=""
-          for name in $BRICKS_LIST; do
-            FILTERS="$FILTERS --filter @focusmcp/${name}"
-          done
-          pnpm $FILTERS run build
-
+          # Runs from repo root — reads .changeset/*.md and bumps all packages
+          # with pending changesets to their next version + snapshot suffix
+          # (e.g. 1.2.0-dev-20260428-abc1234).
+          pnpm changeset version --snapshot dev
+      - run: pnpm build
       - run: pnpm build:catalog
-
-      - name: Publish modified bricks with dev tag
+      - name: Publish all packages with dev tag
+        run: pnpm changeset publish --no-git-tag --tag dev
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          BRICKS_LIST: ${{ steps.modified.outputs.bricks }}
-        run: |
-          if [ -z "$BRICKS_LIST" ]; then
-            echo "No bricks modified — skipping publish."
-            exit 0
-          fi
-          for name in $BRICKS_LIST; do
-            dir="bricks/${name}"
-            [ -f "${dir}/package.json" ] || continue
-            PRIVATE=$(node -e "console.log(require('./${dir}/package.json').private)")
-            [ "$PRIVATE" = "true" ] && echo "  skip (private): ${name}" && continue
-            NAME=$(node -e "console.log(require('./${dir}/package.json').name)")
-            echo "Publishing ${NAME}..."
-            (cd "$dir" && pnpm changeset publish --no-git-tag --tag dev) || echo "  -> skipped"
-          done
