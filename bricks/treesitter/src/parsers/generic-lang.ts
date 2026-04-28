@@ -14,22 +14,11 @@
 
 import { createRequire } from 'node:module';
 import type { SymbolInfo } from '../operations.ts';
+import { endRow, firstLine, row } from './helpers.ts';
 import type { ParseResult, TsNode } from './registry.ts';
 import { registerLanguage } from './registry.ts';
 
 const _require = createRequire(import.meta.url);
-
-function row(node: TsNode): number {
-    return node.startPosition.row + 1;
-}
-function endRow(node: TsNode): number {
-    return node.endPosition.row + 1;
-}
-function firstLine(node: TsNode): string {
-    const text = node.text;
-    const nl = text.indexOf('\n');
-    return (nl === -1 ? text : text.slice(0, nl)).trim();
-}
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Generic symbol extractor — walks tree looking for known declaration patterns
@@ -173,16 +162,65 @@ registerLanguage(
 );
 
 // ──────────────────────────────────────────────────────────────────────────────
-// Elixir
+// Elixir — custom parser to avoid false-positives from generic `call` nodes.
+// In tree-sitter-elixir, ALL function calls are `call` nodes, not just defs.
+// We filter to only emit symbols for `def`, `defp`, `defmacro`, `defmacrop`,
+// `defmodule`, `defprotocol`, `defimpl`, `defstruct` definitions.
 // ──────────────────────────────────────────────────────────────────────────────
+
+const ELIXIR_DEF_KEYWORDS = new Set([
+    'def',
+    'defp',
+    'defmacro',
+    'defmacrop',
+    'defmodule',
+    'defprotocol',
+    'defimpl',
+    'defstruct',
+]);
+
+function elixirCallToSymbol(node: TsNode, filePath: string): SymbolInfo | null {
+    const fnNode = node.childForFieldName('function');
+    if (!fnNode || !ELIXIR_DEF_KEYWORDS.has(fnNode.text)) return null;
+    const argsNode = node.childForFieldName('arguments');
+    const nameNode =
+        argsNode?.children.find((c) => c.type === 'identifier' || c.type === 'alias') ?? null;
+    if (!nameNode) return null;
+    return {
+        name: nameNode.text,
+        kind: fnNode.text === 'defmodule' ? 'class' : 'function',
+        file: filePath,
+        line: row(node),
+        endLine: endRow(node),
+        signature: firstLine(node),
+        exported: fnNode.text === 'def' || fnNode.text === 'defmacro',
+    };
+}
+
+function parseElixir(
+    source: string,
+    filePath: string,
+    parser: { parse(s: string): { rootNode: TsNode } },
+): ParseResult {
+    const tree = parser.parse(source);
+    const symbols: SymbolInfo[] = [];
+
+    function visit(node: TsNode): void {
+        if (node.type === 'call') {
+            const sym = elixirCallToSymbol(node, filePath);
+            if (sym) symbols.push(sym);
+        }
+        for (const child of node.children) visit(child);
+    }
+
+    visit(tree.rootNode);
+    return { symbols, imports: [], exports: [] };
+}
 
 registerLanguage(
     ['.ex', '.exs'],
     _require.resolve('@cursorless/tree-sitter-wasms/out/tree-sitter-elixir.wasm'),
-    buildGenericParser([
-        { types: ['call'], nameField: 'function', kind: 'function' },
-        { types: ['alias'], nameChildType: 'identifier', kind: 'class' },
-    ]),
+    parseElixir,
 );
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -247,25 +285,102 @@ registerLanguage(
 );
 
 // ──────────────────────────────────────────────────────────────────────────────
-// XML
+// XML — custom parser: only top-level elements to avoid exponential noise.
+// A Spring config, SVG, or Maven pom.xml can have hundreds of nested elements.
+// We emit symbols only for direct children of the document root.
 // ──────────────────────────────────────────────────────────────────────────────
+
+function parseXml(
+    source: string,
+    filePath: string,
+    parser: { parse(s: string): { rootNode: TsNode } },
+): ParseResult {
+    const tree = parser.parse(source);
+    const symbols: SymbolInfo[] = [];
+
+    // XML root → document → element (root element)
+    // We emit the root element and its direct element children only.
+    function visit(node: TsNode, depth: number): void {
+        if (node.type === 'element' && depth <= 2) {
+            const startTag = node.children.find(
+                (c) => c.type === 'start_tag' || c.type === 'self_closing_tag',
+            );
+            const tagNameNode = startTag?.children.find((c) => c.type === 'tag_name');
+            if (tagNameNode) {
+                symbols.push({
+                    name: tagNameNode.text,
+                    kind: 'variable',
+                    file: filePath,
+                    line: row(node),
+                    endLine: endRow(node),
+                    signature: firstLine(node),
+                    exported: false,
+                });
+            }
+        }
+        if (depth < 2) {
+            for (const child of node.children) visit(child, depth + 1);
+        }
+    }
+
+    visit(tree.rootNode, 0);
+    return { symbols, imports: [], exports: [] };
+}
 
 registerLanguage(
     ['.xml'],
     _require.resolve('@cursorless/tree-sitter-wasms/out/tree-sitter-xml.wasm'),
-    buildGenericParser([{ types: ['element'], nameChildType: 'tag_name', kind: 'variable' }]),
+    parseXml,
 );
 
 // ──────────────────────────────────────────────────────────────────────────────
-// R
+// R — custom parser: only capture function assignments (x <- function(...)).
+// `binary_operator` matches ALL binary expressions (x+y, a==b, df %>% mutate).
+// We only emit a symbol when the operator is `<-`, `=`, or `<<-` AND the
+// right-hand side is a `function_definition` node.
 // ──────────────────────────────────────────────────────────────────────────────
+
+const R_ASSIGN_OPS = new Set(['<-', '<<-', '=']);
+
+function parseR(
+    source: string,
+    filePath: string,
+    parser: { parse(s: string): { rootNode: TsNode } },
+): ParseResult {
+    const tree = parser.parse(source);
+    const symbols: SymbolInfo[] = [];
+
+    function visit(node: TsNode): void {
+        if (node.type === 'binary_operator') {
+            const [lhs, op, rhs] = node.children;
+            if (
+                op &&
+                R_ASSIGN_OPS.has(op.text) &&
+                rhs?.type === 'function_definition' &&
+                lhs?.type === 'identifier'
+            ) {
+                symbols.push({
+                    name: lhs.text,
+                    kind: 'function',
+                    file: filePath,
+                    line: row(node),
+                    endLine: endRow(node),
+                    signature: firstLine(node),
+                    exported: false,
+                });
+            }
+        }
+        for (const child of node.children) visit(child);
+    }
+
+    visit(tree.rootNode);
+    return { symbols, imports: [], exports: [] };
+}
 
 registerLanguage(
     ['.r'],
     _require.resolve('@cursorless/tree-sitter-wasms/out/tree-sitter-r.wasm'),
-    buildGenericParser([
-        { types: ['binary_operator'], nameChildType: 'identifier', kind: 'function' },
-    ]),
+    parseR,
 );
 
 // ──────────────────────────────────────────────────────────────────────────────

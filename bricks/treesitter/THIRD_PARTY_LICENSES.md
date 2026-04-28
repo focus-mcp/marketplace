@@ -20,7 +20,7 @@ No WASM files are committed to this repository — all grammars are distributed 
 - **License**: Unlicense (public domain)
 - **Publisher**: Cursorless contributors
 - **Version**: ^0.8.1 (published 2026-03-30)
-- **Used for**: prebuilt WASM grammars for 44 languages including HTML, Markdown, SCSS, JSON, Lua, Kotlin, Swift, Dart, Elixir, Haskell, Scala, Zig, XML, R, Perl, LaTeX, Nix, HCL, Gleam, Elm, GDScript, Clojure, Properties, YAML, and more.
+- **Used for**: prebuilt WASM grammars for 44 languages including HTML, Markdown, SCSS, JSON, Lua, Kotlin, Swift, Dart, Elixir, Haskell, Scala, Zig, XML, R, Perl, LaTeX, Nix, HCL, Gleam, Elm, GDScript, Clojure, Properties, and more.
 
 The Unlicense grants any rights to use, copy, modify, distribute, and sell without restriction.
 
@@ -31,8 +31,8 @@ The Unlicense grants any rights to use, copy, modify, distribute, and sell witho
 - **Source**: https://github.com/tree-sitter-grammars/tree-sitter-yaml
 - **License**: MIT
 - **Publisher**: tree-sitter-grammars organization
-- **Version**: ^0.7.0
-- **Used for**: YAML grammar (primary source — shipped as absolute path, not from @vscode bundle).
+- **Version**: ^0.7.1
+- **Used for**: YAML grammar (.yaml/.yml — loaded via absolute path, not from the @vscode or @cursorless bundles).
 
 ---
 

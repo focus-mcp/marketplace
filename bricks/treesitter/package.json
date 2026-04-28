@@ -14,7 +14,8 @@
         "dist",
         "mcp-brick.json",
         "mcp-brick.json.license",
-        "README.md"
+        "README.md",
+        "THIRD_PARTY_LICENSES.md"
     ],
     "scripts": {
         "test": "vitest run src",

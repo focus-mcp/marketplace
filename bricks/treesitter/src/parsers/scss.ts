@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: MIT
 
 /**
- * Tree-sitter parser for SCSS and SASS.
- * Handles: .scss .sass (SASS uses SCSS grammar as a fallback)
+ * Tree-sitter parser for SCSS.
+ * Handles: .scss only (.sass uses a different indented-syntax grammar not available here)
  *
  * Grammar: @cursorless/tree-sitter-wasms (tree-sitter-scss.wasm).
  * Extracts mixin definitions, variable declarations, and class/id selectors.
@@ -11,6 +11,7 @@
 
 import { createRequire } from 'node:module';
 import type { SymbolInfo } from '../operations.ts';
+import { endRow, firstLine, row } from './helpers.ts';
 import type { ParseResult, TsNode } from './registry.ts';
 import { registerLanguage } from './registry.ts';
 
@@ -18,18 +19,6 @@ const _require = createRequire(import.meta.url);
 const SCSS_WASM_PATH: string = _require.resolve(
     '@cursorless/tree-sitter-wasms/out/tree-sitter-scss.wasm',
 );
-
-function row(node: TsNode): number {
-    return node.startPosition.row + 1;
-}
-function endRow(node: TsNode): number {
-    return node.endPosition.row + 1;
-}
-function firstLine(node: TsNode): string {
-    const text = node.text;
-    const nl = text.indexOf('\n');
-    return (nl === -1 ? text : text.slice(0, nl)).trim();
-}
 
 function sym(
     name: string,
@@ -66,7 +55,8 @@ function visitDeclaration(node: TsNode, filePath: string): SymbolInfo | null {
 function visitRuleSet(node: TsNode, filePath: string): SymbolInfo | null {
     const selector = node.children.find((c) => c.type === 'selectors');
     if (!selector) return null;
-    const selText = selector.text.trim().split(/[\s,{]/)[0] ?? selector.text.trim();
+    // split() always returns at least one element, so [0]! is safe
+    const selText = selector.text.trim().split(/[\s,{]/)[0] ?? '';
     if (!selText || (!selText.startsWith('.') && !selText.startsWith('#'))) return null;
     return sym(selText, 'class', false, filePath, node);
 }
@@ -97,4 +87,6 @@ function parseScss(
     return { symbols, imports: [], exports: [] };
 }
 
-registerLanguage(['.scss', '.sass'], SCSS_WASM_PATH, parseScss);
+// Note: .sass (indented syntax) uses a different grammar — not registered here
+// to avoid silently misparsing SASS files with the SCSS grammar.
+registerLanguage(['.scss'], SCSS_WASM_PATH, parseScss);

@@ -11,6 +11,7 @@
 
 import { createRequire } from 'node:module';
 import type { SymbolInfo } from '../operations.ts';
+import { endRow, firstLine, row } from './helpers.ts';
 import type { ParseResult, TsNode } from './registry.ts';
 import { registerLanguage } from './registry.ts';
 
@@ -18,18 +19,6 @@ const _require = createRequire(import.meta.url);
 const HTML_WASM_PATH: string = _require.resolve(
     '@cursorless/tree-sitter-wasms/out/tree-sitter-html.wasm',
 );
-
-function row(node: TsNode): number {
-    return node.startPosition.row + 1;
-}
-function endRow(node: TsNode): number {
-    return node.endPosition.row + 1;
-}
-function firstLine(node: TsNode): string {
-    const text = node.text;
-    const nl = text.indexOf('\n');
-    return (nl === -1 ? text : text.slice(0, nl)).trim();
-}
 
 const HEADING_TAGS = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 

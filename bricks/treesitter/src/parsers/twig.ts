@@ -14,23 +14,12 @@
 
 import { createRequire } from 'node:module';
 import type { SymbolInfo } from '../operations.ts';
+import { endRow, firstLine, row } from './helpers.ts';
 import type { ParseResult, TsNode } from './registry.ts';
 import { registerLanguage } from './registry.ts';
 
 const _require = createRequire(import.meta.url);
 const TWIG_WASM_PATH: string = _require.resolve('tree-sitter-twig/tree-sitter-twig.wasm');
-
-function row(node: TsNode): number {
-    return node.startPosition.row + 1;
-}
-function endRow(node: TsNode): number {
-    return node.endPosition.row + 1;
-}
-function firstLine(node: TsNode): string {
-    const text = node.text;
-    const nl = text.indexOf('\n');
-    return (nl === -1 ? text : text.slice(0, nl)).trim();
-}
 
 function collectSymbols(root: TsNode, filePath: string): SymbolInfo[] {
     const symbols: SymbolInfo[] = [];
