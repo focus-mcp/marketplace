@@ -117,6 +117,20 @@ export async function tsExtractSymbols(
     };
 }
 
+export interface TsSupportedExtsOutput {
+    /** All file extensions registered in the tree-sitter language registry. */
+    readonly exts: string[];
+}
+
+/**
+ * Return all file extensions supported by the tree-sitter registry.
+ * Consumed by code-intel bricks to dynamically filter which files to process.
+ * Target: treesitter:supported-exts
+ */
+export function tsSupportedExts(): TsSupportedExtsOutput {
+    return { exts: supportedExtensions() };
+}
+
 // ──────────────────────────────────────────────────────────────────────────────
 // MCP tool inputs
 // ──────────────────────────────────────────────────────────────────────────────

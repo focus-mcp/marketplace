@@ -10,6 +10,7 @@ import {
     tsLangs,
     tsReindex,
     tsStatus,
+    tsSupportedExts,
 } from './operations.ts';
 
 interface BrickBus {
@@ -62,6 +63,7 @@ const brick: Brick = {
                 tsExtractSymbols(data as TsExtractSymbolsInput),
             ),
         );
+        unsubscribers.push(ctx.bus.handle('treesitter:supported-exts', () => tsSupportedExts()));
     },
     stop() {
         for (const unsub of unsubscribers) unsub();

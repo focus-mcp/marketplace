@@ -1,15 +1,16 @@
 ---
-'@focus-mcp/brick-treesitter': minor
-'@focus-mcp/brick-symbol': minor
+"@focus-mcp/brick-treesitter": minor
+"@focus-mcp/brick-symbol": minor
 ---
 
 feat(code-intel/multilang): pilot multi-language support via EventBus
 
-Add `treesitter:extract-symbols` internal service to the treesitter brick.
-Refactor the symbol brick to consume it via `bus.request`, enabling PHP, Python,
-Go, Rust, Java, and all other tree-sitter-supported languages.
+Add treesitter:extract-symbols and treesitter:supported-exts internal bus services
+to the treesitter brick. Refactor the symbol brick to consume them via bus.request,
+replacing hardcoded TS/JS regex with tree-sitter parsing for ~50 languages.
 
-- `treesitter`: exposes `treesitter:extract-symbols` bus handler (path + content → symbols/imports/exports)
-- `symbol`: removes hardcoded TS/JS regex; delegates to treesitter via bus; extends file collection to ~50 languages
-- `symbol`: declares `dependencies: ["treesitter"]` in manifest (resolved transitively by `focus add`)
-- Tests: 32 treesitter unit tests (incl. PHP/Python extract-symbols), 18 symbol unit tests with mock bus, 7 cross-brick integration tests (TS + PHP + Python)
+- treesitter: treesitter:extract-symbols service (path + content → symbols/imports/exports)
+- treesitter: treesitter:supported-exts service (returns dynamic extension list)
+- symbol: bus injection pattern (setBus/clearBus), per-file error isolation
+- symbol: dependencies: ["treesitter"] in mcp-brick.json
+- Tests: cross-brick integration tests for TS, PHP, Python

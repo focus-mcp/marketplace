@@ -97,8 +97,28 @@ function makeMockBus() {
                 const { path, content } = payload as { path: string; content: string };
                 return makeExtractResult(path, content);
             }
-            if (target === 'treesitter:langs') {
-                return { langs: ['typescript', 'php', 'python'] };
+            if (target === 'treesitter:supported-exts') {
+                // Return a representative set covering TS, PHP, Python and common binary-free exts
+                return {
+                    exts: [
+                        '.ts',
+                        '.tsx',
+                        '.js',
+                        '.jsx',
+                        '.mjs',
+                        '.cjs',
+                        '.php',
+                        '.py',
+                        '.go',
+                        '.rs',
+                        '.java',
+                        '.kt',
+                        '.rb',
+                        '.cs',
+                        '.swift',
+                        '.scala',
+                    ],
+                };
             }
             throw new Error(`Unexpected bus.request target: ${target}`);
         }) as unknown as SymbolBrickBus['request'],

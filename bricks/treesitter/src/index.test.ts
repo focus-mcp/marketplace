@@ -14,6 +14,7 @@ import {
     tsLangs,
     tsReindex,
     tsStatus,
+    tsSupportedExts,
 } from './operations.ts';
 
 let testDir: string;
@@ -358,8 +359,29 @@ describe('tsExtractSymbols', () => {
     });
 });
 
+describe('tsSupportedExts', () => {
+    it('returns a non-empty array of extensions starting with a dot', () => {
+        const { exts } = tsSupportedExts();
+        expect(exts.length).toBeGreaterThan(0);
+        for (const ext of exts) {
+            expect(ext.startsWith('.')).toBe(true);
+        }
+    });
+
+    it('includes expected languages (.ts, .php, .py, .go, .rs, .java)', () => {
+        const { exts } = tsSupportedExts();
+        const extSet = new Set(exts);
+        expect(extSet.has('.ts')).toBe(true);
+        expect(extSet.has('.php')).toBe(true);
+        expect(extSet.has('.py')).toBe(true);
+        expect(extSet.has('.go')).toBe(true);
+        expect(extSet.has('.rs')).toBe(true);
+        expect(extSet.has('.java')).toBe(true);
+    });
+});
+
 describe('treesitter brick', () => {
-    it('registers 6 handlers on start and unregisters on stop', async () => {
+    it('registers 7 handlers on start and unregisters on stop', async () => {
         const { default: brick } = await import('./index.ts');
         const unsubscribers: Array<() => void> = [];
         const bus = {
@@ -372,13 +394,14 @@ describe('treesitter brick', () => {
         };
 
         await brick.start({ bus });
-        expect(bus.handle).toHaveBeenCalledTimes(6);
+        expect(bus.handle).toHaveBeenCalledTimes(7);
         expect(bus.handle).toHaveBeenCalledWith('treesitter:index', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:reindex', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:status', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:cleanup', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:langs', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:extract-symbols', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('treesitter:supported-exts', expect.any(Function));
 
         await brick.stop();
         for (const unsub of unsubscribers) {
