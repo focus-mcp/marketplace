@@ -139,18 +139,50 @@ describe('srMap', () => {
         expect(result.lines.some((l) => l.includes('Greeter'))).toBe(true);
     });
 
-    it('returns lines for PHP file', async () => {
+    it('returns lines for PHP file and includes class name', async () => {
         const phpContent = '<?php\nclass UserService {\n    public function find(): void {}\n}\n';
         await writeFile(join(testDir, 'service.php'), phpContent);
         const result = await srMap({ path: join(testDir, 'service.php') });
         expect(Array.isArray(result.lines)).toBe(true);
+        expect(result.lines.some((l) => l.includes('UserService'))).toBe(true);
     });
 
-    it('returns lines for Python file', async () => {
+    it('returns lines for Python file and includes class name', async () => {
         const pyContent = 'class DataProcessor:\n    def process(self): pass\n';
         await writeFile(join(testDir, 'processor.py'), pyContent);
         const result = await srMap({ path: join(testDir, 'processor.py') });
         expect(Array.isArray(result.lines)).toBe(true);
+        expect(result.lines.some((l) => l.includes('DataProcessor'))).toBe(true);
+    });
+});
+
+describe('smartread — fallback (no bus)', () => {
+    it('srMap falls back to regex when no bus is set', async () => {
+        clearBus();
+        const result = await srMap({ path: join(testDir, 'sample.ts') });
+        expect(Array.isArray(result.lines)).toBe(true);
+        expect(result.lines.some((l) => l.includes('hello'))).toBe(true);
+    });
+
+    it('srSignatures falls back to regex when no bus is set', async () => {
+        clearBus();
+        const result = await srSignatures({ path: join(testDir, 'sample.ts') });
+        expect(Array.isArray(result.lines)).toBe(true);
+        expect(result.lines.some((l) => l.includes('export'))).toBe(true);
+    });
+
+    it('srImports falls back to regex when no bus is set', async () => {
+        clearBus();
+        const result = await srImports({ path: join(testDir, 'sample.ts') });
+        expect(Array.isArray(result.lines)).toBe(true);
+        expect(result.lines.some((l) => l.includes('import'))).toBe(true);
+    });
+
+    it('srSummary falls back to regex when no bus is set', async () => {
+        clearBus();
+        const result = await srSummary({ path: join(testDir, 'sample.ts') });
+        expect(Array.isArray(result.entries)).toBe(true);
+        expect(result.entries.some((e) => e.name === 'hello')).toBe(true);
     });
 });
 

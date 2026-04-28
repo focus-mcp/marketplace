@@ -80,7 +80,8 @@ export async function srMap(input: SrInput): Promise<{ lines: string[] }> {
             { path: resolve(input.path), content },
         );
         return { lines: result.symbols.map((s) => s.signature).filter(Boolean) };
-    } catch {
+    } catch (err) {
+        if (_bus !== undefined) throw err;
         const pat = /^(export\s+)?(async\s+function|function|class|interface|type|const)\s+/;
         return { lines: content.split('\n').filter((l) => pat.test(l.trimStart())) };
     }
@@ -102,13 +103,28 @@ export async function srSignatures(input: SrInput): Promise<{ lines: string[] }>
                 .map((s) => s.signature)
                 .filter(Boolean),
         };
-    } catch {
+    } catch (err) {
+        if (_bus !== undefined) throw err;
         const pat = /^export\s+(async\s+function|function|class|interface|type|const)\s+/;
         return { lines: content.split('\n').filter((l) => pat.test(l.trimStart())) };
     }
 }
 
 // ─── srImports ────────────────────────────────────────────────────────────────
+
+function reconstructImportLine(imp: { from: string; names: string[]; kind?: string }): string {
+    if (imp.kind === 'side-effect' || (imp.names.length === 0 && imp.kind !== 'namespace')) {
+        return `import '${imp.from}'`;
+    }
+    if (imp.kind === 'namespace') {
+        const ns = imp.names[0] ?? '*';
+        return `import * as ${ns} from '${imp.from}'`;
+    }
+    if (imp.names.length > 0) {
+        return `import { ${imp.names.join(', ')} } from '${imp.from}'`;
+    }
+    return `import '${imp.from}'`;
+}
 
 export async function srImports(input: SrInput): Promise<{ lines: string[] }> {
     const content = await readFile(resolve(input.path), 'utf-8');
@@ -118,13 +134,9 @@ export async function srImports(input: SrInput): Promise<{ lines: string[] }> {
             'treesitter:extract-imports',
             { path: resolve(input.path), content },
         );
-        return {
-            lines: result.imports.map((imp) => {
-                const names = imp.names.length > 0 ? `{ ${imp.names.join(', ')} }` : '*';
-                return `import ${names} from '${imp.from}'`;
-            }),
-        };
-    } catch {
+        return { lines: result.imports.map(reconstructImportLine) };
+    } catch (err) {
+        if (_bus !== undefined) throw err;
         return {
             lines: content
                 .split('\n')
@@ -153,7 +165,8 @@ export async function srSummary(input: SrInput): Promise<{ entries: SrSummaryEnt
                     lineCount: Math.max(1, s.endLine - s.line + 1),
                 })),
         };
-    } catch {
+    } catch (err) {
+        if (_bus !== undefined) throw err;
         return { entries: srSummaryFallback(content) };
     }
 }
