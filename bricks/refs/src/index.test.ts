@@ -274,6 +274,28 @@ describe('refsHierarchy', () => {
     });
 });
 
+describe('refsReferences — supported-exts bus call', () => {
+    it('calls treesitter:supported-exts and uses response to filter files', async () => {
+        const mockBus = {
+            request: vi.fn().mockImplementation((target: string) => {
+                if (target === 'treesitter:supported-exts')
+                    return Promise.resolve({ exts: ['.rb'] });
+                // treesitter:extract-refs for .rb files
+                return Promise.resolve({
+                    refs: [{ name: 'MySymbol', line: 1, col: 0, kind: 'reference' }],
+                });
+            }),
+        };
+        setBus(mockBus);
+        await writeFile(join(testDir, 'a.ts'), 'const x = MySymbol;\n');
+        await writeFile(join(testDir, 'b.rb'), 'x = MySymbol\n');
+        const result = await refsReferences({ name: 'MySymbol', dir: testDir });
+        expect(mockBus.request).toHaveBeenCalledWith('treesitter:supported-exts', {});
+        // Only b.rb should be scanned since treesitter reports only .rb
+        expect(result.references.every((r) => r.file.endsWith('.rb'))).toBe(true);
+    });
+});
+
 describe('refs brick', () => {
     it('registers 4 handlers on start, injects bus, unregisters on stop', async () => {
         const { default: brick } = await import('./index.ts');

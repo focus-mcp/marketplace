@@ -163,7 +163,11 @@ async function readFileContent(filePath: string): Promise<string> {
 
 // ─── refsReferences ──────────────────────────────────────────────────────────
 
-const IMPORT_LINE_RE = /^(?:import|use)\s+/;
+const IMPORT_LINE_RE = /^(?:import|from\s+\S+\s+import|use)\s+/;
+
+function escapeRegex(s: string): string {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 function refsFromBusResult(fp: string, content: string, refs: RefEntry[]): ReferenceEntry[] {
     const lines = content.split('\n');
@@ -175,7 +179,7 @@ function refsFromBusResult(fp: string, content: string, refs: RefEntry[]): Refer
 }
 
 function refsFromText(fp: string, content: string, name: string): ReferenceEntry[] {
-    const importPattern = new RegExp(`\\b${name}\\b`);
+    const importPattern = new RegExp(`\\b${escapeRegex(name)}\\b`);
     const importLinePattern = /^import\s+/;
     const entries: ReferenceEntry[] = [];
     const lines = content.split('\n');
@@ -197,11 +201,12 @@ async function refsForFile(fp: string, name: string): Promise<ReferenceEntry[]> 
     }
     if (_bus) {
         try {
-            const { refs } = await _bus.request<
+            const result = await _bus.request<
                 { path: string; content: string; name: string },
                 ExtractRefsOutput
             >('treesitter:extract-refs', { path: fp, content, name });
-            return refsFromBusResult(fp, content, refs);
+            if (!Array.isArray(result?.refs)) throw new Error('invalid bus response');
+            return refsFromBusResult(fp, content, result.refs);
         } catch {
             // fallback to text search below
         }
@@ -228,7 +233,9 @@ export async function refsImplementations(input: RefsInput): Promise<RefsImpleme
     await collectFiles(abs, files);
 
     const implementations: ImplementationEntry[] = [];
-    const implPattern = new RegExp(`(?:implements|extends)\\s+[\\w,\\s]*${input.name}\\b`);
+    const implPattern = new RegExp(
+        `(?:implements|extends)\\s+[\\w,\\s]*${escapeRegex(input.name)}\\b`,
+    );
 
     for (const fp of files) {
         let lines: string[];
@@ -274,7 +281,7 @@ async function findDeclInFile(fp: string, name: string): Promise<DeclarationEntr
         }
     }
     const declPattern = new RegExp(
-        `^export\\s+(?:async\\s+)?(?:function|class|default\\s+class|interface|type|const)\\s+${name}\\b`,
+        `^export\\s+(?:async\\s+)?(?:function|class|default\\s+class|interface|type|const)\\s+${escapeRegex(name)}\\b`,
     );
     const lines = content.split('\n');
     for (let i = 0; i < lines.length; i++) {
@@ -316,11 +323,12 @@ interface HierarchyPatterns {
 }
 
 function buildHierarchyPatterns(name: string): HierarchyPatterns {
+    const escaped = escapeRegex(name);
     return {
-        parentPattern: new RegExp(`class\\s+${name}\\s+extends\\s+(\\w+)`),
-        childPattern: new RegExp(`class\\s+(\\w+)\\s+extends\\s+${name}\\b`),
-        ifaceParentPattern: new RegExp(`interface\\s+${name}\\s+extends\\s+([\\w,\\s]+)`),
-        ifaceChildPattern: new RegExp(`interface\\s+(\\w+)\\s+extends\\s+[\\w,\\s]*${name}\\b`),
+        parentPattern: new RegExp(`class\\s+${escaped}\\s+extends\\s+(\\w+)`),
+        childPattern: new RegExp(`class\\s+(\\w+)\\s+extends\\s+${escaped}\\b`),
+        ifaceParentPattern: new RegExp(`interface\\s+${escaped}\\s+extends\\s+([\\w,\\s]+)`),
+        ifaceChildPattern: new RegExp(`interface\\s+(\\w+)\\s+extends\\s+[\\w,\\s]*${escaped}\\b`),
     };
 }
 
