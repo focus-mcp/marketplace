@@ -9,7 +9,15 @@ import type {
     DepFanoutInput,
     DepImportsInput,
 } from './operations.ts';
-import { depCircular, depExports, depFanin, depFanout, depImports } from './operations.ts';
+import {
+    clearBus,
+    depCircular,
+    depExports,
+    depFanin,
+    depFanout,
+    depImports,
+    setBus,
+} from './operations.ts';
 
 interface BrickBus {
     on(
@@ -17,6 +25,10 @@ interface BrickBus {
         handler: (data: unknown) => Promise<unknown> | unknown,
     ): undefined | (() => void);
     handle(target: string, handler: (data: unknown) => Promise<unknown> | unknown): () => void;
+    request<TRequest = unknown, TResponse = unknown>(
+        target: string,
+        payload: TRequest,
+    ): Promise<TResponse>;
 }
 
 interface BrickContext {
@@ -46,6 +58,7 @@ const brick: Brick = {
     start(ctx) {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
+        setBus(ctx.bus);
         unsubscribers.push(
             ctx.bus.handle('depgraph:imports', (data) => depImports(data as DepImportsInput)),
         );
@@ -65,6 +78,7 @@ const brick: Brick = {
     stop() {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
+        clearBus();
     },
 };
 

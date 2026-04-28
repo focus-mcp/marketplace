@@ -2,26 +2,64 @@
 // SPDX-License-Identifier: MIT
 
 import { readdir, readFile } from 'node:fs/promises';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, extname, join, resolve } from 'node:path';
 
-const SUPPORTED_EXTS = new Set(['.ts', '.tsx', '.js', '.jsx']);
-const RELATIVE_EXTS = ['.ts', '.tsx', '.js', '.jsx'] as const;
+// ─── Bus interface ────────────────────────────────────────────────────────────
 
-async function collectFiles(dir: string): Promise<string[]> {
-    const entries = await readdir(dir, { withFileTypes: true });
-    const results: string[] = [];
-    for (const e of entries) {
-        if (e.name.startsWith('.') || e.name === 'node_modules') continue;
-        const full = join(dir, e.name);
-        if (e.isDirectory()) {
-            results.push(...(await collectFiles(full)));
-        } else {
-            const ext = e.name.slice(e.name.lastIndexOf('.'));
-            if (SUPPORTED_EXTS.has(ext)) results.push(full);
-        }
-    }
-    return results;
+export interface DepgraphBrickBus {
+    request<TRequest = unknown, TResponse = unknown>(
+        target: string,
+        payload: TRequest,
+    ): Promise<TResponse>;
 }
+
+// ─── Module-level bus injection ───────────────────────────────────────────────
+
+const DEFAULT_EXTS = ['.ts', '.tsx', '.js', '.jsx', '.php', '.py', '.go', '.rs', '.java'] as const;
+
+let _bus: DepgraphBrickBus | undefined;
+let _supportedExtsPromise: Promise<Set<string>> | undefined;
+
+export function setBus(bus: DepgraphBrickBus): void {
+    _bus = bus;
+    _supportedExtsPromise = undefined;
+}
+
+export function clearBus(): void {
+    _bus = undefined;
+    _supportedExtsPromise = undefined;
+}
+
+function getSupportedExts(): Promise<Set<string>> {
+    if (_supportedExtsPromise) return _supportedExtsPromise;
+    _supportedExtsPromise = (async () => {
+        if (!_bus) return new Set(DEFAULT_EXTS);
+        try {
+            const { exts } = await _bus.request<object, { exts: string[] }>(
+                'treesitter:supported-exts',
+                {},
+            );
+            return new Set(exts);
+        } catch {
+            return new Set(DEFAULT_EXTS);
+        }
+    })();
+    return _supportedExtsPromise;
+}
+
+// ─── Bus response types (MUST match treesitter brick's shapes — bus contract) ─
+
+interface BusImportEntry {
+    from: string;
+    names: string[];
+    kind?: string;
+}
+
+interface ExtractImportsOutput {
+    imports: BusImportEntry[];
+}
+
+// ─── Public types ─────────────────────────────────────────────────────────────
 
 export interface ImportInfo {
     from: string;
@@ -45,6 +83,29 @@ export interface DepFaninInput {
 export interface DepFanoutInput {
     readonly file: string;
 }
+
+// ─── File collection ──────────────────────────────────────────────────────────
+
+// Note: relative extensions for import resolution (TS-style only)
+const RELATIVE_EXTS = ['.ts', '.tsx', '.js', '.jsx'] as const;
+
+async function collectFiles(dir: string): Promise<string[]> {
+    const exts = await getSupportedExts();
+    const entries = await readdir(dir, { withFileTypes: true });
+    const results: string[] = [];
+    for (const e of entries) {
+        if (e.name.startsWith('.') || e.name === 'node_modules' || e.name === 'vendor') continue;
+        const full = join(dir, e.name);
+        if (e.isDirectory()) {
+            results.push(...(await collectFiles(full)));
+        } else {
+            if (exts.has(extname(e.name))) results.push(full);
+        }
+    }
+    return results;
+}
+
+// ─── Regex-based parsers (kept for backward compat + unit tests) ──────────────
 
 const rEsmImport = /^import\s+.*\s+from\s+['"]([^'"]+)['"]/;
 const rCjsRequire = /require\s*\(\s*['"]([^'"]+)['"]\s*\)/;
@@ -96,7 +157,28 @@ export function parseExports(content: string): string[] {
     return fileExports;
 }
 
-/** Resolve a relative import specifier to a file in the files set */
+// ─── Bus-enhanced import extraction ──────────────────────────────────────────
+
+async function getImportsForFile(filePath: string, content: string): Promise<ImportInfo[]> {
+    const bus = _bus;
+    if (!bus) return parseImports(content);
+    try {
+        const result = await bus.request<{ path: string; content: string }, ExtractImportsOutput>(
+            'treesitter:extract-imports',
+            { path: filePath, content },
+        );
+        return result.imports.map((imp) => ({
+            from: imp.from,
+            names: imp.names,
+            kind: (imp.kind === 'cjs' ? 'cjs' : 'esm') as 'esm' | 'cjs',
+        }));
+    } catch {
+        return parseImports(content);
+    }
+}
+
+// ─── Import resolution ────────────────────────────────────────────────────────
+
 function resolveImport(from: string, baseDir: string, files: ReadonlySet<string>): string | null {
     const candidate = join(baseDir, from);
     if (files.has(candidate)) return candidate;
@@ -107,16 +189,25 @@ function resolveImport(from: string, baseDir: string, files: ReadonlySet<string>
     return null;
 }
 
-function buildDepGraph(files: string[], contents: Map<string, string>): Map<string, Set<string>> {
+async function buildDepGraph(
+    files: string[],
+    contents: Map<string, string>,
+): Promise<Map<string, Set<string>>> {
     const fileSet = new Set(files);
     const graph = new Map<string, Set<string>>();
     for (const f of files) {
         const deps = new Set<string>();
         const base = dirname(f);
-        for (const imp of parseImports(contents.get(f) ?? '')) {
-            if (!imp.from.startsWith('.')) continue;
-            const resolved = resolveImport(imp.from, base, fileSet);
-            if (resolved) deps.add(resolved);
+        try {
+            const content = contents.get(f) ?? '';
+            const imports = await getImportsForFile(f, content);
+            for (const imp of imports) {
+                if (!imp.from.startsWith('.')) continue;
+                const resolved = resolveImport(imp.from, base, fileSet);
+                if (resolved) deps.add(resolved);
+            }
+        } catch {
+            // per-file error isolation
         }
         graph.set(f, deps);
     }
@@ -147,9 +238,12 @@ function detectCycles(graph: Map<string, Set<string>>, files: string[]): string[
     return cycles;
 }
 
+// ─── Tool implementations ─────────────────────────────────────────────────────
+
 export async function depImports(input: DepImportsInput): Promise<{ imports: ImportInfo[] }> {
     const content = await readFile(resolve(input.file), 'utf-8');
-    return { imports: parseImports(content) };
+    const imports = await getImportsForFile(resolve(input.file), content);
+    return { imports };
 }
 
 export async function depExports(input: DepExportsInput): Promise<{ exports: string[] }> {
@@ -161,19 +255,25 @@ export async function depCircular(input: DepCircularInput): Promise<{ cycles: st
     const abs = resolve(input.dir);
     const files = await collectFiles(abs);
     const contents = new Map<string, string>();
-    for (const f of files) contents.set(f, await readFile(f, 'utf-8'));
-    const graph = buildDepGraph(files, contents);
+    for (const f of files) {
+        try {
+            contents.set(f, await readFile(f, 'utf-8'));
+        } catch {
+            // per-file error isolation
+        }
+    }
+    const graph = await buildDepGraph(files, contents);
     return { cycles: detectCycles(graph, files) };
 }
 
 function fileImportsTarget(
-    content: string,
+    imports: ImportInfo[],
     sourceFile: string,
     target: string,
     allFiles: ReadonlySet<string>,
 ): boolean {
     const base = dirname(sourceFile);
-    for (const imp of parseImports(content)) {
+    for (const imp of imports) {
         if (!imp.from.startsWith('.')) continue;
         const resolved = resolveImport(imp.from, base, allFiles);
         if (resolved === target) return true;
@@ -189,8 +289,13 @@ export async function depFanin(input: DepFaninInput): Promise<{ fanin: string[];
     const fanin: string[] = [];
     for (const f of files) {
         if (f === target) continue;
-        const content = await readFile(f, 'utf-8');
-        if (fileImportsTarget(content, f, target, fileSet)) fanin.push(f);
+        try {
+            const content = await readFile(f, 'utf-8');
+            const imports = await getImportsForFile(f, content);
+            if (fileImportsTarget(imports, f, target, fileSet)) fanin.push(f);
+        } catch {
+            // per-file error isolation
+        }
     }
     return { fanin, count: fanin.length };
 }
@@ -199,6 +304,6 @@ export async function depFanout(
     input: DepFanoutInput,
 ): Promise<{ fanout: number; imports: ImportInfo[] }> {
     const content = await readFile(resolve(input.file), 'utf-8');
-    const imports = parseImports(content);
+    const imports = await getImportsForFile(resolve(input.file), content);
     return { fanout: imports.length, imports };
 }
