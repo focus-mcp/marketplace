@@ -489,6 +489,17 @@ describe('tsExtractCalls', () => {
         expect(selfCalls).toHaveLength(0);
     });
 
+    it('extracts calls from arrow function assigned to variable', async () => {
+        const content = [
+            'export function alpha(): void {}',
+            'export const handle = async () => {',
+            '    alpha();',
+            '};',
+        ].join('\n');
+        const result = await tsExtractCalls({ path: '/src/service.ts', content });
+        expect(result.calls.some((c) => c.caller === 'handle' && c.callee === 'alpha')).toBe(true);
+    });
+
     it('handles PHP-like content without crash', async () => {
         const content = ['<?php', 'function doWork() { helper(); }', 'function helper() {}'].join(
             '\n',
