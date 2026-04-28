@@ -1,0 +1,31 @@
+{
+  "brick": "graphcluster",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:07:43.136Z",
+  "duration_ms": 82934,
+  "turns": 15,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 61,
+    "cache_creation_input_tokens": 28446,
+    "cache_read_input_tokens": 357686,
+    "output_tokens": 4861,
+    "total": 391054
+  },
+  "session_id": "c44c5715-3796-42b5-ae4a-0b8ce5a90e00",
+  "result_block": "## Result\n- **Brick**: graphcluster\n- **Mode**: brick\n- **Mini-task**: Build a cross-package import dependency graph across 9 NestJS packages and list packages with in-degree ≥ 3 (sorted alphabetically)\n- **Answer**: *(unavailable — see Notes)*\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_install`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~2,500\n- **Notes**: The graphcluster brick is marked as installed (version `^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-graphcluster'`. `focus_update` reports \"not yet implemented.\" `focus_reload` says \"Brick not found.\" The brick's graph-analysis tools (cluster, communities, explain, architecture) never became available. Since the rules forbid native filesystem/search tools (`Bash`, `Grep`, `Glob`, `Read` beyond Step 1), there is no compliant path to read the TypeScript source files and compute in-degrees. Result: **partial — tool load failure prevented task completion**.",
+  "workdir": "/tmp/focus-bench/graphcluster-brick-2026-04-26T18-07-43-134",
+  "exit_reason": "ok"
+}

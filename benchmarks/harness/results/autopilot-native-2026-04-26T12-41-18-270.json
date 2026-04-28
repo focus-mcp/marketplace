@@ -1,0 +1,26 @@
+{
+  "brick": "autopilot",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:40:16.953Z",
+  "duration_ms": 61316,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 36,
+    "cache_creation_input_tokens": 46363,
+    "cache_read_input_tokens": 404529,
+    "output_tokens": 2966,
+    "total": 453894
+  },
+  "session_id": "83399a0b-adcd-4332-9cf9-0842638de837",
+  "result_block": "## Result\n\n- **Brick**: autopilot\n- **Mode**: native\n- **Mini-task**: List all exception class names exported from `test-repo/packages/common/exceptions/` sorted alphabetically\n- **Answer**:\n```\nBadGatewayException\nBadRequestException\nConflictException\nForbiddenException\nGatewayTimeoutException\nGoneException\nHttpException\nHttpVersionNotSupportedException\nImATeapotException\nInternalServerErrorException\nIntrinsicException\nMethodNotAllowedException\nMisdirectedException\nNotAcceptableException\nNotFoundException\nNotImplementedException\nPayloadTooLargeException\nPreconditionFailedException\nRequestTimeoutException\nServiceUnavailableException\nTooManyRequestsException\nUnauthorizedException\nUnprocessableEntityException\nUnsupportedMediaTypeException\n```\n- **Turns used**: 6\n- **Tools used**: `Bash`, `Glob`, `Read`\n- **Rough token estimate**: ~1,800\n- **Notes**: The task maps naturally to the autopilot brick's plan→execute→status loop. In native mode the whole thing collapses to a single `grep -h \"^export class\" *.ts | sort` command. The brick version should demonstrate meaningful planning overhead (≥3 distinct plan steps) versus this 1-shot native solution.",
+  "mini_task_spec": "Using the autopilot brick's `plan` → `execute` → `status` workflow, perform the following autonomous multi-step task against the NestJS shallow clone in `test-repo/`:\n\n**Task**: Identify every exception class name that is exported from a TypeScript source file (`.ts`) inside `test-repo/packages/common/exceptions/`. Extract only the class names (not the full `export class ...` line), and return them as a sorted alphabetical list, one class name per line.\n\nSteps the agent must take:\n1. Plan the task (use `auto_plan` with the task description and `dir` = `test-repo/packages/common/exceptions`).\n2. Execute the plan step by step (use `auto_execute` repeatedly until all steps are complete).\n3. Check status (use `auto_status` to confirm completion).\n\nExpected answer format: alphabetically sorted list of class names, one per line (just the class name, e.g. `BadGatewayException`).\n\n---",
+  "workdir": "/tmp/focus-bench/autopilot-native-2026-04-26T12-40-16-953",
+  "exit_reason": "ok"
+}

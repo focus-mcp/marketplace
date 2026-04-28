@@ -1,0 +1,25 @@
+{
+  "brick": "filediff",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:01:19.689Z",
+  "duration_ms": 77399,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 20201,
+    "cache_read_input_tokens": 465440,
+    "output_tokens": 4507,
+    "total": 490183
+  },
+  "session_id": "04f4e932-25d9-4314-aab2-2e2c1e6376b2",
+  "result_block": "## Result\n\n- **Brick**: filediff\n- **Mode**: native\n- **Mini-task**: Count removed and added lines in the unified diff between platform-express and platform-fastify package.json files\n- **Answer**: removed: 10, added: 21\n- **Turns used**: 6\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~2,500\n- **Notes**: The `diff -u` command produced a clean two-hunk unified diff. Grep with `^-[^-]` and `^\\+[^+]` correctly excluded the `---`/`+++` file header lines and counted only genuine change lines.",
+  "mini_task_spec": "Using the `filediff` brick's `diff` tool, compare the two files `test-repo/packages/platform-express/package.json` (file A) and `test-repo/packages/platform-fastify/package.json` (file B) by producing their unified diff. From the unified diff output, count: (1) the number of **removed** lines — lines that start with a single `-` character (excluding the `---` file header line), and (2) the number of **added** lines — lines that start with a single `+` character (excluding the `+++` file header line). Report the answer in the exact format: `removed: N, added: M` where N and M are integers.\n\n---",
+  "workdir": "/tmp/focus-bench/filediff-native-2026-04-26T13-01-19-689",
+  "exit_reason": "ok"
+}

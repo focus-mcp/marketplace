@@ -2,8 +2,28 @@
 // SPDX-License-Identifier: MIT
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
-import type { TsIndexInput, TsReindexInput } from './operations.ts';
-import { tsCleanup, tsIndex, tsLangs, tsReindex, tsStatus } from './operations.ts';
+import type {
+    TsExtractCallsInput,
+    TsExtractImportsInput,
+    TsExtractOutlineInput,
+    TsExtractRefsInput,
+    TsExtractSymbolsInput,
+    TsIndexInput,
+    TsReindexInput,
+} from './operations.ts';
+import {
+    tsCleanup,
+    tsExtractCalls,
+    tsExtractImports,
+    tsExtractOutline,
+    tsExtractRefs,
+    tsExtractSymbols,
+    tsIndex,
+    tsLangs,
+    tsReindex,
+    tsStatus,
+    tsSupportedExts,
+} from './operations.ts';
 
 interface BrickBus {
     on(
@@ -49,6 +69,33 @@ const brick: Brick = {
         unsubscribers.push(ctx.bus.handle('treesitter:status', () => tsStatus()));
         unsubscribers.push(ctx.bus.handle('treesitter:cleanup', () => tsCleanup()));
         unsubscribers.push(ctx.bus.handle('treesitter:langs', () => tsLangs()));
+        // Internal services for code-intel bricks
+        unsubscribers.push(
+            ctx.bus.handle('treesitter:extract-symbols', (data) =>
+                tsExtractSymbols(data as TsExtractSymbolsInput),
+            ),
+        );
+        unsubscribers.push(ctx.bus.handle('treesitter:supported-exts', () => tsSupportedExts()));
+        unsubscribers.push(
+            ctx.bus.handle('treesitter:extract-imports', (data) =>
+                tsExtractImports(data as TsExtractImportsInput),
+            ),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('treesitter:extract-refs', (data) =>
+                tsExtractRefs(data as TsExtractRefsInput),
+            ),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('treesitter:extract-calls', (data) =>
+                tsExtractCalls(data as TsExtractCallsInput),
+            ),
+        );
+        unsubscribers.push(
+            ctx.bus.handle('treesitter:extract-outline', (data) =>
+                tsExtractOutline(data as TsExtractOutlineInput),
+            ),
+        );
     },
     stop() {
         for (const unsub of unsubscribers) unsub();

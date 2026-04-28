@@ -1,0 +1,25 @@
+{
+  "brick": "tokenbudget",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:29:32.574Z",
+  "duration_ms": 110767,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 50,
+    "cache_creation_input_tokens": 36259,
+    "cache_read_input_tokens": 719674,
+    "output_tokens": 7514,
+    "total": 763497
+  },
+  "session_id": "065ec3d0-dfa2-476d-8579-b332aeb6dc73",
+  "result_block": "## Result\n- **Brick**: tokenbudget\n- **Mode**: native\n- **Mini-task**: Estimate token counts (chars/4) for all TypeScript files at the root of `packages/common/interfaces/`, sorted by descending cost\n- **Answer**:\n\n| file | tokens |\n|---|---|\n| packages/common/interfaces/nest-application-context.interface.ts | 1387 |\n| packages/common/interfaces/nest-application.interface.ts | 1146 |\n| packages/common/interfaces/nest-microservice.interface.ts | 641 |\n| packages/common/interfaces/version-options.interface.ts | 639 |\n| packages/common/interfaces/nest-application-context-options.interface.ts | 583 |\n| packages/common/interfaces/index.ts | 367 |\n| packages/common/interfaces/nest-application-options.interface.ts | 248 |\n| packages/common/interfaces/scope-options.interface.ts | 242 |\n| packages/common/interfaces/shutdown-hooks-options.interface.ts | 178 |\n| packages/common/interfaces/global-prefix-options.interface.ts | 36 |\n| packages/common/interfaces/type.interface.ts | 19 |\n| packages/common/interfaces/abstract.interface.ts | 16 |\n| packages/common/interfaces/injectable.interface.ts | 8 |\n\n**Total: 5510 tokens**\n\n- **Turns used**: 8\n- **Tools used**: `Bash`, `Read`\n- **Rough token estimate**: ~2,500\n- **Notes**: Character counts (wc -m) and byte counts (wc -c) were identical for all files (pure ASCII TypeScript). The chars/4 heuristic with integer (floor) division was applied consistently. The task avoids subdirectories (`maxdepth 1`) to keep the file set deterministic (13 files). The brick's `analyze` tool would produce this same sorted breakdown automatically.",
+  "mini_task_spec": "Using the `estimate` tool (chars/4 heuristic for code, integer/floor division), compute the estimated token count for each of the 13 TypeScript files located **directly** inside `test-repo/packages/common/interfaces/` (i.e., at the root of that directory only — not in any subdirectory, `maxdepth 1`). List all 13 files sorted by descending estimated token count. Report as a table with two columns: `file` (path relative to `test-repo/`) and `tokens` (integer, floor(char_count / 4)). Also report the total estimated tokens across all 13 files.\n\n---",
+  "workdir": "/tmp/focus-bench/tokenbudget-native-2026-04-26T14-29-32-574",
+  "exit_reason": "ok"
+}

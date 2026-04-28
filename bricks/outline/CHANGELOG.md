@@ -1,5 +1,13 @@
 # @focus-mcp/brick-outline
 
+## 1.2.0
+
+### Minor Changes
+
+- 3f46ab4: Multi-language support via bus.request to treesitter brick (Option A pattern).
+  Replaces hardcoded TS/JS regex parser with bus calls to treesitter:extract-symbols and treesitter:extract-imports.
+  Adds dependencies: ["treesitter"] to manifest.
+
 ## 1.1.1
 
 ### Patch Changes

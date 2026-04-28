@@ -1,0 +1,27 @@
+{
+  "brick": "smartread",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:40:43.251Z",
+  "duration_ms": 88321,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 42,
+    "cache_creation_input_tokens": 22109,
+    "cache_read_input_tokens": 605747,
+    "output_tokens": 4679,
+    "total": 632577
+  },
+  "session_id": "00ac7193-6cd2-402e-ac32-e77beb1c67e5",
+  "result_block": "## Result\n- **Brick**: smartread\n- **Mode**: native\n- **Mini-task**: List all unique import module specifiers from `packages/core/nest-factory.ts`, sorted alphabetically\n- **Answer**:\n```\n./adapters/http-adapter\n./application-config\n./constants\n./errors/exceptions-zone\n./helpers/load-adapter\n./helpers/rethrow\n./injector/container\n./injector/injector\n./injector/instance-loader\n./inspector/graph-inspector\n./inspector/noop-graph-inspector\n./inspector/uuid-factory\n./metadata-scanner\n./nest-application\n./nest-application-context\n./scanner\n@nestjs/common\n@nestjs/common/interfaces/microservices/nest-microservice-options.interface\n@nestjs/common/interfaces/nest-application-context-options.interface\n@nestjs/common/interfaces/nest-application-options.interface\n@nestjs/common/services/console-logger.service\n@nestjs/common/services/logger.service\n@nestjs/common/utils/load-package.util\n@nestjs/common/utils/shared.utils\n```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep, Glob\n- **Rough token estimate**: ~2,200\n- **Notes**: The task directly targets the `imports` extraction mode — the core value proposition of smartread is avoiding reading full file bodies. Native mode required Grep + Bash sed/sort pipeline to replicate what the brick does in one call. The file has 24 unique import specifiers (16 local `./…` and 8 from `@nestjs/common`). No ambiguities or blocked steps.",
+  "mini_task_spec": "Using the `imports` mode of the `smartread` brick (tool: `mcp__focus__sr__imports`), extract all import module specifiers from the file `test-repo/packages/core/nest-factory.ts`. A module specifier is the quoted string after the `from` keyword in each `import … from '…'` statement. List each unique specifier exactly once, one per line, sorted alphabetically in C/ASCII locale order (i.e., `./…` paths sort before `@…` paths).\n\nExpected answer format: a plain list of module specifier strings, one per line, sorted alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/smartread-native-2026-04-26T19-40-43-251",
+  "exit_reason": "ok"
+}

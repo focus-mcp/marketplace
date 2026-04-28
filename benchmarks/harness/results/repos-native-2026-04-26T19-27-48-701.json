@@ -1,0 +1,25 @@
+{
+  "brick": "repos",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:26:24.622Z",
+  "duration_ms": 84078,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 38,
+    "cache_creation_input_tokens": 14621,
+    "cache_read_input_tokens": 499771,
+    "output_tokens": 4832,
+    "total": 519262
+  },
+  "session_id": "401dd9be-77dd-4c35-9522-240236d7ad5d",
+  "result_block": "## Result\n- **Brick**: repos\n- **Mode**: native\n- **Mini-task**: Identify which of three NestJS packages (core, common, microservices) has the most total lines across all files\n- **Answer**:\n  ```\n  Winner: core\n  Files: 266\n  Lines: 29786\n  ```\n- **Turns used**: 8\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,500 tokens\n- **Notes**: Finding the brick JSON required probing three paths before discovering the actual working directory (`/tmp/focus-bench/repos-native-2026-04-26T19-26-24-621/`). The native solution uses `find` + `wc -l` to replicate what the brick's `stats` tool would compute. Line counts include all file types (not just `.ts`), which is the most natural interpretation of \"line count statistics\" for the `repos` brick.",
+  "mini_task_spec": "You are working with a NestJS monorepo located at `test-repo/`. Using the `repos` brick tools, perform the following steps:\n\n1. Register each of the three packages below as named repositories (use each package's directory name as the repo name):\n   - `test-repo/packages/core` → name it `\"core\"`\n   - `test-repo/packages/common` → name it `\"common\"`\n   - `test-repo/packages/microservices` → name it `\"microservices\"`\n\n2. Call the `stats` tool for each of the three registered repositories to get their total file count and total line count.\n\n3. Identify which of the three packages has the **highest total line count**.\n\nReport the answer in exactly this format (three lines):\n```\nWinner: <package-name>\nFiles: <integer>\nLines: <integer>\n```\nwhere `<package-name>` is one of `core`, `common`, or `microservices`.\n\n---",
+  "workdir": "/tmp/focus-bench/repos-native-2026-04-26T19-26-24-621",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "tokenbudget",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:46:33.040Z",
+  "duration_ms": 75928,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 18942,
+    "cache_read_input_tokens": 427112,
+    "output_tokens": 4141,
+    "total": 450230
+  },
+  "session_id": "6f2964d9-ed08-4d01-8f2c-840ae0d405a3",
+  "result_block": "## Result\n\n- **Brick**: tokenbudget\n- **Mode**: native\n- **Mini-task**: Rank top-3 most token-expensive non-test `.ts` files directly in `test-repo/packages/core/router/` by chars/4 estimate\n- **Answer**:\n  ```\n  packages/core/router/router-explorer.ts: 3743 tokens\n  packages/core/router/router-execution-context.ts: 3489 tokens\n  packages/core/router/routes-resolver.ts: 1880 tokens\n  ```\n- **Turns used**: 5\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1 200\n- **Notes**: The brick's `estimate` tool documents \"chars/4 heuristic, adjusted for code vs prose\". In native mode I used plain integer division (chars // 4), which matches the chars/4 formula for code. No adjustment factor is exposed without the brick, so the brick-mode run may produce slightly different values if a code-vs-prose multiplier is applied.",
+  "mini_task_spec": "Using the `estimate` tool from the `tokenbudget` brick (which applies a chars/4 integer-division heuristic for code files), determine the token cost of every non-test TypeScript file located **directly** in `test-repo/packages/core/router/` (i.e. `maxdepth 1`; do not recurse into subdirectories such as `interfaces/`, `request/`, or `utils/`; exclude any file whose name ends in `.spec.ts`).\n\nList the **top 3 files by estimated token count** in **descending order**. Report each file as a relative path starting from `test-repo/` followed by its estimated token count, one entry per line, in this format:\n\n```\npackages/core/router/<filename>.ts: <N> tokens\n```\n\n---",
+  "workdir": "/tmp/focus-bench/tokenbudget-native-2026-04-26T18-46-33-039",
+  "exit_reason": "ok"
+}

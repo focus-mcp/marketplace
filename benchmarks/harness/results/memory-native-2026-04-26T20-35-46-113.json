@@ -1,0 +1,25 @@
+{
+  "brick": "memory",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T20:33:50.839Z",
+  "duration_ms": 115274,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 44,
+    "cache_creation_input_tokens": 32958,
+    "cache_read_input_tokens": 633680,
+    "output_tokens": 7164,
+    "total": 673846
+  },
+  "session_id": "4e55b466-ab5a-438f-a0aa-10ca96fddf62",
+  "result_block": "## Result\n\n- **Brick**: memory\n- **Mode**: native\n- **Mini-task**: Catalog NestJS HTTP exceptions by status code and list the 5xx ones\n- **Answer**:\n  ```\n  BadGatewayException\n  GatewayTimeoutException\n  HttpVersionNotSupportedException\n  InternalServerErrorException\n  NotImplementedException\n  ServiceUnavailableException\n  ```\n- **Turns used**: 10\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~4,500\n- **Notes**: `HttpException` appears in the grep output (it's the base class in `http.exception.ts`) and was excluded per spec. The `base-intrinsic.exception.ts` file exports no leaf exception and was also excluded. All 22 built-in exception classes were cataloged; exactly 6 have 5xx status codes (500–505).",
+  "mini_task_spec": "Scan every file in `test-repo/packages/common/exceptions/` that ends with `.exception.ts`, **excluding** `http.exception.ts`, `base-intrinsic.exception.ts`, and `index.ts`. For each remaining file, extract the exported exception class name (the class that `extends HttpException`) and its default HTTP status code. Look up the numeric value of each `HttpStatus.*` constant in `test-repo/packages/common/enums/http-status.enum.ts`.\n\nUsing `mem__store`, persist each entry as:\n- **key** = exception class name (e.g. `BadGatewayException`)\n- **value** = numeric HTTP status code as a string (e.g. `\"502\"`)\n- **tags** = `[\"nest-exception\", \"5xx\"]` if status ≥ 500, or `[\"nest-exception\", \"4xx\"]` if 400–499\n\nAfter storing all 22 entries, call `mem__list` with `tag: \"5xx\"` to retrieve all server-error exception names.\n\n**Expected answer format**: a sorted alphabetical list of exception class names tagged `5xx`, one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/memory-native-2026-04-26T20-33-50-838",
+  "exit_reason": "ok"
+}

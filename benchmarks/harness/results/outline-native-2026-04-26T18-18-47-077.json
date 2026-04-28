@@ -1,0 +1,25 @@
+{
+  "brick": "outline",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:16:59.290Z",
+  "duration_ms": 107787,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 40,
+    "cache_creation_input_tokens": 37838,
+    "cache_read_input_tokens": 520752,
+    "output_tokens": 7055,
+    "total": 565685
+  },
+  "session_id": "b6e18ca8-5bae-4bf8-97bc-4a0384eacc8d",
+  "result_block": "## Result\n- **Brick**: outline\n- **Mode**: native\n- **Mini-task**: List all distinct exported symbol names (sorted alphabetically) from `test-repo/packages/common/decorators/http/route-params.decorator.ts`\n- **Answer**:\n  ```\n  assignMetadata\n  Body\n  Headers\n  HostParam\n  Ip\n  Next\n  Param\n  ParamData\n  Query\n  RawBody\n  Req\n  Request\n  Res\n  Response\n  ResponseDecoratorOptions\n  RouteParamMetadata\n  Session\n  UploadedFile\n  UploadedFiles\n  ```\n  (19 distinct symbols total)\n- **Turns used**: 11\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,500\n- **Notes**: The file contains several overloaded TypeScript functions (e.g., `UploadedFile`, `Query`, `Body`, `Param`, `HostParam`, `RawBody`) that appear multiple times as separate overload signatures — each counted once. No `export {…}`, `export *`, or `export default` forms were present. The brick's `out__file` tool would surface these symbols directly without requiring manual grep/sed pipeline work.",
+  "mini_task_spec": "Using only the **outline brick** (`out__file` tool), determine the complete list of distinct exported symbol names declared in `test-repo/packages/common/decorators/http/route-params.decorator.ts`.\n\nCall the brick's `file` tool (or equivalent `out__file` tool) on the absolute path to that file. Extract each unique exported symbol name (covering `export const`, `export function`, `export interface`, `export type`, and any other `export` declarations). For overloaded functions, count the symbol name only once. Sort the resulting names alphabetically (case-insensitive). Output one name per line.\n\nThe exact expected answer format is a list of symbol names, one per line, sorted case-insensitively alphabetically:\n\n```\nassignMetadata\nBody\nHeaders\nHostParam\nIp\nNext\nParam\nParamData\nQuery\nRawBody\nReq\nRequest\nRes\nResponse\nResponseDecoratorOptions\nRouteParamMetadata\nSession\nUploadedFile\nUploadedFiles\n```\n\n---",
+  "workdir": "/tmp/focus-bench/outline-native-2026-04-26T18-16-59-290",
+  "exit_reason": "ok"
+}

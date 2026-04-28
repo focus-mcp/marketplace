@@ -1,0 +1,25 @@
+{
+  "brick": "debate",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:55:16.261Z",
+  "duration_ms": 48634,
+  "turns": 8,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 25,
+    "cache_creation_input_tokens": 15552,
+    "cache_read_input_tokens": 289428,
+    "output_tokens": 2893,
+    "total": 307898
+  },
+  "session_id": "f8dfe363-60a2-4394-a3b8-05898ad10504",
+  "result_block": "## Result\n- **Brick**: debate\n- **Mode**: native\n- **Mini-task**: Compute weighted scores for the two HTTP adapter options in `decision-http-adapter.json` and identify the winner\n- **Answer**:\n  ```\n  platform-express: 243\n  platform-fastify: 188\n  Winner: platform-express by 55 points\n  ```\n- **Turns used**: 4\n- **Tools used**: `Read`, `Bash`\n- **Rough token estimate**: ~1,200\n- **Notes**: The `decision-http-adapter.json` file in the test-repo is tailor-made for the debate brick — it contains a structured two-option decision with weighted criteria and per-option scores, directly matching the brick's `score` tool schema. The rationale field in the file itself cross-validates the computed totals (243 vs 188).",
+  "mini_task_spec": "Read the file `test-repo/decision-http-adapter.json`. It documents a structured decision between two NestJS HTTP adapter options: `platform-express` and `platform-fastify`. The file contains a `criteria` array (each entry has a `name` and `weight`) and a `scores` array (each entry has an `option` name and a `scores` array whose elements correspond positionally to the criteria).\n\nUsing only the data in that file, compute the **weighted score** for each option as the sum of `score[i] × weight[i]` across all four criteria. Then identify the winner (higher weighted score) and the winning margin.\n\nReport the answer in this exact format:\n```\nplatform-express: <weighted score>\nplatform-fastify: <weighted score>\nWinner: <option name> by <margin> points\n```\n\n---",
+  "workdir": "/tmp/focus-bench/debate-native-2026-04-26T12-55-16-260",
+  "exit_reason": "ok"
+}

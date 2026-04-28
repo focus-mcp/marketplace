@@ -1,0 +1,32 @@
+{
+  "brick": "fileops",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:08:54.868Z",
+  "duration_ms": 143681,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 107,
+    "cache_creation_input_tokens": 37949,
+    "cache_read_input_tokens": 544874,
+    "output_tokens": 5587,
+    "total": 588517
+  },
+  "session_id": "67a8d607-f625-4e58-8093-12c2650c0c6d",
+  "result_block": "## Result\n- **Brick**: fileops\n- **Mode**: brick\n- **Mini-task**: Copy `packages/common/exceptions/EXCEPTIONS.md` → `packages/core/exceptions/EXCEPTIONS.md`; Rename `packages/common/exceptions/intrinsic.exception.ts` → `packages/common/exceptions/base-intrinsic.exception.ts`; then list both directories sorted\n- **Answer**: *(not available — operations could not be executed; see Notes)*\n- **Turns used**: 11\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_remove`\n- **Rough token estimate**: ~4,500\n- **Notes**: The `fileops` brick is pre-installed as a stub (`noop.js`) but the actual npm module `@focus-mcp/brick-fileops` is missing from the environment. `focus_load` fails with `Cannot find module '@focus-mcp/brick-fileops'`. `focus_update` returns \"not yet implemented\". `focus_remove` fails with \"Lock entry not found for brick fileops\", preventing a clean reinstall. No `mcp__fo__*` brick tools ever became available. All 11 mcp__focus__ management tools were tried; none could bring the brick to a loaded state. The file operations (copy + rename) were therefore **never executed**, and no directory listing can be reported.",
+  "workdir": "/tmp/focus-bench/fileops-brick-2026-04-26T13-08-54-866",
+  "exit_reason": "ok"
+}

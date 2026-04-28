@@ -1,0 +1,33 @@
+{
+  "brick": "rename",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:24:31.089Z",
+  "duration_ms": 120925,
+  "turns": 26,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_add",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 129,
+    "cache_creation_input_tokens": 57322,
+    "cache_read_input_tokens": 809948,
+    "output_tokens": 6576,
+    "total": 873975
+  },
+  "session_id": "01f04727-5304-4fcd-a018-1d31dec4a8cf",
+  "result_block": "## Result\n- **Brick**: rename\n- **Mode**: brick\n- **Mini-task**: Preview which TypeScript files under `test-repo/packages/` reference the symbol `StreamableFile` (dry-run, no changes applied)\n- **Answer**: *(unavailable — see Notes)*\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_add`\n- **Rough token estimate**: ~6,000\n- **Notes**: The rename brick is recorded as installed (version `^0.0.0`) but every attempt to `focus_load` it fails with `Cannot find module '@focus-mcp/brick-rename'` (require stack: `.focus/bricks/noop.js`). The noop stub cannot resolve the actual brick package. `focus_update` is unimplemented; `focus_remove` reports \"Lock entry not found\". Reinstalling from the marketplace returns \"already installed\". Because the brick never loads, `mcp__focus__ren_preview` is never registered and cannot be called. The focus MCP server is functional (catalog queries, search, list all work), so the standard `MODE UNAVAILABLE` sentinel does not apply — the failure is specific to the brick's runtime dependency being absent in the benchmark environment.",
+  "workdir": "/tmp/focus-bench/rename-brick-2026-04-26T18-24-31-087",
+  "exit_reason": "ok"
+}

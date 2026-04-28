@@ -1,0 +1,31 @@
+{
+  "brick": "convert",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:52:36.501Z",
+  "duration_ms": 118316,
+  "turns": 19,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 93,
+    "cache_creation_input_tokens": 37118,
+    "cache_read_input_tokens": 583379,
+    "output_tokens": 7132,
+    "total": 627722
+  },
+  "session_id": "8a29467a-8497-4e53-9c37-f25dbf5b1c47",
+  "result_block": "## Result\n- **Brick**: convert\n- **Mode**: brick\n- **Mini-task**: List `.decorator.ts` files in NestJS `packages/common/decorators/http/`, strip suffix, convert kebab-case base names to PascalCase via `mcp__focus__conv_language`, output sorted A–Z\n- **Answer**:\n  ```\n  CreateRouteParamMetadata\n  Header\n  HttpCode\n  Redirect\n  Render\n  RequestMapping\n  RouteParams\n  Sse\n  ```\n- **Turns used**: 9\n- **Tools used**: `mcp__focus__focus_load`, `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_update`\n- **Rough token estimate**: ~3,500\n- **Notes**: `mcp__focus__conv_language` was **never callable** — the brick is marked installed (^0.0.0) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-convert'`. The catalog shows version 1.1.0 is available but `focus_update` is \"not yet implemented\". The tool therefore never appeared in deferred tools. File discovery used `Read` on `index.ts` (index exports all 8 decorators). PascalCase conversion was done manually as a required fallback; no `mcp__focus__conv_*` calls were made.",
+  "workdir": "/tmp/focus-bench/convert-brick-2026-04-26T12-52-36-498",
+  "exit_reason": "ok"
+}

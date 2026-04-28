@@ -1,0 +1,32 @@
+{
+  "brick": "outline",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:18:47.080Z",
+  "duration_ms": 164685,
+  "turns": 26,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 155,
+    "cache_creation_input_tokens": 60333,
+    "cache_read_input_tokens": 1004609,
+    "output_tokens": 7869,
+    "total": 1072966
+  },
+  "session_id": "34274e09-a55a-4b7f-bc02-dd742bf7c804",
+  "result_block": "## Result\n- **Brick**: outline\n- **Mode**: brick\n- **Mini-task**: List all distinct exported symbol names from `test-repo/packages/common/decorators/http/route-params.decorator.ts` using the `out__file` tool\n- **Answer**: *(unavailable — brick tool could not be invoked; see Notes)*\n- **Turns used**: 14\n- **Tools used**: `mcp__focus__focus_load`, `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_remove`, `mcp__focus__focus_update`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~6,000\n- **Notes**: The `out__file` (i.e. `mcp__focus__out__file`) tool was never exposed as a callable tool. `focus_load \"outline\"` failed with `Cannot find module '@focus-mcp/brick-outline'` — the npm package is registered in the focus config at version `^0.0.0` but is not present in the node_modules path used by `.focus/bricks/noop.js`. `focus_reload` returned \"Brick not found\", `focus_remove` returned \"Lock entry not found\", and `focus_update` is not yet implemented. `focus_install` blocked re-install (\"already installed\"). The focus MCP server itself is reachable; the failure is specific to the brick module being absent from the file system. ToolSearch confirmed `mcp__focus__out__file` is not in the deferred tool registry. No fallback was used — per the rules, native filesystem tools (Bash, Grep, Glob, Read beyond manifest) were not invoked.",
+  "workdir": "/tmp/focus-bench/outline-brick-2026-04-26T18-18-47-077",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "filesearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:14:13.524Z",
+  "duration_ms": 70360,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 20295,
+    "cache_read_input_tokens": 675586,
+    "output_tokens": 3869,
+    "total": 699798
+  },
+  "session_id": "72f306a2-2ba3-4042-b668-525a2b397a52",
+  "result_block": "## Result\n- **Brick**: filesearch\n- **Mode**: native\n- **Mini-task**: Find all `.ts` source files in `test-repo/packages` containing `private readonly logger = new Logger(`\n- **Answer**:\n  ```\n  packages/core/injector/opaque-key-factory/deep-hashed-module-opaque-key-factory.ts\n  packages/core/middleware/middleware-module.ts\n  packages/core/nest-factory.ts\n  packages/core/router/router-explorer.ts\n  packages/core/router/router-response-controller.ts\n  packages/core/router/routes-resolver.ts\n  packages/platform-express/adapters/express-adapter.ts\n  packages/websockets/web-sockets-controller.ts\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: The `grep -E \"spec|test\"` exclusion check false-positived because `test-repo` is in the path; verified with a more precise regex (`\\.spec\\.|/test/`) — all 8 matched files are genuine source files, not tests.",
+  "mini_task_spec": "Using the `filesearch` brick's `search` tool, find all TypeScript source files (`.ts`) under `test-repo/packages` that contain the exact regex pattern `private readonly logger = new Logger\\(`. Return the list of matching file paths, relative to `test-repo/`, sorted alphabetically, one per line. Do not include test or spec files (i.e., exclude files whose path contains `.spec.` or `/test/`).\n\nExpected answer format: a sorted list of relative file paths (relative to `test-repo/`), one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/filesearch-native-2026-04-26T13-14-13-524",
+  "exit_reason": "ok"
+}

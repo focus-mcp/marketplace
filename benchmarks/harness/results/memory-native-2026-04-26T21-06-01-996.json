@@ -1,0 +1,26 @@
+{
+  "brick": "memory",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T21:04:42.071Z",
+  "duration_ms": 79925,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 19829,
+    "cache_read_input_tokens": 509827,
+    "output_tokens": 4377,
+    "total": 534072
+  },
+  "session_id": "a4c1a11d-faaa-4d23-9fe2-6387a2c3dc0e",
+  "result_block": "## Result\n\n- **Brick**: memory\n- **Mode**: native\n- **Mini-task**: Catalog all HttpException subclasses in test-repo/packages/common/exceptions/\n- **Answer**:\n  ```\n  BadGatewayException\n  BadRequestException\n  ConflictException\n  ForbiddenException\n  GatewayTimeoutException\n  GoneException\n  HttpVersionNotSupportedException\n  ImATeapotException\n  InternalServerErrorException\n  MethodNotAllowedException\n  MisdirectedException\n  NotAcceptableException\n  NotFoundException\n  NotImplementedException\n  PayloadTooLargeException\n  PreconditionFailedException\n  RequestTimeoutException\n  ServiceUnavailableException\n  TooManyRequestsException\n  UnauthorizedException\n  UnprocessableEntityException\n  UnsupportedMediaTypeException\n  ```\n- **Turns used**: 8\n- **Tools used**: Bash, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: All 22 classes directly extend `HttpException`. The base class `HttpException` (in `http.exception.ts`) extends `IntrinsicException`, and `IntrinsicException` (in `base-intrinsic.exception.ts`) extends `Error` — neither is included. No brick tools were used; results were obtained purely via `grep -rn` on the exceptions directory.",
+  "mini_task_spec": "In the NestJS repository at `test-repo/packages/common/exceptions/`, identify every TypeScript class that **directly extends `HttpException`** (i.e., the class declaration contains `extends HttpException`). For each such class, record its class name and the file path relative to `test-repo/` where it is defined.\n\nUsing the memory brick, store each entry with:\n- **key** = the class name (e.g. `BadGatewayException`)\n- **value** = the relative file path (e.g. `packages/common/exceptions/bad-gateway.exception.ts`)\n- **tags** = `[\"exception\", \"http-exception\"]`\n\nAfter storing all entries, call `list` with `tag=\"http-exception\"` to retrieve all stored keys. Report the complete list of class names (keys), one per line, sorted alphabetically.\n\nExpected answer format: a list of class names, one per line, sorted alphabetically — exactly 22 entries.\n\n---",
+  "workdir": "/tmp/focus-bench/memory-native-2026-04-26T21-04-42-071",
+  "exit_reason": "ok"
+}

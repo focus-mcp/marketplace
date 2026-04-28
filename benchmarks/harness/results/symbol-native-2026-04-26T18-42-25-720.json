@@ -1,0 +1,26 @@
+{
+  "brick": "symbol",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:41:20.563Z",
+  "duration_ms": 65157,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 50,
+    "cache_creation_input_tokens": 21652,
+    "cache_read_input_tokens": 708317,
+    "output_tokens": 4050,
+    "total": 734069
+  },
+  "session_id": "ee27000c-efa7-40b1-bc80-59990e0e5f72",
+  "result_block": "## Result\n- **Brick**: symbol\n- **Mode**: native\n- **Mini-task**: Find all exported class names containing \"Parse\" in `test-repo/packages/common/pipes/`\n- **Answer**:\n  ```\n  ParseArrayPipe\n  ParseBoolPipe\n  ParseDatePipe\n  ParseEnumPipe\n  ParseFilePipe\n  ParseFilePipeBuilder\n  ParseFloatPipe\n  ParseIntPipe\n  ParseUUIDPipe\n  ```\n- **Turns used**: 7\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: The `mcp-brick.json` was only readable via `Bash cat` (not the `Read` tool) due to filesystem permissions on `/root/task/`. The task cleanly exercises the brick's `find` tool (substring symbol search across a directory). `ParseFilePipeBuilder` is notable — it contains \"Parse\" but is not itself a pipe transform, so it's a good edge-case test for any symbol-lookup implementation.",
+  "mini_task_spec": "Using the `symbol` brick, find all exported class names in `test-repo/packages/common/pipes/` (including its subdirectories) that contain the substring `Parse` in their name. Search the directory `test-repo/packages/common/pipes/` recursively. Report the class names only (not file paths or line numbers), sorted alphabetically, one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/symbol-native-2026-04-26T18-41-20-562",
+  "exit_reason": "ok"
+}

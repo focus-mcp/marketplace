@@ -1,0 +1,26 @@
+{
+  "brick": "rename",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:50:56.436Z",
+  "duration_ms": 61452,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 25693,
+    "cache_read_input_tokens": 481985,
+    "output_tokens": 3597,
+    "total": 511310
+  },
+  "session_id": "2d9e3be4-b742-499f-94ff-439fe6ba5fe8",
+  "result_block": "## Result\n\n- **Brick**: rename\n- **Mode**: native\n- **Mini-task**: Find all files in test-repo/packages/common that contain the symbol `Logger` (whole-word), as a rename preview\n- **Answer**:\n```\npackages/common/file-stream/streamable-file.ts\npackages/common/interfaces/nest-application-context-options.interface.ts\npackages/common/module-utils/configurable-module.builder.ts\npackages/common/pipes/file/file-type.validator.ts\npackages/common/services/logger.service.ts\npackages/common/test/services/logger.service.spec.ts\npackages/common/utils/load-package.util.ts\n```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The `interfaces/nest-application-context-options.interface.ts` match is in a JSDoc comment (`\"Logger#flush\"`) rather than actual code; a smart symbol-aware rename brick might exclude it, but a text-based whole-word grep includes it. The brick mode answer may differ on this edge case depending on whether the brick does AST-level or text-level matching.",
+  "mini_task_spec": "Using the rename brick's `preview` tool (which previews what a symbol rename would affect without making any changes), identify all `.ts` files in `test-repo/packages/common` that contain at least one whole-word occurrence of the symbol `Logger`. The `preview` tool should be called with `dir` set to `test-repo/packages/common` and `oldName` set to `Logger`. Report the list of affected file paths (relative to `test-repo/`), sorted alphabetically, one path per line.\n\nExpected answer format: a sorted list of relative file paths (relative to `test-repo/`), one per line, e.g.:\n```\npackages/common/file-stream/streamable-file.ts\npackages/common/interfaces/...\n...\n```\n\n---",
+  "workdir": "/tmp/focus-bench/rename-native-2026-04-26T13-50-56-435",
+  "exit_reason": "ok"
+}

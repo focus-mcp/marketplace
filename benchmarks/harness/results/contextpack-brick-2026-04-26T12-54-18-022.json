@@ -1,0 +1,31 @@
+{
+  "brick": "contextpack",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:51:31.027Z",
+  "duration_ms": 166995,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 107,
+    "cache_creation_input_tokens": 59512,
+    "cache_read_input_tokens": 775184,
+    "output_tokens": 8172,
+    "total": 842975
+  },
+  "session_id": "b5db2abb-d01b-48a7-9563-e6ce58a8b076",
+  "result_block": "## Result\n- **Brick**: contextpack\n- **Mode**: brick\n- **Mini-task**: Find all `export function` names in TypeScript files under `test-repo/packages/common/decorators/core/` (excluding `index.ts`), then return them sorted in ASCII order (uppercase before lowercase)\n- **Answer**: *(not available — brick tools could not be loaded)*\n- **Turns used**: 17\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~6,000\n- **Notes**: The contextpack brick is registered as installed (version ^0.0.0) but fails to load with `Cannot find module '@focus-mcp/brick-contextpack'`. The npm module is absent from the bench environment's node_modules, so the `pack` tool (which would read and extract file signatures) was never available. All seven focus management tools were attempted; none provide file-reading capability. The brick's own tools (`cp.pack`, `cp.budget`, `cp.estimate`, `cp.prioritize`) never appeared as callable tools. Task could not be completed under the \"brick tools only\" constraint.",
+  "workdir": "/tmp/focus-bench/contextpack-brick-2026-04-26T12-51-31-025",
+  "exit_reason": "ok"
+}

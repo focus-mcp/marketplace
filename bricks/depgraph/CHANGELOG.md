@@ -1,5 +1,14 @@
 # @focus-mcp/brick-depgraph
 
+## 1.2.0
+
+### Minor Changes
+
+- 377fd02: Multi-language support via bus.request to treesitter brick (Option A pattern).
+  Replaces hardcoded TS/JS extensions with dynamic list from treesitter:supported-exts.
+  Uses treesitter:extract-imports for import extraction (bus-enhanced with regex fallback).
+  Adds dependencies: ["treesitter"] to manifest.
+
 ## 1.1.1
 
 ### Patch Changes

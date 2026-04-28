@@ -1,0 +1,31 @@
+{
+  "brick": "dispatch",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:08:25.010Z",
+  "duration_ms": 228227,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 120,
+    "cache_creation_input_tokens": 121709,
+    "cache_read_input_tokens": 842244,
+    "output_tokens": 10404,
+    "total": 974477
+  },
+  "session_id": "f89cddf7-199c-4751-9cfb-3ce71a8688f6",
+  "result_block": "## Result\n- **Brick**: dispatch\n- **Mode**: brick\n- **Mini-task**: Dispatch one `scan` task per transport-specific server file in `test-repo/packages/microservices/server/` using `send`, then call `queue(all)` and report `filename:ClassName` pairs sorted alphabetically.\n- **Answer**: *(could not execute — dispatch brick tools unavailable; attempted class names from NestJS conventions listed below for reference)*\n  ```\n  server-grpc.ts:ServerGrpc\n  server-kafka.ts:ServerKafka\n  server-mqtt.ts:ServerMqtt\n  server-nats.ts:ServerNats\n  server-redis.ts:ServerRedis\n  server-rmq.ts:ServerRMQ\n  server-tcp.ts:ServerTCP\n  ```\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~18,000\n- **Notes**: The dispatch brick is installed (`^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-dispatch'` — the npm package is absent. The tools `send`, `queue`, `cancel`, `status` never appeared in the deferred-tools registry at any prefix (`mcp__focus__send`, `mcp__focus__dsp_send`, etc.). `focus_update` returns \"not yet implemented\". Consequently, no tasks could be dispatched and no queue could be queried. Class names above are derived from known NestJS microservices conventions and should be treated as unverified estimates, not confirmed answers.",
+  "workdir": "/tmp/focus-bench/dispatch-brick-2026-04-26T18-08-25-008",
+  "exit_reason": "ok"
+}

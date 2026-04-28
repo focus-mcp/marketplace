@@ -1,0 +1,25 @@
+{
+  "brick": "metrics",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:42:57.849Z",
+  "duration_ms": 74745,
+  "turns": 8,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 19788,
+    "cache_read_input_tokens": 290393,
+    "output_tokens": 4647,
+    "total": 314852
+  },
+  "session_id": "90d3cae9-6fe1-4ed0-9381-e50e22ec1832",
+  "result_block": "## Result\n\n- **Brick**: metrics  \n- **Mode**: native  \n- **Mini-task**: Compute token totals, session cost, and most-expensive tool call from 5 fixed tool calls  \n- **Answer**:\n  ```\n  Total input tokens: 5540\n  Total output tokens: 1665\n  Total session cost: $0.041595\n  Most expensive: Read (call #4, 2100 in, 680 out) = $0.016500\n  ```\n- **Turns used**: 4  \n- **Tools used**: Read, Bash  \n- **Rough token estimate**: ~1,200  \n- **Notes**: The brick's core value is eliminating the need for manual arithmetic — all four metrics (token aggregation, cost formula, per-call breakdown, session summary) map exactly to its `tokens`, `costs`, and `session` tools. Native mode reduces to a single Python one-liner. No repo content was needed; the task is entirely self-contained.",
+  "mini_task_spec": "A development session made exactly 5 tool calls with the following recorded token usage (in order):\n\n1. **Glob** — 420 input tokens, 95 output tokens  \n2. **Read** — 1650 input tokens, 520 output tokens  \n3. **Grep** — 780 input tokens, 210 output tokens  \n4. **Read** — 2100 input tokens, 680 output tokens  \n5. **Bash** — 590 input tokens, 160 output tokens  \n\nUsing the `metrics` brick (`mcp__focus__met_tokens` to record each call, then `mcp__focus__met_costs` with default pricing of $0.003 per 1,000 input tokens and $0.015 per 1,000 output tokens), answer the following four questions:\n\n1. What is the **total input token count** across all 5 calls?  \n2. What is the **total output token count** across all 5 calls?  \n3. What is the **total estimated session cost in USD**, expressed to 6 decimal places (e.g. `$0.XXXXXX`)?  \n4. Which tool call was the **most expensive**, and what was its individual cost in USD to 6 decimal places?\n\nExpected answer format — four lines:\n```\nTotal input tokens: <integer>\nTotal output tokens: <integer>\nTotal session cost: $<6 decimal places>\nMost expensive: <ToolName> (call #<N>, <input> in, <output> out) = $<6 decimal places>\n```\n\n---",
+  "workdir": "/tmp/focus-bench/metrics-native-2026-04-26T13-42-57-849",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "sandbox",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:02:27.669Z",
+  "duration_ms": 91127,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 31,
+    "cache_creation_input_tokens": 20495,
+    "cache_read_input_tokens": 375414,
+    "output_tokens": 4836,
+    "total": 400776
+  },
+  "session_id": "72f2d0a5-1c8c-482a-9db3-6a2a204978af",
+  "result_block": "## Result\n- **Brick**: sandbox\n- **Mode**: native\n- **Mini-task**: Evaluate 4 `normalizePath`/`addLeadingSlash` calls from `shared.utils.ts`\n- **Answer**: `/foo//bar, /api/v1, {/api}, /users`\n- **Turns used**: 8\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1,800\n- **Notes**: The `normalizePath` function has an asymmetry: the `startsWith('/')` branch applies `replace(/\\/+/g, '/')` to collapse double slashes, but the non-`/` branch does not — producing `/foo//bar` rather than `/foo/bar` for `'foo//bar/'`. This subtle behavior is exactly what sandboxed execution catches automatically; manually tracing it requires careful reading of the ternary structure.",
+  "mini_task_spec": "Read the file `test-repo/packages/common/utils/shared.utils.ts` from the NestJS monorepo, extract the `normalizePath` and `addLeadingSlash` utility functions as-is, execute them in a sandboxed JavaScript context, and evaluate the following four calls:\n\n1. `normalizePath('foo//bar/')`\n2. `normalizePath('//api//v1//')`\n3. `addLeadingSlash('{/api}')`\n4. `addLeadingSlash('users')`\n\nReport the four return values as a comma-separated list in the order listed above (e.g. `value1, value2, value3, value4`). Do not include quotes around values.\n\n---",
+  "workdir": "/tmp/focus-bench/sandbox-native-2026-04-26T14-02-27-668",
+  "exit_reason": "ok"
+}

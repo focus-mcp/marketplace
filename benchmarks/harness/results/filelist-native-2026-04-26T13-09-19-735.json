@@ -1,0 +1,25 @@
+{
+  "brick": "filelist",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:08:32.130Z",
+  "duration_ms": 47605,
+  "turns": 9,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 26,
+    "cache_creation_input_tokens": 23632,
+    "cache_read_input_tokens": 312900,
+    "output_tokens": 2841,
+    "total": 339399
+  },
+  "session_id": "3c14c08d-1146-485a-91df-157986e108fc",
+  "result_block": "## Result\n- **Brick**: filelist\n- **Mode**: native\n- **Mini-task**: List all `.spec.ts` files under `test-repo/packages/common/test/pipes/`, sorted alphabetically, relative to `test-repo/`\n- **Answer**:\n  ```\n  packages/common/test/pipes/default-value.pipe.spec.ts\n  packages/common/test/pipes/file/file-type.validator.spec.ts\n  packages/common/test/pipes/file/max-file-size.validator.spec.ts\n  packages/common/test/pipes/file/parse-file-pipe.builder.spec.ts\n  packages/common/test/pipes/file/parse-file.pipe.spec.ts\n  packages/common/test/pipes/parse-array.pipe.spec.ts\n  packages/common/test/pipes/parse-bool.pipe.spec.ts\n  packages/common/test/pipes/parse-date.pipe.spec.ts\n  packages/common/test/pipes/parse-enum.pipe.spec.ts\n  packages/common/test/pipes/parse-float.pipe.spec.ts\n  packages/common/test/pipes/parse-int.pipe.spec.ts\n  packages/common/test/pipes/parse-uuid.pipe.spec.ts\n  packages/common/test/pipes/validation.pipe.spec.ts\n  ```\n- **Turns used**: 5\n- **Tools used**: `Read`, `Bash`, `Glob`\n- **Rough token estimate**: ~2,500\n- **Notes**: The brick's `glob` tool maps cleanly onto this task — a single call with `pattern: \"**/*.spec.ts\"` against the pipes test directory would return the exact same 13 files. Native mode used `find` via Bash, which is equivalent. No ambiguity in the answer; the result is fully deterministic.",
+  "mini_task_spec": "Using the **filelist** brick's `glob` tool, find all files matching the pattern `**/*.spec.ts` within the directory `test-repo/packages/common/test/pipes/`. Report the matching file paths as paths **relative to `test-repo/`**, one per line, sorted alphabetically. The brick's `glob` tool accepts an absolute `path` parameter and a `pattern` string (e.g. `**/*.spec.ts`). The expected answer format is a sorted list of relative paths, one per line.",
+  "workdir": "/tmp/focus-bench/filelist-native-2026-04-26T13-08-32-130",
+  "exit_reason": "ok"
+}

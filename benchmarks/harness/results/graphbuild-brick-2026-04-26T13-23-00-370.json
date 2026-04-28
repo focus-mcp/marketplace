@@ -1,0 +1,31 @@
+{
+  "brick": "graphbuild",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:21:21.738Z",
+  "duration_ms": 98632,
+  "turns": 16,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 70,
+    "cache_creation_input_tokens": 28996,
+    "cache_read_input_tokens": 389796,
+    "output_tokens": 5364,
+    "total": 424226
+  },
+  "session_id": "a50b0312-378e-4924-b2f4-c75ad015b8bb",
+  "result_block": "## Result\n- **Brick**: graphbuild\n- **Mode**: brick\n- **Mini-task**: Build a knowledge graph of `test-repo/packages/common` (limit 200 files) and find all non-test TypeScript files that directly import from `packages/common/utils/shared.utils.ts`\n- **Answer**: *(unavailable — brick failed to load; see Notes)*\n- **Turns used**: 8\n- **Tools used**: `mcp__focus__focus_load`, `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_install`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~3,500\n- **Notes**: The `focus` MCP server is reachable and its management tools function correctly. However, `focus_load(\"graphbuild\")` fails with `Cannot find module '@focus-mcp/brick-graphbuild'` — the installed artifact is a noop stub that proxies to the npm package, which is not present in this environment. `focus_update` is unimplemented, so no upgrade path is available. Because the brick's tools (`gb_build`, `gb_multimodal`, etc.) are never registered, the knowledge graph cannot be built and the mini-task cannot be completed using brick tools alone. The marketplace catalog lists version 1.1.0 of the brick, but `focus_install` reports it already installed at `^0.0.0` and offers no force-reinstall mechanism.",
+  "workdir": "/tmp/focus-bench/graphbuild-brick-2026-04-26T13-21-21-736",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "convert",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:50:52.277Z",
+  "duration_ms": 104221,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 42,
+    "cache_creation_input_tokens": 26634,
+    "cache_read_input_tokens": 583114,
+    "output_tokens": 6112,
+    "total": 615902
+  },
+  "session_id": "7015e306-07fc-417d-b1ec-d01d9edeee46",
+  "result_block": "## Result\n- **Brick**: convert\n- **Mode**: native\n- **Mini-task**: Convert HTTP decorator filenames from kebab-case to PascalCase\n- **Answer**:\n  ```\n  CreateRouteParamMetadata\n  Header\n  HttpCode\n  Redirect\n  Render\n  RequestMapping\n  RouteParams\n  Sse\n  ```\n- **Turns used**: 6\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: Solved entirely with directory listing and a short Python snippet for kebab→PascalCase conversion. The brick's `language` tool (`to: \"pascal\"`) would replace the Python step in brick mode, making the task a direct exercise of that tool's core capability.",
+  "mini_task_spec": "In the NestJS repository under `test-repo/packages/common/decorators/http/`, there are several TypeScript decorator source files (excluding `index.ts`). Your task is to:\n\n1. List all `.decorator.ts` files in `test-repo/packages/common/decorators/http/` (excluding `index.ts`).\n2. For each file, strip the `.decorator.ts` suffix to get the base name (e.g., `http-code.decorator.ts` → `http-code`).\n3. Convert each base name from kebab-case to PascalCase using the `mcp__focus__conv_language` tool with `to: \"pascal\"` (e.g., `http-code` → `HttpCode`).\n4. Output the resulting PascalCase names sorted alphabetically, one per line.\n\nExpected answer format: 8 PascalCase identifiers, one per line, sorted alphabetically (A–Z).\n\n---",
+  "workdir": "/tmp/focus-bench/convert-native-2026-04-26T12-50-52-277",
+  "exit_reason": "ok"
+}

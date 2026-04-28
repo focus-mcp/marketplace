@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "prefix": "sr",
     "description": "Intelligent file reading — multiple modes to minimize token usage.",
-    "dependencies": [],
+    "dependencies": ["treesitter"],
     "tools": [
         {
             "name": "full",

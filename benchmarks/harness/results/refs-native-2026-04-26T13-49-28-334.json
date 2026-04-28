@@ -1,0 +1,26 @@
+{
+  "brick": "refs",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:48:39.689Z",
+  "duration_ms": 48644,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 31,
+    "cache_creation_input_tokens": 16328,
+    "cache_read_input_tokens": 380050,
+    "output_tokens": 3394,
+    "total": 399803
+  },
+  "session_id": "c2d5889f-04a2-457c-a5aa-9b4472dc71b4",
+  "result_block": "## Result\n- **Brick**: refs\n- **Mode**: native\n- **Mini-task**: Find all files implementing the `PipeTransform` interface under `test-repo/packages/`\n- **Answer**:\n```\npackages/common/pipes/default-value.pipe.ts\npackages/common/pipes/file/parse-file.pipe.ts\npackages/common/pipes/parse-array.pipe.ts\npackages/common/pipes/parse-bool.pipe.ts\npackages/common/pipes/parse-date.pipe.ts\npackages/common/pipes/parse-enum.pipe.ts\npackages/common/pipes/parse-float.pipe.ts\npackages/common/pipes/parse-int.pipe.ts\npackages/common/pipes/parse-uuid.pipe.ts\npackages/common/pipes/validation.pipe.ts\n```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: All 10 implementations are in `packages/common/pipes/`. No implementations found in other packages (microservices, platform-express, etc.). The search with `implements\\s+PipeTransform` was clean and unambiguous. The `file/parse-file.pipe.ts` entry sits one level deeper but is still captured by the recursive Grep.",
+  "mini_task_spec": "Using the `refs` brick's `implementations` tool, find all classes in the NestJS monorepo under `test-repo/packages/` that implement the `PipeTransform` interface. Scan the directory `test-repo/packages` (or its equivalent absolute path if the brick requires one). Report the list of **relative file paths** (relative to `test-repo/`) that contain a `PipeTransform` implementation, one per line, sorted alphabetically. Do not include test files or files outside `packages/`.\n\nExpected answer format: a sorted list of relative file paths, one per line, e.g.:\n```\npackages/common/pipes/default-value.pipe.ts\npackages/common/pipes/file/parse-file.pipe.ts\n...\n```\n\n---",
+  "workdir": "/tmp/focus-bench/refs-native-2026-04-26T13-48-39-689",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "graphexport",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:20:30.343Z",
+  "duration_ms": 123878,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 40,
+    "cache_creation_input_tokens": 54547,
+    "cache_read_input_tokens": 598696,
+    "output_tokens": 8183,
+    "total": 661466
+  },
+  "session_id": "e29b74bb-12ac-4729-8eb9-c3e559e6a1b7",
+  "result_block": "## Result\n- **Brick**: graphexport\n- **Mode**: native\n- **Mini-task**: Build and export NestJS monorepo inter-package peerDependency graph as Mermaid TB diagram\n- **Answer**:\n```\ngraph TB\n    common[\"@nestjs/common\"]\n    core[\"@nestjs/core\"]\n    microservices[\"@nestjs/microservices\"]\n    platform_express[\"@nestjs/platform-express\"]\n    platform_fastify[\"@nestjs/platform-fastify\"]\n    platform_socket_io[\"@nestjs/platform-socket.io\"]\n    platform_ws[\"@nestjs/platform-ws\"]\n    testing[\"@nestjs/testing\"]\n    websockets[\"@nestjs/websockets\"]\n    core -->|depends_on| common\n    core -->|depends_on| microservices\n    core -->|depends_on| platform_express\n    core -->|depends_on| websockets\n    microservices -->|depends_on| common\n    microservices -->|depends_on| core\n    microservices -->|depends_on| websockets\n    platform_express -->|depends_on| common\n    platform_express -->|depends_on| core\n    platform_fastify -->|depends_on| common\n    platform_fastify -->|depends_on| core\n    platform_socket_io -->|depends_on| common\n    platform_socket_io -->|depends_on| websockets\n    platform_ws -->|depends_on| common\n    platform_ws -->|depends_on| websockets\n    testing -->|depends_on| common\n    testing -->|depends_on| core\n    testing -->|depends_on| microservices\n    testing -->|depends_on| platform_express\n    websockets -->|depends_on| common\n    websockets -->|depends_on| core\n    websockets -->|depends_on| platform_socket_io\n```\n(9 nodes, 22 directed edges)\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Glob (Glob via ls)\n- **Rough token estimate**: ~3,500\n- **Notes**: All 9 `@nestjs/*` packages declare only `peerDependencies` (no runtime `dependencies`) to other monorepo packages. The node ID for `platform-socket.io` requires `.` → `_` sanitization to be valid as a Mermaid node identifier. There are circular peer-dependency declarations (e.g. `core` ↔ `microservices`, `core` ↔ `websockets`) which is typical for peer-dep usage in a monorepo but would form cycles in the graph.",
+  "mini_task_spec": "Read each `packages/*/package.json` file under `test-repo/packages/` (there are 9 packages: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets`). For each package, collect all `peerDependencies` entries that are themselves `@nestjs/*` packages present in the same monorepo. These form directed dependency edges.\n\nConstruct a graph where:\n- **Nodes**: one per `@nestjs/*` package; node `id` = the directory short name with `.` and `-` replaced by `_` (e.g. `platform_socket_io`); node `label` = full scoped name (e.g. `@nestjs/platform-socket.io`); node `type` = `\"package\"`.\n- **Edges**: one per peerDependency relationship; `from` = source short-id, `to` = target short-id; `type` = `\"depends_on\"`.\n\nLoad the graph using `ge_input`, then export it as a Mermaid diagram with direction `TB` using `ge_mermaid`.\n\n**Expected answer format**: The complete Mermaid diagram text, starting with `graph TB`, with one node definition per line followed by one edge per line, using `-->|depends_on|` arrow syntax. Nodes and edges sorted alphabetically (nodes by id, edges by source then target).\n\n---",
+  "workdir": "/tmp/focus-bench/graphexport-native-2026-04-26T13-20-30-342",
+  "exit_reason": "ok"
+}

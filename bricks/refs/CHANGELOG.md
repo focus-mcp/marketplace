@@ -1,5 +1,13 @@
 # @focus-mcp/brick-refs
 
+## 1.2.0
+
+### Minor Changes
+
+- bfb55a9: Multi-language support via bus.request to treesitter brick (Option A pattern).
+  Replaces TS/JS-only text search with bus calls to treesitter:extract-refs and treesitter:extract-symbols.
+  Adds dependencies: ["treesitter"] to manifest.
+
 ## 1.1.1
 
 ### Patch Changes

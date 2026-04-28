@@ -1,0 +1,25 @@
+{
+  "brick": "repos",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:24:13.947Z",
+  "duration_ms": 60578,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 14443,
+    "cache_read_input_tokens": 413280,
+    "output_tokens": 2632,
+    "total": 430388
+  },
+  "session_id": "1f6437c3-e15e-4f0c-9772-6bf509cf6624",
+  "result_block": "## Result\n- **Brick**: repos\n- **Mode**: native\n- **Mini-task**: Count total files and lines in `test-repo/packages/common`\n- **Answer**: files: 247, lines: 16379\n- **Turns used**: 6\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1,800\n- **Notes**: The `stats` tool's likely implementation counts all files and their total line count recursively. Native solution used `find` + `wc -l` to replicate that. Binary/non-text files would be included by both approaches. The test-repo is the NestJS monorepo shallow clone; `packages/common` is a well-bounded package with 247 files (239 `.ts` + 8 other files like `CHANGELOG.md`, `package.json`, etc.) totalling 16,379 lines.",
+  "mini_task_spec": "Using the **repos** brick, register the directory `test-repo/packages/common` under the name `\"common\"` (use the absolute path to `test-repo/packages/common` when registering), then call the `stats` tool for `\"common\"`. Report the total **file count** and total **line count** exactly as returned by the stats tool.\n\nThe expected answer format is two integers on two lines:\n```\nfiles: <N>\nlines: <N>\n```\n\nThe correct values must come from scanning all files (recursively) inside `test-repo/packages/common`.\n\n---",
+  "workdir": "/tmp/focus-bench/repos-native-2026-04-26T18-24-13-947",
+  "exit_reason": "ok"
+}

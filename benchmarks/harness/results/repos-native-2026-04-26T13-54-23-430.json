@@ -1,0 +1,26 @@
+{
+  "brick": "repos",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:53:43.936Z",
+  "duration_ms": 39494,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 31,
+    "cache_creation_input_tokens": 5993,
+    "cache_read_input_tokens": 364865,
+    "output_tokens": 1855,
+    "total": 372744
+  },
+  "session_id": "d5823b00-6021-42df-af3b-888ddbf9cfa8",
+  "result_block": "## Result\n- **Brick**: repos\n- **Mode**: native\n- **Mini-task**: Count total files and lines in `test-repo/packages/common`\n- **Answer**:\n  ```\n  files: 247\n  lines: 16379\n  ```\n- **Turns used**: 5\n- **Tools used**: Bash, Glob, Read\n- **Rough token estimate**: ~1,200\n- **Notes**: Solved with `find … | wc -l` and `find … -exec wc -l {} +`. No `.git` subdirectory exists inside `packages/common`, so no hidden-directory skew. Results were confirmed twice and were stable.",
+  "mini_task_spec": "Using the `repos` brick tools, register the directory `test-repo/packages/common` (relative to the session working directory) as a repository named `common` using the `register` tool, then call the `stats` tool with `name: \"common\"` to obtain the file count and total line count for that directory. Report the result as two numbers in this exact format:\n```\nfiles: <N>\nlines: <N>\n```",
+  "workdir": "/tmp/focus-bench/repos-native-2026-04-26T13-53-43-936",
+  "exit_reason": "ok"
+}

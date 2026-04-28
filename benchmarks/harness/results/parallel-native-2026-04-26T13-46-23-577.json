@@ -1,0 +1,25 @@
+{
+  "brick": "parallel",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:45:23.128Z",
+  "duration_ms": 60449,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 32,
+    "cache_creation_input_tokens": 17722,
+    "cache_read_input_tokens": 431549,
+    "output_tokens": 2926,
+    "total": 452229
+  },
+  "session_id": "11424bef-d2c5-44fc-abd4-bcee8f839b6c",
+  "result_block": "## Result\n- **Brick**: parallel\n- **Mode**: native\n- **Mini-task**: Count `.ts` files (excluding `.d.ts`) in each of the 9 packages under `test-repo/packages/`, in parallel\n- **Answer**:\n  ```\n  common: 239\n  core: 259\n  microservices: 196\n  platform-express: 33\n  platform-fastify: 18\n  platform-socket.io: 4\n  platform-ws: 3\n  testing: 12\n  websockets: 61\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,500\n- **Notes**: In native mode this was a simple sequential loop. The brick mode benefit is firing all 9 `find … | wc -l` commands concurrently via `run_inline`, which would reduce wall-clock time proportionally but produce identical results.",
+  "mini_task_spec": "For each subdirectory (package) in `test-repo/packages/`, count the total number of `.ts` files (TypeScript source files, excluding `.d.ts` declaration files) recursively. Use the parallel brick's `run_inline` tool to fire all nine counting tasks concurrently — one task per package — then report the results as a sorted list in the format `<package-name>: <count>`, one entry per line, sorted alphabetically by package name. The packages are: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets`. Use `find <pkg-dir> -name \"*.ts\" ! -name \"*.d.ts\" -type f | wc -l` as the counting command for each package, with `test-repo/packages` as the working directory. Report the final answer as a sorted list, one line per package.",
+  "workdir": "/tmp/focus-bench/parallel-native-2026-04-26T13-45-23-128",
+  "exit_reason": "ok"
+}

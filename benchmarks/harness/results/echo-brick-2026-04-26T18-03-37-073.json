@@ -1,0 +1,32 @@
+{
+  "brick": "echo",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:01:38.459Z",
+  "duration_ms": 118614,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 93,
+    "cache_creation_input_tokens": 40517,
+    "cache_read_input_tokens": 574380,
+    "output_tokens": 7178,
+    "total": 622168
+  },
+  "session_id": "e9db80a4-66aa-4649-9f34-533697096cd8",
+  "result_block": "## Result\n- **Brick**: echo\n- **Mode**: brick\n- **Mini-task**: Read the `\"version\"` field from `test-repo/package.json` and echo it with `mcp__echo__say`\n- **Answer**: 11.1.10\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_remove`\n- **Rough token estimate**: ~4,000\n- **Notes**: The echo brick could not be loaded — `focus_load` failed with `Cannot find module '@focus-mcp/brick-echo'`, meaning the npm package is missing from the local environment. The brick is registered as installed at `^0.0.0` (local dev version) but the module was never built/linked. `focus_update` is not yet implemented, and `focus_remove` failed with a lock-entry error, leaving no path to re-install the marketplace `1.1.0`. As a result, `mcp__echo__say` was never available to call. The version `11.1.10` was obtained directly from `test-repo/package.json` via `Read` (a second use, flagged as a fallback due to the brick failure).",
+  "workdir": "/tmp/focus-bench/echo-brick-2026-04-26T18-01-38-457",
+  "exit_reason": "ok"
+}

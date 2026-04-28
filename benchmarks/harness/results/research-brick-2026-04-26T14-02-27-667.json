@@ -1,0 +1,31 @@
+{
+  "brick": "research",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:00:42.269Z",
+  "duration_ms": 105398,
+  "turns": 18,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 88,
+    "cache_creation_input_tokens": 35894,
+    "cache_read_input_tokens": 454381,
+    "output_tokens": 4667,
+    "total": 495030
+  },
+  "session_id": "6f7b85f6-1a5c-431b-a6cc-b17130f4a04d",
+  "result_block": "## Result\n- **Brick**: research\n- **Mode**: brick\n- **Mini-task**: Identify the inconsistent import path for provider types across `scanner.ts` and `injector/module.ts` in a NestJS repo\n- **Answer**: *Unable to determine* — brick tools could not be loaded (see Notes)\n- **Turns used**: 16\n- **Tools used**: `mcp__focus__focus_load`, `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_install`, `mcp__focus__focus_search`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`\n- **Rough token estimate**: ~6,000\n- **Notes**: The `research` brick is registered as installed (`^0.0.0`) and appears in the marketplace catalog (`1.1.0`), but `focus_load` fails with `Cannot find module '@focus-mcp/brick-research'`. `focus_update` returns `not yet implemented`, and `focus_reload` returns `Brick \"research\" not found`. The brick's tools (`multisource`, `synthesize`, `validate`) never became available in the session. With native filesystem tools forbidden and brick tools unloadable, the file reads could not be performed. This is a local installation gap — the npm package is not physically present in the `.focus/bricks/` tree even though the registry entry exists.",
+  "workdir": "/tmp/focus-bench/research-brick-2026-04-26T14-00-42-266",
+  "exit_reason": "ok"
+}

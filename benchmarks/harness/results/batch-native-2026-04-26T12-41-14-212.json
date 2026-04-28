@@ -1,0 +1,25 @@
+{
+  "brick": "batch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:40:16.958Z",
+  "duration_ms": 57254,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 31,
+    "cache_creation_input_tokens": 68389,
+    "cache_read_input_tokens": 364385,
+    "output_tokens": 2915,
+    "total": 435720
+  },
+  "session_id": "4e2bfa49-0fd4-4f92-9da7-48b90cb0e2c0",
+  "result_block": "## Result\n\n- **Brick**: batch\n- **Mode**: native\n- **Mini-task**: Extract `name` and `version` from all 9 sub-package `package.json` files in parallel\n- **Answer**:\n  ```\n  @nestjs/common=11.1.19\n  @nestjs/core=11.1.19\n  @nestjs/microservices=11.1.19\n  @nestjs/platform-express=11.1.19\n  @nestjs/platform-fastify=11.1.19\n  @nestjs/platform-socket.io=11.1.19\n  @nestjs/platform-ws=11.1.19\n  @nestjs/testing=11.1.19\n  @nestjs/websockets=11.1.19\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~3,500\n- **Notes**: All 9 packages share the same version (`11.1.19`). The task cleanly exercises the `bat:parallel` brick tool — each of the 9 `cat`/`jq` commands can be dispatched in one parallel call instead of 9 sequential reads.",
+  "mini_task_spec": "For each of the 9 sub-packages in `test-repo/packages/` (directories: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets`), read the `name` and `version` fields from their respective `package.json` file and report them.\n\nUse the `bat:parallel` tool (or equivalent batch parallel execution) to fetch all 9 `package.json` files simultaneously, then extract the `name` and `version` from each.\n\n**Expected answer format**: one line per package, sorted by directory name (alphabetical), in the format `<npm-package-name>=<version>`. Example line: `@nestjs/common=11.1.19`.\n\nDo NOT hardcode values — read them from the actual files under `test-repo/packages/<dir>/package.json`.\n\n---",
+  "workdir": "/tmp/focus-bench/batch-native-2026-04-26T12-40-16-958",
+  "exit_reason": "ok"
+}

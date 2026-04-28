@@ -1,0 +1,26 @@
+{
+  "brick": "inline",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:12:22.502Z",
+  "duration_ms": 101486,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 49,
+    "cache_creation_input_tokens": 34585,
+    "cache_read_input_tokens": 727992,
+    "output_tokens": 6995,
+    "total": 769621
+  },
+  "session_id": "39c32a8b-46e3-4889-b249-6d268f439139",
+  "result_block": "## Result\n- **Brick**: inline\n- **Mode**: native\n- **Mini-task**: Determine line 16 content after inlining `MISSING_REQUIRED_DEPENDENCY` in `load-package.util.ts`\n- **Answer**: `    logger.error(\\`The \"${packageName}\" package is missing. Please, make sure to install it to take advantage of ${context}.\\`);`\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Glob, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: The file is small and self-contained (20 lines). `MISSING_REQUIRED_DEPENDENCY` is a non-exported arrow function used exactly once. The inline substitution is mechanical: parameter `name` → `packageName`, `reason` → `context`, producing a direct template literal call. No ambiguity in the transformation.",
+  "mini_task_spec": "In `test-repo/packages/common/utils/load-package.util.ts`, the private arrow function `MISSING_REQUIRED_DEPENDENCY` is defined on lines 3–4:\n\n```typescript\nconst MISSING_REQUIRED_DEPENDENCY = (name: string, reason: string) =>\n  `The \"${name}\" package is missing. Please, make sure to install it to take advantage of ${reason}.`;\n```\n\nIt is called exactly once, on line 16:\n```typescript\n    logger.error(MISSING_REQUIRED_DEPENDENCY(packageName, context));\n```\n\nUse the `inline` tool (from the \"inline\" MCP brick) to inline `MISSING_REQUIRED_DEPENDENCY` in `test-repo/packages/common/utils/load-package.util.ts` with `apply: true`. Report the exact resulting content of **line 16** after the transformation (the definition is removed and the call site is replaced with the substituted template literal). Provide the answer as a single line of TypeScript code exactly as it would appear in the file.\n\n---",
+  "workdir": "/tmp/focus-bench/inline-native-2026-04-26T18-12-22-502",
+  "exit_reason": "ok"
+}

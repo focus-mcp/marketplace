@@ -1,0 +1,38 @@
+{
+  "brick": "repos",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:27:48.703Z",
+  "duration_ms": 1267596,
+  "turns": 21,
+  "tools_used": [
+    "Agent",
+    "Monitor",
+    "Skill",
+    "TaskOutput",
+    "WebFetch",
+    "WebSearch",
+    "mcp__focus__focus_catalog_add",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 233,
+    "cache_creation_input_tokens": 241361,
+    "cache_read_input_tokens": 5397114,
+    "output_tokens": 18118,
+    "total": 5656826
+  },
+  "session_id": "5d5d0518-2c18-4651-8dc9-532b2f0ae694",
+  "result_block": "",
+  "workdir": "/tmp/focus-bench/repos-brick-2026-04-26T19-27-48-701",
+  "exit_reason": "error",
+  "focus_stderr": "[runner] SDK exception: Claude Code returned an error result: Reached maximum number of turns (20)\nError: Claude Code returned an error result: Reached maximum number of turns (20)\n    at D9.readMessages (file:///home/samuelds/projects/focusmcp/marketplace/benchmarks/harness/node_modules/.pnpm/@anthropic-ai+claude-agent-sdk@0.2.118_zod@4.3.6/node_modules/@anthropic-ai/claude-agent-sdk/sdk.mjs:59:17430)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)"
+}

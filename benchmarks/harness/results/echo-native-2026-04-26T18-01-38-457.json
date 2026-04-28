@@ -1,0 +1,25 @@
+{
+  "brick": "echo",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:01:03.507Z",
+  "duration_ms": 34950,
+  "turns": 8,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 23,
+    "cache_creation_input_tokens": 6858,
+    "cache_read_input_tokens": 252617,
+    "output_tokens": 1954,
+    "total": 261452
+  },
+  "session_id": "d4617f81-5d9a-40c5-9ee4-cfababe87351",
+  "result_block": "## Result\n- **Brick**: echo\n- **Mode**: native\n- **Mini-task**: Look up the NestJS repo version in `test-repo/package.json` and echo it back\n- **Answer**: `11.1.10`\n- **Turns used**: 4\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~800\n- **Notes**: The echo brick is a pure smoke-test/hello-world brick with no domain-specific functionality. The only interesting work is retrieving the value to echo; in native mode that's done with Bash/Read, while in brick mode the agent calls `mcp__echo__say` with the retrieved string. The task is deliberately trivial to match the brick's purpose.",
+  "mini_task_spec": "Using only the `echo` brick's `say` tool (tool name: `mcp__echo__say`), look up the value of the `\"version\"` field at the top level of `test-repo/package.json` in the NestJS shallow clone repository. Then call `say` with that version string as the `message` parameter. Report the exact string returned by the tool.\n\nExpected answer format: a single version string (e.g. `\"11.1.10\"`), exactly as it appears in the JSON file, with no surrounding quotes or extra whitespace.",
+  "workdir": "/tmp/focus-bench/echo-native-2026-04-26T18-01-03-506",
+  "exit_reason": "ok"
+}

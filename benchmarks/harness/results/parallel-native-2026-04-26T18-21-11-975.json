@@ -1,0 +1,25 @@
+{
+  "brick": "parallel",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:20:32.117Z",
+  "duration_ms": 39858,
+  "turns": 9,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 28,
+    "cache_creation_input_tokens": 14616,
+    "cache_read_input_tokens": 340855,
+    "output_tokens": 2305,
+    "total": 357804
+  },
+  "session_id": "4b248092-9a89-4204-8d1a-52e4d0402cbd",
+  "result_block": "## Result\n\n- **Brick**: parallel\n- **Mode**: native\n- **Mini-task**: Count `.ts` source files per NestJS package (concurrently), sorted alphabetically\n- **Answer**:\n  ```\n  common: 188\n  core: 178\n  microservices: 132\n  platform-express: 24\n  platform-fastify: 15\n  platform-socket.io: 3\n  platform-ws: 3\n  testing: 12\n  websockets: 43\n  ```\n- **Turns used**: 4\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2 500\n- **Notes**: The brick's core strength (running N shell commands concurrently and merging outputs) maps cleanly onto counting files across 9 independent packages. Native mode used a sequential shell loop, which is functionally equivalent but cannot parallelise; the brick's `run_inline` + `merge` would reduce wall-clock time proportionally. No edge cases encountered; results are fully deterministic.",
+  "mini_task_spec": "Count the number of TypeScript source files (`.ts` extension, excluding `.d.ts` declaration files and any files located under a `test/` directory) in each of the nine top-level package directories found under `test-repo/packages/`. The packages are: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, and `websockets`. Run the file-count command for all nine packages concurrently (e.g., using `par_run_inline` with one task per package, each task running `find test-repo/packages/<name> -name \"*.ts\" ! -name \"*.d.ts\" -not -path \"*/test/*\" | wc -l` from the repo root). Merge and report results as a sorted alphabetical list in the format `<package-name>: <count>`, one entry per line.",
+  "workdir": "/tmp/focus-bench/parallel-native-2026-04-26T18-20-32-117",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,28 @@
+{
+  "brick": "memory",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:36:14.527Z",
+  "duration_ms": 84129,
+  "turns": 11,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 58,
+    "cache_creation_input_tokens": 34485,
+    "cache_read_input_tokens": 280518,
+    "output_tokens": 4639,
+    "total": 319700
+  },
+  "session_id": "6fe67a88-210b-4fb5-93ff-822df9816587",
+  "result_block": "## Result\n- **Brick**: memory\n- **Mode**: brick\n- **Mini-task**: Extract exported TypeScript class names and HTTP status codes from `.exception.ts` files in `test-repo/packages/common/exceptions/`, reported as `ClassName=statusCode` pairs sorted alphabetically\n- **Answer**: *(could not be obtained — see Notes)*\n- **Turns used**: 7\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_update`\n- **Rough token estimate**: ~2,500\n- **Notes**:\n  1. **Brick load failure**: `focus_load(\"memory\")` fails with `Cannot find module '@focus-mcp/brick-memory'` — the npm package is registered in `.focus/` but its node module is absent, so the brick's tools never become available.\n  2. **Wrong tool domain**: Even if the memory brick loaded successfully, its five tools (`store`, `recall`, `search`, `forget`, `list`) are a pure key-value store with no filesystem-reading capability. They cannot open, grep, or traverse TypeScript source files.\n  3. **No pre-stored data**: There was no pre-populated memory entry containing the exception class metadata that could be recalled.\n  4. **Conclusion**: This task is not solvable with the memory brick's tools alone; a filesystem- or code-search brick would be required.",
+  "workdir": "/tmp/focus-bench/memory-brick-2026-04-26T13-36-14-524",
+  "exit_reason": "ok"
+}

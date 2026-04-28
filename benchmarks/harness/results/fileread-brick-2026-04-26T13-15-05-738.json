@@ -1,0 +1,31 @@
+{
+  "brick": "fileread",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:12:50.530Z",
+  "duration_ms": 135208,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 98,
+    "cache_creation_input_tokens": 51603,
+    "cache_read_input_tokens": 551675,
+    "output_tokens": 6601,
+    "total": 609977
+  },
+  "session_id": "bc25c541-365d-4723-bdeb-2d5f4ecf2cf3",
+  "result_block": "## Result\n- **Brick**: fileread\n- **Mode**: brick\n- **Mini-task**: Read lines 13–16 of `test-repo/packages/core/constants.ts` and report each exported constant's name and exact string value\n- **Answer**: *(unavailable — see Notes)*\n- **Turns used**: 15\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_update`, `mcp__focus__focus_install` (with version), `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_add` (schema fetch only)\n- **Rough token estimate**: ~6,000\n- **Notes**: The fileread brick is recorded as installed (version `^0.0.0`) but its npm package `@focus-mcp/brick-fileread` is absent from disk, causing every `focus_load` call to fail with `Cannot find module`. `focus_update` returns \"not yet implemented\". No workaround exists within the available `mcp__focus__*` tool set. The brick's `range` tool (needed to read lines 13–16) never became available, so the mini-task could not be completed using brick tools only. Native `Read` was intentionally withheld from the solution per task rules.",
+  "workdir": "/tmp/focus-bench/fileread-brick-2026-04-26T13-12-50-528",
+  "exit_reason": "ok"
+}

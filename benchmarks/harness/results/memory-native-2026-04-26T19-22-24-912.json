@@ -1,0 +1,26 @@
+{
+  "brick": "memory",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:21:24.545Z",
+  "duration_ms": 60367,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 28172,
+    "cache_read_input_tokens": 454353,
+    "output_tokens": 3614,
+    "total": 486174
+  },
+  "session_id": "7812121b-90d3-429d-b13a-2db3fe6908b4",
+  "result_block": "## Result\n\n- **Brick**: memory\n- **Mode**: native\n- **Mini-task**: Find all NestJS packages in `test-repo/packages/` that list `@nestjs/common` under `peerDependencies`, sorted alphabetically\n- **Answer**:\n  ```\n  @nestjs/core\n  @nestjs/microservices\n  @nestjs/platform-express\n  @nestjs/platform-fastify\n  @nestjs/platform-socket.io\n  @nestjs/platform-ws\n  @nestjs/testing\n  @nestjs/websockets\n  ```\n- **Turns used**: 5\n- **Tools used**: Bash, Read, Glob\n- **Rough token estimate**: ~3,500\n- **Notes**: In native mode this is a simple grep + Python one-liner. The memory brick's value-add is in the brick run: it would let a subsequent agent call `mem_search(\"@nestjs/common\")` without re-scanning the repo, demonstrating cross-session persistence and recall. No blockers encountered.",
+  "mini_task_spec": "Using the `packages/*/package.json` files inside `test-repo/`, identify every NestJS package whose **`peerDependencies`** section (not `devDependencies`) includes `@nestjs/common`.\n\nFor the brick run, the agent should:\n1. Read each of the nine `test-repo/packages/*/package.json` files.\n2. For every package that has `@nestjs/common` under `peerDependencies`, call **`mem_store`** with `key` = the package's `name` field and `value` = the version range string for `@nestjs/common` in that file's `peerDependencies`.\n3. After all stores are done, call **`mem_search`** with `query` = `\"@nestjs/common\"` and report every key returned.\n\n**Expected answer format**: a sorted, alphabetical list of npm package names (one per line) that appear as keys from the search results — i.e., all packages that declared `@nestjs/common` as a peer dependency.\n\n---",
+  "workdir": "/tmp/focus-bench/memory-native-2026-04-26T19-21-24-544",
+  "exit_reason": "ok"
+}

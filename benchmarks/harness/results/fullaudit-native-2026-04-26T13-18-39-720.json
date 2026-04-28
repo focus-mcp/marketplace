@@ -1,0 +1,26 @@
+{
+  "brick": "fullaudit",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:17:03.350Z",
+  "duration_ms": 96370,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 66102,
+    "cache_read_input_tokens": 824699,
+    "output_tokens": 5001,
+    "total": 895850
+  },
+  "session_id": "2e58bfec-a099-4fff-848a-364e2304b876",
+  "result_block": "## Result\n- **Brick**: fullaudit\n- **Mode**: native\n- **Mini-task**: Find non-test `.ts` files in `packages/core` exceeding 500 lines (refactoring hotspots)\n- **Answer**:\n  ```\n  packages/core/injector/injector.ts\n  packages/core/injector/instance-wrapper.ts\n  packages/core/injector/module.ts\n  packages/core/nest-application-context.ts\n  packages/core/scanner.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~4,000\n- **Notes**: Straightforward metric query; all five files are production source files (not test files). `nest-application.ts` (497 lines) falls just below the 500-line threshold and is excluded. Results are fully deterministic.",
+  "mini_task_spec": "Run a code-quality audit of the NestJS core package located at `test-repo/packages/core`. Find every TypeScript source file (`.ts` extension) inside that directory that has **more than 500 lines of code** (as reported by `wc -l`), while **excluding** any file whose path contains a `test/` directory segment. Report only the file paths, one per line, relative to `test-repo/` (e.g. `packages/core/injector/injector.ts`), sorted alphabetically. Do not include line counts in the output.\n\n---",
+  "workdir": "/tmp/focus-bench/fullaudit-native-2026-04-26T13-17-03-349",
+  "exit_reason": "ok"
+}

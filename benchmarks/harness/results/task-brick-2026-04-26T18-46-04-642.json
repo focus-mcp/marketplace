@@ -1,0 +1,29 @@
+{
+  "brick": "task",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:43:05.431Z",
+  "duration_ms": 179211,
+  "turns": 23,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_search"
+  ],
+  "usage": {
+    "input_tokens": 91,
+    "cache_creation_input_tokens": 60735,
+    "cache_read_input_tokens": 739709,
+    "output_tokens": 9429,
+    "total": 809964
+  },
+  "session_id": "6498dffd-b207-462d-86d7-8f662b02f2e6",
+  "result_block": "## Result\n- **Brick**: task\n- **Mode**: brick\n- **Mini-task**: Identify all classes directly extending `HttpException` in `test-repo/packages/common/exceptions/`, cross-reference HTTP status codes from the `HttpStatus` enum, and output them sorted ascending by status code\n- **Answer**: INCOMPLETE — Unable to read the filesystem files using only `mcp__focus__*` tools. The `task` brick failed to load (`@focus-mcp/brick-task` module not found). The `autopilot` brick loaded successfully (tools: `plan`, `execute`, `status`) but its tools are not exposed under the `mcp__focus__*` namespace and cannot be invoked. No `mcp__focus__*` tool provides file reading, grep, or shell execution capability. Without file access, the TypeScript source files in `test-repo/packages/common/exceptions/` and `test-repo/packages/common/enums/http-status.enum.ts` cannot be inspected.\n- **Turns used**: 14\n- **Tools used**: `mcp__focus__focus_list` (×2), `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search` (×4), `mcp__focus__focus_install` (×2), `mcp__focus__focus_load` (×2)\n- **Rough token estimate**: ~8,000\n- **Notes**: \n  1. The `task` brick module (`@focus-mcp/brick-task`) is not installed in this environment — `focus_load` fails with `Cannot find module`. Only the brick's manifest (tools: create, assign, status, complete) is visible, and those tools are task-management primitives with no file-reading capability.\n  2. The `autopilot` brick (which advertises \"shell commands\") was successfully installed and loaded, but its tools (`plan`, `execute`, `status`) are **not** reachable via the `mcp__focus__*` tool namespace — `ToolSearch` returns no matches for them, making them uncallable under the \"mcp__focus__* only\" constraint.\n  3. The marketplace contains no brick offering grep/filesystem/code-search functionality.\n  4. The benchmark constraint prohibiting `Bash`, `Grep`, `Glob`, `Edit`, `Write` (and limiting `Read` to one call for the manifest) leaves no viable path to answer the mini-task with the tools available.",
+  "workdir": "/tmp/focus-bench/task-brick-2026-04-26T18-43-05-428",
+  "exit_reason": "ok"
+}

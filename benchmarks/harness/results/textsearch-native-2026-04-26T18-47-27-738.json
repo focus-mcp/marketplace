@@ -1,0 +1,26 @@
+{
+  "brick": "textsearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:46:04.643Z",
+  "duration_ms": 83095,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 42,
+    "cache_creation_input_tokens": 31573,
+    "cache_read_input_tokens": 638260,
+    "output_tokens": 4258,
+    "total": 674133
+  },
+  "session_id": "b03f7eaf-b973-42b6-bacb-0b2dd20b94a6",
+  "result_block": "## Result\n\n- **Brick**: textsearch\n- **Mode**: native\n- **Mini-task**: Find all exported class names using `implements` in `packages/core` TypeScript source files (sorted alphabetically)\n- **Answer**:\n  ```\n  ByReferenceModuleOpaqueKeyFactory\n  DeepHashedModuleOpaqueKeyFactory\n  ExecutionContextHost\n  MiddlewareBuilder\n  RouteParamsFactory\n  RoutesResolver\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: No spec files matched the `export class X implements` pattern, so excluding them had no effect on the result. All 6 matches were in non-test production source files within `packages/core`.",
+  "mini_task_spec": "Using regex search over the `test-repo/packages/core` directory (TypeScript files only, `**/*.ts` glob), find all lines that match the pattern `export class \\w+ implements` — that is, exported class declarations that implement at least one interface. Exclude spec/test files (i.e., `*.spec.ts`). For each match, extract the class name (the word between `class` and `implements`). Report the list of unique class names found, sorted alphabetically, one per line.\n\nExpected answer format: a sorted, newline-separated list of class names (not file paths), e.g.:\n```\nClassName1\nClassName2\n...\n```\n\nNote: search only in `test-repo/packages/core`, using the glob `**/*.ts` but excluding `*.spec.ts` files.\n\n---",
+  "workdir": "/tmp/focus-bench/textsearch-native-2026-04-26T18-46-04-643",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "smartread",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:20:51.887Z",
+  "duration_ms": 89814,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 46,
+    "cache_creation_input_tokens": 21589,
+    "cache_read_input_tokens": 662404,
+    "output_tokens": 4871,
+    "total": 688910
+  },
+  "session_id": "1c9db275-f5a3-43fd-a621-836797c74366",
+  "result_block": "## Result\n- **Brick**: smartread\n- **Mode**: native\n- **Mini-task**: Extract and sort all import source paths from `packages/core/nest-factory.ts`\n- **Answer**:\n```\n./adapters/http-adapter\n./application-config\n./constants\n./errors/exceptions-zone\n./helpers/load-adapter\n./helpers/rethrow\n./injector/container\n./injector/injector\n./injector/instance-loader\n./inspector/graph-inspector\n./inspector/noop-graph-inspector\n./inspector/uuid-factory\n./metadata-scanner\n./nest-application\n./nest-application-context\n./scanner\n@nestjs/common\n@nestjs/common/interfaces/microservices/nest-microservice-options.interface\n@nestjs/common/interfaces/nest-application-context-options.interface\n@nestjs/common/interfaces/nest-application-options.interface\n@nestjs/common/services/console-logger.service\n@nestjs/common/services/logger.service\n@nestjs/common/utils/load-package.util\n@nestjs/common/utils/shared.utils\n```\n- **Turns used**: 10\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: The file has one multi-line import block (lines 0–8) where the `from` clause is on a different line than `import {`; a simple `^import`-anchored grep missed it. Used `grep -oP \"from\\s+'[^']+'\"` to capture all `from '...'` occurrences regardless of line position. Default `sort` locale placed `./scanner` incorrectly at the end; `LC_ALL=C sort` produced the correct C-locale alphabetical order where `.` < `@`.",
+  "mini_task_spec": "Using the file `test-repo/packages/core/nest-factory.ts`, extract all import source paths (i.e. the module specifier strings that appear after `from` in every `import` statement, including multi-line imports). List each unique source path exactly once, sorted alphabetically using C-locale order (i.e., `./` paths before `@` paths). Return one path per line with no additional text.",
+  "workdir": "/tmp/focus-bench/smartread-native-2026-04-26T14-20-51-887",
+  "exit_reason": "ok"
+}

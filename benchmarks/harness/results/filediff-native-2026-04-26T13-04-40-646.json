@@ -1,0 +1,25 @@
+{
+  "brick": "filediff",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:03:42.974Z",
+  "duration_ms": 57672,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 15574,
+    "cache_read_input_tokens": 415771,
+    "output_tokens": 4059,
+    "total": 435437
+  },
+  "session_id": "c9af3734-68e3-4dec-9eaa-2c475a6ca0b4",
+  "result_block": "## Result\n- **Brick**: filediff\n- **Mode**: native\n- **Mini-task**: Count added/removed lines in unified diff of platform-express vs platform-fastify package.json\n- **Answer**:\n  ```\n  added: 21\n  removed: 10\n  ```\n- **Turns used**: 9\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~2,500\n- **Notes**: Straightforward `diff -u` exercise that maps directly to the brick's `diff` tool. The two `package.json` files differ in name, description, repository directory, dependencies (express→fastify ecosystem), removal of devDependencies, expansion of peerDependencies, and addition of peerDependenciesMeta. Header lines (`+++`/`---`) excluded from count per standard unified-diff semantics.",
+  "mini_task_spec": "Using the `diff` tool, compare `test-repo/packages/platform-express/package.json` (file **a**) with `test-repo/packages/platform-fastify/package.json` (file **b**) and produce a unified diff. Count how many content lines are **added** (lines starting with `+`, excluding the `+++` file header line) and how many content lines are **removed** (lines starting with `-`, excluding the `---` file header line). Report the answer in the exact format:\n\n```\nadded: <N>\nremoved: <N>\n```",
+  "workdir": "/tmp/focus-bench/filediff-native-2026-04-26T13-03-42-973",
+  "exit_reason": "ok"
+}

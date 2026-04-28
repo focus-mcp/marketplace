@@ -1,0 +1,32 @@
+{
+  "brick": "debate",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:56:04.897Z",
+  "duration_ms": 211755,
+  "turns": 16,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 73,
+    "cache_creation_input_tokens": 38148,
+    "cache_read_input_tokens": 532119,
+    "output_tokens": 8545,
+    "total": 578885
+  },
+  "session_id": "c3d5ace9-aeca-4780-8dea-9e79eb365e11",
+  "result_block": "## Result\n- **Brick**: debate\n- **Mode**: brick\n- **Mini-task**: Read `decision-http-adapter.json`, compute weighted scores for `platform-express` vs `platform-fastify` across 4 criteria, identify winner and margin\n- **Answer**: Unable to compute — see Notes\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_install`, `mcp__focus__focus_search`, `mcp__focus__focus_remove`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`\n- **Rough token estimate**: ~3,500\n- **Notes**:\n  1. **Brick load failure**: `focus_load(\"debate\")` failed with `Cannot find module '@focus-mcp/brick-debate'`. The brick is registered (version `^0.0.0`) but its npm package is absent. `focus_update` returned \"not yet implemented\"; `focus_remove` failed with \"Lock entry not found\"; `focus_reload` said \"Brick not found.\" The brick tools (`debate`, `consensus`, `score`, `summary`) were never available.\n  2. **File access**: No `mcp__focus__*` tool can read arbitrary files. The `Read` tool was already used on `mcp-brick.json` (the one allowed use). Without being able to read `test-repo/decision-http-adapter.json`, the criteria weights and per-option scores are unknown, making it impossible to compute the weighted totals.\n  3. **Fundamental mismatch**: Even if the brick were loaded, its `score` tool uses fixed criteria (relevance, evidence, feasibility), not the custom criteria/weight pairs in the decision file — so the brick wouldn't directly solve this mathematical task regardless.\n  4. **Verdict**: Task cannot be completed as specified under the given constraints. The focus MCP server is responsive but the debate brick is broken and no file-reading path exists via `mcp__focus__*` tools.",
+  "workdir": "/tmp/focus-bench/debate-brick-2026-04-26T12-56-04-895",
+  "exit_reason": "ok"
+}

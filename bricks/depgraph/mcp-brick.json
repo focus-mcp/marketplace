@@ -2,7 +2,7 @@
     "name": "depgraph",
     "prefix": "dep",
     "description": "Dependency graph analysis — imports, exports, circular deps, fan-in/out.",
-    "dependencies": [],
+    "dependencies": ["treesitter"],
     "tools": [
         {
             "name": "imports",

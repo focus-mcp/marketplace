@@ -2,7 +2,7 @@
     "name": "callgraph",
     "prefix": "cg",
     "description": "Call graph analysis — callers, callees, call chains.",
-    "dependencies": [],
+    "dependencies": ["treesitter"],
     "tools": [
         {
             "name": "callers",

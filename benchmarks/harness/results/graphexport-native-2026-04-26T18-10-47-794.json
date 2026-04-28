@@ -1,0 +1,25 @@
+{
+  "brick": "graphexport",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:09:06.072Z",
+  "duration_ms": 101722,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 30,
+    "cache_creation_input_tokens": 26647,
+    "cache_read_input_tokens": 379181,
+    "output_tokens": 6995,
+    "total": 412853
+  },
+  "session_id": "10a5b262-dd12-4a17-91c8-3950034c6052",
+  "result_block": "## Result\n\n- **Brick**: graphexport\n- **Mode**: native\n- **Mini-task**: Extract NestJS inter-package dependency graph from `packages/*/package.json` and export as sorted Mermaid edge list\n- **Answer**:\n  ```\n      core --> common\n      core --> microservices\n      core --> platform-express\n      core --> websockets\n      microservices --> common\n      microservices --> core\n      microservices --> websockets\n      platform-express --> common\n      platform-express --> core\n      platform-fastify --> common\n      platform-fastify --> core\n      platform-socket.io --> common\n      platform-socket.io --> websockets\n      platform-ws --> common\n      platform-ws --> websockets\n      testing --> common\n      testing --> core\n      testing --> microservices\n      testing --> platform-express\n      websockets --> common\n      websockets --> core\n      websockets --> platform-socket.io\n  ```\n  (22 directed edges total)\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1,800\n- **Notes**: Edges sourced from both `dependencies` and `peerDependencies` fields in each `package.json`. The `@nestjs/common` package has no `@nestjs/*` dependencies (it is the root dependency of the graph). All 9 packages under `test-repo/packages/` have `@nestjs/` scoped names. Node IDs use the short name (suffix after `@nestjs/`) per the spec; the `platform-socket.io` node ID includes the dot, which is valid in Mermaid when used as a bare node reference in edge declarations.",
+  "mini_task_spec": "Read each `package.json` file found at `test-repo/packages/*/package.json`. For every package whose `name` field starts with `@nestjs/`, collect all `@nestjs/*` entries from both its `dependencies` and `peerDependencies` fields and treat them as directed dependency edges (from the package to the dependency). This gives a directed graph with 9 nodes (one per `@nestjs/*` package in `packages/`) and some set of edges.\n\nUsing the graphexport brick (`ge_mermaid`), export this dependency graph as a Mermaid `graph TB` diagram. Use the short name (the text after `@nestjs/`) as each node's ID. Report **only the edge lines** of the resulting Mermaid diagram (lines containing `-->`), one per line, sorted alphabetically first by source node ID, then by target node ID within the same source, in the exact format `    <source> --> <target>` (4-space indent). Do not include the `graph TB` header or node-declaration lines in the answer.\n\n---",
+  "workdir": "/tmp/focus-bench/graphexport-native-2026-04-26T18-09-06-071",
+  "exit_reason": "ok"
+}

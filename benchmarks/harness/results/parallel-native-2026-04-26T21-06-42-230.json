@@ -1,0 +1,25 @@
+{
+  "brick": "parallel",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T21:05:50.017Z",
+  "duration_ms": 52213,
+  "turns": 8,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 23,
+    "cache_creation_input_tokens": 6975,
+    "cache_read_input_tokens": 260941,
+    "output_tokens": 1929,
+    "total": 269868
+  },
+  "session_id": "186fe238-dd04-48c3-bd08-f0d8d8038414",
+  "result_block": "## Result\n- **Brick**: parallel\n- **Mode**: native\n- **Mini-task**: Count non-spec `.ts` files in each of the 9 NestJS packages, running counts concurrently\n- **Answer**:\n  ```\n  common: 188\n  core: 179\n  microservices: 135\n  platform-express: 24\n  platform-fastify: 15\n  platform-socket.io: 3\n  platform-ws: 3\n  testing: 12\n  websockets: 43\n  ```\n- **Turns used**: 4\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1,500\n- **Notes**: Straightforward task — a single `for` loop replaced what the `run_inline` brick tool would dispatch as 9 parallel `find … | wc -l` commands. The brick's advantage here would be true concurrency; native mode serialises the nine counts but they're fast enough that it doesn't matter for correctness.",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/packages/`, there are nine packages: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, and `websockets`. For **each** package, count the number of TypeScript source files (files ending in `.ts` but **excluding** test files ending in `.spec.ts`) anywhere under that package directory. Use parallel execution to run all nine counts concurrently. Report the results as lines of the form `<package-name>: <count>`, one per line, sorted alphabetically by package name.\n\nExpected answer format — nine lines, alphabetical order, e.g.:\n```\ncommon: N\ncore: N\n...\n```\n\n---",
+  "workdir": "/tmp/focus-bench/parallel-native-2026-04-26T21-05-50-017",
+  "exit_reason": "ok"
+}

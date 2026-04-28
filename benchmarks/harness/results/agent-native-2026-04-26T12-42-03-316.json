@@ -1,0 +1,25 @@
+{
+  "brick": "agent",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:40:16.945Z",
+  "duration_ms": 106371,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 38,
+    "cache_creation_input_tokens": 54223,
+    "cache_read_input_tokens": 466092,
+    "output_tokens": 5519,
+    "total": 525872
+  },
+  "session_id": "7cf44d8d-97b5-40ee-80fa-bcf6c66a89ff",
+  "result_block": "## Result\n\n- **Brick**: agent\n- **Mode**: native\n- **Mini-task**: Identify NestJS microservices transport server class names and report them as agents with `transport` capability\n- **Answer**:\n  ```\n  ServerGrpc\n  ServerKafka\n  ServerMqtt\n  ServerNats\n  ServerRedis\n  ServerRMQ\n  ServerTCP\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,000\n- **Notes**: The brick's `register`/`capabilities` tools are not used in native mode — the answer is derived purely from filesystem inspection. Case-insensitive sort places `ServerRedis` before `ServerRMQ`; byte-value sort (`LC_ALL=C`) reverses those two. The spec uses case-insensitive sort. The `ServerNats` class uses a generic type parameter on the same line but the class name itself is `ServerNats`.",
+  "mini_task_spec": "Inspect `test-repo/packages/microservices/server/` and identify all TypeScript source files that implement a concrete transport server — that is, every `.ts` file **except** `server.ts` (the base class) and `server-factory.ts` (the factory). For each qualifying file, open it and extract the exported class name (the name following `export class`). Use the agent registry brick (`agt`) to register each of those class names as a separate agent with a single capability: `\"transport\"`. After all registrations, call `agt_capabilities` with `capability = \"transport\"` to retrieve the list of agents that can handle it. Report the `name` values of those agents, one per line, sorted alphabetically (case-insensitive).\n\n---",
+  "workdir": "/tmp/focus-bench/agent-native-2026-04-26T12-40-16-944",
+  "exit_reason": "ok"
+}

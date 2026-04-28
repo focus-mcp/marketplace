@@ -1,0 +1,25 @@
+{
+  "brick": "echo",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T20:33:50.830Z",
+  "duration_ms": 69493,
+  "turns": 10,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 52060,
+    "cache_read_input_tokens": 489840,
+    "output_tokens": 2732,
+    "total": 544661
+  },
+  "session_id": "55b65804-3cb5-422b-add1-23a7844ddad4",
+  "result_block": "## Result\n\n- **Brick**: echo\n- **Mode**: native\n- **Mini-task**: Read the `description` field from `test-repo/package.json` and determine what the echo brick's `say` tool would return when passed that value\n- **Answer**: `Modern, fast, powerful node.js web framework`\n- **Turns used**: 4\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~2,500 tokens\n- **Notes**: The echo brick is a pure hello-world/smoke-test brick with a single `say` tool that returns its input verbatim. In native mode there is no actual echo operation to perform — the answer is simply the value read from the file, which is what the brick would return unchanged. The task is deterministic and trivially verifiable.",
+  "mini_task_spec": "Read the `description` field from `test-repo/package.json` (the root `package.json` of the NestJS repository shallow clone). Pass that exact description string as the `message` argument to the echo brick's `say` tool (`mcp__focus__echo__say`). Report the exact string returned by the `say` tool. The expected answer format is a single plain string (no quotes, no extra whitespace).\n\n---",
+  "workdir": "/tmp/focus-bench/echo-native-2026-04-26T20-33-50-830",
+  "exit_reason": "ok"
+}

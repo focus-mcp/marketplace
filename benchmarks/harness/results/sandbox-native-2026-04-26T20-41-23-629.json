@@ -1,0 +1,25 @@
+{
+  "brick": "sandbox",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T20:40:22.275Z",
+  "duration_ms": 61354,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 14309,
+    "cache_read_input_tokens": 407015,
+    "output_tokens": 3765,
+    "total": 425122
+  },
+  "session_id": "0bc4cf43-6464-41fb-b1f8-2f8e42104c5e",
+  "result_block": "## Result\n- **Brick**: sandbox\n- **Mode**: native\n- **Mini-task**: Evaluate `normalizePath` from `test-repo/packages/common/utils/shared.utils.ts` for 6 inputs\n- **Answer**:\n  ```\n  undefined => \"/\"\n  \"\" => \"/\"\n  \"foo\" => \"/foo\"\n  \"/foo/\" => \"/foo\"\n  \"//foo//bar//\" => \"/foo/bar\"\n  \"foo/bar\" => \"/foo/bar\"\n  ```\n- **Turns used**: 5\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1 500\n- **Notes**: Used `node` via Bash to execute the function directly (the same computation the sandbox brick would perform via `mcp__focus__box__run` or `mcp__focus__box__eval`). The brick mode solution would use `box__read` to load the source file and `box__eval` or `box__run` to execute the function against each input, which is the natural fit for this brick's core capability.",
+  "mini_task_spec": "Read the `normalizePath` utility function from `test-repo/packages/common/utils/shared.utils.ts`. The function signature is:\n\n```ts\nexport const normalizePath = (path?: string): string =>\n  path\n    ? path.startsWith('/')\n      ? ('/' + path.replace(/\\/+$/, '')).replace(/\\/+/g, '/')\n      : '/' + path.replace(/\\/+$/, '')\n    : '/';\n```\n\nUsing a sandboxed code execution environment, evaluate `normalizePath` for each of the following six inputs **in order** and report the return value for each:\n\n1. `undefined`\n2. `''` (empty string)\n3. `'foo'`\n4. `'/foo/'`\n5. `'//foo//bar//'`\n6. `'foo/bar'`\n\n**Expected answer format**: six lines, one per input, in the form `<input> => <result>`, where input is shown as a JSON-encoded string (or `undefined` for the undefined case). Example line format: `\"foo\" => \"/foo\"`.\n\n---",
+  "workdir": "/tmp/focus-bench/sandbox-native-2026-04-26T20-40-22-275",
+  "exit_reason": "ok"
+}

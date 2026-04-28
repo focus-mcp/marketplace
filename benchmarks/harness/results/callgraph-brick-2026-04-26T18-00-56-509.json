@@ -1,0 +1,30 @@
+{
+  "brick": "callgraph",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T17:58:56.689Z",
+  "duration_ms": 119820,
+  "turns": 19,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 96,
+    "cache_creation_input_tokens": 31975,
+    "cache_read_input_tokens": 529104,
+    "output_tokens": 5886,
+    "total": 567061
+  },
+  "session_id": "f64ab1ee-e2c5-4a98-a5bb-cd2ac46e1f90",
+  "result_block": "## Result\n- **Brick**: callgraph\n- **Mode**: brick\n- **Mini-task**: Find all methods of the `Injector` class in `injector.ts` that directly call `resolveSingleParam`, sorted alphabetically\n- **Answer**: Unable to determine — the callgraph brick tools (`callers`, `callees`, `chain`, `depth`) could not be loaded. `focus_load` failed with `Cannot find module '@focus-mcp/brick-callgraph'` (the noop.js stub itself requires the missing module), and the tools are not registered in the MCP deferred-tool list.\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_load`, `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_update`\n- **Rough token estimate**: ~3,500\n- **Notes**: The brick is marked as installed (version `^0.0.0`) but the underlying npm package `@focus-mcp/brick-callgraph` is absent. The noop stub at `.focus/bricks/noop.js` itself tries to `require('@focus-mcp/brick-callgraph')`, causing load failure. `focus_update` is not yet implemented, so there is no upgrade path available. The callgraph-specific tools (`mcp__focus__callers`, etc.) never appeared in the deferred-tool registry. Native search tools (Bash/Grep/Glob) were not used per the rules. Task is unresolvable under current constraints.",
+  "workdir": "/tmp/focus-bench/callgraph-brick-2026-04-26T17-58-56-687",
+  "exit_reason": "ok"
+}

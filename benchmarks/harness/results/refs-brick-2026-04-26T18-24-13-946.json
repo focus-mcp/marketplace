@@ -1,0 +1,33 @@
+{
+  "brick": "refs",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:22:34.201Z",
+  "duration_ms": 99745,
+  "turns": 23,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_add",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 111,
+    "cache_creation_input_tokens": 34001,
+    "cache_read_input_tokens": 616142,
+    "output_tokens": 5618,
+    "total": 655872
+  },
+  "session_id": "50ef282e-c795-4e86-8f60-d92a24cee02c",
+  "result_block": "## Result\n- **Brick**: refs\n- **Mode**: brick\n- **Mini-task**: Find all files in `test-repo/packages/` that implement the `PipeTransform` interface using the `refs` brick's `implementations` tool\n- **Answer**: *(unavailable — brick could not be loaded)*\n- **Turns used**: 13\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_search`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_remove`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_catalog_add`, `mcp__focus__focus_catalog_remove`\n- **Rough token estimate**: ~4,500\n- **Notes**: The `refs` brick is registered as version `^0.0.0` with a `noop.js` loader that requires `@focus-mcp/brick-refs` npm package — but that package is not installed in this benchmark environment. All load/reload/reinstall attempts failed with `Cannot find module '@focus-mcp/brick-refs'`. The `focus_update` tool returned \"not yet implemented\", and `focus_remove` returned \"Lock entry not found\". No fallback path exists since native filesystem tools (Bash, Grep, Glob) are forbidden by benchmark rules.",
+  "workdir": "/tmp/focus-bench/refs-brick-2026-04-26T18-22-34-197",
+  "exit_reason": "ok"
+}

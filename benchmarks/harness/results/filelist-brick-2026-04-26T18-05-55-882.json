@@ -1,0 +1,33 @@
+{
+  "brick": "filelist",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:03:22.721Z",
+  "duration_ms": 153161,
+  "turns": 23,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_add",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 112,
+    "cache_creation_input_tokens": 67507,
+    "cache_read_input_tokens": 620428,
+    "output_tokens": 6341,
+    "total": 694388
+  },
+  "session_id": "fd1e7187-5c49-44ab-8d09-f9369c8cadb6",
+  "result_block": "## Result\n- **Brick**: filelist\n- **Mode**: brick\n- **Mini-task**: Find all `package.json` files under `test-repo/packages/` using the filelist brick's `glob` tool\n- **Answer**: *(unavailable — brick failed to load)*\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_catalog_add`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~9,000\n- **Notes**: The `filelist` brick is registered as installed (version `^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-filelist'` — the npm package is not present in the Node.js require path. `focus_update` is not implemented, `focus_remove` reports no lock entry, and reinstalling reports it's already installed. The brick's `glob` tool never became callable. Adding the working directory as a local file:// catalog did not resolve the issue. The infrastructure appears to have a broken local brick install that cannot be remedied without `npm install`/`npm link` access (Bash is forbidden by task rules).",
+  "workdir": "/tmp/focus-bench/filelist-brick-2026-04-26T18-03-22-719",
+  "exit_reason": "ok"
+}

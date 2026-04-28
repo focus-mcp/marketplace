@@ -1,0 +1,28 @@
+{
+  "brick": "parallel",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T20:39:13.437Z",
+  "duration_ms": 68837,
+  "turns": 4,
+  "tools_used": [
+    "Agent",
+    "Monitor",
+    "Skill",
+    "WebFetch",
+    "mcp__focus__par_run_inline",
+    "mcp__focus__run_inline"
+  ],
+  "usage": {
+    "input_tokens": 21,
+    "cache_creation_input_tokens": 18796,
+    "cache_read_input_tokens": 349650,
+    "output_tokens": 2481,
+    "total": 370948
+  },
+  "session_id": "d7bcb721-a80f-4ff8-959b-52b4f98f9f82",
+  "result_block": "## Result\n- **Brick**: parallel\n- **Mode**: brick\n- **Mini-task**: Run 9 parallel `find ... | wc -l` commands (one per package) using `run_inline` and report `.ts` file counts\n- **Answer**: MODE UNAVAILABLE: focus MCP server not configured\n- **Turns used**: 3\n- **Tools used**: (none — mcp__focus__par_run_inline and mcp__focus__run_inline both returned \"No such tool available\")\n- **Rough token estimate**: ~1,500\n- **Notes**: Attempted both `mcp__focus__par_run_inline` (using the brick's `par` prefix) and `mcp__focus__run_inline` (bare tool name). Both failed with \"No such tool available\". The `focus` MCP server is not configured in this session.\n```",
+  "workdir": "/tmp/focus-bench/parallel-brick-2026-04-26T20-39-13-434",
+  "exit_reason": "ok"
+}

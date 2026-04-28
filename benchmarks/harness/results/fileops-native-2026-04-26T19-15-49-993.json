@@ -1,0 +1,25 @@
+{
+  "brick": "fileops",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:14:21.531Z",
+  "duration_ms": 88462,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 34,
+    "cache_creation_input_tokens": 17872,
+    "cache_read_input_tokens": 421633,
+    "output_tokens": 3138,
+    "total": 442677
+  },
+  "session_id": "dbc706e1-5327-4f99-bc68-a38f3d5afe14",
+  "result_block": "## Result\n- **Brick**: fileops\n- **Mode**: native\n- **Mini-task**: Rename `request-method.enum.ts` → `http-method.enum.ts` in `packages/common/enums/`; list directory contents after rename\n- **Answer**:\n  ```\n  http-method.enum.ts\n  http-status.enum.ts\n  index.ts\n  route-paramtypes.enum.ts\n  shutdown-signal.enum.ts\n  version-type.enum.ts\n  ```\n- **Turns used**: 5\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1,500\n- **Notes**: Brick's `setRoot` prerequisite (required before any tool call) makes it slightly more complex in brick mode than native mode. Native `mv` via Bash is a single command; the brick equivalent requires `fileops:setRoot` + `fileops:rename`.",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/`, rename the file `packages/common/enums/request-method.enum.ts` to `http-method.enum.ts` (keeping it in the same directory `packages/common/enums/`). After performing the rename, list every file present in `test-repo/packages/common/enums/`, one filename per line, sorted alphabetically. Report only the bare filenames (not full paths).\n\nExpected answer format: a sorted list of filenames, one per line.",
+  "workdir": "/tmp/focus-bench/fileops-native-2026-04-26T19-14-21-530",
+  "exit_reason": "ok"
+}

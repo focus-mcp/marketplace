@@ -1,0 +1,24 @@
+{
+  "brick": "sandbox",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T21:07:53.703Z",
+  "duration_ms": 36785,
+  "turns": 3,
+  "tools_used": [
+    "NotebookEdit",
+    "mcp__claude_ai_Context7__resolve-library-id"
+  ],
+  "usage": {
+    "input_tokens": 13,
+    "cache_creation_input_tokens": 6662,
+    "cache_read_input_tokens": 155406,
+    "output_tokens": 2099,
+    "total": 164180
+  },
+  "session_id": "43525d04-a57a-46c2-987f-85ecbb1102db",
+  "result_block": "## Result\n- **Brick**: (unknown — unable to read `./mcp-brick.json` without Read tool)\n- **Mode**: brick\n- **Mini-task**: Extract and execute `normalizePath` from `test-repo/packages/common/utils/shared.utils.ts` for 6 inputs\n- **Answer**: `MODE UNAVAILABLE: focus MCP server not configured`\n- **Turns used**: 2\n- **Tools used**: mcp__claude_ai_Context7__resolve-library-id (exploratory, not task-relevant)\n- **Rough token estimate**: ~800\n- **Notes**: No `mcp__focus__*` tools were found in the available tool registry for this session. The focus MCP server is not configured. No `Read` tool was available either to inspect the brick manifest. Cannot proceed with the mini-task without the required brick tools.",
+  "workdir": "/tmp/focus-bench/sandbox-brick-2026-04-26T21-07-53-700",
+  "exit_reason": "ok"
+}

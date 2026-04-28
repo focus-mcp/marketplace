@@ -1,0 +1,26 @@
+{
+  "brick": "filelist",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:02:14.142Z",
+  "duration_ms": 68577,
+  "turns": 9,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 22571,
+    "cache_read_input_tokens": 373861,
+    "output_tokens": 3329,
+    "total": 399790
+  },
+  "session_id": "d538522a-0014-4a74-96c9-68a1fb761827",
+  "result_block": "## Result\n- **Brick**: filelist\n- **Mode**: native\n- **Mini-task**: Find all `package.json` files under `test-repo/packages/` via glob, sorted alphabetically\n- **Answer**:\n  ```\n  packages/common/package.json\n  packages/core/package.json\n  packages/microservices/package.json\n  packages/platform-express/package.json\n  packages/platform-fastify/package.json\n  packages/platform-socket.io/package.json\n  packages/platform-ws/package.json\n  packages/testing/package.json\n  packages/websockets/package.json\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~1 800\n- **Notes**: The `Glob` tool returns paths sorted by modification time; a separate `Bash` sort step was needed to produce the deterministic alphabetical order. The brick's `glob` tool would return results in whatever order the MCP server provides, so the spec must specify alphabetical sorting as the required output form.",
+  "mini_task_spec": "Using the `filelist` brick's `glob` tool, find all files named `package.json` anywhere under the `packages/` directory of the test repository (`test-repo/packages/`). List each matching path **relative to `test-repo/`** (i.e., starting with `packages/`), one per line, sorted alphabetically. The answer must be an exact, complete list — no extra paths, no omissions.\n\nExpected answer format: a list of relative file paths (relative to `test-repo/`), one per line, sorted alphabetically (standard lexicographic order on the full path string).\n\n---",
+  "workdir": "/tmp/focus-bench/filelist-native-2026-04-26T18-02-14-142",
+  "exit_reason": "ok"
+}

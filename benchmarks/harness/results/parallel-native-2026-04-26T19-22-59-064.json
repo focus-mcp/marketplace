@@ -1,0 +1,26 @@
+{
+  "brick": "parallel",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:21:50.603Z",
+  "duration_ms": 68461,
+  "turns": 10,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 30,
+    "cache_creation_input_tokens": 9920,
+    "cache_read_input_tokens": 363345,
+    "output_tokens": 2343,
+    "total": 375638
+  },
+  "session_id": "2c76dbb2-d120-4d2e-94b5-77be47ef05c6",
+  "result_block": "## Result\n- **Brick**: parallel\n- **Mode**: native\n- **Mini-task**: Count `.ts` files in each of the 9 NestJS packages concurrently, report sorted results\n- **Answer**:\n  ```\n  common: 239\n  core: 259\n  microservices: 196\n  platform-express: 33\n  platform-fastify: 18\n  platform-socket.io: 4\n  platform-ws: 3\n  testing: 12\n  websockets: 61\n  ```\n- **Turns used**: 5\n- **Tools used**: Bash, Glob, Read\n- **Rough token estimate**: ~1,200\n- **Notes**: In native mode the 9 `find … | wc -l` counts were run sequentially inside a single Bash shell loop. The parallel brick's `run_inline` tool would run all 9 commands concurrently, which is its core strength and what the paired brick run is designed to demonstrate.",
+  "mini_task_spec": "For each package directory under `test-repo/packages/` (there are 9: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets`), count the total number of `.ts` files (recursively, including subdirectories) in each package. Run all 9 counts concurrently using the parallel brick's `run_inline` tool (one task per package, using `find <dir> -name \"*.ts\" | wc -l`), then report results as a list sorted alphabetically by package name in the format `<package-name>: <count>`, one entry per line.\n\nExpected answer format: 9 lines, alphabetically sorted by package name, e.g.:\n```\ncommon: 239\ncore: 259\n...\n```",
+  "workdir": "/tmp/focus-bench/parallel-native-2026-04-26T19-21-50-603",
+  "exit_reason": "ok"
+}

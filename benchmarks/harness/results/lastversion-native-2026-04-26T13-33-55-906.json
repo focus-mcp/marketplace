@@ -1,0 +1,25 @@
+{
+  "brick": "lastversion",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:32:12.552Z",
+  "duration_ms": 103354,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 37672,
+    "cache_read_input_tokens": 446941,
+    "output_tokens": 5999,
+    "total": 490645
+  },
+  "session_id": "b25b8012-46a0-4b6a-9457-3e1e93a24866",
+  "result_block": "## Result\n- **Brick**: lastversion\n- **Mode**: native\n- **Mini-task**: Identify production deps in test-repo/package.json pinned to semver major 0\n- **Answer**:\n  ```\n  @nuxt/opencollective@0.4.1\n  class-transformer@0.5.1\n  class-validator@0.15.1\n  reflect-metadata@0.2.2\n  ```\n- **Turns used**: 4\n- **Tools used**: Bash\n- **Rough token estimate**: ~2,500 tokens\n- **Notes**: The `Read` tool returned a permission-denied error for files in `test-repo/`, so `Bash`+`cat` was used instead. All four packages are exact-pinned to pre-1.0 versions — exactly the kind of staleness signal the `lastversion` brick's `check` and `audit` tools are designed to surface.",
+  "mini_task_spec": "Open `test-repo/package.json` and inspect the `dependencies` field (production dependencies only, not `devDependencies`). Identify every package whose pinned version string begins with `0.` (i.e., is pinned to semver major version `0`). These are pre-1.0 packages that a version-intelligence tool would flag as potentially unstable. Report each matching package in the format `<package>@<version>`, sorted alphabetically, one per line. The expected answer is a list of exactly those entries — no extras, no omissions.\n\n---",
+  "workdir": "/tmp/focus-bench/lastversion-native-2026-04-26T13-32-12-552",
+  "exit_reason": "ok"
+}

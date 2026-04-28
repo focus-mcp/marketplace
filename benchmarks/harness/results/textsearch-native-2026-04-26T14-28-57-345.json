@@ -1,0 +1,26 @@
+{
+  "brick": "textsearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:26:51.036Z",
+  "duration_ms": 126309,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 53,
+    "cache_creation_input_tokens": 29386,
+    "cache_read_input_tokens": 788989,
+    "output_tokens": 4465,
+    "total": 822893
+  },
+  "session_id": "ea1be2d1-cc78-4c74-9f6c-b3a9763160a6",
+  "result_block": "## Result\n- **Brick**: textsearch\n- **Mode**: native\n- **Mini-task**: Find all class names extending `HttpException` in `test-repo/packages/common/exceptions`\n- **Answer**:\n```\nBadGatewayException\nBadRequestException\nConflictException\nForbiddenException\nGatewayTimeoutException\nGoneException\nHttpVersionNotSupportedException\nImATeapotException\nInternalServerErrorException\nMethodNotAllowedException\nMisdirectedException\nNotAcceptableException\nNotFoundException\nNotImplementedException\nPayloadTooLargeException\nPreconditionFailedException\nRequestTimeoutException\nServiceUnavailableException\nTooManyRequestsException\nUnauthorizedException\nUnprocessableEntityException\nUnsupportedMediaTypeException\n```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~4,500\n- **Notes**: All 22 exception classes in `packages/common/exceptions` extend `HttpException` directly. The regex capture-group extraction (`class (\\w+) extends HttpException`) is the exact use case for the brick's `regex` tool. Native mode required Grep + Bash post-processing (`sed | sort`) to replicate what the brick would do in a single call with capture groups and sorted output.",
+  "mini_task_spec": "Using the textsearch brick's `regex` tool, search for all TypeScript files (`.ts`) inside `test-repo/packages/common/exceptions` that define a class extending `HttpException`. The pattern to use is `class (\\w+) extends HttpException` (with capture groups). Extract the matched class names from the results. Return the list of class names sorted alphabetically, one per line.\n\nExpected answer format: a plain alphabetically-sorted list of class names (one per line), no file paths, no counts — just the names of all classes whose declaration matches `class <ClassName> extends HttpException`.\n\n---",
+  "workdir": "/tmp/focus-bench/textsearch-native-2026-04-26T14-26-51-036",
+  "exit_reason": "ok"
+}

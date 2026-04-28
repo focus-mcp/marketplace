@@ -1,0 +1,26 @@
+{
+  "brick": "refs",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:51:21.385Z",
+  "duration_ms": 60400,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 38,
+    "cache_creation_input_tokens": 22680,
+    "cache_read_input_tokens": 501625,
+    "output_tokens": 4449,
+    "total": 528792
+  },
+  "session_id": "ec38b0c8-2cb4-4929-abb2-846d9982b5a7",
+  "result_block": "## Result\n- **Brick**: refs\n- **Mode**: native\n- **Mini-task**: Find all files in packages/common that implement the PipeTransform interface\n- **Answer**:\n  ```\n  packages/common/pipes/default-value.pipe.ts\n  packages/common/pipes/file/parse-file.pipe.ts\n  packages/common/pipes/parse-array.pipe.ts\n  packages/common/pipes/parse-bool.pipe.ts\n  packages/common/pipes/parse-date.pipe.ts\n  packages/common/pipes/parse-enum.pipe.ts\n  packages/common/pipes/parse-float.pipe.ts\n  packages/common/pipes/parse-int.pipe.ts\n  packages/common/pipes/parse-uuid.pipe.ts\n  packages/common/pipes/validation.pipe.ts\n  ```\n- **Turns used**: 7\n- **Tools used**: Bash, Glob, Read\n- **Rough token estimate**: 3,500\n- **Notes**: All 10 implementations found with a single `grep -r \"implements.*PipeTransform\"` across `packages/common`. The `file/parse-file.pipe.ts` sits in a subdirectory (`pipes/file/`) which affects sort order — it alphabetically precedes the `parse-*` siblings at the `pipes/` level since `f` < `p`.",
+  "mini_task_spec": "Using the `refs` brick (cross-reference tool), find all TypeScript files inside `test-repo/packages/common` that contain a class implementing the `PipeTransform` interface. The `PipeTransform` interface is declared in `test-repo/packages/common/interfaces/features/pipe-transform.interface.ts`.\n\nUse the brick's `implementations` tool (or equivalent search) with `name = \"PipeTransform\"` and `dir = \"test-repo/packages/common\"` to locate every `.ts` file that has a class with `implements PipeTransform` (or `implements PipeTransform<…>`).\n\nReturn the list of file paths **relative to `test-repo/`**, one per line, sorted alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/refs-native-2026-04-26T13-51-21-385",
+  "exit_reason": "ok"
+}

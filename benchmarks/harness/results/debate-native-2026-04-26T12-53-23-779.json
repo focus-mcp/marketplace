@@ -1,0 +1,27 @@
+{
+  "brick": "debate",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:51:27.280Z",
+  "duration_ms": 116499,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 49,
+    "cache_creation_input_tokens": 29424,
+    "cache_read_input_tokens": 789610,
+    "output_tokens": 7698,
+    "total": 826781
+  },
+  "session_id": "b84f142b-d07d-4b29-843d-3fdac7cde333",
+  "result_block": "## Result\n\n- **Brick**: debate\n- **Mode**: native\n- **Mini-task**: Debate platform-express vs platform-fastify for NestJS, score both positions, identify consensus, declare winner\n- **Answer**:\n  - **Winner**: `platform-express`\n  - **Score table**:\n    | Role | Relevance | Evidence | Feasibility | Total |\n    |---|---|---|---|---|\n    | platform-express | 8 | 9 | 9 | 26 |\n    | platform-fastify | 7 | 7 | 6 | 20 |\n  - **Consensus points**: `path-to-regexp` (shared dep), `tslib` (shared dep), NestJS HTTP platform abstraction, TypeScript support, CORS handling capability\n  - **Rationale**: platform-express scored 26 vs 20. Its argument is code-verified (523 lines, 5 deps, 5 multer interceptors confirmed in the repo) and highly feasible for typical apps; fastify's throughput claim is valid but less evidenced from source and less feasible due to 10 deps and no built-in file upload.\n- **Turns used**: 9\n- **Tools used**: Read, Bash, Grep, Glob\n- **Rough token estimate**: ~4,000\n- **Notes**: `test-repo/decision-http-adapter.json` is a pre-existing artifact that encodes the same debate question with weighted criteria scores — native analysis aligns perfectly with it (both yield platform-express as winner: 243 vs 188 weighted, 26 vs 20 debate-style). The debate brick's `score` tool uses different criteria (relevance/evidence/feasibility) than the JSON file (raw throughput/ecosystem/upload/simplicity), so I scored on the brick's canonical criteria using code facts as evidence.",
+  "mini_task_spec": "Using the file `test-repo/decision-http-adapter.json` and the package metadata at `test-repo/packages/platform-express/package.json` and `test-repo/packages/platform-fastify/package.json` (plus the adapter source files and multer interceptors directory), conduct a structured four-step debate:\n\n**Step 1 – Debate**: Define two positions for the topic *\"Which HTTP adapter should be used for a new NestJS application: platform-express or platform-fastify?\"*. The `platform-express` position must cite: vast npm middleware ecosystem, built-in multer file-upload support (exactly 5 interceptor files, no extra install), and simpler adapter implementation (523 lines, 5 runtime deps). The `platform-fastify` position must cite: higher raw throughput performance; note the more complex adapter (917 lines, 10 runtime deps) as a trade-off.\n\n**Step 2 – Score**: Score each position on three criteria — `relevance`, `evidence`, `feasibility` — each 1–10, then sum the three values to produce each position's total. Use the code-verifiable facts above when setting evidence scores.\n\n**Step 3 – Consensus**: Identify shared ground between the two positions (shared dependencies and shared capabilities).\n\n**Step 4 – Summary**: State the winning position (higher total score), list both scores, and name the consensus points.\n\nExpected answer format: a structured summary with (a) winner name, (b) score table (role | relevance | evidence | feasibility | total), (c) consensus points as a comma-separated list. Scores must be integers 1–10.\n\n---",
+  "workdir": "/tmp/focus-bench/debate-native-2026-04-26T12-51-27-280",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "compress",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T17:57:09.132Z",
+  "duration_ms": 104804,
+  "turns": 24,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 59,
+    "cache_creation_input_tokens": 69361,
+    "cache_read_input_tokens": 874182,
+    "output_tokens": 5883,
+    "total": 949485
+  },
+  "session_id": "18047030-ba3f-4c31-b764-10e82d1fec2d",
+  "result_block": "## Result\n\n- **Brick**: compress\n- **Mode**: native\n- **Mini-task**: Count remaining lines after medium compression of `http.exception.ts` (strip comments + blank lines)\n- **Answer**: 112\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Glob, Grep\n- **Rough token estimate**: ~3 500\n- **Notes**: Native simulation used `grep -vP \"^\\s*$\" | grep -vP \"^\\s*(//|/\\*|\\*)\"` to replicate what medium compression does. The file has 186 total lines: 17 blank, 57 comment-only, 112 code lines. The brick's `output` tool would yield the same 112-line result by definition; a brick-mode run can be verified by checking that `wc -l` on the tool's returned text equals 112.",
+  "mini_task_spec": "Using the `compress` brick's `output` tool with `level: \"medium\"`, apply medium compression to the file `test-repo/packages/common/exceptions/http.exception.ts`. Medium compression strips comment-only lines (lines whose first non-whitespace characters are `//`, `/*`, or `*`) and removes blank lines (lines containing only whitespace), while keeping all actual code lines exactly as they are.\n\nCount the number of lines that remain in the compressed output. Report a single integer: the line count of the compressed result.\n\n---",
+  "workdir": "/tmp/focus-bench/compress-native-2026-04-26T17-57-09-131",
+  "exit_reason": "ok"
+}

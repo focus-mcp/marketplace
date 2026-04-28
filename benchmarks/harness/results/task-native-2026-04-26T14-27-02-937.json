@@ -1,0 +1,25 @@
+{
+  "brick": "task",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:25:14.205Z",
+  "duration_ms": 108732,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 41,
+    "cache_creation_input_tokens": 20223,
+    "cache_read_input_tokens": 577992,
+    "output_tokens": 5746,
+    "total": 604002
+  },
+  "session_id": "97e3ef71-564d-4e90-aed0-9371f4c1b26b",
+  "result_block": "## Result\n- **Brick**: task\n- **Mode**: native\n- **Mini-task**: Create prioritized audit tasks for the 9 NestJS packages based on non-test TypeScript file counts\n- **Answer**:\n  ```\n  priority=1: Audit: @nestjs/common\n  priority=1: Audit: @nestjs/core\n  priority=1: Audit: @nestjs/microservices\n  priority=2: Audit: @nestjs/platform-express\n  priority=2: Audit: @nestjs/platform-fastify\n  priority=2: Audit: @nestjs/testing\n  priority=2: Audit: @nestjs/websockets\n  priority=3: Audit: @nestjs/platform-socket.io\n  priority=3: Audit: @nestjs/platform-ws\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2 500\n- **Notes**: File counts per package: common=188, core=178, microservices=132, websockets=43, platform-express=24, platform-fastify=15, testing=12, platform-socket.io=3, platform-ws=3. The `packages/` directory also contains two `.json` config files (`tsconfig.build.json`, `tsconfig.json`) which were correctly ignored (not directories). The brick's `status` tool with no arguments was assumed to list all tasks; if the API requires filtering by status, the brick run may need to query each status value separately.",
+  "mini_task_spec": "You are orchestrating a multi-agent code audit of the NestJS monorepo located in `test-repo/packages/`. Nine packages live there as subdirectories: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets`.\n\n**Your job:**\n\n1. For each of the 9 packages, count the number of `.ts` source files that are NOT test files — i.e. exclude files whose name ends in `.spec.ts` and files found anywhere inside a `test/` directory. The `test-repo/packages/<pkg>/` tree is the search root.\n\n2. Assign a priority level to each package based on that file count:\n   - Priority **1** — more than 100 qualifying files\n   - Priority **2** — between 10 and 100 qualifying files (inclusive on both ends)\n   - Priority **3** — fewer than 10 qualifying files\n\n3. Use the task management brick to create one task per package. Each task must have:\n   - `title`: `\"Audit: @nestjs/<package-directory-name>\"` (e.g. `\"Audit: @nestjs/core\"`)\n   - `description`: `\"Audit the @nestjs/<package-directory-name> package\"`\n   - `priority`: the integer computed in step 2\n\n4. After all 9 tasks are created, retrieve and list every task (using the `status` tool without filtering arguments, or by listing all tasks). Report the tasks sorted by priority ascending, then alphabetically by title within the same priority.\n\n**Expected answer format** — one line per task, in this exact format:\n```\npriority=<N>: <task-title>\n```\nExample line: `priority=1: Audit: @nestjs/core`\n\nNo extra commentary; just the 9 lines in the specified sort order.\n\n---",
+  "workdir": "/tmp/focus-bench/task-native-2026-04-26T14-25-14-205",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,33 @@
+{
+  "brick": "sandbox",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:29:54.245Z",
+  "duration_ms": 173262,
+  "turns": 17,
+  "tools_used": [
+    "Agent",
+    "Skill",
+    "WebFetch",
+    "WebSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__read"
+  ],
+  "usage": {
+    "input_tokens": 80,
+    "cache_creation_input_tokens": 39916,
+    "cache_read_input_tokens": 1305695,
+    "output_tokens": 6111,
+    "total": 1351802
+  },
+  "session_id": "ed4735b1-58e7-4243-ac0e-d32ff9d213cc",
+  "result_block": "## Result\n- **Brick**: fileread\n- **Mode**: brick\n- **Mini-task**: Read `test-repo/packages/common/enums/http-status.enum.ts`, sum all enum member values in the 2xx range (200–299)\n- **Answer**: UNAVAILABLE — brick tools not callable in this session\n- **Turns used**: 9\n- **Tools used**: `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search` (×2), `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_list` (×2), `mcp__focus__focus_reload`\n- **Rough token estimate**: ~3,500\n- **Notes**: The `fileread` brick was successfully found (`focus_search`), installed (`focus_install`), and loaded (`focus_load`/`focus_reload`). The server confirms it is running with tools `read`, `head`, `tail`, `range`. However, calling `mcp__focus__read` (or any variant) returns \"No such tool available\" — dynamically loaded brick tools are not injected into the current session's tool namespace, which is frozen at session initialization. The mini-task could not be solved using brick tools. To work around this, the brick must be pre-loaded **before** the Claude session starts so its tools appear in the initial tool manifest. This is a fundamental session/MCP architecture limitation, not a bug in the brick itself.",
+  "workdir": "/tmp/focus-bench/sandbox-brick-2026-04-26T19-29-54-243",
+  "exit_reason": "ok"
+}

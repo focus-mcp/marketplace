@@ -1,0 +1,25 @@
+{
+  "brick": "savings",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:04:36.346Z",
+  "duration_ms": 122656,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 42,
+    "cache_creation_input_tokens": 41746,
+    "cache_read_input_tokens": 621095,
+    "output_tokens": 7587,
+    "total": 670470
+  },
+  "session_id": "c7cc6132-3a45-40b2-8e1f-51b76ed058e7",
+  "result_block": "## Result\n\n- **Brick**: savings\n- **Mode**: native\n- **Mini-task**: Compute FocusMCP token savings % for platform-express vs platform-fastify focused reads\n- **Answer**:\n  ```\n  Session A savings: 61.8%\n  Session B savings: 43.5%\n  More efficient: Session A (platform-express)\n  ```\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~3 500\n- **Notes**: File sizes are stable (git-tracked). The 1 token = 4 bytes (floor division) convention is critical to reproducibility; any rounding variation will shift the percentages slightly. The savings brick's `report` tool would normally surface these numbers directly; in native mode they were computed manually via `wc -c` and Python arithmetic.",
+  "mini_task_spec": "In the NestJS test-repo, simulate two FocusMCP sessions — one analysing `platform-express` and one analysing `platform-fastify` — and report the token-savings metrics produced by the **savings** brick.\n\n**Measurement rules:**\n- Baseline token count for each session = total bytes of all `.ts` files inside the package directory (e.g. `test-repo/packages/platform-express/`) **excluding** any files under a `test/` subdirectory, divided by 4 using integer (floor) division.\n- Actual token count = bytes of the single main adapter file only (see below), divided by 4 using integer (floor) division.\n- Main adapter files: `test-repo/packages/platform-express/adapters/express-adapter.ts` and `test-repo/packages/platform-fastify/adapters/fastify-adapter.ts`.\n\n**Session A** → `platform-express`: call `sav__report` with `baselineTokens` and `actualTokens` derived from the measurements above.\n**Session B** → `platform-fastify`: call `sav__report` with `baselineTokens` and `actualTokens` derived from the measurements above.\nThen call `sav__compare` (sessionA = \"platform-express\", sessionB = \"platform-fastify\") to identify which session was more efficient.\n\nUsing cost per token = **$0.000003**.\n\nReport **exactly** the following three values (in this order, one per line):\n\n```\nSession A savings: <X.X>%\nSession B savings: <Y.Y>%\nMore efficient: <Session A (platform-express) | Session B (platform-fastify)>\n```\n\n---",
+  "workdir": "/tmp/focus-bench/savings-native-2026-04-26T14-04-36-346",
+  "exit_reason": "ok"
+}

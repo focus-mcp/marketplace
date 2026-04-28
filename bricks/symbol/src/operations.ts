@@ -2,105 +2,151 @@
 // SPDX-License-Identifier: MIT
 
 import { readdir, readFile } from 'node:fs/promises';
-import { join, resolve } from 'node:path';
+import { extname, join, resolve } from 'node:path';
 
+// ──────────────────────────────────────────────────────────────────────────────
+// Bus interface (minimal subset needed by this brick)
+// ──────────────────────────────────────────────────────────────────────────────
+
+export interface SymbolBrickBus {
+    request<TRequest = unknown, TResponse = unknown>(
+        target: string,
+        payload: TRequest,
+    ): Promise<TResponse>;
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Module-level bus injection (set on brick start, cleared on stop)
+// ──────────────────────────────────────────────────────────────────────────────
+
+let _bus: SymbolBrickBus | undefined;
+
+export function setBus(bus: SymbolBrickBus): void {
+    _bus = bus;
+}
+
+export function clearBus(): void {
+    _bus = undefined;
+    // Reset the extensions cache so the next start() fetches fresh data from treesitter
+    _supportedExts = undefined;
+}
+
+function getBus(): SymbolBrickBus {
+    if (!_bus) throw new Error('symbol: bus not initialized — brick must be started first');
+    return _bus;
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Public types
+// ──────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Symbol metadata returned by this brick's tools.
+ *
+ * MUST match treesitter brick's SymbolInfo shape — this is the bus contract.
+ * Any change here must be mirrored in bricks/treesitter/src/operations.ts.
+ */
 export interface SymbolInfo {
     name: string;
     kind: 'function' | 'class' | 'interface' | 'type' | 'variable' | 'method';
     file: string;
     line: number;
+    endLine: number;
     signature: string;
     exported: boolean;
+    parent?: string;
 }
 
-const SUPPORTED_EXTS = new Set(['.ts', '.tsx', '.js', '.jsx']);
+// ──────────────────────────────────────────────────────────────────────────────
+// treesitter:extract-symbols response type (internal)
+// ──────────────────────────────────────────────────────────────────────────────
 
-const rExportFunction = /^export\s+(async\s+)?function\s+(\w+)/;
-const rExportClass = /^export\s+(default\s+)?class\s+(\w+)/;
-const rExportInterface = /^export\s+interface\s+(\w+)/;
-const rExportType = /^export\s+type\s+(\w+)/;
-const rExportConst = /^export\s+const\s+(\w+)/;
-
-function matchSymbol(filePath: string, line: string, lineNum: number): SymbolInfo | null {
-    const mFn = rExportFunction.exec(line);
-    if (mFn)
-        return {
-            name: mFn[2] ?? '',
-            kind: 'function',
-            file: filePath,
-            line: lineNum,
-            signature: line.trim(),
-            exported: true,
-        };
-    const mClass = rExportClass.exec(line);
-    if (mClass)
-        return {
-            name: mClass[2] ?? '',
-            kind: 'class',
-            file: filePath,
-            line: lineNum,
-            signature: line.trim(),
-            exported: true,
-        };
-    const mIface = rExportInterface.exec(line);
-    if (mIface)
-        return {
-            name: mIface[1] ?? '',
-            kind: 'interface',
-            file: filePath,
-            line: lineNum,
-            signature: line.trim(),
-            exported: true,
-        };
-    const mType = rExportType.exec(line);
-    if (mType)
-        return {
-            name: mType[1] ?? '',
-            kind: 'type',
-            file: filePath,
-            line: lineNum,
-            signature: line.trim(),
-            exported: true,
-        };
-    const mConst = rExportConst.exec(line);
-    if (mConst)
-        return {
-            name: mConst[1] ?? '',
-            kind: 'variable',
-            file: filePath,
-            line: lineNum,
-            signature: line.trim(),
-            exported: true,
-        };
-    return null;
+interface ExtractSymbolsOutput {
+    symbols: SymbolInfo[];
+    imports: Array<{ from: string; names: string[] }>;
+    exports: string[];
 }
 
-export function parseSymbols(filePath: string, content: string): SymbolInfo[] {
-    const lines = content.split('\n');
-    const symbols: SymbolInfo[] = [];
-    for (let i = 0; i < lines.length; i++) {
-        const sym = matchSymbol(filePath, lines[i] ?? '', i + 1);
-        if (sym) symbols.push(sym);
+// ──────────────────────────────────────────────────────────────────────────────
+// Supported extensions — fetched from treesitter:supported-exts (lazy, cached)
+// ──────────────────────────────────────────────────────────────────────────────
+
+let _supportedExts: Set<string> | undefined;
+
+/**
+ * Fetch the set of supported file extensions from the treesitter brick via bus.
+ * Result is cached in-process. Falls back to a minimal TS/JS set if the bus is
+ * unavailable (e.g. during unit tests with mock bus that doesn't implement this target).
+ */
+async function getSupportedExts(): Promise<Set<string>> {
+    if (_supportedExts) return _supportedExts;
+    const bus = _bus;
+    if (!bus) return new Set(['.ts', '.tsx', '.js', '.jsx']);
+    try {
+        const { exts } = await bus.request<Record<never, never>, { exts: string[] }>(
+            'treesitter:supported-exts',
+            {},
+        );
+        _supportedExts = new Set(exts);
+    } catch {
+        // treesitter brick not started yet or running an older version — use safe fallback
+        _supportedExts = new Set([
+            '.ts',
+            '.tsx',
+            '.js',
+            '.jsx',
+            '.php',
+            '.py',
+            '.go',
+            '.rs',
+            '.java',
+        ]);
     }
-    return symbols;
+    return _supportedExts;
 }
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Core extraction via bus
+// ──────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Extract symbols from a file by delegating to treesitter:extract-symbols.
+ * Falls back to empty array if the file type is unsupported.
+ */
+export async function parseSymbols(filePath: string, content: string): Promise<SymbolInfo[]> {
+    const bus = getBus();
+    const result = await bus.request<{ path: string; content: string }, ExtractSymbolsOutput>(
+        'treesitter:extract-symbols',
+        { path: filePath, content },
+    );
+    return result.symbols;
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// File collection
+// ──────────────────────────────────────────────────────────────────────────────
 
 async function collectFiles(dir: string): Promise<string[]> {
+    const exts = await getSupportedExts();
     const entries = await readdir(dir, { withFileTypes: true });
     const results: string[] = [];
     for (const e of entries) {
-        if (e.name.startsWith('.') || e.name === 'node_modules') continue;
+        if (e.name.startsWith('.') || e.name === 'node_modules' || e.name === 'vendor') continue;
         const full = join(dir, e.name);
         if (e.isDirectory()) {
             const sub = await collectFiles(full);
             results.push(...sub);
         } else {
-            const ext = e.name.slice(e.name.lastIndexOf('.'));
-            if (SUPPORTED_EXTS.has(ext)) results.push(full);
+            const ext = extname(e.name).toLowerCase();
+            if (exts.has(ext)) results.push(full);
         }
     }
     return results;
 }
+
+// ──────────────────────────────────────────────────────────────────────────────
+// MCP tool input types
+// ──────────────────────────────────────────────────────────────────────────────
 
 export interface SymFindInput {
     readonly name: string;
@@ -123,14 +169,20 @@ export interface SymBodyInput {
     readonly endLine: number;
 }
 
+// ──────────────────────────────────────────────────────────────────────────────
+// MCP tool implementations
+// ──────────────────────────────────────────────────────────────────────────────
+
 export async function symFind(input: SymFindInput): Promise<{ symbols: SymbolInfo[] }> {
     const abs = resolve(input.dir);
     const files = await collectFiles(abs);
     const found: SymbolInfo[] = [];
     for (const f of files) {
-        const content = await readFile(f, 'utf-8');
-        const syms = parseSymbols(f, content);
-        found.push(...syms.filter((s) => s.name.includes(input.name)));
+        try {
+            const content = await readFile(f, 'utf-8');
+            const syms = await parseSymbols(f, content);
+            found.push(...syms.filter((s) => s.name.includes(input.name)));
+        } catch {}
     }
     return { symbols: found };
 }
@@ -139,10 +191,12 @@ export async function symGet(input: SymGetInput): Promise<{ symbol: SymbolInfo |
     const abs = resolve(input.dir);
     const files = await collectFiles(abs);
     for (const f of files) {
-        const content = await readFile(f, 'utf-8');
-        const syms = parseSymbols(f, content);
-        const found = syms.find((s) => s.name === input.name);
-        if (found) return { symbol: found };
+        try {
+            const content = await readFile(f, 'utf-8');
+            const syms = await parseSymbols(f, content);
+            const found = syms.find((s) => s.name === input.name);
+            if (found) return { symbol: found };
+        } catch {}
     }
     return { symbol: null };
 }
@@ -154,8 +208,10 @@ export async function symBulk(
     const files = await collectFiles(abs);
     const allSyms: SymbolInfo[] = [];
     for (const f of files) {
-        const content = await readFile(f, 'utf-8');
-        allSyms.push(...parseSymbols(f, content));
+        try {
+            const content = await readFile(f, 'utf-8');
+            allSyms.push(...(await parseSymbols(f, content)));
+        } catch {}
     }
     const results: Record<string, SymbolInfo | null> = {};
     for (const name of input.names) {

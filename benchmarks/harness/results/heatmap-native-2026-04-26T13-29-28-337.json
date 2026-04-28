@@ -1,0 +1,25 @@
+{
+  "brick": "heatmap",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:27:16.205Z",
+  "duration_ms": 132132,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 55,
+    "cache_creation_input_tokens": 63173,
+    "cache_read_input_tokens": 1013506,
+    "output_tokens": 7544,
+    "total": 1084278
+  },
+  "session_id": "e90be03e-35b3-41a4-93e5-e8dc39b7bcfd",
+  "result_block": "## Result\n- **Brick**: heatmap\n- **Mode**: native\n- **Mini-task**: Find top-5 hottest files in `packages/core/injector/` by counting unique importer files across `packages/core/`\n- **Answer**:\n  ```\n  container.ts: 49\n  instance-wrapper.ts: 46\n  module.ts: 33\n  injector.ts: 19\n  constants.ts: 14\n  ```\n- **Turns used**: 16\n- **Tools used**: Read, Bash, Glob, Grep\n- **Rough token estimate**: ~6,000\n- **Notes**: The repo has only a single git commit so git-history frequency analysis was not viable. Import-count analysis was used as the deterministic proxy for \"hotfiles\" — it directly mirrors what the brick's `track`+`hotfiles` workflow measures during an active session. All counts use `grep -rl` (unique file count per target, single-quote imports only — double-quote imports are absent in this codebase).",
+  "mini_task_spec": "You are working in a NestJS monorepo at `test-repo/`. Your task is to identify which files in `test-repo/packages/core/injector/` are the most \"hot\" (most frequently referenced) by counting how many distinct `.ts` files within `test-repo/packages/core/` import each of these five injector files: `container.ts`, `instance-wrapper.ts`, `module.ts`, `injector.ts`, and `constants.ts`.\n\nFor each of these five files, count the number of unique `.ts` files within `test-repo/packages/core/` that contain at least one import path matching `injector/<basename>` (e.g., `injector/container`, `injector/instance-wrapper`, etc.). Report the five files ranked by their import count in descending order, with ties broken alphabetically by filename. Use the format:\n\n```\n<basename>.ts: <count>\n```\n\n(one per line, ranked highest to lowest)\n\n---",
+  "workdir": "/tmp/focus-bench/heatmap-native-2026-04-26T13-27-16-205",
+  "exit_reason": "ok"
+}

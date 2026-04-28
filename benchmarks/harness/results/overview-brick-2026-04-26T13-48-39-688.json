@@ -1,0 +1,30 @@
+{
+  "brick": "overview",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:47:25.512Z",
+  "duration_ms": 74176,
+  "turns": 17,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 77,
+    "cache_creation_input_tokens": 40494,
+    "cache_read_input_tokens": 443146,
+    "output_tokens": 4081,
+    "total": 487798
+  },
+  "session_id": "f348793c-3d1b-4d35-9a25-12742ed9e0a6",
+  "result_block": "## Result\n- **Brick**: overview\n- **Mode**: brick\n- **Mini-task**: Parse `test-repo/package.json` and report production dependencies (sorted), test runner, and linter\n- **Answer**: Unable to complete — the `overview` brick's `dependencies` tool could not be loaded. `focus_load \"overview\"` failed with: `Cannot find module '@focus-mcp/brick-overview'`. No `mcp__focus__ovw_*` tools were available as deferred tools. Task cannot be solved using only `mcp__focus__*` tools.\n- **Turns used**: 9\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~4,500\n- **Notes**: The focus MCP server is configured and its management tools respond correctly. However, the `overview` brick's Node module (`@focus-mcp/brick-overview`) is not present in the local `node_modules`, causing `focus_load` to fail. `focus_update` returned \"not yet implemented\". No `mcp__focus__ovw_*` tools appeared in the deferred tool registry. The task spec forbids native filesystem tools (`Read` for the test-repo file, `Bash`, `Grep`, etc.), so no fallback was possible.",
+  "workdir": "/tmp/focus-bench/overview-brick-2026-04-26T13-47-25-509",
+  "exit_reason": "ok"
+}

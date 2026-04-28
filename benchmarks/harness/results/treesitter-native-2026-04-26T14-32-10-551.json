@@ -1,0 +1,27 @@
+{
+  "brick": "treesitter",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:31:03.432Z",
+  "duration_ms": 67119,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 36,
+    "cache_creation_input_tokens": 17473,
+    "cache_read_input_tokens": 499096,
+    "output_tokens": 3311,
+    "total": 519916
+  },
+  "session_id": "aaa35691-fc6e-4ac2-9dc4-249290258686",
+  "result_block": "## Result\n\n- **Brick**: treesitter\n- **Mode**: native\n- **Mini-task**: List all exported class names in `test-repo/packages/common/exceptions/`\n- **Answer**:\n  ```\n  BadGatewayException\n  BadRequestException\n  ConflictException\n  ForbiddenException\n  GatewayTimeoutException\n  GoneException\n  HttpException\n  HttpVersionNotSupportedException\n  ImATeapotException\n  InternalServerErrorException\n  IntrinsicException\n  MethodNotAllowedException\n  MisdirectedException\n  NotAcceptableException\n  NotFoundException\n  NotImplementedException\n  PayloadTooLargeException\n  PreconditionFailedException\n  RequestTimeoutException\n  ServiceUnavailableException\n  TooManyRequestsException\n  UnauthorizedException\n  UnprocessableEntityException\n  UnsupportedMediaTypeException\n  ```\n  (24 classes total)\n- **Turns used**: 5\n- **Tools used**: `Read`, `Bash`, `Glob`, `Grep`\n- **Rough token estimate**: ~2,500\n- **Notes**: The `index.ts` file in that directory re-exports from `./intrinsic.exception` (which doesn't exist as a file — the actual file is `base-intrinsic.exception.ts`) and omits `too-many-requests.exception.ts` from its re-export list — a minor inconsistency in the repo. The task was solved directly via regex grep on the source files. `TooManyRequestsException` is defined in a file not referenced in `index.ts`, and `IntrinsicException` lives in `base-intrinsic.exception.ts` (not `intrinsic.exception.ts` as `index.ts` implies).",
+  "mini_task_spec": "Using the treesitter brick, index the directory `test-repo/packages/common/exceptions/` and report all **exported class names** defined in the TypeScript files within that directory (excluding `index.ts`, which contains only re-exports). Provide the answer as a sorted alphabetical list of class names, one per line. The answer should include every class introduced with `export class` in any `.ts` file directly inside `test-repo/packages/common/exceptions/`.",
+  "workdir": "/tmp/focus-bench/treesitter-native-2026-04-26T14-31-03-432",
+  "exit_reason": "ok"
+}

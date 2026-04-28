@@ -1,0 +1,31 @@
+{
+  "brick": "semanticsearch",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:36:00.944Z",
+  "duration_ms": 173273,
+  "turns": 23,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 131,
+    "cache_creation_input_tokens": 69105,
+    "cache_read_input_tokens": 859157,
+    "output_tokens": 8145,
+    "total": 936538
+  },
+  "session_id": "f3104576-a2c6-42e9-8214-cc9990cf61f1",
+  "result_block": "## Result\n- **Brick**: semanticsearch\n- **Mode**: brick\n- **Mini-task**: TF-IDF cosine similarity search over 8-document corpus for query \"websocket gateway connection event message\", returning top-3 document IDs\n- **Answer**: UNAVAILABLE — the `semanticsearch` brick could not be loaded; `mcp__focus__sem__search` was never exposed\n- **Turns used**: 20\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_update`\n- **Rough token estimate**: ~6,000\n- **Notes**:\n  - The focus MCP server **is** configured and responding (all management tools worked).\n  - `focus_load \"semanticsearch\"` fails with: `Cannot find module '@focus-mcp/brick-semanticsearch'` — the npm package is not installed in the benchmark environment.\n  - The brick is registered locally at version `^0.0.0` (from `mcp-brick.json`); the marketplace has `1.1.0`.\n  - `focus_update` returns `\"not yet implemented\"`, so upgrading to the marketplace version is blocked.\n  - `focus_install` refuses to re-install because the brick is already registered.\n  - Because `focus_load` failed, the brick's tool (`mcp__focus__sem__search`) was never dynamically added to the session and could not be invoked.\n  - **Expected top-3 (by TF-IDF reasoning, not from tool output)**: `websockets`, `platform-socket-io`, `microservices` — but this is a manual estimate only; the actual brick result could not be obtained.",
+  "workdir": "/tmp/focus-bench/semanticsearch-brick-2026-04-26T18-36-00-942",
+  "exit_reason": "ok"
+}

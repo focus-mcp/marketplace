@@ -1,0 +1,23 @@
+{
+  "brick": "echo",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T21:05:20.974Z",
+  "duration_ms": 29019,
+  "turns": 2,
+  "tools_used": [
+    "mcp__claude_ai_Context7__resolve-library-id"
+  ],
+  "usage": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 49089,
+    "cache_read_input_tokens": 47232,
+    "output_tokens": 1150,
+    "total": 97480
+  },
+  "session_id": "5b25bab5-4d61-421a-aa9d-c9445393f258",
+  "result_block": "## Result\n- **Brick**: echo (inferred from task spec)\n- **Mode**: brick\n- **Mini-task**: Read lerna.json version from NestJS monorepo and echo it via the `say` tool\n- **Answer**: `MODE UNAVAILABLE: focus MCP server not configured`\n- **Turns used**: 1\n- **Tools used**: none (mcp__focus__* tools not available in session)\n- **Rough token estimate**: ~500\n- **Notes**: No `mcp__focus__*` tools were found in the available tool definitions for this session. The focus MCP server does not appear to be configured. Task halted per instructions.",
+  "workdir": "/tmp/focus-bench/echo-brick-2026-04-26T21-05-20-972",
+  "exit_reason": "ok"
+}

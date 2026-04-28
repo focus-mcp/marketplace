@@ -1,0 +1,31 @@
+{
+  "brick": "batch",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:44:25.314Z",
+  "duration_ms": 151099,
+  "turns": 19,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 101,
+    "cache_creation_input_tokens": 62859,
+    "cache_read_input_tokens": 605930,
+    "output_tokens": 5903,
+    "total": 674793
+  },
+  "session_id": "bb90f704-495b-48d8-bf69-0c3d6105e280",
+  "result_block": "## Result\n- **Brick**: batch\n- **Mode**: brick\n- **Mini-task**: Count `*.spec.ts` files in each of 9 NestJS package directories using the batch brick's `parallel` tool\n- **Answer**: UNABLE TO COMPLETE — the batch brick's `parallel` tool (`mcp__focus__bat_parallel`) could not be loaded. `focus_load \"batch\"` failed with `Cannot find module '@focus-mcp/brick-batch'` (the brick is installed at version `^0.0.0` as a noop stub, but the actual npm package is absent from the environment). No `bat_*` tools ever became available, and native filesystem tools (`Bash`, `Grep`, `Glob`) are forbidden by the benchmark rules.\n- **Turns used**: 16\n- **Tools used**: `mcp__focus__focus_load`, `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_catalog_add` (schema fetched only)\n- **Rough token estimate**: ~12,000\n- **Notes**: The focus MCP server is present and responsive. The batch brick is registered (version `^0.0.0`) but implemented as a noop stub — `require('@focus-mcp/brick-batch')` fails because the real npm package was never installed in the benchmark container. `focus_update` returned \"not yet implemented\", so there was no upgrade path. Without `bat_parallel` available, the parallel `find` commands could not be executed via brick tools. A `focus_install --version 1.1.0` attempt was also blocked (\"already installed\"). The task requires either the npm package to be present or `focus_update` to be implemented.",
+  "workdir": "/tmp/focus-bench/batch-brick-2026-04-26T12-44-25-311",
+  "exit_reason": "ok"
+}

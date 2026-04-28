@@ -1,0 +1,33 @@
+{
+  "brick": "validate",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:53:55.560Z",
+  "duration_ms": 188085,
+  "turns": 24,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_add",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 102,
+    "cache_creation_input_tokens": 37519,
+    "cache_read_input_tokens": 755685,
+    "output_tokens": 8564,
+    "total": 801870
+  },
+  "session_id": "b9c40b76-4826-4353-b97a-cdc0375a9cd9",
+  "result_block": "## Result\n- **Brick**: validate\n- **Mode**: brick\n- **Mini-task**: Lint `test-repo/packages/websockets/test/exceptions/ws-exceptions-handler.spec.ts` and report console.log, TODO/FIXME, debugger, and unused-import violations\n- **Answer**: PARTIAL — brick tools could not be invoked. The `validate` brick is installed (version ^0.0.0) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-validate'` every attempt. The npm package is not present in the benchmark environment, and `focus_update` reports \"not yet implemented\". Without the brick's `lint` tool available, the file could not be analysed.\n- **Turns used**: 20\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_update`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_remove`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_add`\n- **Rough token estimate**: ~6,000\n- **Notes**: Root cause: the focus server stores a `noop.js` stub at `.focus/bricks/noop.js` that `require('@focus-mcp/brick-validate')`—an npm package not installed in the environment. `focus_update` is unimplemented; `focus_remove` says \"lock entry not found\"; reinstalling from marketplace returns \"already installed (^0.0.0)\" without fetching the real module. Adding a `file://` local catalog did not change the resolution path. The brick's lint tool was never accessible, so no file analysis could be performed via brick tools.",
+  "workdir": "/tmp/focus-bench/validate-brick-2026-04-26T18-53-55-557",
+  "exit_reason": "ok"
+}

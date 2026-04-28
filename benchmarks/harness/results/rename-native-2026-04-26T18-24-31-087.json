@@ -1,0 +1,26 @@
+{
+  "brick": "rename",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:23:13.644Z",
+  "duration_ms": 77442,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 42,
+    "cache_creation_input_tokens": 27085,
+    "cache_read_input_tokens": 621796,
+    "output_tokens": 4754,
+    "total": 653677
+  },
+  "session_id": "3ea36178-0e14-44c4-bcc0-b35663c9b030",
+  "result_block": "## Result\n- **Brick**: rename\n- **Mode**: native\n- **Mini-task**: List all TypeScript files affected by renaming the symbol `StreamableFile` in `test-repo/packages/`\n- **Answer**:\n  ```\n  test-repo/packages/common/file-stream/interfaces/streamable-options.interface.ts\n  test-repo/packages/common/file-stream/streamable-file.ts\n  test-repo/packages/common/serializer/class-serializer.interceptor.ts\n  test-repo/packages/common/test/file-stream/streamable-file.spec.ts\n  test-repo/packages/common/test/serializer/class-serializer.interceptor.spec.ts\n  test-repo/packages/platform-express/adapters/express-adapter.ts\n  test-repo/packages/platform-fastify/adapters/fastify-adapter.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The `preview` brick tool is a natural fit here — native mode required plain `grep -rl` + `sort`. The `index.ts` barrel file (`packages/common/file-stream/index.ts`) uses `export * from './streamable-file'` and does NOT contain the string `StreamableFile` directly, so it is correctly excluded. All 7 files contain the literal identifier `StreamableFile` and would require edits in a real rename.",
+  "mini_task_spec": "Using the rename brick's `preview` tool, determine every TypeScript file under `test-repo/packages/` that would be affected if the symbol `StreamableFile` were renamed. Call `mcp__focus__ren_preview` with `dir` set to `test-repo/packages/` and `oldName` set to `StreamableFile`. Report the list of affected file paths (relative to the repo root, i.e. starting with `test-repo/packages/…`), sorted alphabetically, one path per line. Do not apply any changes — dry-run / preview only.\n\n---",
+  "workdir": "/tmp/focus-bench/rename-native-2026-04-26T18-23-13-644",
+  "exit_reason": "ok"
+}

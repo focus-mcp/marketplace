@@ -1,0 +1,26 @@
+{
+  "brick": "overview",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:41:59.390Z",
+  "duration_ms": 101846,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 40826,
+    "cache_read_input_tokens": 775677,
+    "output_tokens": 7226,
+    "total": 823777
+  },
+  "session_id": "76af0890-e8c2-459a-bb32-ad267551e216",
+  "result_block": "## Result\n\n- **Brick**: overview\n- **Mode**: native\n- **Mini-task**: Identify test runner, linter, and bundler from test-repo/package.json devDependencies\n- **Answer**:\n  ```\n  testRunner: mocha\n  linter: eslint\n  bundler: no\n  ```\n- **Turns used**: 12\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~6,000 tokens\n- **Notes**: The project uses `tsc` (TypeScript compiler) and `gulp` for build tasks, but neither counts as a dedicated JS bundler. The `eslint-plugin-prettier` and `typescript-eslint` are also present but `eslint` is the primary linter. No `jest`, `vitest`, or `tslint` found — only `mocha`.",
+  "mini_task_spec": "Read the file `test-repo/package.json` and answer three questions about its `devDependencies`:\n\n1. What is the name of the test runner package? (Look for packages such as mocha, jest, vitest, jasmine, ava, tape.)\n2. What is the name of the primary linter package? (Look for packages such as eslint, tslint, biome.)\n3. Does any dedicated JavaScript bundler appear as a dev dependency? Bundlers to check: webpack, rollup, esbuild, vite, parcel. Answer \"yes\" or \"no\".\n\nReport exactly three lines, in this format:\n```\ntestRunner: <package-name>\nlinter: <package-name>\nbundler: <yes|no>\n```\n\nNo additional text.\n\n---",
+  "workdir": "/tmp/focus-bench/overview-native-2026-04-26T13-41-59-390",
+  "exit_reason": "ok"
+}

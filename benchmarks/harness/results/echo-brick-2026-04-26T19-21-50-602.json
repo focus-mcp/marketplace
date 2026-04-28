@@ -1,0 +1,37 @@
+{
+  "brick": "echo",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:15:05.884Z",
+  "duration_ms": 404718,
+  "turns": 15,
+  "tools_used": [
+    "Agent",
+    "Monitor",
+    "Skill",
+    "WebFetch",
+    "mcp__fileread__read",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_unload",
+    "mcp__focus__focus_update",
+    "mcp__shell__exec"
+  ],
+  "usage": {
+    "input_tokens": 124,
+    "cache_creation_input_tokens": 151733,
+    "cache_read_input_tokens": 2079132,
+    "output_tokens": 10634,
+    "total": 2241623
+  },
+  "session_id": "1efe3554-3f25-4377-9bfe-bde418a75476",
+  "result_block": "## Result\n- **Brick**: echo\n- **Mode**: brick\n- **Mini-task**: Read `test-repo/lerna.json`, extract the top-level `version` field, call `mcp__focus__echo__say` with it, and report the returned string\n- **Answer**: INCOMPLETE — `mcp__focus__echo__say` could not be called (see Notes)\n- **Turns used**: 9\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_remove`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`\n- **Rough token estimate**: ~35,000\n- **Notes**:\n  1. **Echo brick not loadable**: The brick is listed as installed at `^0.0.0`, but loading fails with `Cannot find module '@focus-mcp/brick-echo'`. The npm module is not present on disk. `focus_update` returned \"not yet implemented\" and `focus_remove` returned \"Lock entry not found\", so reinstalling to the marketplace version (1.1.0) was not possible.\n  2. **Brick tools not in callable schema**: The `fileread` and `shell` bricks are listed as `[running]` in `focus_list`, but their tools (`mcp__focus__fileread__read`, `mcp__focus__shell__exec`, etc.) do not appear in the session's tool schema and cannot be called. This is a known Claude.ai limitation — tool schemas are fixed at session start and do not update when bricks are dynamically loaded.\n  3. **File read blocked**: `Bash`, `Grep`, and `Glob` are forbidden by task rules; `Read` is only allowed for the brick manifest; thus `test-repo/lerna.json` could not be read to obtain the version string.\n  4. **Design note**: The `echo` brick's `say` tool is a pure pass-through — it returns exactly the string it receives — so the answer would trivially equal the lerna.json `version` value, if it were obtainable.",
+  "workdir": "/tmp/focus-bench/echo-brick-2026-04-26T19-15-05-881",
+  "exit_reason": "ok"
+}

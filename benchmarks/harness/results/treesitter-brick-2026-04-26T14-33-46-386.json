@@ -1,0 +1,32 @@
+{
+  "brick": "treesitter",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:32:10.554Z",
+  "duration_ms": 95832,
+  "turns": 19,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 94,
+    "cache_creation_input_tokens": 24750,
+    "cache_read_input_tokens": 510002,
+    "output_tokens": 4359,
+    "total": 539205
+  },
+  "session_id": "7e40371f-7022-4ff6-b1e9-73a489c4e5d1",
+  "result_block": "## Result\n- **Brick**: treesitter\n- **Mode**: brick\n- **Mini-task**: Index `test-repo/packages/common/exceptions/` and report all exported class names from TypeScript files (excluding index.ts)\n- **Answer**: *(unavailable — brick failed to load; see Notes)*\n- **Turns used**: 11\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_remove`\n- **Rough token estimate**: ~2,500\n- **Notes**: The focus MCP server is configured and responding, but the treesitter brick cannot be loaded. Every `focus_load \"treesitter\"` call fails with `Cannot find module '@focus-mcp/brick-treesitter'` (require stack points to `/tmp/focus-bench/treesitter-brick-2026-04-26T14-32-10-552/.focus/bricks/noop.js`). The brick is recorded as installed at version `^0.0.0` but has no lock entry and the underlying npm package is absent from the environment. `focus_update` is not yet implemented, `focus_remove` fails (\"Lock entry not found\"), and reinstalling returns \"already installed\". Because the brick tools (`ts_index`, `ts_status`, etc.) only become available after a successful load, and loading is blocked by the missing module, the indexing task could not be completed. No fallback to native filesystem tools was used, per the rules.",
+  "workdir": "/tmp/focus-bench/treesitter-brick-2026-04-26T14-32-10-552",
+  "exit_reason": "ok"
+}

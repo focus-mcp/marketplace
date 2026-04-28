@@ -1,0 +1,26 @@
+{
+  "brick": "impact",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:27:08.560Z",
+  "duration_ms": 82266,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 52,
+    "cache_creation_input_tokens": 32457,
+    "cache_read_input_tokens": 821533,
+    "output_tokens": 3629,
+    "total": 857671
+  },
+  "session_id": "72c82d58-16bd-4fd4-9632-f1eb1fdc9e7b",
+  "result_block": "## Result\n- **Brick**: impact\n- **Mode**: native\n- **Mini-task**: Find all files in `packages/` that directly import `extend-metadata.util.ts`\n- **Answer**:\n  ```\n  packages/common/decorators/core/exception-filters.decorator.ts\n  packages/common/decorators/core/use-guards.decorator.ts\n  packages/common/decorators/core/use-interceptors.decorator.ts\n  packages/common/decorators/core/use-pipes.decorator.ts\n  packages/common/decorators/http/header.decorator.ts\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~4,000\n- **Notes**: All 5 direct importers are within `packages/common/decorators/` and none are test files. The `extend-metadata.util.ts` exports a single function `extendArrayMetadata`, making the scope clean and deterministic. No transitive dependents were required for this task.",
+  "mini_task_spec": "Using the NestJS monorepo in `test-repo/`, perform a direct-import impact analysis for the file `test-repo/packages/common/utils/extend-metadata.util.ts`. Find every TypeScript source file anywhere under `test-repo/packages/` that contains a direct `import` statement referencing `extend-metadata.util` (i.e., files that would be directly affected by a change to that file). List the matching file paths relative to `test-repo/`, sorted alphabetically, one per line. Do not include the changed file itself.",
+  "workdir": "/tmp/focus-bench/impact-native-2026-04-26T13-27-08-560",
+  "exit_reason": "ok"
+}

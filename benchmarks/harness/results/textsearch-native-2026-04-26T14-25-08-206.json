@@ -1,0 +1,26 @@
+{
+  "brick": "textsearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:23:40.770Z",
+  "duration_ms": 87436,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 45,
+    "cache_creation_input_tokens": 21015,
+    "cache_read_input_tokens": 635002,
+    "output_tokens": 4185,
+    "total": 660247
+  },
+  "session_id": "fe6d0529-7e06-452f-b0a8-c0e1d3286455",
+  "result_block": "## Result\n- **Brick**: textsearch\n- **Mode**: native\n- **Mini-task**: Find all exported class names that implement PipeTransform in test-repo/packages/common/pipes\n- **Answer**:\n  ```\n  DefaultValuePipe\n  ParseArrayPipe\n  ParseBoolPipe\n  ParseDatePipe\n  ParseEnumPipe\n  ParseFilePipe\n  ParseFloatPipe\n  ParseIntPipe\n  ParseUUIDPipe\n  ValidationPipe\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The regex capture group approach naturally exercises the brick's `regex` tool with capture group support. All 10 classes were found across the `pipes/` directory (including the nested `pipes/file/` subdirectory). Results are clean and deterministic.",
+  "mini_task_spec": "Using the textsearch brick's `regex` tool, search all TypeScript files (`*.ts`) inside `test-repo/packages/common/pipes` (including subdirectories) for the regex pattern `export class (\\w+).*implements PipeTransform`. Extract the captured class names from all matches. Return the list of class names, one per line, sorted alphabetically (A–Z). No file paths, no line numbers — only the class names.\n\n---",
+  "workdir": "/tmp/focus-bench/textsearch-native-2026-04-26T14-23-40-770",
+  "exit_reason": "ok"
+}

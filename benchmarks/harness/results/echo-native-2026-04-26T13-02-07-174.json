@@ -1,0 +1,25 @@
+{
+  "brick": "echo",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:01:14.835Z",
+  "duration_ms": 52339,
+  "turns": 9,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 26,
+    "cache_creation_input_tokens": 13194,
+    "cache_read_input_tokens": 302766,
+    "output_tokens": 3044,
+    "total": 319030
+  },
+  "session_id": "af45d3a1-30b3-429f-89f5-b822a17997ab",
+  "result_block": "## Result\n- **Brick**: echo\n- **Mode**: native\n- **Mini-task**: Read `test-repo/package.json` name field, construct echo message, report what `echo.say` would return\n- **Answer**: `hello from @nestjs/core`\n- **Turns used**: 8\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1,200\n- **Notes**: The echo brick is a pure passthrough — in native mode the answer is trivially derived by constructing the message string directly (no tool call needed). The task is valid as a smoke test: in brick mode it confirms the FocusMCP pipeline routes the call and returns the payload unchanged.",
+  "mini_task_spec": "You have access to the `echo.say` tool (input: `{ \"message\": string }`, returns the message unchanged). In `test-repo/package.json`, read the top-level `\"name\"` field. Call `echo.say` with the message `\"hello from <name>\"`, substituting `<name>` with the exact value of that field (e.g. if the name were `foo`, the message would be `\"hello from foo\"`). Report the exact string returned by the tool. The expected answer format is a single plain string, no quotes, no extra whitespace.\n\n---",
+  "workdir": "/tmp/focus-bench/echo-native-2026-04-26T13-01-14-835",
+  "exit_reason": "ok"
+}

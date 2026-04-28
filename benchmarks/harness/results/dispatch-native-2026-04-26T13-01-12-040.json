@@ -1,0 +1,25 @@
+{
+  "brick": "dispatch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:59:36.653Z",
+  "duration_ms": 95387,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 38,
+    "cache_creation_input_tokens": 29829,
+    "cache_read_input_tokens": 494845,
+    "output_tokens": 5014,
+    "total": 529726
+  },
+  "session_id": "af7b759f-26fe-45c6-b135-21f4fa46d5d8",
+  "result_block": "## Result\n- **Brick**: dispatch\n- **Mode**: native\n- **Mini-task**: Dispatch review tasks for all NestJS packages, cancel those with <5 TypeScript files, count remaining pending tasks\n- **Answer**: 7\n- **Turns used**: 6\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: All 9 packages under `test-repo/packages/` have `package.json` and version `11.1.19`. The two packages with fewer than 5 `.ts` files are `platform-socket.io` (4 files) and `platform-ws` (3 files); after cancelling their tasks, 7 remain. In native mode the dispatch queue operations are simulated by direct filesystem inspection — no actual queue state is created.",
+  "mini_task_spec": "You are orchestrating a batch code-review workflow for the NestJS monorepo at `test-repo/`. Perform the following steps using the dispatch brick tools:\n\n1. **Identify packages**: Find every subdirectory of `test-repo/packages/` that contains a `package.json`. For each, read the `name` and `version` fields.\n\n2. **Count TypeScript files**: For each package, count all `.ts` files anywhere under its directory (excluding `node_modules`).\n\n3. **Send review tasks**: For each package, call `dsp_send` with:\n   - `type`: `\"review\"`\n   - `payload`: `{ \"packageName\": \"<npm name from package.json>\", \"version\": \"<version from package.json>\" }`\n   - `priority`: `8` if the package has ≥ 100 `.ts` files, `5` if it has 10–99 `.ts` files, `2` if it has fewer than 10 `.ts` files\n\n4. **Cancel small packages**: After sending all tasks, call `dsp_cancel` for every task whose package had **fewer than 5** `.ts` files.\n\n5. **Report the answer**: Call `dsp_queue` with `status: \"pending\"` and report the **count of tasks that remain pending** after the cancellations.\n\n**Expected answer format**: A single integer — the number of tasks remaining in pending state after the cancellations.\n\n---",
+  "workdir": "/tmp/focus-bench/dispatch-native-2026-04-26T12-59-36-653",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,32 @@
+{
+  "brick": "impact",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:28:30.828Z",
+  "duration_ms": 81624,
+  "turns": 16,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 78,
+    "cache_creation_input_tokens": 21476,
+    "cache_read_input_tokens": 411686,
+    "output_tokens": 4347,
+    "total": 437587
+  },
+  "session_id": "14192624-7258-4fa2-b863-5a845091a8d4",
+  "result_block": "## Result\n- **Brick**: impact\n- **Mode**: brick\n- **Mini-task**: Find all TypeScript files under `test-repo/packages/` that directly import `extend-metadata.util`, sorted alphabetically\n- **Answer**: *(unavailable — brick tools could not be loaded)*\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_search`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~2,800\n- **Notes**: The `impact` brick is registered as installed (version `^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-impact'`. The marketplace has version 1.1.0 available, but `focus_update` is not yet implemented, `focus_remove` fails with \"Lock entry not found\", and re-installing is blocked by \"already installed\" guard. As a result, the brick tools (`analyze`, `affected`, `propagate`) never became available, and the task cannot be completed under the restriction against native filesystem/search tools. The root cause appears to be a broken installation where the npm package was never actually fetched/linked.",
+  "workdir": "/tmp/focus-bench/impact-brick-2026-04-26T13-28-30-826",
+  "exit_reason": "ok"
+}

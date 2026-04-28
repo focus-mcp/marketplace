@@ -1,0 +1,32 @@
+{
+  "brick": "onboarding",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:39:13.801Z",
+  "duration_ms": 78261,
+  "turns": 18,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 81,
+    "cache_creation_input_tokens": 27055,
+    "cache_read_input_tokens": 438059,
+    "output_tokens": 4192,
+    "total": 469387
+  },
+  "session_id": "db769e0d-1d6e-451e-a42b-e1d7c2bf01c6",
+  "result_block": "## Result\n- **Brick**: onboarding\n- **Mode**: brick\n- **Mini-task**: Answer 5 onboarding questions about a NestJS monorepo (monorepo tool, workspace packages, test runner, formatter, Node engines) using the onboarding brick's `scan`/`guide` tools\n- **Answer**: *Could not obtain — see Notes*\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_reload`\n- **Rough token estimate**: ~2 500\n- **Notes**: The `onboarding` brick is registered in the lock file at stub version `^0.0.0`, but its actual npm package (`@focus-mcp/brick-onboarding`) is absent from the local `.focus/` tree. `focus_load` fails with `Cannot find module '@focus-mcp/brick-onboarding'` on every attempt; `focus_update` is not yet implemented; `focus_remove` reports \"Lock entry not found\". Because the brick tools (`onb_scan`, `onb_guide`) therefore never become available, and native filesystem tools (`Bash`, `Grep`, `Glob`, `Read` for test-repo files) are forbidden, the task cannot be completed. The focus MCP server itself is reachable (meta-tools respond), so this is a **brick installation/packaging defect**, not a server-unavailability issue.",
+  "workdir": "/tmp/focus-bench/onboarding-brick-2026-04-26T13-39-13-798",
+  "exit_reason": "ok"
+}

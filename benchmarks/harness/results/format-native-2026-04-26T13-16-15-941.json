@@ -1,0 +1,25 @@
+{
+  "brick": "format",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:15:05.739Z",
+  "duration_ms": 70202,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 32,
+    "cache_creation_input_tokens": 24531,
+    "cache_read_input_tokens": 428336,
+    "output_tokens": 3705,
+    "total": 456604
+  },
+  "session_id": "e1c12165-4b80-49b3-8fbc-064655dee2fa",
+  "result_block": "## Result\n\n- **Brick**: format\n- **Mode**: native\n- **Mini-task**: Render `@nestjs/common` runtime dependencies as a sorted ASCII table\n- **Answer**:\n```\n+-----------+---------+\n| Package   | Version |\n+-----------+---------+\n| file-type | 21.3.4  |\n| iterare   | 1.2.1   |\n| load-esm  | 1.0.3   |\n| tslib     | 2.8.1   |\n| uid       | 2.0.2   |\n+-----------+---------+\n```\n- **Turns used**: 10\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~3,500\n- **Notes**: Native mode required a Python one-liner via Bash to manually construct the `+--+` ASCII table that the `fmt.table` tool would produce natively. The column widths were computed dynamically (max of header width vs. max cell width per column). No Glob or Grep were needed since the target file path was directly accessible.",
+  "mini_task_spec": "Read the file `test-repo/packages/common/package.json` and extract its `dependencies` object. Using the format brick's `table` tool, produce an ASCII table with `+--+` style borders. The table must have exactly two columns with headers **Package** and **Version** (both left-aligned), and one row per dependency sorted alphabetically by package name. Report the exact ASCII table output as the answer.\n\n---",
+  "workdir": "/tmp/focus-bench/format-native-2026-04-26T13-15-05-739",
+  "exit_reason": "ok"
+}

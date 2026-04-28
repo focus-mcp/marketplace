@@ -1,0 +1,25 @@
+{
+  "brick": "knowledge",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:16:47.455Z",
+  "duration_ms": 125394,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 32,
+    "cache_creation_input_tokens": 33442,
+    "cache_read_input_tokens": 420167,
+    "output_tokens": 7267,
+    "total": 460908
+  },
+  "session_id": "72252310-2ded-456e-8d04-9f045daaebb4",
+  "result_block": "## Result\n- **Brick**: knowledge\n- **Mode**: native\n- **Mini-task**: Construct KB `index` arguments from `test-repo/decision-http-adapter.json`\n- **Answer**:\n```json\n{\n  \"title\": \"Which HTTP adapter should be used for a new NestJS application: platform-express or platform-fastify?\",\n  \"content\": \"platform-express scored 243 vs platform-fastify's 188. Despite lower raw throughput, express dominates on middleware ecosystem breadth, built-in multer file-upload support (5 interceptors, no extra install), and adapter simplicity (523 lines, 5 deps vs 917 lines, 10 deps). The ecosystem and out-of-the-box capabilities outweigh fastify's throughput edge for most NestJS applications.\",\n  \"tags\": [\n    \"architecture-decision\",\n    \"platform-express\",\n    \"platform-fastify\"\n  ],\n  \"source\": \"test-repo/decision-http-adapter.json\"\n}\n```\n- **Turns used**: 4\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1 200\n- **Notes**: The decision-http-adapter.json file is a pre-built architectural decision record sitting at the repo root — ideal for a knowledge-base indexing task because all necessary fields (title, rationale, options) are already structured. The task is fully deterministic: no interpretation is required beyond direct field extraction and an alphabetical sort.",
+  "mini_task_spec": "Read the file `test-repo/decision-http-adapter.json`. Using its content, construct the exact JSON arguments you would pass to a knowledge base `index` tool call to add this architectural decision record to a searchable knowledge base. The four fields must be populated as follows:\n\n- **`title`**: the exact string value of the top-level `question` field in the JSON.\n- **`content`**: the exact string value of the top-level `rationale` field in the JSON.\n- **`source`**: the relative path `test-repo/decision-http-adapter.json` (literal string, unchanged).\n- **`tags`**: an array built by collecting the `label` value from each element of the top-level `options` array, then appending the literal string `\"architecture-decision\"`, then sorting all elements alphabetically.\n\nReport the answer as a single valid JSON object with exactly those four keys (`title`, `content`, `tags`, `source`), formatted with 2-space indentation. No additional keys.\n\n---",
+  "workdir": "/tmp/focus-bench/knowledge-native-2026-04-26T18-16-47-454",
+  "exit_reason": "ok"
+}

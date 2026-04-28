@@ -1,0 +1,32 @@
+{
+  "brick": "heatmap",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:29:28.340Z",
+  "duration_ms": 164211,
+  "turns": 18,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 72,
+    "cache_creation_input_tokens": 28705,
+    "cache_read_input_tokens": 540861,
+    "output_tokens": 7651,
+    "total": 577289
+  },
+  "session_id": "3f2df5ea-96d4-44dc-b482-fc2c4ddc5d68",
+  "result_block": "## Result\n- **Brick**: heatmap\n- **Mode**: brick\n- **Mini-task**: Count how many distinct `.ts` files in `test-repo/packages/core/` import each of five injector files (`container.ts`, `instance-wrapper.ts`, `module.ts`, `injector.ts`, `constants.ts`), then rank by import count descending\n- **Answer**: *(unavailable — see Notes)*\n- **Turns used**: 11\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_reload`\n- **Rough token estimate**: ~3,500\n- **Notes**: The heatmap brick is registered as installed (version `^0.0.0`) but fails to load with `Cannot find module '@focus-mcp/brick-heatmap'`. Recovery attempts all failed: `focus_update` returned \"not yet implemented\"; `focus_remove` returned \"Lock entry not found\"; reinstalling with `version: 1.1.0` reported the old version already present. With the brick unloadable, the `hm_track` and `hm_hotfiles` tools never became available. The `focus_search` tool only queries the marketplace catalog, not the filesystem. No other `mcp__focus__*` tool can scan source files for import patterns. The task cannot be completed using brick tools only under these conditions.",
+  "workdir": "/tmp/focus-bench/heatmap-brick-2026-04-26T13-29-28-337",
+  "exit_reason": "ok"
+}

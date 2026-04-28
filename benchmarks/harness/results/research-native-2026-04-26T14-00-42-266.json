@@ -1,0 +1,26 @@
+{
+  "brick": "research",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:58:08.270Z",
+  "duration_ms": 153996,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 50,
+    "cache_creation_input_tokens": 45783,
+    "cache_read_input_tokens": 804742,
+    "output_tokens": 7492,
+    "total": 858067
+  },
+  "session_id": "ea79435c-690d-475e-93ad-ddc097d302e7",
+  "result_block": "## Result\n- **Brick**: research\n- **Mode**: native\n- **Mini-task**: Cross-check import-path consistency for provider types across two core files\n- **Answer**: `Provider` is the only inconsistently imported type. `scanner.ts` imports `Provider` from `@nestjs/common`, while `injector/module.ts` imports `Provider` from `@nestjs/common/interfaces`. All other 4 types (`ClassProvider`, `ValueProvider`, `FactoryProvider`, `ExistingProvider`) are imported from `@nestjs/common/interfaces` in both files.\n- **Turns used**: 9\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~6,000\n- **Notes**: The multi-line import blocks in TypeScript files meant a simple single-line regex (`import.*TypeName`) missed cases where the type appeared on its own line inside a block import. A follow-up targeted Grep for `ExistingProvider` and direct Read of the import blocks was needed to confirm all 5 types were present. The inconsistency found (`Provider` from `@nestjs/common` vs `@nestjs/common/interfaces`) is a real pattern in the NestJS codebase where the top-level barrel re-exports the same type — a classic validation finding the research brick's `validate` tool is designed to surface.",
+  "mini_task_spec": "Read three files from the NestJS test repository:\n1. `test-repo/packages/common/interfaces/modules/provider.interface.ts`\n2. `test-repo/packages/core/scanner.ts`\n3. `test-repo/packages/core/injector/module.ts`\n\nStep A — Extract exports: From `provider.interface.ts`, list every exported type/interface name (there are exactly 5).\n\nStep B — Extract imports: For each of those 5 exported names, determine the exact import-source path used in `scanner.ts` and in `injector/module.ts`. The import source will be either `@nestjs/common` or `@nestjs/common/interfaces`.\n\nStep C — Validate consistency: Identify any type that is imported from different paths in the two files (i.e., one file uses `@nestjs/common` and the other uses `@nestjs/common/interfaces` for the same type).\n\nExpected answer format: name the inconsistent type and the two differing import paths, one line each, like:\n```\n<TypeName>: scanner.ts imports from <path-A>, module.ts imports from <path-B>\n```\n\n---",
+  "workdir": "/tmp/focus-bench/research-native-2026-04-26T13-58-08-270",
+  "exit_reason": "ok"
+}

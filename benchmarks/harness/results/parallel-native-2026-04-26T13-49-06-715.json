@@ -1,0 +1,25 @@
+{
+  "brick": "parallel",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:48:28.426Z",
+  "duration_ms": 38289,
+  "turns": 10,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 27,
+    "cache_creation_input_tokens": 18136,
+    "cache_read_input_tokens": 327496,
+    "output_tokens": 2279,
+    "total": 347938
+  },
+  "session_id": "40f1ede5-424e-4147-8c57-4d605d36bdca",
+  "result_block": "## Result\n\n- **Brick**: parallel\n- **Mode**: native\n- **Mini-task**: Count `.ts` files per NestJS package in parallel and report counts\n- **Answer**:\n  ```\n  common: 239\n  core: 259\n  microservices: 196\n  platform-express: 33\n  platform-fastify: 18\n  platform-socket.io: 4\n  platform-ws: 3\n  testing: 12\n  websockets: 61\n  ```\n- **Turns used**: 4\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1,800\n- **Notes**: In native mode a single sequential shell loop achieves the same result as parallel execution; the `parallel` brick's value would be running all 9 `find | wc -l` commands concurrently and merging outputs in one round-trip rather than sequentially.",
+  "mini_task_spec": "Count the number of TypeScript (`.ts`) source files in each package under `test-repo/packages/`. Exclude any files inside `node_modules` subdirectories. Run the count for all 9 packages concurrently using the parallel brick's `run_inline` tool (one task per package, each task uses `find <pkg-dir> -name \"*.ts\" -not -path \"*/node_modules/*\" | wc -l`). Then merge the results into a single report.\n\nReport the answer as a list of lines sorted alphabetically by package name, each in the format:\n\n```\n<package-name>: <count>\n```\n\nThe packages to cover (all direct subdirectories of `test-repo/packages/`) are:\n`common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets`.\n\n---",
+  "workdir": "/tmp/focus-bench/parallel-native-2026-04-26T13-48-28-426",
+  "exit_reason": "ok"
+}

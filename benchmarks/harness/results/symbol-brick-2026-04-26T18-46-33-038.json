@@ -1,0 +1,32 @@
+{
+  "brick": "symbol",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:42:25.722Z",
+  "duration_ms": 247316,
+  "turns": 40,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 187,
+    "cache_creation_input_tokens": 169204,
+    "cache_read_input_tokens": 2563079,
+    "output_tokens": 13300,
+    "total": 2745770
+  },
+  "session_id": "f02d2813-96da-486e-8949-dd356765a83f",
+  "result_block": "## Result\n- **Brick**: symbol\n- **Mode**: brick\n- **Mini-task**: Find all exported class names containing \"Parse\" in `test-repo/packages/common/pipes/` (recursively), sorted alphabetically\n- **Answer**: Unable to produce answer — the `symbol` brick could not be loaded due to a missing npm module (`@focus-mcp/brick-symbol` not found), and no alternative `mcp__focus__sym_*` tools were available or callable in this session.\n- **Turns used**: 20\n- **Tools used**: mcp__focus__focus_list, mcp__focus__focus_load, mcp__focus__focus_install, mcp__focus__focus_update, mcp__focus__focus_reload, mcp__focus__focus_catalog_list, mcp__focus__focus_search, mcp__focus__focus_remove, mcp__focus__focus_unload (indirectly via list)\n- **Rough token estimate**: ~18,000 tokens\n- **Notes**: Two blockers prevented task completion: (1) The `symbol` brick is installed as `^0.0.0` (local noop stub) but the real npm module `@focus-mcp/brick-symbol` is absent from the module resolution path — `focus_update` is not yet implemented and `focus_remove` failed with \"Lock entry not found\". (2) Even after loading the `outline` brick (which did load successfully with tools `file, repo, structure`), those dynamically-registered tools did not appear as deferred tools accessible via `ToolSearch`, making them uncallable within this session. The benchmark harness appears to only surface tools that were present at session-start, not tools registered dynamically after loading a brick mid-session.",
+  "workdir": "/tmp/focus-bench/symbol-brick-2026-04-26T18-42-25-720",
+  "exit_reason": "ok"
+}

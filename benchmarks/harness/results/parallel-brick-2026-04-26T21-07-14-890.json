@@ -1,0 +1,23 @@
+{
+  "brick": "parallel",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T21:06:42.233Z",
+  "duration_ms": 32657,
+  "turns": 3,
+  "tools_used": [
+    "mcp__claude_ai_Context7__resolve-library-id"
+  ],
+  "usage": {
+    "input_tokens": 13,
+    "cache_creation_input_tokens": 7292,
+    "cache_read_input_tokens": 155641,
+    "output_tokens": 1572,
+    "total": 164518
+  },
+  "session_id": "e0b66db2-963e-4e4f-8f5a-9f7f19a7ace4",
+  "result_block": "## Result\n- **Brick**: Unknown (could not read `./mcp-brick.json` — no `Read` tool available in session)\n- **Mode**: brick\n- **Mini-task**: Count TypeScript source files (excluding `.spec.ts`) in each of the 9 NestJS monorepo packages under `test-repo/packages/`, run concurrently, report sorted alphabetically\n- **Answer**: MODE UNAVAILABLE — the `mcp__focus__*` tools required to solve this task are not present in this session\n- **Turns used**: 1\n- **Tools used**: *(none — no mcp__focus__* tools available)*\n- **Rough token estimate**: ~800\n- **Notes**: The focus MCP server is not configured in this Claude session. No `mcp__focus__*` tools appeared in the available tool list. Per the task instructions, execution was halted and this message was emitted: `MODE UNAVAILABLE: focus MCP server not configured`. The two Context7 calls were exploratory/accidental and did not contribute to the task.",
+  "workdir": "/tmp/focus-bench/parallel-brick-2026-04-26T21-06-42-231",
+  "exit_reason": "ok"
+}

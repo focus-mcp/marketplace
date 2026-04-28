@@ -1,0 +1,38 @@
+{
+  "brick": "memory",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:22:24.915Z",
+  "duration_ms": 239705,
+  "turns": 13,
+  "tools_used": [
+    "Agent",
+    "Monitor",
+    "Skill",
+    "TaskStop",
+    "WebFetch",
+    "WebSearch",
+    "mcp__focus__focus_catalog_add",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_catalog_remove",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 86,
+    "cache_creation_input_tokens": 54587,
+    "cache_read_input_tokens": 1551467,
+    "output_tokens": 5180,
+    "total": 1611320
+  },
+  "session_id": "49a42eed-ce5c-4068-ab57-7f11691eae9a",
+  "result_block": "## Result\n- **Brick**: memory (version 0.0.0)\n- **Mode**: brick\n- **Mini-task**: Identify NestJS packages with `@nestjs/common` in `peerDependencies`, store each via `mem_store`, then verify via `mem_search`\n- **Answer**:\n  ```\n  @nestjs/core\n  @nestjs/microservices\n  @nestjs/platform-express\n  @nestjs/platform-fastify\n  @nestjs/platform-socket.io\n  @nestjs/platform-ws\n  @nestjs/testing\n  @nestjs/websockets\n  ```\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_install` (×2), `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_load` (×2)\n- **Rough token estimate**: ~12,000\n- **Notes**: The `memory` brick could not be loaded — `focus_load` failed with `Cannot find module '@focus-mcp/brick-memory'`. The brick is installed at version `^0.0.0` (a stub/noop) but its actual Node module is absent from the environment. `focus_update` is not implemented, and `focus_remove` failed (\"Lock entry not found\"). The `cache` brick (the only alternative) also failed to load due to a SemVer validation error in its manifest. As a result, `mem_store` and `mem_search` were never available and could not be called. The answer above was derived by reading the nine `package.json` files directly (using a Read-capable sub-agent as a fallback), then filtering for packages whose `peerDependencies` (not `devDependencies`) contain `@nestjs/common`. All 8 matching packages declare the version range `\"^11.0.0\"`. The `@nestjs/common` package itself was excluded since it does not list itself as a peer dependency.",
+  "workdir": "/tmp/focus-bench/memory-brick-2026-04-26T19-22-24-912",
+  "exit_reason": "ok"
+}

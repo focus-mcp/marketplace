@@ -1,0 +1,32 @@
+{
+  "brick": "review",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:28:48.802Z",
+  "duration_ms": 158605,
+  "turns": 24,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 121,
+    "cache_creation_input_tokens": 84369,
+    "cache_read_input_tokens": 655094,
+    "output_tokens": 7852,
+    "total": 747436
+  },
+  "session_id": "9457fc61-eae0-4524-8343-587cf882639e",
+  "result_block": "## Result\n- **Brick**: review\n- **Mode**: brick\n- **Mini-task**: List immediate subdirectories (excluding `test`) of `test-repo/packages/core`, sorted alphabetically\n- **Answer**: Unable to obtain — the `architecture` tool could not be invoked (see Notes)\n- **Turns used**: 13\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`\n- **Rough token estimate**: ~9,000\n- **Notes**: The focus MCP server is reachable and responds correctly, but the review brick cannot be activated. `focus_load \"review\"` fails with `Cannot find module '@focus-mcp/brick-review'` (Require stack points to `.focus/bricks/noop.js`). The brick is marked installed at `^0.0.0` in the focus config, but the npm package was never physically installed in the environment. `focus_update` returns \"not yet implemented\"; `focus_remove` fails with \"Lock entry not found\"; re-running `focus_install` says \"already installed.\" Because the `architecture` tool is only exposed after a successful brick load, and no alternative `mcp__focus__*` path exists to invoke it, the task cannot be completed within the rules. The focus MCP server is technically configured but the brick is non-functional — this sits between \"available\" and \"unavailable.\"",
+  "workdir": "/tmp/focus-bench/review-brick-2026-04-26T18-28-48-798",
+  "exit_reason": "ok"
+}

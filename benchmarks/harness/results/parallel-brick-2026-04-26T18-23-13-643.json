@@ -1,0 +1,32 @@
+{
+  "brick": "parallel",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:21:11.978Z",
+  "duration_ms": 121665,
+  "turns": 21,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 112,
+    "cache_creation_input_tokens": 52721,
+    "cache_read_input_tokens": 600098,
+    "output_tokens": 5014,
+    "total": 657945
+  },
+  "session_id": "91a26738-dcd3-447a-bf34-0972436e419f",
+  "result_block": "## Result\n- **Brick**: parallel\n- **Mode**: brick\n- **Mini-task**: Count `.ts` files (excluding `.d.ts` and `test/`) in each of 9 packages under `test-repo/packages/`, run concurrently via `par_run_inline`, report sorted alphabetically\n- **Answer**: *(unavailable — brick tools could not be loaded)*\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_load`, `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_install`, `mcp__focus__focus_search`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_remove`\n- **Rough token estimate**: ~6,000\n- **Notes**: The brick \"parallel\" is recorded as installed (version `^0.0.0`) but its npm module `@focus-mcp/brick-parallel` is not present in the environment (`Cannot find module '@focus-mcp/brick-parallel'`). `focus_update` is not yet implemented; `focus_remove` fails with \"Lock entry not found\"; reinstalling the same version is rejected. As a result, none of the brick's tools (`par_run`, `par_run_inline`, `par_collect`, `par_merge`, `par_timeout`) were ever registered, and the mini-task could not be executed. The focus MCP server itself is configured and operational — only the specific brick module is broken.",
+  "workdir": "/tmp/focus-bench/parallel-brick-2026-04-26T18-21-11-975",
+  "exit_reason": "ok"
+}

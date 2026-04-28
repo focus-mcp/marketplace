@@ -1,0 +1,25 @@
+{
+  "brick": "sandbox",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:31:16.489Z",
+  "duration_ms": 67568,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 21920,
+    "cache_read_input_tokens": 473939,
+    "output_tokens": 4715,
+    "total": 500611
+  },
+  "session_id": "1e896b28-5d24-4e4b-a78c-54caf0ef5408",
+  "result_block": "## Result\n- **Brick**: sandbox\n- **Mode**: native\n- **Mini-task**: Compute `normalizePath` return values for 5 specific inputs from `shared.utils.ts`\n- **Answer**:\n  ```\n  /\n  /\n  /foo/bar\n  /foo/bar\n  /foo/bar\n  ```\n- **Turns used**: 9\n- **Tools used**: Bash, Read, Glob\n- **Rough token estimate**: ~2,500\n- **Notes**: The sandbox brick's `read` + `run`/`eval` combo maps perfectly to this task — read the TS source, inline the function, execute it. In native mode this required extracting the function manually from the source file and running it in a Node.js subprocess via Bash. The last three inputs all produce the same result (`/foo/bar`), which is a good determinism check.",
+  "mini_task_spec": "The `normalizePath` function is defined in `test-repo/packages/common/utils/shared.utils.ts` as:\n\n```\nexport const normalizePath = (path?: string): string =>\n  path\n    ? path.startsWith('/')\n      ? ('/' + path.replace(/\\/+$/, '')).replace(/\\/+/g, '/')\n      : '/' + path.replace(/\\/+$/, '')\n    : '/';\n```\n\nUsing the sandbox brick, read the source file at `test-repo/packages/common/utils/shared.utils.ts`, extract the `normalizePath` function, and execute it against these five inputs **in order**:\n1. `undefined`\n2. `''` (empty string)\n3. `'foo/bar/'`\n4. `'/foo//bar/'`\n5. `'//foo/bar'`\n\nReport only the five return values, one per line, in input order (no extra labels or quotes). Each value should be the raw string returned by the function.\n\n---",
+  "workdir": "/tmp/focus-bench/sandbox-native-2026-04-26T18-31-16-489",
+  "exit_reason": "ok"
+}

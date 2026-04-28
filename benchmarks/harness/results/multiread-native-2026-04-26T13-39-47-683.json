@@ -1,0 +1,25 @@
+{
+  "brick": "multiread",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:38:20.555Z",
+  "duration_ms": 87128,
+  "turns": 23,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 49,
+    "cache_creation_input_tokens": 44694,
+    "cache_read_input_tokens": 725185,
+    "output_tokens": 5608,
+    "total": 775536
+  },
+  "session_id": "0c2770b2-a649-4438-b3ac-5f6553ef3089",
+  "result_block": "## Result\n- **Brick**: multiread\n- **Mode**: native\n- **Mini-task**: Read all 9 package.json files in test-repo/packages/* and report each package's name and peerDependencies count\n- **Answer**:\n  ```\n  common: @nestjs/common (4 peerDependencies)\n  core: @nestjs/core (6 peerDependencies)\n  microservices: @nestjs/microservices (13 peerDependencies)\n  platform-express: @nestjs/platform-express (2 peerDependencies)\n  platform-fastify: @nestjs/platform-fastify (4 peerDependencies)\n  platform-socket.io: @nestjs/platform-socket.io (3 peerDependencies)\n  platform-ws: @nestjs/platform-ws (3 peerDependencies)\n  testing: @nestjs/testing (4 peerDependencies)\n  websockets: @nestjs/websockets (5 peerDependencies)\n  ```\n- **Turns used**: 5\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: Straightforward multi-file read task. In native mode required 3 separate Read calls (batched in parallel) plus Bash for discovery. The multiread brick would collapse this to a single `mr__batch` call over all 9 paths, demonstrating its core batch-reading value proposition cleanly.",
+  "mini_task_spec": "In the `test-repo/packages/` directory there are nine subdirectories, each containing a `package.json`. Read **all nine** `package.json` files — from `test-repo/packages/common/package.json`, `test-repo/packages/core/package.json`, `test-repo/packages/microservices/package.json`, `test-repo/packages/platform-express/package.json`, `test-repo/packages/platform-fastify/package.json`, `test-repo/packages/platform-socket.io/package.json`, `test-repo/packages/platform-ws/package.json`, `test-repo/packages/testing/package.json`, and `test-repo/packages/websockets/package.json` — and for each one report the `name` field and the count of entries in the `peerDependencies` object. Output one line per package, sorted alphabetically by subdirectory name, in this exact format:\n\n```\n<subdirectory-name>: <npm-package-name> (<N> peerDependencies)\n```\n\nExample line: `common: @nestjs/common (4 peerDependencies)`",
+  "workdir": "/tmp/focus-bench/multiread-native-2026-04-26T13-38-20-555",
+  "exit_reason": "ok"
+}

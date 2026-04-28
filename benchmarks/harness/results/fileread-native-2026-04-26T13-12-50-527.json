@@ -1,0 +1,25 @@
+{
+  "brick": "fileread",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:11:12.080Z",
+  "duration_ms": 98447,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 14676,
+    "cache_read_input_tokens": 499323,
+    "output_tokens": 5467,
+    "total": 519503
+  },
+  "session_id": "a49e6315-9045-41a6-b28a-6d50377fba7a",
+  "result_block": "## Result\n- **Brick**: fileread\n- **Mode**: native\n- **Mini-task**: Extract the four simple exported string constants (lines 13–16) from `test-repo/packages/core/constants.ts`\n- **Answer**:\n  ```\n  APP_INTERCEPTOR = 'APP_INTERCEPTOR'\n  APP_PIPE = 'APP_PIPE'\n  APP_GUARD = 'APP_GUARD'\n  APP_FILTER = 'APP_FILTER'\n  ```\n- **Turns used**: 11\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: The file is small (28 lines) so `read` (full file) and `range` (lines 13–16) both work; the brick's `range` tool is the most natural fit. The constants are self-referential (each string value equals its variable name), which makes the answer easy to verify deterministically.",
+  "mini_task_spec": "Read lines 13 through 16 (inclusive) of the file `test-repo/packages/core/constants.ts`. Report each exported constant's name and its exact string value, one per line, in the format `NAME = 'VALUE'`, listed in the order they appear in the file (top to bottom). Do not include the `MESSAGES` object or the `ENHANCER_TOKEN_TO_SUBTYPE_MAP` constant. The expected answer format is four lines, each like `APP_FOO = 'APP_FOO'`.",
+  "workdir": "/tmp/focus-bench/fileread-native-2026-04-26T13-11-12-080",
+  "exit_reason": "ok"
+}

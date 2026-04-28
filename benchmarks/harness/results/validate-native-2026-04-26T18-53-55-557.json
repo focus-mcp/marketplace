@@ -1,0 +1,26 @@
+{
+  "brick": "validate",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:49:47.445Z",
+  "duration_ms": 248112,
+  "turns": 37,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 97,
+    "cache_creation_input_tokens": 95409,
+    "cache_read_input_tokens": 2315972,
+    "output_tokens": 13986,
+    "total": 2425464
+  },
+  "session_id": "f2aeff99-51cb-4a14-9b97-174280c32434",
+  "result_block": "## Result\n- **Brick**: validate\n- **Mode**: native\n- **Mini-task**: Lint-scan `packages/websockets/test/exceptions/ws-exceptions-handler.spec.ts` and report all violations by category\n- **Answer**:\n  ```\n  console.log: line 57\n  TODO/FIXME: 0\n  debugger: 0\n  unused imports: none\n  ```\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~4 000\n- **Notes**: No TODO/FIXME or debugger statements exist anywhere in `packages/` TypeScript files — the only runtime lint signal in this file is the single leftover `console.log` on line 57. All five imports (`ExecutionContextHost`, `expect`, `sinon`, `WsException`, `WsExceptionsHandler`) are referenced in the file body, so no unused-import violations.",
+  "mini_task_spec": "Using the `validate` brick's `lint` tool, analyse the file `test-repo/packages/websockets/test/exceptions/ws-exceptions-handler.spec.ts` for lint violations. Report, by category, each violation found (with line numbers where applicable):\n\n- **console.log statements** – list every line containing a `console.log(` call  \n- **TODO/FIXME comments** – total count  \n- **debugger statements** – total count  \n- **unused imports** – list any imported symbol that is never referenced after its import line  \n\nExpected answer format: one line per category, e.g.  \n```\nconsole.log: line <N>\nTODO/FIXME: <count>\ndebugger: <count>\nunused imports: <symbol> OR none\n```\n\n---",
+  "workdir": "/tmp/focus-bench/validate-native-2026-04-26T18-49-47-445",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "memory",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T21:06:01.999Z",
+  "duration_ms": 42807,
+  "turns": 5,
+  "tools_used": [
+    "NotebookEdit",
+    "RemoteTrigger",
+    "TodoWrite"
+  ],
+  "usage": {
+    "input_tokens": 17,
+    "cache_creation_input_tokens": 46290,
+    "cache_read_input_tokens": 163160,
+    "output_tokens": 2307,
+    "total": 211774
+  },
+  "session_id": "25ed16e8-fec8-438f-8954-1d8d2a81276a",
+  "result_block": "## Result\n- **Brick**: memory (as defined in `mcp-brick.json`, unread due to tool unavailability)\n- **Mode**: brick\n- **Mini-task**: Find all TypeScript classes directly extending HttpException in test-repo/packages/common/exceptions/, store each in memory brick with tags [\"exception\", \"http-exception\"], then list all by tag\n- **Answer**: MODE UNAVAILABLE: focus MCP server not configured\n- **Turns used**: 3\n- **Tools used**: (none — mcp__focus__* tools not present in session)\n- **Rough token estimate**: ~800\n- **Notes**: The `mcp__focus__*` tools are not registered in this Claude session. The tool manifest contains only `mcp__claude_ai_Gmail__*`, `mcp__claude_ai_Google_Calendar__*`, `mcp__claude_ai_Google_Drive__*`, and `mcp__claude_ai_Notion__*` MCP tools. No focus MCP server was configured, so the task cannot be completed per the stated rules. Additionally, native filesystem tools (Read, Bash, Grep, Glob) were not available in this session either.",
+  "workdir": "/tmp/focus-bench/memory-brick-2026-04-26T21-06-01-997",
+  "exit_reason": "ok"
+}

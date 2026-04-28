@@ -79,6 +79,7 @@ lerna-debug.log*
 
 # ============ AI coding agents ============
 .claude/
+.claude-octopus/
 .cursor/
 .cursorrules.local
 .windsurf/

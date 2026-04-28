@@ -1,0 +1,32 @@
+{
+  "brick": "graphquery",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:14:36.888Z",
+  "duration_ms": 142401,
+  "turns": 25,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 115,
+    "cache_creation_input_tokens": 53747,
+    "cache_read_input_tokens": 818075,
+    "output_tokens": 6437,
+    "total": 878374
+  },
+  "session_id": "43835d41-ebb0-4300-b3ce-b7f6108c5b5f",
+  "result_block": "## Result\n- **Brick**: graphquery\n- **Mode**: brick\n- **Mini-task**: Find all non-test TypeScript source files in packages/core/ that are direct neighbors (import or are imported by) GraphInspector\n- **Answer**: *(unavailable — brick tools could not be loaded)*\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_search`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~6,000\n- **Notes**: The `graphquery` brick is registered as installed (version `^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-graphquery'`. The actual npm package is absent from the `.focus/bricks/` directory (only a `noop.js` placeholder exists). `focus_update` returned \"not yet implemented\" and `focus_remove` failed with \"Lock entry not found\". Without the brick's tools (`gq_query`, `gq_neighbors`, etc.) being loadable, the knowledge graph cannot be queried. The focus MCP server itself is functional; the failure is specific to the graphquery module not being physically installed.",
+  "workdir": "/tmp/focus-bench/graphquery-brick-2026-04-26T18-14-36-885",
+  "exit_reason": "ok"
+}

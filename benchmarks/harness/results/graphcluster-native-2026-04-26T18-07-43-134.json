@@ -1,0 +1,25 @@
+{
+  "brick": "graphcluster",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:05:55.884Z",
+  "duration_ms": 107250,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 43,
+    "cache_creation_input_tokens": 23926,
+    "cache_read_input_tokens": 601812,
+    "output_tokens": 6202,
+    "total": 631983
+  },
+  "session_id": "c6f9ca23-c583-4765-a606-e5f2d8c5c0d0",
+  "result_block": "## Result\n- **Brick**: graphcluster\n- **Mode**: native\n- **Mini-task**: Identify NestJS packages depended on by ≥3 other packages in the monorepo\n- **Answer**:\n  ```\n  common\n  core\n  ```\n  Full dependency map for reference:\n  - `common` ← 8 packages (core, microservices, platform-express, platform-fastify, platform-socket.io, platform-ws, testing, websockets)\n  - `core` ← 5 packages (microservices, platform-express, platform-fastify, testing, websockets)\n  - `websockets` ← 2 packages (platform-socket.io, platform-ws)\n  - All others ← 0\n\n- **Turns used**: 10\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~3,500\n- **Notes**: The `grep -rl` approach initially undercounted platform-express's deps (missed `@nestjs/core`); switched to `find | xargs grep` for accuracy. No spec files were included (filtered with `! -name \"*.spec.ts\"`). The `common` package has zero outgoing internal deps, making it the sole foundation layer.",
+  "mini_task_spec": "Analyze the TypeScript source files (excluding `*.spec.ts` files) across all packages in `test-repo/packages/` to build a cross-package import dependency graph. The 9 packages are: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets`. Package A is said to depend on package B if any non-spec `.ts` file in `packages/A` contains an import from `'@nestjs/B'` or `'@nestjs/B/...'` (where B is the short package name). For each package, count how many other packages in the repo depend on it (its \"in-degree\"). List all packages whose in-degree is **3 or more**, one per line, sorted alphabetically.",
+  "workdir": "/tmp/focus-bench/graphcluster-native-2026-04-26T18-05-55-883",
+  "exit_reason": "ok"
+}

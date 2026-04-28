@@ -1,0 +1,25 @@
+{
+  "brick": "graphexport",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:13:42.619Z",
+  "duration_ms": 89898,
+  "turns": 10,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 29411,
+    "cache_read_input_tokens": 376995,
+    "output_tokens": 5989,
+    "total": 412424
+  },
+  "session_id": "39f5c7ff-6f03-4294-8b0d-9ef07a99146a",
+  "result_block": "## Result\n\n- **Brick**: graphexport\n- **Mode**: native\n- **Mini-task**: Export internal `@nestjs/*` peer-dependency graph of test-repo packages as a Mermaid LR diagram\n- **Answer**:\n```\ngraph LR\n  nestjs_common[\"@nestjs/common\"]\n  nestjs_core[\"@nestjs/core\"]\n  nestjs_microservices[\"@nestjs/microservices\"]\n  nestjs_platform_express[\"@nestjs/platform-express\"]\n  nestjs_platform_fastify[\"@nestjs/platform-fastify\"]\n  nestjs_platform_socket_io[\"@nestjs/platform-socket.io\"]\n  nestjs_platform_ws[\"@nestjs/platform-ws\"]\n  nestjs_testing[\"@nestjs/testing\"]\n  nestjs_websockets[\"@nestjs/websockets\"]\n  nestjs_core --> nestjs_common\n  nestjs_core --> nestjs_microservices\n  nestjs_core --> nestjs_platform_express\n  nestjs_core --> nestjs_websockets\n  nestjs_microservices --> nestjs_common\n  nestjs_microservices --> nestjs_core\n  nestjs_microservices --> nestjs_websockets\n  nestjs_platform_express --> nestjs_common\n  nestjs_platform_express --> nestjs_core\n  nestjs_platform_fastify --> nestjs_common\n  nestjs_platform_fastify --> nestjs_core\n  nestjs_platform_socket_io --> nestjs_common\n  nestjs_platform_socket_io --> nestjs_websockets\n  nestjs_platform_ws --> nestjs_common\n  nestjs_platform_ws --> nestjs_websockets\n  nestjs_testing --> nestjs_common\n  nestjs_testing --> nestjs_core\n  nestjs_testing --> nestjs_microservices\n  nestjs_testing --> nestjs_platform_express\n  nestjs_websockets --> nestjs_common\n  nestjs_websockets --> nestjs_core\n  nestjs_websockets --> nestjs_platform_socket_io\n```\n- **Turns used**: 9\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: The `@nestjs/common` package has no internal peer dependencies (it is the root). All nine packages were discovered from `test-repo/packages/` by reading their `package.json` files. Node IDs were sanitized by replacing `@`, `/`, `-`, `.` with `_`. Edges represent `peerDependencies` relationships restricted to internal `@nestjs/*` packages only. Native mode required manual graph construction and Mermaid formatting via a Python script; the brick mode would invoke `ge_input(graph)` + `ge_mermaid(direction=\"LR\")` directly.",
+  "mini_task_spec": "Using the NestJS monorepo located in `test-repo/packages/`, read the `package.json` file in each of the nine sub-packages (`common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets`). For each package, collect every entry in its `peerDependencies` field that starts with `@nestjs/` **and** corresponds to one of those nine packages. Treat each such relationship as a directed edge \"package A depends on package B\". Then, using the graphexport brick's `mermaid` tool with `direction: \"LR\"`, export the resulting graph as a Mermaid diagram. Node IDs must be valid Mermaid identifiers (sanitize `@`, `/`, `-`, `.` → `_`). Report the complete Mermaid diagram text, exactly as the `mermaid` tool would output it — one code block, starting with `graph LR`, listing all nine nodes alphabetically followed by all edges sorted alphabetically by source then target.\n\n---",
+  "workdir": "/tmp/focus-bench/graphexport-native-2026-04-26T18-13-42-618",
+  "exit_reason": "ok"
+}

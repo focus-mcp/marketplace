@@ -1,0 +1,26 @@
+{
+  "brick": "depgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:54:34.818Z",
+  "duration_ms": 73435,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 42,
+    "cache_creation_input_tokens": 16481,
+    "cache_read_input_tokens": 546421,
+    "output_tokens": 4471,
+    "total": 567415
+  },
+  "session_id": "1f05dde8-ff56-4142-bc36-624da46e53d3",
+  "result_block": "## Result\n\n- **Brick**: depgraph\n- **Mode**: native\n- **Mini-task**: Find all non-test files in `packages/core` that import `metadata-scanner.ts`, sorted alphabetically\n- **Answer**:\n  ```\n  packages/core/discovery/discovery-module.ts\n  packages/core/index.ts\n  packages/core/middleware/routes-mapper.ts\n  packages/core/nest-factory.ts\n  packages/core/repl/native-functions/methods-repl-fn.ts\n  packages/core/router/paths-explorer.ts\n  packages/core/router/router-explorer.ts\n  packages/core/router/routes-resolver.ts\n  packages/core/scanner.ts\n  ```\n- **Turns used**: 10\n- **Tools used**: Bash, Glob, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: `index.ts` uses `export * from './metadata-scanner'` (a re-export rather than a plain import), but it still establishes a direct dependency on `metadata-scanner.ts`. The brick's `fanin` tool should detect this as well. Test files (under `packages/core/test/`) were excluded as specified.",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/`, use the **depgraph** brick's `fanin` tool to determine which TypeScript source files inside `packages/core` directly depend on (import or re-export from) `packages/core/metadata-scanner.ts`. Exclude any files located under a `test/` subdirectory. Return the results as a list of file paths relative to `test-repo/`, sorted alphabetically, one per line.\n\nExpected answer format: file paths relative to `test-repo/`, one per line, sorted alphabetically — for example:\n```\npackages/core/discovery/discovery-module.ts\npackages/core/index.ts\n...\n```\n\nDo NOT include the answer. The brick-mode agent should invoke the `fanin` tool with the absolute path of `packages/core/metadata-scanner.ts` as the `file` argument and the `packages/core` directory as `dir`, then filter out paths under `test/`, sort, and return the list.\n\n---",
+  "workdir": "/tmp/focus-bench/depgraph-native-2026-04-26T12-54-34-818",
+  "exit_reason": "ok"
+}
