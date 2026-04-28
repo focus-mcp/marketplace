@@ -1,6 +1,6 @@
 {
     "name": "@focus-mcp/brick-memory",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "private": false,
     "description": "Persistent key-value memory — store and recall information across sessions as JSON files.",
     "license": "MIT",
