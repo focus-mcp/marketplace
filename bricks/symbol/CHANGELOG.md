@@ -1,5 +1,11 @@
 # @focus-mcp/brick-symbol
 
+## 1.1.2
+
+### Patch Changes
+
+- 920ce2c: fix(symbol): scope test script to src/ + add test:integration; align with Phase A/B/C pattern
+
 ## 1.1.1
 
 ### Patch Changes
