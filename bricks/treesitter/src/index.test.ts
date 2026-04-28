@@ -9,6 +9,10 @@ import {
     indexStore,
     parseFile,
     tsCleanup,
+    tsExtractCalls,
+    tsExtractImports,
+    tsExtractOutline,
+    tsExtractRefs,
     tsExtractSymbols,
     tsIndex,
     tsLangs,
@@ -380,8 +384,148 @@ describe('tsSupportedExts', () => {
     });
 });
 
+describe('tsExtractImports', () => {
+    it('extracts TS imports', async () => {
+        const result = await tsExtractImports({
+            path: '/src/app.ts',
+            content: "import { foo, bar } from './utils.ts';\nimport type { T } from './types.ts';",
+        });
+        expect(result.imports.length).toBeGreaterThanOrEqual(1);
+        expect(result.imports.some((i) => i.from === './utils.ts')).toBe(true);
+    });
+
+    it('extracts PHP use statements', async () => {
+        const result = await tsExtractImports({
+            path: '/src/Controller.php',
+            content: "<?php\nuse App\\Service\\UserService;\nuse App\\Repository\\UserRepo;",
+        });
+        expect(result.imports.length).toBeGreaterThanOrEqual(1);
+    });
+
+    it('extracts Python imports', async () => {
+        const result = await tsExtractImports({
+            path: '/src/module.py',
+            content: 'import os\nfrom pathlib import Path\nfrom typing import List',
+        });
+        expect(result.imports.length).toBeGreaterThanOrEqual(2);
+    });
+});
+
+describe('tsExtractRefs', () => {
+    it('finds TypeScript usages of a name', async () => {
+        const result = await tsExtractRefs({
+            path: '/src/app.ts',
+            content: 'const x = MyClass.create();\nconst y = new MyClass();\n',
+            name: 'MyClass',
+        });
+        expect(result.refs.length).toBeGreaterThanOrEqual(2);
+        expect(result.refs[0]).toMatchObject({ name: 'MyClass', kind: 'reference' });
+    });
+
+    it('skips declaration lines', async () => {
+        const result = await tsExtractRefs({
+            path: '/src/app.ts',
+            content: 'class MyClass {}\nconst x = new MyClass();\n',
+            name: 'MyClass',
+        });
+        expect(result.refs.every((r) => r.line === 2)).toBe(true);
+    });
+
+    it('finds PHP usages', async () => {
+        const result = await tsExtractRefs({
+            path: '/src/Service.php',
+            content: "<?php\n$user = new UserService();\n$x = UserService::find(1);\n",
+            name: 'UserService',
+        });
+        expect(result.refs.length).toBeGreaterThanOrEqual(2);
+    });
+});
+
+describe('tsExtractCalls', () => {
+    it('extracts caller→callee for TS functions', async () => {
+        const result = await tsExtractCalls({
+            path: '/src/app.ts',
+            content: [
+                'export function main(): void {',
+                '    doWork();',
+                '    helper();',
+                '}',
+                'export function doWork(): void {}',
+                'export function helper(): void {}',
+            ].join('\n'),
+        });
+        expect(result.calls.some((c) => c.caller === 'main' && c.callee === 'doWork')).toBe(true);
+        expect(result.calls.some((c) => c.caller === 'main' && c.callee === 'helper')).toBe(true);
+    });
+
+    it('returns empty array for file with no function calls', async () => {
+        const result = await tsExtractCalls({
+            path: '/src/pure.ts',
+            content: 'export const X = 42;\nexport const Y = "hello";\n',
+        });
+        expect(result.calls).toHaveLength(0);
+    });
+
+    it('handles PHP-style content (no crash)', async () => {
+        const result = await tsExtractCalls({
+            path: '/src/controller.php',
+            content: "<?php\nfunction handle() {\n    $this->service->do();\n}\n",
+        });
+        expect(Array.isArray(result.calls)).toBe(true);
+    });
+});
+
+describe('tsExtractOutline', () => {
+    it('builds hierarchical outline for TS class', async () => {
+        const result = await tsExtractOutline({
+            path: '/src/service.ts',
+            content: [
+                'export class MyService {',
+                '    doWork() {}',
+                '    helper() {}',
+                '}',
+                'export function standalone(): void {}',
+            ].join('\n'),
+        });
+        expect(result.outline.length).toBeGreaterThanOrEqual(1);
+        const cls = result.outline.find((n) => n.name === 'MyService');
+        expect(cls).toBeDefined();
+        if (cls?.children) {
+            expect(cls.children.some((c) => c.name === 'doWork')).toBe(true);
+        }
+    });
+
+    it('returns flat outline for PHP (class + functions)', async () => {
+        const result = await tsExtractOutline({
+            path: '/src/controller.php',
+            content: [
+                '<?php',
+                'class UserController {',
+                '    public function index(): void {}',
+                '}',
+            ].join('\n'),
+        });
+        expect(result.outline.length).toBeGreaterThanOrEqual(1);
+        const cls = result.outline.find((n) => n.name === 'UserController');
+        expect(cls).toBeDefined();
+    });
+
+    it('returns flat list for Python module', async () => {
+        const result = await tsExtractOutline({
+            path: '/src/module.py',
+            content: [
+                'class DataService:',
+                '    def process(self): pass',
+                '',
+                'def helper(): pass',
+            ].join('\n'),
+        });
+        expect(result.outline.some((n) => n.name === 'DataService')).toBe(true);
+    });
+});
+
 describe('treesitter brick', () => {
-    it('registers 7 handlers on start and unregisters on stop', async () => {
+    it('registers 11 handlers on start and unregisters on stop', async () => {
         const { default: brick } = await import('./index.ts');
         const unsubscribers: Array<() => void> = [];
         const bus = {
@@ -394,7 +538,7 @@ describe('treesitter brick', () => {
         };
 
         await brick.start({ bus });
-        expect(bus.handle).toHaveBeenCalledTimes(7);
+        expect(bus.handle).toHaveBeenCalledTimes(11);
         expect(bus.handle).toHaveBeenCalledWith('treesitter:index', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:reindex', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:status', expect.any(Function));
@@ -402,6 +546,10 @@ describe('treesitter brick', () => {
         expect(bus.handle).toHaveBeenCalledWith('treesitter:langs', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:extract-symbols', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:supported-exts', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('treesitter:extract-imports', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('treesitter:extract-refs', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('treesitter:extract-calls', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('treesitter:extract-outline', expect.any(Function));
 
         await brick.stop();
         for (const unsub of unsubscribers) {
