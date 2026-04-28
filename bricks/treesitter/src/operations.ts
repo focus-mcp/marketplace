@@ -180,23 +180,29 @@ export interface TsExtractRefsOutput {
 
 /**
  * Find all usages of `name` in a file (identifier matches, excluding declarations).
+ * Uses tree-sitter AST symbols to identify declaration lines, then scans remaining
+ * lines for word-boundary matches — avoiding false positives from comments/strings
+ * at the declaration level.
  * Consumed by refs brick via treesitter:extract-refs.
  */
 export async function tsExtractRefs(input: TsExtractRefsInput): Promise<TsExtractRefsOutput> {
-    const lines = input.content.split('\n');
-    const refs: RefEntry[] = [];
+    const indexed = await parseFile(input.path, input.content, 0);
+    // Declaration lines are those where a symbol with this name is defined
+    const declLines = new Set(
+        indexed.symbols.filter((s) => s.name === input.name).map((s) => s.line),
+    );
     const escaped = input.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const wordRe = new RegExp(`\\b${escaped}\\b`, 'g');
-    const declRe = new RegExp(
-        `(?:function|class|interface|type|const|let|var|def|func|fn)\\s+${escaped}\\b`,
-    );
+    const lines = input.content.split('\n');
+    const refs: RefEntry[] = [];
     for (let i = 0; i < lines.length; i++) {
+        const lineNum = i + 1;
+        if (declLines.has(lineNum)) continue;
         const line = lines[i] ?? '';
-        if (declRe.test(line)) continue;
         wordRe.lastIndex = 0;
         let m = wordRe.exec(line);
         while (m !== null) {
-            refs.push({ name: input.name, line: i + 1, col: m.index, kind: 'reference' });
+            refs.push({ name: input.name, line: lineNum, col: m.index, kind: 'reference' });
             m = wordRe.exec(line);
         }
     }
@@ -235,12 +241,7 @@ const CALL_SKIP = new Set([
     'constructor',
 ]);
 
-const FN_DECL_RE = /^(?:export\s+)?(?:async\s+)?function\s+(\w+)/;
 const CALL_RE = /\b(\w+)\s*\(/g;
-
-function countBraces(line: string): number {
-    return (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
-}
 
 function extractCallsFromLine(line: string, lineNum: number, callerFn: string): CallEntry[] {
     const entries: CallEntry[] = [];
@@ -258,26 +259,34 @@ function extractCallsFromLine(line: string, lineNum: number, callerFn: string): 
 
 /**
  * Extract caller→callee relationships for callgraph analysis.
+ * Uses tree-sitter AST symbol ranges (line/endLine) to determine which function
+ * scope each call site belongs to — handles arrow functions, class methods,
+ * Python defs, Go funcs, and nested functions correctly.
  * Consumed by callgraph brick via treesitter:extract-calls.
  */
 export async function tsExtractCalls(input: TsExtractCallsInput): Promise<TsExtractCallsOutput> {
+    const indexed = await parseFile(input.path, input.content, 0);
+    const FN_KINDS = new Set(['function', 'method']);
+    // Build list of function scopes from AST symbols (sorted by line)
+    const scopes = indexed.symbols
+        .filter((s) => FN_KINDS.has(s.kind))
+        .sort((a, b) => a.line - b.line);
+
     const lines = input.content.split('\n');
     const calls: CallEntry[] = [];
-    let currentFn: string | undefined;
-    let depth = 0;
+
     for (let i = 0; i < lines.length; i++) {
+        const lineNum = i + 1;
         const line = lines[i] ?? '';
-        const fnMatch = FN_DECL_RE.exec(line.trimStart());
-        if (fnMatch) {
-            currentFn = fnMatch[1];
-            depth = countBraces(line);
-            if (depth <= 0) currentFn = undefined;
-            continue;
+        // Find innermost scope containing this line
+        let callerFn: string | undefined;
+        for (const scope of scopes) {
+            if (lineNum >= scope.line && lineNum <= scope.endLine) {
+                callerFn = scope.name;
+            }
         }
-        if (currentFn) {
-            depth += countBraces(line);
-            calls.push(...extractCallsFromLine(line, i + 1, currentFn));
-            if (depth <= 0) currentFn = undefined;
+        if (callerFn) {
+            calls.push(...extractCallsFromLine(line, lineNum, callerFn));
         }
     }
     return { calls };

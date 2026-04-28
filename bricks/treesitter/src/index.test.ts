@@ -517,6 +517,9 @@ describe('tsExtractOutline', () => {
         const classNode = result.outline.find((n) => n.name === 'MyService');
         expect(classNode).toBeDefined();
         expect(classNode?.kind).toBe('class');
+        expect(classNode?.children).toBeDefined();
+        expect(classNode?.children?.some((c) => c.name === 'process')).toBe(true);
+        expect(classNode?.children?.some((c) => c.name === 'helper')).toBe(true);
         const fn = result.outline.find((n) => n.name === 'standalone');
         expect(fn).toBeDefined();
     });
