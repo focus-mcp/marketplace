@@ -2,9 +2,121 @@
 // SPDX-License-Identifier: MIT
 
 import { readdir, readFile } from 'node:fs/promises';
-import { join, resolve } from 'node:path';
+import { extname, join, resolve } from 'node:path';
 
-const SUPPORTED_EXTS = new Set(['.ts', '.tsx', '.js', '.jsx']);
+// ─── Bus interface ────────────────────────────────────────────────────────────
+
+export interface CallgraphBrickBus {
+    request<TRequest = unknown, TResponse = unknown>(
+        target: string,
+        payload: TRequest,
+    ): Promise<TResponse>;
+}
+
+// ─── Module-level bus injection ───────────────────────────────────────────────
+
+let _bus: CallgraphBrickBus | undefined;
+let _supportedExts: Set<string> | undefined;
+
+export function setBus(bus: CallgraphBrickBus): void {
+    _bus = bus;
+}
+
+export function clearBus(): void {
+    _bus = undefined;
+    _supportedExts = undefined;
+}
+
+function getBus(): CallgraphBrickBus {
+    if (!_bus) throw new Error('callgraph: bus not initialized — brick must be started first');
+    return _bus;
+}
+
+async function getSupportedExts(): Promise<Set<string>> {
+    if (_supportedExts) return _supportedExts;
+    const bus = _bus;
+    if (!bus) {
+        _supportedExts = new Set(['.ts', '.tsx', '.js', '.jsx']);
+        return _supportedExts;
+    }
+    try {
+        const { exts } = await bus.request<Record<never, never>, { exts: string[] }>(
+            'treesitter:supported-exts',
+            {},
+        );
+        _supportedExts = new Set(exts);
+    } catch {
+        _supportedExts = new Set([
+            '.ts',
+            '.tsx',
+            '.js',
+            '.jsx',
+            '.php',
+            '.py',
+            '.go',
+            '.rs',
+            '.java',
+        ]);
+    }
+    return _supportedExts;
+}
+
+// ─── bus response types (MUST match treesitter brick's shapes — bus contract) ─
+
+// NOTE: CallEntry mirrors the same-named type in bricks/treesitter/src/operations.ts.
+// Keep both shapes in sync if the bus contract changes.
+interface CallEntry {
+    caller: string;
+    callee: string;
+    line: number;
+}
+
+interface ExtractCallsOutput {
+    calls: CallEntry[];
+}
+
+// ─── File collection ──────────────────────────────────────────────────────────
+
+async function collectFiles(dir: string): Promise<string[]> {
+    const exts = await getSupportedExts();
+    const entries = await readdir(dir, { withFileTypes: true });
+    const results: string[] = [];
+    for (const e of entries) {
+        if (e.name.startsWith('.') || e.name === 'node_modules' || e.name === 'vendor') continue;
+        const full = join(dir, e.name);
+        if (e.isDirectory()) {
+            results.push(...(await collectFiles(full)));
+        } else {
+            if (exts.has(extname(e.name))) results.push(full);
+        }
+    }
+    return results;
+}
+
+// ─── Call map from treesitter:extract-calls ──────────────────────────────────
+
+async function buildCallMap(files: string[]): Promise<Map<string, Set<string>>> {
+    const bus = getBus();
+    const map = new Map<string, Set<string>>();
+    for (const f of files) {
+        try {
+            const content = await readFile(f, 'utf-8');
+            const result = await bus.request<{ path: string; content: string }, ExtractCallsOutput>(
+                'treesitter:extract-calls',
+                { path: f, content },
+            );
+            for (const { caller, callee } of result.calls) {
+                if (!map.has(caller)) map.set(caller, new Set());
+                map.get(caller)?.add(callee);
+            }
+        } catch {
+            // per-file error isolation
+        }
+    }
+    return map;
+}
+
+// ─── Local regex fallback for cgCallees (reads explicit line range) ───────────
 
 const CALL_KEYWORDS = new Set([
     'if',
@@ -21,24 +133,7 @@ const CALL_KEYWORDS = new Set([
     'constructor',
 ]);
 
-const rExportFn = /^export\s+(async\s+)?function\s+(\w+)/;
 const rCallPattern = /\b(\w+)\s*\(/g;
-
-async function collectFiles(dir: string): Promise<string[]> {
-    const entries = await readdir(dir, { withFileTypes: true });
-    const results: string[] = [];
-    for (const e of entries) {
-        if (e.name.startsWith('.') || e.name === 'node_modules') continue;
-        const full = join(dir, e.name);
-        if (e.isDirectory()) {
-            results.push(...(await collectFiles(full)));
-        } else {
-            const ext = e.name.slice(e.name.lastIndexOf('.'));
-            if (SUPPORTED_EXTS.has(ext)) results.push(full);
-        }
-    }
-    return results;
-}
 
 function extractCallsFromLine(line: string, selfName: string): string[] {
     const calls: string[] = [];
@@ -52,42 +147,7 @@ function extractCallsFromLine(line: string, selfName: string): string[] {
     return calls;
 }
 
-function addCallsToMap(map: Map<string, Set<string>>, fnName: string, line: string): void {
-    for (const call of extractCallsFromLine(line, fnName)) {
-        map.get(fnName)?.add(call);
-    }
-}
-
-function processLine(
-    line: string,
-    state: { currentFn: string | undefined; fnDepth: number },
-    map: Map<string, Set<string>>,
-): void {
-    const mFn = rExportFn.exec(line);
-    if (mFn) {
-        state.currentFn = mFn[2] ?? '';
-        if (!map.has(state.currentFn)) map.set(state.currentFn, new Set());
-        state.fnDepth = (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
-        addCallsToMap(map, state.currentFn, line);
-        if (state.fnDepth <= 0) state.currentFn = undefined;
-        return;
-    }
-    if (state.currentFn) {
-        state.fnDepth += (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
-        addCallsToMap(map, state.currentFn, line);
-        if (state.fnDepth <= 0) state.currentFn = undefined;
-    }
-}
-
-async function buildCallMap(files: string[]): Promise<Map<string, Set<string>>> {
-    const map = new Map<string, Set<string>>();
-    for (const f of files) {
-        const content = await readFile(f, 'utf-8');
-        const state = { currentFn: undefined as string | undefined, fnDepth: 0 };
-        for (const line of content.split('\n')) processLine(line, state, map);
-    }
-    return map;
-}
+// ─── Input types ──────────────────────────────────────────────────────────────
 
 export interface CgCallersInput {
     readonly name: string;
@@ -120,6 +180,8 @@ export interface CallerInfo {
     snippet: string;
 }
 
+// ─── Implementations ──────────────────────────────────────────────────────────
+
 function escapeRegex(s: string): string {
     return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -133,13 +195,17 @@ export async function cgCallers(input: CgCallersInput): Promise<{ callers: Calle
         `^\\s*(export\\s+)?(async\\s+)?function\\s+${escapeRegex(input.name)}\\b`,
     );
     for (const f of files) {
-        const content = await readFile(f, 'utf-8');
-        const lines = content.split('\n');
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i] ?? '';
-            if (rDecl.test(line)) continue;
-            rCall.lastIndex = 0;
-            if (rCall.test(line)) callers.push({ file: f, line: i + 1, snippet: line.trim() });
+        try {
+            const content = await readFile(f, 'utf-8');
+            const lines = content.split('\n');
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i] ?? '';
+                if (rDecl.test(line)) continue;
+                rCall.lastIndex = 0;
+                if (rCall.test(line)) callers.push({ file: f, line: i + 1, snippet: line.trim() });
+            }
+        } catch {
+            // per-file error isolation
         }
     }
     return { callers };
@@ -150,7 +216,7 @@ export async function cgCallees(input: CgCalleesInput): Promise<{ callees: strin
     const lines = content.split('\n').slice(input.startLine - 1, input.endLine);
     const calleeSet = new Set<string>();
     for (const line of lines) {
-        for (const call of extractCallsFromLine(line, '')) {
+        for (const call of extractCallsFromLine(line, input.name)) {
             if (!CALL_KEYWORDS.has(call)) calleeSet.add(call);
         }
     }

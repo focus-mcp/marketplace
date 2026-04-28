@@ -124,7 +124,6 @@ export interface TsSupportedExtsOutput {
 
 /**
  * Return all file extensions supported by the tree-sitter registry.
- * Consumed by code-intel bricks to dynamically filter which files to process.
  * Target: treesitter:supported-exts
  */
 export function tsSupportedExts(): TsSupportedExtsOutput {
@@ -150,7 +149,7 @@ export interface TsExtractImportsOutput {
 
 /**
  * Extract import statements from a file via tree-sitter.
- * Consumed by code-intel bricks (smartread, depgraph) via treesitter:extract-imports.
+ * Target: treesitter:extract-imports
  */
 export async function tsExtractImports(
     input: TsExtractImportsInput,
@@ -180,30 +179,23 @@ export interface TsExtractRefsOutput {
 
 /**
  * Find all usages of `name` in a file (identifier matches, excluding declarations).
- * Uses tree-sitter AST symbols to identify declaration lines (which are skipped).
- * Non-declaration lines are scanned with a word-boundary regex — false positives
- * from comments/strings on those lines are still possible but declaration-line
- * false positives are eliminated.
  * Target: treesitter:extract-refs
  */
 export async function tsExtractRefs(input: TsExtractRefsInput): Promise<TsExtractRefsOutput> {
-    const indexed = await parseFile(input.path, input.content, 0);
-    // Declaration lines are those where a symbol with this name is defined
-    const declLines = new Set(
-        indexed.symbols.filter((s) => s.name === input.name).map((s) => s.line),
-    );
-    const escaped = input.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const wordRe = new RegExp(`\\b${escaped}\\b`, 'g');
     const lines = input.content.split('\n');
     const refs: RefEntry[] = [];
+    const escaped = input.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const wordRe = new RegExp(`\\b${escaped}\\b`, 'g');
+    const declRe = new RegExp(
+        `(?:function|class|interface|type|const|let|var|def|func|fn)\\s+${escaped}\\b`,
+    );
     for (let i = 0; i < lines.length; i++) {
-        const lineNum = i + 1;
-        if (declLines.has(lineNum)) continue;
         const line = lines[i] ?? '';
+        if (declRe.test(line)) continue;
         wordRe.lastIndex = 0;
         let m = wordRe.exec(line);
         while (m !== null) {
-            refs.push({ name: input.name, line: lineNum, col: m.index, kind: 'reference' });
+            refs.push({ name: input.name, line: i + 1, col: m.index, kind: 'reference' });
             m = wordRe.exec(line);
         }
     }
@@ -242,7 +234,12 @@ const CALL_SKIP = new Set([
     'constructor',
 ]);
 
+const FN_DECL_RE = /^(?:export\s+)?(?:async\s+)?function\s+(\w+)/;
 const CALL_RE = /\b(\w+)\s*\(/g;
+
+function countBraces(line: string): number {
+    return (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
+}
 
 function extractCallsFromLine(line: string, lineNum: number, callerFn: string): CallEntry[] {
     const entries: CallEntry[] = [];
@@ -260,43 +257,26 @@ function extractCallsFromLine(line: string, lineNum: number, callerFn: string): 
 
 /**
  * Extract caller→callee relationships for callgraph analysis.
- * Uses tree-sitter AST symbol ranges (line/endLine) to determine which function
- * scope each call site belongs to — handles class methods, Python defs,
- * Go funcs, and nested functions correctly.
- * Note: arrow functions assigned to variables (e.g. const fn = () => {}) are
- * emitted as kind 'variable' by parsers; including 'variable' in FN_KINDS
- * captures them at the cost of also attributing calls inside non-function
- * variable initialisers. This is the minimal fix.
- * Known limitation: callee extraction (extractCallsFromLine) uses raw regex
- * on each line, so calls inside string literals or comments produce false
- * edges. Full token-level accuracy would require querying call_expression
- * AST nodes directly from tree-sitter.
  * Target: treesitter:extract-calls
  */
 export async function tsExtractCalls(input: TsExtractCallsInput): Promise<TsExtractCallsOutput> {
-    const indexed = await parseFile(input.path, input.content, 0);
-    // 'variable' is included to capture arrow-function scopes (const fn = () => {})
-    const FN_KINDS = new Set(['function', 'method', 'variable']);
-    // Build list of function scopes from AST symbols (sorted by line)
-    const scopes = indexed.symbols
-        .filter((s) => FN_KINDS.has(s.kind))
-        .sort((a, b) => a.line - b.line);
-
     const lines = input.content.split('\n');
     const calls: CallEntry[] = [];
-
+    let currentFn: string | undefined;
+    let depth = 0;
     for (let i = 0; i < lines.length; i++) {
-        const lineNum = i + 1;
         const line = lines[i] ?? '';
-        // Find innermost scope containing this line
-        let callerFn: string | undefined;
-        for (const scope of scopes) {
-            if (lineNum >= scope.line && lineNum <= scope.endLine) {
-                callerFn = scope.name;
-            }
+        const fnMatch = FN_DECL_RE.exec(line.trimStart());
+        if (fnMatch) {
+            currentFn = fnMatch[1];
+            depth = countBraces(line);
+            if (depth <= 0) currentFn = undefined;
+            continue;
         }
-        if (callerFn) {
-            calls.push(...extractCallsFromLine(line, lineNum, callerFn));
+        if (currentFn) {
+            depth += countBraces(line);
+            calls.push(...extractCallsFromLine(line, i + 1, currentFn));
+            if (depth <= 0) currentFn = undefined;
         }
     }
     return { calls };
@@ -322,7 +302,7 @@ export interface TsExtractOutlineOutput {
 
 /**
  * Build a hierarchical outline from the symbol tree.
- * Consumed by outline brick via treesitter:extract-outline.
+ * Target: treesitter:extract-outline
  */
 export async function tsExtractOutline(
     input: TsExtractOutlineInput,
