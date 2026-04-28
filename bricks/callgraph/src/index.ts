@@ -2,8 +2,14 @@
 // SPDX-License-Identifier: MIT
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
-import type { CgCalleesInput, CgCallersInput, CgChainInput, CgDepthInput } from './operations.ts';
-import { cgCallees, cgCallers, cgChain, cgDepth } from './operations.ts';
+import type {
+    CallgraphBrickBus,
+    CgCalleesInput,
+    CgCallersInput,
+    CgChainInput,
+    CgDepthInput,
+} from './operations.ts';
+import { cgCallees, cgCallers, cgChain, cgDepth, clearBus, setBus } from './operations.ts';
 
 interface BrickBus {
     on(
@@ -11,6 +17,10 @@ interface BrickBus {
         handler: (data: unknown) => Promise<unknown> | unknown,
     ): undefined | (() => void);
     handle(target: string, handler: (data: unknown) => Promise<unknown> | unknown): () => void;
+    request<TRequest = unknown, TResponse = unknown>(
+        target: string,
+        payload: TRequest,
+    ): Promise<TResponse>;
 }
 
 interface BrickContext {
@@ -40,6 +50,7 @@ const brick: Brick = {
     start(ctx) {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
+        setBus(ctx.bus as CallgraphBrickBus);
         unsubscribers.push(
             ctx.bus.handle('callgraph:callers', (data) => cgCallers(data as CgCallersInput)),
         );
@@ -56,6 +67,7 @@ const brick: Brick = {
     stop() {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
+        clearBus();
     },
 };
 

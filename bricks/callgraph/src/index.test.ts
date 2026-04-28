@@ -5,15 +5,124 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cgCallees, cgCallers, cgChain, cgDepth } from './operations.ts';
+import {
+    type CallgraphBrickBus,
+    cgCallees,
+    cgCallers,
+    cgChain,
+    cgDepth,
+    clearBus,
+    setBus,
+} from './operations.ts';
 
 let testDir: string;
 
+// ─── Mock bus helpers ─────────────────────────────────────────────────────────
+
+const MOCK_SUPPORTED_EXTS = [
+    '.ts',
+    '.tsx',
+    '.js',
+    '.jsx',
+    '.mjs',
+    '.php',
+    '.py',
+    '.go',
+    '.rs',
+    '.java',
+];
+
+const MOCK_SKIP_KEYWORDS = new Set([
+    'if',
+    'for',
+    'while',
+    'switch',
+    'catch',
+    'function',
+    'class',
+    'return',
+    'new',
+    'typeof',
+    'instanceof',
+    'constructor',
+]);
+
+const MOCK_FN_RE = /^(?:export\s+)?(?:async\s+)?function\s+(\w+)/;
+const MOCK_CALL_RE = /\b(\w+)\s*\(/g;
+
+interface MockCallEntry {
+    caller: string;
+    callee: string;
+    line: number;
+}
+
+function mockExtractCallsFromLine(
+    line: string,
+    currentFn: string,
+    lineIndex: number,
+    calls: MockCallEntry[],
+): void {
+    MOCK_CALL_RE.lastIndex = 0;
+    let m = MOCK_CALL_RE.exec(line);
+    while (m !== null) {
+        const name = m[1] ?? '';
+        if (!MOCK_SKIP_KEYWORDS.has(name) && name !== currentFn) {
+            calls.push({ caller: currentFn, callee: name, line: lineIndex + 1 });
+        }
+        m = MOCK_CALL_RE.exec(line);
+    }
+}
+
+function mockCountBraces(line: string): number {
+    return (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
+}
+
+function mockParseContent(content: string): MockCallEntry[] {
+    const calls: MockCallEntry[] = [];
+    let currentFn: string | undefined;
+    let depth = 0;
+    const lines = content.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i] ?? '';
+        const fnMatch = MOCK_FN_RE.exec(line.trimStart());
+        if (fnMatch) {
+            currentFn = fnMatch[1];
+            depth = mockCountBraces(line);
+            if (currentFn) mockExtractCallsFromLine(line, currentFn, i, calls);
+            if (depth <= 0) currentFn = undefined;
+            continue;
+        }
+        if (currentFn) {
+            depth += mockCountBraces(line);
+            mockExtractCallsFromLine(line, currentFn, i, calls);
+            if (depth <= 0) currentFn = undefined;
+        }
+    }
+    return calls;
+}
+
+function makeMockBus(): CallgraphBrickBus {
+    return {
+        request: vi.fn(async (target: string, payload: unknown): Promise<unknown> => {
+            if (target === 'treesitter:supported-exts') {
+                return { exts: MOCK_SUPPORTED_EXTS };
+            }
+            if (target === 'treesitter:extract-calls') {
+                const { content } = payload as { path: string; content: string };
+                return { calls: mockParseContent(content) };
+            }
+            throw new Error(`Unexpected bus target: ${target}`);
+        }) as CallgraphBrickBus['request'],
+    };
+}
+
 beforeEach(async () => {
     testDir = await mkdtemp(join(tmpdir(), 'focusmcp-callgraph-test-'));
+    setBus(makeMockBus());
 });
 
 afterEach(async () => {
+    clearBus();
     await rm(testDir, { recursive: true, force: true });
 });
 
@@ -39,7 +148,6 @@ describe('cgCallers', () => {
             'export function helper(): void {}\nexport function helper2(): void { helper(); }',
         );
         const result = await cgCallers({ name: 'helper', dir: testDir });
-        // The definition line should not appear
         const defLines = result.callers.filter((c) =>
             c.snippet.match(/^(export\s+)?(async\s+)?function\s+helper\b/),
         );
@@ -139,16 +247,13 @@ describe('collectFiles (callgraph) — branch coverage', () => {
     it('ignores files with unsupported extensions', async () => {
         await writeFile(join(testDir, 'readme.md'), '# Readme');
         await writeFile(join(testDir, 'code.ts'), 'export function code(): void {}');
-        // cgCallers triggers collectFiles internally
         const result = await cgCallers({ name: 'code', dir: testDir });
-        // only code.ts is scanned — readme.md is ignored
         expect(result.callers).toHaveLength(0);
     });
 });
 
 describe('processLine — currentFn tracking branches', () => {
     it('closes currentFn when brace depth returns to 0 inside function body', async () => {
-        // A multi-line function whose body closes on a subsequent line
         await writeFile(
             join(testDir, 'k.ts'),
             [
@@ -158,9 +263,28 @@ describe('processLine — currentFn tracking branches', () => {
                 'export function unrelated(): void {}',
             ].join('\n'),
         );
-        // cgChain exercises processLine / buildCallMap with multi-line functions
         const result = await cgChain({ from: 'outer', to: 'helper', dir: testDir });
         expect(result.chain).not.toBeNull();
+    });
+});
+
+describe('cgCallers — multi-language', () => {
+    it('finds PHP function callers via text grep', async () => {
+        await writeFile(
+            join(testDir, 'controller.php'),
+            '<?php\nfunction handle() {}\nfunction index() { handle(); }\n',
+        );
+        const result = await cgCallers({ name: 'handle', dir: testDir });
+        expect(result.callers.some((c) => c.snippet.includes('handle()'))).toBe(true);
+    });
+
+    it('finds Python function callers via text grep', async () => {
+        await writeFile(
+            join(testDir, 'module.py'),
+            'def process():\n    pass\n\ndef main():\n    process()\n',
+        );
+        const result = await cgCallers({ name: 'process', dir: testDir });
+        expect(result.callers.some((c) => c.snippet.includes('process()'))).toBe(true);
     });
 });
 
@@ -175,6 +299,7 @@ describe('callgraph brick', () => {
                 return unsub;
             }),
             on: vi.fn(),
+            request: vi.fn(),
         };
 
         await brick.start({ bus });
