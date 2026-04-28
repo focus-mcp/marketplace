@@ -180,30 +180,23 @@ export interface TsExtractRefsOutput {
 
 /**
  * Find all usages of `name` in a file (identifier matches, excluding declarations).
- * Uses tree-sitter AST symbols to identify declaration lines (which are skipped).
- * Non-declaration lines are scanned with a word-boundary regex — false positives
- * from comments/strings on those lines are still possible but declaration-line
- * false positives are eliminated.
- * Target: treesitter:extract-refs
+ * Consumed by refs brick via treesitter:extract-refs.
  */
 export async function tsExtractRefs(input: TsExtractRefsInput): Promise<TsExtractRefsOutput> {
-    const indexed = await parseFile(input.path, input.content, 0);
-    // Declaration lines are those where a symbol with this name is defined
-    const declLines = new Set(
-        indexed.symbols.filter((s) => s.name === input.name).map((s) => s.line),
-    );
-    const escaped = input.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const wordRe = new RegExp(`\\b${escaped}\\b`, 'g');
     const lines = input.content.split('\n');
     const refs: RefEntry[] = [];
+    const escaped = input.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const wordRe = new RegExp(`\\b${escaped}\\b`, 'g');
+    const declRe = new RegExp(
+        `(?:function|class|interface|type|const|let|var|def|func|fn)\\s+${escaped}\\b`,
+    );
     for (let i = 0; i < lines.length; i++) {
-        const lineNum = i + 1;
-        if (declLines.has(lineNum)) continue;
         const line = lines[i] ?? '';
+        if (declRe.test(line)) continue;
         wordRe.lastIndex = 0;
         let m = wordRe.exec(line);
         while (m !== null) {
-            refs.push({ name: input.name, line: lineNum, col: m.index, kind: 'reference' });
+            refs.push({ name: input.name, line: i + 1, col: m.index, kind: 'reference' });
             m = wordRe.exec(line);
         }
     }
@@ -228,75 +221,42 @@ export interface TsExtractCallsOutput {
 }
 
 const CALL_SKIP = new Set([
-    'if',
-    'for',
-    'while',
-    'switch',
-    'catch',
-    'function',
-    'class',
-    'return',
-    'new',
-    'typeof',
-    'instanceof',
-    'constructor',
+    'if', 'for', 'while', 'switch', 'catch', 'function', 'class',
+    'return', 'new', 'typeof', 'instanceof', 'constructor',
 ]);
-
-const CALL_RE = /\b(\w+)\s*\(/g;
-
-function extractCallsFromLine(line: string, lineNum: number, callerFn: string): CallEntry[] {
-    const entries: CallEntry[] = [];
-    CALL_RE.lastIndex = 0;
-    let m = CALL_RE.exec(line);
-    while (m !== null) {
-        const callee = m[1] ?? '';
-        if (!CALL_SKIP.has(callee) && callee !== callerFn) {
-            entries.push({ caller: callerFn, callee, line: lineNum });
-        }
-        m = CALL_RE.exec(line);
-    }
-    return entries;
-}
 
 /**
  * Extract caller→callee relationships for callgraph analysis.
- * Uses tree-sitter AST symbol ranges (line/endLine) to determine which function
- * scope each call site belongs to — handles class methods, Python defs,
- * Go funcs, and nested functions correctly.
- * Note: arrow functions assigned to variables (e.g. const fn = () => {}) are
- * emitted as kind 'variable' by parsers; including 'variable' in FN_KINDS
- * captures them at the cost of also attributing calls inside non-function
- * variable initialisers. This is the minimal fix.
- * Known limitation: callee extraction (extractCallsFromLine) uses raw regex
- * on each line, so calls inside string literals or comments produce false
- * edges. Full token-level accuracy would require querying call_expression
- * AST nodes directly from tree-sitter.
- * Target: treesitter:extract-calls
+ * Consumed by callgraph brick via treesitter:extract-calls.
  */
 export async function tsExtractCalls(input: TsExtractCallsInput): Promise<TsExtractCallsOutput> {
-    const indexed = await parseFile(input.path, input.content, 0);
-    // 'variable' is included to capture arrow-function scopes (const fn = () => {})
-    const FN_KINDS = new Set(['function', 'method', 'variable']);
-    // Build list of function scopes from AST symbols (sorted by line)
-    const scopes = indexed.symbols
-        .filter((s) => FN_KINDS.has(s.kind))
-        .sort((a, b) => a.line - b.line);
-
     const lines = input.content.split('\n');
     const calls: CallEntry[] = [];
-
+    const fnDeclRe = /^(?:export\s+)?(?:async\s+)?function\s+(\w+)/;
+    const callRe = /\b(\w+)\s*\(/g;
+    let currentFn: string | undefined;
+    let depth = 0;
     for (let i = 0; i < lines.length; i++) {
-        const lineNum = i + 1;
         const line = lines[i] ?? '';
-        // Find innermost scope containing this line
-        let callerFn: string | undefined;
-        for (const scope of scopes) {
-            if (lineNum >= scope.line && lineNum <= scope.endLine) {
-                callerFn = scope.name;
-            }
+        const fnMatch = fnDeclRe.exec(line.trimStart());
+        if (fnMatch) {
+            currentFn = fnMatch[1];
+            depth = (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
+            if (depth <= 0) currentFn = undefined;
+            continue;
         }
-        if (callerFn) {
-            calls.push(...extractCallsFromLine(line, lineNum, callerFn));
+        if (currentFn) {
+            depth += (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
+            callRe.lastIndex = 0;
+            let m = callRe.exec(line);
+            while (m !== null) {
+                const callee = m[1] ?? '';
+                if (!CALL_SKIP.has(callee) && callee !== currentFn) {
+                    calls.push({ caller: currentFn, callee, line: i + 1 });
+                }
+                m = callRe.exec(line);
+            }
+            if (depth <= 0) currentFn = undefined;
         }
     }
     return { calls };
