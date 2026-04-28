@@ -35,15 +35,25 @@ jobs:
           registry-url: https://registry.npmjs.org
           scope: '@focus-mcp'
       - run: pnpm install --frozen-lockfile
-      - name: Apply changeset snapshot versions
+      - name: Check for pending changesets
+        id: pending
         run: |
-          # Runs from repo root — reads .changeset/*.md and bumps all packages
-          # with pending changesets to their next version + snapshot suffix
-          # (e.g. 1.2.0-dev-20260428-abc1234).
-          pnpm changeset version --snapshot dev
-      - run: pnpm build
-      - run: pnpm build:catalog
+          PENDING=$(ls .changeset/*.md 2>/dev/null | grep -v "^.changeset/README" | wc -l || echo 0)
+          echo "count=$PENDING" >> $GITHUB_OUTPUT
+          if [ "$PENDING" -eq 0 ]; then
+            echo "No pending changesets — skipping dev publish."
+          fi
+      - name: Apply changeset snapshot versions
+        if: steps.pending.outputs.count != '0'
+        run: pnpm changeset version --snapshot dev
+      - name: Build
+        if: steps.pending.outputs.count != '0'
+        run: pnpm build
+      - name: Build catalog
+        if: steps.pending.outputs.count != '0'
+        run: pnpm build:catalog
       - name: Publish all packages with dev tag
+        if: steps.pending.outputs.count != '0'
         run: pnpm changeset publish --no-git-tag --tag dev
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
