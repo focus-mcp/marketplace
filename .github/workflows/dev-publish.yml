@@ -38,7 +38,7 @@ jobs:
       - name: Check for pending changesets
         id: pending
         run: |
-          PENDING=$(ls .changeset/*.md 2>/dev/null | grep -v "^.changeset/README" | wc -l || echo 0)
+          PENDING=$(find .changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | xargs)
           echo "count=$PENDING" >> $GITHUB_OUTPUT
           if [ "$PENDING" -eq 0 ]; then
             echo "No pending changesets — skipping dev publish."
