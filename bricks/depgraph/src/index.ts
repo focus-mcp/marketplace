@@ -7,7 +7,6 @@ import type {
     DepExportsInput,
     DepFaninInput,
     DepFanoutInput,
-    DepgraphBrickBus,
     DepImportsInput,
 } from './operations.ts';
 import {
@@ -59,7 +58,7 @@ const brick: Brick = {
     start(ctx) {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
-        setBus(ctx.bus as DepgraphBrickBus);
+        setBus(ctx.bus);
         unsubscribers.push(
             ctx.bus.handle('depgraph:imports', (data) => depImports(data as DepImportsInput)),
         );

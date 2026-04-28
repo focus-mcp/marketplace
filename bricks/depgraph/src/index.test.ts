@@ -250,18 +250,30 @@ describe('depFanin — fileImportsTarget extension matching branch', () => {
 });
 
 describe('depgraph — multi-language', () => {
-    it('handles PHP file imports (no crash)', async () => {
+    it('handles PHP file imports (no crash) and calls treesitter bus', async () => {
+        const bus = makeMockBus();
+        setBus(bus);
         const phpFile = join(testDir, 'service.php');
         await writeFile(phpFile, '<?php\nuse App\\Service\\UserService;\nclass Foo {}\n');
         const result = await depImports({ file: phpFile });
         expect(Array.isArray(result.imports)).toBe(true);
+        expect(bus.request).toHaveBeenCalledWith(
+            'treesitter:extract-imports',
+            expect.objectContaining({ path: phpFile }),
+        );
     });
 
-    it('counts Python imports via bus', async () => {
+    it('counts Python imports via bus and calls treesitter bus', async () => {
+        const bus = makeMockBus();
+        setBus(bus);
         const pyFile = join(testDir, 'module.py');
         await writeFile(pyFile, 'import os\nfrom pathlib import Path\n\ndef func(): pass\n');
         const result = await depFanout({ file: pyFile });
         expect(typeof result.fanout).toBe('number');
+        expect(bus.request).toHaveBeenCalledWith(
+            'treesitter:extract-imports',
+            expect.objectContaining({ path: pyFile }),
+        );
     });
 });
 

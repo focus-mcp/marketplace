@@ -15,42 +15,36 @@ export interface DepgraphBrickBus {
 
 // ─── Module-level bus injection ───────────────────────────────────────────────
 
+const DEFAULT_EXTS = ['.ts', '.tsx', '.js', '.jsx', '.php', '.py', '.go', '.rs', '.java'] as const;
+
 let _bus: DepgraphBrickBus | undefined;
-let _supportedExts: Set<string> | undefined;
+let _supportedExtsPromise: Promise<Set<string>> | undefined;
 
 export function setBus(bus: DepgraphBrickBus): void {
     _bus = bus;
+    _supportedExtsPromise = undefined;
 }
 
 export function clearBus(): void {
     _bus = undefined;
-    _supportedExts = undefined;
+    _supportedExtsPromise = undefined;
 }
 
-async function getSupportedExts(): Promise<Set<string>> {
-    if (_supportedExts) return _supportedExts;
-    const bus = _bus;
-    if (!bus) return new Set(['.ts', '.tsx', '.js', '.jsx']);
-    try {
-        const { exts } = await bus.request<Record<never, never>, { exts: string[] }>(
-            'treesitter:supported-exts',
-            {},
-        );
-        _supportedExts = new Set(exts);
-    } catch {
-        _supportedExts = new Set([
-            '.ts',
-            '.tsx',
-            '.js',
-            '.jsx',
-            '.php',
-            '.py',
-            '.go',
-            '.rs',
-            '.java',
-        ]);
-    }
-    return _supportedExts;
+function getSupportedExts(): Promise<Set<string>> {
+    if (_supportedExtsPromise) return _supportedExtsPromise;
+    _supportedExtsPromise = (async () => {
+        if (!_bus) return new Set(DEFAULT_EXTS);
+        try {
+            const { exts } = await _bus.request<object, { exts: string[] }>(
+                'treesitter:supported-exts',
+                {},
+            );
+            return new Set(exts);
+        } catch {
+            return new Set(DEFAULT_EXTS);
+        }
+    })();
+    return _supportedExtsPromise;
 }
 
 // ─── Bus response types (MUST match treesitter brick's shapes — bus contract) ─
