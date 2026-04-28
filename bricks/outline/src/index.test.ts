@@ -134,34 +134,11 @@ function handleExtractSymbols(payload: unknown): {
     return { symbols, imports, exports: [] };
 }
 
-function handleExtractImports(payload: unknown): {
-    imports: Array<{ from: string; names: string[] }>;
-} {
-    const { content } = payload as { path: string; content: string };
-    const imports: Array<{ from: string; names: string[] }> = [];
-    for (const line of content.split('\n')) {
-        const m = rMockImport.exec(line);
-        if (!m) continue;
-        const nm = rMockNamed.exec(line);
-        imports.push({
-            from: m[1] ?? '',
-            names: nm
-                ? (nm[1] ?? '')
-                      .split(',')
-                      .map((n) => n.trim().split(' as ')[0]?.trim() ?? '')
-                      .filter(Boolean)
-                : [],
-        });
-    }
-    return { imports };
-}
-
 function makeMockBus(): OutlineBrickBus {
     return {
         request: vi.fn(async (target: string, payload: unknown): Promise<unknown> => {
             if (target === 'treesitter:supported-exts') return handleSupportedExts();
             if (target === 'treesitter:extract-symbols') return handleExtractSymbols(payload);
-            if (target === 'treesitter:extract-imports') return handleExtractImports(payload);
             throw new Error(`Unexpected bus target: ${target}`);
         }) as OutlineBrickBus['request'],
     };
