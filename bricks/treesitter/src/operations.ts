@@ -267,6 +267,10 @@ function extractCallsFromLine(line: string, lineNum: number, callerFn: string): 
  * emitted as kind 'variable' by parsers; including 'variable' in FN_KINDS
  * captures them at the cost of also attributing calls inside non-function
  * variable initialisers. This is the minimal fix.
+ * Known limitation: callee extraction (extractCallsFromLine) uses raw regex
+ * on each line, so calls inside string literals or comments produce false
+ * edges. Full token-level accuracy would require querying call_expression
+ * AST nodes directly from tree-sitter.
  * Target: treesitter:extract-calls
  */
 export async function tsExtractCalls(input: TsExtractCallsInput): Promise<TsExtractCallsOutput> {
