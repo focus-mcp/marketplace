@@ -2,12 +2,14 @@
 // SPDX-License-Identifier: MIT
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
-import type { RefsInput } from './operations.ts';
+import type { RefsBrickBus, RefsInput } from './operations.ts';
 import {
+    clearBus,
     refsDeclaration,
     refsHierarchy,
     refsImplementations,
     refsReferences,
+    setBus,
 } from './operations.ts';
 
 interface BrickBus {
@@ -16,6 +18,10 @@ interface BrickBus {
         handler: (data: unknown) => Promise<unknown> | unknown,
     ): undefined | (() => void);
     handle(target: string, handler: (data: unknown) => Promise<unknown> | unknown): () => void;
+    request<TRequest = unknown, TResponse = unknown>(
+        target: string,
+        payload: TRequest,
+    ): Promise<TResponse>;
 }
 
 interface BrickContext {
@@ -45,6 +51,7 @@ const brick: Brick = {
     start(ctx) {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
+        setBus(ctx.bus as RefsBrickBus);
         unsubscribers.push(
             ctx.bus.handle('refs:references', (data) => refsReferences(data as RefsInput)),
         );
@@ -63,6 +70,7 @@ const brick: Brick = {
     stop() {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
+        clearBus();
     },
 };
 
