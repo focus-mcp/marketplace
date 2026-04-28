@@ -67,6 +67,11 @@
             "glob": "^10.4.5",
             "minimatch": "^9.0.5",
             "cookie": ">=0.7.0"
-        }
+        },
+        "neverBuiltDependencies": [
+            "tree-sitter-twig",
+            "@tree-sitter-grammars/tree-sitter-toml",
+            "@tree-sitter-grammars/tree-sitter-yaml"
+        ]
     }
 }
