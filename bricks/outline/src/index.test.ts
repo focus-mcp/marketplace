@@ -286,7 +286,9 @@ describe('outlineStructure', () => {
 });
 
 describe('outlineFile — multi-language', () => {
-    it('outlineFile for PHP class (no crash)', async () => {
+    it('outlineFile for PHP class (no crash) and calls treesitter bus', async () => {
+        const bus = makeMockBus();
+        setBus(bus);
         const phpFile = join(testDir, 'controller.php');
         await writeFile(
             phpFile,
@@ -295,9 +297,15 @@ describe('outlineFile — multi-language', () => {
         const result = await outlineFile({ path: phpFile });
         expect(result.lineCount).toBeGreaterThan(0);
         expect(Array.isArray(result.symbols)).toBe(true);
+        expect(bus.request).toHaveBeenCalledWith(
+            'treesitter:extract-symbols',
+            expect.objectContaining({ path: phpFile }),
+        );
     });
 
-    it('outlineFile for Python module (no crash)', async () => {
+    it('outlineFile for Python module (no crash) and calls treesitter bus', async () => {
+        const bus = makeMockBus();
+        setBus(bus);
         const pyFile = join(testDir, 'module.py');
         await writeFile(
             pyFile,
@@ -306,6 +314,23 @@ describe('outlineFile — multi-language', () => {
         const result = await outlineFile({ path: pyFile });
         expect(result.lineCount).toBeGreaterThan(0);
         expect(Array.isArray(result.symbols)).toBe(true);
+        expect(bus.request).toHaveBeenCalledWith(
+            'treesitter:extract-symbols',
+            expect.objectContaining({ path: pyFile }),
+        );
+    });
+
+    it('falls back to regex when bus request rejects', async () => {
+        const rejectingBus: OutlineBrickBus = {
+            request: vi.fn().mockRejectedValue(new Error('treesitter unavailable')),
+        };
+        setBus(rejectingBus);
+        const tsFile = join(testDir, 'sample.ts');
+        await writeFile(tsFile, 'export function greet(): void {}\nexport const VALUE = 1;\n');
+        const result = await outlineFile({ path: tsFile });
+        expect(result.lineCount).toBeGreaterThan(0);
+        expect(Array.isArray(result.symbols)).toBe(true);
+        expect(result.symbols.some((s) => s.name === 'greet')).toBe(true);
     });
 });
 

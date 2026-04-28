@@ -15,44 +15,48 @@ export interface OutlineBrickBus {
 
 // ─── Module-level bus injection ───────────────────────────────────────────────
 
+const DEFAULT_EXTS = [
+    '.ts',
+    '.tsx',
+    '.js',
+    '.jsx',
+    '.mts',
+    '.mjs',
+    '.php',
+    '.py',
+    '.go',
+    '.rs',
+    '.java',
+] as const;
+
 let _bus: OutlineBrickBus | undefined;
-let _supportedExts: Set<string> | undefined;
+let _supportedExtsPromise: Promise<Set<string>> | undefined;
 
 export function setBus(bus: OutlineBrickBus): void {
     _bus = bus;
+    _supportedExtsPromise = undefined;
 }
 
 export function clearBus(): void {
     _bus = undefined;
-    _supportedExts = undefined;
+    _supportedExtsPromise = undefined;
 }
 
-async function getSupportedExts(): Promise<Set<string>> {
-    if (_supportedExts) return _supportedExts;
-    const bus = _bus;
-    if (!bus) return new Set(['.ts', '.tsx', '.js', '.jsx', '.mts', '.mjs']);
-    try {
-        const { exts } = await bus.request<Record<never, never>, { exts: string[] }>(
-            'treesitter:supported-exts',
-            {},
-        );
-        _supportedExts = new Set(exts);
-    } catch {
-        _supportedExts = new Set([
-            '.ts',
-            '.tsx',
-            '.js',
-            '.jsx',
-            '.mts',
-            '.mjs',
-            '.php',
-            '.py',
-            '.go',
-            '.rs',
-            '.java',
-        ]);
-    }
-    return _supportedExts;
+function getSupportedExts(): Promise<Set<string>> {
+    if (_supportedExtsPromise) return _supportedExtsPromise;
+    _supportedExtsPromise = (async () => {
+        if (!_bus) return new Set(DEFAULT_EXTS);
+        try {
+            const { exts } = await _bus.request<object, { exts: string[] }>(
+                'treesitter:supported-exts',
+                {},
+            );
+            return new Set(exts);
+        } catch {
+            return new Set(DEFAULT_EXTS);
+        }
+    })();
+    return _supportedExtsPromise;
 }
 
 // ─── Bus response types (MUST match treesitter brick's shapes — bus contract) ─
@@ -224,11 +228,31 @@ function parseContentFallback(content: string): { symbols: SymbolEntry[]; import
     return { symbols, imports };
 }
 
+// ─── Shared symbol mapper ─────────────────────────────────────────────────────
+
+const VALID_KINDS = new Set<string>(['function', 'class', 'interface', 'type', 'variable']);
+
+function mapBusSymbols(raw: BusSymbolInfo[]): SymbolEntry[] {
+    return raw
+        .filter((s) => !s.parent && VALID_KINDS.has(s.kind))
+        .map((s) => ({
+            name: s.name,
+            kind: s.kind as SymbolEntry['kind'],
+            line: s.line,
+            signature: s.signature,
+            exported: s.exported,
+        }));
+}
+
 // ─── File collection ──────────────────────────────────────────────────────────
 
-async function collectCodeFiles(dir: string, max: number, results: string[]): Promise<void> {
+async function collectCodeFiles(
+    dir: string,
+    max: number,
+    results: string[],
+    exts: Set<string>,
+): Promise<void> {
     if (results.length >= max) return;
-    const exts = await getSupportedExts();
     const entries = await readdir(dir, { withFileTypes: true });
     for (const entry of entries) {
         if (results.length >= max) break;
@@ -236,7 +260,7 @@ async function collectCodeFiles(dir: string, max: number, results: string[]): Pr
         if (name.startsWith('.') || name === 'node_modules' || name === 'vendor') continue;
         const full = join(dir, name);
         if (entry.isDirectory()) {
-            await collectCodeFiles(full, max, results);
+            await collectCodeFiles(full, max, results, exts);
         } else if (exts.has(extname(name))) {
             results.push(full);
         }
@@ -268,19 +292,13 @@ export async function outlineFile(input: OutlineFileInput): Promise<OutlineFileO
                     { imports: Array<{ from: string; names: string[] }> }
                 >('treesitter:extract-imports', { path: abs, content }),
             ]);
-            const VALID_KINDS = new Set(['function', 'class', 'interface', 'type', 'variable']);
-            const symbols: SymbolEntry[] = symbolsResult.symbols
-                .filter((s) => !s.parent && VALID_KINDS.has(s.kind))
-                .map((s) => ({
-                    name: s.name,
-                    kind: s.kind as SymbolEntry['kind'],
-                    line: s.line,
-                    signature: s.signature,
-                    exported: s.exported,
-                }));
-            return { symbols, imports: importsResult.imports, lineCount };
+            return {
+                symbols: mapBusSymbols(symbolsResult.symbols),
+                imports: importsResult.imports,
+                lineCount,
+            };
         } catch {
-            // fallback to regex
+            // fallback to regex on bus error
         }
     }
     const { symbols, imports } = parseContentFallback(content);
@@ -293,7 +311,8 @@ export async function outlineRepo(input: OutlineRepoInput): Promise<OutlineRepoO
     const abs = resolve(input.dir);
     const maxFiles = input.maxFiles ?? 100;
     const filePaths: string[] = [];
-    await collectCodeFiles(abs, maxFiles, filePaths);
+    const exts = await getSupportedExts();
+    await collectCodeFiles(abs, maxFiles, filePaths, exts);
 
     const files: RepoFileEntry[] = [];
     let totalSymbols = 0;
@@ -323,22 +342,7 @@ export async function outlineRepo(input: OutlineRepoInput): Promise<OutlineRepoO
                             { imports: Array<{ from: string; names: string[] }> }
                         >('treesitter:extract-imports', { path: fp, content }),
                     ]);
-                    const VALID_KINDS = new Set([
-                        'function',
-                        'class',
-                        'interface',
-                        'type',
-                        'variable',
-                    ]);
-                    symbols = symbolsResult.symbols
-                        .filter((s) => !s.parent && VALID_KINDS.has(s.kind))
-                        .map((s) => ({
-                            name: s.name,
-                            kind: s.kind as SymbolEntry['kind'],
-                            line: s.line,
-                            signature: s.signature,
-                            exported: s.exported,
-                        }));
+                    symbols = mapBusSymbols(symbolsResult.symbols);
                     imports = importsResult.imports;
                 } catch {
                     const parsed = parseContentFallback(content);
