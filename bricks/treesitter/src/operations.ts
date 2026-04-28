@@ -85,6 +85,53 @@ export async function parseFile(
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
+// Internal bus service types  (treesitter:extract-* — consumed by code-intel bricks)
+// ──────────────────────────────────────────────────────────────────────────────
+
+export interface TsExtractSymbolsInput {
+    /** Absolute or relative path — used only as metadata in SymbolInfo.file */
+    readonly path: string;
+    /** Raw file content to parse */
+    readonly content: string;
+}
+
+export interface TsExtractSymbolsOutput {
+    readonly symbols: SymbolInfo[];
+    readonly imports: Array<{ from: string; names: string[] }>;
+    readonly exports: string[];
+}
+
+/**
+ * Parse a file and return structured symbol/import/export data.
+ * This is an internal bus service used by code-intel bricks.
+ * It does NOT index into the in-memory store — call tsIndex/tsReindex for that.
+ */
+export async function tsExtractSymbols(
+    input: TsExtractSymbolsInput,
+): Promise<TsExtractSymbolsOutput> {
+    const indexed = await parseFile(input.path, input.content, 0);
+    return {
+        symbols: indexed.symbols,
+        imports: indexed.imports,
+        exports: indexed.exports,
+    };
+}
+
+export interface TsSupportedExtsOutput {
+    /** All file extensions registered in the tree-sitter language registry. */
+    readonly exts: string[];
+}
+
+/**
+ * Return all file extensions supported by the tree-sitter registry.
+ * Consumed by code-intel bricks to dynamically filter which files to process.
+ * Target: treesitter:supported-exts
+ */
+export function tsSupportedExts(): TsSupportedExtsOutput {
+    return { exts: supportedExtensions() };
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
 // MCP tool inputs
 // ──────────────────────────────────────────────────────────────────────────────
 

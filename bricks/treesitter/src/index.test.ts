@@ -9,10 +9,12 @@ import {
     indexStore,
     parseFile,
     tsCleanup,
+    tsExtractSymbols,
     tsIndex,
     tsLangs,
     tsReindex,
     tsStatus,
+    tsSupportedExts,
 } from './operations.ts';
 
 let testDir: string;
@@ -298,8 +300,88 @@ describe('parseFile — multi-language', () => {
     });
 });
 
+describe('tsExtractSymbols', () => {
+    it('extracts TypeScript symbols without indexing', async () => {
+        const result = await tsExtractSymbols({
+            path: '/src/service.ts',
+            content: 'export function doWork(): void {}\nexport class MyService {}',
+        });
+        expect(result.symbols.some((s) => s.name === 'doWork' && s.kind === 'function')).toBe(true);
+        expect(result.symbols.some((s) => s.name === 'MyService' && s.kind === 'class')).toBe(true);
+        // Should NOT be in the index store (pure extraction, no side-effects)
+        expect(indexStore.has('/src/service.ts')).toBe(false);
+    });
+
+    it('extracts PHP symbols', async () => {
+        const result = await tsExtractSymbols({
+            path: '/src/UserController.php',
+            content: [
+                '<?php',
+                'namespace App\\Controller;',
+                'class UserController {',
+                '    public function index(): void {}',
+                '    public function show(int $id): void {}',
+                '}',
+            ].join('\n'),
+        });
+        expect(result.symbols.some((s) => s.name === 'UserController' && s.kind === 'class')).toBe(
+            true,
+        );
+        expect(result.symbols.some((s) => s.name === 'index' && s.kind === 'method')).toBe(true);
+    });
+
+    it('extracts Python symbols', async () => {
+        const result = await tsExtractSymbols({
+            path: '/src/service.py',
+            content: [
+                'class DataService:',
+                '    def process(self, data):',
+                '        pass',
+                '',
+                'def helper_fn():',
+                '    pass',
+            ].join('\n'),
+        });
+        expect(result.symbols.some((s) => s.name === 'DataService' && s.kind === 'class')).toBe(
+            true,
+        );
+        expect(result.symbols.some((s) => s.name === 'helper_fn')).toBe(true);
+    });
+
+    it('returns empty arrays for unsupported extension', async () => {
+        const result = await tsExtractSymbols({
+            path: '/data/config.bin',
+            content: 'binary content',
+        });
+        expect(result.symbols).toHaveLength(0);
+        expect(result.imports).toHaveLength(0);
+        expect(result.exports).toHaveLength(0);
+    });
+});
+
+describe('tsSupportedExts', () => {
+    it('returns a non-empty array of extensions starting with a dot', () => {
+        const { exts } = tsSupportedExts();
+        expect(exts.length).toBeGreaterThan(0);
+        for (const ext of exts) {
+            expect(ext.startsWith('.')).toBe(true);
+        }
+    });
+
+    it('includes expected languages (.ts, .php, .py, .go, .rs, .java)', () => {
+        const { exts } = tsSupportedExts();
+        const extSet = new Set(exts);
+        expect(extSet.has('.ts')).toBe(true);
+        expect(extSet.has('.php')).toBe(true);
+        expect(extSet.has('.py')).toBe(true);
+        expect(extSet.has('.go')).toBe(true);
+        expect(extSet.has('.rs')).toBe(true);
+        expect(extSet.has('.java')).toBe(true);
+    });
+});
+
 describe('treesitter brick', () => {
-    it('registers 5 handlers on start and unregisters on stop', async () => {
+    it('registers 7 handlers on start and unregisters on stop', async () => {
         const { default: brick } = await import('./index.ts');
         const unsubscribers: Array<() => void> = [];
         const bus = {
@@ -312,12 +394,14 @@ describe('treesitter brick', () => {
         };
 
         await brick.start({ bus });
-        expect(bus.handle).toHaveBeenCalledTimes(5);
+        expect(bus.handle).toHaveBeenCalledTimes(7);
         expect(bus.handle).toHaveBeenCalledWith('treesitter:index', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:reindex', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:status', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:cleanup', expect.any(Function));
         expect(bus.handle).toHaveBeenCalledWith('treesitter:langs', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('treesitter:extract-symbols', expect.any(Function));
+        expect(bus.handle).toHaveBeenCalledWith('treesitter:supported-exts', expect.any(Function));
 
         await brick.stop();
         for (const unsub of unsubscribers) {

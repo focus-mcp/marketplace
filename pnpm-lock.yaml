@@ -667,6 +667,9 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
     devDependencies:
+      '@focus-mcp/brick-treesitter':
+        specifier: workspace:*
+        version: link:../treesitter
       '@focus-mcp/marketplace-testing':
         specifier: workspace:*
         version: link:../../packages/marketplace-testing

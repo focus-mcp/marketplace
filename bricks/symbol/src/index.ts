@@ -3,7 +3,7 @@
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
 import type { SymBodyInput, SymBulkInput, SymFindInput, SymGetInput } from './operations.ts';
-import { symBody, symBulk, symFind, symGet } from './operations.ts';
+import { clearBus, setBus, symBody, symBulk, symFind, symGet } from './operations.ts';
 
 interface BrickBus {
     on(
@@ -11,6 +11,10 @@ interface BrickBus {
         handler: (data: unknown) => Promise<unknown> | unknown,
     ): undefined | (() => void);
     handle(target: string, handler: (data: unknown) => Promise<unknown> | unknown): () => void;
+    request<TRequest = unknown, TResponse = unknown>(
+        target: string,
+        payload: TRequest,
+    ): Promise<TResponse>;
 }
 
 interface BrickContext {
@@ -40,6 +44,8 @@ const brick: Brick = {
     start(ctx) {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
+        // Inject bus into operations module so all tool handlers can call treesitter
+        setBus(ctx.bus);
         unsubscribers.push(ctx.bus.handle('symbol:find', (data) => symFind(data as SymFindInput)));
         unsubscribers.push(ctx.bus.handle('symbol:get', (data) => symGet(data as SymGetInput)));
         unsubscribers.push(ctx.bus.handle('symbol:bulk', (data) => symBulk(data as SymBulkInput)));
@@ -48,6 +54,7 @@ const brick: Brick = {
     stop() {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
+        clearBus();
     },
 };
 
