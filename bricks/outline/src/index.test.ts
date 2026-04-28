@@ -105,17 +105,33 @@ function handleSupportedExts(): { exts: string[] } {
 
 function handleExtractSymbols(payload: unknown): {
     symbols: MockSymbol[];
-    imports: unknown[];
-    exports: unknown[];
+    imports: Array<{ from: string; names: string[] }>;
+    exports: string[];
 } {
     const { content } = payload as { path: string; content: string };
     const symbols: MockSymbol[] = [];
+    const imports: Array<{ from: string; names: string[] }> = [];
     const lines = content.split('\n');
     for (let i = 0; i < lines.length; i++) {
-        const sym = parseMockSymbolLine(lines[i] ?? '', i + 1);
+        const line = lines[i] ?? '';
+        const sym = parseMockSymbolLine(line, i + 1);
         if (sym) symbols.push(sym);
+        // Include imports in response so outlineFile can use the single-call result
+        const m = rMockImport.exec(line);
+        if (m) {
+            const nm = rMockNamed.exec(line);
+            imports.push({
+                from: m[1] ?? '',
+                names: nm
+                    ? (nm[1] ?? '')
+                          .split(',')
+                          .map((n) => n.trim().split(' as ')[0]?.trim() ?? '')
+                          .filter(Boolean)
+                    : [],
+            });
+        }
     }
-    return { symbols, imports: [], exports: [] };
+    return { symbols, imports, exports: [] };
 }
 
 function handleExtractImports(payload: unknown): {

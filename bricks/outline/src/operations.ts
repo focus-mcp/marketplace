@@ -282,19 +282,13 @@ export async function outlineFile(input: OutlineFileInput): Promise<OutlineFileO
     const bus = _bus;
     if (bus) {
         try {
-            const [symbolsResult, importsResult] = await Promise.all([
-                bus.request<{ path: string; content: string }, ExtractSymbolsOutput>(
-                    'treesitter:extract-symbols',
-                    { path: abs, content },
-                ),
-                bus.request<
-                    { path: string; content: string },
-                    { imports: Array<{ from: string; names: string[] }> }
-                >('treesitter:extract-imports', { path: abs, content }),
-            ]);
+            const symbolsResult = await bus.request<
+                { path: string; content: string },
+                ExtractSymbolsOutput
+            >('treesitter:extract-symbols', { path: abs, content });
             return {
                 symbols: mapBusSymbols(symbolsResult.symbols),
-                imports: importsResult.imports,
+                imports: symbolsResult.imports,
                 lineCount,
             };
         } catch {
@@ -332,18 +326,12 @@ export async function outlineRepo(input: OutlineRepoInput): Promise<OutlineRepoO
             let imports: ImportEntry[] = [];
             if (bus) {
                 try {
-                    const [symbolsResult, importsResult] = await Promise.all([
-                        bus.request<{ path: string; content: string }, ExtractSymbolsOutput>(
-                            'treesitter:extract-symbols',
-                            { path: fp, content },
-                        ),
-                        bus.request<
-                            { path: string; content: string },
-                            { imports: Array<{ from: string; names: string[] }> }
-                        >('treesitter:extract-imports', { path: fp, content }),
-                    ]);
+                    const symbolsResult = await bus.request<
+                        { path: string; content: string },
+                        ExtractSymbolsOutput
+                    >('treesitter:extract-symbols', { path: fp, content });
                     symbols = mapBusSymbols(symbolsResult.symbols);
-                    imports = importsResult.imports;
+                    imports = symbolsResult.imports;
                 } catch {
                     const parsed = parseContentFallback(content);
                     symbols = parsed.symbols;
