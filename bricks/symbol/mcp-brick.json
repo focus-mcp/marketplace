@@ -1,8 +1,8 @@
 {
     "name": "symbol",
     "prefix": "sym",
-    "description": "Symbol lookup in source files — find, get, bulk, body.",
-    "dependencies": [],
+    "description": "Symbol lookup in source files — find, get, bulk, body. Multi-language via treesitter (PHP, Python, Go, Rust, Java, TS/JS, etc.).",
+    "dependencies": ["treesitter"],
     "tools": [
         {
             "name": "find",

@@ -2,8 +2,15 @@
 // SPDX-License-Identifier: MIT
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
-import type { TsIndexInput, TsReindexInput } from './operations.ts';
-import { tsCleanup, tsIndex, tsLangs, tsReindex, tsStatus } from './operations.ts';
+import type { TsExtractSymbolsInput, TsIndexInput, TsReindexInput } from './operations.ts';
+import {
+    tsCleanup,
+    tsExtractSymbols,
+    tsIndex,
+    tsLangs,
+    tsReindex,
+    tsStatus,
+} from './operations.ts';
 
 interface BrickBus {
     on(
@@ -49,6 +56,12 @@ const brick: Brick = {
         unsubscribers.push(ctx.bus.handle('treesitter:status', () => tsStatus()));
         unsubscribers.push(ctx.bus.handle('treesitter:cleanup', () => tsCleanup()));
         unsubscribers.push(ctx.bus.handle('treesitter:langs', () => tsLangs()));
+        // Internal services for code-intel bricks
+        unsubscribers.push(
+            ctx.bus.handle('treesitter:extract-symbols', (data) =>
+                tsExtractSymbols(data as TsExtractSymbolsInput),
+            ),
+        );
     },
     stop() {
         for (const unsub of unsubscribers) unsub();

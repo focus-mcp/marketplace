@@ -47,6 +47,7 @@
         "directory": "bricks/symbol"
     },
     "devDependencies": {
+        "@focus-mcp/brick-treesitter": "workspace:*",
         "@focus-mcp/marketplace-testing": "workspace:*"
     },
     "peerDependencies": {
