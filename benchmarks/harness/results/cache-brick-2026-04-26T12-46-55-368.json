@@ -1,0 +1,31 @@
+{
+  "brick": "cache",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:44:10.469Z",
+  "duration_ms": 164899,
+  "turns": 16,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 80,
+    "cache_creation_input_tokens": 58225,
+    "cache_read_input_tokens": 529632,
+    "output_tokens": 6950,
+    "total": 594887
+  },
+  "session_id": "cabb6279-4a2f-4b6e-b0d0-985b0e715a21",
+  "result_block": "## Result\n- **Brick**: cache\n- **Mode**: brick\n- **Mini-task**: Find all `tsconfig.json` files at depth 2 under `test-repo/packages/<package-name>/tsconfig.json` (excluding depth-1 and non-package-root variants) to pass to the cache brick's `warmup` tool\n- **Answer**: UNABLE TO DETERMINE — the cache brick could not be loaded (`Cannot find module '@focus-mcp/brick-cache'`), so neither the `get` nor `warmup` tools were available to probe or pre-warm files. No other available `mcp__focus__*` tool provides filesystem discovery capability.\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~6,000\n- **Notes**: The focus MCP server itself is reachable (meta-tools respond correctly), so the `MODE UNAVAILABLE` sentinel does not apply. However, the cache brick's npm module (`@focus-mcp/brick-cache`) is missing from the local node_modules, preventing `focus_load` from activating the brick and exposing its tools (`get`, `set`, `invalidate`, `warmup`, `stats`). `focus_update` returned \"not yet implemented\". `focus_search` only queries the remote marketplace catalog, not the local filesystem. With no filesystem-capable `mcp__focus__*` tool available and native tools (Bash, Grep, Glob) forbidden, there is no compliant path to enumerate the target files. The benchmark harness should ensure `@focus-mcp/brick-cache` is properly installed before running brick-mode tasks against the cache brick.",
+  "workdir": "/tmp/focus-bench/cache-brick-2026-04-26T12-44-10-465",
+  "exit_reason": "ok"
+}

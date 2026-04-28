@@ -1,0 +1,26 @@
+{
+  "brick": "knowledge",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:33:23.906Z",
+  "duration_ms": 86682,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 34903,
+    "cache_read_input_tokens": 745712,
+    "output_tokens": 5466,
+    "total": 786129
+  },
+  "session_id": "1b1064e0-ea6b-41f0-b4e8-7e3df976f0b6",
+  "result_block": "## Result\n\n- **Brick**: knowledge\n- **Mode**: native\n- **Mini-task**: Find all 5xx exception files in `test-repo/packages/common/exceptions/`\n- **Answer**:\n  ```\n  bad-gateway.exception.ts\n  gateway-timeout.exception.ts\n  http-version-not-supported.exception.ts\n  internal-server-error.exception.ts\n  not-implemented.exception.ts\n  service-unavailable.exception.ts\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The knowledge brick's core strength (content search + ranked retrieval) maps cleanly to a Grep-based file content search in native mode. The HttpStatus enum (http-status.enum.ts) provides authoritative mapping of status names to integers, allowing cross-referencing exception files by their `HttpStatus.*` references. All 6 files use named enum constants (not raw numbers), but the numeric values confirm they are all 5xx codes (500–505).",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/`, the directory `test-repo/packages/common/exceptions/` contains individual TypeScript files for each HTTP exception class. Each exception file (named `*.exception.ts`) references a specific HTTP status code via `HttpStatus.<CONSTANT>`. The HTTP status code values are defined in `test-repo/packages/common/enums/http-status.enum.ts`.\n\n**Task**: Identify all `.exception.ts` files in `test-repo/packages/common/exceptions/` whose HTTP status code falls in the 5xx range (500–599 inclusive). Return the base file names only (no directory paths), sorted alphabetically, one per line.\n\nThe expected answer format is a list of file names (e.g., `bad-gateway.exception.ts`), one per line, sorted alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/knowledge-native-2026-04-26T13-33-23-906",
+  "exit_reason": "ok"
+}

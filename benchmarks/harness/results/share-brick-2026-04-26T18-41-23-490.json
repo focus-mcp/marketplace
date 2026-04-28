@@ -1,0 +1,32 @@
+{
+  "brick": "share",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:37:53.998Z",
+  "duration_ms": 209492,
+  "turns": 23,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 106,
+    "cache_creation_input_tokens": 75677,
+    "cache_read_input_tokens": 718048,
+    "output_tokens": 12245,
+    "total": 806076
+  },
+  "session_id": "7742008a-d598-4f04-bcf6-1f433eaa4dcf",
+  "result_block": "## Result\n- **Brick**: share\n- **Mode**: brick\n- **Mini-task**: Multi-agent audit of NestJS monorepo — find `@Injectable` files in two packages, register them via `shr__files`/`shr__results`, set combined count via `shr__context`, and broadcast via `shr__broadcast`\n- **Answer**: **BLOCKED — brick failed to load**\n\n  The share brick is listed as installed (`^0.0.0`) but the underlying npm module `@focus-mcp/brick-share` is missing from node_modules, so `focus_load \"share\"` fails with:\n  ```\n  Cannot find module '@focus-mcp/brick-share'\n  Require stack: - .../.focus/bricks/noop.js\n  ```\n  Without the brick loaded, the `shr__files`, `shr__results`, `shr__context`, and `shr__broadcast` tools are never exposed. Attempts to fix via `focus_reload`, `focus_remove`, and `focus_update` all failed (`focus_update` is not implemented; `focus_remove` reports \"Lock entry not found\"). The marketplace lists version `1.1.0` but `focus_update` is unimplemented and reinstall is blocked.\n\n  Because native filesystem tools (`Bash`, `Grep`, `Glob`) are forbidden and `Read` is restricted to manifest inspection, the `@Injectable` file scan could not be performed either.\n\n  - **agent-common files**: *(not determined — brick blocked)*\n  - **agent-core files**: *(not determined — brick blocked)*\n  - **total-injectable-files context value**: *(not stored — brick blocked)*\n\n- **Turns used**: 14\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_remove`, `mcp__focus__focus_update`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~6,000\n- **Notes**: The benchmark environment has a broken share brick installation — `@focus-mcp/brick-share` npm package is absent from node_modules. The `.focus/bricks/noop.js` placeholder requires it but cannot resolve it. `focus_update` returns \"not yet implemented\", `focus_remove` returns \"Lock entry not found\" (no lock entry despite `focus_install` reporting it already installed). This is a setup-level failure; the focus MCP server itself is functional but the specific brick's module is missing. To unblock: run `npm install @focus-mcp/brick-share` (or equivalent) in the benchmark working directory.",
+  "workdir": "/tmp/focus-bench/share-brick-2026-04-26T18-37-53-995",
+  "exit_reason": "ok"
+}

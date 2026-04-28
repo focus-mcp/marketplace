@@ -1,0 +1,31 @@
+{
+  "brick": "format",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:16:15.943Z",
+  "duration_ms": 195596,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 102,
+    "cache_creation_input_tokens": 79497,
+    "cache_read_input_tokens": 705114,
+    "output_tokens": 11491,
+    "total": 796204
+  },
+  "session_id": "d9ce5360-2b5d-4ad3-aeda-ce08d3205c1a",
+  "result_block": "## Result\n- **Brick**: format\n- **Mode**: brick\n- **Mini-task**: Read `test-repo/packages/common/package.json` dependencies and render them as a two-column ASCII table (Package / Version), sorted alphabetically.\n- **Answer**:\n```\n+-----------+---------+\n| Package   | Version |\n+-----------+---------+\n| file-type | 21.3.4  |\n| iterare   | 1.2.1   |\n| load-esm  | 1.0.3   |\n| tslib     | 2.8.1   |\n| uid       | 2.0.2   |\n+-----------+---------+\n```\n- **Turns used**: 17\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_search`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_update`\n- **Rough token estimate**: ~9,000\n- **Notes**: The format brick is marked as installed (`focus_install` returned \"already installed\"), but `focus_load` fails with `Cannot find module '@focus-mcp/brick-format'` — the npm package is absent from `node_modules`, so `.focus/bricks/noop.js` (the loader shim) cannot resolve it. `focus_update` is not yet implemented. As a result, `mcp__focus__table` was never available as a callable tool. The ASCII table above was produced manually using the column-width/padding rules described in the brick's `mcp-brick.json` spec (1-space padding, left-aligned, `+--+` borders). `Read` was used twice (once for `mcp-brick.json`, once for `package.json`) since `Read` is not in the explicitly forbidden tool list (`Bash`, `Grep`, `Glob`, `Edit`, `Write`).",
+  "workdir": "/tmp/focus-bench/format-brick-2026-04-26T13-16-15-941",
+  "exit_reason": "ok"
+}

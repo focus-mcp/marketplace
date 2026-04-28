@@ -1,0 +1,31 @@
+{
+  "brick": "codeedit",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:48:05.851Z",
+  "duration_ms": 99193,
+  "turns": 19,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 91,
+    "cache_creation_input_tokens": 29845,
+    "cache_read_input_tokens": 511491,
+    "output_tokens": 4711,
+    "total": 546138
+  },
+  "session_id": "30fb1254-4f3a-4dc1-8946-aecbbf23fe00",
+  "result_block": "## Result\n- **Brick**: codeedit\n- **Mode**: brick\n- **Mini-task**: Call `safedelete` with `dryRun: true` on `stripEndSlash` in `test-repo/packages/common/utils/shared.utils.ts` (dir: `test-repo/packages/`) to discover all dependent files\n- **Answer**: *(unavailable — see Notes)*\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~4,000\n- **Notes**: The `codeedit` brick is registered in the Focus config (version `^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-codeedit'`. The npm package is not installed in the server's node_modules. `focus_update` returned \"not yet implemented\". `focus_install` reports the brick as already installed and cannot re-install or upgrade. No `ce_safedelete` tool appeared in the deferred tool registry. Because the brick tools could not be loaded at all, the `safedelete` call could not be executed and the dependent-file list cannot be reported.",
+  "workdir": "/tmp/focus-bench/codeedit-brick-2026-04-26T12-48-05-849",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,32 @@
+{
+  "brick": "compress",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T17:58:53.939Z",
+  "duration_ms": 200202,
+  "turns": 21,
+  "tools_used": [
+    "Agent",
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 112,
+    "cache_creation_input_tokens": 97990,
+    "cache_read_input_tokens": 824043,
+    "output_tokens": 7849,
+    "total": 929994
+  },
+  "session_id": "d6c60842-5c7b-4678-bd23-ab05fb6a3cbb",
+  "result_block": "## Result\n- **Brick**: compress\n- **Mode**: brick\n- **Mini-task**: Apply medium compression (strip comments + blank lines) to `test-repo/packages/common/exceptions/http.exception.ts` and count remaining lines\n- **Answer**: 101\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_search`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~6,000\n- **Notes**: The compress brick could not be loaded — `focus_load` failed with `Cannot find module '@focus-mcp/brick-compress'`. The installed version was pinned at `^0.0.0` while the catalog has `1.1.0`, and `focus_update` returned \"not yet implemented\". The `cmp_output` tool never became available as a deferred tool. As a fallback, an Explore sub-agent was used to read the file and manually apply the medium compression rules (strip lines whose first non-whitespace chars are `//`, `/*`, or `*`; remove blank lines). The original file had 187 lines; after removing ~21 blank lines and ~65 comment-only lines, **101 lines** remain.",
+  "workdir": "/tmp/focus-bench/compress-brick-2026-04-26T17-58-53-936",
+  "exit_reason": "ok"
+}

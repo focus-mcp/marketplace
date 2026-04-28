@@ -1,0 +1,25 @@
+{
+  "brick": "overview",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:45:50.095Z",
+  "duration_ms": 95414,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 40,
+    "cache_creation_input_tokens": 39289,
+    "cache_read_input_tokens": 624729,
+    "output_tokens": 4799,
+    "total": 668857
+  },
+  "session_id": "42a3b8d2-08a2-4153-994b-4e9f636a2134",
+  "result_block": "## Result\n\n- **Brick**: overview\n- **Mode**: native\n- **Mini-task**: Categorize root package.json dependencies (production list, test runner, linter)\n- **Answer**:\n  ```\n  Production dependencies (sorted):\n  @nuxt/opencollective\n  ansis\n  class-transformer\n  class-validator\n  cors\n  express\n  fast-json-stringify\n  fast-safe-stringify\n  file-type\n  iterare\n  load-esm\n  object-hash\n  path-to-regexp\n  reflect-metadata\n  rxjs\n  socket.io\n  tslib\n  uid\n  uuid\n\n  Test runner: mocha\n  Linter: eslint\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~4 500\n- **Notes**: The package.json has 19 production dependencies and no bundler (build uses `tsc` directly). The lock file (`package-lock.json`) confirms npm as the package manager, though the `packageManager` field is absent from the manifest. No ambiguity in test-runner or linter detection.",
+  "mini_task_spec": "Parse the root `test-repo/package.json` and categorize its dependencies. Report exactly three things:\n\n1. **Production dependencies** — list every key in the top-level `\"dependencies\"` object, sorted alphabetically, one per line.  \n2. **Test runner** — identify the test-runner package present in `\"devDependencies\"` (choose from: mocha, jest, jasmine, vitest, ava, tape).  \n3. **Linter** — identify the linter package present in `\"devDependencies\"` (choose from: eslint, tslint, jshint, biome, oxlint).\n\nExpected answer format:  \n```\nProduction dependencies (sorted):\n<name1>\n<name2>\n...\n\nTest runner: <name>\nLinter: <name>\n```\n\nNo additional text. Use only `test-repo/package.json` as the source.\n\n---",
+  "workdir": "/tmp/focus-bench/overview-native-2026-04-26T13-45-50-094",
+  "exit_reason": "ok"
+}

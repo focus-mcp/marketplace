@@ -1,5 +1,31 @@
 # @focus-mcp/brick-treesitter
 
+## 1.3.0
+
+### Minor Changes
+
+- 17dde5e: feat(code-intel/multilang): pilot multi-language support via EventBus
+
+  Add treesitter:extract-symbols and treesitter:supported-exts internal bus services
+  to the treesitter brick. Refactor the symbol brick to consume them via bus.request,
+  replacing hardcoded TS/JS regex with tree-sitter parsing for ~50 languages.
+
+  - treesitter: treesitter:extract-symbols service (path + content → symbols/imports/exports)
+  - treesitter: treesitter:supported-exts service (returns dynamic extension list)
+  - symbol: bus injection pattern (setBus/clearBus), per-file error isolation
+  - symbol: dependencies: ["treesitter"] in mcp-brick.json
+  - Tests: cross-brick integration tests for TS, PHP, Python
+
+- f581e41: Add 4 new internal bus services for code-intel bricks:
+  - treesitter:extract-imports — import statement extraction
+  - treesitter:extract-refs — identifier reference finding
+  - treesitter:extract-calls — caller/callee extraction
+  - treesitter:extract-outline — hierarchical symbol outline
+
+### Patch Changes
+
+- c3857eb: Skip native build of tree-sitter-twig, @tree-sitter-grammars/tree-sitter-toml, and @tree-sitter-grammars/tree-sitter-yaml to fix install failures on platforms without C++ build tools (ARM, Windows without Visual Studio, minimal Docker images). The prebuilt .wasm shipped in each tarball is used directly via pnpm.neverBuiltDependencies at workspace root.
+
 ## 1.2.0
 
 ### Minor Changes

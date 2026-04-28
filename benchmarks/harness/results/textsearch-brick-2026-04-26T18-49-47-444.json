@@ -1,0 +1,32 @@
+{
+  "brick": "textsearch",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:47:27.741Z",
+  "duration_ms": 139703,
+  "turns": 25,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 125,
+    "cache_creation_input_tokens": 75659,
+    "cache_read_input_tokens": 862591,
+    "output_tokens": 8247,
+    "total": 946622
+  },
+  "session_id": "0f8b8f15-361f-4c2b-9a6a-ba8d6064fbfd",
+  "result_block": "## Result\n- **Brick**: textsearch\n- **Mode**: brick\n- **Mini-task**: Regex search `export class \\w+ implements` in `test-repo/packages/core/**/*.ts` (excluding `*.spec.ts`), extract and sort unique class names\n- **Answer**: *(not obtained — brick tools could not be activated)*\n- **Turns used**: 14\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_catalog_add` (schema fetched only)\n- **Rough token estimate**: ~9,000\n- **Notes**: The focus MCP server is reachable and all management tools respond. However, `focus_load textsearch` fails with `Cannot find module '@focus-mcp/brick-textsearch'` — the npm package is registered in the focus config (version `^0.0.0`) but was never installed into `node_modules`. `focus_update` is not yet implemented; `focus_remove` fails with \"Lock entry not found\"; the marketplace lists version `1.1.0` but there is no path to install it without `npm` access. The brick-specific tools (`txt_regex`, `txt_search`, `txt_replace`, `txt_grouped`) never appeared in the deferred tool registry and could not be called. Task could not be completed using only `mcp__focus__*` tools.",
+  "workdir": "/tmp/focus-bench/textsearch-brick-2026-04-26T18-47-27-738",
+  "exit_reason": "ok"
+}

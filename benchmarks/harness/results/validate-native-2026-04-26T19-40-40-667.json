@@ -1,0 +1,26 @@
+{
+  "brick": "validate",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:38:04.387Z",
+  "duration_ms": 156280,
+  "turns": 25,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 63,
+    "cache_creation_input_tokens": 87791,
+    "cache_read_input_tokens": 1380221,
+    "output_tokens": 10399,
+    "total": 1478474
+  },
+  "session_id": "23e22ebe-8c49-49b8-8ab4-de51610408c4",
+  "result_block": "## Result\n- **Brick**: validate\n- **Mode**: native\n- **Mini-task**: Lint `packages/common/services/console.service.ts` — count console.log, TODO/FIXME, debugger, and unused imports\n- **Answer**:\n  ```\n  console.log calls: 2\n  TODO/FIXME markers: 0\n  debugger statements: 0\n  unused imports: none\n  ```\n  *(The 2 executable `console.log` calls are on lines 347 and 373; line 47 is inside a JSDoc comment and excluded. All 11 named imports — `inspect`, `InspectOptions`, `Injectable`, `Optional`, `clc`, `yellow`, `isColorAllowed`, `isFunction`, `isPlainObject`, `isString`, `isUndefined`, `LoggerService`, `LogLevel`, `isLogLevelEnabled` — are referenced in the file body.)*\n- **Turns used**: 17\n- **Tools used**: Read, Bash, Grep, Glob\n- **Rough token estimate**: ~9,000\n- **Notes**: No debugger statements or TODO/FIXME markers exist anywhere in the `packages/` tree. The only real `console.log` usages in executable code in this file are inside conditional branches that respect a `forceConsole` flag, which is why they exist intentionally rather than as accidental debug leftovers.",
+  "mini_task_spec": "Using the **validate** brick's `lint` tool, lint the file `test-repo/packages/common/services/console.service.ts`. Report exactly:\n1. The number of `console.log` calls that appear in **executable code** (i.e., not inside comments or JSDoc blocks)\n2. The number of TODO/FIXME markers in the file\n3. The number of `debugger` statements in the file\n4. Whether any imports are unused (list them, or state \"none\")\n\nExpress the answer as four values on separate lines, in the format:\n```\nconsole.log calls: <N>\nTODO/FIXME markers: <N>\ndebugger statements: <N>\nunused imports: <list or \"none\">\n```\n\n---",
+  "workdir": "/tmp/focus-bench/validate-native-2026-04-26T19-38-04-387",
+  "exit_reason": "ok"
+}

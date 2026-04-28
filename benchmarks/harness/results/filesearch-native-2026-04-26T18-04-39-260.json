@@ -1,0 +1,27 @@
+{
+  "brick": "filesearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:03:37.074Z",
+  "duration_ms": 62186,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 30,
+    "cache_creation_input_tokens": 16996,
+    "cache_read_input_tokens": 364949,
+    "output_tokens": 3128,
+    "total": 385103
+  },
+  "session_id": "0f6c4ebc-4209-4f49-9346-d035fc1372ef",
+  "result_block": "## Result\n- **Brick**: filesearch\n- **Mode**: native\n- **Mini-task**: Find all *.ts files in packages/common that match the regex `SetMetadata`\n- **Answer**:\n  ```\n  packages/common/decorators/core/set-metadata.decorator.ts\n  packages/common/serializer/decorators/serialize-options.decorator.ts\n  packages/common/test/decorators/set-metadata.decorator.spec.ts\n  ```\n- **Turns used**: 4\n- **Tools used**: Read, Bash, Glob, Grep\n- **Rough token estimate**: ~3,000\n- **Notes**: Grep returned exactly 3 matching files; result is deterministic and fully checkable. Glob was used for codebase orientation only; Grep is the direct native equivalent of the brick's `search` tool.",
+  "mini_task_spec": "Using the `filesearch` brick's `search` tool, search all TypeScript files (`*.ts`) under the directory `test-repo/packages/common` for the regex pattern `SetMetadata`. List every matching file path, one per line, sorted alphabetically. Paths should be relative to `test-repo/` (i.e. start with `packages/common/…`). Do not include line content — only file paths.",
+  "workdir": "/tmp/focus-bench/filesearch-native-2026-04-26T18-03-37-073",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "filesearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:08:12.675Z",
+  "duration_ms": 46176,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 15745,
+    "cache_read_input_tokens": 436787,
+    "output_tokens": 3244,
+    "total": 455811
+  },
+  "session_id": "7945419f-cf11-484e-907d-8d1757752009",
+  "result_block": "## Result\n- **Brick**: filesearch\n- **Mode**: native\n- **Mini-task**: Find all `.ts` files in `test-repo/packages` containing `@deprecated`\n- **Answer**:\n  ```\n  packages/common/pipes/file/max-file-size.validator.ts\n  packages/core/metadata-scanner.ts\n  packages/microservices/external/kafka.interface.ts\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~1,800\n- **Notes**: Results are unambiguous — exactly 3 files match with no edge cases. The glob filter `*.ts` recursively matches all TypeScript files in subdirectories via ripgrep. The brick's `search` tool maps directly to this use case: `path=test-repo/packages`, `pattern=@deprecated`, `glob=*.ts`.",
+  "mini_task_spec": "Using the `filesearch` brick (`mcp__fsrch__search`), search for all TypeScript files (`.ts`) inside the `test-repo/packages` directory that contain the string `@deprecated` (as part of a JSDoc comment or annotation). Use the regex pattern `@deprecated` and a glob filter of `*.ts`, searching recursively in `test-repo/packages`.\n\nReturn the list of matching file paths relative to `test-repo/`, one per line, sorted alphabetically. Expected answer format example:\n```\npackages/common/pipes/file/max-file-size.validator.ts\npackages/core/metadata-scanner.ts\npackages/microservices/external/kafka.interface.ts\n```",
+  "workdir": "/tmp/focus-bench/filesearch-native-2026-04-26T18-08-12-675",
+  "exit_reason": "ok"
+}

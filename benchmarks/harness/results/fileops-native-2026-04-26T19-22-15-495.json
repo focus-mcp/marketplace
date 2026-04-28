@@ -1,0 +1,26 @@
+{
+  "brick": "fileops",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:20:58.448Z",
+  "duration_ms": 77047,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 36,
+    "cache_creation_input_tokens": 19447,
+    "cache_read_input_tokens": 493842,
+    "output_tokens": 3584,
+    "total": 516909
+  },
+  "session_id": "34bdcadc-d327-4313-bd6d-cc92bdcf30f2",
+  "result_block": "## Result\n- **Brick**: fileops\n- **Mode**: native\n- **Mini-task**: List all `.exception.ts` files directly under `packages/common/exceptions/` (sorted alphabetically, relative to `test-repo/`)\n- **Answer**:\n```\npackages/common/exceptions/bad-gateway.exception.ts\npackages/common/exceptions/bad-request.exception.ts\npackages/common/exceptions/base-intrinsic.exception.ts\npackages/common/exceptions/conflict.exception.ts\npackages/common/exceptions/forbidden.exception.ts\npackages/common/exceptions/gateway-timeout.exception.ts\npackages/common/exceptions/gone.exception.ts\npackages/common/exceptions/http.exception.ts\npackages/common/exceptions/http-version-not-supported.exception.ts\npackages/common/exceptions/im-a-teapot.exception.ts\npackages/common/exceptions/internal-server-error.exception.ts\npackages/common/exceptions/method-not-allowed.exception.ts\npackages/common/exceptions/misdirected.exception.ts\npackages/common/exceptions/not-acceptable.exception.ts\npackages/common/exceptions/not-found.exception.ts\npackages/common/exceptions/not-implemented.exception.ts\npackages/common/exceptions/payload-too-large.exception.ts\npackages/common/exceptions/precondition-failed.exception.ts\npackages/common/exceptions/request-timeout.exception.ts\npackages/common/exceptions/service-unavailable.exception.ts\npackages/common/exceptions/too-many-requests.exception.ts\npackages/common/exceptions/unauthorized.exception.ts\npackages/common/exceptions/unprocessable-entity.exception.ts\npackages/common/exceptions/unsupported-media-type.exception.ts\n```\n- **Turns used**: 5\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~2,500\n- **Notes**: The `Glob` tool with the `*.exception.ts` pattern inside the test-repo path returned no results (likely a path resolution issue with symlinks), so `Bash` with `find` was used instead. There are no `.exception.ts` files in any subdirectory — all 24 live directly at depth 1 in `packages/common/exceptions/`.",
+  "mini_task_spec": "In the NestJS monorepo located at `test-repo/`, list all `.exception.ts` files that reside **directly** (i.e., at depth 1, not in any subdirectory) inside `test-repo/packages/common/exceptions/`. These are the files an agent would target with `fileops:move` calls when reorganizing the exceptions package into a subdirectory. Provide the answer as a sorted alphabetical list of paths **relative to `test-repo/`**, one per line.",
+  "workdir": "/tmp/focus-bench/fileops-native-2026-04-26T19-20-58-448",
+  "exit_reason": "ok"
+}

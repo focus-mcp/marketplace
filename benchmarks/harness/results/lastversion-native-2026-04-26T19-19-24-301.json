@@ -1,0 +1,25 @@
+{
+  "brick": "lastversion",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:18:04.883Z",
+  "duration_ms": 79417,
+  "turns": 10,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 31,
+    "cache_creation_input_tokens": 41395,
+    "cache_read_input_tokens": 456136,
+    "output_tokens": 3650,
+    "total": 501212
+  },
+  "session_id": "227ca4ae-6451-4126-a225-fb6887d83c85",
+  "result_block": "## Result\n\n- **Brick**: lastversion\n- **Mode**: native\n- **Mini-task**: Identify outdated production npm dependencies in test-repo/package.json\n- **Answer**: `file-type@21.3.4 → 22.0.1`\n- **Turns used**: 6\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~3,500 tokens\n- **Notes**: Only one of the 19 production dependencies is outdated — `file-type` is pinned at `21.3.4` while npm latest stable is `22.0.1`. All other 18 packages (`@nuxt/opencollective`, `ansis`, `class-transformer`, `class-validator`, `cors`, `express`, `fast-json-stringify`, `fast-safe-stringify`, `iterare`, `load-esm`, `object-hash`, `path-to-regexp`, `reflect-metadata`, `rxjs`, `socket.io`, `tslib`, `uid`, `uuid`) match the latest stable version exactly. Answer obtained via `npm view <pkg> version` for each dependency.",
+  "mini_task_spec": "Inspect the `dependencies` (production dependencies only, not `devDependencies`) listed in `test-repo/package.json`. For each package, compare its pinned version against the latest stable version available on npm. Report every package whose pinned version is strictly older than the latest stable npm release, formatted as `<pkg>@<current> → <latest>`, one entry per line, sorted alphabetically. If no packages are outdated, report \"none\".\n\n---",
+  "workdir": "/tmp/focus-bench/lastversion-native-2026-04-26T19-18-04-883",
+  "exit_reason": "ok"
+}

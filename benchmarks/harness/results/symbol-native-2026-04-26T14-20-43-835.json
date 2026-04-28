@@ -1,0 +1,25 @@
+{
+  "brick": "symbol",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:18:58.076Z",
+  "duration_ms": 105759,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 45,
+    "cache_creation_input_tokens": 47321,
+    "cache_read_input_tokens": 730670,
+    "output_tokens": 5268,
+    "total": 783304
+  },
+  "session_id": "213cac38-6524-4e4f-8d65-bcd9afcddc52",
+  "result_block": "## Result\n\n- **Brick**: symbol\n- **Mode**: native\n- **Mini-task**: List all public method names in the `MetadataScanner` class sorted alphabetically\n- **Answer**:\n  ```\n  getAllFilteredMethodNames\n  getAllMethodNames\n  scanFromPrototype\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~5,000\n- **Notes**: The task is clean and deterministic. The `MetadataScanner` class is small (121 lines) with exactly three public methods. The symbol brick's `find` or `get` tool would make this trivially one-shot versus the three tool calls needed in native mode (Bash + Grep + Read to locate, confirm, and verify).",
+  "mini_task_spec": "Using the file `test-repo/packages/core/metadata-scanner.ts`, identify every public method defined directly in the `MetadataScanner` class (there are no inherited public methods to consider). List the name of each public method, one per line, sorted alphabetically (A–Z). Do not include private methods, constructor, getters, setters, or static members — only methods explicitly marked with the `public` keyword. The expected answer format is a plain alphabetically-sorted list of method names (one name per line, no signatures, no file paths, no extra text).",
+  "workdir": "/tmp/focus-bench/symbol-native-2026-04-26T14-18-58-076",
+  "exit_reason": "ok"
+}

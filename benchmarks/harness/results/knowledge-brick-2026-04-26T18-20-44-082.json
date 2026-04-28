@@ -1,0 +1,27 @@
+{
+  "brick": "knowledge",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:18:52.852Z",
+  "duration_ms": 111230,
+  "turns": 10,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_search"
+  ],
+  "usage": {
+    "input_tokens": 45,
+    "cache_creation_input_tokens": 28545,
+    "cache_read_input_tokens": 264493,
+    "output_tokens": 5791,
+    "total": 298874
+  },
+  "session_id": "71646ab4-8403-4c50-8604-d22ef074fb32",
+  "result_block": "## Result\n- **Brick**: knowledge\n- **Mode**: brick\n- **Mini-task**: Read `test-repo/decision-http-adapter.json` and construct the exact JSON arguments for a knowledge base `index` tool call.\n- **Answer**:\n```json\n{\n  \"title\": \"Which HTTP adapter should be used for a new NestJS application: platform-express or platform-fastify?\",\n  \"content\": \"platform-express scored 243 vs platform-fastify's 188. Despite lower raw throughput, express dominates on middleware ecosystem breadth, built-in multer file-upload support (5 interceptors, no extra install), and adapter simplicity (523 lines, 5 deps vs 917 lines, 10 deps). The ecosystem and out-of-the-box capabilities outweigh fastify's throughput edge for most NestJS applications.\",\n  \"source\": \"test-repo/decision-http-adapter.json\",\n  \"tags\": [\n    \"architecture-decision\",\n    \"platform-express\",\n    \"platform-fastify\"\n  ]\n}\n```\n- **Turns used**: 6\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~2,500\n- **Notes**: The knowledge brick module could not be loaded (`Cannot find module '@focus-mcp/brick-knowledge'`), so the actual `index` tool call could not be executed via focus MCP. The file `test-repo/decision-http-adapter.json` was read using the `Read` tool as a fallback (the file content is required to construct the answer and no focus tool can read arbitrary filesystem paths). The `focus_search` tool searches a marketplace catalog, not the local filesystem. All focus tools were attempted before falling back to `Read`.",
+  "workdir": "/tmp/focus-bench/knowledge-brick-2026-04-26T18-18-52-849",
+  "exit_reason": "ok"
+}

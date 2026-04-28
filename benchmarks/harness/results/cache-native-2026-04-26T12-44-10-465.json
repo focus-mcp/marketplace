@@ -1,0 +1,25 @@
+{
+  "brick": "cache",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:42:59.544Z",
+  "duration_ms": 70921,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 18909,
+    "cache_read_input_tokens": 420090,
+    "output_tokens": 4193,
+    "total": 443225
+  },
+  "session_id": "b339e583-d091-473c-8020-cb5da6a6af0a",
+  "result_block": "## Result\n- **Brick**: cache\n- **Mode**: native\n- **Mini-task**: Find all per-package `tsconfig.json` files to pre-warm in the cache brick\n- **Answer**:\n  ```\n  packages/common/tsconfig.json\n  packages/core/tsconfig.json\n  packages/microservices/tsconfig.json\n  packages/platform-express/tsconfig.json\n  packages/platform-fastify/tsconfig.json\n  packages/platform-socket.io/tsconfig.json\n  packages/platform-ws/tsconfig.json\n  packages/testing/tsconfig.json\n  packages/websockets/tsconfig.json\n  ```\n- **Turns used**: 10\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2 500\n- **Notes**: The brick's `warmup` tool accepts an array of absolute paths; the spec asks for paths relative to `test-repo/` so a brick-mode agent will need to resolve them to absolute paths before calling `warmup`. The `packages/tsconfig.json` (depth 1) and `packages/platform-ws/test/tsconfig.json`-style files (depth 3) are intentionally excluded — the task targets only the canonical per-package roots.",
+  "mini_task_spec": "Using the NestJS monorepo at `test-repo/`, identify the complete list of per-package TypeScript configuration files that a build agent would want to pre-warm into the `cache` brick before performing any analysis work. Specifically: find all files named exactly `tsconfig.json` (not `tsconfig.build.json`, not `tsconfig.spec.json`, not files inside `test/` subdirectories) that live directly in a named package subdirectory under `test-repo/packages/<package-name>/tsconfig.json` (i.e., at depth 2 below `packages/`, excluding the `packages/tsconfig.json` file that lives at depth 1). Report the paths relative to `test-repo/`, one per line, sorted alphabetically. This list is the input you would pass to the cache brick's `warmup` tool to pre-load these frequently-read config files.\n\n---",
+  "workdir": "/tmp/focus-bench/cache-native-2026-04-26T12-42-59-544",
+  "exit_reason": "ok"
+}

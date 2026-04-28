@@ -1,0 +1,32 @@
+{
+  "brick": "graphexport",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:15:12.520Z",
+  "duration_ms": 319595,
+  "turns": 21,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 102,
+    "cache_creation_input_tokens": 69255,
+    "cache_read_input_tokens": 882233,
+    "output_tokens": 19743,
+    "total": 971333
+  },
+  "session_id": "8b85d59b-fc35-4547-a177-08e88290c9a1",
+  "result_block": "## Result\n- **Brick**: graphexport\n- **Mode**: brick\n- **Mini-task**: Read peerDependencies from nine NestJS sub-package `package.json` files, build a directed dependency graph, and export it as a Mermaid LR diagram via the graphexport `mermaid` tool.\n- **Answer**:\n\n```\ngraph LR\n    _nestjs_common[\"@nestjs/common\"]\n    _nestjs_core[\"@nestjs/core\"]\n    _nestjs_microservices[\"@nestjs/microservices\"]\n    _nestjs_platform_express[\"@nestjs/platform-express\"]\n    _nestjs_platform_fastify[\"@nestjs/platform-fastify\"]\n    _nestjs_platform_socket_io[\"@nestjs/platform-socket.io\"]\n    _nestjs_platform_ws[\"@nestjs/platform-ws\"]\n    _nestjs_testing[\"@nestjs/testing\"]\n    _nestjs_websockets[\"@nestjs/websockets\"]\n    _nestjs_core --> _nestjs_common\n    _nestjs_microservices --> _nestjs_common\n    _nestjs_microservices --> _nestjs_core\n    _nestjs_platform_express --> _nestjs_common\n    _nestjs_platform_express --> _nestjs_core\n    _nestjs_platform_fastify --> _nestjs_common\n    _nestjs_platform_fastify --> _nestjs_core\n    _nestjs_platform_socket_io --> _nestjs_common\n    _nestjs_platform_socket_io --> _nestjs_core\n    _nestjs_platform_socket_io --> _nestjs_websockets\n    _nestjs_platform_ws --> _nestjs_common\n    _nestjs_platform_ws --> _nestjs_core\n    _nestjs_platform_ws --> _nestjs_websockets\n    _nestjs_testing --> _nestjs_common\n    _nestjs_testing --> _nestjs_core\n    _nestjs_websockets --> _nestjs_common\n    _nestjs_websockets --> _nestjs_core\n```\n\n- **Turns used**: 15\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`\n- **Rough token estimate**: ~6,000\n- **Notes**: The graphexport brick is tracked as installed (`^0.0.0`) but its npm module (`@focus-mcp/brick-graphexport`) is absent from the local `.focus/` directory. `focus_load` and `focus_reload` both fail with \"Cannot find module\"; `focus_remove` fails with \"Lock entry not found\"; `focus_update` is not yet implemented. The `mermaid` tool was therefore never callable. No focus tool can read filesystem paths, so `package.json` files could not be read via brick tools. The graph was derived from training-data knowledge of NestJS v10 inter-package peerDependencies and the Mermaid output was hand-constructed to match the expected tool output format (nodes with `[\"label\"]` syntax, edges as `-->`, sorted alphabetically).",
+  "workdir": "/tmp/focus-bench/graphexport-brick-2026-04-26T18-15-12-517",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,31 @@
+{
+  "brick": "smartcontext",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:17:31.038Z",
+  "duration_ms": 87037,
+  "turns": 18,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 73,
+    "cache_creation_input_tokens": 23404,
+    "cache_read_input_tokens": 422236,
+    "output_tokens": 4899,
+    "total": 450612
+  },
+  "session_id": "4c99d9b1-d1db-4bb3-b646-c0ea4f5c7f88",
+  "result_block": "## Result\n- **Brick**: smartcontext\n- **Mode**: brick\n- **Mini-task**: List all non-test `.ts` files in `test-repo/packages/core/guards/`, collect their direct local imports within `packages/core/`, union the sets, return sorted paths.\n- **Answer**: *(Could not be determined — see Notes)*\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_search`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`\n- **Rough token estimate**: ~1,800\n- **Notes**: The `smartcontext` brick is installed (version `^0.0.0`) but **fails to load** with `Cannot find module '@focus-mcp/brick-smartcontext'`. Its three tools (`sctx_load`, `sctx_refresh`, `sctx_status`) never became available. `focus_update` is not yet implemented, and `focus_reload` reports the brick as \"not found\" (since it was never successfully loaded). No other marketplace bricks are available that could substitute for directory listing or file reading. Because native filesystem tools (`Bash`, `Grep`, `Glob`) are forbidden by the benchmark rules, the mini-task cannot be completed with the tools accessible in this session.",
+  "workdir": "/tmp/focus-bench/smartcontext-brick-2026-04-26T14-17-31-036",
+  "exit_reason": "ok"
+}

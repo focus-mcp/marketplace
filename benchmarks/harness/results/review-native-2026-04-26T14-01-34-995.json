@@ -1,0 +1,25 @@
+{
+  "brick": "review",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:59:18.228Z",
+  "duration_ms": 136767,
+  "turns": 27,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 61,
+    "cache_creation_input_tokens": 46297,
+    "cache_read_input_tokens": 913149,
+    "output_tokens": 7521,
+    "total": 967028
+  },
+  "session_id": "8e11cc0f-2cb0-47e0-b7cf-a5f4b18ad29a",
+  "result_block": "## Result\n\n- **Brick**: review\n- **Mode**: native\n- **Mini-task**: Identify the public method in guards-context-creator.ts absent from interceptors-context-creator.ts\n- **Answer**: `getGuardInstance`\n- **Turns used**: 7\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~2 500\n- **Notes**: Both files are structurally identical except that `GuardsContextCreator.getGuardInstance` is renamed to `getInterceptorInstance` in `InterceptorsContextCreator`. The native solution required only `grep -n \"public \"` on both files and a visual diff of the output — straightforward and deterministic. The brick's `compare` tool should surface this as a removal (`getGuardInstance`) plus an addition (`getInterceptorInstance`) in one call.",
+  "mini_task_spec": "Using the FocusMCP **review** brick's `compare` tool, compare the two TypeScript files found inside the NestJS shallow clone at `test-repo/packages/core/`:\n\n- **pathA** (original): `test-repo/packages/core/guards/guards-context-creator.ts`\n- **pathB** (modified): `test-repo/packages/core/interceptors/interceptors-context-creator.ts`\n\nBoth files expose the same five public methods, with one exception: one public method name that exists in pathA is absent from pathB (replaced by a differently-named counterpart).\n\n**Task**: Call `mcp__focus__rev__compare` with the absolute paths to pathA and pathB. From the tool's findings, identify the **single public method name that is present in pathA (`guards-context-creator.ts`) but absent from pathB (`interceptors-context-creator.ts`)**.\n\nExpected answer format: a single method name (exactly as it appears in the source, no prefix/suffix).\n\n---",
+  "workdir": "/tmp/focus-bench/review-native-2026-04-26T13-59-18-227",
+  "exit_reason": "ok"
+}

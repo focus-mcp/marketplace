@@ -1,0 +1,25 @@
+{
+  "brick": "memory",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:35:16.379Z",
+  "duration_ms": 58145,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 30,
+    "cache_creation_input_tokens": 14390,
+    "cache_read_input_tokens": 365699,
+    "output_tokens": 3028,
+    "total": 383147
+  },
+  "session_id": "1d56873c-4482-46c0-8e40-d5e9ab2d8e44",
+  "result_block": "## Result\n\n- **Brick**: memory\n- **Mode**: native\n- **Mini-task**: Catalog all named HTTP exception classes in test-repo/packages/common/exceptions/ with their fixed status codes\n- **Answer**:\n  ```\n  BadGatewayException=502\n  BadRequestException=400\n  ConflictException=409\n  ForbiddenException=403\n  GatewayTimeoutException=504\n  GoneException=410\n  HttpVersionNotSupportedException=505\n  ImATeapotException=418\n  InternalServerErrorException=500\n  MethodNotAllowedException=405\n  MisdirectedException=421\n  NotAcceptableException=406\n  NotFoundException=404\n  NotImplementedException=501\n  PayloadTooLargeException=413\n  PreconditionFailedException=412\n  RequestTimeoutException=408\n  ServiceUnavailableException=503\n  TooManyRequestsException=429\n  UnauthorizedException=401\n  UnprocessableEntityException=422\n  UnsupportedMediaTypeException=415\n  ```\n- **Turns used**: 5\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~3,500\n- **Notes**: The memory brick's native-mode equivalent is just reading source files directly; the brick would shine by storing these pairs persistently (via `store`) so they could be recalled across sessions without re-reading the files. `http.exception.ts` and `base-intrinsic.exception.ts` were correctly excluded as they have no fixed numeric status code.",
+  "mini_task_spec": "In the NestJS repository under `test-repo/packages/common/exceptions/`, there are several TypeScript files ending in `.exception.ts` (e.g. `bad-request.exception.ts`, `not-found.exception.ts`). Each concrete exception class maps to a fixed HTTP status code documented in a JSDoc comment of the form `statusCode`: this will be the value NNN.\n\n**Task**: For every `.exception.ts` file in `test-repo/packages/common/exceptions/` that exports a named class **and** documents a fixed numeric status code in its JSDoc, extract the exported TypeScript class name and the corresponding HTTP status code. Report the results as a list of `ClassName=statusCode` pairs, sorted alphabetically by class name, one per line.\n\nFiles that do **not** document a fixed numeric status code (e.g. `http.exception.ts`, `base-intrinsic.exception.ts`) must be excluded. The `index.ts` file must also be excluded.\n\nExpected answer format: sorted list of `ClassName=statusCode` pairs, one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/memory-native-2026-04-26T13-35-16-379",
+  "exit_reason": "ok"
+}

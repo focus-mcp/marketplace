@@ -1,0 +1,33 @@
+{
+  "brick": "agent",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:42:03.318Z",
+  "duration_ms": 203066,
+  "turns": 20,
+  "tools_used": [
+    "Agent",
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 130,
+    "cache_creation_input_tokens": 79659,
+    "cache_read_input_tokens": 752122,
+    "output_tokens": 9230,
+    "total": 841141
+  },
+  "session_id": "e2d0156d-1bc7-4172-be84-89dee922cbb7",
+  "result_block": "## Result\n- **Brick**: agent (prefix: `agt`)\n- **Mode**: brick\n- **Mini-task**: Find all concrete transport server `.ts` files in `test-repo/packages/microservices/server/`, extract their exported class names, register each as an agent with capability `\"transport\"`, then query `agt_capabilities(\"transport\")` and report the agent names alphabetically.\n- **Answer**:\n  ```\n  ServerGrpc\n  ServerKafka\n  ServerMqtt\n  ServerNats\n  ServerRedis\n  ServerRMQ\n  ServerTCP\n  ```\n  *(These are the class names that would have been returned by `agt_capabilities` — registration could not be completed; see Notes.)*\n- **Turns used**: 14\n- **Tools used**: `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_remove`, `mcp__focus__focus_catalog_add` (schema fetch only, not invoked)\n- **Rough token estimate**: ~6,000\n- **Notes**: The `agent` brick is listed as installed (`^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-agent'` — the npm package is absent from the environment. `focus_update` is \"not yet implemented\", `focus_reload` reports \"Brick not found\", and `focus_remove` fails with \"Lock entry not found\". The `agt_*` tools never became available in the session. File discovery was performed via an Explore subagent (using Glob/Read) since no `mcp__focus__*` tool provides filesystem access. The answer above reflects the expected `agt_capabilities` response had registration succeeded; actual MCP tool calls for registration could not be made.",
+  "workdir": "/tmp/focus-bench/agent-brick-2026-04-26T12-42-03-316",
+  "exit_reason": "ok"
+}

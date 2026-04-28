@@ -1,0 +1,25 @@
+{
+  "brick": "dispatch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:00:56.527Z",
+  "duration_ms": 106744,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 44,
+    "cache_creation_input_tokens": 20764,
+    "cache_read_input_tokens": 579596,
+    "output_tokens": 6422,
+    "total": 606826
+  },
+  "session_id": "3c6a7a85-e40c-4d15-b77c-7a612fff8dd4",
+  "result_block": "## Result\n\n- **Brick**: dispatch\n- **Mode**: native\n- **Mini-task**: Identify helpers/ files with/without tests and determine dispatch queue order by priority\n- **Answer**:\n  ```\n  9|review|tcp-socket.ts\n  3|lint|grpc-helpers.ts\n  3|lint|json-socket.ts\n  3|lint|kafka-logger.ts\n  3|lint|kafka-parser.ts\n  3|lint|kafka-reply-partition-assigner.ts\n  ```\n- **Turns used**: 10\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~3,500\n- **Notes**: All six non-index source files in `test-repo/packages/microservices/helpers/` were checked. Five have corresponding `.spec.ts` files in `test-repo/packages/microservices/test/helpers/`; `tcp-socket.ts` does not — it is the sole file dispatched as a high-priority `review` task (priority 9). The remaining five are dispatched as `lint` tasks (priority 3). No files outside the helpers directory were considered.",
+  "mini_task_spec": "Examine the TypeScript source files in `test-repo/packages/microservices/helpers/` (excluding `index.ts`) and their corresponding spec files in `test-repo/packages/microservices/test/helpers/`. For each source file **without** a corresponding `.spec.ts` in the test directory, dispatch a `review` task with priority 9. For each source file **with** a corresponding `.spec.ts`, dispatch a `lint` task with priority 3. The payload for each task should include `{ \"file\": \"<filename>\" }` where `<filename>` is just the filename (not a full path). After dispatching all tasks, query the queue and report its full contents. The expected answer is a list of all queued tasks, one per line, sorted by priority descending then filename ascending, in the format: `<priority>|<type>|<filename>`. Do not include `index.ts` in the dispatch.\n\n---",
+  "workdir": "/tmp/focus-bench/dispatch-native-2026-04-26T18-00-56-527",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "sandbox",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T21:06:44.807Z",
+  "duration_ms": 68893,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 24786,
+    "cache_read_input_tokens": 395019,
+    "output_tokens": 3963,
+    "total": 423801
+  },
+  "session_id": "9e182bc2-31cf-4bb2-9bbe-036216c42bc8",
+  "result_block": "## Result\n- **Brick**: sandbox\n- **Mode**: native\n- **Mini-task**: Compute `normalizePath` outputs for 6 test inputs from `shared.utils.ts`\n- **Answer**:\n  ```\n  undefined => \"/\"\n  \"\" => \"/\"\n  \"/\" => \"/\"\n  \"foo\" => \"/foo\"\n  \"/foo/bar/\" => \"/foo/bar\"\n  \"//foo//bar//\" => \"/foo/bar\"\n  ```\n- **Turns used**: 8\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1 200\n- **Notes**: In native mode I read `shared.utils.ts` to obtain the function source, then re-implemented it inline in Node.js (`node -e`) to compute the six outputs. The sandbox brick would make this cleaner: a single `run` or `eval` call loading the TS source directly via `read` + executing it would replace the manual Node invocation, exercising the brick's TypeScript-execution strength.",
+  "mini_task_spec": "Read the file `test-repo/packages/common/utils/shared.utils.ts` and extract the `normalizePath` function. Execute that function in a sandboxed JavaScript/TypeScript environment for each of the following six inputs (in order): `undefined`, `''` (empty string), `'/'`, `'foo'`, `'/foo/bar/'`, and `'//foo//bar//'`. Report each result on its own line in the format `<input> => <output>`, where `undefined` is written as the bare word `undefined` and string values are double-quoted. The answer must list all six results in the order the inputs were given.\n\n---",
+  "workdir": "/tmp/focus-bench/sandbox-native-2026-04-26T21-06-44-807",
+  "exit_reason": "ok"
+}

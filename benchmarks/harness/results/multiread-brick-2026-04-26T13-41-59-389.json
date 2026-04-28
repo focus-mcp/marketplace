@@ -1,0 +1,32 @@
+{
+  "brick": "multiread",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:39:47.686Z",
+  "duration_ms": 131703,
+  "turns": 21,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 98,
+    "cache_creation_input_tokens": 49942,
+    "cache_read_input_tokens": 512257,
+    "output_tokens": 5206,
+    "total": 567503
+  },
+  "session_id": "f91f36e7-bdec-4abc-ba7d-1057908496ce",
+  "result_block": "## Result\n- **Brick**: multiread\n- **Mode**: brick\n- **Mini-task**: Read 9 `package.json` files from `test-repo/packages/` subdirectories and report each package's `name` and `peerDependencies` count, sorted alphabetically by subdirectory name.\n- **Answer**: *(unavailable — see Notes)*\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_load`, `mcp__focus__focus_list`, `mcp__focus__focus_install`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_add` *(schema fetch only)*\n- **Rough token estimate**: ~6,000\n- **Notes**: The `multiread` brick is registered as installed (`^0.0.0`) but its underlying npm module `@focus-mcp/brick-multiread` is missing from the environment. `focus_load` fails with `Cannot find module '@focus-mcp/brick-multiread'`. `focus_update` returns \"not yet implemented\". `focus_remove` fails with \"Lock entry not found\". The marketplace lists version `1.1.0` but reinstallation is blocked. Since brick tools (`mr__batch`, `mr__dedup`, `mr__merge`) are inaccessible and native filesystem tools (`Bash`, `Grep`, `Glob`, `Read` for non-manifest files) are forbidden, the mini-task cannot be completed. This appears to be a broken/stub installation in the benchmark environment.",
+  "workdir": "/tmp/focus-bench/multiread-brick-2026-04-26T13-39-47-684",
+  "exit_reason": "ok"
+}

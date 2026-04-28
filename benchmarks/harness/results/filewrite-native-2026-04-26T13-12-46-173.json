@@ -1,0 +1,25 @@
+{
+  "brick": "filewrite",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:11:19.811Z",
+  "duration_ms": 86362,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 46,
+    "cache_creation_input_tokens": 21349,
+    "cache_read_input_tokens": 669403,
+    "output_tokens": 4436,
+    "total": 695234
+  },
+  "session_id": "d962b40a-bf1c-4380-9535-ee387688e8d4",
+  "result_block": "## Result\n- **Brick**: filewrite\n- **Mode**: native\n- **Mini-task**: Create version.util.ts with NEST_VERSION constant then append a comment line\n- **Answer**:\n  ```\n  export const NEST_VERSION = '11.1.19';\n  // Auto-generated — do not edit\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,800\n- **Notes**: Native mode used `printf >` for the initial file creation and `printf >>` for appending — direct analogues of the brick's `create` and `append` tools. The task is fully deterministic: the version string `11.1.19` is hardcoded in the repo's `package.json` and the target path did not previously exist.",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/`, the file `test-repo/packages/common/package.json` declares `\"version\": \"11.1.19\"`. Your task is:\n\n1. Read the `version` field from `test-repo/packages/common/package.json`.\n2. Create a **new** file at `test-repo/packages/common/utils/version.util.ts` with the following exact content as the first line:\n   ```\n   export const NEST_VERSION = '11.1.19';\n   ```\n   (where `11.1.19` is the version value read from the package.json). The `create` tool should be used (not `write`) since the file does not previously exist.\n3. Append a second line to that file:\n   ```\n   // Auto-generated — do not edit\n   ```\n\n**Expected final file content** (two lines, with trailing newline):\n```\nexport const NEST_VERSION = '11.1.19';\n// Auto-generated — do not edit\n```\n\nReport the final content of `test-repo/packages/common/utils/version.util.ts`, verbatim, as the answer.\n\n---",
+  "workdir": "/tmp/focus-bench/filewrite-native-2026-04-26T13-11-19-811",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "callgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:46:24.202Z",
+  "duration_ms": 125009,
+  "turns": 19,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 52,
+    "cache_creation_input_tokens": 38438,
+    "cache_read_input_tokens": 818292,
+    "output_tokens": 6046,
+    "total": 862828
+  },
+  "session_id": "a0d2b8e6-7451-4547-8a30-8d03b6c974bc",
+  "result_block": "## Result\n- **Brick**: callgraph\n- **Mode**: native\n- **Mini-task**: Find non-test callers of `createInstancesOfDependencies` in `packages/core`\n- **Answer**:\n  ```\n  packages/core/injector/lazy-module-loader/lazy-module-loader.ts:50\n  packages/core/nest-factory.ts:244\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Grep, Bash\n- **Rough token estimate**: ~3,500\n- **Notes**: The callers tool would grep for the method name; native approach used Grep with a glob filter and then excluded test paths manually. The definition line (`instance-loader.ts:25`) and 9 test-file occurrences were filtered out, leaving exactly 2 production callers: `initialize` in `nest-factory.ts` (line 244) and `load` in `lazy-module-loader.ts` (line 50).",
+  "mini_task_spec": "Using the `callgraph` brick's `callers` tool, find all non-test TypeScript source files within `test-repo/packages/core` that call the method `createInstancesOfDependencies`. Exclude the file that defines the method (`instance-loader.ts`) and any files under `test-repo/packages/core/test/`. List each result as `relative-path-from-test-repo-root:line-number`, sorted alphabetically by path. Use `dir = \"test-repo/packages/core\"` and `name = \"createInstancesOfDependencies\"`, then filter out test files (any path containing `/test/`) and the definition line itself.\n\nExpected answer format: one entry per line, `packages/core/<path>:<line>`, sorted alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/callgraph-native-2026-04-26T12-46-24-201",
+  "exit_reason": "ok"
+}

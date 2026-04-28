@@ -1,0 +1,26 @@
+{
+  "brick": "planning",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:57:48.131Z",
+  "duration_ms": 100850,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 14674,
+    "cache_read_input_tokens": 444806,
+    "output_tokens": 5264,
+    "total": 464779
+  },
+  "session_id": "81251924-a103-4b65-9e10-20b18bd8c016",
+  "result_block": "## Result\n- **Brick**: planning\n- **Mode**: native\n- **Mini-task**: Find all `@deprecated` files in `test-repo/packages/`, build a 3-step removal plan with estimates and one dependency\n- **Answer**:\n  - Files found (3, alphabetical):\n    1. `packages/common/pipes/file/max-file-size.validator.ts`\n    2. `packages/core/metadata-scanner.ts`\n    3. `packages/microservices/external/kafka.interface.ts`\n  - Step titles (0-indexed):\n    - 0: \"Remove deprecated API in packages/common/pipes/file/max-file-size.validator.ts\" — estimate 1h\n    - 1: \"Remove deprecated API in packages/core/metadata-scanner.ts\" — estimate 1h, depends on step 0\n    - 2: \"Remove deprecated API in packages/microservices/external/kafka.interface.ts\" — estimate 1h\n  - Plan summary: total=3, completed=0, blocked=1 (step 1 blocked until step 0 done), estimated time remaining=3h\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~2,500\n- **Notes**: Dependency between steps was derived by checking that `packages/core/metadata-scanner.ts` imports from `@nestjs/common` (line 1 and 6). The microservices/kafka file has no imports from common so it has no dependency. Exactly 3 files matched `@deprecated` across all packages.",
+  "mini_task_spec": "Using the FocusMCP `planning` brick (`mcp__focus__plan_*` tools), create a deprecation-removal plan for the NestJS monorepo at `test-repo/`.\n\n**Instructions:**\n\n1. Search the `test-repo/packages/` directory recursively for every file containing at least one `@deprecated` JSDoc annotation (exact string `@deprecated`). Collect the unique file paths relative to `test-repo/` (i.e. starting with `packages/`).\n\n2. Call `mcp__focus__plan_create` with title `\"Remove deprecated APIs\"` and description `\"Systematic removal of all @deprecated-annotated items in the NestJS monorepo packages.\"`.\n\n3. Call `mcp__focus__plan_steps` to add one step per file found in step 1, sorted alphabetically by path. Each step title must be `\"Remove deprecated API in <relative-path>\"` (e.g. `\"Remove deprecated API in packages/common/pipes/file/max-file-size.validator.ts\"`). Each step must have an estimate of `\"1h\"`.\n\n4. Call `mcp__focus__plan_dependencies` to record that the step for `packages/core/metadata-scanner.ts` (step index 1, 0-based) depends on the step for `packages/common/pipes/file/max-file-size.validator.ts` (step index 0), because `packages/core/metadata-scanner.ts` imports from `@nestjs/common`.\n\n5. Call `mcp__focus__plan_estimate` and report the full summary it returns.\n\n**Expected answer format:** Report the plan summary as returned by `plan_estimate`, which must show: total steps = 3, completed = 0, blocked = 1, estimated time remaining = 3h.\n\n---",
+  "workdir": "/tmp/focus-bench/planning-native-2026-04-26T13-57-48-131",
+  "exit_reason": "ok"
+}

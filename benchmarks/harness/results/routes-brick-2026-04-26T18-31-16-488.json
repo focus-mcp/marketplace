@@ -1,0 +1,32 @@
+{
+  "brick": "routes",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:28:43.052Z",
+  "duration_ms": 153436,
+  "turns": 22,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 103,
+    "cache_creation_input_tokens": 62370,
+    "cache_read_input_tokens": 636014,
+    "output_tokens": 8397,
+    "total": 706884
+  },
+  "session_id": "4c5cd352-dc9b-4d91-bcb4-2ac96f1a5360",
+  "result_block": "## Result\n- **Brick**: routes\n- **Mode**: brick\n- **Mini-task**: Enumerate all HTTP API routes (method + full URL path) from the NestJS `05-sql-typeorm` sample app's controller(s)\n- **Answer**: Unable to produce — the routes brick failed to load (`Cannot find module '@focus-mcp/brick-routes'`), so the brick's `scan`/`list` tools were never available. No route enumeration could be performed using only `mcp__focus__*` tools.\n- **Turns used**: 13\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`\n- **Rough token estimate**: ~6,000\n- **Notes**: The brick is registered at version `^0.0.0` in the local `.focus` config, but the actual npm package `@focus-mcp/brick-routes` is absent from `node_modules`. `focus_update` is not yet implemented, `focus_remove` returned \"Lock entry not found\", and re-installing reported \"already installed\". The marketplace lists version `1.1.0` but there is no implemented path to upgrade from the stub `^0.0.0`. Because native filesystem tools (Bash, Grep, Glob) and additional Read calls were forbidden, the controller files could not be inspected by any alternative means.",
+  "workdir": "/tmp/focus-bench/routes-brick-2026-04-26T18-28-43-050",
+  "exit_reason": "ok"
+}

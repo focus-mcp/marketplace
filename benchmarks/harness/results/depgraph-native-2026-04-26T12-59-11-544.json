@@ -1,0 +1,26 @@
+{
+  "brick": "depgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:57:30.947Z",
+  "duration_ms": 100597,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 58271,
+    "cache_read_input_tokens": 872797,
+    "output_tokens": 6704,
+    "total": 937820
+  },
+  "session_id": "6295983b-b548-4c70-b280-72605bd73b39",
+  "result_block": "## Result\n\n- **Brick**: depgraph\n- **Mode**: native\n- **Mini-task**: Find all non-test TypeScript files in `packages/core` that import `metadata-scanner` (fan-in), sorted alphabetically\n- **Answer**:\n  ```\n  test-repo/packages/core/discovery/discovery-module.ts\n  test-repo/packages/core/middleware/routes-mapper.ts\n  test-repo/packages/core/nest-factory.ts\n  test-repo/packages/core/repl/native-functions/methods-repl-fn.ts\n  test-repo/packages/core/router/paths-explorer.ts\n  test-repo/packages/core/router/router-explorer.ts\n  test-repo/packages/core/router/routes-resolver.ts\n  test-repo/packages/core/scanner.ts\n  ```\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~5,500 tokens\n- **Notes**: `test-repo/packages/core/index.ts` uses `export * from './metadata-scanner'` (a re-export, not an `import` statement) so it is correctly excluded. 5 test files also match the pattern but are excluded by the `/test/` path filter.",
+  "mini_task_spec": "Using the **fan-in** capability of a dependency-graph tool, find all non-test TypeScript source files inside `test-repo/packages/core` that directly import from `metadata-scanner` (i.e., contain an `import` statement referencing `metadata-scanner`). Exclude any file whose path contains `/test/`. Return the results as a sorted list of relative file paths (relative to the repository root, i.e., prefixed with `test-repo/`), one per line, in alphabetical order.\n\nExpected answer format: a list of file paths, one per line, sorted alphabetically, e.g.:\n```\ntest-repo/packages/core/discovery/discovery-module.ts\ntest-repo/packages/core/middleware/routes-mapper.ts\n...\n```",
+  "workdir": "/tmp/focus-bench/depgraph-native-2026-04-26T12-57-30-947",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "callgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:14:21.519Z",
+  "duration_ms": 103059,
+  "turns": 21,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 21941,
+    "cache_read_input_tokens": 685808,
+    "output_tokens": 3489,
+    "total": 711286
+  },
+  "session_id": "1b686661-93f9-4c5a-9472-0db4b16be616",
+  "result_block": "",
+  "workdir": "/tmp/focus-bench/callgraph-native-2026-04-26T19-14-21-519",
+  "exit_reason": "error",
+  "focus_stderr": "[runner] SDK exception: Claude Code returned an error result: Reached maximum number of turns (20)\nError: Claude Code returned an error result: Reached maximum number of turns (20)\n    at D9.readMessages (file:///home/samuelds/projects/focusmcp/marketplace/benchmarks/harness/node_modules/.pnpm/@anthropic-ai+claude-agent-sdk@0.2.118_zod@4.3.6/node_modules/@anthropic-ai/claude-agent-sdk/sdk.mjs:59:17430)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)"
+}

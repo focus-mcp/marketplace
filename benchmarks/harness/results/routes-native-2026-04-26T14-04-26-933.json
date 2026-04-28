@@ -1,0 +1,26 @@
+{
+  "brick": "routes",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:02:41.346Z",
+  "duration_ms": 105587,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 51,
+    "cache_creation_input_tokens": 29713,
+    "cache_read_input_tokens": 769562,
+    "output_tokens": 4389,
+    "total": 803715
+  },
+  "session_id": "d664cf38-ae58-42c9-9384-64aada3e5225",
+  "result_block": "## Result\n- **Brick**: routes\n- **Mode**: native\n- **Mini-task**: List all API endpoints in `test-repo/sample/06-mongoose/src` controller(s)\n- **Answer**:\n  ```\n  GET /cats\n  POST /cats\n  DELETE /cats/:id\n  GET /cats/:id\n  POST /cats/:id\n  ```\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: Single controller (`CatsController`) found in the mongoose sample. Controller prefix is `cats`, yielding 5 routes. No nested routing or module-level prefixes detected.",
+  "mini_task_spec": "Scan the NestJS controller(s) in `test-repo/sample/06-mongoose/src` and list every API endpoint defined there. For each endpoint, produce a line in the format `METHOD /full-path`, where the full path is the controller-level prefix combined with any method-level path segment (e.g., `@Controller('cats')` + `@Get(':id')` → `GET /cats/:id`). Output one endpoint per line, sorted first alphabetically by path, then alphabetically by HTTP method for ties. No extra commentary — only the list of endpoints.",
+  "workdir": "/tmp/focus-bench/routes-native-2026-04-26T14-02-41-345",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "batch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:43:14.561Z",
+  "duration_ms": 70749,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 13935,
+    "cache_read_input_tokens": 476247,
+    "output_tokens": 3658,
+    "total": 493877
+  },
+  "session_id": "a06f5944-6b92-4757-a0e1-87872f1999e4",
+  "result_block": "## Result\n- **Brick**: batch\n- **Mode**: native\n- **Mini-task**: Count `*.spec.ts` files in each of the 9 packages under `test-repo/packages/`, run in parallel, sorted alphabetically\n- **Answer**:\n  ```\n  common: 51\n  core: 80\n  microservices: 61\n  platform-express: 9\n  platform-fastify: 3\n  platform-socket.io: 1\n  platform-ws: 0\n  testing: 0\n  websockets: 18\n  ```\n- **Turns used**: 6\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~2,500\n- **Notes**: All packages had the same version (11.1.19), so version-based tasks would not be interesting. The spec-file count task was chosen because it naturally maps to the brick's `parallel` tool — 9 independent `find` commands with no ordering dependency. Results were verified twice with consistent output.",
+  "mini_task_spec": "For each of the 9 package directories under `test-repo/packages/` (i.e., `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets`), count the number of `*.spec.ts` files anywhere within that package directory (recursively, using `find <pkg_dir> -name \"*.spec.ts\"`). Use the batch brick's `parallel` tool to run all 9 `find` commands simultaneously. Report the results as a list sorted alphabetically by package directory name, in the format `<package-name>: <count>` (one per line).\n\nExpected output format example:\n```\ncommon: <N>\ncore: <N>\n...\n```",
+  "workdir": "/tmp/focus-bench/batch-native-2026-04-26T12-43-14-561",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "session",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:09:20.008Z",
+  "duration_ms": 127378,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 47,
+    "cache_creation_input_tokens": 28839,
+    "cache_read_input_tokens": 691680,
+    "output_tokens": 6771,
+    "total": 727337
+  },
+  "session_id": "363cc321-9ef8-4003-a74b-4382a60f4b76",
+  "result_block": "## Result\n\n- **Brick**: session\n- **Mode**: native\n- **Mini-task**: List exported class names from each file in `test-repo/packages/core/exceptions/`\n- **Answer**:\n  ```\n  packages/core/exceptions/base-exception-filter-context.ts: BaseExceptionFilterContext\n  packages/core/exceptions/base-exception-filter.ts: BaseExceptionFilter\n  packages/core/exceptions/exceptions-handler.ts: ExceptionsHandler\n  packages/core/exceptions/external-exception-filter-context.ts: ExternalExceptionFilterContext\n  packages/core/exceptions/external-exception-filter.ts: ExternalExceptionFilter\n  packages/core/exceptions/external-exceptions-handler.ts: ExternalExceptionsHandler\n  ```\n- **Turns used**: 8\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~4 500\n- **Notes**: `index.ts` exists in the directory but only re-exports `BaseExceptionFilter` — it defines no class of its own and is excluded from the class-name listing (but included in the `files` array of any session save). All 6 class-defining files were read and verified. No ambiguities encountered.",
+  "mini_task_spec": "You are investigating the exception handling subsystem of a NestJS monorepo located at `test-repo/`. Read every TypeScript source file (`.ts`) inside `test-repo/packages/core/exceptions/`. There are 7 files in that directory; 6 of them define a primary exported class (the file `index.ts` only re-exports and defines no class of its own).\n\nFor the **6 class-defining files**, produce a list sorted alphabetically by file path (relative to `test-repo/`). Each line must follow the format:\n\n```\n<relative-path-from-test-repo>: <PrimaryExportedClassName>\n```\n\nThen, using the session brick's `save` tool (tool name `ses__save`, or equivalent), persist a session named `\"exceptions-investigation\"` with:\n- `files` — the 7 relative paths (sorted alphabetically, relative to `test-repo/`)\n- `context` — `\"NestJS core exception handling subsystem investigation\"`\n- `notes` — the 6 `path: ClassName` pairs joined by `\"; \"`\n\nReport the final `path: ClassName` list as the answer (one pair per line, alphabetically sorted, paths relative to `test-repo/`).\n\n---",
+  "workdir": "/tmp/focus-bench/session-native-2026-04-26T14-09-20-008",
+  "exit_reason": "ok"
+}

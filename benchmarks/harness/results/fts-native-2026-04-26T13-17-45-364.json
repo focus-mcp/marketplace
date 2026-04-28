@@ -1,0 +1,26 @@
+{
+  "brick": "fts",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:15:27.417Z",
+  "duration_ms": 137947,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 50,
+    "cache_creation_input_tokens": 70662,
+    "cache_read_input_tokens": 929073,
+    "output_tokens": 7653,
+    "total": 1007438
+  },
+  "session_id": "176663a4-9cfc-4f67-bfce-be29ab058c40",
+  "result_block": "## Result\n\n- **Brick**: fts\n- **Mode**: native\n- **Mini-task**: Find top-3 most TF-IDF-relevant non-test `.ts` files in `packages/core` for query \"interceptor\"\n- **Answer**:\n  ```\n  packages/core/interceptors/interceptors-context-creator.ts\n  packages/core/application-config.ts\n  packages/core/helpers/external-context-creator.ts\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~6,000\n- **Notes**: Native mode approximated TF-IDF by (a) counting all case-insensitive occurrences of \"interceptor\" in each of 178 non-test `.ts` files and (b) normalizing by line count as a document-length proxy. Raw counts were 30 / 25 / 20 for the top three; their normalized TFs (0.244 / 0.167 / 0.055) preserved the same rank order, so the result is robust across both raw-count and length-normalized TF regimes. The `grep -c` (lines-with-match) flag was avoided in favor of `grep -oi | wc -l` for accurate per-occurrence counting.",
+  "mini_task_spec": "Index all non-test TypeScript files in `test-repo/packages/core` (i.e., `.ts` files that are NOT under any `test/` sub-directory and do NOT have the `.spec.ts` suffix) using full-text search with TF-IDF ranking. Then search the resulting index for the query term `interceptor`. Return the **top 3** file paths (relative to `test-repo/`) ranked by TF-IDF relevance score descending. In the event of a score tie, sort alphabetically by file path. Output format: one relative file path per line, no scores, no extra text.\n\n---",
+  "workdir": "/tmp/focus-bench/fts-native-2026-04-26T13-15-27-417",
+  "exit_reason": "ok"
+}

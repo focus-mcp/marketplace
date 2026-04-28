@@ -1,0 +1,26 @@
+{
+  "brick": "graphquery",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:12:13.238Z",
+  "duration_ms": 143647,
+  "turns": 24,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 61,
+    "cache_creation_input_tokens": 78835,
+    "cache_read_input_tokens": 1115915,
+    "output_tokens": 10335,
+    "total": 1205146
+  },
+  "session_id": "b61186cb-9635-43b8-a00e-d001b714cbd7",
+  "result_block": "## Result\n- **Brick**: graphquery\n- **Mode**: native\n- **Mini-task**: Find all non-test source files in `packages/core/` that directly import `GraphInspector`, sorted alphabetically\n- **Answer**:\n  ```\n  packages/core/injector/instance-loader.ts\n  packages/core/injector/internal-core-module/internal-core-module-factory.ts\n  packages/core/inspector/noop-graph-inspector.ts\n  packages/core/middleware/middleware-module.ts\n  packages/core/nest-application.ts\n  packages/core/nest-factory.ts\n  packages/core/router/router-explorer.ts\n  packages/core/router/routes-resolver.ts\n  packages/core/scanner.ts\n  ```\n- **Turns used**: 14\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~8,000\n- **Notes**: The graphquery brick's `neighbors` tool directly models this \"which nodes are connected to GraphInspector\" query. In native mode it required reading the codebase structure, then using `grep -rl` with exclusion filters for test/spec files. The brick would expose this as a single `neighbors(id=\"GraphInspector\", direction=\"in\", edgeType=\"imports\")` call followed by filtering internal/test nodes.",
+  "mini_task_spec": "In the `test-repo/` NestJS codebase, use the graphquery brick to find all nodes in `packages/core/` that are \"neighbors\" of the `GraphInspector` node (i.e., all non-test TypeScript source files that directly import `GraphInspector`). Specifically: query the knowledge graph for all source-file nodes that have an incoming or outgoing dependency edge to `GraphInspector`, excluding any test or spec files (files under `test/` directories or with `.spec.ts` extensions). List the file paths relative to `test-repo/`, one per line, sorted alphabetically.\n\nExpected answer format: list of relative file paths (relative to `test-repo/`), one per line, sorted alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/graphquery-native-2026-04-26T18-12-13-238",
+  "exit_reason": "ok"
+}

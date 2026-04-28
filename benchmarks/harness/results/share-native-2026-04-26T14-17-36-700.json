@@ -1,0 +1,26 @@
+{
+  "brick": "share",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:16:30.856Z",
+  "duration_ms": 65844,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 16095,
+    "cache_read_input_tokens": 468719,
+    "output_tokens": 4169,
+    "total": 489018
+  },
+  "session_id": "0685a41d-4cdb-4823-9009-3dbaf1b02872",
+  "result_block": "## Result\n- **Brick**: share\n- **Mode**: native\n- **Mini-task**: Count non-test `.ts` files per package to populate multi-agent shared context keys\n- **Answer**:\n  ```\n  common:file_count=188\n  core:file_count=178\n  microservices:file_count=132\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~3,500\n- **Notes**: All spec files in `packages/common` reside inside `test/` subdirectories, so the two exclusion criteria (`*.spec.ts` and `*/test/*`) don't double-count. In `packages/core` there is 1 non-spec helper file inside `test/` (string.cleaner.ts), and in `packages/microservices` there are 3 such helpers — all correctly excluded. The \"share\" brick's native equivalent is simply counting files with `find`; the brick itself would be exercised by calling `shr__context`, `shr__files`, and `shr__results` with the computed values.",
+  "mini_task_spec": "In the NestJS test-repo at `test-repo/packages/`, three agents are assigned to perform a code audit of three packages: `agent-common` owns `packages/common`, `agent-core` owns `packages/core`, and `agent-microservices` owns `packages/microservices`. Each agent must:\n\n1. Use the `shr__files` tool to register all non-test TypeScript source files it owns (i.e., all `.ts` files in its package, excluding files whose name ends in `.spec.ts` **and** excluding any file located under a `test/` subdirectory).\n2. Use the `shr__context` tool to store the count of those files under the key `<package>:file_count` (e.g., `common:file_count`).\n3. Use the `shr__results` tool to store the file list under task ID `<package>:audit`.\n\nYour task: using the `shr__context` tool, report the values stored for the three keys `common:file_count`, `core:file_count`, and `microservices:file_count` after all agents have completed step 2.\n\nExpected answer format: three lines, one per agent, in the form `<key>=<integer>`, sorted alphabetically by key.\n\n---",
+  "workdir": "/tmp/focus-bench/share-native-2026-04-26T14-16-30-856",
+  "exit_reason": "ok"
+}

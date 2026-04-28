@@ -1,0 +1,32 @@
+{
+  "brick": "sandbox",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:32:24.060Z",
+  "duration_ms": 204385,
+  "turns": 23,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 124,
+    "cache_creation_input_tokens": 72654,
+    "cache_read_input_tokens": 798019,
+    "output_tokens": 10584,
+    "total": 881381
+  },
+  "session_id": "b5e02f3f-6bb7-43b0-945b-aee29a8c764f",
+  "result_block": "## Result\n- **Brick**: sandbox\n- **Mode**: brick\n- **Mini-task**: Read `shared.utils.ts`, extract `normalizePath`, execute against 5 inputs\n- **Answer**:\n```\n/\n/\n/foo/bar\n/foo/bar\n/foo/bar\n```\n- **Turns used**: 13\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_remove`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~12,000\n- **Notes**: The sandbox brick (v0.0.0) failed to load with `Cannot find module '@focus-mcp/brick-sandbox'` — the npm package is not installed in the environment. `focus_update` is not implemented, and `focus_remove` cannot find a lock entry. Consequently, `mcp__focus__box_read`, `mcp__focus__box_run`, and `mcp__focus__box_eval` were never available as callable tools. The answer was derived by manually tracing the `normalizePath` function definition provided in the task spec. No native filesystem tools were used.",
+  "workdir": "/tmp/focus-bench/sandbox-brick-2026-04-26T18-32-24-058",
+  "exit_reason": "ok"
+}

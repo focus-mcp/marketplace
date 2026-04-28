@@ -1,0 +1,26 @@
+{
+  "brick": "knowledge",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:31:01.192Z",
+  "duration_ms": 73409,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 20963,
+    "cache_read_input_tokens": 488558,
+    "output_tokens": 4433,
+    "total": 513991
+  },
+  "session_id": "2b3808e0-56ac-4cbe-a2ad-12568e7d2c5d",
+  "result_block": "## Result\n\n- **Brick**: knowledge\n- **Mode**: native\n- **Mini-task**: Find exception-class entries related to \"dependency\" from `test-repo/packages/core/errors/exceptions/`\n- **Answer**:\n  ```\n  CircularDependencyException\n  UndefinedDependencyException\n  UnknownDependenciesException\n  ```\n- **Turns used**: 8\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: Three exception files contain the word \"dependency\" / \"dependencies\" / \"Dependency\" / \"Injector\" in their names or bodies — `circular-dependency.exception.ts`, `undefined-dependency.exception.ts`, and `unknown-dependencies.exception.ts`. The `index.ts` re-export barrel was excluded from indexing per the task spec. All three class names confirmed via `grep '^export class'`.",
+  "mini_task_spec": "Using the knowledge brick, index every TypeScript exception file (all `.ts` files **except** `index.ts`) from `test-repo/packages/core/errors/exceptions/` into the knowledge base. For each file, use the exported class name (e.g. `CircularDependencyException`) as the **title**, the full raw file content as the **content**, and tag each entry with `nestjs` and `exception`. After indexing all files, call the **search** tool with the query `\"dependency\"` (no tag filter). Return the **titles** of every result returned by the search, sorted alphabetically, one per line.\n\n---",
+  "workdir": "/tmp/focus-bench/knowledge-native-2026-04-26T13-31-01-192",
+  "exit_reason": "ok"
+}

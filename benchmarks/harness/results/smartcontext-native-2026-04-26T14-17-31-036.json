@@ -1,0 +1,27 @@
+{
+  "brick": "smartcontext",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:15:23.162Z",
+  "duration_ms": 127874,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 52,
+    "cache_creation_input_tokens": 62477,
+    "cache_read_input_tokens": 886468,
+    "output_tokens": 7151,
+    "total": 956148
+  },
+  "session_id": "8ddad8a1-4ddf-48f9-befe-4d11d3e7aeae",
+  "result_block": "## Result\n\n- **Brick**: smartcontext\n- **Mode**: native\n- **Mini-task**: Enumerate guards pipeline source files + their direct local imports in `test-repo/packages/core/`\n- **Answer**:\n  ```\n  test-repo/packages/core/application-config.ts\n  test-repo/packages/core/guards/constants.ts\n  test-repo/packages/core/guards/guards-consumer.ts\n  test-repo/packages/core/guards/guards-context-creator.ts\n  test-repo/packages/core/guards/index.ts\n  test-repo/packages/core/helpers/context-creator.ts\n  test-repo/packages/core/helpers/execution-context-host.ts\n  test-repo/packages/core/injector/constants.ts\n  test-repo/packages/core/injector/container.ts\n  test-repo/packages/core/injector/instance-wrapper.ts\n  ```\n- **Turns used**: 7\n- **Tools used**: `Read`, `Bash`, `Grep`\n- **Rough token estimate**: ~3,500\n- **Notes**: The brick's `load` tool would auto-discover these same files given a task like \"understand the guards execution pipeline\" within a token budget. In native mode I manually read the guard directory files and ran targeted grep on their import statements to reconstruct the same closure. No ambiguity — the set is fully deterministic from the import graph (one hop from `guards/`).",
+  "mini_task_spec": "Using the repository at `test-repo/` (a NestJS monorepo shallow clone), identify the complete set of non-test TypeScript source files in `test-repo/packages/core/` that are directly relevant to the guards execution pipeline. Specifically:\n\n1. List every `.ts` file inside `test-repo/packages/core/guards/` (there are no subdirectories there, and you should exclude test files — none exist in that directory itself).\n2. Inspect the `import` statements in each of those guard files and collect every **direct local import** that resolves to a `.ts` file inside `test-repo/packages/core/` (i.e., imports beginning with `'../'` or `'./'` that reference another file in the core package — not `@nestjs/common` or other node_modules).\n3. Union the two sets (the guard files themselves + the directly-imported core files). Do **not** recurse into transitive imports.\n\nReturn the resulting file paths relative to `test-repo/`, one per line, sorted alphabetically.\n\n---",
+  "workdir": "/tmp/focus-bench/smartcontext-native-2026-04-26T14-15-23-162",
+  "exit_reason": "ok"
+}

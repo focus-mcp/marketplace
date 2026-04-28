@@ -1,0 +1,26 @@
+{
+  "brick": "filelist",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:06:10.151Z",
+  "duration_ms": 46738,
+  "turns": 11,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 25466,
+    "cache_read_input_tokens": 372238,
+    "output_tokens": 2950,
+    "total": 400683
+  },
+  "session_id": "600650fb-9dc8-4de3-bffa-09396df8aff7",
+  "result_block": "## Result\n\n- **Brick**: filelist\n- **Mode**: native\n- **Mini-task**: Find all `.spec.ts` files in `test-repo/packages/common` via glob, sorted alphabetically\n- **Answer**:\n```\npackages/common/test/decorators/apply-decorators.spec.ts\npackages/common/test/decorators/bind.decorator.spec.ts\npackages/common/test/decorators/catch.decorator.spec.ts\npackages/common/test/decorators/controller.decorator.spec.ts\npackages/common/test/decorators/create-param-decorator.spec.ts\npackages/common/test/decorators/dependencies.decorator.spec.ts\npackages/common/test/decorators/exception-filters.decorator.spec.ts\npackages/common/test/decorators/global.decorator.spec.ts\npackages/common/test/decorators/header.decorator.spec.ts\npackages/common/test/decorators/http-code.decorator.spec.ts\npackages/common/test/decorators/inject.decorator.spec.ts\npackages/common/test/decorators/injectable.decorator.spec.ts\npackages/common/test/decorators/module.decorator.spec.ts\npackages/common/test/decorators/redirect.decorator.spec.ts\npackages/common/test/decorators/render.decorator.spec.ts\npackages/common/test/decorators/request-mapping.decorator.spec.ts\npackages/common/test/decorators/route-params.decorator.spec.ts\npackages/common/test/decorators/set-metadata.decorator.spec.ts\npackages/common/test/decorators/sse.decorator.spec.ts\npackages/common/test/decorators/use-guards.decorator.spec.ts\npackages/common/test/decorators/use-interceptors.decorator.spec.ts\npackages/common/test/decorators/use-pipes.decorator.spec.ts\npackages/common/test/decorators/version.decorator.spec.ts\npackages/common/test/exceptions/http.exception.spec.ts\npackages/common/test/file-stream/streamable-file.spec.ts\npackages/common/test/module-utils/configurable-module.builder.spec.ts\npackages/common/test/module-utils/utils/get-injection-providers.util.spec.ts\npackages/common/test/pipes/default-value.pipe.spec.ts\npackages/common/test/pipes/file/file-type.validator.spec.ts\npackages/common/test/pipes/file/max-file-size.validator.spec.ts\npackages/common/test/pipes/file/parse-file-pipe.builder.spec.ts\npackages/common/test/pipes/file/parse-file.pipe.spec.ts\npackages/common/test/pipes/parse-array.pipe.spec.ts\npackages/common/test/pipes/parse-bool.pipe.spec.ts\npackages/common/test/pipes/parse-date.pipe.spec.ts\npackages/common/test/pipes/parse-enum.pipe.spec.ts\npackages/common/test/pipes/parse-float.pipe.spec.ts\npackages/common/test/pipes/parse-int.pipe.spec.ts\npackages/common/test/pipes/parse-uuid.pipe.spec.ts\npackages/common/test/pipes/validation.pipe.spec.ts\npackages/common/test/serializer/class-serializer.interceptor.spec.ts\npackages/common/test/services/logger.service.spec.ts\npackages/common/test/services/utils/filter-log-levels.util.spec.ts\npackages/common/test/services/utils/is-log-level-enabled.util.spec.ts\npackages/common/test/utils/forward-ref.util.spec.ts\npackages/common/test/utils/load-package.util.spec.ts\npackages/common/test/utils/merge-with-values.util.spec.ts\npackages/common/test/utils/random-string-generator.util.spec.ts\npackages/common/test/utils/select-exception-filter-metadata.util.spec.ts\npackages/common/test/utils/shared.utils.spec.ts\npackages/common/test/utils/validate-each.util.spec.ts\n```\n(51 files total)\n\n- **Turns used**: 4\n- **Tools used**: Bash, Read, Glob\n- **Rough token estimate**: ~3,500\n- **Notes**: The `find` + `sort` Bash command was used to produce the canonical sorted order, since the Glob tool returns results ordered by modification time (not alphabetically). The `inject.decorator.spec.ts` / `injectable.decorator.spec.ts` ordering differs slightly between the two tools — `sort` gives the definitive alphabetical order used in the answer.",
+  "mini_task_spec": "Using the `filelist` brick's `glob` tool, find all files matching the pattern `**/*.spec.ts` within the directory `test-repo/packages/common`. List every matching file path, expressed relative to `test-repo/` (i.e. strip the leading `./test-repo/` prefix so paths begin with `packages/common/...`), sorted alphabetically, one per line.\n\nExpected answer format: a sorted list of relative paths (from `test-repo/`), one per line, like:\n```\npackages/common/test/decorators/apply-decorators.spec.ts\npackages/common/test/decorators/bind.decorator.spec.ts\n...\n```\n\n---",
+  "workdir": "/tmp/focus-bench/filelist-native-2026-04-26T13-06-10-151",
+  "exit_reason": "ok"
+}

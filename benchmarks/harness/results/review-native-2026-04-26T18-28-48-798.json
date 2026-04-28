@@ -1,0 +1,25 @@
+{
+  "brick": "review",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:26:32.015Z",
+  "duration_ms": 136783,
+  "turns": 24,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 59,
+    "cache_creation_input_tokens": 27658,
+    "cache_read_input_tokens": 950542,
+    "output_tokens": 5763,
+    "total": 984022
+  },
+  "session_id": "a0b8b716-6159-4571-9c75-72d2593f5c50",
+  "result_block": "## Result\n\n- **Brick**: review\n- **Mode**: native\n- **Mini-task**: List architectural subdirectories of `packages/core` (excluding `test`), sorted alphabetically\n- **Answer**:\n  ```\n  adapters\n  discovery\n  errors\n  exceptions\n  guards\n  helpers\n  hooks\n  injector\n  inspector\n  interceptors\n  interfaces\n  middleware\n  pipes\n  repl\n  router\n  services\n  ```\n- **Turns used**: 8\n- **Tools used**: `Bash`, `Read`\n- **Rough token estimate**: ~4 000\n- **Notes**: No security anti-patterns (eval, hardcoded secrets, SQL injection) were found in `packages/core` — the security tool would return clean results on most files here. Architecture review was the cleanest deterministic exercise for this brick.",
+  "mini_task_spec": "Using the `architecture` tool from the **review** brick, identify the architectural components of the NestJS core package located at `packages/core` in the test repository. Specifically, list all immediate subdirectories of `test-repo/packages/core` that represent architectural layers or modules — excluding the `test` directory — sorted alphabetically, one name per line. The expected output is a plain alphabetically-sorted list of directory names (just the bare names, not full paths).\n\n---",
+  "workdir": "/tmp/focus-bench/review-native-2026-04-26T18-26-32-015",
+  "exit_reason": "ok"
+}

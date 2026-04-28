@@ -1,0 +1,25 @@
+{
+  "brick": "decision",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:54:18.024Z",
+  "duration_ms": 64426,
+  "turns": 9,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 27,
+    "cache_creation_input_tokens": 14849,
+    "cache_read_input_tokens": 320143,
+    "output_tokens": 3269,
+    "total": 338288
+  },
+  "session_id": "fffe182b-bd7a-43d8-8ba5-9a7338285e59",
+  "result_block": "## Result\n\n- **Brick**: decision\n- **Mode**: native\n- **Mini-task**: Compute weighted tradeoff scores for the two HTTP adapter options recorded in `test-repo/decision-http-adapter.json` and identify the recommended option\n- **Answer**:\n  ```\n  platform-express: 243\n  platform-fastify: 188\n  Recommended: platform-express\n  ```\n- **Turns used**: 4\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1 200\n- **Notes**: The test-repo ships with a pre-existing `decision-http-adapter.json` that directly demonstrates the brick's full workflow (options → tradeoffs → recommend → record). The weighted scores are unambiguous: `platform-express` wins 243 vs 188, consistent with the `chosen` and `rationale` fields already in the file. No ambiguity or edge cases.",
+  "mini_task_spec": "Read the file `test-repo/decision-http-adapter.json`. It contains a structured decision record with:\n- A `question` field (which HTTP adapter to use for a NestJS app)\n- An `options` array (two options: `platform-express` and `platform-fastify`, each with `pros` and `cons`)\n- A `criteria` array (four criteria, each with a `name` and a `weight` 1–10)\n- A `scores` array (one entry per option, each with a `scores` array of 4 integers 1–10, aligned to the criteria in order)\n\nUsing the **decision brick** (`dec_options`, `dec_tradeoffs`, `dec_recommend`):\n1. Call `dec_options` to register the question and both options with their pros/cons.\n2. Call `dec_tradeoffs` with the returned `decisionId`, the four criteria and their weights, and the per-option scores exactly as given in the JSON.\n3. Call `dec_recommend` with the same `decisionId` to get the weighted recommendation.\n\nReport the weighted score for each option and the recommended option. The weighted score for an option is computed as the sum of (criterion weight × option score) across all four criteria (using the ordering from the JSON arrays).\n\nExpected answer format — three lines exactly:\n```\nplatform-express: <weighted total>\nplatform-fastify: <weighted total>\nRecommended: <option label>\n```\n(lines 1–2 sorted by score descending)\n\n---",
+  "workdir": "/tmp/focus-bench/decision-native-2026-04-26T12-54-18-023",
+  "exit_reason": "ok"
+}

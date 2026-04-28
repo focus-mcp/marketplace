@@ -1,0 +1,25 @@
+{
+  "brick": "sandbox",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:28:54.557Z",
+  "duration_ms": 59685,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 33,
+    "cache_creation_input_tokens": 24647,
+    "cache_read_input_tokens": 417748,
+    "output_tokens": 3549,
+    "total": 445977
+  },
+  "session_id": "906c0932-3fcc-4dae-b59f-d7ebdc5bbac4",
+  "result_block": "## Result\n\n- **Brick**: sandbox\n- **Mode**: native\n- **Mini-task**: Sum all 2xx HTTP status code values in the NestJS HttpStatus enum\n- **Answer**: `2046`\n- **Turns used**: 4\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~800\n- **Notes**: Solved entirely with `grep -oE '= [2][0-9]{2}'` to extract values then `awk` to sum. The sandbox brick's value here would be using `box__read` + `box__eval` or `box__run` to parse the enum natively in TypeScript/JS — equivalent work but without shell arithmetic.",
+  "mini_task_spec": "Read the file `test-repo/packages/common/enums/http-status.enum.ts`. It contains a TypeScript `HttpStatus` enum with numeric values. Find every enum member whose value falls in the **2xx success range** (200–299 inclusive) and compute the **sum** of those numeric values. Report the single integer result.\n\nExpected answer format: a single integer (e.g. `1234`).\n\n---",
+  "workdir": "/tmp/focus-bench/sandbox-native-2026-04-26T19-28-54-557",
+  "exit_reason": "ok"
+}

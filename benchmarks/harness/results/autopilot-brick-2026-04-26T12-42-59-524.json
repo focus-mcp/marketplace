@@ -1,0 +1,32 @@
+{
+  "brick": "autopilot",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T12:41:18.272Z",
+  "duration_ms": 101252,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 100,
+    "cache_creation_input_tokens": 31182,
+    "cache_read_input_tokens": 560527,
+    "output_tokens": 5420,
+    "total": 597229
+  },
+  "session_id": "781a1a9f-a772-4d1e-8f43-7c44951400ff",
+  "result_block": "## Result\n- **Brick**: autopilot\n- **Mode**: brick\n- **Mini-task**: Use autopilot `plan` → `execute` → `status` workflow to find and alphabetically list all exported exception class names from `test-repo/packages/common/exceptions/*.ts`\n- **Answer**: PARTIAL — autopilot brick could not be loaded; `auto_plan`/`auto_execute`/`auto_status` tools were never registered. The underlying npm package `@focus-mcp/brick-autopilot` was missing from node_modules (error: `Cannot find module '@focus-mcp/brick-autopilot'`), so no plan could be created and no files were inspected via the brick.\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_remove`, `mcp__focus__focus_catalog_add`\n- **Rough token estimate**: ~4,500\n- **Notes**: The focus MCP server itself is operational (all `mcp__focus__*` tools responded). However, the autopilot brick's npm package was not installed in node_modules (`@focus-mcp/brick-autopilot` missing). `focus_install` reported it as already installed at `^0.0.0`; `focus_update` returned \"not yet implemented\"; `focus_remove` returned \"Lock entry not found\"; `focus_reload` returned \"Brick not found\". The `auto_*` tools never appeared as deferred tools. No workaround was possible within the no-Bash constraint.",
+  "workdir": "/tmp/focus-bench/autopilot-brick-2026-04-26T12-41-18-270",
+  "exit_reason": "ok"
+}

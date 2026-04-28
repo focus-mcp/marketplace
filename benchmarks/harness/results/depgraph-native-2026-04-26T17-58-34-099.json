@@ -1,0 +1,25 @@
+{
+  "brick": "depgraph",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T17:57:09.136Z",
+  "duration_ms": 84963,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 64373,
+    "cache_read_input_tokens": 645934,
+    "output_tokens": 4122,
+    "total": 714477
+  },
+  "session_id": "71a70b17-4a21-48d5-9d7b-9259b2f33b47",
+  "result_block": "## Result\n\n- **Brick**: depgraph\n- **Mode**: native\n- **Mini-task**: Find all non-test `.ts` files in `packages/core` that directly import from `metadata-scanner.ts`\n- **Answer**:\n  ```\n  packages/core/discovery/discovery-module.ts\n  packages/core/middleware/routes-mapper.ts\n  packages/core/nest-factory.ts\n  packages/core/repl/native-functions/methods-repl-fn.ts\n  packages/core/router/paths-explorer.ts\n  packages/core/router/router-explorer.ts\n  packages/core/router/routes-resolver.ts\n  packages/core/scanner.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: `packages/core/index.ts` was excluded because it uses `export * from './metadata-scanner'` (a re-export, not an import). All 8 remaining non-test files in `packages/core` that reference `metadata-scanner` use a genuine `import` statement.",
+  "mini_task_spec": "Using the NestJS repository located in `test-repo/`, identify all TypeScript source files within `test-repo/packages/core` (excluding any files inside `test/` subdirectories) that directly **import** (not re-export) from `metadata-scanner.ts`. A \"direct import\" means the file contains an `import` statement whose module specifier resolves to `metadata-scanner` (e.g. `'./metadata-scanner'`, `'../metadata-scanner'`, `'../../metadata-scanner'`). Re-export lines (`export * from './metadata-scanner'`) do not count.\n\nList the matching file paths relative to `test-repo/`, one per line, sorted alphabetically.\n\nExpected answer format example:\n```\npackages/core/discovery/discovery-module.ts\npackages/core/middleware/routes-mapper.ts\n...\n```",
+  "workdir": "/tmp/focus-bench/depgraph-native-2026-04-26T17-57-09-135",
+  "exit_reason": "ok"
+}

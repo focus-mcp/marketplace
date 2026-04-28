@@ -1,0 +1,26 @@
+{
+  "brick": "smartread",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:38:54.218Z",
+  "duration_ms": 77177,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 36,
+    "cache_creation_input_tokens": 20173,
+    "cache_read_input_tokens": 463581,
+    "output_tokens": 4255,
+    "total": 488045
+  },
+  "session_id": "27c096b0-6da8-4ffe-a734-10eb51a64f41",
+  "result_block": "## Result\n- **Brick**: smartread\n- **Mode**: native\n- **Mini-task**: List all import source paths (the `from '...'` values) in `packages/core/nest-factory.ts`, in order of appearance\n- **Answer**:\n  ```\n  @nestjs/common\n  @nestjs/common/interfaces/microservices/nest-microservice-options.interface\n  @nestjs/common/interfaces/nest-application-context-options.interface\n  @nestjs/common/interfaces/nest-application-options.interface\n  @nestjs/common/services/console-logger.service\n  @nestjs/common/services/logger.service\n  @nestjs/common/utils/load-package.util\n  @nestjs/common/utils/shared.utils\n  ./adapters/http-adapter\n  ./application-config\n  ./constants\n  ./errors/exceptions-zone\n  ./helpers/load-adapter\n  ./helpers/rethrow\n  ./injector/container\n  ./injector/injector\n  ./injector/instance-loader\n  ./inspector/graph-inspector\n  ./inspector/noop-graph-inspector\n  ./inspector/uuid-factory\n  ./metadata-scanner\n  ./nest-application\n  ./nest-application-context\n  ./scanner\n  ```\n  (24 import sources total)\n- **Turns used**: 6\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~1,200\n- **Notes**: The first import is a multi-line block (lines 1–9) with a single `from '@nestjs/common'` clause — Grep on `^import ` catches the opening line, but the `from` is on line 9. Using `from '...'` pattern directly gave the clean list. No unusual issues.",
+  "mini_task_spec": "Using the `imports` mode of the **smartread** brick, extract all import source paths from `test-repo/packages/core/nest-factory.ts`. Specifically: list the string value of every `from '...'` clause in that file, in the order each import statement appears (top to bottom). Include each source path exactly once, even if multi-line import blocks share one `from` clause. Output one source path per line, no surrounding quotes.\n\n---",
+  "workdir": "/tmp/focus-bench/smartread-native-2026-04-26T18-38-54-218",
+  "exit_reason": "ok"
+}

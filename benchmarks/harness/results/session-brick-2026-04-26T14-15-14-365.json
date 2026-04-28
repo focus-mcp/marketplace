@@ -1,0 +1,33 @@
+{
+  "brick": "session",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:11:27.389Z",
+  "duration_ms": 226976,
+  "turns": 20,
+  "tools_used": [
+    "Agent",
+    "Monitor",
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 123,
+    "cache_creation_input_tokens": 122574,
+    "cache_read_input_tokens": 916078,
+    "output_tokens": 9971,
+    "total": 1048746
+  },
+  "session_id": "5cc25771-1eca-4e43-bedb-fbe9efc791a0",
+  "result_block": "## Result\n- **Brick**: session (prefix: `ses`)\n- **Mode**: brick\n- **Mini-task**: Read 7 TypeScript files in `test-repo/packages/core/exceptions/`, identify the primary exported class in each of the 6 class-defining files, then persist session via `ses__save`\n- **Answer**:\n  ```\n  packages/core/exceptions/base-exception-filter-context.ts: BaseExceptionFilterContext\n  packages/core/exceptions/base-exception-filter.ts: BaseExceptionFilter\n  packages/core/exceptions/exceptions-handler.ts: ExceptionsHandler\n  packages/core/exceptions/external-exception-filter-context.ts: ExternalExceptionFilterContext\n  packages/core/exceptions/external-exception-filter.ts: ExternalExceptionFilter\n  packages/core/exceptions/external-exceptions-handler.ts: ExternalExceptionsHandler\n  ```\n- **Turns used**: 19\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_reload`, `mcp__focus__focus_update`\n- **Rough token estimate**: ~12,000\n- **Notes**:\n  - **`ses__save` could not be called.** `focus_install` reported the brick is already installed (version `^0.0.0`), but `focus_load` failed with `Cannot find module '@focus-mcp/brick-session'` — the npm package is not present in the local node_modules. `focus_reload` returned \"Brick not found\". `focus_update` is not yet implemented. `ses__save` does not appear in the deferred tools registry. As a result, the session save step was skipped entirely.\n  - File data was gathered via an Explore sub-agent (the `Agent` tool) since no focus tool provides file-reading capability and `Read` had already been used for brick.json inspection.\n  - `index.ts` confirmed: re-exports only (`export * from './base-exception-filter'`), no class defined.",
+  "workdir": "/tmp/focus-bench/session-brick-2026-04-26T14-11-27-386",
+  "exit_reason": "ok"
+}

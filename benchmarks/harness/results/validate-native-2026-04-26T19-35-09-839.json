@@ -1,0 +1,26 @@
+{
+  "brick": "validate",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:32:47.508Z",
+  "duration_ms": 142331,
+  "turns": 20,
+  "tools_used": [
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 51,
+    "cache_creation_input_tokens": 118200,
+    "cache_read_input_tokens": 1173758,
+    "output_tokens": 7331,
+    "total": 1299340
+  },
+  "session_id": "1b87b1d0-ede7-4124-80ab-7fb3af2880e7",
+  "result_block": "## Result\n\n- **Brick**: validate\n- **Mode**: native\n- **Mini-task**: Count `any` annotations and type issues in `test-repo/integration/hello-world/src/hello/hello.controller.ts`\n- **Answer**: `any_count=2`, `any_lines=29,30`, `missing_return_types=0`, `implicit_any=0`\n  - Line 29: `user: any,` (parameter type)\n  - Line 30: `): any {` (return type annotation using `any`)\n  - All four methods (`greeting`, `asyncGreeting`, `streamGreeting`, `localPipe`) have explicit return types; none are missing.\n  - No implicit `any` instances (all parameters and variables are explicitly typed or inferred from concrete types).\n- **Turns used**: 10\n- **Tools used**: Read, Glob, Grep\n- **Rough token estimate**: ~12,000\n- **Notes**: No `debugger` statements exist anywhere in the test-repo TypeScript files, making that lint check trivially false for any target file. The `any` instances on lines 29–30 are intentional NestJS integration-test stubs. All other methods in the file carry precise return types, so the `types` tool would only flag the two `any` annotations.",
+  "mini_task_spec": "Apply the `types` validation tool from the `validate` brick to the file `test-repo/integration/hello-world/src/hello/hello.controller.ts`. Report:\n1. The total count of explicit `any` type annotations found in the file.\n2. The line numbers where each `any` annotation appears.\n3. The count of methods that are missing a return type annotation.\n4. The count of implicit `any` instances.\n\nThe expected answer format is four fields: `any_count` (integer), `any_lines` (comma-separated line numbers, ascending), `missing_return_types` (integer), `implicit_any` (integer).\n\n---",
+  "workdir": "/tmp/focus-bench/validate-native-2026-04-26T19-32-47-508",
+  "exit_reason": "ok"
+}

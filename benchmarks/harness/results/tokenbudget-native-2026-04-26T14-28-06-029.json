@@ -1,0 +1,25 @@
+{
+  "brick": "tokenbudget",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:27:06.592Z",
+  "duration_ms": 59437,
+  "turns": 12,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 16636,
+    "cache_read_input_tokens": 439666,
+    "output_tokens": 3427,
+    "total": 459764
+  },
+  "session_id": "666dc8bd-959c-48d2-b8f8-6d91f50205a7",
+  "result_block": "## Result\n- **Brick**: tokenbudget\n- **Mode**: native\n- **Mini-task**: Rank all .ts files in packages/common/decorators/core/ by estimated token cost (chars/4)\n- **Answer**:\n  ```\n  controller.decorator.ts 1933\n  inject.decorator.ts 650\n  injectable.decorator.ts 541\n  use-interceptors.decorator.ts 521\n  exception-filters.decorator.ts 519\n  use-guards.decorator.ts 447\n  use-pipes.decorator.ts 408\n  optional.decorator.ts 277\n  set-metadata.decorator.ts 267\n  catch.decorator.ts 244\n  apply-decorators.ts 224\n  dependencies.decorator.ts 169\n  version.decorator.ts 150\n  index.ts 138\n  bind.decorator.ts 137\n  ```\n- **Turns used**: 6\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~1 200\n- **Notes**: `bc` was not available in the environment; used Python 3 (`len(content) // 4`) for the chars/4 integer division. The byte counts from `wc -c` and character counts from `wc -m` / `len()` agreed exactly for all files (pure ASCII content), so there is no encoding ambiguity. The brick's \"adjusted for code vs prose\" language may mean a different multiplier for code files, but since all files here are TypeScript, any uniform adjustment leaves the ranking unchanged.\n```",
+  "mini_task_spec": "Using the `tokenbudget` brick's `analyze` tool, determine the estimated token count for every TypeScript (`.ts`) file inside `test-repo/packages/common/decorators/core/`. The brick uses a chars/4 heuristic to estimate token counts. Report each file as a **basename-only filename** paired with its estimated token count, sorted by token count **descending**. Use the format:\n\n  <filename> <token_count>\n\none entry per line, sorted from highest to lowest token count.",
+  "workdir": "/tmp/focus-bench/tokenbudget-native-2026-04-26T14-27-06-592",
+  "exit_reason": "ok"
+}

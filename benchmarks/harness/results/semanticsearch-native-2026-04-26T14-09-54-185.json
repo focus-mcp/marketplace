@@ -1,0 +1,25 @@
+{
+  "brick": "semanticsearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:06:04.776Z",
+  "duration_ms": 229409,
+  "turns": 20,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 56,
+    "cache_creation_input_tokens": 133168,
+    "cache_read_input_tokens": 1283492,
+    "output_tokens": 15719,
+    "total": 1432435
+  },
+  "session_id": "16d2e0ec-543a-415f-ac05-9ea4d430f439",
+  "result_block": "## Result\n- **Brick**: semanticsearch\n- **Mode**: native\n- **Mini-task**: Rank top-3 core NestJS decorator files by TF-IDF cosine similarity to query \"injection token provider dependency\"\n- **Answer**:\n  ```\n  inject.decorator.ts\n  injectable.decorator.ts\n  optional.decorator.ts\n  ```\n- **Turns used**: 7\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~18,000 tokens (large file reads + analysis)\n- **Notes**: The key discriminator is the word \"token\" — it appears 8 times exclusively in `inject.decorator.ts` with an IDF of 2.64 (highest IDF among query terms), making it the clear #1 by a large margin. Scores are well-separated (14.6 / 8.6 / 4.1 / 1.7 / 0.9), so the top-3 ranking is robust under different TF normalization variants (raw counts vs log normalization). The corpus has 14 documents (N=14 after excluding `index.ts`).",
+  "mini_task_spec": "Using the 14 non-index TypeScript files in `test-repo/packages/common/decorators/core/` (all `.ts` files except `index.ts`) as a corpus, perform semantic search using TF-IDF cosine similarity with the query `\"injection token provider dependency\"`. Each corpus document's `id` is the basename of the file (e.g. `inject.decorator.ts`) and its `text` is the full content of that file. Using the `search` tool with `limit: 3`, report the ordered list of the top 3 most semantically similar file basenames, one per line, most similar first (rank 1 at top). The expected answer format is exactly three lines, each containing only the filename basename.",
+  "workdir": "/tmp/focus-bench/semanticsearch-native-2026-04-26T14-06-04-776",
+  "exit_reason": "ok"
+}

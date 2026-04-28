@@ -1,0 +1,26 @@
+{
+  "brick": "graphbuild",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:19:31.541Z",
+  "duration_ms": 110195,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 41276,
+    "cache_read_input_tokens": 729112,
+    "output_tokens": 7266,
+    "total": 777702
+  },
+  "session_id": "2115a2ce-9a98-453d-837d-745bfa6dcb03",
+  "result_block": "## Result\n- **Brick**: graphbuild\n- **Mode**: native\n- **Mini-task**: Find all non-test files in packages/common that import from shared.utils.ts\n- **Answer**:\n```\npackages/common/decorators/core/controller.decorator.ts\npackages/common/decorators/core/exception-filters.decorator.ts\npackages/common/decorators/core/inject.decorator.ts\npackages/common/decorators/core/optional.decorator.ts\npackages/common/decorators/core/use-guards.decorator.ts\npackages/common/decorators/core/use-interceptors.decorator.ts\npackages/common/decorators/core/use-pipes.decorator.ts\npackages/common/decorators/http/create-route-param-metadata.decorator.ts\npackages/common/decorators/http/route-params.decorator.ts\npackages/common/exceptions/http.exception.ts\npackages/common/file-stream/streamable-file.ts\npackages/common/module-utils/utils/get-injection-providers.util.ts\npackages/common/pipes/default-value.pipe.ts\npackages/common/pipes/file/parse-file.pipe.ts\npackages/common/pipes/parse-array.pipe.ts\npackages/common/pipes/parse-bool.pipe.ts\npackages/common/pipes/parse-date.pipe.ts\npackages/common/pipes/parse-enum.pipe.ts\npackages/common/pipes/parse-float.pipe.ts\npackages/common/pipes/parse-int.pipe.ts\npackages/common/pipes/parse-uuid.pipe.ts\npackages/common/pipes/validation.pipe.ts\npackages/common/serializer/class-serializer.interceptor.ts\npackages/common/services/console.service.ts\npackages/common/services/logger.service.ts\n```\n(25 files total)\n- **Turns used**: 8\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: Some imports use multi-line `import { … } from '…shared.utils'` syntax, so a naive `import.*shared.utils` single-line grep misses 2 files (`console.service.ts` and `shared.utils.spec.ts`). Using `from ['\"].*shared\\.utils['\"]` correctly captures all 27 total (25 non-test). The brick's `build` tool would construct this import-edge graph automatically, making the query trivial compared to manual grep chaining.",
+  "mini_task_spec": "Using the graphbuild brick, build a knowledge graph of `test-repo/packages/common` (limit 200 files). Then identify every non-test TypeScript source file in that directory that **directly imports** from `packages/common/utils/shared.utils.ts`. Exclude any file whose path contains `/test/` or whose name ends in `.spec.ts`.\n\nReport the matching file paths relative to `test-repo/`, one per line, sorted alphabetically. The expected answer format is a plain list such as:\n\n```\npackages/common/decorators/core/controller.decorator.ts\npackages/common/exceptions/http.exception.ts\n…\n```",
+  "workdir": "/tmp/focus-bench/graphbuild-native-2026-04-26T13-19-31-540",
+  "exit_reason": "ok"
+}

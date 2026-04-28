@@ -1,0 +1,25 @@
+{
+  "brick": "planning",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:47:48.129Z",
+  "duration_ms": 159761,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 47,
+    "cache_creation_input_tokens": 39049,
+    "cache_read_input_tokens": 697861,
+    "output_tokens": 8749,
+    "total": 745706
+  },
+  "session_id": "f549f890-19b6-44f9-8b97-e5e11eda633c",
+  "result_block": "## Result\n- **Brick**: planning\n- **Mode**: native\n- **Mini-task**: Build a 24-step audit plan for all NestJS common decorators and compute total estimated time\n- **Answer**:\n  Steps in order (24 total):\n  1. Audit apply-decorators\n  2. Audit bind.decorator\n  3. Audit catch.decorator\n  4. Audit controller.decorator\n  5. Audit dependencies.decorator\n  6. Audit exception-filters.decorator\n  7. Audit injectable.decorator\n  8. Audit inject.decorator\n  9. Audit optional.decorator\n  10. Audit set-metadata.decorator\n  11. Audit use-guards.decorator\n  12. Audit use-interceptors.decorator\n  13. Audit use-pipes.decorator\n  14. Audit version.decorator\n  15. Audit create-route-param-metadata.decorator\n  16. Audit header.decorator\n  17. Audit http-code.decorator\n  18. Audit redirect.decorator\n  19. Audit render.decorator\n  20. Audit request-mapping.decorator\n  21. Audit route-params.decorator\n  22. Audit sse.decorator\n  23. Audit global.decorator\n  24. Audit module.decorator\n\n  **Total estimated time: 720 minutes**\n- **Turns used**: 6\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,500\n- **Notes**: The `sort` output for stems within the `core/` category places `injectable.decorator` before `inject.decorator` due to locale-aware collation (`'a' < '.'` in most locales). The spec uses the same `sort` convention. The brick-mode run must reproduce this exact ordering to match.",
+  "mini_task_spec": "Using the planning brick (`mcp__focus__plan__*` tools), complete the following task against the NestJS shallow clone at `test-repo/`:\n\n1. Inspect the directory `test-repo/packages/common/decorators/`. It has three subdirectories: `core/`, `http/`, and `modules/`.\n2. Collect all `.ts` files in those subdirectories that are **not** named `index.ts`. Strip the `.ts` extension from each filename to get the \"stem.\"\n3. Call `mcp__focus__plan__create` with title `\"Audit NestJS Common Decorators\"`.\n4. Call `mcp__focus__plan__steps` to add one step per stem, in this order:\n   - All `core/` stems, alphabetically sorted\n   - All `http/` stems, alphabetically sorted\n   - All `modules/` stems, alphabetically sorted\n   - Each step title: `Audit <stem>` (e.g. `Audit bind.decorator`)\n   - Each step estimate: `30m`\n5. Call `mcp__focus__plan__dependencies` to wire a linear dependency chain: step at index 1 depends on index 0, step at index 2 depends on index 1, …, step at index N-1 depends on index N-2 (0-based).\n6. Call `mcp__focus__plan__estimate` on the plan.\n\n**Report the following, in this exact format:**\n- Line 1: the 24 step titles, one per line, in the order they were added to the plan\n- Final line: `Total estimated time: <N> minutes`\n\n(There is exactly 1 correct answer: 24 steps and 720 minutes total.)\n\n---",
+  "workdir": "/tmp/focus-bench/planning-native-2026-04-26T13-47-48-129",
+  "exit_reason": "ok"
+}

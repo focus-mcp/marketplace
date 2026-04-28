@@ -1,0 +1,25 @@
+{
+  "brick": "planning",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:20:44.083Z",
+  "duration_ms": 129073,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 27684,
+    "cache_read_input_tokens": 564590,
+    "output_tokens": 6833,
+    "total": 599146
+  },
+  "session_id": "ca80bde3-f844-4bb5-a543-0748648b7d91",
+  "result_block": "## Result\n- **Brick**: planning\n- **Mode**: native\n- **Mini-task**: Create a 5-step Express→Fastify migration plan with dependencies and compute the plan estimate\n- **Answer**:\n  total_steps: 5\n  completed: 0\n  blocked: 4\n  estimated_time_remaining: 12h\n- **Turns used**: 7\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~4,500\n- **Notes**: In native mode the planning brick's state machine (create/steps/dependencies/estimate) is simulated manually. The dependency graph is a DAG with step 0 as the only unblocked step; all others are transitively blocked. Total time is the arithmetic sum of all estimates: 2+3+1+2+4=12h.\n```",
+  "mini_task_spec": "Using the NestJS test-repo, create a structured migration plan by calling the planning brick tools as follows:\n\n1. Call `plan__create` with title \"Migrate from platform-express to platform-fastify\" and description \"Move the application from platform-express (523 lines, 5 deps) to platform-fastify (917 lines, 10 deps) as described in test-repo/decision-http-adapter.json\".\n\n2. Call `plan__steps` with the planId returned from step 1, adding these 5 steps in order:\n   - index 0: title=\"Audit current Express middleware usage\", estimate=\"2h\"\n   - index 1: title=\"Find Fastify equivalents for each middleware\", estimate=\"3h\"\n   - index 2: title=\"Replace adapter configuration\", estimate=\"1h\"\n   - index 3: title=\"Update file-upload code to use @fastify/multipart\", estimate=\"2h\"\n   - index 4: title=\"Run full test suite and fix failures\", estimate=\"4h\"\n\n3. Call `plan__dependencies` five times to add these edges (from → to):\n   - from=0, to=1\n   - from=1, to=2\n   - from=1, to=3\n   - from=2, to=4\n   - from=3, to=4\n\n4. Call `plan__estimate` with the planId and report its exact output.\n\nExpected answer format: four values on separate lines:\n  total_steps: <integer>\n  completed: <integer>\n  blocked: <integer>\n  estimated_time_remaining: <string, e.g. \"12h\">\n\nNo steps should be marked complete before calling estimate.",
+  "workdir": "/tmp/focus-bench/planning-native-2026-04-26T18-20-44-083",
+  "exit_reason": "ok"
+}

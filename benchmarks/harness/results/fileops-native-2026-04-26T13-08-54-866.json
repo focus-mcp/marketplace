@@ -1,0 +1,25 @@
+{
+  "brick": "fileops",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:07:04.362Z",
+  "duration_ms": 110504,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 43,
+    "cache_creation_input_tokens": 23959,
+    "cache_read_input_tokens": 595826,
+    "output_tokens": 7525,
+    "total": 627353
+  },
+  "session_id": "e15322f3-52bb-4790-8196-652a6aaa7108",
+  "result_block": "## Result\n\n- **Brick**: fileops\n- **Mode**: native\n- **Mini-task**: Copy EXCEPTIONS.md from common→core exceptions dir; rename intrinsic.exception.ts to base-intrinsic.exception.ts; report sorted file listings of both dirs\n- **Answer**:\n  ```\n  === packages/common/exceptions/ ===\n  bad-gateway.exception.ts\n  bad-request.exception.ts\n  base-intrinsic.exception.ts\n  conflict.exception.ts\n  EXCEPTIONS.md\n  forbidden.exception.ts\n  gateway-timeout.exception.ts\n  gone.exception.ts\n  http.exception.ts\n  http-version-not-supported.exception.ts\n  im-a-teapot.exception.ts\n  index.ts\n  internal-server-error.exception.ts\n  method-not-allowed.exception.ts\n  misdirected.exception.ts\n  not-acceptable.exception.ts\n  not-found.exception.ts\n  not-implemented.exception.ts\n  payload-too-large.exception.ts\n  precondition-failed.exception.ts\n  request-timeout.exception.ts\n  service-unavailable.exception.ts\n  too-many-requests.exception.ts\n  unauthorized.exception.ts\n  unprocessable-entity.exception.ts\n  unsupported-media-type.exception.ts\n  === packages/core/exceptions/ ===\n  base-exception-filter-context.ts\n  base-exception-filter.ts\n  exceptions-handler.ts\n  EXCEPTIONS.md\n  external-exception-filter-context.ts\n  external-exception-filter.ts\n  external-exceptions-handler.ts\n  index.ts\n  ```\n- **Turns used**: 6\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,500\n- **Notes**: The `ls | sort` output places lowercase-starting filenames before `EXCEPTIONS.md` in `packages/common/exceptions/` because the locale-aware sort interleaves case; brick-mode runs should use the same `ls | sort` invocation to ensure consistent ordering.",
+  "mini_task_spec": "Using the NestJS shallow clone at `test-repo/`, perform two file operations:\n\n1. **Copy** the file `packages/common/exceptions/EXCEPTIONS.md` to `packages/core/exceptions/EXCEPTIONS.md`.\n2. **Rename** (move within same directory) `packages/common/exceptions/intrinsic.exception.ts` to `packages/common/exceptions/base-intrinsic.exception.ts`.\n\nAfter both operations, list the filenames (not full paths) in each directory, sorted alphabetically (as produced by `ls | sort`), one filename per line. Report the two sorted lists separated by a header line for each directory:\n\n```\n=== packages/common/exceptions/ ===\n<sorted filenames>\n=== packages/core/exceptions/ ===\n<sorted filenames>\n```\n\nThe expected answer format is the exact filenames only (no directory prefix), one per line, in the order produced by piping `ls` through `sort` with the system default locale.\n\n---",
+  "workdir": "/tmp/focus-bench/fileops-native-2026-04-26T13-07-04-362",
+  "exit_reason": "ok"
+}

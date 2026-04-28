@@ -1,0 +1,31 @@
+{
+  "brick": "shell",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:16:02.489Z",
+  "duration_ms": 137260,
+  "turns": 19,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 107,
+    "cache_creation_input_tokens": 43544,
+    "cache_read_input_tokens": 567714,
+    "output_tokens": 6081,
+    "total": 617446
+  },
+  "session_id": "b671f39d-b302-4d04-a304-5e3f8059c38f",
+  "result_block": "## Result\n- **Brick**: shell\n- **Mode**: brick\n- **Mini-task**: Count `.ts` source files (excluding `.spec.ts` and `.d.ts`) in each of 9 top-level packages under `test-repo/packages/`\n- **Answer**: Unable to complete — the shell brick's `exec` tool could not be loaded (`Cannot find module '@focus-mcp/brick-shell'`; the npm package is not installed in the environment). No `mcp__focus__*` tool capable of executing shell commands was available.\n- **Turns used**: 11\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`\n- **Rough token estimate**: ~4,500\n- **Notes**: The focus MCP server is configured and responsive. The shell brick is registered (marked \"already installed\") but its underlying npm package `@focus-mcp/brick-shell` is absent from node_modules, causing every `focus_load` attempt to fail. `focus_update` is not yet implemented. No alternative `mcp__focus__*` exec pathway exists. The task cannot be completed under the \"brick tools only\" constraint.",
+  "workdir": "/tmp/focus-bench/shell-brick-2026-04-26T14-16-02-487",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,32 @@
+{
+  "brick": "fts",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:17:45.368Z",
+  "duration_ms": 126234,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 107,
+    "cache_creation_input_tokens": 62344,
+    "cache_read_input_tokens": 566003,
+    "output_tokens": 6469,
+    "total": 634923
+  },
+  "session_id": "a0f838d7-d97d-4a8b-95ac-5b25e4ecd27b",
+  "result_block": "## Result\n- **Brick**: fts (Full-text search with TF-IDF ranking)\n- **Mode**: brick\n- **Mini-task**: Index non-test `.ts` files in `test-repo/packages/core`, search for `interceptor`, return top 3 paths by TF-IDF score\n- **Answer**: *(not available — brick tools could not be loaded)*\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_remove`, `mcp__focus__focus_update`, `mcp__focus__focus_search`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~6,000\n- **Notes**: The `fts` brick is registered in the focus lock file (version `^0.0.0`) but the underlying npm package `@focus-mcp/brick-fts` is not installed in the benchmark working directory's `node_modules`. `focus_update` is not implemented, `focus_remove` cannot find the lock entry, and `focus_reload` cannot find the brick — leaving no path to activate the brick's `index`/`search` tools. The focus MCP server infrastructure itself is operational; only this specific brick's module resolution fails. Task could not be completed.",
+  "workdir": "/tmp/focus-bench/fts-brick-2026-04-26T13-17-45-364",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,27 @@
+{
+  "brick": "inline",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:29:52.453Z",
+  "duration_ms": 87419,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 43,
+    "cache_creation_input_tokens": 27063,
+    "cache_read_input_tokens": 558308,
+    "output_tokens": 5691,
+    "total": 591105
+  },
+  "session_id": "4f68e77a-ef1f-4b4a-b4dc-4c1cb5cc3c3f",
+  "result_block": "## Result\n- **Brick**: inline\n- **Mode**: native\n- **Mini-task**: Inline `MISSING_REQUIRED_DEPENDENCY` in `packages/common/utils/load-package.util.ts`\n- **Answer**:\n```ts\nimport { Logger } from '../services/logger.service';\n\nconst logger = new Logger('PackageLoader');\n\nexport function loadPackage(\n  packageName: string,\n  context: string,\n  loaderFn?: Function,\n) {\n  try {\n    return loaderFn ? loaderFn() : require(packageName);\n  } catch (e) {\n    logger.error(`The \"${packageName}\" package is missing. Please, make sure to install it to take advantage of ${context}.`);\n    Logger.flush();\n    process.exit(1);\n  }\n}\n```\n- **Turns used**: 5\n- **Tools used**: Read, Glob, Bash, Grep\n- **Rough token estimate**: ~1,800\n- **Notes**: The function has exactly one definition and one call site, making inlining fully deterministic. No other files import `MISSING_REQUIRED_DEPENDENCY` (it was not exported), so no cross-file import updates are needed.",
+  "mini_task_spec": "In `test-repo/packages/common/utils/load-package.util.ts`, the private arrow function `MISSING_REQUIRED_DEPENDENCY` is defined on lines 3–4 and called exactly once on line 16 inside the `catch` block of `loadPackage`. Use the **inline** refactoring tool to inline `MISSING_REQUIRED_DEPENDENCY`: replace the single call site with the function's template-literal body (substituting `packageName` for `name` and `context` for `reason`), then remove the function definition (and its trailing blank line).\n\nReport the **full content of the file after inlining**, exactly as it would appear on disk, preserving all indentation and line breaks. The expected answer format is the complete file text (not a diff).\n\n---",
+  "workdir": "/tmp/focus-bench/inline-native-2026-04-26T13-29-52-453",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,27 @@
+{
+  "brick": "routes",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:26:44.574Z",
+  "duration_ms": 118476,
+  "turns": 26,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 59,
+    "cache_creation_input_tokens": 32809,
+    "cache_read_input_tokens": 937868,
+    "output_tokens": 6124,
+    "total": 976860
+  },
+  "session_id": "b056f7b7-7700-496c-b2bf-bbd4106301a8",
+  "result_block": "## Result\n- **Brick**: routes\n- **Mode**: native\n- **Mini-task**: List all HTTP API routes in `test-repo/sample/05-sql-typeorm`\n- **Answer**:\n  ```\n  DELETE /users/:id\n  GET /users\n  GET /users/:id\n  POST /users\n  ```\n- **Turns used**: 8\n- **Tools used**: Read, Glob, Grep, Bash\n- **Rough token estimate**: ~3,500\n- **Notes**: NestJS is not listed in the brick's supported frameworks (Express, Fastify, Next.js, SvelteKit), but NestJS uses Express/Fastify under the hood and follows the same decorator-based routing pattern. The task is well-suited to the brick's route-detection strength. Only one controller file exists in this sample (`users.controller.ts`), making the answer fully deterministic.",
+  "mini_task_spec": "Using the NestJS sample application at `test-repo/sample/05-sql-typeorm`, enumerate all HTTP API routes defined in the application's controller(s). For each route, determine the HTTP method and the full URL path (constructed from the `@Controller(prefix)` base path concatenated with any method-level path argument in `@Get(...)`, `@Post(...)`, `@Put(...)`, `@Delete(...)`, `@Patch(...)` decorators). Output the complete list as one route per line in the format `METHOD /path`, sorted alphabetically (primary sort: path lexicographically, secondary sort: method lexicographically). Do not include routes from files outside `test-repo/sample/05-sql-typeorm`.\n\n---",
+  "workdir": "/tmp/focus-bench/routes-native-2026-04-26T18-26-44-574",
+  "exit_reason": "ok"
+}

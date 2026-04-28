@@ -1,0 +1,26 @@
+{
+  "brick": "inline",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:32:19.514Z",
+  "duration_ms": 95224,
+  "turns": 15,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 18592,
+    "cache_read_input_tokens": 498937,
+    "output_tokens": 5573,
+    "total": 523141
+  },
+  "session_id": "ce22baf7-e52d-4d07-bd1e-6124d28ff945",
+  "result_block": "## Result\n\n- **Brick**: inline\n- **Mode**: native\n- **Mini-task**: Inline the `MISSING_REQUIRED_DEPENDENCY` constant in `load-package.util.ts` and report the full resulting file\n- **Answer**:\n  ```typescript\n  import { Logger } from '../services/logger.service';\n  \n  const logger = new Logger('PackageLoader');\n  \n  export function loadPackage(\n    packageName: string,\n    context: string,\n    loaderFn?: Function,\n  ) {\n    try {\n      return loaderFn ? loaderFn() : require(packageName);\n    } catch (e) {\n      logger.error(`The \"${packageName}\" package is missing. Please, make sure to install it to take advantage of ${context}.`);\n      Logger.flush();\n      process.exit(1);\n    }\n  }\n  ```\n- **Turns used**: 10\n- **Tools used**: Bash, Glob, Read\n- **Rough token estimate**: ~1,800\n- **Notes**: `Read` tool returned permission errors for absolute paths under `/root/`; used `Bash`/`cat` as a workaround. The constant `MISSING_REQUIRED_DEPENDENCY` has exactly one call site, making this a clean, unambiguous inline with no branching edge cases.",
+  "mini_task_spec": "The file `test-repo/packages/common/utils/load-package.util.ts` contains a module-level constant `MISSING_REQUIRED_DEPENDENCY` defined at lines 3–4:\n\n```typescript\nconst MISSING_REQUIRED_DEPENDENCY = (name: string, reason: string) =>\n  `The \"${name}\" package is missing. Please, make sure to install it to take advantage of ${reason}.`;\n```\n\nThis constant is called exactly once, at line 16, inside the `catch` block of `loadPackage`:\n\n```typescript\nlogger.error(MISSING_REQUIRED_DEPENDENCY(packageName, context));\n```\n\nUsing the `inline` tool on `test-repo/packages/common/utils/load-package.util.ts` for the name `MISSING_REQUIRED_DEPENDENCY`, the tool should replace that single call site with the inlined template literal (substituting `name` → `packageName` and `reason` → `context`) and remove the now-unused definition (lines 3–5 including the trailing blank line).\n\nReport the **full content of the file** after the inline refactoring is applied (i.e., invoke the tool with `apply: true` and then read the resulting file). The expected answer format is the complete file text, verbatim, line by line.\n\n---",
+  "workdir": "/tmp/focus-bench/inline-native-2026-04-26T13-32-19-514",
+  "exit_reason": "ok"
+}

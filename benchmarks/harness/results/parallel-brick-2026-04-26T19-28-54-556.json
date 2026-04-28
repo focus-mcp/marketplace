@@ -1,0 +1,37 @@
+{
+  "brick": "parallel",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:22:59.066Z",
+  "duration_ms": 355490,
+  "turns": 18,
+  "tools_used": [
+    "Agent",
+    "Skill",
+    "WebFetch",
+    "mcp__focus__fileread__read",
+    "mcp__focus__fileread_read",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_unload",
+    "mcp__focus__focus_update",
+    "mcp__focus__read"
+  ],
+  "usage": {
+    "input_tokens": 103,
+    "cache_creation_input_tokens": 116782,
+    "cache_read_input_tokens": 1794241,
+    "output_tokens": 11182,
+    "total": 1922308
+  },
+  "session_id": "f9810d3f-4229-49dd-a261-2d87d4148c8e",
+  "result_block": "## Result\n- **Brick**: parallel\n- **Mode**: brick\n- **Mini-task**: Count `.ts` files in each of 9 NestJS packages under `test-repo/packages/` using the parallel brick's `run_inline` tool concurrently, report sorted counts\n- **Answer**:\n  ```\n  TASK INCOMPLETE — parallel brick failed to load; run_inline tool unavailable\n  ```\n- **Turns used**: 15\n- **Tools used**: `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_reload`, `mcp__focus__focus_remove`, `mcp__focus__focus_unload`, `mcp__focus__focus_update`, `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~18,000\n- **Notes**:\n  - The `parallel` brick was listed as \"already installed (version ^0.0.0)\" — suggesting it was pre-registered from the local `mcp-brick.json` — but every attempt to load it failed with: `Cannot find module '@focus-mcp/brick-parallel'` (Require stack: `.focus/bricks/noop.js`). The `.focus/bricks/noop.js` is a placeholder that tries to dynamically `require('@focus-mcp/brick-parallel')` from npm, but that package is not present in `node_modules/`.\n  - The local `mcp-brick.json` contains the brick manifest/implementation, but the focus MCP server's loading mechanism routes through `noop.js` rather than loading from the JSON file directly.\n  - `focus_update` and `focus_remove` are not yet implemented, so there was no way to re-install from the catalog to get a working build.\n  - The `fileread` brick was pre-loaded and running (tools: `read`, `head`, `tail`, `range`), but brick tools are not surfaced in this session's callable tool list (only focus management tools like `mcp__focus__focus_*` are available), so fileread tools could not be invoked to read `mcp-brick.json` either.\n  - The `run_inline` tool was never accessible; the counting task could not be executed.",
+  "workdir": "/tmp/focus-bench/parallel-brick-2026-04-26T19-22-59-064",
+  "exit_reason": "ok"
+}

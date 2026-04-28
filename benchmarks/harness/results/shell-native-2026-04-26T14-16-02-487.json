@@ -1,0 +1,25 @@
+{
+  "brick": "shell",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:15:14.366Z",
+  "duration_ms": 48121,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 27221,
+    "cache_read_input_tokens": 478561,
+    "output_tokens": 3006,
+    "total": 508823
+  },
+  "session_id": "8d9e3a86-dbd3-4b62-bcdd-9feed8938a1c",
+  "result_block": "## Result\n\n- **Brick**: shell\n- **Mode**: native\n- **Mini-task**: Count non-spec, non-declaration `.ts` files per package under `test-repo/packages/`\n- **Answer**:\n  ```\n  common: 188\n  core: 179\n  microservices: 135\n  platform-express: 24\n  platform-fastify: 15\n  platform-socket.io: 3\n  platform-ws: 3\n  testing: 12\n  websockets: 43\n  ```\n- **Turns used**: 5\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~3 500\n- **Notes**: Straightforward `find` loop; the two `tsconfig` files in `packages/` are not directories so they're naturally excluded by the directory iteration. Results are fully deterministic for this static repo snapshot.",
+  "mini_task_spec": "Using the shell `exec` tool, count the number of TypeScript source files in each top-level package under `test-repo/packages/`. A \"TypeScript source file\" is any file ending in `.ts` that does NOT end in `.spec.ts` or `.d.ts`. Ignore the two `tsconfig*.json` pseudo-entries — only consider the nine real package directories: `common`, `core`, `microservices`, `platform-express`, `platform-fastify`, `platform-socket.io`, `platform-ws`, `testing`, `websockets`.\n\nRun the following command (or equivalent) with `cwd` set to `test-repo/`:\n\n```\nfor pkg in common core microservices platform-express platform-fastify platform-socket.io platform-ws testing websockets; do count=$(find \"packages/$pkg\" -name \"*.ts\" ! -name \"*.spec.ts\" ! -name \"*.d.ts\" -type f | wc -l); echo \"$pkg: $count\"; done\n```\n\nReport the result as one line per package in the format `<package-name>: <count>`, sorted alphabetically by package name (which is the natural sort order of the names above). No trailing spaces or extra blank lines.\n\n---",
+  "workdir": "/tmp/focus-bench/shell-native-2026-04-26T14-15-14-366",
+  "exit_reason": "ok"
+}

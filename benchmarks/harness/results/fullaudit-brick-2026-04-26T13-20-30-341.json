@@ -1,0 +1,32 @@
+{
+  "brick": "fullaudit",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:18:39.724Z",
+  "duration_ms": 110617,
+  "turns": 20,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 84,
+    "cache_creation_input_tokens": 25270,
+    "cache_read_input_tokens": 467472,
+    "output_tokens": 5304,
+    "total": 498130
+  },
+  "session_id": "9fe812a4-0304-491c-96da-aa7b242bf3c6",
+  "result_block": "## Result\n- **Brick**: fullaudit\n- **Mode**: brick\n- **Mini-task**: Find all TypeScript source files (`.ts`) in `test-repo/packages/core` with >500 lines, excluding paths containing `test/`, sorted alphabetically\n- **Answer**: *(unable to produce — brick tools unavailable; see Notes)*\n- **Turns used**: 11\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_remove`\n- **Rough token estimate**: ~3,500\n- **Notes**: The `fullaudit` brick is registered as installed (`^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-fullaudit'` — the npm package is not present in the environment. `focus_update` returned \"not yet implemented\". `focus_remove` returned \"Lock entry not found\". The brick's tools (`audit__run`, `audit__report`) could not be exposed. Since the focus MCP server itself is available (management tools work), the `MODE UNAVAILABLE` sentinel does not strictly apply, but the brick is functionally unavailable and the task cannot be completed within the brick-only constraint.",
+  "workdir": "/tmp/focus-bench/fullaudit-brick-2026-04-26T13-18-39-721",
+  "exit_reason": "ok"
+}

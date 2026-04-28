@@ -1,0 +1,26 @@
+{
+  "brick": "dispatch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:08:01.226Z",
+  "duration_ms": 97432,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 39,
+    "cache_creation_input_tokens": 17111,
+    "cache_read_input_tokens": 510873,
+    "output_tokens": 5402,
+    "total": 533425
+  },
+  "session_id": "92a16e6f-9e7a-4b16-aeb5-4274b54b4d1e",
+  "result_block": "## Result\n- **Brick**: dispatch\n- **Mode**: native\n- **Mini-task**: Identify exported-class TS files in microservices/server/, count review + build dispatch tasks\n- **Answer**: 9 files export a class — `server-factory.ts`, `server-grpc.ts`, `server-kafka.ts`, `server-mqtt.ts`, `server-nats.ts`, `server-redis.ts`, `server-rmq.ts`, `server-tcp.ts`, `server.ts` (sorted alphabetically). Total tasks dispatched: **10** (9 review tasks at priority 5 + 1 build task at priority 8).\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: `index.ts` was excluded because it only re-exports via `export *` and does not contain a direct class declaration. The dispatch brick's `send`/`queue` tools are not callable in native mode, so the answer is computed analytically from codebase inspection and the queue contents are described rather than demonstrated.",
+  "mini_task_spec": "You are orchestrating a code review workflow for the NestJS microservices server transport implementations. \n\n**Step 1 – Discover files**: Find all TypeScript files (`.ts`) located directly in `test-repo/packages/microservices/server/` (non-recursively, i.e. no subdirectories) that contain a top-level exported class declaration. A file qualifies if it contains a line matching the pattern `export class` or `export abstract class`.\n\n**Step 2 – Send dispatch tasks**: For each qualifying file (in alphabetical order by base filename), send a dispatch task using the `send` tool with `type: \"review\"`, `priority: 5`, and a `payload` of `{\"file\": \"<basename>\"}`. After all review tasks are sent, send one final task with `type: \"build\"`, `priority: 8`, and `payload: {\"package\": \"microservices/server\"}`.\n\n**Step 3 – List the queue**: Call the `queue` tool (no filter) and report its contents.\n\n**Expected answer format**:\n- A list of the qualifying base filenames, one per line, sorted alphabetically.\n- The total number of tasks dispatched (review tasks + 1 build task), as a single integer.\n\n---",
+  "workdir": "/tmp/focus-bench/dispatch-native-2026-04-26T13-08-01-226",
+  "exit_reason": "ok"
+}

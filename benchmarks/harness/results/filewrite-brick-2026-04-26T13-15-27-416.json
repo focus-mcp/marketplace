@@ -1,0 +1,31 @@
+{
+  "brick": "filewrite",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:12:46.176Z",
+  "duration_ms": 161240,
+  "turns": 17,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 79,
+    "cache_creation_input_tokens": 67299,
+    "cache_read_input_tokens": 494574,
+    "output_tokens": 8107,
+    "total": 570059
+  },
+  "session_id": "86164925-9e80-4505-a2f6-a143ef68547d",
+  "result_block": "## Result\n- **Brick**: filewrite\n- **Mode**: brick\n- **Mini-task**: Read version from `packages/common/package.json`, create `packages/common/utils/version.util.ts` with `export const NEST_VERSION = '11.1.19';`, then append `// Auto-generated — do not edit`\n- **Answer**:\n  ```\n  export const NEST_VERSION = '11.1.19';\n  // Auto-generated — do not edit\n  ```\n  *(file could NOT be created — see Notes)*\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`\n- **Rough token estimate**: ~4,500\n- **Notes**: The filewrite brick could not be loaded. `focus_load(\"filewrite\")` returned `Cannot find module '@focus-mcp/brick-filewrite'` (stub at `.focus/bricks/noop.js`). `focus_install` reported the brick is already installed at `^0.0.0` (local version from mcp-brick.json), but the actual npm package is absent from node_modules. `focus_update` returned \"not yet implemented\", and `focus_reload` returned \"Brick not found.\" As a result the brick's `create` and `append` tools were never exposed as callable MCP tools, so the file `test-repo/packages/common/utils/version.util.ts` was not written. The expected content above is derived from the task spec (version `11.1.19` was stated explicitly); no native filesystem tools were used.",
+  "workdir": "/tmp/focus-bench/filewrite-brick-2026-04-26T13-12-46-173",
+  "exit_reason": "ok"
+}

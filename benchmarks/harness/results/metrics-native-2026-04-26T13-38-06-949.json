@@ -1,0 +1,25 @@
+{
+  "brick": "metrics",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:36:12.644Z",
+  "duration_ms": 114305,
+  "turns": 16,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 43,
+    "cache_creation_input_tokens": 52807,
+    "cache_read_input_tokens": 707851,
+    "output_tokens": 5018,
+    "total": 765719
+  },
+  "session_id": "88d069c9-5987-49ea-9a09-0cc4586c5a29",
+  "result_block": "## Result\n\n- **Brick**: metrics\n- **Mode**: native\n- **Mini-task**: Count `.ts` source files in `test-repo/packages/core/`, simulate per-file token usage, and compute total session cost\n- **Answer**:\n  ```\n  total_input_tokens: 53700\n  total_output_tokens: 14320\n  total_cost_usd: 0.375900\n  ```\n  *(179 non-spec `.ts` files × 300 input tokens = 53,700 input; × 80 output tokens = 14,320 output; cost = (53700/1000)×$0.003 + (14320/1000)×$0.015 = $0.1611 + $0.2148 = $0.3759)*\n- **Turns used**: 7\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~4,500 tokens\n- **Notes**: The metrics brick is purely an observability/accounting tool — it doesn't operate on the codebase itself. The mini-task grounds it in the repo by using the file count as the \"number of tool calls\" in a simulated session. Native mode required only basic shell arithmetic; the brick mode would use `tokens` (per-call recording or batched) and `costs` (for the pricing calculation).",
+  "mini_task_spec": "You are simulating a metrics session over the NestJS test repository. Your task:\n\n1. Count the number of TypeScript source files (files ending in `.ts` but **not** ending in `.spec.ts`) directly or recursively inside `test-repo/packages/core/`.\n\n2. Treat each file as a single \"read\" tool call in the session, where each call consumed **300 input tokens** and **80 output tokens**.\n\n3. Using the `metrics` brick's `tokens` tool, record one entry per file (or equivalently, compute the aggregated totals). Then use the `costs` tool with its **default pricing** ($0.003 per 1,000 input tokens; $0.015 per 1,000 output tokens) to compute the total estimated session cost.\n\nReport **three numbers** in this exact format:\n```\ntotal_input_tokens: <integer>\ntotal_output_tokens: <integer>\ntotal_cost_usd: <value rounded to 6 decimal places, e.g. 0.375900>\n```\n\n---",
+  "workdir": "/tmp/focus-bench/metrics-native-2026-04-26T13-36-12-644",
+  "exit_reason": "ok"
+}

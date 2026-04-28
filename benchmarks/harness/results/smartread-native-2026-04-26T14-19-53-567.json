@@ -1,0 +1,25 @@
+{
+  "brick": "smartread",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T14:18:19.750Z",
+  "duration_ms": 93817,
+  "turns": 18,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 49,
+    "cache_creation_input_tokens": 28171,
+    "cache_read_input_tokens": 715707,
+    "output_tokens": 5920,
+    "total": 749847
+  },
+  "session_id": "11f7a211-5a9f-4882-b215-e5a4f803a571",
+  "result_block": "## Result\n\n- **Brick**: smartread\n- **Mode**: native\n- **Mini-task**: List all unique import source paths in `packages/core/nest-application.ts`, sorted alphabetically (ASCII order)\n- **Answer**:\n  ```\n  ./adapters\n  ./application-config\n  ./constants\n  ./helpers/optional-require\n  ./injector/container\n  ./injector/injector\n  ./inspector/graph-inspector\n  ./middleware/container\n  ./middleware/middleware-module\n  ./middleware/utils\n  ./nest-application-context\n  ./router/interfaces/resolver.interface\n  ./router/routes-resolver\n  @nestjs/common\n  @nestjs/common/interfaces\n  @nestjs/common/services/logger.service\n  @nestjs/common/utils/load-package.util\n  @nestjs/common/utils/shared.utils\n  iterare\n  os\n  ```\n- **Turns used**: 9\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~2,500\n- **Notes**: All 20 unique import paths were extracted by grepping `from '...'` patterns (covering both single-line and multi-line `import` blocks). The `sort -u` with `LC_ALL=C` gives consistent ASCII ordering. In brick mode an agent would call `mcp__focus__sr__imports` with `{\"path\": \"test-repo/packages/core/nest-application.ts\"}` and parse its output instead.",
+  "mini_task_spec": "Using the smartread brick's `imports` tool, read the file `test-repo/packages/core/nest-application.ts` and extract every unique import source path — i.e., the string that appears after `from` in each TypeScript `import { ... } from '...'` statement (both single-line and multi-line forms). Produce a deduplicated list of all such source paths, sorted alphabetically in ASCII/C-locale order (symbols < uppercase < lowercase; so paths starting with `./` come first, then paths starting with `@`, then plain names). Output one path per line, no surrounding quotes.\n\n---",
+  "workdir": "/tmp/focus-bench/smartread-native-2026-04-26T14-18-19-750",
+  "exit_reason": "ok"
+}

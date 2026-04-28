@@ -1,0 +1,26 @@
+{
+  "brick": "outline",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:44:16.367Z",
+  "duration_ms": 77162,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 49370,
+    "cache_read_input_tokens": 503812,
+    "output_tokens": 3961,
+    "total": 557180
+  },
+  "session_id": "6ef8bed9-6cd6-4aac-88d4-42c03ca5cc50",
+  "result_block": "## Result\n- **Brick**: outline\n- **Mode**: native\n- **Mini-task**: List all unique exported symbol names from `route-params.decorator.ts`, sorted alphabetically\n- **Answer**:\n```\nBody\nHeaders\nHostParam\nIp\nNext\nParam\nParamData\nQuery\nRawBody\nReq\nRequest\nRes\nResponse\nResponseDecoratorOptions\nRouteParamMetadata\nSession\nUploadedFile\nUploadedFiles\nassignMetadata\n```\n- **Turns used**: 8\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~12,000 tokens (the file is ~770 lines, full read was necessary in native mode)\n- **Notes**: The file contains heavily overloaded functions (Body, Query, Param, HostParam, UploadedFile, UploadedFiles, RawBody) — each appears 3–4 times in source but is one exported symbol. The \"outline\" brick's `file` tool would surface these as unique symbol+line entries directly, without needing to read the entire 770-line file body — a clear efficiency win over native mode.",
+  "mini_task_spec": "Using the \"outline\" brick's `file` tool, list all unique exported symbol names from the file `test-repo/packages/common/decorators/http/route-params.decorator.ts`. The file is a TypeScript source file in a NestJS monorepo. Count each symbol only once (overloaded functions appear multiple times in source but should be listed once). Return the result as a sorted (alphabetical, case-sensitive, capital letters first) list of symbol names, one per line, with no extra annotations.\n\nExpected answer format: plain list of symbol names, one per line, sorted alphabetically (uppercase before lowercase). All exports must be included: interfaces, types, functions, constants, and re-exports.\n\n---",
+  "workdir": "/tmp/focus-bench/outline-native-2026-04-26T13-44-16-367",
+  "exit_reason": "ok"
+}

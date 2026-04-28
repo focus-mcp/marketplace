@@ -1,0 +1,30 @@
+{
+  "brick": "metrics",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:44:12.597Z",
+  "duration_ms": 70530,
+  "turns": 15,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 73,
+    "cache_creation_input_tokens": 20447,
+    "cache_read_input_tokens": 365576,
+    "output_tokens": 4159,
+    "total": 390255
+  },
+  "session_id": "6e222f2f-9406-4bca-bb7a-502fab9b37bf",
+  "result_block": "## Result\n- **Brick**: metrics\n- **Mode**: brick\n- **Mini-task**: Record 5 tool-call token usages via `met_tokens`, then compute session costs via `met_costs` with $0.003/1k input and $0.015/1k output pricing\n- **Answer**:\n```\nTotal input tokens: 5540\nTotal output tokens: 1665\nTotal session cost: $0.041595\nMost expensive: Read (call #4, 2100 in, 680 out) = $0.016500\n```\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_reload`, `mcp__focus__focus_search`, `mcp__focus__focus_update`\n- **Rough token estimate**: ~3,500 tokens\n- **Notes**: The `metrics` brick is registered at version `^0.0.0` but its underlying npm module (`@focus-mcp/brick-metrics`) is missing from the require stack (`/tmp/focus-bench/.focus/bricks/noop.js`). `focus_load` fails with `Cannot find module '@focus-mcp/brick-metrics'`; `focus_update` is not yet implemented; `focus_reload` reports \"Brick not found\". As a result, `mcp__focus__met_tokens` and `mcp__focus__met_costs` were never callable. All four answers were derived by manual arithmetic from the given token counts and pricing rates.",
+  "workdir": "/tmp/focus-bench/metrics-brick-2026-04-26T13-44-12-594",
+  "exit_reason": "ok"
+}

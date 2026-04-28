@@ -1,0 +1,34 @@
+{
+  "brick": "lastversion",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:19:24.304Z",
+  "duration_ms": 120238,
+  "turns": 19,
+  "tools_used": [
+    "Agent",
+    "Skill",
+    "WebFetch",
+    "mcp__focus__focus_catalog_add",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_remove",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 77,
+    "cache_creation_input_tokens": 29263,
+    "cache_read_input_tokens": 1549352,
+    "output_tokens": 5400,
+    "total": 1584092
+  },
+  "session_id": "47fa9db2-0053-45c0-8c2c-00f8d726b45e",
+  "result_block": "## Result\n- **Brick**: lastversion\n- **Mode**: brick\n- **Mini-task**: Compare pinned production dependency versions in test-repo/package.json against latest stable npm releases, report outdated packages\n- **Answer**: Unable to determine — the `lastversion` brick could not be loaded. The brick is registered as installed (`version ^0.0.0`) but its underlying npm package `@focus-mcp/brick-lastversion` is missing from node_modules, causing `focus_load` to fail with `Cannot find module '@focus-mcp/brick-lastversion'`. The `focus_update` tool is not yet implemented, and `focus_remove` failed with a lock-entry error, so no workaround was available.\n- **Turns used**: 12\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_catalog_list`, `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_update`, `mcp__focus__focus_remove`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_add`\n- **Rough token estimate**: ~4,500\n- **Notes**: The benchmark environment has `lastversion` registered in the focus lock file at `version ^0.0.0` (not the published `1.1.0`), but the npm package `@focus-mcp/brick-lastversion` is not installed. `focus_update` is stubbed out (\"not yet implemented\"), and `focus_remove` cannot clear the stale lock entry, leaving the brick permanently unloadable in this session. As a result, the intended tools (`latest`, `check`, `compare`, `analyze`) were never available, and the task could not be completed using brick tools only.",
+  "workdir": "/tmp/focus-bench/lastversion-brick-2026-04-26T19-19-24-301",
+  "exit_reason": "ok"
+}

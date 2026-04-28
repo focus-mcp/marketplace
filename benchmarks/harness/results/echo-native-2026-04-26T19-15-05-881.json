@@ -1,0 +1,25 @@
+{
+  "brick": "echo",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T19:14:21.527Z",
+  "duration_ms": 44354,
+  "turns": 7,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 20,
+    "cache_creation_input_tokens": 5639,
+    "cache_read_input_tokens": 215027,
+    "output_tokens": 1516,
+    "total": 222202
+  },
+  "session_id": "ff34cc4f-96ee-42ad-8cb5-7ac137555662",
+  "result_block": "## Result\n- **Brick**: echo\n- **Mode**: native\n- **Mini-task**: Read the monorepo version from `test-repo/lerna.json` and echo it back\n- **Answer**: `11.1.19`\n- **Turns used**: 4\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~800\n- **Notes**: The echo brick is a pure smoke-test; there is no computation to validate — the interesting assertion in brick mode is that `mcp__focus__echo__say` dispatches correctly and returns the input unchanged. The value `11.1.19` comes directly from the `version` field in `test-repo/lerna.json`.",
+  "mini_task_spec": "Read the file `test-repo/lerna.json`. Extract the value of the top-level `\"version\"` field. Then call the `mcp__focus__echo__say` tool with that version string as the `message` argument and report the exact string it returns.\n\nThe expected answer format is the bare version string (no quotes, no extra whitespace) returned by the `say` tool — for example `1.2.3`.\n\n---",
+  "workdir": "/tmp/focus-bench/echo-native-2026-04-26T19-14-21-527",
+  "exit_reason": "ok"
+}

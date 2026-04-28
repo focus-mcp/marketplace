@@ -1,0 +1,31 @@
+{
+  "brick": "filediff",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:04:40.649Z",
+  "duration_ms": 89501,
+  "turns": 19,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 82,
+    "cache_creation_input_tokens": 44354,
+    "cache_read_input_tokens": 440081,
+    "output_tokens": 4381,
+    "total": 488898
+  },
+  "session_id": "81b87044-3092-4364-bf0b-fa064c6908c6",
+  "result_block": "## Result\n- **Brick**: filediff\n- **Mode**: brick\n- **Mini-task**: Compare `packages/platform-express/package.json` (a) vs `packages/platform-fastify/package.json` (b) via unified diff; count added/removed content lines\n- **Answer**: Unable to produce — brick tools unavailable (see Notes)\n- **Turns used**: 9\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_load`, `mcp__focus__focus_install`, `mcp__focus__focus_search`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~3,500\n- **Notes**: The filediff brick is registered in `.focus` at version `^0.0.0`, and `focus_install` reports it as already installed, but `focus_load` fails with `Cannot find module '@focus-mcp/brick-filediff'`. The `focus_update` tool is not yet implemented. As a result, the `diff` tool never becomes available, and the task cannot be completed using brick tools only. The focus MCP server itself is reachable and responsive; the failure is specifically the missing npm package for the brick.",
+  "workdir": "/tmp/focus-bench/filediff-brick-2026-04-26T13-04-40-647",
+  "exit_reason": "ok"
+}

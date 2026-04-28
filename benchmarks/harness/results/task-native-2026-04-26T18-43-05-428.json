@@ -1,0 +1,25 @@
+{
+  "brick": "task",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:41:23.491Z",
+  "duration_ms": 101937,
+  "turns": 17,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 45,
+    "cache_creation_input_tokens": 32811,
+    "cache_read_input_tokens": 633131,
+    "output_tokens": 6387,
+    "total": 672374
+  },
+  "session_id": "cea4a2e2-7d14-4a2a-9089-e4f113c315d7",
+  "result_block": "## Result\n- **Brick**: task\n- **Mode**: native\n- **Mini-task**: List all NestJS HttpException subclasses with their HTTP status codes, sorted by code\n- **Answer**:\n```\nBadRequestException 400\nUnauthorizedException 401\nForbiddenException 403\nNotFoundException 404\nMethodNotAllowedException 405\nNotAcceptableException 406\nRequestTimeoutException 408\nConflictException 409\nGoneException 410\nPreconditionFailedException 412\nPayloadTooLargeException 413\nUnsupportedMediaTypeException 415\nImATeapotException 418\nMisdirectedException 421\nUnprocessableEntityException 422\nTooManyRequestsException 429\nInternalServerErrorException 500\nNotImplementedException 501\nBadGatewayException 502\nServiceUnavailableException 503\nGatewayTimeoutException 504\nHttpVersionNotSupportedException 505\n```\n- **Turns used**: 11\n- **Tools used**: Bash, Read, Grep\n- **Rough token estimate**: ~4,500\n- **Notes**: The task brick's strength (create/assign/status/complete tasks) maps naturally to a multi-agent workflow where each exception class is a documentation or review task. In native mode, the same analysis is done with grep + enum lookup. No blocked paths; the file structure was straightforward. Note that `HttpStatus.I_AM_A_TEAPOT` is the enum key for `ImATeapotException` (status 418).",
+  "mini_task_spec": "In the NestJS monorepo at `test-repo/packages/common/exceptions/`, there are multiple TypeScript files defining HTTP exception classes. Your task is to:\n\n1. Identify every concrete class that **directly extends `HttpException`** (i.e., `export class X extends HttpException`) — excluding `HttpException` itself and `IntrinsicException`.\n2. For each such class, look up the numeric HTTP status code it uses (by cross-referencing the `HttpStatus` enum in `test-repo/packages/common/enums/http-status.enum.ts`).\n3. Output the full list sorted **ascending by HTTP status code**, one entry per line, in the exact format: `<ClassName> <status_code>`.\n\nExpected answer format: 22 lines, each containing a class name and an integer separated by a single space, sorted numerically by the integer, e.g.:\n```\nBadRequestException 400\nUnauthorizedException 401\n...\nHttpVersionNotSupportedException 505\n```\n\n---",
+  "workdir": "/tmp/focus-bench/task-native-2026-04-26T18-41-23-491",
+  "exit_reason": "ok"
+}

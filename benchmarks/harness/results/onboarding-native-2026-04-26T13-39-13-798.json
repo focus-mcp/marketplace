@@ -1,0 +1,25 @@
+{
+  "brick": "onboarding",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:37:38.658Z",
+  "duration_ms": 95140,
+  "turns": 21,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 38140,
+    "cache_read_input_tokens": 755013,
+    "output_tokens": 5703,
+    "total": 798904
+  },
+  "session_id": "b0f71f84-f060-4b1e-99a2-2d9ab2380c1a",
+  "result_block": "## Result\n\n- **Brick**: onboarding\n- **Mode**: native\n- **Mini-task**: Gather 5 key onboarding facts (monorepo tool, packages, test runner, formatter, Node version) from the NestJS `test-repo/`\n- **Answer**:\n  1. Lerna v9.0.7\n  2. @nestjs/common, @nestjs/core, @nestjs/microservices, @nestjs/platform-express, @nestjs/platform-fastify, @nestjs/platform-socket.io, @nestjs/platform-ws, @nestjs/testing, @nestjs/websockets\n  3. mocha\n  4. prettier\n  5. >= 20\n- **Turns used**: 9\n- **Tools used**: Read, Bash\n- **Rough token estimate**: 6,500\n- **Notes**: Two initial `Read` calls failed (wrong absolute path guesses) before locating `mcp-brick.json` via `Bash find`. All five facts were deterministically extractable from `package.json`, `lerna.json`, and `packages/*/package.json`. No ambiguity in answers.",
+  "mini_task_spec": "You are onboarding to the NestJS monorepo located at `test-repo/`. Using only files in that directory tree, answer the following five onboarding questions:\n\n1. **Monorepo tool + version**: What package manages the monorepo workspace (look in `test-repo/lerna.json` and `test-repo/package.json` devDependencies)?\n2. **Workspace packages**: List every npm package name published from this repo (from each `test-repo/packages/*/package.json` `\"name\"` field), sorted alphabetically.\n3. **Test runner**: What test runner is configured (check `test-repo/package.json` `\"mocha\"` / `\"jest\"` / similar keys and the `\"test\"` script)?\n4. **Code formatter**: What code formatter is used (check `test-repo/package.json` devDependencies and `\"format\"` script)?\n5. **Minimum Node.js version**: What is the `engines.node` constraint in `test-repo/package.json`?\n\nExpected answer format — one labelled line per item:\n```\n1. <tool> v<version>\n2. <package1>, <package2>, ... (alphabetical, comma-separated)\n3. <test-runner>\n4. <formatter>\n5. <engines.node value>\n```\n\n---",
+  "workdir": "/tmp/focus-bench/onboarding-native-2026-04-26T13-37-38-657",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "brick": "repos",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:56:00.892Z",
+  "duration_ms": 55953,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 37,
+    "cache_creation_input_tokens": 12809,
+    "cache_read_input_tokens": 481203,
+    "output_tokens": 3386,
+    "total": 497435
+  },
+  "session_id": "3c540be3-5688-4318-b428-2c38cec2c4eb",
+  "result_block": "## Result\n\n- **Brick**: repos\n- **Mode**: native\n- **Mini-task**: Count TypeScript files and total lines in `test-repo/packages/common`\n- **Answer**: TypeScript files: 239 · Total lines: 16132\n- **Turns used**: 6\n- **Tools used**: Read, Bash\n- **Rough token estimate**: ~1 200\n- **Notes**: The brick's `stats` tool is designed to return exactly this kind of file-count / line-count summary; in native mode these were trivially reproduced with `find` + `wc -l`. The test-repo symlink resolved cleanly to `/home/samuelds/benchmarks/test-repo`.",
+  "mini_task_spec": "Using the **repos** brick (tools: `register`, `stats`), determine the total number of TypeScript (`.ts`) files and the total number of lines across all those files inside the `test-repo/packages/common` directory.\n\nSteps expected in brick mode:\n1. Call `mcp__focus__repos__register` with `name = \"nest-common\"` and `path = <absolute path to test-repo/packages/common>`.\n2. Call `mcp__focus__repos__stats` with `name = \"nest-common\"`.\n3. Report the stats returned by the tool.\n\nExpected answer format: two integers on two lines:\n```\nTypeScript files: <N>\nTotal lines: <M>\n```\n\nThe authoritative native answer (computed via `find … -name \"*.ts\" -type f | wc -l` and `wc -l` sum) is **239 files, 16132 lines**. The brick-mode answer must match these values.\n\n---",
+  "workdir": "/tmp/focus-bench/repos-native-2026-04-26T13-56-00-891",
+  "exit_reason": "ok"
+}

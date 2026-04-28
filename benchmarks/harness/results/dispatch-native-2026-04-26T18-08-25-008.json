@@ -1,0 +1,26 @@
+{
+  "brick": "dispatch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:07:15.242Z",
+  "duration_ms": 69766,
+  "turns": 14,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 35,
+    "cache_creation_input_tokens": 35542,
+    "cache_read_input_tokens": 476588,
+    "output_tokens": 4307,
+    "total": 516472
+  },
+  "session_id": "07b8059a-a334-4759-9e47-b7c9da360616",
+  "result_block": "## Result\n- **Brick**: dispatch\n- **Mode**: native\n- **Mini-task**: Identify exported class names in all transport-specific server files under `packages/microservices/server/`\n- **Answer**:\n  ```\n  server-grpc.ts:ServerGrpc\n  server-kafka.ts:ServerKafka\n  server-mqtt.ts:ServerMqtt\n  server-nats.ts:ServerNats\n  server-redis.ts:ServerRedis\n  server-rmq.ts:ServerRMQ\n  server-tcp.ts:ServerTCP\n  ```\n- **Turns used**: 8\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~3,500\n- **Notes**: The `server-nats.ts` file uses a generic class declaration (`export class ServerNats<`) so the class name is `ServerNats` (trimming the generic type parameter). `server-factory.ts` was correctly excluded per the task spec. Native mode is straightforward — Grep directly searches source files. Brick mode would require dispatching one task per file and then reading the queue, exercising `send` × 7 + `queue` calls.",
+  "mini_task_spec": "Using only the tools of the `dispatch` brick (`send`, `queue`, `cancel`, `status`), dispatch one `scan` task per transport-specific server file found in `test-repo/packages/microservices/server/` (files matching `server-*.ts`, excluding `server.ts` and `server-factory.ts`). Each task payload should include `{ \"file\": \"<filename>\", \"class\": \"<ExportedClassName>\" }` where the class name is the identifier immediately following `export class` in that file. Then call `queue` (status `all`) and report the task entries as `filename:ClassName` pairs, one per line, sorted alphabetically by filename.\n\nThe expected answer format is a list of `filename:ClassName` pairs (e.g. `server-grpc.ts:ServerGrpc`), one per line, sorted alphabetically by filename. There are 7 files to cover: `server-grpc.ts`, `server-kafka.ts`, `server-mqtt.ts`, `server-nats.ts`, `server-redis.ts`, `server-rmq.ts`, `server-tcp.ts`.\n\n---",
+  "workdir": "/tmp/focus-bench/dispatch-native-2026-04-26T18-07-15-242",
+  "exit_reason": "ok"
+}

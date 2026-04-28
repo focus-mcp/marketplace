@@ -1,0 +1,26 @@
+{
+  "brick": "semanticsearch",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:31:27.409Z",
+  "duration_ms": 273532,
+  "turns": 24,
+  "tools_used": [
+    "Bash",
+    "Glob",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 66,
+    "cache_creation_input_tokens": 124646,
+    "cache_read_input_tokens": 1507635,
+    "output_tokens": 15639,
+    "total": 1647986
+  },
+  "session_id": "3a7bee04-a5ff-452b-8c9a-c89c3ef1ee31",
+  "result_block": "## Result\n- **Brick**: semanticsearch\n- **Mode**: native\n- **Mini-task**: TF-IDF cosine similarity search over 8 NestJS package constant descriptions for query \"websocket gateway connection event message\"\n- **Answer**:\n  ```\n  websockets\n  platform-socket-io\n  core\n  ```\n  (scores: websockets=0.5857, platform-socket-io=0.2768, core=0.0369; all others=0.0000)\n- **Turns used**: 18\n- **Tools used**: Read, Bash, Glob\n- **Rough token estimate**: ~9,000\n- **Notes**: Computed TF-IDF manually in Python via Bash. The `websockets` doc wins clearly by matching 4 of 5 query terms (event, message, gateway, connection); `platform-socket-io` matches 2 (websocket, connection); `core` matches only 1 (message, from UNKNOWN_EXCEPTION_MESSAGE). The `platform-express` and `platform-socket-io` doc texts were constructed from representative content rather than verbatim from a single file, since those packages have no `constants.ts` — but they are specified exactly in the spec so the result remains reproducible and the brick agent can use them directly. The first 3 attempts at reading `mcp-brick.json` failed due to permission/path issues; the correct working directory was `/tmp/focus-bench/semanticsearch-native-2026-04-26T18-31-27-408/`.",
+  "mini_task_spec": "Using the `semanticsearch` brick's `search` tool, perform TF-IDF cosine similarity search over the following fixed corpus of 8 documents and return the **top-3 document IDs** (in descending order of cosine similarity score) for the query `\"websocket gateway connection event message\"`.\n\n**Corpus** (exact text strings to pass as the `corpus` parameter):\n```\n[\n  { \"id\": \"common\",           \"text\": \"MODULE_METADATA IMPORTS PROVIDERS CONTROLLERS EXPORTS GLOBAL_MODULE_METADATA HOST_METADATA PATH_METADATA PARAMTYPES_METADATA SELF_DECLARED_DEPS_METADATA OPTIONAL_DEPS_METADATA PROPERTY_DEPS_METADATA SCOPE_OPTIONS_METADATA METHOD_METADATA ROUTE_ARGS_METADATA FILTER_CATCH_EXCEPTIONS\" },\n  { \"id\": \"core\",             \"text\": \"APPLICATION_START APPLICATION_READY MICROSERVICE_READY UNKNOWN_EXCEPTION_MESSAGE ERROR_DURING_SHUTDOWN CALL_LISTEN_FIRST APP_INTERCEPTOR APP_PIPE APP_GUARD APP_FILTER\" },\n  { \"id\": \"microservices\",    \"text\": \"TCP_DEFAULT_PORT TCP_DEFAULT_HOST REDIS_DEFAULT_PORT REDIS_DEFAULT_HOST NATS_DEFAULT_URL MQTT_DEFAULT_URL GRPC_DEFAULT_URL RQM_DEFAULT_URL KAFKA_DEFAULT_BROKER KAFKA_DEFAULT_CLIENT KAFKA_DEFAULT_GROUP MQTT_SEPARATOR MQTT_WILDCARD_SINGLE RQM_DEFAULT_QUEUE RQM_DEFAULT_PREFETCH_COUNT\" },\n  { \"id\": \"websockets\",       \"text\": \"MESSAGE_MAPPING_METADATA websockets message mapping MESSAGE_METADATA message GATEWAY_SERVER_METADATA websockets is socket GATEWAY_METADATA websockets is gateway NAMESPACE_METADATA namespace PORT_METADATA port GATEWAY_OPTIONS websockets gateway options PARAM_ARGS_METADATA CONNECTION_EVENT connection DISCONNECT_EVENT disconnect CLOSE_EVENT close ERROR_EVENT error\" },\n  { \"id\": \"platform-fastify\", \"text\": \"FASTIFY_ROUTE_CONFIG_METADATA fastify route config FASTIFY_ROUTE_CONSTRAINTS_METADATA fastify route constraints FASTIFY_ROUTE_SCHEMA_METADATA fastify route schema\" },\n  { \"id\": \"platform-express\", \"text\": \"express adapter http server middleware request response route handler\" },\n  { \"id\": \"testing\",          \"text\": \"test module builder compile create testing module override provider mock\" },\n  { \"id\": \"platform-socket-io\", \"text\": \"socket io adapter server broadcast emit rooms namespace connection websocket\" }\n]\n```\n\n**Query**: `\"websocket gateway connection event message\"`\n\n**`limit`**: 3\n\nThe corpus texts are derived from the `constants.ts` files of the NestJS packages in `test-repo/packages/` (e.g., `test-repo/packages/websockets/constants.ts`, `test-repo/packages/microservices/constants.ts`, etc.).\n\n**Expected answer format**: The top-3 document IDs, one per line, in descending order of cosine similarity score. Example format:\n```\nwebsockets\nplatform-socket-io\ncore\n```\n\n---",
+  "workdir": "/tmp/focus-bench/semanticsearch-native-2026-04-26T18-31-27-408",
+  "exit_reason": "ok"
+}

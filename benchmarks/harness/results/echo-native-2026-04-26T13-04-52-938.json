@@ -1,0 +1,25 @@
+{
+  "brick": "echo",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:04:13.460Z",
+  "duration_ms": 39478,
+  "turns": 8,
+  "tools_used": [
+    "Bash",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 4738,
+    "cache_read_input_tokens": 268354,
+    "output_tokens": 2213,
+    "total": 275329
+  },
+  "session_id": "6e390535-bf4d-47b2-8a38-cc80af811605",
+  "result_block": "## Result\n- **Brick**: echo\n- **Mode**: native\n- **Mini-task**: Read the `name` field from `test-repo/package.json` and echo it via the `say` tool\n- **Answer**: `@nestjs/core`\n- **Turns used**: 4\n- **Tools used**: Bash, Read\n- **Rough token estimate**: ~400 tokens\n- **Notes**: The echo brick is a pure smoke-test with no domain logic — its only tool (`say`) returns the input unchanged. In native mode the task reduces to reading `package.json` and reporting the value directly, since there is no equivalent native \"echo\" primitive that needs exercising. The paired brick run will verify the MCP dispatch pipeline end-to-end by confirming `mcp__echo__say({\"message\": \"@nestjs/core\"})` returns `\"@nestjs/core\"`.",
+  "mini_task_spec": "Read the root `test-repo/package.json` file and extract the value of the top-level `\"name\"` field. Pass that exact string as the `message` argument to the echo brick's `say` tool (`mcp__echo__say`). Report the string that the tool returns.\n\nExpected answer format: a single string exactly as returned by the `say` tool.\n\n---",
+  "workdir": "/tmp/focus-bench/echo-native-2026-04-26T13-04-13-460",
+  "exit_reason": "ok"
+}

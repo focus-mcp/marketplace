@@ -1,0 +1,31 @@
+{
+  "brick": "inline",
+  "mode": "brick",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:14:03.991Z",
+  "duration_ms": 163462,
+  "turns": 21,
+  "tools_used": [
+    "Read",
+    "ToolSearch",
+    "mcp__focus__focus_catalog_list",
+    "mcp__focus__focus_install",
+    "mcp__focus__focus_list",
+    "mcp__focus__focus_load",
+    "mcp__focus__focus_reload",
+    "mcp__focus__focus_search",
+    "mcp__focus__focus_update"
+  ],
+  "usage": {
+    "input_tokens": 102,
+    "cache_creation_input_tokens": 58117,
+    "cache_read_input_tokens": 655524,
+    "output_tokens": 7380,
+    "total": 721123
+  },
+  "session_id": "6e6f2a5f-19e5-41be-8dca-620e89258e50",
+  "result_block": "## Result\n- **Brick**: inline\n- **Mode**: brick\n- **Mini-task**: Inline `MISSING_REQUIRED_DEPENDENCY` arrow function into its single call site in `test-repo/packages/common/utils/load-package.util.ts` with `apply: true` and report the resulting line 16\n- **Answer**: N/A — brick tool could not be executed (see Notes)\n- **Turns used**: 10\n- **Tools used**: `mcp__focus__focus_list`, `mcp__focus__focus_search`, `mcp__focus__focus_install`, `mcp__focus__focus_load`, `mcp__focus__focus_update`, `mcp__focus__focus_reload`, `mcp__focus__focus_catalog_list`\n- **Rough token estimate**: ~6,000\n- **Notes**: The `inline` brick is installed (version `^0.0.0`) but `focus_load` fails with `Cannot find module '@focus-mcp/brick-inline'` (require stack: `.focus/bricks/noop.js`). The brick's tools (`inline`, `extract`, `move`) are never registered and do not appear as deferred tools. `focus_update` returned \"not yet implemented\". The focus MCP server itself is available and responding, but the brick module is missing from the node_modules, making the inline tool inaccessible. Based on the source code described in the task spec (substituting `packageName` → `name`, `context` → `reason`), the expected line 16 after inlining would be: `    logger.error(\\`The \"${packageName}\" package is missing. Please, make sure to install it to take advantage of ${context}.\\`);` — but this was derived analytically, not from running the brick tool.",
+  "workdir": "/tmp/focus-bench/inline-brick-2026-04-26T18-14-03-988",
+  "exit_reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "brick": "share",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T18:35:48.446Z",
+  "duration_ms": 125549,
+  "turns": 25,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 54,
+    "cache_creation_input_tokens": 37926,
+    "cache_read_input_tokens": 826781,
+    "output_tokens": 8162,
+    "total": 872923
+  },
+  "session_id": "9f2f37af-c4d1-4682-882c-2276f6c90949",
+  "result_block": "## Result\n\n- **Brick**: share\n- **Mode**: native\n- **Mini-task**: Find @Injectable production TypeScript files in packages/common and packages/core, simulate multi-agent registration\n- **Answer**:\n\n  **agent-common files** (14 files, sorted):\n  ```\n  test-repo/packages/common/decorators/core/inject.decorator.ts\n  test-repo/packages/common/pipes/default-value.pipe.ts\n  test-repo/packages/common/pipes/file/parse-file.pipe.ts\n  test-repo/packages/common/pipes/parse-array.pipe.ts\n  test-repo/packages/common/pipes/parse-bool.pipe.ts\n  test-repo/packages/common/pipes/parse-date.pipe.ts\n  test-repo/packages/common/pipes/parse-enum.pipe.ts\n  test-repo/packages/common/pipes/parse-float.pipe.ts\n  test-repo/packages/common/pipes/parse-int.pipe.ts\n  test-repo/packages/common/pipes/parse-uuid.pipe.ts\n  test-repo/packages/common/pipes/validation.pipe.ts\n  test-repo/packages/common/serializer/class-serializer.interceptor.ts\n  test-repo/packages/common/services/console.service.ts\n  test-repo/packages/common/services/logger.service.ts\n  ```\n\n  **agent-core files** (3 files, sorted):\n  ```\n  test-repo/packages/core/discovery/discovery-service.ts\n  test-repo/packages/core/errors/messages.ts\n  test-repo/packages/core/scanner.ts\n  ```\n\n  **total-injectable-files**: `17`\n\n- **Turns used**: 8\n- **Tools used**: `Read`, `Bash`, `Grep`\n- **Rough token estimate**: ~3,500\n- **Notes**: The share brick's tools (context, files, results, broadcast) map naturally onto this multi-agent file-registration scenario. In native mode, the same data is gathered directly via grep without any shared-state intermediary. The `inject.decorator.ts` file in `packages/common/decorators/core/` is a legitimate hit — it references `@Injectable` in its implementation. No ambiguities found.",
+  "mini_task_spec": "You are simulating a multi-agent audit of the NestJS monorepo located in `test-repo/`. Two virtual agents coordinate via the share brick's shared state:\n\n- **\"agent-common\"** is responsible for `test-repo/packages/common/`\n- **\"agent-core\"** is responsible for `test-repo/packages/core/`\n\nEach agent scans its own package for all production TypeScript files (`.ts`) that contain the string `@Injectable`. Production files exclude anything inside a `test/` directory and any file whose name ends in `.spec.ts`.\n\nYour task:\n1. **For \"agent-common\"**: call `shr__files` to register the matching file paths (relative to `test-repo/`), and call `shr__results` with taskId `\"agent-common-result\"` to store the sorted list of those paths as a JSON array string.\n2. **For \"agent-core\"**: call `shr__files` to register the matching file paths (relative to `test-repo/`), and call `shr__results` with taskId `\"agent-core-result\"` to store the sorted list of those paths as a JSON array string.\n3. Call `shr__context` to set key `\"total-injectable-files\"` to the combined count (integer, as a JSON string) of matching files across both agents.\n4. Call `shr__broadcast` with `from: \"orchestrator\"` and a message announcing the total count.\n\nReport the final value of the context key `\"total-injectable-files\"` (as an integer) and the sorted file lists for each agent (one path per line).\n\nExpected answer format:\n- **agent-common files**: sorted list of relative paths (one per line)\n- **agent-core files**: sorted list of relative paths (one per line)\n- **total-injectable-files context value**: integer\n\n---",
+  "workdir": "/tmp/focus-bench/share-native-2026-04-26T18-35-48-446",
+  "exit_reason": "ok"
+}

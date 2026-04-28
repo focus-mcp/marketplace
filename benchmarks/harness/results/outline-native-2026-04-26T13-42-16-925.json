@@ -1,0 +1,26 @@
+{
+  "brick": "outline",
+  "mode": "native",
+  "model": "claude-sonnet-4-6",
+  "framing": "minimal",
+  "started_at": "2026-04-26T13:40:32.063Z",
+  "duration_ms": 104862,
+  "turns": 13,
+  "tools_used": [
+    "Bash",
+    "Grep",
+    "Read"
+  ],
+  "usage": {
+    "input_tokens": 36,
+    "cache_creation_input_tokens": 81015,
+    "cache_read_input_tokens": 700286,
+    "output_tokens": 5706,
+    "total": 787043
+  },
+  "session_id": "d354cb96-2dd9-48ea-aaea-03350cdb9934",
+  "result_block": "## Result\n- **Brick**: outline\n- **Mode**: native\n- **Mini-task**: List all exported symbols with first-occurrence line numbers from `packages/common/decorators/http/route-params.decorator.ts`, sorted alphabetically\n- **Answer**:\n  ```\n  assignMetadata:30\n  Body:432\n  Headers:325\n  HostParam:720\n  Ip:151\n  Next:138\n  Param:609\n  ParamData:24\n  Query:346\n  RawBody:526\n  Req:770\n  Request:99\n  Res:771\n  Response:112\n  ResponseDecoratorOptions:13\n  RouteParamMetadata:25\n  Session:164\n  UploadedFile:184\n  UploadedFiles:267\n  ```\n- **Turns used**: 11\n- **Tools used**: Read, Bash, Grep\n- **Rough token estimate**: ~9,000\n- **Notes**: The file contains many overloaded TypeScript function signatures (e.g. `Body`, `Param`, `Query`, `UploadedFile`, `UploadedFiles`, `RawBody`, `HostParam`); only the first declaration line for each unique name is reported. Two re-exports (`Req = Request`, `Res = Response`) at lines 770–771 are included as distinct exported symbols.",
+  "mini_task_spec": "Using the `outline` brick's `file` tool, outline the file `test-repo/packages/common/decorators/http/route-params.decorator.ts` (a NestJS shallow clone). List every exported symbol found in that file, deduplicated by name (overloaded functions appear once, at their first declaration line). Report only the unique exported symbol names and their first-occurrence line numbers, sorted alphabetically by symbol name (case-insensitive). Format the answer as one entry per line: `<name>:<line>`.\n\n---",
+  "workdir": "/tmp/focus-bench/outline-native-2026-04-26T13-40-32-063",
+  "exit_reason": "ok"
+}
