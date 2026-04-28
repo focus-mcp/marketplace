@@ -2,8 +2,16 @@
 // SPDX-License-Identifier: MIT
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
-import type { SrInput } from './operations.ts';
-import { srFull, srImports, srMap, srSignatures, srSummary } from './operations.ts';
+import type { SmartreadBrickBus, SrInput } from './operations.ts';
+import {
+    clearBus,
+    setBus,
+    srFull,
+    srImports,
+    srMap,
+    srSignatures,
+    srSummary,
+} from './operations.ts';
 
 interface BrickBus {
     on(
@@ -11,6 +19,10 @@ interface BrickBus {
         handler: (data: unknown) => Promise<unknown> | unknown,
     ): undefined | (() => void);
     handle(target: string, handler: (data: unknown) => Promise<unknown> | unknown): () => void;
+    request<TRequest = unknown, TResponse = unknown>(
+        target: string,
+        payload: TRequest,
+    ): Promise<TResponse>;
 }
 
 interface BrickContext {
@@ -41,6 +53,7 @@ const brick: Brick = {
     start(ctx) {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
+        setBus(ctx.bus as SmartreadBrickBus);
         unsubscribers.push(ctx.bus.handle('smartread:full', (data) => srFull(data as SrInput)));
         unsubscribers.push(ctx.bus.handle('smartread:map', (data) => srMap(data as SrInput)));
         unsubscribers.push(
@@ -56,6 +69,7 @@ const brick: Brick = {
     stop() {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
+        clearBus();
     },
 };
 

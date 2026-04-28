@@ -4,6 +4,32 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
+// ─── Bus interface ────────────────────────────────────────────────────────────
+
+export interface SmartreadBrickBus {
+    request<TRequest = unknown, TResponse = unknown>(
+        target: string,
+        payload: TRequest,
+    ): Promise<TResponse>;
+}
+
+let _bus: SmartreadBrickBus | undefined;
+
+export function setBus(bus: SmartreadBrickBus): void {
+    _bus = bus;
+}
+
+export function clearBus(): void {
+    _bus = undefined;
+}
+
+function getBus(): SmartreadBrickBus {
+    if (!_bus) throw new Error('smartread: bus not initialized — brick must be started first');
+    return _bus;
+}
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 export interface SrInput {
     readonly path: string;
 }
@@ -15,58 +41,140 @@ export interface SrSummaryEntry {
     readonly lineCount: number;
 }
 
+interface SymbolInfo {
+    name: string;
+    kind: string;
+    file: string;
+    line: number;
+    endLine: number;
+    signature: string;
+    exported: boolean;
+    parent?: string;
+}
+
+interface ExtractSymbolsOutput {
+    symbols: SymbolInfo[];
+    imports: Array<{ from: string; names: string[] }>;
+    exports: string[];
+}
+
+interface ExtractImportsOutput {
+    imports: Array<{ from: string; names: string[]; kind?: string }>;
+}
+
+// ─── srFull ───────────────────────────────────────────────────────────────────
+
 export async function srFull(input: SrInput): Promise<{ content: string }> {
     const content = await readFile(resolve(input.path), 'utf-8');
     return { content };
 }
 
+// ─── srMap ────────────────────────────────────────────────────────────────────
+
 export async function srMap(input: SrInput): Promise<{ lines: string[] }> {
     const content = await readFile(resolve(input.path), 'utf-8');
-    const mapPattern = /^(export\s+)?(async\s+function|function|class|interface|type|const)\s+/;
-    const lines = content.split('\n').filter((line) => mapPattern.test(line.trimStart()));
-    return { lines };
+    try {
+        const bus = getBus();
+        const result = await bus.request<{ path: string; content: string }, ExtractSymbolsOutput>(
+            'treesitter:extract-symbols',
+            { path: resolve(input.path), content },
+        );
+        return { lines: result.symbols.map((s) => s.signature).filter(Boolean) };
+    } catch (err) {
+        if (_bus !== undefined) throw err;
+        const pat = /^(export\s+)?(async\s+function|function|class|interface|type|const)\s+/;
+        return { lines: content.split('\n').filter((l) => pat.test(l.trimStart())) };
+    }
 }
+
+// ─── srSignatures ─────────────────────────────────────────────────────────────
 
 export async function srSignatures(input: SrInput): Promise<{ lines: string[] }> {
     const content = await readFile(resolve(input.path), 'utf-8');
-    const exportPattern = /^export\s+(async\s+function|function|class|interface|type|const)\s+/;
-    const lines = content.split('\n').filter((line) => exportPattern.test(line.trimStart()));
-    return { lines };
+    try {
+        const bus = getBus();
+        const result = await bus.request<{ path: string; content: string }, ExtractSymbolsOutput>(
+            'treesitter:extract-symbols',
+            { path: resolve(input.path), content },
+        );
+        return {
+            lines: result.symbols
+                .filter((s) => s.exported)
+                .map((s) => s.signature)
+                .filter(Boolean),
+        };
+    } catch (err) {
+        if (_bus !== undefined) throw err;
+        const pat = /^export\s+(async\s+function|function|class|interface|type|const)\s+/;
+        return { lines: content.split('\n').filter((l) => pat.test(l.trimStart())) };
+    }
+}
+
+// ─── srImports ────────────────────────────────────────────────────────────────
+
+function reconstructImportLine(imp: { from: string; names: string[]; kind?: string }): string {
+    if (imp.kind === 'side-effect' || (imp.names.length === 0 && imp.kind !== 'namespace')) {
+        return `import '${imp.from}'`;
+    }
+    if (imp.kind === 'namespace') {
+        const ns = imp.names[0] ?? '*';
+        return `import * as ${ns} from '${imp.from}'`;
+    }
+    if (imp.names.length > 0) {
+        return `import { ${imp.names.join(', ')} } from '${imp.from}'`;
+    }
+    return `import '${imp.from}'`;
 }
 
 export async function srImports(input: SrInput): Promise<{ lines: string[] }> {
     const content = await readFile(resolve(input.path), 'utf-8');
-    const lines = content
-        .split('\n')
-        .filter((line) => /^import\s+/.test(line.trimStart()) || line.includes('require('));
-    return { lines };
-}
-
-const BLOCK_START = /^(?:export\s+)?(?:async\s+)?(?:function|class)\s+(\w+)/;
-
-function findBlockEnd(allLines: string[], startIdx: number): number {
-    let depth = 0;
-    let foundOpen = false;
-    for (let j = startIdx; j < allLines.length; j++) {
-        const l = allLines[j] ?? '';
-        for (const ch of l) {
-            if (ch === '{') {
-                depth++;
-                foundOpen = true;
-            } else if (ch === '}') {
-                depth--;
-            }
-        }
-        if (foundOpen && depth === 0) return j;
+    try {
+        const bus = getBus();
+        const result = await bus.request<{ path: string; content: string }, ExtractImportsOutput>(
+            'treesitter:extract-imports',
+            { path: resolve(input.path), content },
+        );
+        return { lines: result.imports.map(reconstructImportLine) };
+    } catch (err) {
+        if (_bus !== undefined) throw err;
+        return {
+            lines: content
+                .split('\n')
+                .filter((l) => /^import\s+/.test(l.trimStart()) || l.includes('require(')),
+        };
     }
-    return startIdx;
 }
+
+// ─── srSummary ────────────────────────────────────────────────────────────────
 
 export async function srSummary(input: SrInput): Promise<{ entries: SrSummaryEntry[] }> {
     const content = await readFile(resolve(input.path), 'utf-8');
+    try {
+        const bus = getBus();
+        const result = await bus.request<{ path: string; content: string }, ExtractSymbolsOutput>(
+            'treesitter:extract-symbols',
+            { path: resolve(input.path), content },
+        );
+        return {
+            entries: result.symbols
+                .filter((s) => !s.parent)
+                .map((s) => ({
+                    name: s.name,
+                    startLine: s.line,
+                    endLine: s.endLine,
+                    lineCount: Math.max(1, s.endLine - s.line + 1),
+                })),
+        };
+    } catch (err) {
+        if (_bus !== undefined) throw err;
+        return { entries: srSummaryFallback(content) };
+    }
+}
+
+function srSummaryFallback(content: string): SrSummaryEntry[] {
+    const BLOCK_START = /^(?:export\s+)?(?:async\s+)?(?:function|class)\s+(\w+)/;
     const allLines = content.split('\n');
     const entries: SrSummaryEntry[] = [];
-
     let i = 0;
     while (i < allLines.length) {
         const rawLine = allLines[i] ?? '';
@@ -86,6 +194,23 @@ export async function srSummary(input: SrInput): Promise<{ entries: SrSummaryEnt
         entries.push({ name, startLine, endLine, lineCount: endLine - startLine + 1 });
         i = endIdx + 1;
     }
+    return entries;
+}
 
-    return { entries };
+function findBlockEnd(allLines: string[], startIdx: number): number {
+    let depth = 0;
+    let foundOpen = false;
+    for (let j = startIdx; j < allLines.length; j++) {
+        const l = allLines[j] ?? '';
+        for (const ch of l) {
+            if (ch === '{') {
+                depth++;
+                foundOpen = true;
+            } else if (ch === '}') {
+                depth--;
+            }
+        }
+        if (foundOpen && depth === 0) return j;
+    }
+    return startIdx;
 }
