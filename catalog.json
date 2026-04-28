@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-28T06:20:21.080Z",
+  "updated": "2026-04-28T09:22:48.210Z",
   "bricks": [
     {
       "name": "agent",
@@ -110,7 +110,7 @@
     },
     {
       "name": "aiteam",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "AI team coordination — loads dispatch, parallel, debate, review, agent for multi-agent orchestration.",
       "tags": [
         "aiteam",
@@ -587,7 +587,7 @@
     },
     {
       "name": "codebase",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Complete codebase intelligence — loads treesitter, symbol, outline, callgraph, depgraph, refs.",
       "tags": [
         "codebase",
@@ -789,7 +789,7 @@
     },
     {
       "name": "codemod",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Code modification toolkit — loads symbol, rename, codeedit, inline, textsearch for automated refactoring.",
       "tags": [
         "codemod",
@@ -812,7 +812,7 @@
     },
     {
       "name": "compress",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Compress text output to save tokens — strip comments, collapse whitespace, abbreviate patterns.",
       "tags": [
         "compress",
@@ -1594,7 +1594,7 @@
     },
     {
       "name": "devtools",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Developer tools — loads shell, sandbox, batch for command execution and scripting.",
       "tags": [
         "devtools",
@@ -1908,7 +1908,7 @@
     },
     {
       "name": "echo",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Hello-world brick — returns the message it receives. Serves as a smoke test for the FocusMCP pipeline.",
       "tags": [
         "example",
@@ -1943,7 +1943,7 @@
     },
     {
       "name": "filediff",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "File comparison — diff, patch, delta between files or versions.",
       "tags": [
         "file",
@@ -2025,7 +2025,7 @@
     },
     {
       "name": "filelist",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "List directory contents — entries, tree, glob, find.",
       "tags": [
         "file",
@@ -2122,7 +2122,7 @@
     },
     {
       "name": "fileops",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "description": "File operations — move, copy, delete, rename. Call fileops:setRoot first with the absolute path to your workspace, otherwise tools will fail-fast on the first non-existent path.",
       "tags": [
         "file",
@@ -2222,7 +2222,7 @@
     },
     {
       "name": "fileread",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Read files — full, head, tail, line range, encoding detection.",
       "tags": [
         "file",
@@ -2323,7 +2323,7 @@
     },
     {
       "name": "filesearch",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Search and replace in files — regex search, in-place replace.",
       "tags": [
         "file",
@@ -2395,7 +2395,7 @@
     },
     {
       "name": "filesystem",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Complete filesystem operations — loads fileread, filewrite, filelist, fileops, filesearch.",
       "tags": [
         "filesystem",
@@ -2510,7 +2510,7 @@
     },
     {
       "name": "format",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Format data into various output formats — pretty JSON, YAML, markdown, ASCII tables.",
       "tags": [
         "format",
@@ -2642,7 +2642,7 @@
     },
     {
       "name": "fts",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Full-text search with TF-IDF ranking — index files, search with relevance scoring, suggest completions.",
       "tags": [
         "search",
@@ -3820,7 +3820,7 @@
     },
     {
       "name": "knowledgebase",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Knowledge base — loads knowledge, fts, graphbuild, graphquery for document indexing and graph-powered search.",
       "tags": [
         "knowledgebase",
@@ -3843,7 +3843,7 @@
     },
     {
       "name": "lastversion",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "description": "Package version intelligence — latest version, diff, changelog, audit across npm/pypi/github/gitlab.",
       "tags": [
         "version",
@@ -4040,7 +4040,7 @@
     },
     {
       "name": "memory",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "description": "Persistent key-value memory — store and recall information across sessions as JSON files.",
       "tags": [
         "memory",
@@ -4161,7 +4161,7 @@
     },
     {
       "name": "metrics",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "Session metrics tracking — token usage, costs, duration, and per-tool statistics.",
       "tags": [
         "metrics",
@@ -4259,7 +4259,7 @@
     },
     {
       "name": "multiread",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Batch file reading — multiple files in one call, deduplication.",
       "tags": [
         "file",
@@ -4340,7 +4340,7 @@
     },
     {
       "name": "onboarding",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Project onboarding workflow — auto-discover project structure, conventions, and key files for a new contributor or AI agent.",
       "tags": [
         "onboarding",
@@ -4401,7 +4401,7 @@
     },
     {
       "name": "outline",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "File and repo structure outline — list exported symbols and directory trees without reading full content.",
       "tags": [
         "outline",
@@ -4479,7 +4479,7 @@
     },
     {
       "name": "overview",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Project-level understanding without reading all files — detect framework, language, conventions, and architecture.",
       "tags": [
         "overview",
@@ -4570,7 +4570,7 @@
     },
     {
       "name": "parallel",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "description": "Parallel execution coordination — run tasks concurrently, collect results, merge outputs, handle timeouts.",
       "tags": [
         "parallel",
@@ -4869,7 +4869,7 @@
     },
     {
       "name": "refs",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Cross-references — find who imports or uses a symbol, locate declarations, and trace inheritance chains.",
       "tags": [
         "references",
@@ -4976,7 +4976,7 @@
     },
     {
       "name": "rename",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Rename refactoring — rename symbols across files, rename files with import updates, bulk rename with preview.",
       "tags": [
         "rename",
@@ -5119,7 +5119,7 @@
     },
     {
       "name": "repos",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Multi-repo management — register, track, and get stats for multiple repositories.",
       "tags": [
         "repos",
@@ -5203,7 +5203,7 @@
     },
     {
       "name": "research",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Multi-source research — collect info from multiple files/sources, synthesize findings, validate consistency.",
       "tags": [
         "research",
@@ -5550,7 +5550,7 @@
     },
     {
       "name": "sandbox",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "description": "Sandboxed code execution — run JavaScript/TypeScript snippets in an isolated VM context.",
       "tags": [
         "sandbox",
@@ -6122,7 +6122,7 @@
     },
     {
       "name": "shell",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Shell command execution — run commands, background processes, kill, and compress output.",
       "tags": [
         "shell",
@@ -6322,7 +6322,7 @@
     },
     {
       "name": "smartread",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Intelligent file reading — multiple modes to minimize token usage.",
       "tags": [
         "file",
@@ -6421,7 +6421,7 @@
     },
     {
       "name": "symbol",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "description": "Symbol lookup in source files — find, get, bulk, body.",
       "tags": [
         "symbols",
@@ -6535,7 +6535,7 @@
     },
     {
       "name": "task",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Task management for multi-agent workflows — create tasks, assign to agents, track status, mark complete.",
       "tags": [
         "task",
@@ -6649,7 +6649,7 @@
     },
     {
       "name": "textsearch",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Text search and replace across files — regex search, multi-file replace, grouped results.",
       "tags": [
         "search",
@@ -7031,7 +7031,7 @@
     },
     {
       "name": "treesitter",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "description": "Tree-sitter based multi-language code indexer — supports TS, JS, PHP, Python, Go, Rust, Java.",
       "tags": [
         "ast",
@@ -7118,7 +7118,7 @@
     },
     {
       "name": "validate",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Validate data — JSON syntax, JSON Schema compliance, TypeScript type checking, lint rules.",
       "tags": [
         "validate",
