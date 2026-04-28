@@ -221,9 +221,40 @@ export interface TsExtractCallsOutput {
 }
 
 const CALL_SKIP = new Set([
-    'if', 'for', 'while', 'switch', 'catch', 'function', 'class',
-    'return', 'new', 'typeof', 'instanceof', 'constructor',
+    'if',
+    'for',
+    'while',
+    'switch',
+    'catch',
+    'function',
+    'class',
+    'return',
+    'new',
+    'typeof',
+    'instanceof',
+    'constructor',
 ]);
+
+const FN_DECL_RE = /^(?:export\s+)?(?:async\s+)?function\s+(\w+)/;
+const CALL_RE = /\b(\w+)\s*\(/g;
+
+function countBraces(line: string): number {
+    return (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
+}
+
+function extractCallsFromLine(line: string, lineNum: number, callerFn: string): CallEntry[] {
+    const entries: CallEntry[] = [];
+    CALL_RE.lastIndex = 0;
+    let m = CALL_RE.exec(line);
+    while (m !== null) {
+        const callee = m[1] ?? '';
+        if (!CALL_SKIP.has(callee) && callee !== callerFn) {
+            entries.push({ caller: callerFn, callee, line: lineNum });
+        }
+        m = CALL_RE.exec(line);
+    }
+    return entries;
+}
 
 /**
  * Extract caller→callee relationships for callgraph analysis.
@@ -232,30 +263,20 @@ const CALL_SKIP = new Set([
 export async function tsExtractCalls(input: TsExtractCallsInput): Promise<TsExtractCallsOutput> {
     const lines = input.content.split('\n');
     const calls: CallEntry[] = [];
-    const fnDeclRe = /^(?:export\s+)?(?:async\s+)?function\s+(\w+)/;
-    const callRe = /\b(\w+)\s*\(/g;
     let currentFn: string | undefined;
     let depth = 0;
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i] ?? '';
-        const fnMatch = fnDeclRe.exec(line.trimStart());
+        const fnMatch = FN_DECL_RE.exec(line.trimStart());
         if (fnMatch) {
             currentFn = fnMatch[1];
-            depth = (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
+            depth = countBraces(line);
             if (depth <= 0) currentFn = undefined;
             continue;
         }
         if (currentFn) {
-            depth += (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
-            callRe.lastIndex = 0;
-            let m = callRe.exec(line);
-            while (m !== null) {
-                const callee = m[1] ?? '';
-                if (!CALL_SKIP.has(callee) && callee !== currentFn) {
-                    calls.push({ caller: currentFn, callee, line: i + 1 });
-                }
-                m = callRe.exec(line);
-            }
+            depth += countBraces(line);
+            calls.push(...extractCallsFromLine(line, i + 1, currentFn));
             if (depth <= 0) currentFn = undefined;
         }
     }

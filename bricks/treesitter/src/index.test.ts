@@ -388,7 +388,8 @@ describe('tsExtractImports', () => {
     it('extracts TypeScript imports', async () => {
         const result = await tsExtractImports({
             path: '/src/service.ts',
-            content: "import { foo, bar } from './utils.ts';\nimport type { Baz } from './types.ts';",
+            content:
+                "import { foo, bar } from './utils.ts';\nimport type { Baz } from './types.ts';",
         });
         expect(result.imports.length).toBeGreaterThanOrEqual(1);
         expect(result.imports.some((i) => i.from === './utils.ts')).toBe(true);
@@ -489,11 +490,9 @@ describe('tsExtractCalls', () => {
     });
 
     it('handles PHP-like content without crash', async () => {
-        const content = [
-            '<?php',
-            'function doWork() { helper(); }',
-            'function helper() {}',
-        ].join('\n');
+        const content = ['<?php', 'function doWork() { helper(); }', 'function helper() {}'].join(
+            '\n',
+        );
         const result = await tsExtractCalls({ path: '/src/util.php', content });
         expect(Array.isArray(result.calls)).toBe(true);
     });
