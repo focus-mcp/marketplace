@@ -108,10 +108,11 @@ describe('tsIndex', () => {
         expect(result.files).toBe(2);
     });
 
-    it('ignores non-TS/JS files', async () => {
-        await writeFile(join(testDir, 'readme.md'), '# Hello');
+    it('ignores truly unsupported files (e.g. .txt) but indexes supported ones', async () => {
+        await writeFile(join(testDir, 'notes.txt'), 'some text');
         await writeFile(join(testDir, 'code.ts'), 'export function code() {}');
         const result = await tsIndex({ dir: testDir });
+        // Only .ts is indexed; .txt is not supported
         expect(result.files).toBe(1);
     });
 });
@@ -289,8 +290,8 @@ describe('parseFile — multi-language', () => {
         expect(result.symbols.some((s) => s.name === 'myMethod' && s.kind === 'method')).toBe(true);
     });
 
-    it('returns empty result for unsupported extension', async () => {
-        const result = await parseFile('/readme.md', '# Hello world', 0);
+    it('returns empty result for truly unsupported extension (.xyz)', async () => {
+        const result = await parseFile('/archive.xyz', '# Hello world', 0);
         expect(result.symbols).toHaveLength(0);
         expect(result.imports).toHaveLength(0);
         expect(result.exports).toHaveLength(0);

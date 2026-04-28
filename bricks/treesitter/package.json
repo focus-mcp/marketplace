@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-treesitter",
     "version": "1.1.1",
     "private": false,
-    "description": "Tree-sitter based multi-language code indexer — parses symbols, imports, exports for TS, JS, PHP, Python, Go, Rust, Java.",
+    "description": "Multi-language tree-sitter parser — supports ~50 languages including TypeScript, Python, PHP, Go, Rust, HTML, YAML, JSON, Markdown, Twig, SCSS, etc.",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",
@@ -14,7 +14,8 @@
         "dist",
         "mcp-brick.json",
         "mcp-brick.json.license",
-        "README.md"
+        "README.md",
+        "THIRD_PARTY_LICENSES.md"
     ],
     "scripts": {
         "test": "vitest run src",
@@ -42,6 +43,31 @@
         "go",
         "rust",
         "java",
+        "yaml",
+        "html",
+        "markdown",
+        "scss",
+        "json",
+        "toml",
+        "twig",
+        "kotlin",
+        "swift",
+        "dart",
+        "elixir",
+        "haskell",
+        "scala",
+        "zig",
+        "lua",
+        "xml",
+        "r",
+        "perl",
+        "latex",
+        "nix",
+        "hcl",
+        "terraform",
+        "gleam",
+        "elm",
+        "clojure",
         "multi-language",
         "tree-sitter"
     ],
@@ -68,6 +94,10 @@
     },
     "types": "./dist/index.d.ts",
     "dependencies": {
-        "@vscode/tree-sitter-wasm": "^0.3.1"
+        "@cursorless/tree-sitter-wasms": "^0.8.1",
+        "@tree-sitter-grammars/tree-sitter-toml": "^0.7.0",
+        "@tree-sitter-grammars/tree-sitter-yaml": "^0.7.1",
+        "@vscode/tree-sitter-wasm": "^0.3.1",
+        "tree-sitter-twig": "^0.8.2"
     }
 }
