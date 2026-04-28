@@ -58,36 +58,23 @@ jobs:
           echo "Modified bricks: ${BRICKS:-<none>}"
           echo "bricks=$(echo "$BRICKS" | tr '\n' ' ' | xargs)" >> "$GITHUB_OUTPUT"
 
-      - name: Compute dev number
-        id: devnum
-        run: |
-          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || git rev-list --max-parents=0 HEAD)
-          DEV_NUM=$(git rev-list --count ${LAST_TAG}..HEAD)
-          echo "num=${DEV_NUM}" >> "$GITHUB_OUTPUT"
-          echo "Dev number: ${DEV_NUM}"
-
-      - name: Set per-brick dev versions (modified only)
+      - name: Apply changeset snapshot versions (modified bricks only)
         env:
-          DEV_NUM: ${{ steps.devnum.outputs.num }}
           BRICKS_LIST: ${{ steps.modified.outputs.bricks }}
         run: |
           if [ -z "$BRICKS_LIST" ]; then
             echo "No bricks modified — skipping version bump."
             exit 0
           fi
+          # Build the --filter flags for modified bricks only
+          FILTERS=""
           for name in $BRICKS_LIST; do
-            dir="bricks/${name}"
-            [ -f "${dir}/package.json" ] || continue
-            node -e "
-              const fs = require('fs');
-              const pkg = JSON.parse(fs.readFileSync('${dir}/package.json', 'utf-8'));
-              if (pkg.private === true) process.exit(0);
-              const base = pkg.version.split('-')[0];
-              pkg.version = base + '-dev.' + process.env.DEV_NUM;
-              fs.writeFileSync('${dir}/package.json', JSON.stringify(pkg, null, 4) + '\n');
-              console.log('  -> ' + pkg.name + '@' + pkg.version);
-            "
+            FILTERS="$FILTERS --filter @focusmcp/${name}"
           done
+          # Snapshot mode: produces versions like 0.5.0-dev-20260428-abc1234
+          # from pending changesets for the matching packages.
+          # Falls back gracefully when no changesets are pending (no-op).
+          pnpm $FILTERS changeset version --snapshot dev || true
 
       - name: Build modified bricks
         env:
@@ -121,5 +108,5 @@ jobs:
             [ "$PRIVATE" = "true" ] && echo "  skip (private): ${name}" && continue
             NAME=$(node -e "console.log(require('./${dir}/package.json').name)")
             echo "Publishing ${NAME}..."
-            (cd "$dir" && npm publish --tag dev --access public) || echo "  -> skipped"
+            (cd "$dir" && pnpm changeset publish --no-git-tag --tag dev) || echo "  -> skipped"
           done
