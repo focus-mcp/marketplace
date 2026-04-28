@@ -6,6 +6,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
+    clearBus,
+    type DepgraphBrickBus,
     depCircular,
     depExports,
     depFanin,
@@ -13,15 +15,72 @@ import {
     depImports,
     parseExports,
     parseImports,
+    setBus,
 } from './operations.ts';
 
 let testDir: string;
 
+// ─── Mock bus helpers ─────────────────────────────────────────────────────────
+
+const rMockEsm = /^import\s+.*from\s+['"]([^'"]+)['"]/;
+const rMockNamed = /\{\s*([^}]+)\s*\}/;
+const rMockCjs = /require\s*\(\s*['"]([^'"]+)['"]\s*\)/;
+
+function parseMockLine(line: string): Array<{ from: string; names: string[]; kind: string }> {
+    const entries: Array<{ from: string; names: string[]; kind: string }> = [];
+    const m = rMockEsm.exec(line);
+    if (m) {
+        const nm = rMockNamed.exec(line);
+        entries.push({
+            from: m[1] ?? '',
+            names: nm
+                ? (nm[1] ?? '')
+                      .split(',')
+                      .map((n) => n.trim())
+                      .filter(Boolean)
+                : [],
+            kind: 'esm',
+        });
+    }
+    const cjsM = rMockCjs.exec(line);
+    if (cjsM) {
+        entries.push({ from: cjsM[1] ?? '', names: [], kind: 'cjs' });
+    }
+    return entries;
+}
+
+function mockExtractImports(payload: unknown): {
+    imports: Array<{ from: string; names: string[]; kind: string }>;
+} {
+    const { content } = payload as { path: string; content: string };
+    const imports: Array<{ from: string; names: string[]; kind: string }> = [];
+    for (const line of content.split('\n')) {
+        imports.push(...parseMockLine(line));
+    }
+    return { imports };
+}
+
+function makeMockBus(): DepgraphBrickBus {
+    return {
+        request: vi.fn(async (target: string, payload: unknown): Promise<unknown> => {
+            if (target === 'treesitter:supported-exts') {
+                return { exts: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.php', '.py'] };
+            }
+            if (target === 'treesitter:extract-imports') {
+                return mockExtractImports(payload);
+            }
+            throw new Error(`Unexpected: ${target}`);
+        }) as DepgraphBrickBus['request'],
+    };
+}
+
 beforeEach(async () => {
     testDir = await mkdtemp(join(tmpdir(), 'focusmcp-depgraph-test-'));
+    setBus(makeMockBus());
 });
 
 afterEach(async () => {
+    clearBus();
     await rm(testDir, { recursive: true, force: true });
 });
 
@@ -165,7 +224,6 @@ describe('depFanout', () => {
 
 describe('depCircular — resolveImport index file branch', () => {
     it('resolves imports to index.ts inside a subdirectory', async () => {
-        // resolveImport checks `candidate/index${ext}` — trigger that branch
         const subDir = join(testDir, 'utils');
         await mkdir(subDir);
         await writeFile(join(subDir, 'index.ts'), 'export function util() {}');
@@ -173,7 +231,6 @@ describe('depCircular — resolveImport index file branch', () => {
             join(testDir, 'main.ts'),
             "import { util } from './utils';\nexport function main() {}",
         );
-        // No cycles expected; just verify the graph resolves correctly (no crash)
         const result = await depCircular({ dir: testDir });
         expect(Array.isArray(result.cycles)).toBe(true);
     });
@@ -181,7 +238,6 @@ describe('depCircular — resolveImport index file branch', () => {
 
 describe('depFanin — fileImportsTarget extension matching branch', () => {
     it('detects fanin when import specifier has no extension (resolved via extension loop)', async () => {
-        // importer uses './util' (no ext) — fileImportsTarget must use the extension loop
         await writeFile(join(testDir, 'util.ts'), 'export function util() {}');
         await writeFile(
             join(testDir, 'consumer.ts'),
@@ -190,6 +246,22 @@ describe('depFanin — fileImportsTarget extension matching branch', () => {
         const result = await depFanin({ file: join(testDir, 'util.ts'), dir: testDir });
         expect(result.count).toBeGreaterThanOrEqual(1);
         expect(result.fanin.some((f) => f.endsWith('consumer.ts'))).toBe(true);
+    });
+});
+
+describe('depgraph — multi-language', () => {
+    it('handles PHP file imports (no crash)', async () => {
+        const phpFile = join(testDir, 'service.php');
+        await writeFile(phpFile, '<?php\nuse App\\Service\\UserService;\nclass Foo {}\n');
+        const result = await depImports({ file: phpFile });
+        expect(Array.isArray(result.imports)).toBe(true);
+    });
+
+    it('counts Python imports via bus', async () => {
+        const pyFile = join(testDir, 'module.py');
+        await writeFile(pyFile, 'import os\nfrom pathlib import Path\n\ndef func(): pass\n');
+        const result = await depFanout({ file: pyFile });
+        expect(typeof result.fanout).toBe('number');
     });
 });
 
@@ -204,6 +276,7 @@ describe('depgraph brick', () => {
                 return unsub;
             }),
             on: vi.fn(),
+            request: vi.fn(),
         };
 
         await brick.start({ bus });
