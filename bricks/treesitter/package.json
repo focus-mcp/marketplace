@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-treesitter",
     "version": "1.1.1",
     "private": false,
-    "description": "Regex-based code indexer for TypeScript/JavaScript — parses symbols, imports, exports.",
+    "description": "Multi-language tree-sitter parser — supports ~50 languages including TypeScript, Python, PHP, Go, Rust, HTML, YAML, JSON, Markdown, Twig, SCSS, etc.",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",
@@ -14,7 +14,8 @@
         "dist",
         "mcp-brick.json",
         "mcp-brick.json.license",
-        "README.md"
+        "README.md",
+        "THIRD_PARTY_LICENSES.md"
     ],
     "scripts": {
         "test": "vitest run src",
@@ -35,7 +36,40 @@
         "ast",
         "parser",
         "symbols",
-        "typescript"
+        "typescript",
+        "javascript",
+        "php",
+        "python",
+        "go",
+        "rust",
+        "java",
+        "yaml",
+        "html",
+        "markdown",
+        "scss",
+        "json",
+        "toml",
+        "twig",
+        "kotlin",
+        "swift",
+        "dart",
+        "elixir",
+        "haskell",
+        "scala",
+        "zig",
+        "lua",
+        "xml",
+        "r",
+        "perl",
+        "latex",
+        "nix",
+        "hcl",
+        "terraform",
+        "gleam",
+        "elm",
+        "clojure",
+        "multi-language",
+        "tree-sitter"
     ],
     "author": "FocusMCP contributors",
     "homepage": "https://github.com/focus-mcp/marketplace/tree/main/bricks/treesitter#readme",
@@ -58,5 +92,12 @@
     "devDependencies": {
         "@focus-mcp/marketplace-testing": "workspace:*"
     },
-    "types": "./dist/index.d.ts"
+    "types": "./dist/index.d.ts",
+    "dependencies": {
+        "@cursorless/tree-sitter-wasms": "^0.8.1",
+        "@tree-sitter-grammars/tree-sitter-toml": "^0.7.0",
+        "@tree-sitter-grammars/tree-sitter-yaml": "^0.7.1",
+        "@vscode/tree-sitter-wasm": "^0.3.1",
+        "tree-sitter-twig": "^0.8.2"
+    }
 }

@@ -92,6 +92,12 @@ Some bricks save tokens immediately, others need multiple calls to amortize thei
 
 See [full math model report](./benchmarks/equivalence-math-report.md).
 
+## Roadmap & improvements
+
+Enhancement opportunities tracked in [`IMPROVEMENTS.md`](./IMPROVEMENTS.md) — architecture, performance, and new capabilities.
+Bugs and patches are in [`benchmarks/PATCH_QUEUE.md`](./benchmarks/PATCH_QUEUE.md).
+
+
 ## Contribute a brick
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).
