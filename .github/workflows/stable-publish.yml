@@ -93,8 +93,17 @@ jobs:
           pnpm "${FILTERS[@]}" run build
 
           # Publish each bumped brick
+          # If the version already exists on npm (e.g. published earlier as @dev),
+          # just promote it to @latest via dist-tag instead of re-publishing.
           for NAME in "${bumped[@]}"; do
             dir="${DIRS[$NAME]}"
-            echo "Publishing $NAME from $dir..."
-            (cd "$dir" && npm publish --access public)
+            LOCAL=$(node -e "console.log(require('./${dir}package.json').version)")
+            EXISTS=$(npm view "$NAME@$LOCAL" version 2>/dev/null || echo "none")
+            if [ "$EXISTS" = "$LOCAL" ]; then
+              echo "Promoting $NAME@$LOCAL to @latest (already on npm as @dev)..."
+              npm dist-tag add "$NAME@$LOCAL" latest
+            else
+              echo "Publishing $NAME@$LOCAL from $dir..."
+              (cd "$dir" && npm publish --access public --tag latest)
+            fi
           done
