@@ -2,8 +2,13 @@
 // SPDX-License-Identifier: MIT
 
 import manifestJson from '../mcp-brick.json' with { type: 'json' };
-import type { OutlineFileInput, OutlineRepoInput, OutlineStructureInput } from './operations.ts';
-import { outlineFile, outlineRepo, outlineStructure } from './operations.ts';
+import type {
+    OutlineBrickBus,
+    OutlineFileInput,
+    OutlineRepoInput,
+    OutlineStructureInput,
+} from './operations.ts';
+import { clearBus, outlineFile, outlineRepo, outlineStructure, setBus } from './operations.ts';
 
 interface BrickBus {
     on(
@@ -11,6 +16,10 @@ interface BrickBus {
         handler: (data: unknown) => Promise<unknown> | unknown,
     ): undefined | (() => void);
     handle(target: string, handler: (data: unknown) => Promise<unknown> | unknown): () => void;
+    request<TRequest = unknown, TResponse = unknown>(
+        target: string,
+        payload: TRequest,
+    ): Promise<TResponse>;
 }
 
 interface BrickContext {
@@ -40,6 +49,7 @@ const brick: Brick = {
     start(ctx) {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
+        setBus(ctx.bus as OutlineBrickBus);
         unsubscribers.push(
             ctx.bus.handle('outline:file', (data) => outlineFile(data as OutlineFileInput)),
         );
@@ -55,6 +65,7 @@ const brick: Brick = {
     stop() {
         for (const unsub of unsubscribers) unsub();
         unsubscribers.length = 0;
+        clearBus();
     },
 };
 

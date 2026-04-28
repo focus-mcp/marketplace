@@ -5,15 +5,159 @@ import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { outlineFile, outlineRepo, outlineStructure } from './operations.ts';
+import {
+    clearBus,
+    type OutlineBrickBus,
+    outlineFile,
+    outlineRepo,
+    outlineStructure,
+    setBus,
+} from './operations.ts';
 
 let testDir: string;
 
+// ─── Mock bus helpers ─────────────────────────────────────────────────────────
+
+const rMockFn = /^export\s+(async\s+)?function\s+(\w+)/;
+const rMockClass = /^export\s+(default\s+)?class\s+(\w+)/;
+const rMockIface = /^export\s+interface\s+(\w+)/;
+const rMockType = /^export\s+type\s+(\w+)/;
+const rMockConst = /^export\s+const\s+(\w+)/;
+const rMockImport = /^import\s+.*from\s+['"]([^'"]+)['"]/;
+const rMockNamed = /\{\s*([^}]+)\s*\}/;
+
+type MockSymbol = {
+    name: string;
+    kind: string;
+    file: string;
+    line: number;
+    endLine: number;
+    signature: string;
+    exported: boolean;
+    parent?: string;
+};
+
+function parseMockSymbolLine(line: string, lineNum: number): MockSymbol | undefined {
+    const sig = line.trim();
+    const mFn = rMockFn.exec(line);
+    if (mFn)
+        return {
+            name: mFn[2] ?? '',
+            kind: 'function',
+            file: '',
+            line: lineNum,
+            endLine: lineNum,
+            signature: sig,
+            exported: true,
+        };
+    const mClass = rMockClass.exec(line);
+    if (mClass)
+        return {
+            name: mClass[2] ?? '',
+            kind: 'class',
+            file: '',
+            line: lineNum,
+            endLine: lineNum,
+            signature: sig,
+            exported: true,
+        };
+    const mIface = rMockIface.exec(line);
+    if (mIface)
+        return {
+            name: mIface[1] ?? '',
+            kind: 'interface',
+            file: '',
+            line: lineNum,
+            endLine: lineNum,
+            signature: sig,
+            exported: true,
+        };
+    const mType = rMockType.exec(line);
+    if (mType)
+        return {
+            name: mType[1] ?? '',
+            kind: 'type',
+            file: '',
+            line: lineNum,
+            endLine: lineNum,
+            signature: sig,
+            exported: true,
+        };
+    const mConst = rMockConst.exec(line);
+    if (mConst)
+        return {
+            name: mConst[1] ?? '',
+            kind: 'variable',
+            file: '',
+            line: lineNum,
+            endLine: lineNum,
+            signature: sig,
+            exported: true,
+        };
+    return undefined;
+}
+
+function handleSupportedExts(): { exts: string[] } {
+    return {
+        exts: ['.ts', '.tsx', '.js', '.jsx', '.mts', '.mjs', '.php', '.py', '.go', '.rs', '.java'],
+    };
+}
+
+function handleExtractSymbols(payload: unknown): {
+    symbols: MockSymbol[];
+    imports: unknown[];
+    exports: unknown[];
+} {
+    const { content } = payload as { path: string; content: string };
+    const symbols: MockSymbol[] = [];
+    const lines = content.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+        const sym = parseMockSymbolLine(lines[i] ?? '', i + 1);
+        if (sym) symbols.push(sym);
+    }
+    return { symbols, imports: [], exports: [] };
+}
+
+function handleExtractImports(payload: unknown): {
+    imports: Array<{ from: string; names: string[] }>;
+} {
+    const { content } = payload as { path: string; content: string };
+    const imports: Array<{ from: string; names: string[] }> = [];
+    for (const line of content.split('\n')) {
+        const m = rMockImport.exec(line);
+        if (!m) continue;
+        const nm = rMockNamed.exec(line);
+        imports.push({
+            from: m[1] ?? '',
+            names: nm
+                ? (nm[1] ?? '')
+                      .split(',')
+                      .map((n) => n.trim().split(' as ')[0]?.trim() ?? '')
+                      .filter(Boolean)
+                : [],
+        });
+    }
+    return { imports };
+}
+
+function makeMockBus(): OutlineBrickBus {
+    return {
+        request: vi.fn(async (target: string, payload: unknown): Promise<unknown> => {
+            if (target === 'treesitter:supported-exts') return handleSupportedExts();
+            if (target === 'treesitter:extract-symbols') return handleExtractSymbols(payload);
+            if (target === 'treesitter:extract-imports') return handleExtractImports(payload);
+            throw new Error(`Unexpected bus target: ${target}`);
+        }) as OutlineBrickBus['request'],
+    };
+}
+
 beforeEach(async () => {
     testDir = await mkdtemp(join(tmpdir(), 'focusmcp-outline-test-'));
+    setBus(makeMockBus());
 });
 
 afterEach(async () => {
+    clearBus();
     await rm(testDir, { recursive: true, force: true });
 });
 
@@ -141,6 +285,30 @@ describe('outlineStructure', () => {
     });
 });
 
+describe('outlineFile — multi-language', () => {
+    it('outlineFile for PHP class (no crash)', async () => {
+        const phpFile = join(testDir, 'controller.php');
+        await writeFile(
+            phpFile,
+            '<?php\nclass UserController {\n    public function index(): void {}\n}\n',
+        );
+        const result = await outlineFile({ path: phpFile });
+        expect(result.lineCount).toBeGreaterThan(0);
+        expect(Array.isArray(result.symbols)).toBe(true);
+    });
+
+    it('outlineFile for Python module (no crash)', async () => {
+        const pyFile = join(testDir, 'module.py');
+        await writeFile(
+            pyFile,
+            'class DataService:\n    def process(self): pass\n\ndef helper(): pass\n',
+        );
+        const result = await outlineFile({ path: pyFile });
+        expect(result.lineCount).toBeGreaterThan(0);
+        expect(Array.isArray(result.symbols)).toBe(true);
+    });
+});
+
 describe('outline brick', () => {
     it('registers 3 handlers on start and unregisters on stop', async () => {
         const { default: brick } = await import('./index.ts');
@@ -152,6 +320,7 @@ describe('outline brick', () => {
                 return unsub;
             }),
             on: vi.fn(),
+            request: vi.fn(),
         };
 
         await brick.start({ bus });

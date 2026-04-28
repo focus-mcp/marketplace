@@ -4,7 +4,77 @@
 import { open, readdir } from 'node:fs/promises';
 import { extname, join, relative, resolve } from 'node:path';
 
-// ─── Types ───────────────────────────────────────────────────────────────────
+// ─── Bus interface ────────────────────────────────────────────────────────────
+
+export interface OutlineBrickBus {
+    request<TRequest = unknown, TResponse = unknown>(
+        target: string,
+        payload: TRequest,
+    ): Promise<TResponse>;
+}
+
+// ─── Module-level bus injection ───────────────────────────────────────────────
+
+let _bus: OutlineBrickBus | undefined;
+let _supportedExts: Set<string> | undefined;
+
+export function setBus(bus: OutlineBrickBus): void {
+    _bus = bus;
+}
+
+export function clearBus(): void {
+    _bus = undefined;
+    _supportedExts = undefined;
+}
+
+async function getSupportedExts(): Promise<Set<string>> {
+    if (_supportedExts) return _supportedExts;
+    const bus = _bus;
+    if (!bus) return new Set(['.ts', '.tsx', '.js', '.jsx', '.mts', '.mjs']);
+    try {
+        const { exts } = await bus.request<Record<never, never>, { exts: string[] }>(
+            'treesitter:supported-exts',
+            {},
+        );
+        _supportedExts = new Set(exts);
+    } catch {
+        _supportedExts = new Set([
+            '.ts',
+            '.tsx',
+            '.js',
+            '.jsx',
+            '.mts',
+            '.mjs',
+            '.php',
+            '.py',
+            '.go',
+            '.rs',
+            '.java',
+        ]);
+    }
+    return _supportedExts;
+}
+
+// ─── Bus response types (MUST match treesitter brick's shapes — bus contract) ─
+
+interface BusSymbolInfo {
+    name: string;
+    kind: string;
+    file: string;
+    line: number;
+    endLine: number;
+    signature: string;
+    exported: boolean;
+    parent?: string;
+}
+
+interface ExtractSymbolsOutput {
+    symbols: BusSymbolInfo[];
+    imports: Array<{ from: string; names: string[] }>;
+    exports: string[];
+}
+
+// ─── Public types ─────────────────────────────────────────────────────────────
 
 export interface SymbolEntry {
     name: string;
@@ -64,7 +134,7 @@ export interface OutlineStructureOutput {
     tree: TreeEntry[];
 }
 
-// ─── Regex patterns ──────────────────────────────────────────────────────────
+// ─── Regex fallback for parsing (used when bus unavailable) ───────────────────
 
 const rExportFunction = /^export\s+(async\s+)?function\s+(\w+)/;
 const rExportClass = /^export\s+(default\s+)?class\s+(\w+)/;
@@ -74,98 +144,103 @@ const rExportConst = /^export\s+const\s+(\w+)/;
 const rImport = /^import\s+.*\s+from\s+['"]([^'"]+)['"]/;
 const rNamedImport = /\{\s*([^}]+)\s*\}/;
 
-const SUPPORTED_EXTS = new Set(['.ts', '.tsx', '.js', '.jsx', '.mts', '.mjs']);
-
-// ─── Parsing ─────────────────────────────────────────────────────────────────
-
-function parseLine(
-    line: string,
-    lineNum: number,
-    symbols: SymbolEntry[],
-    imports: ImportEntry[],
-): void {
+function parseImportLine(line: string): ImportEntry | undefined {
     const mImport = rImport.exec(line);
-    if (mImport) {
-        const from = mImport[1] ?? '';
-        const mNamed = rNamedImport.exec(line);
-        const names = mNamed
-            ? (mNamed[1] ?? '')
-                  .split(',')
-                  .map((n) => n.trim().split(' as ')[0]?.trim() ?? '')
-                  .filter(Boolean)
-            : [];
-        imports.push({ from, names });
-        return;
-    }
+    if (!mImport) return undefined;
+    const from = mImport[1] ?? '';
+    const mNamed = rNamedImport.exec(line);
+    const names = mNamed
+        ? (mNamed[1] ?? '')
+              .split(',')
+              .map((n) => n.trim().split(' as ')[0]?.trim() ?? '')
+              .filter(Boolean)
+        : [];
+    return { from, names };
+}
 
+function parseSymbolLine(line: string, lineNum: number): SymbolEntry | undefined {
     const mFn = rExportFunction.exec(line);
-    if (mFn) {
-        symbols.push({
+    if (mFn)
+        return {
             name: mFn[2] ?? '',
             kind: 'function',
             line: lineNum,
             signature: line.trim(),
             exported: true,
-        });
-        return;
-    }
-
+        };
     const mClass = rExportClass.exec(line);
-    if (mClass) {
-        symbols.push({
+    if (mClass)
+        return {
             name: mClass[2] ?? '',
             kind: 'class',
             line: lineNum,
             signature: line.trim(),
             exported: true,
-        });
-        return;
-    }
-
+        };
     const mIface = rExportInterface.exec(line);
-    if (mIface) {
-        symbols.push({
+    if (mIface)
+        return {
             name: mIface[1] ?? '',
             kind: 'interface',
             line: lineNum,
             signature: line.trim(),
             exported: true,
-        });
-        return;
-    }
-
+        };
     const mType = rExportType.exec(line);
-    if (mType) {
-        symbols.push({
+    if (mType)
+        return {
             name: mType[1] ?? '',
             kind: 'type',
             line: lineNum,
             signature: line.trim(),
             exported: true,
-        });
-        return;
-    }
-
+        };
     const mConst = rExportConst.exec(line);
-    if (mConst) {
-        symbols.push({
+    if (mConst)
+        return {
             name: mConst[1] ?? '',
             kind: 'variable',
             line: lineNum,
             signature: line.trim(),
             exported: true,
-        });
-    }
+        };
+    return undefined;
 }
 
-function parseContent(content: string): { symbols: SymbolEntry[]; imports: ImportEntry[] } {
+function parseContentFallback(content: string): { symbols: SymbolEntry[]; imports: ImportEntry[] } {
     const symbols: SymbolEntry[] = [];
     const imports: ImportEntry[] = [];
     const lines = content.split('\n');
     for (let i = 0; i < lines.length; i++) {
-        parseLine(lines[i] ?? '', i + 1, symbols, imports);
+        const line = lines[i] ?? '';
+        const importEntry = parseImportLine(line);
+        if (importEntry) {
+            imports.push(importEntry);
+            continue;
+        }
+        const symbolEntry = parseSymbolLine(line, i + 1);
+        if (symbolEntry) symbols.push(symbolEntry);
     }
     return { symbols, imports };
+}
+
+// ─── File collection ──────────────────────────────────────────────────────────
+
+async function collectCodeFiles(dir: string, max: number, results: string[]): Promise<void> {
+    if (results.length >= max) return;
+    const exts = await getSupportedExts();
+    const entries = await readdir(dir, { withFileTypes: true });
+    for (const entry of entries) {
+        if (results.length >= max) break;
+        const name = entry.name.toString();
+        if (name.startsWith('.') || name === 'node_modules' || name === 'vendor') continue;
+        const full = join(dir, name);
+        if (entry.isDirectory()) {
+            await collectCodeFiles(full, max, results);
+        } else if (exts.has(extname(name))) {
+            results.push(full);
+        }
+    }
 }
 
 // ─── outlineFile ─────────────────────────────────────────────────────────────
@@ -173,33 +248,46 @@ function parseContent(content: string): { symbols: SymbolEntry[]; imports: Impor
 export async function outlineFile(input: OutlineFileInput): Promise<OutlineFileOutput> {
     const abs = resolve(input.path);
     const fh = await open(abs, 'r');
+    let content: string;
     try {
-        const content = await fh.readFile('utf-8');
-        const lineCount = content.split('\n').length;
-        const { symbols, imports } = parseContent(content);
-        return { symbols, imports, lineCount };
+        content = await fh.readFile('utf-8');
     } finally {
         await fh.close();
     }
+    const lineCount = content.split('\n').length;
+    const bus = _bus;
+    if (bus) {
+        try {
+            const [symbolsResult, importsResult] = await Promise.all([
+                bus.request<{ path: string; content: string }, ExtractSymbolsOutput>(
+                    'treesitter:extract-symbols',
+                    { path: abs, content },
+                ),
+                bus.request<
+                    { path: string; content: string },
+                    { imports: Array<{ from: string; names: string[] }> }
+                >('treesitter:extract-imports', { path: abs, content }),
+            ]);
+            const VALID_KINDS = new Set(['function', 'class', 'interface', 'type', 'variable']);
+            const symbols: SymbolEntry[] = symbolsResult.symbols
+                .filter((s) => !s.parent && VALID_KINDS.has(s.kind))
+                .map((s) => ({
+                    name: s.name,
+                    kind: s.kind as SymbolEntry['kind'],
+                    line: s.line,
+                    signature: s.signature,
+                    exported: s.exported,
+                }));
+            return { symbols, imports: importsResult.imports, lineCount };
+        } catch {
+            // fallback to regex
+        }
+    }
+    const { symbols, imports } = parseContentFallback(content);
+    return { symbols, imports, lineCount };
 }
 
 // ─── outlineRepo ─────────────────────────────────────────────────────────────
-
-async function collectCodeFiles(dir: string, max: number, results: string[]): Promise<void> {
-    if (results.length >= max) return;
-    const entries = await readdir(dir, { withFileTypes: true });
-    for (const entry of entries) {
-        if (results.length >= max) break;
-        const name = entry.name.toString();
-        if (name.startsWith('.') || name === 'node_modules') continue;
-        const full = join(dir, name);
-        if (entry.isDirectory()) {
-            await collectCodeFiles(full, max, results);
-        } else if (SUPPORTED_EXTS.has(extname(name))) {
-            results.push(full);
-        }
-    }
-}
 
 export async function outlineRepo(input: OutlineRepoInput): Promise<OutlineRepoOutput> {
     const abs = resolve(input.dir);
@@ -209,13 +297,59 @@ export async function outlineRepo(input: OutlineRepoInput): Promise<OutlineRepoO
 
     const files: RepoFileEntry[] = [];
     let totalSymbols = 0;
+    const bus = _bus;
 
     for (const fp of filePaths) {
-        const fh = await open(fp, 'r');
         try {
-            const content = await fh.readFile('utf-8');
+            const fh = await open(fp, 'r');
+            let content: string;
+            try {
+                content = await fh.readFile('utf-8');
+            } finally {
+                await fh.close();
+            }
             const lines = content.split('\n').length;
-            const { symbols, imports } = parseContent(content);
+            let symbols: SymbolEntry[] = [];
+            let imports: ImportEntry[] = [];
+            if (bus) {
+                try {
+                    const [symbolsResult, importsResult] = await Promise.all([
+                        bus.request<{ path: string; content: string }, ExtractSymbolsOutput>(
+                            'treesitter:extract-symbols',
+                            { path: fp, content },
+                        ),
+                        bus.request<
+                            { path: string; content: string },
+                            { imports: Array<{ from: string; names: string[] }> }
+                        >('treesitter:extract-imports', { path: fp, content }),
+                    ]);
+                    const VALID_KINDS = new Set([
+                        'function',
+                        'class',
+                        'interface',
+                        'type',
+                        'variable',
+                    ]);
+                    symbols = symbolsResult.symbols
+                        .filter((s) => !s.parent && VALID_KINDS.has(s.kind))
+                        .map((s) => ({
+                            name: s.name,
+                            kind: s.kind as SymbolEntry['kind'],
+                            line: s.line,
+                            signature: s.signature,
+                            exported: s.exported,
+                        }));
+                    imports = importsResult.imports;
+                } catch {
+                    const parsed = parseContentFallback(content);
+                    symbols = parsed.symbols;
+                    imports = parsed.imports;
+                }
+            } else {
+                const parsed = parseContentFallback(content);
+                symbols = parsed.symbols;
+                imports = parsed.imports;
+            }
             const exportCount = symbols.filter((s) => s.exported).length;
             files.push({
                 path: relative(abs, fp),
@@ -225,8 +359,8 @@ export async function outlineRepo(input: OutlineRepoInput): Promise<OutlineRepoO
                 lines,
             });
             totalSymbols += symbols.length;
-        } finally {
-            await fh.close();
+        } catch {
+            // per-file error isolation
         }
     }
 

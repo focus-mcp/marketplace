@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "prefix": "out",
     "description": "File and repo structure outline — list exported symbols and directory trees without reading full content.",
-    "dependencies": [],
+    "dependencies": ["treesitter"],
     "tools": [
         {
             "name": "file",
