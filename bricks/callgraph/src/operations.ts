@@ -35,7 +35,10 @@ function getBus(): CallgraphBrickBus {
 async function getSupportedExts(): Promise<Set<string>> {
     if (_supportedExts) return _supportedExts;
     const bus = _bus;
-    if (!bus) return new Set(['.ts', '.tsx', '.js', '.jsx']);
+    if (!bus) {
+        _supportedExts = new Set(['.ts', '.tsx', '.js', '.jsx']);
+        return _supportedExts;
+    }
     try {
         const { exts } = await bus.request<Record<never, never>, { exts: string[] }>(
             'treesitter:supported-exts',
@@ -60,6 +63,8 @@ async function getSupportedExts(): Promise<Set<string>> {
 
 // ─── bus response types (MUST match treesitter brick's shapes — bus contract) ─
 
+// NOTE: CallEntry mirrors the same-named type in bricks/treesitter/src/operations.ts.
+// Keep both shapes in sync if the bus contract changes.
 interface CallEntry {
     caller: string;
     callee: string;

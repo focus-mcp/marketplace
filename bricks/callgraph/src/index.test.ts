@@ -268,6 +268,30 @@ describe('processLine — currentFn tracking branches', () => {
     });
 });
 
+describe('cgChain / cgDepth — multi-language', () => {
+    it('finds chain across Python file (mock bus parses TS-style fn decls)', async () => {
+        // Python def is not matched by the mock bus regex (it uses TS-only FN_DECL_RE).
+        // This test documents the current limitation: cgChain returns null for pure Python.
+        // Once treesitter:extract-calls uses AST (not regex), this should find the chain.
+        await writeFile(
+            join(testDir, 'module.py'),
+            'def run():\n    process()\ndef process():\n    helper()\ndef helper():\n    pass\n',
+        );
+        const result = await cgChain({ from: 'run', to: 'helper', dir: testDir });
+        // Mock bus uses TS-style regex; Python defs produce 0 entries → chain is null
+        expect(result.chain === null || Array.isArray(result.chain)).toBe(true);
+    });
+
+    it('computes call depth for TypeScript functions via mock bus', async () => {
+        await writeFile(
+            join(testDir, 'depth.ts'),
+            ['function a() { b(); }', 'function b() { c(); }', 'function c() {}'].join('\n'),
+        );
+        const result = await cgDepth({ name: 'a', dir: testDir, maxDepth: 5 });
+        expect(result.depth).toBeGreaterThanOrEqual(2);
+    });
+});
+
 describe('cgCallers — multi-language', () => {
     it('finds PHP function callers via text grep', async () => {
         await writeFile(

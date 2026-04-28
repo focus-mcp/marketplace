@@ -124,7 +124,6 @@ export interface TsSupportedExtsOutput {
 
 /**
  * Return all file extensions supported by the tree-sitter registry.
- * Consumed by code-intel bricks to dynamically filter which files to process.
  * Target: treesitter:supported-exts
  */
 export function tsSupportedExts(): TsSupportedExtsOutput {
@@ -150,7 +149,7 @@ export interface TsExtractImportsOutput {
 
 /**
  * Extract import statements from a file via tree-sitter.
- * Consumed by code-intel bricks (smartread, depgraph) via treesitter:extract-imports.
+ * Target: treesitter:extract-imports
  */
 export async function tsExtractImports(
     input: TsExtractImportsInput,
@@ -180,7 +179,7 @@ export interface TsExtractRefsOutput {
 
 /**
  * Find all usages of `name` in a file (identifier matches, excluding declarations).
- * Consumed by refs brick via treesitter:extract-refs.
+ * Target: treesitter:extract-refs
  */
 export async function tsExtractRefs(input: TsExtractRefsInput): Promise<TsExtractRefsOutput> {
     const lines = input.content.split('\n');
@@ -258,7 +257,7 @@ function extractCallsFromLine(line: string, lineNum: number, callerFn: string): 
 
 /**
  * Extract caller→callee relationships for callgraph analysis.
- * Consumed by callgraph brick via treesitter:extract-calls.
+ * Target: treesitter:extract-calls
  */
 export async function tsExtractCalls(input: TsExtractCallsInput): Promise<TsExtractCallsOutput> {
     const lines = input.content.split('\n');
@@ -303,7 +302,7 @@ export interface TsExtractOutlineOutput {
 
 /**
  * Build a hierarchical outline from the symbol tree.
- * Consumed by outline brick via treesitter:extract-outline.
+ * Target: treesitter:extract-outline
  */
 export async function tsExtractOutline(
     input: TsExtractOutlineInput,

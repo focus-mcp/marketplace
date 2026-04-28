@@ -397,7 +397,7 @@ describe('tsExtractImports', () => {
     it('extracts PHP use statements', async () => {
         const result = await tsExtractImports({
             path: '/src/Controller.php',
-            content: "<?php\nuse App\\Service\\UserService;\nuse App\\Repository\\UserRepo;",
+            content: '<?php\nuse App\\Service\\UserService;\nuse App\\Repository\\UserRepo;',
         });
         expect(result.imports.length).toBeGreaterThanOrEqual(1);
     });
@@ -434,7 +434,7 @@ describe('tsExtractRefs', () => {
     it('finds PHP usages', async () => {
         const result = await tsExtractRefs({
             path: '/src/Service.php',
-            content: "<?php\n$user = new UserService();\n$x = UserService::find(1);\n",
+            content: '<?php\n$user = new UserService();\n$x = UserService::find(1);\n',
             name: 'UserService',
         });
         expect(result.refs.length).toBeGreaterThanOrEqual(2);
@@ -469,7 +469,7 @@ describe('tsExtractCalls', () => {
     it('handles PHP-style content (no crash)', async () => {
         const result = await tsExtractCalls({
             path: '/src/controller.php',
-            content: "<?php\nfunction handle() {\n    $this->service->do();\n}\n",
+            content: '<?php\nfunction handle() {\n    $this->service->do();\n}\n',
         });
         expect(Array.isArray(result.calls)).toBe(true);
     });
