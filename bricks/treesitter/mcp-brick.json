@@ -72,6 +72,31 @@
         "java",
         "multi-language"
     ],
+    "keywords": [
+        "typescript",
+        "javascript",
+        "ast",
+        "parser",
+        "code-intel",
+        "php",
+        "python",
+        "go",
+        "rust",
+        "java",
+        "multi-language"
+    ],
+    "recommendedFor": [
+        "typescript",
+        "javascript",
+        "react",
+        "vue",
+        "next",
+        "python",
+        "rust",
+        "go",
+        "php",
+        "java"
+    ],
     "license": "MIT",
     "version": "1.1.1"
 }

@@ -1,8 +1,8 @@
 {
     "name": "@focus-mcp/brick-symbol",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "private": false,
-    "description": "Symbol lookup in source files — find, get, bulk, body.",
+    "description": "Symbol lookup in source files \u2014 find, get, bulk, body.",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",

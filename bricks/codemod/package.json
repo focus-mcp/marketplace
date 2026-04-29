@@ -1,8 +1,8 @@
 {
     "name": "@focus-mcp/brick-codemod",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "private": false,
-    "description": "Code modification toolkit — loads symbol, rename, codeedit, inline, textsearch for automated refactoring.",
+    "description": "Code modification toolkit \u2014 loads symbol, rename, codeedit, inline, textsearch for automated refactoring.",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",
