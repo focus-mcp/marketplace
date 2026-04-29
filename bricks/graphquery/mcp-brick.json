@@ -1,6 +1,5 @@
 {
     "name": "graphquery",
-    "version": "0.0.0",
     "prefix": "gq",
     "description": "Knowledge graph query — find nodes, traverse neighbors, find paths, filter by type.",
     "dependencies": [],
@@ -15,8 +14,14 @@
                         "type": "string",
                         "description": "Search pattern (substring match on label)"
                     },
-                    "type": { "type": "string", "description": "Filter by node type" },
-                    "limit": { "type": "number", "description": "Max results (default 20)" }
+                    "type": {
+                        "type": "string",
+                        "description": "Filter by node type"
+                    },
+                    "limit": {
+                        "type": "number",
+                        "description": "Max results (default 20)"
+                    }
                 },
                 "required": ["pattern"],
                 "additionalProperties": false
@@ -28,7 +33,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "id": { "type": "string", "description": "Node ID" }
+                    "id": {
+                        "type": "string",
+                        "description": "Node ID"
+                    }
                 },
                 "required": ["id"],
                 "additionalProperties": false
@@ -40,12 +48,18 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "id": { "type": "string", "description": "Node ID" },
+                    "id": {
+                        "type": "string",
+                        "description": "Node ID"
+                    },
                     "direction": {
                         "type": "string",
                         "description": "'in', 'out', or 'both' (default 'both')"
                     },
-                    "edgeType": { "type": "string", "description": "Filter by edge type" }
+                    "edgeType": {
+                        "type": "string",
+                        "description": "Filter by edge type"
+                    }
                 },
                 "required": ["id"],
                 "additionalProperties": false
@@ -57,9 +71,18 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "from": { "type": "string", "description": "Start node ID" },
-                    "to": { "type": "string", "description": "End node ID" },
-                    "maxDepth": { "type": "number", "description": "Max path length (default 5)" }
+                    "from": {
+                        "type": "string",
+                        "description": "Start node ID"
+                    },
+                    "to": {
+                        "type": "string",
+                        "description": "End node ID"
+                    },
+                    "maxDepth": {
+                        "type": "number",
+                        "description": "Max path length (default 5)"
+                    }
                 },
                 "required": ["from", "to"],
                 "additionalProperties": false
@@ -73,12 +96,16 @@
                 "properties": {
                     "nodeTypes": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "Keep only these node types"
                     },
                     "edgeTypes": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "Keep only these edge types"
                     }
                 },

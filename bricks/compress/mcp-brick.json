@@ -1,6 +1,5 @@
 {
     "name": "compress",
-    "version": "0.0.0",
     "prefix": "cmp",
     "description": "Compress text output to save tokens — strip comments, collapse whitespace, abbreviate patterns.",
     "dependencies": [],
@@ -11,7 +10,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "text": { "type": "string", "description": "Text to compress" },
+                    "text": {
+                        "type": "string",
+                        "description": "Text to compress"
+                    },
                     "level": {
                         "type": "string",
                         "enum": ["light", "medium", "aggressive"],
@@ -28,7 +30,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "json": { "type": "string", "description": "JSON string to compress" }
+                    "json": {
+                        "type": "string",
+                        "description": "JSON string to compress"
+                    }
                 },
                 "required": ["json"],
                 "additionalProperties": false
@@ -40,7 +45,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "text": { "type": "string", "description": "Source text to make terse" }
+                    "text": {
+                        "type": "string",
+                        "description": "Source text to make terse"
+                    }
                 },
                 "required": ["text"],
                 "additionalProperties": false
@@ -51,8 +59,12 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "terse": { "delta": -0.972 },
-            "output": { "delta": -0.199 }
+            "terse": {
+                "delta": -0.972
+            },
+            "output": {
+                "delta": -0.199
+            }
         },
         "source": "static-equivalence-2026-04-27"
     }

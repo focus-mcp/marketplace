@@ -1,6 +1,5 @@
 {
     "name": "graphcluster",
-    "version": "0.0.0",
     "prefix": "gc",
     "description": "Graph clustering — detect communities, explain groupings, identify architecture layers.",
     "dependencies": [],

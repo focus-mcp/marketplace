@@ -1,6 +1,5 @@
 {
     "name": "codeedit",
-    "version": "0.0.0",
     "prefix": "ce",
     "description": "Precise code editing — replace function bodies, insert before/after, safe delete with dependency check.",
     "dependencies": [],
@@ -11,13 +10,22 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "File path" },
-                    "name": { "type": "string", "description": "Function or method name" },
+                    "path": {
+                        "type": "string",
+                        "description": "File path"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Function or method name"
+                    },
                     "newBody": {
                         "type": "string",
                         "description": "New function body content (without braces)"
                     },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" },
+                    "apply": {
+                        "type": "boolean",
+                        "description": "Apply changes (default false)"
+                    },
                     "dryRun": {
                         "type": "boolean",
                         "description": "When true, return preview only — never write to disk"
@@ -33,7 +41,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "File path" },
+                    "path": {
+                        "type": "string",
+                        "description": "File path"
+                    },
                     "after": {
                         "type": "number",
                         "description": "Line number to insert after (1-based)"
@@ -46,8 +57,14 @@
                         "type": "number",
                         "description": "Preferred line number when pattern has multiple matches — picks the closest match"
                     },
-                    "content": { "type": "string", "description": "Content to insert" },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" },
+                    "content": {
+                        "type": "string",
+                        "description": "Content to insert"
+                    },
+                    "apply": {
+                        "type": "boolean",
+                        "description": "Apply changes (default false)"
+                    },
                     "dryRun": {
                         "type": "boolean",
                         "description": "When true, return diff only — never write to disk"
@@ -63,7 +80,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "File path" },
+                    "path": {
+                        "type": "string",
+                        "description": "File path"
+                    },
                     "before": {
                         "type": "number",
                         "description": "Line number to insert before (1-based)"
@@ -76,8 +96,14 @@
                         "type": "number",
                         "description": "Preferred line number when pattern has multiple matches — picks the closest match"
                     },
-                    "content": { "type": "string", "description": "Content to insert" },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" },
+                    "content": {
+                        "type": "string",
+                        "description": "Content to insert"
+                    },
+                    "apply": {
+                        "type": "boolean",
+                        "description": "Apply changes (default false)"
+                    },
                     "dryRun": {
                         "type": "boolean",
                         "description": "When true, return diff only — never write to disk"
@@ -93,8 +119,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "File path" },
-                    "name": { "type": "string", "description": "Function/export name to delete" },
+                    "path": {
+                        "type": "string",
+                        "description": "File path"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Function/export name to delete"
+                    },
                     "dir": {
                         "type": "string",
                         "description": "Project root to check for dependents"
@@ -103,7 +135,10 @@
                         "type": "boolean",
                         "description": "Delete even if dependents exist (default false)"
                     },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" },
+                    "apply": {
+                        "type": "boolean",
+                        "description": "Apply changes (default false)"
+                    },
                     "dryRun": {
                         "type": "boolean",
                         "description": "When true, return diff only — never write to disk"

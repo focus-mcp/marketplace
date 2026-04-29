@@ -1,6 +1,5 @@
 {
     "name": "planning",
-    "version": "0.0.0",
     "prefix": "plan",
     "description": "Structured planning — create plans with steps, dependencies, and time estimates.",
     "dependencies": [],
@@ -11,8 +10,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "title": { "type": "string", "description": "Plan title" },
-                    "description": { "type": "string", "description": "Plan description" }
+                    "title": {
+                        "type": "string",
+                        "description": "Plan title"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Plan description"
+                    }
                 },
                 "required": ["title"],
                 "additionalProperties": false
@@ -24,13 +29,18 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "planId": { "type": "string", "description": "Plan ID" },
+                    "planId": {
+                        "type": "string",
+                        "description": "Plan ID"
+                    },
                     "add": {
                         "type": "array",
                         "items": {
                             "type": "object",
                             "properties": {
-                                "title": { "type": "string" },
+                                "title": {
+                                    "type": "string"
+                                },
                                 "estimate": {
                                     "type": "string",
                                     "description": "Time estimate (e.g. '2h', '30m')"
@@ -55,12 +65,18 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "planId": { "type": "string", "description": "Plan ID" },
+                    "planId": {
+                        "type": "string",
+                        "description": "Plan ID"
+                    },
                     "from": {
                         "type": "number",
                         "description": "Step index that must complete first"
                     },
-                    "to": { "type": "number", "description": "Step index that depends on 'from'" }
+                    "to": {
+                        "type": "number",
+                        "description": "Step index that depends on 'from'"
+                    }
                 },
                 "required": ["planId", "from", "to"],
                 "additionalProperties": false
@@ -72,7 +88,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "planId": { "type": "string", "description": "Plan ID" }
+                    "planId": {
+                        "type": "string",
+                        "description": "Plan ID"
+                    }
                 },
                 "required": ["planId"],
                 "additionalProperties": false

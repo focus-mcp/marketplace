@@ -1,6 +1,5 @@
 {
     "name": "heatmap",
-    "version": "0.0.0",
     "prefix": "hm",
     "description": "File access heatmap — track read/write patterns, detect hot and cold files.",
     "dependencies": [],

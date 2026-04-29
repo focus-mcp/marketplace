@@ -1,6 +1,5 @@
 {
     "name": "agent",
-    "version": "0.0.0",
     "prefix": "agt",
     "description": "Agent registry — register AI agents with capabilities, list available agents, query capabilities.",
     "dependencies": [],
@@ -17,12 +16,16 @@
                     },
                     "capabilities": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "List of capability identifiers the agent can handle"
                     },
                     "metadata": {
                         "type": "object",
-                        "additionalProperties": { "type": "string" },
+                        "additionalProperties": {
+                            "type": "string"
+                        },
                         "description": "Optional key-value metadata about the agent"
                     }
                 },

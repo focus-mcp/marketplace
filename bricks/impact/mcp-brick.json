@@ -1,6 +1,5 @@
 {
     "name": "impact",
-    "version": "0.0.0",
     "prefix": "imp",
     "description": "Change impact analysis — given a file or symbol, find what files are affected by a change.",
     "dependencies": [],
@@ -15,7 +14,10 @@
                         "type": "string",
                         "description": "Absolute path to the changed file"
                     },
-                    "dir": { "type": "string", "description": "Root directory of the project" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory of the project"
+                    }
                 },
                 "required": ["file", "dir"],
                 "additionalProperties": false
@@ -29,10 +31,15 @@
                 "properties": {
                     "files": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "List of changed file paths"
                     },
-                    "dir": { "type": "string", "description": "Root directory of the project" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory of the project"
+                    }
                 },
                 "required": ["files", "dir"],
                 "additionalProperties": false
@@ -48,7 +55,10 @@
                         "type": "string",
                         "description": "Absolute path to the changed file"
                     },
-                    "dir": { "type": "string", "description": "Root directory of the project" },
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory of the project"
+                    },
                     "maxDepth": {
                         "type": "number",
                         "description": "Max propagation depth (default 3)"

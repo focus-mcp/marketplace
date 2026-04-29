@@ -1,6 +1,5 @@
 {
     "name": "lastversion",
-    "version": "0.0.0",
     "prefix": "lv",
     "description": "Package version intelligence — latest version, diff, changelog, audit across npm/pypi/github/gitlab.",
     "dependencies": [],
@@ -38,9 +37,18 @@
                         "type": "string",
                         "description": "Source: npm, pypi, github, gitlab"
                     },
-                    "target": { "type": "string", "description": "Package name or owner/repo" },
-                    "range": { "type": "string", "description": "Semver range (e.g. '>=18.0.0')" },
-                    "limit": { "type": "number", "description": "Max results (default 20)" },
+                    "target": {
+                        "type": "string",
+                        "description": "Package name or owner/repo"
+                    },
+                    "range": {
+                        "type": "string",
+                        "description": "Semver range (e.g. '>=18.0.0')"
+                    },
+                    "limit": {
+                        "type": "number",
+                        "description": "Max results (default 20)"
+                    },
                     "stable": {
                         "type": "boolean",
                         "description": "Stable only (filter pre-releases). Default true."
@@ -60,9 +68,18 @@
                         "type": "string",
                         "description": "Source: npm, pypi, github, gitlab"
                     },
-                    "target": { "type": "string", "description": "Package name or owner/repo" },
-                    "from": { "type": "string", "description": "Source version" },
-                    "to": { "type": "string", "description": "Target version" }
+                    "target": {
+                        "type": "string",
+                        "description": "Package name or owner/repo"
+                    },
+                    "from": {
+                        "type": "string",
+                        "description": "Source version"
+                    },
+                    "to": {
+                        "type": "string",
+                        "description": "Target version"
+                    }
                 },
                 "required": ["source", "target", "from", "to"],
                 "additionalProperties": false
@@ -74,8 +91,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "repo": { "type": "string", "description": "GitHub repo owner/name" },
-                    "from": { "type": "string", "description": "Start version (tag)" },
+                    "repo": {
+                        "type": "string",
+                        "description": "GitHub repo owner/name"
+                    },
+                    "from": {
+                        "type": "string",
+                        "description": "Start version (tag)"
+                    },
                     "to": {
                         "type": "string",
                         "description": "End version (tag). Default: latest."
@@ -99,8 +122,14 @@
                         "type": "string",
                         "description": "Source: npm, pypi, github, gitlab"
                     },
-                    "target": { "type": "string", "description": "Package name or owner/repo" },
-                    "current": { "type": "string", "description": "Currently installed version" }
+                    "target": {
+                        "type": "string",
+                        "description": "Package name or owner/repo"
+                    },
+                    "current": {
+                        "type": "string",
+                        "description": "Currently installed version"
+                    }
                 },
                 "required": ["source", "target", "current"],
                 "additionalProperties": false
@@ -116,7 +145,10 @@
                         "type": "string",
                         "description": "Source: npm, pypi, github, cargo, gomod"
                     },
-                    "target": { "type": "string", "description": "Package name" },
+                    "target": {
+                        "type": "string",
+                        "description": "Package name"
+                    },
                     "version": {
                         "type": "string",
                         "description": "Specific version to check (optional)"

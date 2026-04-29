@@ -1,6 +1,5 @@
 {
     "name": "semanticsearch",
-    "version": "0.0.0",
     "prefix": "sem",
     "description": "Semantic search using TF-IDF vector space — cosine similarity, intent matching, document similarity.",
     "dependencies": [],
@@ -16,15 +15,25 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "id": { "type": "string" },
-                                "text": { "type": "string" }
+                                "id": {
+                                    "type": "string"
+                                },
+                                "text": {
+                                    "type": "string"
+                                }
                             },
                             "required": ["id", "text"]
                         },
                         "description": "Documents to search"
                     },
-                    "query": { "type": "string", "description": "Search query" },
-                    "limit": { "type": "number", "description": "Max results (default 5)" }
+                    "query": {
+                        "type": "string",
+                        "description": "Search query"
+                    },
+                    "limit": {
+                        "type": "number",
+                        "description": "Max results (default 5)"
+                    }
                 },
                 "required": ["corpus", "query"],
                 "additionalProperties": false
@@ -41,8 +50,12 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "id": { "type": "string" },
-                                "text": { "type": "string" }
+                                "id": {
+                                    "type": "string"
+                                },
+                                "text": {
+                                    "type": "string"
+                                }
                             },
                             "required": ["id", "text"]
                         },
@@ -52,7 +65,10 @@
                         "type": "string",
                         "description": "ID of document to find similar ones to"
                     },
-                    "limit": { "type": "number", "description": "Max results (default 5)" }
+                    "limit": {
+                        "type": "number",
+                        "description": "Max results (default 5)"
+                    }
                 },
                 "required": ["corpus", "targetId"],
                 "additionalProperties": false
@@ -64,14 +80,24 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "query": { "type": "string", "description": "User query to classify" },
+                    "query": {
+                        "type": "string",
+                        "description": "User query to classify"
+                    },
                     "intents": {
                         "type": "array",
                         "items": {
                             "type": "object",
                             "properties": {
-                                "label": { "type": "string" },
-                                "examples": { "type": "array", "items": { "type": "string" } }
+                                "label": {
+                                    "type": "string"
+                                },
+                                "examples": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
                             },
                             "required": ["label", "examples"]
                         },
@@ -90,7 +116,9 @@
                 "properties": {
                     "texts": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "Texts to vectorize"
                     }
                 },

@@ -1,6 +1,5 @@
 {
     "name": "fileops",
-    "version": "0.0.0",
     "prefix": "fo",
     "description": "File operations — move, copy, delete, rename. Call fileops:setRoot first with the absolute path to your workspace, otherwise tools will fail-fast on the first non-existent path.",
     "dependencies": [],
@@ -11,8 +10,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "from": { "type": "string", "description": "Source path" },
-                    "to": { "type": "string", "description": "Destination path" }
+                    "from": {
+                        "type": "string",
+                        "description": "Source path"
+                    },
+                    "to": {
+                        "type": "string",
+                        "description": "Destination path"
+                    }
                 },
                 "required": ["from", "to"],
                 "additionalProperties": false
@@ -24,8 +29,12 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "from": { "type": "string" },
-                    "to": { "type": "string" }
+                    "from": {
+                        "type": "string"
+                    },
+                    "to": {
+                        "type": "string"
+                    }
                 },
                 "required": ["from", "to"],
                 "additionalProperties": false
@@ -37,7 +46,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Absolute path to delete" }
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute path to delete"
+                    }
                 },
                 "required": ["path"],
                 "additionalProperties": false
@@ -49,8 +61,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Current file path" },
-                    "name": { "type": "string", "description": "New filename (not a full path)" }
+                    "path": {
+                        "type": "string",
+                        "description": "Current file path"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "New filename (not a full path)"
+                    }
                 },
                 "required": ["path", "name"],
                 "additionalProperties": false

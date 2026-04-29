@@ -1,6 +1,5 @@
 {
     "name": "outline",
-    "version": "0.0.0",
     "prefix": "out",
     "description": "File and repo structure outline — list exported symbols and directory trees without reading full content.",
     "dependencies": ["treesitter"],
@@ -11,7 +10,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Absolute path to file" }
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute path to file"
+                    }
                 },
                 "required": ["path"],
                 "additionalProperties": false
@@ -23,7 +25,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Root directory to scan" },
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory to scan"
+                    },
                     "maxFiles": {
                         "type": "number",
                         "description": "Max files to scan (default 100)"
@@ -39,8 +44,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Root directory to scan" },
-                    "maxDepth": { "type": "number", "description": "Max depth (default 3)" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory to scan"
+                    },
+                    "maxDepth": {
+                        "type": "number",
+                        "description": "Max depth (default 3)"
+                    }
                 },
                 "required": ["dir"],
                 "additionalProperties": false
@@ -61,9 +72,15 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "repo": { "delta": -0.981 },
-            "file": { "delta": -0.961 },
-            "structure": { "delta": -0.829 }
+            "repo": {
+                "delta": -0.981
+            },
+            "file": {
+                "delta": -0.961
+            },
+            "structure": {
+                "delta": -0.829
+            }
         },
         "source": "static-equivalence-2026-04-27"
     }
