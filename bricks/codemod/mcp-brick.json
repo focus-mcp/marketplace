@@ -6,5 +6,7 @@
     "dependencies": ["symbol", "rename", "codeedit", "inline", "textsearch"],
     "tools": [],
     "tags": ["codemod", "composite", "refactoring"],
+    "keywords": ["codemod", "refactoring", "ast", "transforms", "rename", "inline", "composite"],
+    "recommendedFor": ["typescript", "javascript", "python", "refactoring"],
     "license": "MIT"
 }

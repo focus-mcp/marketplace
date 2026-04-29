@@ -18,7 +18,8 @@
             "!**/pnpm-lock.yaml",
             "!.focusmcp/catalog.json",
             "!**/*.svelte",
-            "!benchmarks/harness"
+            "!benchmarks/harness",
+            "!fixtures"
         ]
     },
     "formatter": {

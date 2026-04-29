@@ -59,6 +59,16 @@
         }
     ],
     "tags": ["references", "cross-references", "symbols", "navigation"],
+    "keywords": [
+        "code-navigation",
+        "references",
+        "symbols",
+        "code-intel",
+        "cross-references",
+        "declarations",
+        "inheritance"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "rust", "java"],
     "license": "MIT",
     "bench": {
         "tools": {

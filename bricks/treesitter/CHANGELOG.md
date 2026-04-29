@@ -1,5 +1,11 @@
 # @focus-mcp/brick-treesitter
 
+## 1.3.1
+
+### Patch Changes
+
+- eb10354: chore: add keywords and recommendedFor to manifest
+
 ## 1.3.0
 
 ### Minor Changes

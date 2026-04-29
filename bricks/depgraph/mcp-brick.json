@@ -67,6 +67,18 @@
         }
     ],
     "tags": ["depgraph", "imports", "analysis", "circular"],
+    "keywords": [
+        "dependency",
+        "graph",
+        "code-intel",
+        "analysis",
+        "imports",
+        "exports",
+        "circular-deps",
+        "fan-in",
+        "fan-out"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "monorepo"],
     "license": "MIT",
     "version": "1.1.1"
 }

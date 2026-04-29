@@ -115,5 +115,15 @@
         }
     ],
     "tags": ["edit", "code", "refactoring", "insert", "delete", "codemod"],
+    "keywords": [
+        "code-editing",
+        "refactoring",
+        "ast",
+        "insert",
+        "delete",
+        "replace",
+        "safe-delete"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "rust", "php", "refactoring"],
     "license": "MIT"
 }

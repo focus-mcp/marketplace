@@ -24,8 +24,12 @@ export default {
             ],
         ],
         'subject-case': [2, 'never', ['upper-case', 'pascal-case', 'start-case']],
-        'header-max-length': [2, 'always', 100],
+        'header-max-length': [2, 'always', 120],
         'body-leading-blank': [2, 'always'],
         'footer-leading-blank': [2, 'always'],
+        // Squash-merge bodies can embed PR descriptions with long lines; disable the limit.
+        'body-max-line-length': [0],
+        // Squash-merge footers can include diff lines or long Co-authored-by entries; disable.
+        'footer-max-line-length': [0],
     },
 };

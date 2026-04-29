@@ -48,6 +48,16 @@
         }
     ],
     "tags": ["outline", "symbols", "structure", "navigation"],
+    "keywords": [
+        "outline",
+        "structure",
+        "ast",
+        "navigation",
+        "symbols",
+        "file-structure",
+        "repo-overview"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "rust"],
     "license": "MIT",
     "bench": {
         "tools": {
