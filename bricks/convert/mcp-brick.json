@@ -1,6 +1,5 @@
 {
     "name": "convert",
-    "version": "0.0.0",
     "prefix": "conv",
     "description": "Convert between formats and units — unit conversion, encoding, format transformation, naming conventions.",
     "dependencies": [],

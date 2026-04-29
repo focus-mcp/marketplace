@@ -1,6 +1,5 @@
 {
     "name": "inline",
-    "version": "0.0.0",
     "prefix": "inl",
     "description": "Inline, extract, and move refactoring — inline variables/functions, extract code to new functions, move between files.",
     "dependencies": [],
@@ -11,12 +10,18 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "File path" },
+                    "path": {
+                        "type": "string",
+                        "description": "File path"
+                    },
                     "name": {
                         "type": "string",
                         "description": "Variable or function name to inline"
                     },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                    "apply": {
+                        "type": "boolean",
+                        "description": "Apply changes (default false)"
+                    }
                 },
                 "required": ["path", "name"],
                 "additionalProperties": false
@@ -28,14 +33,26 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "File path" },
-                    "startLine": { "type": "number", "description": "Start line (1-based)" },
-                    "endLine": { "type": "number", "description": "End line (1-based, inclusive)" },
+                    "path": {
+                        "type": "string",
+                        "description": "File path"
+                    },
+                    "startLine": {
+                        "type": "number",
+                        "description": "Start line (1-based)"
+                    },
+                    "endLine": {
+                        "type": "number",
+                        "description": "End line (1-based, inclusive)"
+                    },
                     "functionName": {
                         "type": "string",
                         "description": "Name for the extracted function"
                     },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                    "apply": {
+                        "type": "boolean",
+                        "description": "Apply changes (default false)"
+                    }
                 },
                 "required": ["path", "startLine", "endLine", "functionName"],
                 "additionalProperties": false
@@ -47,10 +64,22 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "sourcePath": { "type": "string", "description": "Source file path" },
-                    "targetPath": { "type": "string", "description": "Target file path" },
-                    "name": { "type": "string", "description": "Function/export name to move" },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                    "sourcePath": {
+                        "type": "string",
+                        "description": "Source file path"
+                    },
+                    "targetPath": {
+                        "type": "string",
+                        "description": "Target file path"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Function/export name to move"
+                    },
+                    "apply": {
+                        "type": "boolean",
+                        "description": "Apply changes (default false)"
+                    }
                 },
                 "required": ["sourcePath", "targetPath", "name"],
                 "additionalProperties": false

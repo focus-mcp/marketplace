@@ -19,7 +19,7 @@ interface BrickContext {
 
 interface BrickManifest {
     readonly name: string;
-    readonly version: string;
+    readonly version?: string;
     readonly prefix: string;
     readonly description: string;
     readonly dependencies: readonly string[];

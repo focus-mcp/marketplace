@@ -1,6 +1,5 @@
 {
     "name": "session",
-    "version": "0.0.0",
     "prefix": "ses",
     "description": "Session context save and restore — track loaded files and operations, persist sessions to disk.",
     "dependencies": [],
@@ -11,13 +10,25 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Session name" },
+                    "name": {
+                        "type": "string",
+                        "description": "Session name"
+                    },
                     "data": {
                         "type": "object",
                         "properties": {
-                            "files": { "type": "array", "items": { "type": "string" } },
-                            "context": { "type": "string" },
-                            "notes": { "type": "string" }
+                            "files": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "context": {
+                                "type": "string"
+                            },
+                            "notes": {
+                                "type": "string"
+                            }
                         },
                         "additionalProperties": false,
                         "description": "Session data to save"
@@ -33,7 +44,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Session name to restore" }
+                    "name": {
+                        "type": "string",
+                        "description": "Session name to restore"
+                    }
                 },
                 "required": ["name"],
                 "additionalProperties": false

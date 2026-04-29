@@ -10,7 +10,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "file": { "type": "string", "description": "Absolute file path" }
+                    "file": {
+                        "type": "string",
+                        "description": "Absolute file path"
+                    }
                 },
                 "required": ["file"],
                 "additionalProperties": false
@@ -22,7 +25,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "file": { "type": "string", "description": "Absolute file path" }
+                    "file": {
+                        "type": "string",
+                        "description": "Absolute file path"
+                    }
                 },
                 "required": ["file"],
                 "additionalProperties": false
@@ -34,7 +40,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Absolute directory path" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Absolute directory path"
+                    }
                 },
                 "required": ["dir"],
                 "additionalProperties": false
@@ -46,8 +55,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "file": { "type": "string", "description": "Absolute file path" },
-                    "dir": { "type": "string", "description": "Directory to search in" }
+                    "file": {
+                        "type": "string",
+                        "description": "Absolute file path"
+                    },
+                    "dir": {
+                        "type": "string",
+                        "description": "Directory to search in"
+                    }
                 },
                 "required": ["file", "dir"],
                 "additionalProperties": false
@@ -59,7 +74,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "file": { "type": "string", "description": "Absolute file path" }
+                    "file": {
+                        "type": "string",
+                        "description": "Absolute file path"
+                    }
                 },
                 "required": ["file"],
                 "additionalProperties": false
@@ -67,6 +85,17 @@
         }
     ],
     "tags": ["depgraph", "imports", "analysis", "circular"],
-    "license": "MIT",
-    "version": "1.1.1"
+    "keywords": [
+        "dependency",
+        "graph",
+        "code-intel",
+        "analysis",
+        "imports",
+        "exports",
+        "circular-deps",
+        "fan-in",
+        "fan-out"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "monorepo"],
+    "license": "MIT"
 }

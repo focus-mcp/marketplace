@@ -1,6 +1,5 @@
 {
     "name": "contextpack",
-    "version": "0.0.0",
     "prefix": "cp",
     "description": "Pack files into a compressed context bundle — reduce token usage by extracting only signatures, maps, or full content.",
     "dependencies": [],
@@ -13,7 +12,9 @@
                 "properties": {
                     "files": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "List of file paths to pack"
                     },
                     "mode": {
@@ -34,10 +35,15 @@
                 "properties": {
                     "files": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "List of file paths"
                     },
-                    "budget": { "type": "number", "description": "Token budget" }
+                    "budget": {
+                        "type": "number",
+                        "description": "Token budget"
+                    }
                 },
                 "required": ["files", "budget"],
                 "additionalProperties": false
@@ -51,7 +57,9 @@
                 "properties": {
                     "files": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "List of file paths"
                     },
                     "mode": {
@@ -72,10 +80,15 @@
                 "properties": {
                     "files": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "List of file paths"
                     },
-                    "query": { "type": "string", "description": "Relevance query" }
+                    "query": {
+                        "type": "string",
+                        "description": "Relevance query"
+                    }
                 },
                 "required": ["files", "query"],
                 "additionalProperties": false

@@ -1,6 +1,5 @@
 {
     "name": "graphexport",
-    "version": "0.0.0",
     "prefix": "ge",
     "description": "Generate visualizations from a provided or upstream graph. For upstream graphs, use with graphbuild/callgraph/depgraph first. Alternatively, load an inline graph via ge_input(graph) to use standalone.",
     "dependencies": [],
@@ -20,9 +19,15 @@
                                 "items": {
                                     "type": "object",
                                     "properties": {
-                                        "id": { "type": "string" },
-                                        "label": { "type": "string" },
-                                        "type": { "type": "string" }
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "label": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string"
+                                        }
                                     },
                                     "required": ["id", "label", "type"]
                                 }
@@ -32,9 +37,15 @@
                                 "items": {
                                     "type": "object",
                                     "properties": {
-                                        "from": { "type": "string" },
-                                        "to": { "type": "string" },
-                                        "type": { "type": "string" }
+                                        "from": {
+                                            "type": "string"
+                                        },
+                                        "to": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string"
+                                        }
                                     },
                                     "required": ["from", "to", "type"]
                                 }
@@ -61,8 +72,12 @@
                         "type": "object",
                         "description": "Optional inline graph (overrides upstream context)",
                         "properties": {
-                            "nodes": { "type": "array" },
-                            "edges": { "type": "array" }
+                            "nodes": {
+                                "type": "array"
+                            },
+                            "edges": {
+                                "type": "array"
+                            }
                         }
                     }
                 },
@@ -75,13 +90,20 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "direction": { "type": "string", "description": "TB, LR, BT, RL (default TB)" },
+                    "direction": {
+                        "type": "string",
+                        "description": "TB, LR, BT, RL (default TB)"
+                    },
                     "graph": {
                         "type": "object",
                         "description": "Optional inline graph (overrides upstream context)",
                         "properties": {
-                            "nodes": { "type": "array" },
-                            "edges": { "type": "array" }
+                            "nodes": {
+                                "type": "array"
+                            },
+                            "edges": {
+                                "type": "array"
+                            }
                         }
                     }
                 },
@@ -98,8 +120,12 @@
                         "type": "object",
                         "description": "Optional inline graph (overrides upstream context)",
                         "properties": {
-                            "nodes": { "type": "array" },
-                            "edges": { "type": "array" }
+                            "nodes": {
+                                "type": "array"
+                            },
+                            "edges": {
+                                "type": "array"
+                            }
                         }
                     }
                 },
@@ -116,8 +142,12 @@
                         "type": "object",
                         "description": "Optional inline graph (overrides upstream context)",
                         "properties": {
-                            "nodes": { "type": "array" },
-                            "edges": { "type": "array" }
+                            "nodes": {
+                                "type": "array"
+                            },
+                            "edges": {
+                                "type": "array"
+                            }
                         }
                     }
                 },
@@ -134,8 +164,12 @@
                         "type": "object",
                         "description": "Optional inline graph (overrides upstream context)",
                         "properties": {
-                            "nodes": { "type": "array" },
-                            "edges": { "type": "array" }
+                            "nodes": {
+                                "type": "array"
+                            },
+                            "edges": {
+                                "type": "array"
+                            }
                         }
                     }
                 },
@@ -152,8 +186,12 @@
                         "type": "object",
                         "description": "Optional inline graph (overrides upstream context)",
                         "properties": {
-                            "nodes": { "type": "array" },
-                            "edges": { "type": "array" }
+                            "nodes": {
+                                "type": "array"
+                            },
+                            "edges": {
+                                "type": "array"
+                            }
                         }
                     }
                 },

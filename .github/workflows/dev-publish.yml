@@ -35,17 +35,28 @@ jobs:
           registry-url: https://registry.npmjs.org
           scope: '@focus-mcp'
       - run: pnpm install --frozen-lockfile
+      - name: Check for pending changesets
+        id: pending
+        run: |
+          PENDING=$(find .changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | xargs)
+          echo "count=$PENDING" >> $GITHUB_OUTPUT
+          if [ "$PENDING" -eq 0 ]; then
+            echo "No pending changesets — skipping dev publish."
+          fi
       - name: Upgrade npm for OIDC Trusted Publishing support
+        if: steps.pending.outputs.count != '0'
         run: npm install -g npm@latest
       - name: Apply changeset snapshot versions
-        run: |
-          # Runs from repo root — reads .changeset/*.md and bumps all packages
-          # with pending changesets to their next version + snapshot suffix
-          # (e.g. 1.2.0-dev-20260428-abc1234).
-          pnpm changeset version --snapshot dev
-      - run: pnpm build
-      - run: pnpm build:catalog
+        if: steps.pending.outputs.count != '0'
+        run: pnpm changeset version --snapshot dev
+      - name: Build
+        if: steps.pending.outputs.count != '0'
+        run: pnpm build
+      - name: Build catalog
+        if: steps.pending.outputs.count != '0'
+        run: pnpm build:catalog
       - name: Publish all packages with dev tag
+        if: steps.pending.outputs.count != '0'
         run: pnpm changeset publish --no-git-tag --tag dev
         # NODE_AUTH_TOKEN fallback: kept for rollback if Trusted Publisher not yet configured on npmjs.com
         env:

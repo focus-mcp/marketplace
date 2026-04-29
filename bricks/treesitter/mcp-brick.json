@@ -25,7 +25,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Absolute path to file" }
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute path to file"
+                    }
                 },
                 "required": ["path"],
                 "additionalProperties": false
@@ -72,6 +75,30 @@
         "java",
         "multi-language"
     ],
-    "license": "MIT",
-    "version": "1.1.1"
+    "keywords": [
+        "typescript",
+        "javascript",
+        "ast",
+        "parser",
+        "code-intel",
+        "php",
+        "python",
+        "go",
+        "rust",
+        "java",
+        "multi-language"
+    ],
+    "recommendedFor": [
+        "typescript",
+        "javascript",
+        "react",
+        "vue",
+        "next",
+        "python",
+        "rust",
+        "go",
+        "php",
+        "java"
+    ],
+    "license": "MIT"
 }

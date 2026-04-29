@@ -1,5 +1,11 @@
 # @focus-mcp/brick-refs
 
+## 1.2.1
+
+### Patch Changes
+
+- eb10354: chore: add keywords and recommendedFor to manifest
+
 ## 1.2.0
 
 ### Minor Changes

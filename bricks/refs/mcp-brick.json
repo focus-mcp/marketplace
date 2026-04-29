@@ -1,6 +1,5 @@
 {
     "name": "refs",
-    "version": "0.0.0",
     "prefix": "refs",
     "description": "Cross-references — find who imports or uses a symbol, locate declarations, and trace inheritance chains.",
     "dependencies": ["treesitter"],
@@ -11,8 +10,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Symbol name to search for" },
-                    "dir": { "type": "string", "description": "Root directory to scan" }
+                    "name": {
+                        "type": "string",
+                        "description": "Symbol name to search for"
+                    },
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory to scan"
+                    }
                 },
                 "required": ["name", "dir"],
                 "additionalProperties": false
@@ -24,8 +29,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Interface or type name" },
-                    "dir": { "type": "string", "description": "Root directory to scan" }
+                    "name": {
+                        "type": "string",
+                        "description": "Interface or type name"
+                    },
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory to scan"
+                    }
                 },
                 "required": ["name", "dir"],
                 "additionalProperties": false
@@ -37,8 +48,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Symbol name" },
-                    "dir": { "type": "string", "description": "Root directory to scan" }
+                    "name": {
+                        "type": "string",
+                        "description": "Symbol name"
+                    },
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory to scan"
+                    }
                 },
                 "required": ["name", "dir"],
                 "additionalProperties": false
@@ -50,8 +67,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Class or interface name" },
-                    "dir": { "type": "string", "description": "Root directory to scan" }
+                    "name": {
+                        "type": "string",
+                        "description": "Class or interface name"
+                    },
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory to scan"
+                    }
                 },
                 "required": ["name", "dir"],
                 "additionalProperties": false
@@ -59,12 +82,28 @@
         }
     ],
     "tags": ["references", "cross-references", "symbols", "navigation"],
+    "keywords": [
+        "code-navigation",
+        "references",
+        "symbols",
+        "code-intel",
+        "cross-references",
+        "declarations",
+        "inheritance"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "rust", "java"],
     "license": "MIT",
     "bench": {
         "tools": {
-            "hierarchy": { "delta": -0.997 },
-            "references": { "delta": -0.82 },
-            "declaration": { "delta": -0.355 }
+            "hierarchy": {
+                "delta": -0.997
+            },
+            "references": {
+                "delta": -0.82
+            },
+            "declaration": {
+                "delta": -0.355
+            }
         },
         "source": "static-equivalence-2026-04-27"
     }

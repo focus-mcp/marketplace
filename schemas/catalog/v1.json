@@ -24,9 +24,18 @@
             "required": ["name", "url"],
             "additionalProperties": false,
             "properties": {
-                "name": { "type": "string", "minLength": 1 },
-                "url": { "type": "string", "format": "uri" },
-                "email": { "type": "string", "format": "email" }
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email"
+                }
             }
         },
         "updated": {
@@ -35,7 +44,9 @@
         },
         "bricks": {
             "type": "array",
-            "items": { "$ref": "#/$defs/brick" }
+            "items": {
+                "$ref": "#/$defs/brick"
+            }
         }
     },
     "$defs": {
@@ -60,19 +71,29 @@
                 },
                 "tags": {
                     "type": "array",
-                    "items": { "type": "string", "minLength": 1 },
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    },
                     "uniqueItems": true
                 },
                 "dependencies": {
                     "type": "array",
-                    "items": { "type": "string", "minLength": 1 },
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    },
                     "description": "Liste des briques requises (noms, sans préfixe)."
                 },
                 "tools": {
                     "type": "array",
-                    "items": { "$ref": "#/$defs/tool" }
+                    "items": {
+                        "$ref": "#/$defs/tool"
+                    }
                 },
-                "source": { "$ref": "#/$defs/source" },
+                "source": {
+                    "$ref": "#/$defs/source"
+                },
                 "tarballUrl": {
                     "type": "string",
                     "format": "uri"
@@ -86,9 +107,36 @@
                     "type": "string",
                     "format": "date-time"
                 },
-                "license": { "type": "string", "minLength": 1 },
-                "homepage": { "type": "string", "format": "uri" },
-                "publisher": { "type": "string", "minLength": 1 }
+                "license": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "homepage": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "publisher": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "keywords": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "uniqueItems": true,
+                    "description": "Free-form tags (e.g. typescript, ast, security)"
+                },
+                "recommendedFor": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "uniqueItems": true,
+                    "description": "Recommended for these stacks/frameworks (e.g. react, next, symfony)"
+                }
             }
         },
         "tool": {
@@ -96,8 +144,14 @@
             "required": ["name", "description", "inputSchema"],
             "additionalProperties": false,
             "properties": {
-                "name": { "type": "string", "minLength": 1 },
-                "description": { "type": "string", "minLength": 1 },
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "description": {
+                    "type": "string",
+                    "minLength": 1
+                },
                 "inputSchema": {
                     "type": "object",
                     "description": "JSON Schema (Draft 2020-12) de l'input du tool."
@@ -111,8 +165,13 @@
                     "required": ["type", "path"],
                     "additionalProperties": false,
                     "properties": {
-                        "type": { "const": "local" },
-                        "path": { "type": "string", "minLength": 1 }
+                        "type": {
+                            "const": "local"
+                        },
+                        "path": {
+                            "type": "string",
+                            "minLength": 1
+                        }
                     }
                 },
                 {
@@ -120,8 +179,13 @@
                     "required": ["type", "url"],
                     "additionalProperties": false,
                     "properties": {
-                        "type": { "const": "url" },
-                        "url": { "type": "string", "format": "uri" },
+                        "type": {
+                            "const": "url"
+                        },
+                        "url": {
+                            "type": "string",
+                            "format": "uri"
+                        },
                         "sha": {
                             "type": "string",
                             "pattern": "^(sha256-[A-Za-z0-9+/=]+|[a-f0-9]{64})$"
@@ -133,10 +197,21 @@
                     "required": ["type", "url", "path", "ref"],
                     "additionalProperties": false,
                     "properties": {
-                        "type": { "const": "git-subdir" },
-                        "url": { "type": "string", "format": "uri" },
-                        "path": { "type": "string", "minLength": 1 },
-                        "ref": { "type": "string", "minLength": 1 }
+                        "type": {
+                            "const": "git-subdir"
+                        },
+                        "url": {
+                            "type": "string",
+                            "format": "uri"
+                        },
+                        "path": {
+                            "type": "string",
+                            "minLength": 1
+                        },
+                        "ref": {
+                            "type": "string",
+                            "minLength": 1
+                        }
                     }
                 },
                 {
@@ -144,9 +219,16 @@
                     "required": ["type", "package"],
                     "additionalProperties": false,
                     "properties": {
-                        "type": { "const": "npm" },
-                        "package": { "type": "string" },
-                        "registry": { "type": "string", "format": "uri" }
+                        "type": {
+                            "const": "npm"
+                        },
+                        "package": {
+                            "type": "string"
+                        },
+                        "registry": {
+                            "type": "string",
+                            "format": "uri"
+                        }
                     }
                 }
             ]

@@ -1,6 +1,5 @@
 {
     "name": "multiread",
-    "version": "0.0.0",
     "prefix": "mr",
     "description": "Batch file reading — multiple files in one call, deduplication.",
     "dependencies": [],
@@ -13,7 +12,9 @@
                 "properties": {
                     "paths": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "List of file paths to read"
                     }
                 },
@@ -26,7 +27,14 @@
             "description": "Read multiple files, deduplicate shared imports/headers",
             "inputSchema": {
                 "type": "object",
-                "properties": { "paths": { "type": "array", "items": { "type": "string" } } },
+                "properties": {
+                    "paths": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
                 "required": ["paths"],
                 "additionalProperties": false
             }
@@ -37,7 +45,12 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "paths": { "type": "array", "items": { "type": "string" } },
+                    "paths": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
                     "separator": {
                         "type": "string",
                         "description": "Separator between files (default: filename header)"
@@ -52,8 +65,12 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "merge": { "delta": 0.003 },
-            "batch": { "delta": 0.01 }
+            "merge": {
+                "delta": 0.003
+            },
+            "batch": {
+                "delta": 0.01
+            }
         },
         "source": "static-equivalence-2026-04-27"
     }

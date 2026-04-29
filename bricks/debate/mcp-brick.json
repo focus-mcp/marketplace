@@ -1,6 +1,5 @@
 {
     "name": "debate",
-    "version": "0.0.0",
     "prefix": "dbt",
     "description": "Structured multi-perspective debate — define positions, score arguments, find consensus, summarize.",
     "dependencies": [],
@@ -70,7 +69,10 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "role": { "type": "string", "description": "Role being scored" },
+                                "role": {
+                                    "type": "string",
+                                    "description": "Role being scored"
+                                },
                                 "relevance": {
                                     "type": "number",
                                     "description": "Relevance score 1-10"

@@ -1,10 +1,11 @@
 {
     "name": "codemod",
-    "version": "0.0.0",
     "prefix": "cmod",
     "description": "Code modification toolkit — loads symbol, rename, codeedit, inline, textsearch for automated refactoring.",
     "dependencies": ["symbol", "rename", "codeedit", "inline", "textsearch"],
     "tools": [],
     "tags": ["codemod", "composite", "refactoring"],
+    "keywords": ["codemod", "refactoring", "ast", "transforms", "rename", "inline", "composite"],
+    "recommendedFor": ["typescript", "javascript", "python", "refactoring"],
     "license": "MIT"
 }

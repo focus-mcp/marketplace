@@ -1,6 +1,5 @@
 {
     "name": "rename",
-    "version": "0.0.0",
     "prefix": "ren",
     "description": "Rename refactoring — rename symbols across files, rename files with import updates, bulk rename with preview.",
     "dependencies": [],
@@ -11,9 +10,18 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Root directory to search" },
-                    "oldName": { "type": "string", "description": "Current symbol name" },
-                    "newName": { "type": "string", "description": "New symbol name" },
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory to search"
+                    },
+                    "oldName": {
+                        "type": "string",
+                        "description": "Current symbol name"
+                    },
+                    "newName": {
+                        "type": "string",
+                        "description": "New symbol name"
+                    },
                     "apply": {
                         "type": "boolean",
                         "description": "Apply changes (default false = dry run)"
@@ -29,13 +37,22 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Current file path" },
+                    "path": {
+                        "type": "string",
+                        "description": "Current file path"
+                    },
                     "newName": {
                         "type": "string",
                         "description": "New filename (just the name, not full path)"
                     },
-                    "dir": { "type": "string", "description": "Project root to update imports in" },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Project root to update imports in"
+                    },
+                    "apply": {
+                        "type": "boolean",
+                        "description": "Apply changes (default false)"
+                    }
                 },
                 "required": ["path", "newName"],
                 "additionalProperties": false
@@ -47,20 +64,30 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Root directory" },
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory"
+                    },
                     "renames": {
                         "type": "array",
                         "items": {
                             "type": "object",
                             "properties": {
-                                "oldName": { "type": "string" },
-                                "newName": { "type": "string" }
+                                "oldName": {
+                                    "type": "string"
+                                },
+                                "newName": {
+                                    "type": "string"
+                                }
                             },
                             "required": ["oldName", "newName"]
                         },
                         "description": "List of renames"
                     },
-                    "apply": { "type": "boolean", "description": "Apply changes (default false)" }
+                    "apply": {
+                        "type": "boolean",
+                        "description": "Apply changes (default false)"
+                    }
                 },
                 "required": ["dir", "renames"],
                 "additionalProperties": false
@@ -72,8 +99,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Root directory" },
-                    "oldName": { "type": "string", "description": "Symbol to search for" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory"
+                    },
+                    "oldName": {
+                        "type": "string",
+                        "description": "Symbol to search for"
+                    }
                 },
                 "required": ["dir", "oldName"],
                 "additionalProperties": false
@@ -84,7 +117,9 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "preview": { "delta": -0.473 }
+            "preview": {
+                "delta": -0.473
+            }
         },
         "source": "static-equivalence-2026-04-27"
     }

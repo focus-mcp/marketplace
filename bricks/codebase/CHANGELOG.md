@@ -1,5 +1,11 @@
 # @focus-mcp/brick-codebase
 
+## 1.1.2
+
+### Patch Changes
+
+- eb10354: chore: add keywords and recommendedFor to manifest
+
 ## 1.1.1
 
 ### Patch Changes

@@ -42,6 +42,8 @@ export interface CatalogBrick {
     version: string;
     description: string;
     tags?: string[];
+    keywords?: string[];
+    recommendedFor?: string[];
     dependencies: string[];
     tools: CatalogTool[];
     source: CatalogSource;
@@ -66,6 +68,8 @@ export interface BrickManifest {
     name: string;
     description: string;
     tags?: string[];
+    keywords?: string[];
+    recommendedFor?: string[];
     dependencies?: string[];
     tools?: CatalogTool[];
     license?: string;
@@ -119,6 +123,26 @@ async function tryReadJson<T>(path: string): Promise<T | undefined> {
     }
 }
 
+function buildBrickEntry(
+    manifest: BrickManifest,
+    pkg: { version: string; name?: string },
+): CatalogBrick {
+    return {
+        name: manifest.name,
+        version: pkg.version,
+        description: manifest.description,
+        ...(manifest.tags ? { tags: manifest.tags } : {}),
+        ...(manifest.keywords ? { keywords: manifest.keywords } : {}),
+        ...(manifest.recommendedFor ? { recommendedFor: manifest.recommendedFor } : {}),
+        dependencies: manifest.dependencies ?? [],
+        tools: manifest.tools ?? [],
+        source: { type: 'npm', package: pkg.name ?? `@focus-mcp/brick-${manifest.name}` },
+        ...(manifest.license ? { license: manifest.license } : {}),
+        ...(manifest.homepage ? { homepage: manifest.homepage } : {}),
+        ...(manifest.publisher ? { publisher: manifest.publisher } : {}),
+    };
+}
+
 export async function collectLocalBricks(rootDir: string): Promise<CatalogBrick[]> {
     const manifests = await glob('bricks/*/mcp-brick.json', {
         cwd: rootDir,
@@ -137,21 +161,7 @@ export async function collectLocalBricks(rootDir: string): Promise<CatalogBrick[
                 `Missing version in ${join(brickDir, 'package.json')} (required for brick ${manifest.name})`,
             );
         }
-        bricks.push({
-            name: manifest.name,
-            version: pkg.version,
-            description: manifest.description,
-            ...(manifest.tags ? { tags: manifest.tags } : {}),
-            dependencies: manifest.dependencies ?? [],
-            tools: manifest.tools ?? [],
-            source: {
-                type: 'npm',
-                package: pkg.name ?? `@focus-mcp/brick-${manifest.name}`,
-            },
-            ...(manifest.license ? { license: manifest.license } : {}),
-            ...(manifest.homepage ? { homepage: manifest.homepage } : {}),
-            ...(manifest.publisher ? { publisher: manifest.publisher } : {}),
-        });
+        bricks.push(buildBrickEntry(manifest, pkg as { version: string; name?: string }));
     }
     return bricks;
 }

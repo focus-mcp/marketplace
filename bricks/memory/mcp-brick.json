@@ -1,6 +1,5 @@
 {
     "name": "memory",
-    "version": "0.0.0",
     "prefix": "mem",
     "description": "Persistent key-value memory — store and recall information across sessions as JSON files.",
     "dependencies": [],
@@ -11,11 +10,19 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "key": { "type": "string", "description": "Memory key" },
-                    "value": { "type": "string", "description": "Value to store" },
+                    "key": {
+                        "type": "string",
+                        "description": "Memory key"
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "Value to store"
+                    },
                     "tags": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "Optional tags for categorization"
                     }
                 },
@@ -29,7 +36,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "key": { "type": "string", "description": "Memory key" }
+                    "key": {
+                        "type": "string",
+                        "description": "Memory key"
+                    }
                 },
                 "required": ["key"],
                 "additionalProperties": false
@@ -41,8 +51,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "query": { "type": "string", "description": "Search query" },
-                    "limit": { "type": "number", "description": "Max results (default 10)" }
+                    "query": {
+                        "type": "string",
+                        "description": "Search query"
+                    },
+                    "limit": {
+                        "type": "number",
+                        "description": "Max results (default 10)"
+                    }
                 },
                 "required": ["query"],
                 "additionalProperties": false
@@ -54,7 +70,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "key": { "type": "string", "description": "Memory key to delete" }
+                    "key": {
+                        "type": "string",
+                        "description": "Memory key to delete"
+                    }
                 },
                 "required": ["key"],
                 "additionalProperties": false
@@ -66,7 +85,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "tag": { "type": "string", "description": "Filter by tag (optional)" },
+                    "tag": {
+                        "type": "string",
+                        "description": "Filter by tag (optional)"
+                    },
                     "limit": {
                         "type": "number",
                         "description": "Max entries to return (default 100, set 0 for unlimited)"

@@ -10,8 +10,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Symbol name or substring" },
-                    "dir": { "type": "string", "description": "Directory to search in" }
+                    "name": {
+                        "type": "string",
+                        "description": "Symbol name or substring"
+                    },
+                    "dir": {
+                        "type": "string",
+                        "description": "Directory to search in"
+                    }
                 },
                 "required": ["name", "dir"],
                 "additionalProperties": false
@@ -23,8 +29,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Exact symbol name" },
-                    "dir": { "type": "string", "description": "Directory to search in" }
+                    "name": {
+                        "type": "string",
+                        "description": "Exact symbol name"
+                    },
+                    "dir": {
+                        "type": "string",
+                        "description": "Directory to search in"
+                    }
                 },
                 "required": ["name", "dir"],
                 "additionalProperties": false
@@ -38,10 +50,15 @@
                 "properties": {
                     "names": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "Symbol names to look up"
                     },
-                    "dir": { "type": "string", "description": "Directory to search in" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Directory to search in"
+                    }
                 },
                 "required": ["names", "dir"],
                 "additionalProperties": false
@@ -53,9 +70,18 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "file": { "type": "string", "description": "Absolute file path" },
-                    "startLine": { "type": "number", "description": "Start line (1-based)" },
-                    "endLine": { "type": "number", "description": "End line (inclusive)" }
+                    "file": {
+                        "type": "string",
+                        "description": "Absolute file path"
+                    },
+                    "startLine": {
+                        "type": "number",
+                        "description": "Start line (1-based)"
+                    },
+                    "endLine": {
+                        "type": "number",
+                        "description": "End line (inclusive)"
+                    }
                 },
                 "required": ["file", "startLine", "endLine"],
                 "additionalProperties": false
@@ -63,6 +89,7 @@
         }
     ],
     "tags": ["symbols", "code-intel", "search"],
-    "license": "MIT",
-    "version": "1.1.1"
+    "keywords": ["symbols", "ast", "code-intel", "navigation", "lookup", "multi-language"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "rust", "php", "java"],
+    "license": "MIT"
 }

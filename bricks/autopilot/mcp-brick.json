@@ -1,6 +1,5 @@
 {
     "name": "autopilot",
-    "version": "0.0.0",
     "prefix": "auto",
     "description": "Autopilot workflow — autonomous task execution with reasoning, context management, and shell commands.",
     "dependencies": ["codebase", "smartcontext", "devtools", "thinking"],
@@ -11,8 +10,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "task": { "type": "string", "description": "Task description" },
-                    "dir": { "type": "string", "description": "Project root directory" }
+                    "task": {
+                        "type": "string",
+                        "description": "Task description"
+                    },
+                    "dir": {
+                        "type": "string",
+                        "description": "Project root directory"
+                    }
                 },
                 "required": ["task"],
                 "additionalProperties": false
@@ -24,7 +29,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "planId": { "type": "string", "description": "Plan ID from auto_plan" },
+                    "planId": {
+                        "type": "string",
+                        "description": "Plan ID from auto_plan"
+                    },
                     "step": {
                         "type": "number",
                         "description": "Step to execute (default: next pending)"
@@ -40,7 +48,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "planId": { "type": "string", "description": "Plan ID" }
+                    "planId": {
+                        "type": "string",
+                        "description": "Plan ID"
+                    }
                 },
                 "required": ["planId"],
                 "additionalProperties": false

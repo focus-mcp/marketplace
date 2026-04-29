@@ -170,4 +170,48 @@ describe('buildCatalog', () => {
         expect(errors).toEqual([]);
         expect(catalog.bricks.map((b) => b.name)).toEqual(['alpha', 'zeta']);
     });
+
+    it('propagates keywords and recommendedFor from the brick manifest', async () => {
+        await writeJson(join(root, 'bricks/enriched/mcp-brick.json'), {
+            name: 'enriched',
+            description: 'Brick with keywords and recommendedFor.',
+            dependencies: [],
+            tools: [],
+            keywords: ['typescript', 'ast', 'code-intel'],
+            recommendedFor: ['react', 'next', 'vue'],
+        });
+        await writeJson(join(root, 'bricks/enriched/package.json'), {
+            name: '@focus-mcp/brick-enriched',
+            version: '1.0.0',
+        });
+
+        const { catalog, errors } = await buildCatalog({ rootDir: root, now: frozenNow });
+        expect(errors).toEqual([]);
+        const brick = catalog.bricks[0];
+        expect(brick).toBeDefined();
+        if (!brick) throw new Error('brick[0] missing');
+        expect(brick.keywords).toEqual(['typescript', 'ast', 'code-intel']);
+        expect(brick.recommendedFor).toEqual(['react', 'next', 'vue']);
+    });
+
+    it('omits keywords and recommendedFor when absent from the brick manifest', async () => {
+        await writeJson(join(root, 'bricks/plain/mcp-brick.json'), {
+            name: 'plain',
+            description: 'Brick without keywords or recommendedFor.',
+            dependencies: [],
+            tools: [],
+        });
+        await writeJson(join(root, 'bricks/plain/package.json'), {
+            name: '@focus-mcp/brick-plain',
+            version: '1.0.0',
+        });
+
+        const { catalog, errors } = await buildCatalog({ rootDir: root, now: frozenNow });
+        expect(errors).toEqual([]);
+        const brick = catalog.bricks[0];
+        expect(brick).toBeDefined();
+        if (!brick) throw new Error('brick[0] missing');
+        expect(brick.keywords).toBeUndefined();
+        expect(brick.recommendedFor).toBeUndefined();
+    });
 });
