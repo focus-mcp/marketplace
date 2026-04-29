@@ -24,7 +24,7 @@ export default {
             ],
         ],
         'subject-case': [2, 'never', ['upper-case', 'pascal-case', 'start-case']],
-        'header-max-length': [2, 'always', 100],
+        'header-max-length': [2, 'always', 120],
         'body-leading-blank': [2, 'always'],
         'footer-leading-blank': [2, 'always'],
         'body-max-line-length': [0, 'always', 0],
