@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-28T18:38:23.028Z",
+  "updated": "2026-04-29T18:11:01.956Z",
   "bricks": [
     {
       "name": "agent",
@@ -458,12 +458,28 @@
     },
     {
       "name": "callgraph",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "Call graph analysis — callers, callees, call chains.",
       "tags": [
         "callgraph",
         "code-intel",
         "analysis"
+      ],
+      "keywords": [
+        "call-graph",
+        "ast",
+        "code-intel",
+        "analysis",
+        "callers",
+        "callees",
+        "call-chain"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "rust"
       ],
       "dependencies": [
         "treesitter"
@@ -589,12 +605,24 @@
     },
     {
       "name": "codebase",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "description": "Complete codebase intelligence — loads treesitter, symbol, outline, callgraph, depgraph, refs.",
       "tags": [
         "codebase",
         "composite",
         "code-intelligence"
+      ],
+      "keywords": [
+        "project",
+        "codebase",
+        "navigation",
+        "overview",
+        "composite",
+        "code-intelligence",
+        "all-in-one"
+      ],
+      "recommendedFor": [
+        "any"
       ],
       "dependencies": [
         "treesitter",
@@ -613,7 +641,7 @@
     },
     {
       "name": "codeedit",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "Precise code editing — replace function bodies, insert before/after, safe delete with dependency check.",
       "tags": [
         "edit",
@@ -622,6 +650,24 @@
         "insert",
         "delete",
         "codemod"
+      ],
+      "keywords": [
+        "code-editing",
+        "refactoring",
+        "ast",
+        "insert",
+        "delete",
+        "replace",
+        "safe-delete"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "rust",
+        "php",
+        "refactoring"
       ],
       "dependencies": [],
       "tools": [
@@ -791,11 +837,26 @@
     },
     {
       "name": "codemod",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "description": "Code modification toolkit — loads symbol, rename, codeedit, inline, textsearch for automated refactoring.",
       "tags": [
         "codemod",
         "composite",
+        "refactoring"
+      ],
+      "keywords": [
+        "codemod",
+        "refactoring",
+        "ast",
+        "transforms",
+        "rename",
+        "inline",
+        "composite"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
         "refactoring"
       ],
       "dependencies": [
@@ -1487,13 +1548,30 @@
     },
     {
       "name": "depgraph",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "Dependency graph analysis — imports, exports, circular deps, fan-in/out.",
       "tags": [
         "depgraph",
         "imports",
         "analysis",
         "circular"
+      ],
+      "keywords": [
+        "dependency",
+        "graph",
+        "code-intel",
+        "analysis",
+        "imports",
+        "exports",
+        "circular-deps",
+        "fan-in",
+        "fan-out"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "monorepo"
       ],
       "dependencies": [
         "treesitter"
@@ -4405,13 +4483,29 @@
     },
     {
       "name": "outline",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "File and repo structure outline — list exported symbols and directory trees without reading full content.",
       "tags": [
         "outline",
         "symbols",
         "structure",
         "navigation"
+      ],
+      "keywords": [
+        "outline",
+        "structure",
+        "ast",
+        "navigation",
+        "symbols",
+        "file-structure",
+        "repo-overview"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "rust"
       ],
       "dependencies": [
         "treesitter"
@@ -4875,13 +4969,30 @@
     },
     {
       "name": "refs",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "Cross-references — find who imports or uses a symbol, locate declarations, and trace inheritance chains.",
       "tags": [
         "references",
         "cross-references",
         "symbols",
         "navigation"
+      ],
+      "keywords": [
+        "code-navigation",
+        "references",
+        "symbols",
+        "code-intel",
+        "cross-references",
+        "declarations",
+        "inheritance"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "rust",
+        "java"
       ],
       "dependencies": [
         "treesitter"
@@ -6330,13 +6441,28 @@
     },
     {
       "name": "smartread",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "Intelligent file reading — multiple modes to minimize token usage.",
       "tags": [
         "file",
         "read",
         "smart",
         "tokens"
+      ],
+      "keywords": [
+        "code-navigation",
+        "ast",
+        "smart-read",
+        "code-intel",
+        "token-efficient",
+        "file-reading"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "rust"
       ],
       "dependencies": [
         "treesitter"
@@ -6431,12 +6557,29 @@
     },
     {
       "name": "symbol",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "Symbol lookup in source files — find, get, bulk, body. Multi-language via treesitter (PHP, Python, Go, Rust, Java, TS/JS, etc.).",
       "tags": [
         "symbols",
         "code-intel",
         "search"
+      ],
+      "keywords": [
+        "symbols",
+        "ast",
+        "code-intel",
+        "navigation",
+        "lookup",
+        "multi-language"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "rust",
+        "php",
+        "java"
       ],
       "dependencies": [
         "treesitter"
@@ -7043,7 +7186,7 @@
     },
     {
       "name": "treesitter",
-      "version": "1.3.0",
+      "version": "1.3.1",
       "description": "Tree-sitter based multi-language code indexer — supports TS, JS, PHP, Python, Go, Rust, Java.",
       "tags": [
         "ast",
@@ -7057,6 +7200,31 @@
         "rust",
         "java",
         "multi-language"
+      ],
+      "keywords": [
+        "typescript",
+        "javascript",
+        "ast",
+        "parser",
+        "code-intel",
+        "php",
+        "python",
+        "go",
+        "rust",
+        "java",
+        "multi-language"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "react",
+        "vue",
+        "next",
+        "python",
+        "rust",
+        "go",
+        "php",
+        "java"
       ],
       "dependencies": [],
       "tools": [
