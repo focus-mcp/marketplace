@@ -27,6 +27,9 @@ export default {
         'header-max-length': [2, 'always', 120],
         'body-leading-blank': [2, 'always'],
         'footer-leading-blank': [2, 'always'],
-        'body-max-line-length': [0, 'always', 0],
+        // Squash-merge bodies can embed PR descriptions with long lines; disable the limit.
+        'body-max-line-length': [0],
+        // Squash-merge footers can include diff lines or long Co-authored-by entries; disable.
+        'footer-max-line-length': [0],
     },
 };
