@@ -1,6 +1,5 @@
 {
     "name": "review",
-    "version": "0.0.0",
     "prefix": "rev",
     "description": "Structured code review — analyze code quality, security, architecture patterns, compare versions.",
     "dependencies": [],

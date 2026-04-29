@@ -1,6 +1,5 @@
 {
     "name": "repos",
-    "version": "0.0.0",
     "prefix": "repos",
     "description": "Multi-repo management — register, track, and get stats for multiple repositories.",
     "dependencies": [],
@@ -20,8 +19,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Repository name" },
-                    "path": { "type": "string", "description": "Absolute path to the repository" }
+                    "name": {
+                        "type": "string",
+                        "description": "Repository name"
+                    },
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute path to the repository"
+                    }
                 },
                 "required": ["name", "path"],
                 "additionalProperties": false
@@ -33,7 +38,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Repository name to remove" }
+                    "name": {
+                        "type": "string",
+                        "description": "Repository name to remove"
+                    }
                 },
                 "required": ["name"],
                 "additionalProperties": false
@@ -45,7 +53,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Repository name" }
+                    "name": {
+                        "type": "string",
+                        "description": "Repository name"
+                    }
                 },
                 "required": ["name"],
                 "additionalProperties": false

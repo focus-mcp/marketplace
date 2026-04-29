@@ -1,6 +1,5 @@
 {
     "name": "batch",
-    "version": "0.0.0",
     "prefix": "bat",
     "description": "Batch execution patterns — run multiple operations sequentially, in parallel, or as a pipeline.",
     "dependencies": [],
@@ -13,7 +12,9 @@
                 "properties": {
                     "commands": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "List of shell commands"
                     },
                     "cwd": {
@@ -37,10 +38,15 @@
                 "properties": {
                     "commands": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "Commands to run in order"
                     },
-                    "cwd": { "type": "string", "description": "Working directory" },
+                    "cwd": {
+                        "type": "string",
+                        "description": "Working directory"
+                    },
                     "timeout": {
                         "type": "number",
                         "description": "Per-command timeout in ms (default 30000)"
@@ -62,10 +68,15 @@
                 "properties": {
                     "commands": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "Commands to run in parallel"
                     },
-                    "cwd": { "type": "string", "description": "Working directory" },
+                    "cwd": {
+                        "type": "string",
+                        "description": "Working directory"
+                    },
                     "timeout": {
                         "type": "number",
                         "description": "Per-command timeout in ms (default 30000)"
@@ -87,10 +98,15 @@
                 "properties": {
                     "commands": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "Commands to pipe together"
                     },
-                    "cwd": { "type": "string", "description": "Working directory" },
+                    "cwd": {
+                        "type": "string",
+                        "description": "Working directory"
+                    },
                     "timeout": {
                         "type": "number",
                         "description": "Total pipeline timeout in ms (default 30000)"

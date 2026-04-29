@@ -1,6 +1,5 @@
 {
     "name": "thinking",
-    "version": "0.0.0",
     "prefix": "thk",
     "description": "Structured reasoning chains — think step by step, branch alternatives, revise conclusions, summarize.",
     "dependencies": [],
@@ -11,7 +10,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "thought": { "type": "string", "description": "The reasoning step content" },
+                    "thought": {
+                        "type": "string",
+                        "description": "The reasoning step content"
+                    },
                     "confidence": {
                         "type": "number",
                         "description": "Confidence level 0-1 (optional)"
@@ -35,8 +37,14 @@
                         "type": "string",
                         "description": "Branch label (e.g. 'Option A', 'If we assume...')"
                     },
-                    "thought": { "type": "string", "description": "First thought in this branch" },
-                    "chainId": { "type": "string", "description": "Chain to branch from" }
+                    "thought": {
+                        "type": "string",
+                        "description": "First thought in this branch"
+                    },
+                    "chainId": {
+                        "type": "string",
+                        "description": "Chain to branch from"
+                    }
                 },
                 "required": ["label", "thought"],
                 "additionalProperties": false
@@ -52,9 +60,18 @@
                         "type": "number",
                         "description": "Index of step to revise (0-based)"
                     },
-                    "revision": { "type": "string", "description": "Revised thought" },
-                    "reason": { "type": "string", "description": "Why this revision" },
-                    "chainId": { "type": "string", "description": "Chain ID" }
+                    "revision": {
+                        "type": "string",
+                        "description": "Revised thought"
+                    },
+                    "reason": {
+                        "type": "string",
+                        "description": "Why this revision"
+                    },
+                    "chainId": {
+                        "type": "string",
+                        "description": "Chain ID"
+                    }
                 },
                 "required": ["stepIndex", "revision", "reason"],
                 "additionalProperties": false

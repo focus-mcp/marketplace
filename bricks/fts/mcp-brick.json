@@ -1,6 +1,5 @@
 {
     "name": "fts",
-    "version": "0.0.0",
     "prefix": "fts",
     "description": "Full-text search with TF-IDF ranking — index files, search with relevance scoring, suggest completions.",
     "dependencies": [],
@@ -11,7 +10,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Directory to index" },
+                    "dir": {
+                        "type": "string",
+                        "description": "Directory to index"
+                    },
                     "glob": {
                         "type": "string",
                         "description": "File glob filter (default: *.ts,*.js,*.md,*.json)"
@@ -35,7 +37,10 @@
                         "type": "string",
                         "description": "Search query (space-separated terms)"
                     },
-                    "limit": { "type": "number", "description": "Max results (default 10)" }
+                    "limit": {
+                        "type": "number",
+                        "description": "Max results (default 10)"
+                    }
                 },
                 "required": ["query"],
                 "additionalProperties": false
@@ -47,10 +52,15 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "query": { "type": "string", "description": "Search query" },
+                    "query": {
+                        "type": "string",
+                        "description": "Search query"
+                    },
                     "files": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "File paths to rank"
                     }
                 },
@@ -64,8 +74,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "prefix": { "type": "string", "description": "Partial term to complete" },
-                    "limit": { "type": "number", "description": "Max suggestions (default 5)" }
+                    "prefix": {
+                        "type": "string",
+                        "description": "Partial term to complete"
+                    },
+                    "limit": {
+                        "type": "number",
+                        "description": "Max suggestions (default 5)"
+                    }
                 },
                 "required": ["prefix"],
                 "additionalProperties": false
@@ -76,7 +92,9 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "search": { "delta": -0.933 }
+            "search": {
+                "delta": -0.933
+            }
         },
         "source": "static-equivalence-2026-04-27"
     }

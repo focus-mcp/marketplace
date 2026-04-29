@@ -1,6 +1,5 @@
 {
     "name": "filediff",
-    "version": "0.0.0",
     "prefix": "fd",
     "description": "File comparison — diff, patch, delta between files or versions.",
     "dependencies": [],
@@ -11,8 +10,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "a": { "type": "string", "description": "Path to first file" },
-                    "b": { "type": "string", "description": "Path to second file" }
+                    "a": {
+                        "type": "string",
+                        "description": "Path to first file"
+                    },
+                    "b": {
+                        "type": "string",
+                        "description": "Path to second file"
+                    }
                 },
                 "required": ["a", "b"],
                 "additionalProperties": false
@@ -24,8 +29,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "File to patch" },
-                    "patch": { "type": "string", "description": "Unified diff content" }
+                    "path": {
+                        "type": "string",
+                        "description": "File to patch"
+                    },
+                    "patch": {
+                        "type": "string",
+                        "description": "Unified diff content"
+                    }
                 },
                 "required": ["path", "patch"],
                 "additionalProperties": false
@@ -36,7 +47,14 @@
             "description": "Show only changed lines between two strings (compact)",
             "inputSchema": {
                 "type": "object",
-                "properties": { "before": { "type": "string" }, "after": { "type": "string" } },
+                "properties": {
+                    "before": {
+                        "type": "string"
+                    },
+                    "after": {
+                        "type": "string"
+                    }
+                },
                 "required": ["before", "after"],
                 "additionalProperties": false
             }
@@ -46,7 +64,9 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "diff": { "delta": -0.005 }
+            "diff": {
+                "delta": -0.005
+            }
         },
         "source": "static-equivalence-2026-04-27"
     }

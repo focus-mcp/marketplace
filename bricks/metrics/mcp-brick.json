@@ -1,6 +1,5 @@
 {
     "name": "metrics",
-    "version": "0.0.0",
     "prefix": "met",
     "description": "Session metrics tracking — token usage, costs, duration, and per-tool statistics.",
     "dependencies": [],

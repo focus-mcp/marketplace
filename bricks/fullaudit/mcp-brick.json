@@ -1,6 +1,5 @@
 {
     "name": "fullaudit",
-    "version": "0.0.0",
     "prefix": "audit",
     "description": "Full project audit workflow — code quality review, security scan, architecture analysis, and metrics report.",
     "dependencies": ["codebase", "review", "metrics"],
@@ -11,10 +10,15 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Project root directory" },
+                    "dir": {
+                        "type": "string",
+                        "description": "Project root directory"
+                    },
                     "checks": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "Checks to run: 'code', 'security', 'architecture' (default: all)"
                     }
                 },

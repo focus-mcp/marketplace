@@ -1,6 +1,5 @@
 {
     "name": "graphbuild",
-    "version": "0.0.0",
     "prefix": "gb",
     "description": "Knowledge graph builder — construct a graph of code entities (files, functions, types) and their relationships.",
     "dependencies": [],
@@ -11,7 +10,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Root directory to scan" },
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory to scan"
+                    },
                     "maxFiles": {
                         "type": "number",
                         "description": "Max files to scan (default 200)"
@@ -29,7 +31,9 @@
                 "properties": {
                     "files": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "Changed file paths to re-scan"
                     }
                 },
@@ -55,18 +59,30 @@
                     "node": {
                         "type": "object",
                         "properties": {
-                            "id": { "type": "string" },
-                            "type": { "type": "string" },
-                            "label": { "type": "string" }
+                            "id": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string"
+                            },
+                            "label": {
+                                "type": "string"
+                            }
                         },
                         "description": "Node to add"
                     },
                     "edge": {
                         "type": "object",
                         "properties": {
-                            "from": { "type": "string" },
-                            "to": { "type": "string" },
-                            "type": { "type": "string" }
+                            "from": {
+                                "type": "string"
+                            },
+                            "to": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string"
+                            }
                         },
                         "description": "Edge to add"
                     }

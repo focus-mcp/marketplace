@@ -1,6 +1,5 @@
 {
     "name": "format",
-    "version": "0.0.0",
     "prefix": "fmt",
     "description": "Format data into various output formats — pretty JSON, YAML, markdown, ASCII tables.",
     "dependencies": [],
@@ -71,20 +70,27 @@
                 "properties": {
                     "headers": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "Column header labels"
                     },
                     "rows": {
                         "type": "array",
                         "items": {
                             "type": "array",
-                            "items": { "type": "string" }
+                            "items": {
+                                "type": "string"
+                            }
                         },
                         "description": "Table rows as arrays of cell strings"
                     },
                     "align": {
                         "type": "array",
-                        "items": { "type": "string", "enum": ["left", "right", "center"] },
+                        "items": {
+                            "type": "string",
+                            "enum": ["left", "right", "center"]
+                        },
                         "description": "Per-column alignment (default: left)"
                     }
                 },
@@ -97,7 +103,9 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "json": { "delta": 0.002 }
+            "json": {
+                "delta": 0.002
+            }
         },
         "source": "static-equivalence-2026-04-27"
     }

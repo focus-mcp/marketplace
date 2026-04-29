@@ -1,6 +1,5 @@
 {
     "name": "routes",
-    "version": "0.0.0",
     "prefix": "rt",
     "description": "API route detection — scan projects for Express, Fastify, Next.js, SvelteKit route definitions.",
     "dependencies": [],
@@ -11,7 +10,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Root directory to scan" },
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory to scan"
+                    },
                     "framework": {
                         "type": "string",
                         "description": "Force framework (express, fastify, nextjs, sveltekit). Auto-detects if omitted."
@@ -27,7 +29,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Root directory" },
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory"
+                    },
                     "pattern": {
                         "type": "string",
                         "description": "Path pattern to search (e.g. '/api/user')"
@@ -47,7 +52,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Root directory" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory"
+                    }
                 },
                 "required": ["dir"],
                 "additionalProperties": false
@@ -59,7 +67,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Root directory" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory"
+                    }
                 },
                 "required": ["dir"],
                 "additionalProperties": false

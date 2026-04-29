@@ -1,6 +1,5 @@
 {
     "name": "decision",
-    "version": "0.0.0",
     "prefix": "dec",
     "description": "Structured decision-making — define options, analyze tradeoffs, recommend, and record decisions.",
     "dependencies": [],
@@ -11,15 +10,30 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "question": { "type": "string", "description": "The decision question" },
+                    "question": {
+                        "type": "string",
+                        "description": "The decision question"
+                    },
                     "options": {
                         "type": "array",
                         "items": {
                             "type": "object",
                             "properties": {
-                                "label": { "type": "string" },
-                                "pros": { "type": "array", "items": { "type": "string" } },
-                                "cons": { "type": "array", "items": { "type": "string" } }
+                                "label": {
+                                    "type": "string"
+                                },
+                                "pros": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "cons": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
                             },
                             "required": ["label"]
                         },
@@ -36,14 +50,22 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "decisionId": { "type": "string", "description": "Decision ID" },
+                    "decisionId": {
+                        "type": "string",
+                        "description": "Decision ID"
+                    },
                     "criteria": {
                         "type": "array",
                         "items": {
                             "type": "object",
                             "properties": {
-                                "name": { "type": "string" },
-                                "weight": { "type": "number", "description": "Weight 1-10" }
+                                "name": {
+                                    "type": "string"
+                                },
+                                "weight": {
+                                    "type": "number",
+                                    "description": "Weight 1-10"
+                                }
                             },
                             "required": ["name", "weight"]
                         },
@@ -54,10 +76,14 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "option": { "type": "string" },
+                                "option": {
+                                    "type": "string"
+                                },
                                 "scores": {
                                     "type": "array",
-                                    "items": { "type": "number" },
+                                    "items": {
+                                        "type": "number"
+                                    },
                                     "description": "Score per criterion (1-10)"
                                 }
                             },
@@ -76,7 +102,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "decisionId": { "type": "string", "description": "Decision ID" }
+                    "decisionId": {
+                        "type": "string",
+                        "description": "Decision ID"
+                    }
                 },
                 "required": ["decisionId"],
                 "additionalProperties": false
@@ -88,9 +117,18 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "decisionId": { "type": "string", "description": "Decision ID" },
-                    "chosen": { "type": "string", "description": "The chosen option label" },
-                    "rationale": { "type": "string", "description": "Why this option was chosen" },
+                    "decisionId": {
+                        "type": "string",
+                        "description": "Decision ID"
+                    },
+                    "chosen": {
+                        "type": "string",
+                        "description": "The chosen option label"
+                    },
+                    "rationale": {
+                        "type": "string",
+                        "description": "Why this option was chosen"
+                    },
                     "outputPath": {
                         "type": "string",
                         "description": "File path to save the decision record (optional)"

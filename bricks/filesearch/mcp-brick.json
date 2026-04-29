@@ -1,6 +1,5 @@
 {
     "name": "filesearch",
-    "version": "0.0.0",
     "prefix": "fsrch",
     "description": "Search and replace in files — regex search, in-place replace.",
     "dependencies": [],
@@ -11,9 +10,18 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Directory to search in" },
-                    "pattern": { "type": "string", "description": "Regex pattern" },
-                    "glob": { "type": "string", "description": "File glob filter (e.g. *.ts)" }
+                    "path": {
+                        "type": "string",
+                        "description": "Directory to search in"
+                    },
+                    "pattern": {
+                        "type": "string",
+                        "description": "Regex pattern"
+                    },
+                    "glob": {
+                        "type": "string",
+                        "description": "File glob filter (e.g. *.ts)"
+                    }
                 },
                 "required": ["path", "pattern"],
                 "additionalProperties": false
@@ -25,9 +33,18 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "File path" },
-                    "pattern": { "type": "string", "description": "Regex pattern to find" },
-                    "replacement": { "type": "string", "description": "Replacement string" }
+                    "path": {
+                        "type": "string",
+                        "description": "File path"
+                    },
+                    "pattern": {
+                        "type": "string",
+                        "description": "Regex pattern to find"
+                    },
+                    "replacement": {
+                        "type": "string",
+                        "description": "Replacement string"
+                    }
                 },
                 "required": ["path", "pattern", "replacement"],
                 "additionalProperties": false
@@ -38,7 +55,9 @@
     "license": "MIT",
     "bench": {
         "tools": {
-            "search": { "delta": -0.446 }
+            "search": {
+                "delta": -0.446
+            }
         },
         "source": "static-equivalence-2026-04-27"
     }
