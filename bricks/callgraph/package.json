@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-callgraph",
     "version": "1.2.1",
     "private": false,
-    "description": "Call graph analysis \u2014 callers, callees, call chains.",
+    "description": "Call graph analysis — callers, callees, call chains.",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",

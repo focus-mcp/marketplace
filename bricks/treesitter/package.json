@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-treesitter",
     "version": "1.3.1",
     "private": false,
-    "description": "Multi-language tree-sitter parser \u2014 supports ~50 languages including TypeScript, Python, PHP, Go, Rust, HTML, YAML, JSON, Markdown, Twig, SCSS, etc.",
+    "description": "Multi-language tree-sitter parser — supports ~50 languages including TypeScript, Python, PHP, Go, Rust, HTML, YAML, JSON, Markdown, Twig, SCSS, etc.",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",

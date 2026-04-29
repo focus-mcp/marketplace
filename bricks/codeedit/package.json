@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-codeedit",
     "version": "1.2.1",
     "private": false,
-    "description": "Precise code editing \u2014 replace function bodies, insert before/after, safe delete with dependency check.",
+    "description": "Precise code editing — replace function bodies, insert before/after, safe delete with dependency check.",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",

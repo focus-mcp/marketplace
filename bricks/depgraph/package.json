@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-depgraph",
     "version": "1.2.1",
     "private": false,
-    "description": "Dependency graph analysis \u2014 imports, exports, circular deps, fan-in/out.",
+    "description": "Dependency graph analysis — imports, exports, circular deps, fan-in/out.",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",

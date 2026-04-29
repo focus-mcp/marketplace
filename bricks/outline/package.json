@@ -2,7 +2,7 @@
     "name": "@focus-mcp/brick-outline",
     "version": "1.2.1",
     "private": false,
-    "description": "File and repo structure outline \u2014 list exported symbols and directory trees without reading full content.",
+    "description": "File and repo structure outline — list exported symbols and directory trees without reading full content.",
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",
