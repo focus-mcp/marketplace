@@ -35,6 +35,8 @@ jobs:
           registry-url: https://registry.npmjs.org
           scope: '@focus-mcp'
       - run: pnpm install --frozen-lockfile
+      - name: Upgrade npm for OIDC Trusted Publishing support
+        run: npm install -g npm@latest
       - name: Apply changeset snapshot versions
         run: |
           # Runs from repo root — reads .changeset/*.md and bumps all packages
@@ -45,5 +47,6 @@ jobs:
       - run: pnpm build:catalog
       - name: Publish all packages with dev tag
         run: pnpm changeset publish --no-git-tag --tag dev
+        # NODE_AUTH_TOKEN fallback: kept for rollback if Trusted Publisher not yet configured on npmjs.com
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
