@@ -108,8 +108,7 @@ jobs:
             fi
           done
 
-          # Export bumped list for downstream steps
-          # Format: "name@version" one per line, stored in GITHUB_STEP_SUMMARY file area
+          # Export bumped list for downstream steps — format: "name@version" one per line
           {
             for NAME in "${bumped[@]}"; do
               dir="${DIRS[$NAME]}"
@@ -163,9 +162,11 @@ jobs:
             BRICKS_LIST="${BRICKS_LIST}- \`${line}\`"$'\n'
           done < /tmp/published-bricks.txt
 
-          # Detect pre-release: any published version contains a hyphen (e.g. 1.0.0-beta.1)
+          # Detect pre-release: version field (after last @) starts with digits and contains a hyphen.
+          # Pattern anchored to semver: MAJOR.MINOR.PATCH-prerelease — avoids false positives on
+          # scoped package names that legitimately contain hyphens (e.g. @focus-mcp/brick-foo@1.0.0).
           IS_PRERELEASE="false"
-          if grep -qE '@[^@]+-' /tmp/published-bricks.txt 2>/dev/null; then
+          if grep -qE '@[0-9]+\.[0-9]+\.[0-9]+-' /tmp/published-bricks.txt 2>/dev/null; then
             IS_PRERELEASE="true"
           fi
 
