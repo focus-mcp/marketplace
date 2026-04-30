@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>FocusMCP — Health Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { font-family: ui-sans-serif, system-ui, sans-serif; }
+        .badge { display:inline-block; padding:1px 8px; border-radius:4px; font-size:.7rem; font-weight:700; }
+        .badge-ok      { background:#dcfce7; color:#166534; }
+        .badge-warn    { background:#fef9c3; color:#854d0e; }
+        .badge-err     { background:#fee2e2; color:#991b1b; }
+        .badge-unknown { background:#f1f5f9; color:#64748b; }
+        table { border-collapse:collapse; width:100%; }
+        th { background:#f8fafc; color:#475569; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; }
+        th, td { padding:8px 12px; border-bottom:1px solid #e2e8f0; text-align:left; vertical-align:middle; }
+        tr:hover td { background:#f8fafc; }
+        .section { background:white; border:1px solid #e2e8f0; border-radius:10px; padding:20px; margin-bottom:24px; }
+        .sec-title { font-size:1rem; font-weight:700; color:#1e293b; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; }
+        .fw { font-weight:600; }
+        .na { color:#94a3b8; }
+        .amber { color:#b45309; }
+        .link { color:#4f46e5; text-decoration:none; }
+        .link:hover { text-decoration:underline; }
+        .branch { background:#f1f5f9; padding:1px 6px; border-radius:4px; font-size:.75rem; }
+        .trunc { max-width:320px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        input[type=search] { border:1px solid #e2e8f0; border-radius:6px; padding:5px 12px; font-size:.85rem; width:220px; outline:none; }
+        input[type=search]:focus { border-color:#6366f1; box-shadow:0 0 0 2px #e0e7ff; }
+        .stat-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px 20px; text-align:center; }
+        .stat-num { font-size:2rem; font-weight:800; color:#1e293b; }
+        .stat-lbl { font-size:.75rem; color:#64748b; margin-top:2px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+<header style="background:white; border-bottom:1px solid #e2e8f0; position:sticky; top:0; z-index:10;">
+    <div style="max-width:1100px; margin:auto; padding:12px 16px; display:flex; align-items:center; justify-content:space-between;">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:1.25rem; font-weight:800; color:#4f46e5;">FocusMCP</span>
+            <span style="color:#cbd5e1;">|</span>
+            <span style="font-weight:500; color:#475569;">Health Dashboard</span>
+        </div>
+        <span style="font-size:.75rem; color:#94a3b8;">Generated: 2026-04-30 12:34:09 UTC</span>
+    </div>
+</header>
+
+<main style="max-width:1100px; margin:auto; padding:24px 16px;">
+
+    <!-- Summary cards -->
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px;">
+        <div class="stat-card"><div class="stat-num">72</div><div class="stat-lbl">Packages tracked</div></div>
+        <div class="stat-card"><div class="stat-num" style="color:#16a34a;">72</div><div class="stat-lbl">Aligned / 72</div></div>
+        <div class="stat-card"><div class="stat-num" style="color:#1e293b;">0</div><div class="stat-lbl">Open PRs</div></div>
+        <div class="stat-card"><div class="stat-num" style="color:#1e293b;">0</div><div class="stat-lbl">Pending changesets</div></div>
+    </div>
+
+    <!-- 1. Package versions -->
+    <div class="section">
+        <div class="sec-title">
+            <span>Package Versions</span>
+            <input type="search" placeholder="Filter packages…" oninput="filterTable('pkg-tb', this.value)">
+        </div>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead><tr><th>Package</th><th>npm latest</th><th>Git tag</th><th>package.json</th><th>Status</th></tr></thead>
+                <tbody id="pkg-tb">
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/cli</td>
+            <td>2.2.0</td>
+            <td><span class="na">—</span></td>
+            <td><span class="na">—</span></td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/core</td>
+            <td>1.5.0</td>
+            <td><span class="na">—</span></td>
+            <td><span class="na">—</span></td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/sdk</td>
+            <td>1.5.0</td>
+            <td><span class="na">—</span></td>
+            <td><span class="na">—</span></td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/validator</td>
+            <td>1.0.6</td>
+            <td><span class="na">—</span></td>
+            <td><span class="na">—</span></td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-agent</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-aiteam</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-autopilot</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-batch</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-cache</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-callgraph</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-codebase</td>
+            <td>1.1.2</td>
+            <td>1.1.2</td>
+            <td>1.1.2</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-codeedit</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-codemod</td>
+            <td>1.1.2</td>
+            <td>1.1.2</td>
+            <td>1.1.2</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-compress</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-contextpack</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-convert</td>
+            <td>1.2.0</td>
+            <td>1.2.0</td>
+            <td>1.2.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-debate</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-decision</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-depgraph</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-devtools</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-diagram</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-dispatch</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-echo</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-filediff</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-filelist</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-fileops</td>
+            <td>1.4.0</td>
+            <td>1.4.0</td>
+            <td>1.4.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-fileread</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-filesearch</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-filesystem</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-filewrite</td>
+            <td>1.2.0</td>
+            <td>1.2.0</td>
+            <td>1.2.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-format</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-fts</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-fullaudit</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-graphbuild</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-graphcluster</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-graphexport</td>
+            <td>1.2.0</td>
+            <td>1.2.0</td>
+            <td>1.2.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-graphquery</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-heatmap</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-impact</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-inline</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-knowledge</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-knowledgebase</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-lastversion</td>
+            <td>1.2.2</td>
+            <td>1.2.2</td>
+            <td>1.2.2</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-memory</td>
+            <td>1.1.2</td>
+            <td>1.1.2</td>
+            <td>1.1.2</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-metrics</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-multiread</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-onboarding</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-outline</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-overview</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-parallel</td>
+            <td>1.3.0</td>
+            <td>1.3.0</td>
+            <td>1.3.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-planning</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-refs</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-rename</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-repos</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-research</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-review</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-routes</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-sandbox</td>
+            <td>1.2.2</td>
+            <td>1.2.2</td>
+            <td>1.2.2</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-savings</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-semanticsearch</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-session</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-share</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-shell</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-smartcontext</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-smartread</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-symbol</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td>1.2.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-task</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-textsearch</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-thinking</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-tokenbudget</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td>1.1.0</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-treesitter</td>
+            <td>1.3.1</td>
+            <td>1.3.1</td>
+            <td>1.3.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr>
+        <tr>
+            <td class="font-mono text-sm">@focus-mcp/brick-validate</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td>1.1.1</td>
+            <td><span class="badge badge-ok">aligned</span></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 2. Drift -->
+    <div class="section">
+        <div class="sec-title">Drift main ↔ develop</div>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead><tr><th>Repo</th><th>develop ahead of main</th><th>main ahead of develop</th></tr></thead>
+                <tbody>
+        <tr>
+            <td class="fw">cli</td>
+            <td>70</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td class="fw">core</td>
+            <td>51</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td class="fw">marketplace</td>
+            <td>24</td>
+            <td>3</td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 3. CI stats -->
+    <div class="section">
+        <div class="sec-title">CI Status — Last 7 days</div>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead><tr><th>Repo</th><th>Branch</th><th>Total</th><th>Success</th><th>Failure</th><th>Rate</th></tr></thead>
+                <tbody>
+        <tr>
+            <td class="fw">cli</td>
+            <td><code class="branch">main</code></td>
+            <td>85</td>
+            <td>77</td>
+            <td>2</td>
+            <td><span class="badge badge-ok">91%</span></td>
+        </tr>
+        <tr>
+            <td class="fw">cli</td>
+            <td><code class="branch">develop</code></td>
+            <td>100</td>
+            <td>92</td>
+            <td>6</td>
+            <td><span class="badge badge-ok">92%</span></td>
+        </tr>
+        <tr>
+            <td class="fw">core</td>
+            <td><code class="branch">main</code></td>
+            <td>55</td>
+            <td>48</td>
+            <td>2</td>
+            <td><span class="badge badge-warn">87%</span></td>
+        </tr>
+        <tr>
+            <td class="fw">core</td>
+            <td><code class="branch">develop</code></td>
+            <td>93</td>
+            <td>86</td>
+            <td>7</td>
+            <td><span class="badge badge-ok">92%</span></td>
+        </tr>
+        <tr>
+            <td class="fw">marketplace</td>
+            <td><code class="branch">main</code></td>
+            <td>100</td>
+            <td>30</td>
+            <td>7</td>
+            <td><span class="badge badge-err">30%</span></td>
+        </tr>
+        <tr>
+            <td class="fw">marketplace</td>
+            <td><code class="branch">develop</code></td>
+            <td>100</td>
+            <td>76</td>
+            <td>17</td>
+            <td><span class="badge badge-warn">76%</span></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 4. Releases -->
+    <div class="section">
+        <div class="sec-title">Latest Releases</div>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead><tr><th>Date</th><th>Repo</th><th>Tag</th></tr></thead>
+                <tbody>
+        <tr>
+            <td>2026-04-29</td>
+            <td class="fw">cli</td>
+            <td><a href="https://github.com/focus-mcp/cli/releases/tag/v2.2.0" target="_blank" class="link font-mono text-sm">v2.2.0</a></td>
+        </tr>
+        <tr>
+            <td>2026-04-29</td>
+            <td class="fw">cli</td>
+            <td><a href="https://github.com/focus-mcp/cli/releases/tag/v2.1.0" target="_blank" class="link font-mono text-sm">v2.1.0</a></td>
+        </tr>
+        <tr>
+            <td>2026-04-29</td>
+            <td class="fw">cli</td>
+            <td><a href="https://github.com/focus-mcp/cli/releases/tag/v2.0.0" target="_blank" class="link font-mono text-sm">v2.0.0</a></td>
+        </tr>
+        <tr>
+            <td>2026-04-29</td>
+            <td class="fw">cli</td>
+            <td><a href="https://github.com/focus-mcp/cli/releases/tag/v1.9.0" target="_blank" class="link font-mono text-sm">v1.9.0</a></td>
+        </tr>
+        <tr>
+            <td>2026-04-29</td>
+            <td class="fw">cli</td>
+            <td><a href="https://github.com/focus-mcp/cli/releases/tag/v1.8.1" target="_blank" class="link font-mono text-sm">v1.8.1</a></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 5. Open PRs -->
+    <div class="section">
+        <div class="sec-title">Open Pull Requests (0)</div>
+        <p style="color:#94a3b8;font-size:.875rem;">No open PRs.</p>
+    </div>
+
+    <!-- 6. Changesets -->
+    <div class="section">
+        <div class="sec-title">Pending Changesets</div>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead><tr><th>Repo</th><th>Count</th></tr></thead>
+                <tbody>
+        <tr>
+            <td class="fw">cli</td>
+            <td><span class="na">0</span></td>
+        </tr>
+        <tr>
+            <td class="fw">core</td>
+            <td><span class="na">0</span></td>
+        </tr>
+        <tr>
+            <td class="fw">marketplace</td>
+            <td><span class="na">0</span></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+
+<footer style="text-align:center;font-size:.75rem;color:#94a3b8;padding:24px 0;">
+    FocusMCP Health Dashboard — refreshed daily via GitHub Actions ·
+    <a href="data.json" class="link">Raw JSON</a>
+</footer>
+
+<script>
+function filterTable(tbodyId, q) {
+    const tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    q = q.toLowerCase();
+    for (const row of tbody.rows) {
+        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    }
+}
+</script>
+</body>
+</html>

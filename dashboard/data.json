@@ -1,0 +1,624 @@
+{
+  "timestamp": "2026-04-30T12:34:09.952Z",
+  "generatedAt": "2026-04-30 12:34:09",
+  "packages": [
+    {
+      "name": "@focus-mcp/cli",
+      "npmLatest": "2.2.0",
+      "gitTag": null,
+      "pkgJson": null,
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/core",
+      "npmLatest": "1.5.0",
+      "gitTag": null,
+      "pkgJson": null,
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/sdk",
+      "npmLatest": "1.5.0",
+      "gitTag": null,
+      "pkgJson": null,
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/validator",
+      "npmLatest": "1.0.6",
+      "gitTag": null,
+      "pkgJson": null,
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-agent",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-aiteam",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-autopilot",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-batch",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-cache",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-callgraph",
+      "npmLatest": "1.2.1",
+      "gitTag": "1.2.1",
+      "pkgJson": "1.2.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-codebase",
+      "npmLatest": "1.1.2",
+      "gitTag": "1.1.2",
+      "pkgJson": "1.1.2",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-codeedit",
+      "npmLatest": "1.2.1",
+      "gitTag": "1.2.1",
+      "pkgJson": "1.2.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-codemod",
+      "npmLatest": "1.1.2",
+      "gitTag": "1.1.2",
+      "pkgJson": "1.1.2",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-compress",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-contextpack",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-convert",
+      "npmLatest": "1.2.0",
+      "gitTag": "1.2.0",
+      "pkgJson": "1.2.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-debate",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-decision",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-depgraph",
+      "npmLatest": "1.2.1",
+      "gitTag": "1.2.1",
+      "pkgJson": "1.2.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-devtools",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-diagram",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-dispatch",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-echo",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-filediff",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-filelist",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-fileops",
+      "npmLatest": "1.4.0",
+      "gitTag": "1.4.0",
+      "pkgJson": "1.4.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-fileread",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-filesearch",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-filesystem",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-filewrite",
+      "npmLatest": "1.2.0",
+      "gitTag": "1.2.0",
+      "pkgJson": "1.2.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-format",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-fts",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-fullaudit",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-graphbuild",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-graphcluster",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-graphexport",
+      "npmLatest": "1.2.0",
+      "gitTag": "1.2.0",
+      "pkgJson": "1.2.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-graphquery",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-heatmap",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-impact",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-inline",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-knowledge",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-knowledgebase",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-lastversion",
+      "npmLatest": "1.2.2",
+      "gitTag": "1.2.2",
+      "pkgJson": "1.2.2",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-memory",
+      "npmLatest": "1.1.2",
+      "gitTag": "1.1.2",
+      "pkgJson": "1.1.2",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-metrics",
+      "npmLatest": "1.2.1",
+      "gitTag": "1.2.1",
+      "pkgJson": "1.2.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-multiread",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-onboarding",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-outline",
+      "npmLatest": "1.2.1",
+      "gitTag": "1.2.1",
+      "pkgJson": "1.2.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-overview",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-parallel",
+      "npmLatest": "1.3.0",
+      "gitTag": "1.3.0",
+      "pkgJson": "1.3.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-planning",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-refs",
+      "npmLatest": "1.2.1",
+      "gitTag": "1.2.1",
+      "pkgJson": "1.2.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-rename",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-repos",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-research",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-review",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-routes",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-sandbox",
+      "npmLatest": "1.2.2",
+      "gitTag": "1.2.2",
+      "pkgJson": "1.2.2",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-savings",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-semanticsearch",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-session",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-share",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-shell",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-smartcontext",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-smartread",
+      "npmLatest": "1.2.1",
+      "gitTag": "1.2.1",
+      "pkgJson": "1.2.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-symbol",
+      "npmLatest": "1.2.1",
+      "gitTag": "1.2.1",
+      "pkgJson": "1.2.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-task",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-textsearch",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-thinking",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-tokenbudget",
+      "npmLatest": "1.1.0",
+      "gitTag": "1.1.0",
+      "pkgJson": "1.1.0",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-treesitter",
+      "npmLatest": "1.3.1",
+      "gitTag": "1.3.1",
+      "pkgJson": "1.3.1",
+      "status": "aligned"
+    },
+    {
+      "name": "@focus-mcp/brick-validate",
+      "npmLatest": "1.1.1",
+      "gitTag": "1.1.1",
+      "pkgJson": "1.1.1",
+      "status": "aligned"
+    }
+  ],
+  "drift": [
+    {
+      "repo": "cli",
+      "ahead": 70,
+      "behind": 0
+    },
+    {
+      "repo": "core",
+      "ahead": 51,
+      "behind": 0
+    },
+    {
+      "repo": "marketplace",
+      "ahead": 24,
+      "behind": 3
+    }
+  ],
+  "ciStats": [
+    {
+      "repo": "cli",
+      "branch": "main",
+      "total": 85,
+      "success": 77,
+      "failure": 2,
+      "successRate": 91
+    },
+    {
+      "repo": "cli",
+      "branch": "develop",
+      "total": 100,
+      "success": 92,
+      "failure": 6,
+      "successRate": 92
+    },
+    {
+      "repo": "core",
+      "branch": "main",
+      "total": 55,
+      "success": 48,
+      "failure": 2,
+      "successRate": 87
+    },
+    {
+      "repo": "core",
+      "branch": "develop",
+      "total": 93,
+      "success": 86,
+      "failure": 7,
+      "successRate": 92
+    },
+    {
+      "repo": "marketplace",
+      "branch": "main",
+      "total": 100,
+      "success": 30,
+      "failure": 7,
+      "successRate": 30
+    },
+    {
+      "repo": "marketplace",
+      "branch": "develop",
+      "total": 100,
+      "success": 76,
+      "failure": 17,
+      "successRate": 76
+    }
+  ],
+  "latestReleases": [
+    {
+      "repo": "cli",
+      "tag": "v2.2.0",
+      "date": "2026-04-29",
+      "url": "https://github.com/focus-mcp/cli/releases/tag/v2.2.0"
+    },
+    {
+      "repo": "cli",
+      "tag": "v2.1.0",
+      "date": "2026-04-29",
+      "url": "https://github.com/focus-mcp/cli/releases/tag/v2.1.0"
+    },
+    {
+      "repo": "cli",
+      "tag": "v2.0.0",
+      "date": "2026-04-29",
+      "url": "https://github.com/focus-mcp/cli/releases/tag/v2.0.0"
+    },
+    {
+      "repo": "cli",
+      "tag": "v1.9.0",
+      "date": "2026-04-29",
+      "url": "https://github.com/focus-mcp/cli/releases/tag/v1.9.0"
+    },
+    {
+      "repo": "cli",
+      "tag": "v1.8.1",
+      "date": "2026-04-29",
+      "url": "https://github.com/focus-mcp/cli/releases/tag/v1.8.1"
+    }
+  ],
+  "openPrs": [],
+  "pendingChangesets": [
+    {
+      "repo": "cli",
+      "count": 0
+    },
+    {
+      "repo": "core",
+      "count": 0
+    },
+    {
+      "repo": "marketplace",
+      "count": 0
+    }
+  ]
+}
