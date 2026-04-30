@@ -39,7 +39,8 @@
         "benchmark:clone": "bash benchmarks/scripts/clone.sh",
         "benchmark:parse": "tsx benchmarks/scripts/parse-session.ts",
         "benchmark:collect": "tsx benchmarks/scripts/collect.ts",
-        "test:curate-golden": "tsx scripts/curate-golden.ts"
+        "test:curate-golden": "tsx scripts/curate-golden.ts",
+        "preflight": "bash scripts/preflight-release.sh"
     },
     "devDependencies": {
         "@anthropic-ai/claude-agent-sdk": "^0.2.123",
