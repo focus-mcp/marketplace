@@ -17,25 +17,42 @@ for including the prompt or the key instructions you used.
 
 **What we care about, regardless of who wrote it:**
 
-- ✅ Tests pass
-- ✅ Types are strict (no `any`, no `@ts-ignore` without a comment)
-- ✅ Lint is green (`pnpm lint`)
-- ✅ Coverage ≥ 80% (100% on critical modules)
-- ✅ Commit messages follow Conventional Commits
-- ✅ PR has a clear description — "what, why, how to verify"
-- ✅ You understand the diff and can discuss design during review
+- Tests pass
+- Types are strict (no `any`, no `@ts-ignore` without a comment)
+- Lint is green (`pnpm lint`)
+- Coverage >= 80% (100% on critical modules)
+- Commit messages follow Conventional Commits
+- PR has a clear description — "what, why, how to verify"
+- You understand the diff and can discuss design during review
 
 **What gets you rejected:**
 
-- ❌ Obviously untested AI slop (generated code that doesn't run)
-- ❌ PRs with no description, just "here's some code"
-- ❌ Hidden AI use that makes review confusing
+- Obviously untested AI slop (generated code that doesn't run)
+- PRs with no description, just "here's some code"
+- Hidden AI use that makes review confusing
 
 We don't care if you used AI, we care if the PR is good.
 
 ## Code of Conduct
 
 All contributors agree to follow the [Code of Conduct](./CODE_OF_CONDUCT.md).
+
+## Git workflow
+
+```
+main       ← stable releases only (never commit directly)
+develop    ← integration branch (persistent, never force-delete)
+feat/*     ← feature branches, branch FROM develop
+fix/*      ← bug fix branches, branch FROM develop
+docs/*     ← documentation branches
+```
+
+1. **Branch from `develop`** — never from `main`.
+2. **Open a PR targeting `develop`**. `main` is release-only (synced via the back-merge workflow).
+3. **Auto-merge** is enabled: once CI passes and at least one review is approved, the PR merges automatically.
+4. **Never force-push** to `develop` or `main`.
+
+> The `develop` → `main` sync happens via the back-merge workflow after each stable release. Do not open PRs directly to `main`.
 
 ## Submission process
 
@@ -47,6 +64,20 @@ All contributors agree to follow the [Code of Conduct](./CODE_OF_CONDUCT.md).
 6. **Submit a PR to `develop`** with a description of the domain covered and justification of atomicity (why it is not covered by an existing brick).
 
 The PR must pass **the whole CI**: lint, typecheck, tests, REUSE, gitleaks, catalog build.
+
+## Commit conventions
+
+Enforced by commitlint (`config/commitlint.config.js`):
+
+| Rule | Value |
+|------|-------|
+| Types allowed | `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`, `release` |
+| Header max length | 100 characters |
+| Body max line length | disabled (squash-merge PR bodies may contain long lines) |
+| Footer max line length | disabled |
+| Subject case | lowercase (not UPPER, not PascalCase, not Start Case) |
+
+Scope is the brick name: `feat(shell): add env tool`, `fix(memory): handle concurrent writes`.
 
 ## Local brick layout
 
@@ -80,7 +111,7 @@ Optional fields: `tags`, `license`, `homepage`, `publisher`.
 1. **Atomicity** — 1 brick = 1 domain. No kitchen-sink bricks. If two responsibilities coexist, split into two bricks.
 2. **Naming** — kebab-case, bare domain name (e.g. `echo`, `indexer`, `sf-router`). No `focus-` prefix. The npm package uses the scope `@focus-mcp/brick-<name>`.
 3. **MIT-compatible license** — GPL/AGPL rejected to preserve the project license.
-4. **TDD / Coverage ≥ 80 %** — tests required, coverage enforced in CI.
+4. **TDD / Coverage >= 80%** — tests required, coverage enforced in CI.
 5. **SPDX headers** in every source file (`SPDX-FileCopyrightText: 2026 FocusMCP contributors` + `SPDX-License-Identifier: MIT`). For JSON files, create a sibling `.license` file (REUSE convention).
 6. **Strict TypeScript** — no `any`, no `console.log` (use the core logger instead), ESM only.
 7. **Conventional Commits** — enforced by commitlint (`feat(indexer): ...`, `fix(memory): ...`).
@@ -97,14 +128,7 @@ pnpm build:catalog     # validates the catalog structure against the JSON Schema
 pnpm reuse             # REUSE compliance (SPDX headers)
 ```
 
-## Review
-
-Maintainers check:
-
-- domain relevance (atomicity, no duplicate);
-- code quality (tests, typing, lint);
-- manifest conformance to the JSON Schema;
-- coherence of the generated catalog.
+Never use `--no-verify` or `--skip` flags to bypass these checks — they are enforced in CI regardless.
 
 ## Bumping bricks
 
@@ -116,7 +140,7 @@ A changeset file **must list only the bricks whose source was actually changed**
 - `bricks/<name>/mcp-brick.json` — manifest
 - `bricks/<name>/package.json` — package metadata (not the `version` field — that is managed by Changesets)
 
-**Never bump all 68 bricks in a single changeset unless there is a cross-cutting reason** (see below). Each `bricks/*/package.json` version change triggers one `npm publish`. Bumping unchanged bricks:
+**Never bump all 68+ bricks in a single changeset unless there is a cross-cutting reason** (see below). Each `bricks/*/package.json` version change triggers one `npm publish`. Bumping unchanged bricks:
 
 - wastes npm registry entries
 - pollutes install choices (`npm install @focus-mcp/brick-shell` returns a new version with no meaningful change)
@@ -124,7 +148,7 @@ A changeset file **must list only the bricks whose source was actually changed**
 
 ### Exception: cross-cutting infra changes
 
-Bumping all bricks in one go is acceptable when a change affects every brick's build output — e.g. a tsconfig change, a tooling upgrade, a license/header update, or a build-pipeline fix (like PR #48). In that case:
+Bumping all bricks in one go is acceptable when a change affects every brick's build output — e.g. a tsconfig change, a tooling upgrade, a license/header update, or a build-pipeline fix. In that case:
 
 1. The PR description must include the line `Cross-cutting: <reason>`.
 2. The changeset file must be named `.changeset/cross-cutting-<slug>.md` — this keyword bypasses the CI alignment check.
@@ -143,9 +167,37 @@ Add shell_env tool that exposes safe read-only environment variables.
 
 CI runs `scripts/check-changeset-alignment.ts` on every PR. For each path `bricks/<name>/**` in the diff, the changeset markdowns in the PR must reference `@focus-mcp/brick-<name>`. The check is **skipped** when a file named `.changeset/cross-cutting-*.md` is present in the PR diff.
 
-## Security
+## Fixtures and NestJS submodule
 
-Vulnerabilities must be reported **privately** — see [SECURITY.md](./SECURITY.md).
+The integration test fixtures use a NestJS submodule at `fixtures/`. When working locally:
+
+```bash
+git submodule update --init --recursive
+```
+
+If snapshot tests fail after adding a new fixture or changing the NestJS fixture app, update the snapshots:
+
+```bash
+pnpm test --update-snapshots
+```
+
+Do not commit snapshot updates alongside unrelated changes — open a separate PR.
+
+## Common pitfalls
+
+- **Snapshot drift** — if `pnpm test` fails with snapshot mismatches on a branch that only changes one brick, run `pnpm test --update-snapshots` and commit the result.
+- **Changeset scope mismatch** — CI rejects PRs where the changeset lists bricks not touched by the diff. Scope your changeset to exactly the bricks you changed.
+- **`develop` ↔ `main` divergence** — if CI reports that `develop` is behind `main`, wait for the maintainer to run the back-merge workflow, or ask in the issue.
+- **Catalog validation failure** — run `pnpm build:catalog` locally to catch JSON Schema violations before pushing.
+
+## Review
+
+Maintainers check:
+
+- domain relevance (atomicity, no duplicate);
+- code quality (tests, typing, lint);
+- manifest conformance to the JSON Schema;
+- coherence of the generated catalog.
 
 ## Authoring integration tests
 
@@ -160,6 +212,10 @@ Short version:
 4. Reference the scenario from a Vitest test under `bricks/<brick>/tests/integration/<tool>.test.ts`.
 5. The test runs offline — **no LLM at runtime**.
 
-Official bricks support every language by default — no `supportedLanguages` declaration is needed in `mcp-brick.json`. External (third-party) bricks may declare `supportedLanguages` to restrict which fixtures the test runner exercises. See `docs/testing/integration-tests.md#language-scope` for details.
+## Security
 
-No CI is wired yet (Phase 0 of the integration tests POC). Tests run via `pnpm -r --filter "./bricks/**" run test:integration` locally.
+Vulnerabilities must be reported **privately** — see [SECURITY.md](./SECURITY.md).
+
+## Release process
+
+See [docs/RELEASE.md](./docs/RELEASE.md) for the full release guide (for maintainers).
