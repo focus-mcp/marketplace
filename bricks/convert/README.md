@@ -2,6 +2,8 @@
 
 Convert between formats and units — unit conversion, encoding, format transformation, naming conventions.
 
+<!-- smoke test 2026-04-30 -->
+
 ## Tools
 
 | Tool | Exposed as | Description |
