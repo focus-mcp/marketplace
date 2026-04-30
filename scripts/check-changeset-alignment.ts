@@ -90,6 +90,15 @@ function getChangesetCoveredBricks(files: string[]): Set<string> {
 }
 
 function main(): void {
+    // Skip on release sync PRs (develop → main):
+    // changesets are consumed by `changeset version` before merge,
+    // so the diff contains no .changeset/*.md but many bumped packages.
+    const baseRef = process.env['GITHUB_BASE_REF'];
+    if (baseRef === 'main') {
+        console.log(`Release sync PR (base=${baseRef}) — skipping changeset alignment check.`);
+        process.exit(0);
+    }
+
     const changedFiles = getChangedFiles();
 
     if (hasCrossCuttingBypass(changedFiles)) {
