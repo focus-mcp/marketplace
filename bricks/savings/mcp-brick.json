@@ -1,6 +1,5 @@
 {
     "name": "savings",
-    "version": "0.0.0",
     "prefix": "sav",
     "description": "Track and report token savings — compare FocusMCP usage vs naive full-read, trend over time, ROI.",
     "dependencies": [],

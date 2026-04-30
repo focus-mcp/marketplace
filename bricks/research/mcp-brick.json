@@ -1,6 +1,5 @@
 {
     "name": "research",
-    "version": "0.0.0",
     "prefix": "rsh",
     "description": "Multi-source research — collect info from multiple files/sources, synthesize findings, validate consistency.",
     "dependencies": [],
@@ -13,7 +12,9 @@
                 "properties": {
                     "paths": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "Absolute paths to the files to read and analyze"
                     }
                 },
@@ -32,11 +33,33 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "path": { "type": "string" },
-                                "exports": { "type": "array", "items": { "type": "string" } },
-                                "imports": { "type": "array", "items": { "type": "string" } },
-                                "types": { "type": "array", "items": { "type": "string" } },
-                                "functions": { "type": "array", "items": { "type": "string" } }
+                                "path": {
+                                    "type": "string"
+                                },
+                                "exports": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "imports": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "types": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "functions": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
                             },
                             "required": ["path", "exports", "imports", "types", "functions"],
                             "additionalProperties": false
@@ -59,11 +82,33 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "path": { "type": "string" },
-                                "exports": { "type": "array", "items": { "type": "string" } },
-                                "imports": { "type": "array", "items": { "type": "string" } },
-                                "types": { "type": "array", "items": { "type": "string" } },
-                                "functions": { "type": "array", "items": { "type": "string" } }
+                                "path": {
+                                    "type": "string"
+                                },
+                                "exports": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "imports": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "types": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "functions": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
                             },
                             "required": ["path", "exports", "imports", "types", "functions"],
                             "additionalProperties": false

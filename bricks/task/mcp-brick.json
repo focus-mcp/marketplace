@@ -1,6 +1,5 @@
 {
     "name": "task",
-    "version": "0.0.0",
     "prefix": "tsk",
     "description": "Task management for multi-agent workflows — create tasks, assign to agents, track status, mark complete.",
     "dependencies": [],

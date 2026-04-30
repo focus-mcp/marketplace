@@ -10,7 +10,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Absolute file path" }
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute file path"
+                    }
                 },
                 "required": ["path"],
                 "additionalProperties": false
@@ -22,8 +25,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Absolute file path" },
-                    "content": { "type": "string", "description": "File content to cache" }
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute file path"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "File content to cache"
+                    }
                 },
                 "required": ["path", "content"],
                 "additionalProperties": false
@@ -51,7 +60,9 @@
                 "properties": {
                     "paths": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "List of absolute file paths to cache"
                     }
                 },
@@ -70,6 +81,5 @@
         }
     ],
     "tags": ["cache", "performance", "io"],
-    "license": "MIT",
-    "version": "1.1.1"
+    "license": "MIT"
 }

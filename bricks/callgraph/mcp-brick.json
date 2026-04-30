@@ -14,7 +14,10 @@
                         "type": "string",
                         "description": "Function name to find callers for"
                     },
-                    "dir": { "type": "string", "description": "Directory to search in" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Directory to search in"
+                    }
                 },
                 "required": ["name", "dir"],
                 "additionalProperties": false
@@ -26,7 +29,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Function name" },
+                    "name": {
+                        "type": "string",
+                        "description": "Function name"
+                    },
                     "file": {
                         "type": "string",
                         "description": "File containing the function"
@@ -35,7 +41,10 @@
                         "type": "number",
                         "description": "Start line of function body"
                     },
-                    "endLine": { "type": "number", "description": "End line of function body" }
+                    "endLine": {
+                        "type": "number",
+                        "description": "End line of function body"
+                    }
                 },
                 "required": ["name", "file", "startLine", "endLine"],
                 "additionalProperties": false
@@ -47,9 +56,18 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "from": { "type": "string", "description": "Start function name" },
-                    "to": { "type": "string", "description": "End function name" },
-                    "dir": { "type": "string", "description": "Directory to search in" },
+                    "from": {
+                        "type": "string",
+                        "description": "Start function name"
+                    },
+                    "to": {
+                        "type": "string",
+                        "description": "End function name"
+                    },
+                    "dir": {
+                        "type": "string",
+                        "description": "Directory to search in"
+                    },
                     "maxDepth": {
                         "type": "number",
                         "description": "Maximum search depth (default 5)"
@@ -65,8 +83,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "description": "Function name" },
-                    "dir": { "type": "string", "description": "Directory to search in" },
+                    "name": {
+                        "type": "string",
+                        "description": "Function name"
+                    },
+                    "dir": {
+                        "type": "string",
+                        "description": "Directory to search in"
+                    },
                     "maxDepth": {
                         "type": "number",
                         "description": "Maximum depth to explore (default 5)"
@@ -80,6 +104,5 @@
     "tags": ["callgraph", "code-intel", "analysis"],
     "keywords": ["call-graph", "ast", "code-intel", "analysis", "callers", "callees", "call-chain"],
     "recommendedFor": ["typescript", "javascript", "python", "go", "rust"],
-    "license": "MIT",
-    "version": "1.1.1"
+    "license": "MIT"
 }

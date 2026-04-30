@@ -1,6 +1,5 @@
 {
     "name": "share",
-    "version": "0.0.0",
     "prefix": "shr",
     "description": "Shared state for multi-agent — share context, files, results between agents, broadcast messages.",
     "dependencies": [],
@@ -36,7 +35,9 @@
                     },
                     "files": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "List of file paths to register for this agent. Omit to read."
                     }
                 },

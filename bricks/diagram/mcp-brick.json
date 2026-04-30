@@ -1,6 +1,5 @@
 {
     "name": "diagram",
-    "version": "0.0.0",
     "prefix": "diag",
     "description": "Diagram generation — produce Mermaid, DOT/Graphviz, and ASCII diagrams from data.",
     "dependencies": [],
@@ -20,8 +19,12 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "id": { "type": "string" },
-                                "label": { "type": "string" }
+                                "id": {
+                                    "type": "string"
+                                },
+                                "label": {
+                                    "type": "string"
+                                }
                             },
                             "required": ["id"]
                         },
@@ -32,9 +35,15 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "from": { "type": "string" },
-                                "to": { "type": "string" },
-                                "label": { "type": "string" }
+                                "from": {
+                                    "type": "string"
+                                },
+                                "to": {
+                                    "type": "string"
+                                },
+                                "label": {
+                                    "type": "string"
+                                }
                             },
                             "required": ["from", "to"]
                         },
@@ -60,9 +69,15 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "id": { "type": "string" },
-                                "label": { "type": "string" },
-                                "shape": { "type": "string" }
+                                "id": {
+                                    "type": "string"
+                                },
+                                "label": {
+                                    "type": "string"
+                                },
+                                "shape": {
+                                    "type": "string"
+                                }
                             },
                             "required": ["id"]
                         },
@@ -73,9 +88,15 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "from": { "type": "string" },
-                                "to": { "type": "string" },
-                                "label": { "type": "string" }
+                                "from": {
+                                    "type": "string"
+                                },
+                                "to": {
+                                    "type": "string"
+                                },
+                                "label": {
+                                    "type": "string"
+                                }
                             },
                             "required": ["from", "to"]
                         },
@@ -101,8 +122,12 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "id": { "type": "string" },
-                                "label": { "type": "string" }
+                                "id": {
+                                    "type": "string"
+                                },
+                                "label": {
+                                    "type": "string"
+                                }
                             },
                             "required": ["id"]
                         },
@@ -113,9 +138,15 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "from": { "type": "string" },
-                                "to": { "type": "string" },
-                                "label": { "type": "string" }
+                                "from": {
+                                    "type": "string"
+                                },
+                                "to": {
+                                    "type": "string"
+                                },
+                                "label": {
+                                    "type": "string"
+                                }
                             },
                             "required": ["from", "to"]
                         },

@@ -1,6 +1,5 @@
 {
     "name": "tokenbudget",
-    "version": "0.0.0",
     "prefix": "tb",
     "description": "Token budget management — estimate and optimize token usage for AI agents.",
     "dependencies": [],
@@ -11,8 +10,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "text": { "type": "string", "description": "Text to estimate" },
-                    "path": { "type": "string", "description": "File path to read and estimate" }
+                    "text": {
+                        "type": "string",
+                        "description": "Text to estimate"
+                    },
+                    "path": {
+                        "type": "string",
+                        "description": "File path to read and estimate"
+                    }
                 },
                 "additionalProperties": false
             }
@@ -23,7 +28,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Directory to analyze" },
+                    "dir": {
+                        "type": "string",
+                        "description": "Directory to analyze"
+                    },
                     "maxFiles": {
                         "type": "number",
                         "description": "Max files to analyze (default 50)"
@@ -39,10 +47,15 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "budget": { "type": "number", "description": "Token budget" },
+                    "budget": {
+                        "type": "number",
+                        "description": "Token budget"
+                    },
                     "files": {
                         "type": "array",
-                        "items": { "type": "string" },
+                        "items": {
+                            "type": "string"
+                        },
                         "description": "List of file paths"
                     },
                     "mode": {
@@ -61,8 +74,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "budget": { "type": "number", "description": "Token budget" },
-                    "dir": { "type": "string", "description": "Directory to optimize" }
+                    "budget": {
+                        "type": "number",
+                        "description": "Token budget"
+                    },
+                    "dir": {
+                        "type": "string",
+                        "description": "Directory to optimize"
+                    }
                 },
                 "required": ["budget", "dir"],
                 "additionalProperties": false

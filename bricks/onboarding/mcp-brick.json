@@ -1,6 +1,5 @@
 {
     "name": "onboarding",
-    "version": "0.0.0",
     "prefix": "onb",
     "description": "Project onboarding workflow — auto-discover project structure, conventions, and key files for a new contributor or AI agent.",
     "dependencies": ["codebase", "smartcontext", "overview"],
@@ -11,7 +10,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Project root directory" },
+                    "dir": {
+                        "type": "string",
+                        "description": "Project root directory"
+                    },
                     "budget": {
                         "type": "number",
                         "description": "Token budget for context (default 4000)"
@@ -27,7 +29,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Project root directory" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Project root directory"
+                    }
                 },
                 "required": ["dir"],
                 "additionalProperties": false

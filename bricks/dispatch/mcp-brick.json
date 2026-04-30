@@ -1,6 +1,5 @@
 {
     "name": "dispatch",
-    "version": "0.0.0",
     "prefix": "dsp",
     "description": "Task dispatch queue — send tasks, manage queue, cancel, check status for multi-step workflows.",
     "dependencies": [],
@@ -15,8 +14,14 @@
                         "type": "string",
                         "description": "Task type (e.g. 'review', 'build')"
                     },
-                    "payload": { "type": "object", "description": "Task payload data" },
-                    "priority": { "type": "number", "description": "Priority 1-10 (default 5)" }
+                    "payload": {
+                        "type": "object",
+                        "description": "Task payload data"
+                    },
+                    "priority": {
+                        "type": "number",
+                        "description": "Priority 1-10 (default 5)"
+                    }
                 },
                 "required": ["type", "payload"],
                 "additionalProperties": false
@@ -42,7 +47,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "id": { "type": "string", "description": "Task ID" }
+                    "id": {
+                        "type": "string",
+                        "description": "Task ID"
+                    }
                 },
                 "required": ["id"],
                 "additionalProperties": false
@@ -54,7 +62,10 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "id": { "type": "string", "description": "Task ID" }
+                    "id": {
+                        "type": "string",
+                        "description": "Task ID"
+                    }
                 },
                 "required": ["id"],
                 "additionalProperties": false

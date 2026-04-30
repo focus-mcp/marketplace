@@ -1,6 +1,5 @@
 {
     "name": "smartcontext",
-    "version": "0.0.0",
     "prefix": "sctx",
     "description": "Composite brick — orchestrates smartread, cache, compress, tokenbudget, and overview to deliver optimal context within a token budget.",
     "dependencies": ["smartread", "cache", "compress", "tokenbudget", "overview"],
@@ -15,8 +14,14 @@
                         "type": "string",
                         "description": "Task description to contextualize"
                     },
-                    "dir": { "type": "string", "description": "Root directory to scan" },
-                    "budget": { "type": "number", "description": "Token budget (default: 2000)" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Root directory to scan"
+                    },
+                    "budget": {
+                        "type": "number",
+                        "description": "Token budget (default: 2000)"
+                    }
                 },
                 "required": ["task", "dir"],
                 "additionalProperties": false
@@ -28,8 +33,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "dir": { "type": "string", "description": "Directory to refresh" },
-                    "budget": { "type": "number", "description": "Token budget (default: 2000)" }
+                    "dir": {
+                        "type": "string",
+                        "description": "Directory to refresh"
+                    },
+                    "budget": {
+                        "type": "number",
+                        "description": "Token budget (default: 2000)"
+                    }
                 },
                 "required": ["dir"],
                 "additionalProperties": false

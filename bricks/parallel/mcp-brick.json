@@ -1,6 +1,5 @@
 {
     "name": "parallel",
-    "version": "0.0.0",
     "prefix": "par",
     "description": "Parallel execution coordination — run tasks concurrently, collect results, merge outputs, handle timeouts.",
     "dependencies": [],
@@ -16,8 +15,12 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "id": { "type": "string" },
-                                "command": { "type": "string" }
+                                "id": {
+                                    "type": "string"
+                                },
+                                "command": {
+                                    "type": "string"
+                                }
                             },
                             "required": ["id", "command"]
                         },
@@ -62,8 +65,12 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "id": { "type": "string" },
-                                "content": { "type": "string" }
+                                "id": {
+                                    "type": "string"
+                                },
+                                "content": {
+                                    "type": "string"
+                                }
                             },
                             "required": ["id", "content"]
                         },
@@ -111,8 +118,12 @@
                         "items": {
                             "type": "object",
                             "properties": {
-                                "id": { "type": "string" },
-                                "command": { "type": "string" }
+                                "id": {
+                                    "type": "string"
+                                },
+                                "command": {
+                                    "type": "string"
+                                }
                             },
                             "required": ["id", "command"]
                         },
@@ -134,5 +145,7 @@
     ],
     "tags": ["parallel", "concurrent", "merge", "orchestration"],
     "license": "MIT",
-    "bench": { "maxTurns": 40 }
+    "bench": {
+        "maxTurns": 40
+    }
 }

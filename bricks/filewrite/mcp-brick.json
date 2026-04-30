@@ -1,6 +1,5 @@
 {
     "name": "filewrite",
-    "version": "0.0.0",
     "prefix": "fw",
     "description": "Write files — create, overwrite, append.",
     "dependencies": [],
@@ -11,8 +10,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Absolute file path" },
-                    "content": { "type": "string", "description": "Content to write" }
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute file path"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Content to write"
+                    }
                 },
                 "required": ["path", "content"],
                 "additionalProperties": false
@@ -24,8 +29,12 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string" },
-                    "content": { "type": "string" }
+                    "path": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
                 },
                 "required": ["path", "content"],
                 "additionalProperties": false
@@ -37,8 +46,14 @@
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "Absolute file path" },
-                    "content": { "type": "string", "description": "Content to write" },
+                    "path": {
+                        "type": "string",
+                        "description": "Absolute file path"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Content to write"
+                    },
                     "options": {
                         "type": "object",
                         "description": "Optional creation options",

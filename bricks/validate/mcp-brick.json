@@ -1,6 +1,5 @@
 {
     "name": "validate",
-    "version": "0.0.0",
     "prefix": "val",
     "description": "Validate data — JSON syntax, JSON Schema compliance, TypeScript type checking, lint rules.",
     "dependencies": [],

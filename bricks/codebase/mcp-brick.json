@@ -1,6 +1,5 @@
 {
     "name": "codebase",
-    "version": "0.0.0",
     "prefix": "codebase",
     "description": "Complete codebase intelligence — loads treesitter, symbol, outline, callgraph, depgraph, refs.",
     "dependencies": ["treesitter", "symbol", "outline", "callgraph", "depgraph", "refs"],
