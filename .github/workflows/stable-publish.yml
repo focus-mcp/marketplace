@@ -46,8 +46,6 @@ jobs:
           commit_message: 'chore(catalog): deploy to gh-pages after stable publish [skip ci]'
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
-      - name: Upgrade npm for OIDC Trusted Publishing support
-        run: npm install -g npm@latest
       # Strategy: diff local package.json version vs npm registry @latest.
       # Only bricks whose version has changed are built then published.
       # Bricks already at the latest version on npm are skipped entirely — no build, no publish.
