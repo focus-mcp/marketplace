@@ -67,7 +67,6 @@ interface PullRequest {
 interface ChangesetInfo {
     repo: string;
     count: number;
-    oldestDate: string | null;
 }
 
 interface DashboardData {
@@ -238,19 +237,13 @@ function daysBetween(dateStr: string): number {
 async function collectPackageVersions(): Promise<PackageVersionInfo[]> {
     const results: PackageVersionInfo[] = [];
 
-    // Core packages
+    // Core packages — no local clone available here, so gitTag and pkgJson are not fetchable.
+    // We only track npmLatest; drift detection is not applicable for these packages.
     for (const { name } of CORE_PACKAGES) {
         const npmLatest = npmView(name, 'version');
-        const pkgJson = npmLatest; // no local clone of cli/core available here
-
-        let status: PackageVersionInfo['status'] = 'unknown';
-        if (npmLatest && pkgJson) {
-            status = npmLatest === pkgJson ? 'aligned' : 'drift';
-        } else if (!npmLatest) {
-            status = 'broken';
-        }
-
-        results.push({ name, npmLatest, gitTag: npmLatest, pkgJson, status });
+        // no local clone for core packages — gitTag and pkgJson intentionally null
+        const status: PackageVersionInfo['status'] = npmLatest ? 'aligned' : 'broken';
+        results.push({ name, npmLatest, gitTag: null, pkgJson: null, status });
     }
 
     // Bricks
@@ -290,8 +283,10 @@ async function collectCIStats(days: number): Promise<CIStats[]> {
         const slug = fullRepo.split('/')[1] ?? fullRepo;
 
         for (const branch of ['main', 'develop'] as const) {
+            // Use ghApiOne (no pagination) to avoid gh --paginate concatenating
+            // multiple {total_count, workflow_runs} objects which breaks JSON.parse.
             const path = `repos/${fullRepo}/actions/runs?branch=${branch}&per_page=100`;
-            const runs = ghApi(path) as {
+            const runs = ghApiOne(path) as {
                 workflow_runs?: Array<{ conclusion: string | null; created_at: string }>;
             } | null;
 
@@ -412,22 +407,23 @@ async function collectPendingChangesets(): Promise<ChangesetInfo[]> {
                     f.path !== '.changeset/README.md',
             ) ?? [];
 
-        let oldestDate: string | null = null;
-        const oldest = changesetFiles[0];
-        if (oldest) {
-            const commits = ghApi(
-                `repos/${fullRepo}/commits?path=${encodeURIComponent(oldest.path)}&per_page=1`,
-            ) as Array<{ commit: { committer: { date: string } } }> | null;
-            oldestDate = commits?.[0]?.commit.committer.date.slice(0, 10) ?? null;
-        }
-
-        results.push({ repo: slug, count: changesetFiles.length, oldestDate });
+        // oldestDate is not reported: tree.tree is alphabetical, not chronological,
+        // so changesetFiles[0] does not represent the oldest file temporally.
+        results.push({ repo: slug, count: changesetFiles.length });
     }
 
     return results;
 }
 
 // ─── HTML renderer ────────────────────────────────────────────────────────────
+
+function escHtml(s: string): string {
+    return s
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
 
 function badge(cls: string, label: string): string {
     return `<span class="badge badge-${cls}">${label}</span>`;
@@ -494,7 +490,7 @@ function renderHtml(data: DashboardData): string {
         <tr>
             <td>${r.date}</td>
             <td class="fw">${r.repo}</td>
-            <td><a href="${r.url}" target="_blank" class="link font-mono text-sm">${r.tag}</a></td>
+            <td><a href="${escHtml(r.url)}" target="_blank" class="link font-mono text-sm">${escHtml(r.tag)}</a></td>
         </tr>`,
         )
         .join('');
@@ -504,9 +500,9 @@ function renderHtml(data: DashboardData): string {
             (pr) => `
         <tr>
             <td class="fw">${pr.repo}</td>
-            <td><a href="${pr.url}" target="_blank" class="link">#${pr.number}</a></td>
-            <td class="trunc text-sm" title="${pr.title}">${pr.title}</td>
-            <td class="text-sm na">${pr.author}</td>
+            <td><a href="${escHtml(pr.url)}" target="_blank" class="link">#${pr.number}</a></td>
+            <td class="trunc text-sm" title="${escHtml(pr.title)}">${escHtml(pr.title)}</td>
+            <td class="text-sm na">${escHtml(pr.author)}</td>
             <td>${pr.ageDays}d</td>
             <td>${
                 pr.ciStatus === 'success'
@@ -525,7 +521,6 @@ function renderHtml(data: DashboardData): string {
         <tr>
             <td class="fw">${cs.repo}</td>
             <td>${cs.count > 0 ? `<b class="${cs.count > 5 ? 'amber' : ''}">${cs.count}</b>` : '<span class="na">0</span>'}</td>
-            <td class="text-sm na">${cs.oldestDate ?? '—'}</td>
         </tr>`,
         )
         .join('');
@@ -657,7 +652,7 @@ function renderHtml(data: DashboardData): string {
         <div class="sec-title">Pending Changesets</div>
         <div style="overflow-x:auto;">
             <table>
-                <thead><tr><th>Repo</th><th>Count</th><th>Oldest</th></tr></thead>
+                <thead><tr><th>Repo</th><th>Count</th></tr></thead>
                 <tbody>${csRows}</tbody>
             </table>
         </div>
