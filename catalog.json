@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-30T19:38:48.497Z",
+  "updated": "2026-05-01T11:58:31.557Z",
   "bricks": [
     {
       "name": "agent",
@@ -18,6 +18,21 @@
         "registry",
         "capabilities",
         "ai"
+      ],
+      "keywords": [
+        "agent-registry",
+        "ai-agent",
+        "capabilities",
+        "multi-agent",
+        "register",
+        "discovery"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "multi-agent",
+        "backend",
+        "analysis"
       ],
       "dependencies": [],
       "tools": [
@@ -118,6 +133,22 @@
         "orchestration",
         "multi-agent"
       ],
+      "keywords": [
+        "multi-agent",
+        "orchestration",
+        "composite",
+        "team",
+        "dispatch",
+        "debate",
+        "parallel"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "multi-agent",
+        "backend",
+        "analysis"
+      ],
       "dependencies": [
         "dispatch",
         "parallel",
@@ -141,6 +172,22 @@
         "workflow",
         "autonomous",
         "planning"
+      ],
+      "keywords": [
+        "autopilot",
+        "autonomous",
+        "workflow",
+        "plan-execute",
+        "reasoning",
+        "task-automation"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "backend",
+        "analysis",
+        "devops"
       ],
       "dependencies": [
         "codebase",
@@ -226,6 +273,22 @@
         "sequential",
         "pipeline",
         "devtools"
+      ],
+      "keywords": [
+        "batch",
+        "parallel-execution",
+        "sequential",
+        "pipeline",
+        "multi-command",
+        "devtools"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "devops",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -364,6 +427,23 @@
         "cache",
         "performance",
         "io"
+      ],
+      "keywords": [
+        "cache",
+        "in-memory",
+        "file-cache",
+        "mtime",
+        "invalidation",
+        "warmup",
+        "performance"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "performance",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -883,6 +963,22 @@
         "output",
         "json"
       ],
+      "keywords": [
+        "compression",
+        "token-saving",
+        "whitespace",
+        "strip-comments",
+        "terse",
+        "output"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "performance",
+        "analysis"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -961,6 +1057,22 @@
         "pack",
         "tokens",
         "compression"
+      ],
+      "keywords": [
+        "context-pack",
+        "token-budget",
+        "signatures",
+        "compression",
+        "prioritize",
+        "bundle"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "analysis",
+        "performance"
       ],
       "dependencies": [],
       "tools": [
@@ -1081,7 +1193,7 @@
     },
     {
       "name": "convert",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "Convert between formats and units — unit conversion, encoding, format transformation, naming conventions.",
       "tags": [
         "convert",
@@ -1089,6 +1201,23 @@
         "encoding",
         "format",
         "naming"
+      ],
+      "keywords": [
+        "unit-conversion",
+        "encoding",
+        "base64",
+        "format-transform",
+        "naming-convention",
+        "csv",
+        "yaml"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -1237,6 +1366,21 @@
         "analysis",
         "reasoning"
       ],
+      "keywords": [
+        "debate",
+        "multi-perspective",
+        "consensus",
+        "scoring",
+        "reasoning",
+        "positions"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "analysis",
+        "multi-agent",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -1381,6 +1525,21 @@
         "analysis",
         "recommendation",
         "adr"
+      ],
+      "keywords": [
+        "decision",
+        "tradeoff",
+        "adr",
+        "recommendation",
+        "weighted-score",
+        "options"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "analysis",
+        "backend",
+        "documentation"
       ],
       "dependencies": [],
       "tools": [
@@ -1683,6 +1842,22 @@
         "composite",
         "execution"
       ],
+      "keywords": [
+        "devtools",
+        "composite",
+        "shell",
+        "sandbox",
+        "batch",
+        "scripting"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "devops",
+        "backend"
+      ],
       "dependencies": [
         "shell",
         "sandbox",
@@ -1706,6 +1881,23 @@
         "dot",
         "ascii",
         "visualization"
+      ],
+      "keywords": [
+        "diagram",
+        "mermaid",
+        "graphviz",
+        "dot",
+        "ascii",
+        "visualization",
+        "flowchart"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "documentation",
+        "analysis",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -1905,6 +2097,22 @@
         "orchestration",
         "workflow"
       ],
+      "keywords": [
+        "dispatch",
+        "queue",
+        "task-queue",
+        "orchestration",
+        "workflow",
+        "cancel",
+        "priority"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "backend",
+        "multi-agent",
+        "devops"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -1997,6 +2205,20 @@
         "smoke-test",
         "hello-world"
       ],
+      "keywords": [
+        "echo",
+        "smoke-test",
+        "hello-world",
+        "canary",
+        "template",
+        "example"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "testing",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -2031,6 +2253,22 @@
         "file",
         "diff",
         "patch"
+      ],
+      "keywords": [
+        "diff",
+        "patch",
+        "file-comparison",
+        "unified-diff",
+        "delta",
+        "version-comparison"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "refactoring",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -2113,6 +2351,22 @@
         "file",
         "list",
         "directory"
+      ],
+      "keywords": [
+        "directory-listing",
+        "tree",
+        "glob",
+        "find",
+        "filesystem",
+        "file-discovery"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -2212,6 +2466,22 @@
         "copy",
         "delete"
       ],
+      "keywords": [
+        "file-operations",
+        "move",
+        "copy",
+        "delete",
+        "rename",
+        "filesystem"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "devops"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -2310,6 +2580,22 @@
         "file",
         "read",
         "io"
+      ],
+      "keywords": [
+        "file-read",
+        "head",
+        "tail",
+        "line-range",
+        "encoding",
+        "io"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "analysis"
       ],
       "dependencies": [],
       "tools": [
@@ -2413,6 +2699,22 @@
         "replace",
         "regex"
       ],
+      "keywords": [
+        "file-search",
+        "regex-search",
+        "replace",
+        "glob",
+        "in-place",
+        "pattern"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "refactoring",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -2483,6 +2785,22 @@
         "filesystem",
         "composite"
       ],
+      "keywords": [
+        "filesystem",
+        "composite",
+        "file-read",
+        "file-write",
+        "file-ops",
+        "file-search"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "devops"
+      ],
       "dependencies": [
         "fileread",
         "filewrite",
@@ -2505,6 +2823,22 @@
         "file",
         "write",
         "io"
+      ],
+      "keywords": [
+        "file-write",
+        "create",
+        "append",
+        "overwrite",
+        "io",
+        "filesystem"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -2601,6 +2935,23 @@
         "markdown",
         "table",
         "output"
+      ],
+      "keywords": [
+        "format",
+        "json",
+        "yaml",
+        "markdown",
+        "ascii-table",
+        "pretty-print",
+        "output"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "documentation"
       ],
       "dependencies": [],
       "tools": [
@@ -2733,6 +3084,22 @@
         "index",
         "ranking"
       ],
+      "keywords": [
+        "full-text-search",
+        "tfidf",
+        "inverted-index",
+        "ranking",
+        "autocomplete",
+        "suggest"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "documentation"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -2844,6 +3211,22 @@
         "quality",
         "security"
       ],
+      "keywords": [
+        "audit",
+        "code-quality",
+        "security",
+        "architecture",
+        "static-analysis",
+        "report"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "security",
+        "analysis"
+      ],
       "dependencies": [
         "codebase",
         "review",
@@ -2904,6 +3287,22 @@
         "knowledge",
         "codebase",
         "relationships"
+      ],
+      "keywords": [
+        "knowledge-graph",
+        "graph-builder",
+        "code-entities",
+        "relationships",
+        "imports",
+        "exports"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "refactoring"
       ],
       "dependencies": [],
       "tools": [
@@ -3029,6 +3428,21 @@
         "architecture",
         "analysis"
       ],
+      "keywords": [
+        "graph-clustering",
+        "community-detection",
+        "label-propagation",
+        "architecture-layers",
+        "analysis"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "refactoring",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -3103,6 +3517,23 @@
         "graphml",
         "cypher",
         "obsidian"
+      ],
+      "keywords": [
+        "graph-export",
+        "mermaid",
+        "graphml",
+        "cypher",
+        "neo4j",
+        "obsidian",
+        "visualization"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "documentation",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -3331,6 +3762,22 @@
         "path",
         "knowledge"
       ],
+      "keywords": [
+        "graph-query",
+        "traversal",
+        "shortest-path",
+        "bfs",
+        "subgraph",
+        "neighbors"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "refactoring"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -3468,6 +3915,22 @@
         "files",
         "analysis"
       ],
+      "keywords": [
+        "heatmap",
+        "file-access",
+        "hot-files",
+        "cold-files",
+        "access-patterns",
+        "tracking"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "performance",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -3561,6 +4024,21 @@
         "analysis",
         "refactoring"
       ],
+      "keywords": [
+        "impact-analysis",
+        "change-propagation",
+        "dependents",
+        "affected-files",
+        "dependency-graph"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "refactoring",
+        "analysis"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -3653,6 +4131,21 @@
         "move",
         "refactoring",
         "codemod"
+      ],
+      "keywords": [
+        "inline",
+        "extract-function",
+        "move-symbol",
+        "refactoring",
+        "codemod",
+        "variable-inline"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "refactoring",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -3766,6 +4259,22 @@
         "index",
         "documents",
         "knowledgebase"
+      ],
+      "keywords": [
+        "knowledge-base",
+        "document-index",
+        "search",
+        "rank",
+        "purge",
+        "retrieval"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "documentation",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -3910,6 +4419,22 @@
         "search",
         "graph"
       ],
+      "keywords": [
+        "knowledgebase",
+        "composite",
+        "document-search",
+        "graph-powered",
+        "fts",
+        "knowledge"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "documentation",
+        "backend"
+      ],
       "dependencies": [
         "knowledge",
         "fts",
@@ -3936,6 +4461,23 @@
         "audit",
         "security",
         "updates"
+      ],
+      "keywords": [
+        "version-check",
+        "changelog",
+        "security-audit",
+        "semver",
+        "outdated",
+        "npm",
+        "pypi"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "security",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -4130,6 +4672,22 @@
         "persistence",
         "key-value"
       ],
+      "keywords": [
+        "memory",
+        "key-value",
+        "persistence",
+        "store",
+        "recall",
+        "sessions"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "multi-agent",
+        "backend",
+        "analysis"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -4253,6 +4811,22 @@
         "session",
         "observability"
       ],
+      "keywords": [
+        "metrics",
+        "token-usage",
+        "cost-tracking",
+        "duration",
+        "session-stats",
+        "observability"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "performance"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -4349,6 +4923,22 @@
         "batch",
         "tokens"
       ],
+      "keywords": [
+        "multi-read",
+        "batch-read",
+        "deduplication",
+        "merge",
+        "file-io",
+        "token-saving"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "analysis"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -4429,6 +5019,22 @@
         "workflow",
         "project",
         "guide"
+      ],
+      "keywords": [
+        "onboarding",
+        "project-scan",
+        "conventions",
+        "contributor-guide",
+        "discovery",
+        "workflow"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "analysis",
+        "documentation"
       ],
       "dependencies": [
         "codebase",
@@ -4587,6 +5193,21 @@
         "architecture",
         "conventions"
       ],
+      "keywords": [
+        "project-overview",
+        "framework-detection",
+        "conventions",
+        "architecture",
+        "dependencies"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "analysis",
+        "documentation"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -4677,6 +5298,22 @@
         "concurrent",
         "merge",
         "orchestration"
+      ],
+      "keywords": [
+        "parallel",
+        "concurrency",
+        "collect",
+        "merge",
+        "timeout",
+        "orchestration"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -4852,6 +5489,22 @@
         "dependencies",
         "estimation",
         "workflow"
+      ],
+      "keywords": [
+        "planning",
+        "steps",
+        "dependency-graph",
+        "time-estimate",
+        "project-management",
+        "workflow"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "multi-agent"
       ],
       "dependencies": [],
       "tools": [
@@ -5103,6 +5756,22 @@
         "symbol",
         "codemod"
       ],
+      "keywords": [
+        "rename",
+        "symbol-rename",
+        "bulk-rename",
+        "import-update",
+        "dry-run",
+        "refactoring"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "refactoring",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -5246,6 +5915,22 @@
         "management",
         "stats"
       ],
+      "keywords": [
+        "multi-repo",
+        "repository-management",
+        "register",
+        "stats",
+        "monorepo",
+        "workspace"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "devops",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -5330,6 +6015,22 @@
         "synthesize",
         "validate",
         "analysis"
+      ],
+      "keywords": [
+        "research",
+        "multi-source",
+        "synthesize",
+        "consistency-check",
+        "cross-file",
+        "analysis"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "refactoring"
       ],
       "dependencies": [],
       "tools": [
@@ -5485,6 +6186,22 @@
         "architecture",
         "diff"
       ],
+      "keywords": [
+        "code-review",
+        "security-scan",
+        "architecture-review",
+        "compare",
+        "quality",
+        "owasp"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "security",
+        "analysis"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -5577,6 +6294,23 @@
         "endpoints",
         "express",
         "web"
+      ],
+      "keywords": [
+        "api-routes",
+        "endpoints",
+        "express",
+        "fastify",
+        "next.js",
+        "sveltekit",
+        "http"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "backend",
+        "frontend",
+        "next.js",
+        "express"
       ],
       "dependencies": [],
       "tools": [
@@ -5678,6 +6412,21 @@
         "javascript",
         "typescript",
         "devtools"
+      ],
+      "keywords": [
+        "sandbox",
+        "vm",
+        "isolated-execution",
+        "eval",
+        "code-runner",
+        "esbuild"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "testing",
+        "devops",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -5788,6 +6537,21 @@
         "metrics",
         "efficiency"
       ],
+      "keywords": [
+        "token-savings",
+        "roi",
+        "efficiency",
+        "benchmark",
+        "trend",
+        "cost-comparison"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "analysis",
+        "performance",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -5888,6 +6652,22 @@
         "tfidf",
         "vector",
         "intent"
+      ],
+      "keywords": [
+        "semantic-search",
+        "cosine-similarity",
+        "tfidf",
+        "intent-classification",
+        "vector-space",
+        "nlp"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "documentation"
       ],
       "dependencies": [],
       "tools": [
@@ -6050,6 +6830,22 @@
         "persistence",
         "restore"
       ],
+      "keywords": [
+        "session",
+        "context-save",
+        "restore",
+        "persistence",
+        "history",
+        "checkpoint"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "multi-agent",
+        "backend",
+        "analysis"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -6141,6 +6937,21 @@
         "broadcast",
         "multi-agent",
         "state"
+      ],
+      "keywords": [
+        "shared-state",
+        "pub-sub",
+        "broadcast",
+        "multi-agent",
+        "context-sharing",
+        "coordination"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "multi-agent",
+        "backend",
+        "orchestration"
       ],
       "dependencies": [],
       "tools": [
@@ -6249,6 +7060,22 @@
         "command",
         "process",
         "devtools"
+      ],
+      "keywords": [
+        "shell",
+        "exec",
+        "background-process",
+        "kill",
+        "command-line",
+        "devtools"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "devops",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -6367,6 +7194,22 @@
         "composite",
         "orchestration",
         "tokens"
+      ],
+      "keywords": [
+        "smart-context",
+        "token-budget",
+        "auto-discover",
+        "composite",
+        "context-loading",
+        "cache"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "analysis",
+        "backend"
       ],
       "dependencies": [
         "smartread",
@@ -6699,6 +7542,21 @@
         "orchestration",
         "multi-agent"
       ],
+      "keywords": [
+        "task-management",
+        "assign",
+        "priority",
+        "multi-agent",
+        "workflow",
+        "tracking"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "multi-agent",
+        "backend",
+        "orchestration"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -6812,6 +7670,22 @@
         "regex",
         "replace",
         "refactoring"
+      ],
+      "keywords": [
+        "text-search",
+        "regex",
+        "multi-file-replace",
+        "grouped-results",
+        "dry-run",
+        "grep"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "refactoring",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -6965,6 +7839,22 @@
         "chain-of-thought",
         "analysis"
       ],
+      "keywords": [
+        "reasoning-chain",
+        "chain-of-thought",
+        "branching",
+        "revise",
+        "summarize",
+        "structured-thinking"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "multi-agent",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -7079,6 +7969,22 @@
         "budget",
         "optimize",
         "estimate"
+      ],
+      "keywords": [
+        "token-budget",
+        "estimate",
+        "optimize",
+        "fill",
+        "context-window",
+        "cost"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "performance",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -7306,6 +8212,22 @@
         "schema",
         "types",
         "lint"
+      ],
+      "keywords": [
+        "validation",
+        "json-schema",
+        "type-check",
+        "lint",
+        "syntax",
+        "compliance"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "testing",
+        "backend",
+        "analysis"
       ],
       "dependencies": [],
       "tools": [
