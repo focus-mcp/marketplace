@@ -159,5 +159,14 @@
         }
     ],
     "tags": ["diagram", "mermaid", "graphviz", "dot", "ascii", "visualization"],
+    "keywords": ["diagram", "mermaid", "graphviz", "dot", "ascii", "visualization", "flowchart"],
+    "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "documentation",
+        "analysis",
+        "backend"
+    ],
     "license": "MIT"
 }

@@ -81,5 +81,15 @@
         }
     ],
     "tags": ["cache", "performance", "io"],
+    "keywords": [
+        "cache",
+        "in-memory",
+        "file-cache",
+        "mtime",
+        "invalidation",
+        "warmup",
+        "performance"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "performance", "backend"],
     "license": "MIT"
 }

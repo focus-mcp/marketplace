@@ -64,5 +64,14 @@
         }
     ],
     "tags": ["repos", "multi-repo", "management", "stats"],
+    "keywords": [
+        "multi-repo",
+        "repository-management",
+        "register",
+        "stats",
+        "monorepo",
+        "workspace"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "devops", "backend"],
     "license": "MIT"
 }

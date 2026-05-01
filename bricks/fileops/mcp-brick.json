@@ -76,5 +76,7 @@
         }
     ],
     "tags": ["file", "move", "copy", "delete"],
+    "keywords": ["file-operations", "move", "copy", "delete", "rename", "filesystem"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "backend", "devops"],
     "license": "MIT"
 }

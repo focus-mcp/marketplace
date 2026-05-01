@@ -5,5 +5,21 @@
     "dependencies": ["knowledge", "fts", "graphbuild", "graphquery"],
     "tools": [],
     "tags": ["knowledgebase", "composite", "search", "graph"],
+    "keywords": [
+        "knowledgebase",
+        "composite",
+        "document-search",
+        "graph-powered",
+        "fts",
+        "knowledge"
+    ],
+    "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "documentation",
+        "backend"
+    ],
     "license": "MIT"
 }

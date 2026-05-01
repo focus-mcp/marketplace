@@ -99,5 +99,7 @@
         }
     ],
     "tags": ["memory", "storage", "persistence", "key-value"],
+    "keywords": ["memory", "key-value", "persistence", "store", "recall", "sessions"],
+    "recommendedFor": ["typescript", "javascript", "python", "multi-agent", "backend", "analysis"],
     "license": "MIT"
 }

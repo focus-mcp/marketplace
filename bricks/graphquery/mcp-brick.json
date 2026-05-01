@@ -114,5 +114,7 @@
         }
     ],
     "tags": ["graph", "query", "traversal", "path", "knowledge"],
+    "keywords": ["graph-query", "traversal", "shortest-path", "bfs", "subgraph", "neighbors"],
+    "recommendedFor": ["typescript", "javascript", "python", "analysis", "backend", "refactoring"],
     "license": "MIT"
 }

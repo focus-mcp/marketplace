@@ -106,5 +106,14 @@
         }
     ],
     "tags": ["graph", "knowledge", "codebase", "relationships"],
+    "keywords": [
+        "knowledge-graph",
+        "graph-builder",
+        "code-entities",
+        "relationships",
+        "imports",
+        "exports"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "analysis", "backend", "refactoring"],
     "license": "MIT"
 }

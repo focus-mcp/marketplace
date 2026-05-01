@@ -73,5 +73,7 @@
         }
     ],
     "tags": ["session", "context", "persistence", "restore"],
+    "keywords": ["session", "context-save", "restore", "persistence", "history", "checkpoint"],
+    "recommendedFor": ["typescript", "javascript", "python", "multi-agent", "backend", "analysis"],
     "license": "MIT"
 }

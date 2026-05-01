@@ -1,5 +1,11 @@
 # @focus-mcp/brick-convert
 
+## 1.2.1
+
+### Patch Changes
+
+- 1f039c7: chore(smoke-test): validate release pipeline post check-changeset workflow
+
 ## 1.2.0
 
 ### Minor Changes

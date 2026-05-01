@@ -99,5 +99,14 @@
         }
     ],
     "tags": ["planning", "steps", "dependencies", "estimation", "workflow"],
+    "keywords": [
+        "planning",
+        "steps",
+        "dependency-graph",
+        "time-estimate",
+        "project-management",
+        "workflow"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "backend", "multi-agent"],
     "license": "MIT"
 }

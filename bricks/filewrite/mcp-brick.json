@@ -72,5 +72,7 @@
         }
     ],
     "tags": ["file", "write", "io"],
+    "keywords": ["file-write", "create", "append", "overwrite", "io", "filesystem"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "backend", "devops"],
     "license": "MIT"
 }

@@ -85,5 +85,14 @@
         }
     ],
     "tags": ["share", "context", "broadcast", "multi-agent", "state"],
+    "keywords": [
+        "shared-state",
+        "pub-sub",
+        "broadcast",
+        "multi-agent",
+        "context-sharing",
+        "coordination"
+    ],
+    "recommendedFor": ["typescript", "javascript", "multi-agent", "backend", "orchestration"],
     "license": "MIT"
 }

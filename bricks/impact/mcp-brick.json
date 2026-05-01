@@ -70,5 +70,13 @@
         }
     ],
     "tags": ["impact", "dependencies", "analysis", "refactoring"],
+    "keywords": [
+        "impact-analysis",
+        "change-propagation",
+        "dependents",
+        "affected-files",
+        "dependency-graph"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "refactoring", "analysis"],
     "license": "MIT"
 }

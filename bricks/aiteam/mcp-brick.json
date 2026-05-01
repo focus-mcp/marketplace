@@ -5,5 +5,15 @@
     "dependencies": ["dispatch", "parallel", "debate", "review", "agent"],
     "tools": [],
     "tags": ["aiteam", "composite", "orchestration", "multi-agent"],
+    "keywords": [
+        "multi-agent",
+        "orchestration",
+        "composite",
+        "team",
+        "dispatch",
+        "debate",
+        "parallel"
+    ],
+    "recommendedFor": ["typescript", "javascript", "multi-agent", "backend", "analysis"],
     "license": "MIT"
 }

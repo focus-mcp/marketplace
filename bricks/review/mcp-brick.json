@@ -70,5 +70,14 @@
         }
     ],
     "tags": ["review", "code-quality", "security", "architecture", "diff"],
+    "keywords": [
+        "code-review",
+        "security-scan",
+        "architecture-review",
+        "compare",
+        "quality",
+        "owasp"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "security", "analysis"],
     "license": "MIT"
 }

@@ -118,5 +118,14 @@
         }
     ],
     "tags": ["batch", "execution", "parallel", "sequential", "pipeline", "devtools"],
+    "keywords": [
+        "batch",
+        "parallel-execution",
+        "sequential",
+        "pipeline",
+        "multi-command",
+        "devtools"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "devops", "backend"],
     "license": "MIT"
 }

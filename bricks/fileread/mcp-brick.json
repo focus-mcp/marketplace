@@ -79,6 +79,8 @@
         }
     ],
     "tags": ["file", "read", "io"],
+    "keywords": ["file-read", "head", "tail", "line-range", "encoding", "io"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "backend", "analysis"],
     "license": "MIT",
     "bench": {
         "tools": {

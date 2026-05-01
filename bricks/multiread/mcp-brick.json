@@ -62,6 +62,8 @@
         }
     ],
     "tags": ["file", "read", "batch", "tokens"],
+    "keywords": ["multi-read", "batch-read", "deduplication", "merge", "file-io", "token-saving"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "backend", "analysis"],
     "license": "MIT",
     "bench": {
         "tools": {

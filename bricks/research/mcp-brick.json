@@ -122,5 +122,14 @@
         }
     ],
     "tags": ["research", "multisource", "synthesize", "validate", "analysis"],
+    "keywords": [
+        "research",
+        "multi-source",
+        "synthesize",
+        "consistency-check",
+        "cross-file",
+        "analysis"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "analysis", "backend", "refactoring"],
     "license": "MIT"
 }

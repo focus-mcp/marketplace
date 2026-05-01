@@ -93,5 +93,14 @@
         }
     ],
     "tags": ["thinking", "reasoning", "chain-of-thought", "analysis"],
+    "keywords": [
+        "reasoning-chain",
+        "chain-of-thought",
+        "branching",
+        "revise",
+        "summarize",
+        "structured-thinking"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "analysis", "multi-agent", "backend"],
     "license": "MIT"
 }

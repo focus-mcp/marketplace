@@ -113,5 +113,7 @@
         }
     ],
     "tags": ["debate", "consensus", "scoring", "analysis", "reasoning"],
+    "keywords": ["debate", "multi-perspective", "consensus", "scoring", "reasoning", "positions"],
+    "recommendedFor": ["typescript", "javascript", "analysis", "multi-agent", "backend"],
     "license": "MIT"
 }
