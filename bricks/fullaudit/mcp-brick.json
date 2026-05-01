@@ -42,5 +42,7 @@
         }
     ],
     "tags": ["audit", "workflow", "quality", "security"],
+    "keywords": ["audit", "code-quality", "security", "architecture", "static-analysis", "report"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "security", "analysis"],
     "license": "MIT"
 }

@@ -87,7 +87,8 @@
                 "scripts/build-catalog.ts",
                 "scripts/build-docs.ts",
                 "scripts/check-changeset-alignment.ts",
-                "scripts/curate-golden.ts"
+                "scripts/curate-golden.ts",
+                "scripts/auto-enrich-manifests.ts"
             ],
             "linter": {
                 "rules": {

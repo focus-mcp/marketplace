@@ -87,6 +87,8 @@
         }
     ],
     "tags": ["sandbox", "execution", "vm", "javascript", "typescript", "devtools"],
+    "keywords": ["sandbox", "vm", "isolated-execution", "eval", "code-runner", "esbuild"],
+    "recommendedFor": ["typescript", "javascript", "testing", "devops", "backend"],
     "license": "MIT",
     "bench": {
         "maxTurns": 40

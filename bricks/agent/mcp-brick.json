@@ -79,5 +79,14 @@
         }
     ],
     "tags": ["agent", "registry", "capabilities", "ai"],
+    "keywords": [
+        "agent-registry",
+        "ai-agent",
+        "capabilities",
+        "multi-agent",
+        "register",
+        "discovery"
+    ],
+    "recommendedFor": ["typescript", "javascript", "multi-agent", "backend", "analysis"],
     "license": "MIT"
 }

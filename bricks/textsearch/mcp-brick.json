@@ -126,6 +126,15 @@
         }
     ],
     "tags": ["search", "text", "regex", "replace", "refactoring"],
+    "keywords": [
+        "text-search",
+        "regex",
+        "multi-file-replace",
+        "grouped-results",
+        "dry-run",
+        "grep"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "refactoring", "backend"],
     "license": "MIT",
     "bench": {
         "tools": {

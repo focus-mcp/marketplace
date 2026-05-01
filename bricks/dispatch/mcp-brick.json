@@ -73,5 +73,15 @@
         }
     ],
     "tags": ["dispatch", "queue", "task", "orchestration", "workflow"],
+    "keywords": [
+        "dispatch",
+        "queue",
+        "task-queue",
+        "orchestration",
+        "workflow",
+        "cancel",
+        "priority"
+    ],
+    "recommendedFor": ["typescript", "javascript", "backend", "multi-agent", "devops"],
     "license": "MIT"
 }

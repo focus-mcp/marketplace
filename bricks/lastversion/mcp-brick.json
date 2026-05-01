@@ -160,5 +160,15 @@
         }
     ],
     "tags": ["version", "release", "npm", "pypi", "github", "audit", "security", "updates"],
+    "keywords": [
+        "version-check",
+        "changelog",
+        "security-audit",
+        "semver",
+        "outdated",
+        "npm",
+        "pypi"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "security", "devops"],
     "license": "MIT"
 }

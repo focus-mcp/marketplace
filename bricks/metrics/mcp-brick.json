@@ -79,5 +79,14 @@
         }
     ],
     "tags": ["metrics", "tokens", "costs", "duration", "session", "observability"],
+    "keywords": [
+        "metrics",
+        "token-usage",
+        "cost-tracking",
+        "duration",
+        "session-stats",
+        "observability"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "analysis", "backend", "performance"],
     "license": "MIT"
 }

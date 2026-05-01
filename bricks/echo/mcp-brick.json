@@ -21,5 +21,7 @@
         }
     ],
     "tags": ["example", "smoke-test", "hello-world"],
+    "keywords": ["echo", "smoke-test", "hello-world", "canary", "template", "example"],
+    "recommendedFor": ["typescript", "javascript", "testing", "backend"],
     "license": "MIT"
 }

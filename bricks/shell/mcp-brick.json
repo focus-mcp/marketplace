@@ -97,5 +97,7 @@
         }
     ],
     "tags": ["shell", "exec", "command", "process", "devtools"],
+    "keywords": ["shell", "exec", "background-process", "kill", "command-line", "devtools"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "devops", "backend"],
     "license": "MIT"
 }

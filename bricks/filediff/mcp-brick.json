@@ -61,6 +61,8 @@
         }
     ],
     "tags": ["file", "diff", "patch"],
+    "keywords": ["diff", "patch", "file-comparison", "unified-diff", "delta", "version-comparison"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "refactoring", "devops"],
     "license": "MIT",
     "bench": {
         "tools": {

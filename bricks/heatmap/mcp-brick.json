@@ -71,5 +71,14 @@
         }
     ],
     "tags": ["heatmap", "tracking", "patterns", "files", "analysis"],
+    "keywords": [
+        "heatmap",
+        "file-access",
+        "hot-files",
+        "cold-files",
+        "access-patterns",
+        "tracking"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "analysis", "performance", "backend"],
     "license": "MIT"
 }

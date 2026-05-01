@@ -89,5 +89,7 @@
         }
     ],
     "tags": ["tokens", "budget", "optimize", "estimate"],
+    "keywords": ["token-budget", "estimate", "optimize", "fill", "context-window", "cost"],
+    "recommendedFor": ["typescript", "javascript", "python", "analysis", "performance", "backend"],
     "license": "MIT"
 }

@@ -144,6 +144,8 @@
         }
     ],
     "tags": ["parallel", "concurrent", "merge", "orchestration"],
+    "keywords": ["parallel", "concurrency", "collect", "merge", "timeout", "orchestration"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "backend", "devops"],
     "license": "MIT",
     "bench": {
         "maxTurns": 40

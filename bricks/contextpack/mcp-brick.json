@@ -96,5 +96,14 @@
         }
     ],
     "tags": ["context", "pack", "tokens", "compression"],
+    "keywords": [
+        "context-pack",
+        "token-budget",
+        "signatures",
+        "compression",
+        "prioritize",
+        "bundle"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "analysis", "performance"],
     "license": "MIT"
 }

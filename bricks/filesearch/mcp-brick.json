@@ -52,6 +52,8 @@
         }
     ],
     "tags": ["file", "search", "replace", "regex"],
+    "keywords": ["file-search", "regex-search", "replace", "glob", "in-place", "pattern"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "refactoring", "backend"],
     "license": "MIT",
     "bench": {
         "tools": {

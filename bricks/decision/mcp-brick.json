@@ -140,5 +140,7 @@
         }
     ],
     "tags": ["decision", "tradeoff", "analysis", "recommendation", "adr"],
+    "keywords": ["decision", "tradeoff", "adr", "recommendation", "weighted-score", "options"],
+    "recommendedFor": ["typescript", "javascript", "analysis", "backend", "documentation"],
     "license": "MIT"
 }

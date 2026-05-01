@@ -5,5 +5,7 @@
     "dependencies": ["shell", "sandbox", "batch"],
     "tools": [],
     "tags": ["devtools", "composite", "execution"],
+    "keywords": ["devtools", "composite", "shell", "sandbox", "batch", "scripting"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "devops", "backend"],
     "license": "MIT"
 }

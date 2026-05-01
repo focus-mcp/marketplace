@@ -70,5 +70,7 @@
         }
     ],
     "tags": ["validate", "json", "schema", "types", "lint"],
+    "keywords": ["validation", "json-schema", "type-check", "lint", "syntax", "compliance"],
+    "recommendedFor": ["typescript", "javascript", "python", "testing", "backend", "analysis"],
     "license": "MIT"
 }

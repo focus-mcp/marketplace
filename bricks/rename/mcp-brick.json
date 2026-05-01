@@ -114,6 +114,15 @@
         }
     ],
     "tags": ["rename", "refactoring", "symbol", "codemod"],
+    "keywords": [
+        "rename",
+        "symbol-rename",
+        "bulk-rename",
+        "import-update",
+        "dry-run",
+        "refactoring"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "refactoring", "backend"],
     "license": "MIT",
     "bench": {
         "tools": {
