@@ -82,11 +82,14 @@ const FRAMEWORK_TOKENS = new Set([
     'nest.js',
 ]);
 
+// Short tokens that are valid language/tool names and should NOT be filtered out
+const KEEP_SHORT = new Set(['go', 'c', 'r', 'cpp']);
+
 function tokenize(text: string): string[] {
     return text
         .toLowerCase()
         .split(/[\s\-_/.,;:()[\]{}"'<>!?@#$%^&*=+|\\`~]+/)
-        .filter((t) => t.length >= 3);
+        .filter((t) => t.length >= 3 || KEEP_SHORT.has(t));
 }
 
 function extractReadmeKeywords(readme: string): string[] {
@@ -122,7 +125,8 @@ function buildKeywords(
     // Count frequency
     const freq = new Map<string, number>();
     for (const t of allTokens) {
-        if (t.length < 3 || LANG_TOKENS.has(t) || FRAMEWORK_TOKENS.has(t)) continue;
+        if ((t.length < 3 && !KEEP_SHORT.has(t)) || LANG_TOKENS.has(t) || FRAMEWORK_TOKENS.has(t))
+            continue;
         freq.set(t, (freq.get(t) ?? 0) + 1);
     }
 
@@ -167,6 +171,11 @@ function buildRecommendedFor(
 
 // ---------- Processing ----------
 
+interface ProcessResult {
+    manifest: BrickManifest;
+    draft: EnrichResult;
+}
+
 async function tryReadFile(path: string): Promise<string> {
     try {
         return await readFile(path, 'utf8');
@@ -175,7 +184,7 @@ async function tryReadFile(path: string): Promise<string> {
     }
 }
 
-async function processOneBrick(brickDir: string): Promise<EnrichResult | null> {
+async function processOneBrick(brickDir: string): Promise<ProcessResult | null> {
     const manifestPath = join(brickDir, 'mcp-brick.json');
     const raw = await tryReadFile(manifestPath);
     if (!raw) return null;
@@ -200,7 +209,7 @@ async function processOneBrick(brickDir: string): Promise<EnrichResult | null> {
         readmeTokens,
     );
 
-    return { brick: manifest.name, keywords, recommendedFor };
+    return { manifest, draft: { brick: manifest.name, keywords, recommendedFor } };
 }
 
 function insertFields(manifest: BrickManifest, result: EnrichResult): BrickManifest {
@@ -221,10 +230,39 @@ function insertFields(manifest: BrickManifest, result: EnrichResult): BrickManif
 
 // ---------- CLI ----------
 
+function parseSingleBrick(argv: string[]): string | null {
+    const brickIdx = argv.indexOf('--brick');
+    if (brickIdx === -1) return null;
+
+    // Bug 1: --brick requires an explicit value
+    const name = argv[brickIdx + 1];
+    if (name === undefined) {
+        console.error('Error: --brick requires a brick name argument.');
+        process.exit(1);
+    }
+
+    // Bug 2: validate against path traversal
+    if (name.includes('/') || name.includes('..')) {
+        console.error(
+            `Error: Invalid brick name "${name}". Brick names must not contain '/' or '..'.`,
+        );
+        process.exit(1);
+    }
+
+    return name;
+}
+
+async function applyResult(brickDir: string, result: ProcessResult): Promise<void> {
+    const manifestPath = join(brickDir, 'mcp-brick.json');
+    const updated = insertFields(result.manifest, result.draft);
+    await writeFile(manifestPath, `${JSON.stringify(updated, null, 4)}\n`, 'utf8');
+    console.log(`✓ ${result.draft.brick}`);
+}
+
 async function main(): Promise<void> {
     const argv = process.argv.slice(2);
     const isDryRun = !argv.includes('--apply');
-    const singleBrick = argv.includes('--brick') ? argv[argv.indexOf('--brick') + 1] : null;
+    const singleBrick = parseSingleBrick(argv);
 
     const rootDir = resolve(dirname(fileURLToPath(import.meta.url)), '..');
     const bricksDir = join(rootDir, 'bricks');
@@ -238,15 +276,11 @@ async function main(): Promise<void> {
         const result = await processOneBrick(brickDir);
         if (!result) continue;
 
+        // Bug 4: reuse manifest already read in processOneBrick — no double read
         if (isDryRun) {
-            console.log(JSON.stringify(result, null, 2));
+            console.log(JSON.stringify(result.draft, null, 2));
         } else {
-            const manifestPath = join(brickDir, 'mcp-brick.json');
-            const raw = await readFile(manifestPath, 'utf8');
-            const manifest: BrickManifest = JSON.parse(raw);
-            const updated = insertFields(manifest, result);
-            await writeFile(manifestPath, `${JSON.stringify(updated, null, 4)}\n`, 'utf8');
-            console.log(`✓ ${result.brick}`);
+            await applyResult(brickDir, result);
         }
 
         processed++;
