@@ -1,31 +1,31 @@
 {
-  "timestamp": "2026-04-30T12:34:09.952Z",
-  "generatedAt": "2026-04-30 12:34:09",
+  "timestamp": "2026-05-01T08:12:13.740Z",
+  "generatedAt": "2026-05-01 08:12:13",
   "packages": [
     {
       "name": "@focus-mcp/cli",
-      "npmLatest": "2.2.0",
+      "npmLatest": "2.2.1",
       "gitTag": null,
       "pkgJson": null,
       "status": "aligned"
     },
     {
       "name": "@focus-mcp/core",
-      "npmLatest": "1.5.0",
+      "npmLatest": "1.5.1",
       "gitTag": null,
       "pkgJson": null,
       "status": "aligned"
     },
     {
       "name": "@focus-mcp/sdk",
-      "npmLatest": "1.5.0",
+      "npmLatest": "1.5.1",
       "gitTag": null,
       "pkgJson": null,
       "status": "aligned"
     },
     {
       "name": "@focus-mcp/validator",
-      "npmLatest": "1.0.6",
+      "npmLatest": "1.0.7",
       "gitTag": null,
       "pkgJson": null,
       "status": "aligned"
@@ -510,71 +510,83 @@
   "drift": [
     {
       "repo": "cli",
-      "ahead": 70,
-      "behind": 0
+      "ahead": 79,
+      "behind": 1
     },
     {
       "repo": "core",
-      "ahead": 51,
-      "behind": 0
+      "ahead": 61,
+      "behind": 5
     },
     {
       "repo": "marketplace",
-      "ahead": 24,
-      "behind": 3
+      "ahead": 36,
+      "behind": 0
     }
   ],
   "ciStats": [
     {
       "repo": "cli",
       "branch": "main",
-      "total": 85,
-      "success": 77,
-      "failure": 2,
-      "successRate": 91
+      "total": 84,
+      "success": 75,
+      "failure": 3,
+      "successRate": 89
     },
     {
       "repo": "cli",
       "branch": "develop",
       "total": 100,
-      "success": 92,
-      "failure": 6,
-      "successRate": 92
-    },
-    {
-      "repo": "core",
-      "branch": "main",
-      "total": 55,
-      "success": 48,
+      "success": 96,
       "failure": 2,
-      "successRate": 87
+      "successRate": 96
+    },
+    {
+      "repo": "core",
+      "branch": "main",
+      "total": 77,
+      "success": 64,
+      "failure": 4,
+      "successRate": 83
     },
     {
       "repo": "core",
       "branch": "develop",
-      "total": 93,
-      "success": 86,
-      "failure": 7,
-      "successRate": 92
+      "total": 100,
+      "success": 93,
+      "failure": 5,
+      "successRate": 93
     },
     {
       "repo": "marketplace",
       "branch": "main",
       "total": 100,
-      "success": 30,
-      "failure": 7,
-      "successRate": 30
+      "success": 28,
+      "failure": 4,
+      "successRate": 28
     },
     {
       "repo": "marketplace",
       "branch": "develop",
       "total": 100,
-      "success": 76,
+      "success": 81,
       "failure": 17,
-      "successRate": 76
+      "successRate": 81
     }
   ],
   "latestReleases": [
+    {
+      "repo": "cli",
+      "tag": "v2.2.1",
+      "date": "2026-05-01",
+      "url": "https://github.com/focus-mcp/cli/releases/tag/v2.2.1"
+    },
+    {
+      "repo": "core",
+      "tag": "v1.5.1",
+      "date": "2026-04-30",
+      "url": "https://github.com/focus-mcp/core/releases/tag/v1.5.1"
+    },
     {
       "repo": "cli",
       "tag": "v2.2.0",
@@ -592,21 +604,20 @@
       "tag": "v2.0.0",
       "date": "2026-04-29",
       "url": "https://github.com/focus-mcp/cli/releases/tag/v2.0.0"
-    },
-    {
-      "repo": "cli",
-      "tag": "v1.9.0",
-      "date": "2026-04-29",
-      "url": "https://github.com/focus-mcp/cli/releases/tag/v1.9.0"
-    },
-    {
-      "repo": "cli",
-      "tag": "v1.8.1",
-      "date": "2026-04-29",
-      "url": "https://github.com/focus-mcp/cli/releases/tag/v1.8.1"
     }
   ],
-  "openPrs": [],
+  "openPrs": [
+    {
+      "repo": "marketplace",
+      "number": 217,
+      "title": "feat(catalog): enrich 58 bricks with keywords and recommendedFor",
+      "author": "samuelds",
+      "createdAt": "2026-05-01",
+      "ageDays": 0,
+      "url": "https://github.com/focus-mcp/marketplace/pull/217",
+      "ciStatus": "failure"
+    }
+  ],
   "pendingChangesets": [
     {
       "repo": "cli",
@@ -614,11 +625,11 @@
     },
     {
       "repo": "core",
-      "count": 0
+      "count": 6
     },
     {
       "repo": "marketplace",
-      "count": 0
+      "count": 8
     }
   ]
 }
