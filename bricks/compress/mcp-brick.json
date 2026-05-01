@@ -56,6 +56,8 @@
         }
     ],
     "tags": ["compress", "tokens", "output", "json"],
+    "keywords": ["compression", "token-saving", "whitespace", "strip-comments", "terse", "output"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "performance", "analysis"],
     "license": "MIT",
     "bench": {
         "tools": {

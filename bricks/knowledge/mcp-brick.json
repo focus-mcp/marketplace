@@ -121,5 +121,14 @@
         }
     ],
     "tags": ["knowledge", "search", "index", "documents", "knowledgebase"],
+    "keywords": ["knowledge-base", "document-index", "search", "rank", "purge", "retrieval"],
+    "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "documentation",
+        "backend"
+    ],
     "license": "MIT"
 }

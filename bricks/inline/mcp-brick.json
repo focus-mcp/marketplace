@@ -87,5 +87,14 @@
         }
     ],
     "tags": ["inline", "extract", "move", "refactoring", "codemod"],
+    "keywords": [
+        "inline",
+        "extract-function",
+        "move-symbol",
+        "refactoring",
+        "codemod",
+        "variable-inline"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "refactoring", "backend"],
     "license": "MIT"
 }

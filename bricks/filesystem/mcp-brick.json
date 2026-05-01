@@ -5,5 +5,7 @@
     "dependencies": ["fileread", "filewrite", "filelist", "fileops", "filesearch"],
     "tools": [],
     "tags": ["filesystem", "composite"],
+    "keywords": ["filesystem", "composite", "file-read", "file-write", "file-ops", "file-search"],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "backend", "devops"],
     "license": "MIT"
 }

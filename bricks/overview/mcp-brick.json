@@ -70,6 +70,14 @@
         }
     ],
     "tags": ["overview", "project", "architecture", "conventions"],
+    "keywords": [
+        "project-overview",
+        "framework-detection",
+        "conventions",
+        "architecture",
+        "dependencies"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "analysis", "documentation"],
     "license": "MIT",
     "bench": {
         "tools": {

@@ -89,6 +89,22 @@
         }
     ],
     "tags": ["search", "fulltext", "tfidf", "index", "ranking"],
+    "keywords": [
+        "full-text-search",
+        "tfidf",
+        "inverted-index",
+        "ranking",
+        "autocomplete",
+        "suggest"
+    ],
+    "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "documentation"
+    ],
     "license": "MIT",
     "bench": {
         "tools": {

@@ -128,5 +128,21 @@
         }
     ],
     "tags": ["search", "semantic", "similarity", "tfidf", "vector", "intent"],
+    "keywords": [
+        "semantic-search",
+        "cosine-similarity",
+        "tfidf",
+        "intent-classification",
+        "vector-space",
+        "nlp"
+    ],
+    "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "documentation"
+    ],
     "license": "MIT"
 }

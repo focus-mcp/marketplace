@@ -58,5 +58,13 @@
         }
     ],
     "tags": ["graph", "cluster", "community", "architecture", "analysis"],
+    "keywords": [
+        "graph-clustering",
+        "community-detection",
+        "label-propagation",
+        "architecture-layers",
+        "analysis"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "analysis", "refactoring", "backend"],
     "license": "MIT"
 }

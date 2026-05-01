@@ -78,5 +78,7 @@
         }
     ],
     "tags": ["routes", "api", "endpoints", "express", "web"],
+    "keywords": ["api-routes", "endpoints", "express", "fastify", "next.js", "sveltekit", "http"],
+    "recommendedFor": ["typescript", "javascript", "backend", "frontend", "next.js", "express"],
     "license": "MIT"
 }

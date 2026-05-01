@@ -107,5 +107,15 @@
         }
     ],
     "tags": ["convert", "units", "encoding", "format", "naming"],
+    "keywords": [
+        "unit-conversion",
+        "encoding",
+        "base64",
+        "format-transform",
+        "naming-convention",
+        "csv",
+        "yaml"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "backend", "devops"],
     "license": "MIT"
 }

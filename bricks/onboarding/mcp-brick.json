@@ -40,5 +40,14 @@
         }
     ],
     "tags": ["onboarding", "workflow", "project", "guide"],
+    "keywords": [
+        "onboarding",
+        "project-scan",
+        "conventions",
+        "contributor-guide",
+        "discovery",
+        "workflow"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "analysis", "documentation"],
     "license": "MIT"
 }

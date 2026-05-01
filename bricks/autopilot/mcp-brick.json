@@ -59,5 +59,14 @@
         }
     ],
     "tags": ["autopilot", "workflow", "autonomous", "planning"],
+    "keywords": [
+        "autopilot",
+        "autonomous",
+        "workflow",
+        "plan-execute",
+        "reasoning",
+        "task-automation"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "backend", "analysis", "devops"],
     "license": "MIT"
 }

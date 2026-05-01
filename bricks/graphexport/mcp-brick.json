@@ -200,5 +200,22 @@
         }
     ],
     "tags": ["graph", "export", "mermaid", "graphml", "cypher", "obsidian"],
+    "keywords": [
+        "graph-export",
+        "mermaid",
+        "graphml",
+        "cypher",
+        "neo4j",
+        "obsidian",
+        "visualization"
+    ],
+    "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "documentation",
+        "backend"
+    ],
     "license": "MIT"
 }

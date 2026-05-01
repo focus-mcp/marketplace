@@ -57,5 +57,14 @@
         }
     ],
     "tags": ["context", "composite", "orchestration", "tokens"],
+    "keywords": [
+        "smart-context",
+        "token-budget",
+        "auto-discover",
+        "composite",
+        "context-loading",
+        "cache"
+    ],
+    "recommendedFor": ["typescript", "javascript", "python", "go", "analysis", "backend"],
     "license": "MIT"
 }

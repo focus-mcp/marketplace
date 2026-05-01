@@ -80,5 +80,7 @@
         }
     ],
     "tags": ["savings", "tokens", "roi", "metrics", "efficiency"],
+    "keywords": ["token-savings", "roi", "efficiency", "benchmark", "trend", "cost-comparison"],
+    "recommendedFor": ["typescript", "javascript", "analysis", "performance", "backend"],
     "license": "MIT"
 }
