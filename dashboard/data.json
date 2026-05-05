@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-05-04T08:30:36.502Z",
-  "generatedAt": "2026-05-04 08:30:36",
+  "timestamp": "2026-05-05T08:10:46.557Z",
+  "generatedAt": "2026-05-05 08:10:46",
   "packages": [
     {
       "name": "@focus-mcp/cli",
@@ -510,18 +510,18 @@
   "drift": [
     {
       "repo": "cli",
-      "ahead": 87,
-      "behind": 1
+      "ahead": 89,
+      "behind": 0
     },
     {
       "repo": "core",
-      "ahead": 69,
-      "behind": 1
+      "ahead": 71,
+      "behind": 0
     },
     {
       "repo": "marketplace",
-      "ahead": 41,
-      "behind": 1
+      "ahead": 43,
+      "behind": 0
     }
   ],
   "ciStats": [
@@ -561,9 +561,9 @@
       "repo": "marketplace",
       "branch": "main",
       "total": 100,
-      "success": 33,
-      "failure": 4,
-      "successRate": 33
+      "success": 32,
+      "failure": 3,
+      "successRate": 32
     },
     {
       "repo": "marketplace",
