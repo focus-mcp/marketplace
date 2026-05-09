@@ -3,7 +3,7 @@
 Per-tool measurement. No LLM, no variance.
 Token approximation: `Math.ceil(JSON.stringify(output).length / 4)`
 Test fixture: `/home/samuelds/benchmarks/test-repo`
-Date: 2026-04-27T11:33:19.511Z
+Date: 2026-05-09T11:48:45.148Z
 
 ## Full Results (sorted by Δ%, best first)
 
@@ -11,23 +11,24 @@ Date: 2026-04-27T11:33:19.511Z
 |---|---|---:|---:|---:|
 | `treesitter.ts_reindex` | Reindex a single file | 8,522 | 4 | **-100.0%** |
 | `treesitter.ts_index` | Index core src with treesitter | 5,645 | 7 | **-99.9%** |
+| `symbol.sym_find` | Find all symbols named "Injector" in core | 2,678 | 4 | **-99.9%** |
 | `routes.rt_list` | List all routes as table | 6,796 | 10 | **-99.9%** |
+| `symbol.sym_bulk` | Bulk get ["Injector","Injectable"] metadata | 8,237 | 12 | **-99.9%** |
 | `routes.rt_scan` | Scan HTTP routes in core src | 7,354 | 12 | **-99.8%** |
 | `routes.rt_frameworks` | Detect frameworks used in core | 2,415 | 5 | **-99.8%** |
 | `fts.fts_index` | Index core source directory | 5,645 | 14 | **-99.8%** |
 | `smartread.sr_summary` | Block summary of injector.ts | 8,522 | 20 | **-99.8%** |
 | `refs.refs_hierarchy` | Class hierarchy of "Injector" in core | 2,678 | 7 | **-99.7%** |
-| `treesitter.ts_status` | Treesitter index status | 5,645 | 16 | **-99.7%** |
 | `textsearch.txt_replace` | Dry-run replace "Injectable" in tmp copy | 5,560 | 18 | **-99.7%** |
 | `filesearch.fsrch_replace` | Dry-run replace "Injectable" in tmp copy | 5,560 | 21 | **-99.6%** |
 | `semanticsearch.sem_search` | Semantic search "dependency injection" in core | 29,443 | 125 | **-99.6%** |
 | `smartread.sr_signatures` | Export signatures of injector.ts | 8,522 | 44 | **-99.5%** |
 | `routes.rt_search` | Search routes matching "/api" pattern | 1,050 | 6 | **-99.4%** |
 | `rename.ren_symbol` | Dry-run rename "Injector" → "InjectorV2" in tmp | 2,678 | 16 | **-99.4%** |
-| `symbol.sym_bulk` | Bulk get ["Injector","Injectable"] metadata | 8,237 | 56 | **-99.3%** |
 | `inline.inl_inline` | Inline a function occurrence (dry-run) | 5,560 | 41 | **-99.3%** |
 | `inline.inl_move` | Move symbol between files (dry-run) | 5,560 | 42 | **-99.3%** |
 | `rename.ren_file` | Dry-run rename file in tmp | 2,678 | 25 | **-99.1%** |
+| `treesitter.ts_status` | Treesitter index status | 5,645 | 77 | **-98.6%** |
 | `outline.out_repo` | Repo outline of core/injector (find + read each) | 23,712 | 436 | **-98.1%** |
 | `codeedit.ce_replacebody` | Replace body of function "constructor" (dry-run) | 5,105 | 101 | **-98.0%** |
 | `rename.ren_bulk` | Dry-run bulk rename 2 symbols in tmp | 2,678 | 55 | **-98.0%** |
@@ -39,14 +40,13 @@ Date: 2026-04-27T11:33:19.511Z
 | `semanticsearch.sem_similar` | Find files similar to injector.ts | 2,678 | 89 | **-96.7%** |
 | `impact.imp_affected` | Find files affected by changes to 3 TS files | 12,930 | 469 | **-96.3%** |
 | `outline.out_file` | Outline symbols/imports of injector.ts | 8,522 | 323 | **-96.1%** |
-| `symbol.sym_find` | Find all symbols named "Injector" in core | 2,678 | 157 | **-94.1%** |
 | `fts.fts_search` | FTS search "Injectable" after indexing core | 5,560 | 370 | **-93.3%** |
+| `symbol.sym_get` | Get single "Injector" symbol metadata | 26 | 4 | **-84.7%** |
 | `smartread.sr_map` | Symbol map of injector.ts | 8,522 | 1,292 | **-84.3%** |
 | `outline.out_structure` | Directory structure of core package | 5,645 | 956 | **-82.9%** |
 | `textsearch.txt_grouped` | Grouped search "Injectable" by file | 5,560 | 968 | **-82.4%** |
 | `refs.refs_references` | All refs to "Injector" symbol in core | 12,930 | 2,261 | **-82.0%** |
 | `impact.imp_analyze` | Analyze impact of changing injector.ts | 12,930 | 2,350 | **-81.3%** |
-| `treesitter.ts_langs` | List supported languages | 24 | 7 | **-70.7%** |
 | `filelist.fl_tree` | Directory tree of core (depth 3) | 6,378 | 2,038 | **-67.7%** |
 | `overview.ovw_project` | Project metadata (package.json parse) | 2,415 | 716 | **-66.7%** |
 | `filediff.fd_patch` | Apply a simple unified patch to tmp file | 1,161 | 505 | **-55.1%** |
@@ -79,10 +79,10 @@ Date: 2026-04-27T11:33:19.511Z
 | `filewrite.fw_write` | Write (overwrite) existing file | 17 | 21 | **+26.2%** |
 | `fileops.fo_delete` | Delete a tmp file | 18 | 22 | **+26.9%** |
 | `filelist.fl_list` | List entries of core/injector dir | 90 | 108 | **+27.6%** |
-| `symbol.sym_get` | Get single "Injector" symbol metadata | 26 | 48 | **+92.9%** |
 | `fileops.fo_rename` | Rename file in tmp dir | 17 | 38 | **+128.8%** |
 | `fileops.fo_copy` | Copy injector.ts to tmp | 16 | 36 | **+129.0%** |
 | `fileops.fo_move` | Move file within tmp | 16 | 36 | **+131.1%** |
+| `treesitter.ts_langs` | List supported languages | 24 | 67 | **+191.3%** |
 | `semanticsearch.sem_intent` | Classify intent of "show me the injector" | 9 | 31 | **+284.4%** |
 | `semanticsearch.sem_embeddings` | Generate embeddings for 3 short texts | 16 | 87 | **+468.9%** |
 | `inline.inl_extract` | Extract lines 10-30 of injector.ts into a function (dry-run) | 126 | 8,580 | **+7049.4%** |
@@ -95,13 +95,13 @@ Date: 2026-04-27T11:33:19.511Z
 |---|---|
 | Tools measured (ok) | 79 |
 | Errors | 0 |
-| Skipped (no native equivalent) | 174 |
+| Skipped (no native equivalent) | 173 |
 | Total tools in scope (ok + errors) | 79 |
-| Total catalog tools (243) | 243 |
-| Coverage % | **32.5%** |
-| Average Δ% (ok tools) | **942.3%** |
+| Total catalog tools | 252 |
+| Coverage % | **31.3%** |
+| Average Δ% (ok tools) | **943.3%** |
 | Total native tokens | 366,912 |
-| Total brick tokens | 127,348 |
+| Total brick tokens | 127,228 |
 | Overall token savings | **65.3%** |
 
 ## Top 10 Token Savers
@@ -110,14 +110,14 @@ Date: 2026-04-27T11:33:19.511Z
 |---|---|---:|---:|---:|
 | `treesitter.ts_reindex` | Reindex a single file | 8,522 | 4 | **-100.0%** |
 | `treesitter.ts_index` | Index core src with treesitter | 5,645 | 7 | **-99.9%** |
+| `symbol.sym_find` | Find all symbols named "Injector" in core | 2,678 | 4 | **-99.9%** |
 | `routes.rt_list` | List all routes as table | 6,796 | 10 | **-99.9%** |
+| `symbol.sym_bulk` | Bulk get ["Injector","Injectable"] metadata | 8,237 | 12 | **-99.9%** |
 | `routes.rt_scan` | Scan HTTP routes in core src | 7,354 | 12 | **-99.8%** |
 | `routes.rt_frameworks` | Detect frameworks used in core | 2,415 | 5 | **-99.8%** |
 | `fts.fts_index` | Index core source directory | 5,645 | 14 | **-99.8%** |
 | `smartread.sr_summary` | Block summary of injector.ts | 8,522 | 20 | **-99.8%** |
 | `refs.refs_hierarchy` | Class hierarchy of "Injector" in core | 2,678 | 7 | **-99.7%** |
-| `treesitter.ts_status` | Treesitter index status | 5,645 | 16 | **-99.7%** |
-| `textsearch.txt_replace` | Dry-run replace "Injectable" in tmp copy | 5,560 | 18 | **-99.7%** |
 
 ## Errors / Skipped
 
@@ -127,7 +127,7 @@ Date: 2026-04-27T11:33:19.511Z
 |---|---|
 | — | none |
 
-### Skipped (174) — no direct native equivalent
+### Skipped (173) — no direct native equivalent
 
 | Tool | Note |
 |---|---|
@@ -136,7 +136,6 @@ Date: 2026-04-27T11:33:19.511Z
 | `format.fmt_markdown` | compute pure transform |
 | `format.fmt_table` | compute pure transform |
 | `format.fmt_yaml` | compute pure transform |
-| `compress.cmp_response` | compute pure transform |
 **compute pure**
 | `convert.conv_encoding` | compute pure — no native equivalent |
 | `convert.conv_format` | compute pure |
@@ -351,7 +350,7 @@ Date: 2026-04-27T11:33:19.511Z
   Delta reflects structural overhead only.
 - **treesitter.***: Native = find(ts files) as proxy; brick builds a richer in-memory index.
 - **routes.***: Native = grep for route patterns. Brick parses AST for structured route table.
-- **Skipped categories** (174 tools): compute pure transforms, stateful multi-call
+- **Skipped categories** (173 tools): compute pure transforms, stateful multi-call
   (cache/memory/session/share), orchestration (parallel/dispatch/agent/autopilot/batch),
   meta-AI (planning/thinking/debate/decision/review), CLI meta (focus_*), VM (sandbox),
   observability (metrics/heatmap/savings/tokenbudget), API-bound (validate/lastversion),

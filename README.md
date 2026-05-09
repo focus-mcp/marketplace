@@ -51,23 +51,23 @@ curl https://raw.githubusercontent.com/focus-mcp/marketplace/main/publish/catalo
 
 ## Measured economy
 
-Static, reproducible benchmark on 29 tools (no LLM, no variance):
+Static, reproducible benchmark on 79 tools across all 69 bricks (no LLM, no variance):
 
 | | Tokens |
 |---|---:|
-| Native equivalent (raw `Read`, `Grep`, etc.) | 169,225 |
-| FocusMCP bricks output | 57,725 |
-| **Saved** | **111,500 (−65.9%)** |
+| Native equivalent (raw `Read`, `Grep`, etc.) | 366,912 |
+| FocusMCP bricks output | 127,228 |
+| **Saved** | **239,684 (−65.3%)** |
 
 **Top 5 most efficient tools** (best replacement for native operations):
 
 | Tool | Native | Brick | Δ |
 |---|---:|---:|---:|
-| `smartread.sr_summary` | 8,522 | 20 | **−99.8%** |
-| `refs.refs_hierarchy` | 2,678 | 7 | **−99.7%** |
-| `smartread.sr_signatures` | 8,522 | 44 | **−99.5%** |
-| `outline.out_repo` | 23,712 | 436 | **−98.1%** |
-| `smartread.sr_imports` | 8,522 | 198 | **−97.6%** |
+| `treesitter.ts_reindex` | 8,522 | 4 | **−100.0%** |
+| `treesitter.ts_index` | 5,645 | 7 | **−99.9%** |
+| `symbol.sym_find` | 2,678 | 4 | **−99.9%** |
+| `routes.rt_list` | 6,796 | 10 | **−99.9%** |
+| `symbol.sym_bulk` | 8,237 | 12 | **−99.9%** |
 
 **Caveats** (full transparency):
 - 4 tools show marginal overhead (+2 to +28%) on tiny outputs where JSON envelope weighs more than the operation. Examples: `fl_list`, `fr_head`, `fr_range`, `fmt_json`.

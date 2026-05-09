@@ -35,10 +35,8 @@
         "version": "changeset version",
         "release": "changeset publish",
         "prepare": "husky",
-        "benchmark:static": "tsx benchmarks/src/measure.ts && tsx benchmarks/src/report.ts",
-        "benchmark:clone": "bash benchmarks/scripts/clone.sh",
-        "benchmark:parse": "tsx benchmarks/scripts/parse-session.ts",
-        "benchmark:collect": "tsx benchmarks/scripts/collect.ts",
+        "benchmark": "tsx benchmarks/harness/src/equivalence.ts > benchmarks/equivalence-report.md",
+        "benchmark:show": "cat benchmarks/equivalence-report.md",
         "test:curate-golden": "tsx scripts/curate-golden.ts",
         "preflight": "bash scripts/preflight-release.sh"
     },
