@@ -1,31 +1,31 @@
 {
-  "timestamp": "2026-05-09T07:57:44.652Z",
-  "generatedAt": "2026-05-09 07:57:44",
+  "timestamp": "2026-05-10T08:08:43.533Z",
+  "generatedAt": "2026-05-10 08:08:43",
   "packages": [
     {
       "name": "@focus-mcp/cli",
-      "npmLatest": "2.3.1",
+      "npmLatest": "2.4.0",
       "gitTag": null,
       "pkgJson": null,
       "status": "aligned"
     },
     {
       "name": "@focus-mcp/core",
-      "npmLatest": "1.5.2",
+      "npmLatest": "1.6.0",
       "gitTag": null,
       "pkgJson": null,
       "status": "aligned"
     },
     {
       "name": "@focus-mcp/sdk",
-      "npmLatest": "1.5.2",
+      "npmLatest": "1.6.0",
       "gitTag": null,
       "pkgJson": null,
       "status": "aligned"
     },
     {
       "name": "@focus-mcp/validator",
-      "npmLatest": "1.0.8",
+      "npmLatest": "1.0.9",
       "gitTag": null,
       "pkgJson": null,
       "status": "aligned"
@@ -510,17 +510,17 @@
   "drift": [
     {
       "repo": "cli",
-      "ahead": 0,
-      "behind": 1
+      "ahead": 2,
+      "behind": 0
     },
     {
       "repo": "core",
-      "ahead": 71,
+      "ahead": 2,
       "behind": 0
     },
     {
       "repo": "marketplace",
-      "ahead": 43,
+      "ahead": 2,
       "behind": 0
     }
   ],
@@ -528,53 +528,65 @@
     {
       "repo": "cli",
       "branch": "main",
-      "total": 13,
-      "success": 10,
-      "failure": 2,
-      "successRate": 77
+      "total": 25,
+      "success": 20,
+      "failure": 4,
+      "successRate": 80
     },
     {
       "repo": "cli",
       "branch": "develop",
-      "total": 24,
-      "success": 24,
+      "total": 57,
+      "success": 57,
       "failure": 0,
       "successRate": 100
     },
     {
       "repo": "core",
       "branch": "main",
-      "total": 9,
-      "success": 9,
+      "total": 14,
+      "success": 13,
       "failure": 0,
-      "successRate": 100
+      "successRate": 93
     },
     {
       "repo": "core",
       "branch": "develop",
-      "total": 3,
-      "success": 3,
-      "failure": 0,
-      "successRate": 100
-    },
-    {
-      "repo": "marketplace",
-      "branch": "main",
-      "total": 11,
-      "success": 7,
+      "total": 30,
+      "success": 29,
       "failure": 1,
-      "successRate": 64
+      "successRate": 97
+    },
+    {
+      "repo": "marketplace",
+      "branch": "main",
+      "total": 17,
+      "success": 10,
+      "failure": 1,
+      "successRate": 59
     },
     {
       "repo": "marketplace",
       "branch": "develop",
-      "total": 2,
-      "success": 2,
-      "failure": 0,
-      "successRate": 100
+      "total": 9,
+      "success": 8,
+      "failure": 1,
+      "successRate": 89
     }
   ],
   "latestReleases": [
+    {
+      "repo": "cli",
+      "tag": "v2.4.0",
+      "date": "2026-05-09",
+      "url": "https://github.com/focus-mcp/cli/releases/tag/v2.4.0"
+    },
+    {
+      "repo": "core",
+      "tag": "v1.6.0",
+      "date": "2026-05-09",
+      "url": "https://github.com/focus-mcp/core/releases/tag/v1.6.0"
+    },
     {
       "repo": "cli",
       "tag": "v2.3.1",
@@ -592,18 +604,6 @@
       "tag": "v2.2.1",
       "date": "2026-05-01",
       "url": "https://github.com/focus-mcp/cli/releases/tag/v2.2.1"
-    },
-    {
-      "repo": "core",
-      "tag": "v1.5.2",
-      "date": "2026-05-01",
-      "url": "https://github.com/focus-mcp/core/releases/tag/v1.5.2"
-    },
-    {
-      "repo": "marketplace",
-      "tag": "release-2026-05-01",
-      "date": "2026-05-01",
-      "url": "https://github.com/focus-mcp/marketplace/releases/tag/release-2026-05-01"
     }
   ],
   "openPrs": [],
