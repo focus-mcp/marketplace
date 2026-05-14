@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-05-13T08:45:21.992Z",
-  "generatedAt": "2026-05-13 08:45:21",
+  "timestamp": "2026-05-14T08:38:13.110Z",
+  "generatedAt": "2026-05-14 08:38:13",
   "packages": [
     {
       "name": "@focus-mcp/cli",
@@ -528,16 +528,16 @@
     {
       "repo": "cli",
       "branch": "main",
-      "total": 25,
-      "success": 20,
-      "failure": 4,
-      "successRate": 80
+      "total": 18,
+      "success": 16,
+      "failure": 2,
+      "successRate": 89
     },
     {
       "repo": "cli",
       "branch": "develop",
-      "total": 54,
-      "success": 54,
+      "total": 42,
+      "success": 42,
       "failure": 0,
       "successRate": 100
     },
