@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-05-16T08:05:05.248Z",
-  "generatedAt": "2026-05-16 08:05:05",
+  "timestamp": "2026-05-17T08:22:17.343Z",
+  "generatedAt": "2026-05-17 08:22:17",
   "packages": [
     {
       "name": "@focus-mcp/cli",
@@ -528,50 +528,50 @@
     {
       "repo": "cli",
       "branch": "main",
-      "total": 14,
-      "success": 12,
-      "failure": 2,
-      "successRate": 86
+      "total": 2,
+      "success": 2,
+      "failure": 0,
+      "successRate": 100
     },
     {
       "repo": "cli",
       "branch": "develop",
-      "total": 33,
-      "success": 33,
+      "total": 0,
+      "success": 0,
+      "failure": 0,
+      "successRate": 0
+    },
+    {
+      "repo": "core",
+      "branch": "main",
+      "total": 9,
+      "success": 9,
       "failure": 0,
       "successRate": 100
     },
     {
       "repo": "core",
-      "branch": "main",
-      "total": 14,
-      "success": 13,
-      "failure": 0,
-      "successRate": 93
-    },
-    {
-      "repo": "core",
       "branch": "develop",
-      "total": 27,
-      "success": 26,
-      "failure": 1,
-      "successRate": 96
+      "total": 0,
+      "success": 0,
+      "failure": 0,
+      "successRate": 0
     },
     {
       "repo": "marketplace",
       "branch": "main",
-      "total": 15,
-      "success": 11,
+      "total": 9,
+      "success": 8,
       "failure": 0,
-      "successRate": 73
+      "successRate": 89
     },
     {
       "repo": "marketplace",
       "branch": "develop",
-      "total": 7,
-      "success": 6,
-      "failure": 1,
-      "successRate": 86
+      "total": 0,
+      "success": 0,
+      "failure": 0,
+      "successRate": 0
     }
   ],
   "latestReleases": [
