@@ -20,17 +20,19 @@ import { registerLanguage } from './registry.ts';
 
 const _require = createRequire(import.meta.url);
 
-// tree-sitter-twig is declared as an optionalDependency: it ships with a
-// node-gyp install script that fails on machines without a native build
-// toolchain, even though this brick only needs the bundled .wasm file.
-// If the package isn't installed (install script failed and npm removed it,
-// or the user explicitly skipped it), gracefully disable Twig support
-// rather than crashing the whole tree-sitter brick at module load.
+// optionalDependency: node-gyp fails on machines without a C++ toolchain;
+// skip Twig registration only when the package is genuinely absent.
+// Any other error (corrupt install, renamed .wasm path, etc.) re-throws.
 let TWIG_WASM_PATH: string | null = null;
 try {
     TWIG_WASM_PATH = _require.resolve('tree-sitter-twig/tree-sitter-twig.wasm');
-} catch {
-    TWIG_WASM_PATH = null;
+} catch (err: unknown) {
+    const code = (err as { code?: string } | null)?.code;
+    if (code === 'MODULE_NOT_FOUND' || code === 'ERR_MODULE_NOT_FOUND') {
+        TWIG_WASM_PATH = null;
+    } else {
+        throw err;
+    }
 }
 
 function collectSymbols(root: TsNode, filePath: string): SymbolInfo[] {
