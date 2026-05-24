@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-05-01T11:58:31.557Z",
+  "updated": "2026-05-24T09:52:47.246Z",
   "bricks": [
     {
       "name": "agent",
@@ -3075,7 +3075,7 @@
     },
     {
       "name": "fts",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "description": "Full-text search with TF-IDF ranking — index files, search with relevance scoring, suggest completions.",
       "tags": [
         "search",
