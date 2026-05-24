@@ -12,27 +12,32 @@
  * Extracts: block names, macro definitions, set variables.
  */
 
-import { createRequire } from 'node:module';
+import { existsSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { SymbolInfo } from '../operations.ts';
 import { endRow, firstLine, row } from './helpers.ts';
 import type { ParseResult, TsNode } from './registry.ts';
 import { registerLanguage } from './registry.ts';
 
-const _require = createRequire(import.meta.url);
-
-// optionalDependency: node-gyp fails on machines without a C++ toolchain;
-// skip Twig registration only when the package is genuinely absent.
-// Any other error (corrupt install, renamed .wasm path, etc.) re-throws.
-let TWIG_WASM_PATH: string | null = null;
-try {
-    TWIG_WASM_PATH = _require.resolve('tree-sitter-twig/tree-sitter-twig.wasm');
-} catch (err: unknown) {
-    const code = (err as { code?: string } | null)?.code;
-    if (code === 'MODULE_NOT_FOUND' || code === 'ERR_MODULE_NOT_FOUND') {
-        TWIG_WASM_PATH = null;
-    } else {
-        throw err;
-    }
+// The Twig grammar `.wasm` is bundled with this brick under `wasms/` rather
+// than pulled from `tree-sitter-twig` on npm. That package ships an
+// `install: node-gyp rebuild` script but its tarball contains no
+// `binding.gyp`, so installing it fails on every machine (with or without
+// a C/C++ toolchain — node-gyp has nothing to build). We only need the
+// prebuilt `.wasm`, so we vendor it directly. Grammar is MPL-2.0; see
+// wasms/tree-sitter-twig.wasm.license.
+//
+// The `.wasm` is now a REQUIRED artifact of the brick (listed in
+// package.json `files`). A missing file means a broken install, not an
+// expected optional miss — so we throw rather than silently disable Twig.
+const _here = dirname(fileURLToPath(import.meta.url));
+const TWIG_WASM_PATH = join(_here, '..', '..', 'wasms', 'tree-sitter-twig.wasm');
+if (!existsSync(TWIG_WASM_PATH)) {
+    throw new Error(
+        `bundled tree-sitter-twig.wasm not found at ${TWIG_WASM_PATH} — ` +
+            'the brick install is broken (the wasms/ directory must ship in the npm tarball)',
+    );
 }
 
 function collectSymbols(root: TsNode, filePath: string): SymbolInfo[] {
@@ -114,6 +119,4 @@ function parseTwig(
     return { symbols, imports: [], exports: [] };
 }
 
-if (TWIG_WASM_PATH !== null) {
-    registerLanguage(['.twig'], TWIG_WASM_PATH, parseTwig);
-}
+registerLanguage(['.twig'], TWIG_WASM_PATH, parseTwig);

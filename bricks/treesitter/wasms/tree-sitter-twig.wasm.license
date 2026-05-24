@@ -1,0 +1,13 @@
+SPDX-FileCopyrightText: 2024 kaermorchen (and tree-sitter-twig contributors)
+SPDX-License-Identifier: MPL-2.0
+
+This file is the compiled WebAssembly module of the `tree-sitter-twig`
+grammar published as `tree-sitter-twig@0.8.2` on npm. It is vendored here
+rather than installed from npm because the upstream package's `install`
+script (`node-gyp rebuild`) fails on every machine — the tarball does
+not ship the `binding.gyp` that node-gyp would need, so the build fails
+regardless of whether a C/C++ toolchain is present. We only need the
+prebuilt `.wasm`, so vendoring it directly is the correct fix.
+
+Source: https://github.com/kaermorchen/tree-sitter-twig
+License: MPL-2.0
