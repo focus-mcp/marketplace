@@ -5,7 +5,7 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ftsIndex, ftsRank, ftsSearch, ftsSuggest } from './operations.ts';
+import { _tokenize, ftsIndex, ftsRank, ftsSearch, ftsSuggest } from './operations.ts';
 
 let testDir: string;
 
@@ -194,6 +194,107 @@ describe('ftsSuggest', () => {
         if (appleEntry && appEntry) {
             expect(appleEntry.documentCount).toBeGreaterThanOrEqual(appEntry.documentCount);
         }
+    });
+});
+
+describe('tokenizer — camelCase / PascalCase splitting', () => {
+    it('finds files by sub-token of a PascalCase compound', async () => {
+        await makeFile('pool.ts', 'export class PurchasableRewardPool {}');
+        await ftsIndex({ dir: testDir });
+
+        const byCompound = ftsSearch({ query: 'PurchasableRewardPool' });
+        const bySuffix = ftsSearch({ query: 'RewardPool' });
+        const byPrefix = ftsSearch({ query: 'Purchasable' });
+        const byMid = ftsSearch({ query: 'Reward' });
+
+        expect(byCompound.results.length).toBeGreaterThan(0);
+        expect(bySuffix.results.length).toBeGreaterThan(0);
+        expect(byPrefix.results.length).toBeGreaterThan(0);
+        expect(byMid.results.length).toBeGreaterThan(0);
+    });
+
+    it('splits consecutive-caps acronyms before mixed-case suffix', async () => {
+        await makeFile('subsystem.ts', 'class UEMProfileImageSubsystem {}');
+        await ftsIndex({ dir: testDir });
+
+        const byAcronym = ftsSearch({ query: 'UEM' });
+        const bySuffix = ftsSearch({ query: 'Subsystem' });
+        const byMid = ftsSearch({ query: 'Profile' });
+
+        expect(byAcronym.results.length).toBeGreaterThan(0);
+        expect(bySuffix.results.length).toBeGreaterThan(0);
+        expect(byMid.results.length).toBeGreaterThan(0);
+    });
+
+    it('splits camelCase identifiers', async () => {
+        await makeFile('friends.ts', 'function getFriendsList() {}');
+        await ftsIndex({ dir: testDir });
+
+        const byPrefix = ftsSearch({ query: 'get' });
+        const byMid = ftsSearch({ query: 'Friends' });
+        const bySuffix = ftsSearch({ query: 'List' });
+
+        expect(byPrefix.results.length).toBeGreaterThan(0);
+        expect(byMid.results.length).toBeGreaterThan(0);
+        expect(bySuffix.results.length).toBeGreaterThan(0);
+    });
+
+    it('preserves existing underscore/space split behaviour (no regression)', async () => {
+        await makeFile('bundle.ts', 'const Department_Bundle = 1;');
+        await ftsIndex({ dir: testDir });
+
+        const byPart1 = ftsSearch({ query: 'Department' });
+        const byPart2 = ftsSearch({ query: 'Bundle' });
+
+        expect(byPart1.results.length).toBeGreaterThan(0);
+        expect(byPart2.results.length).toBeGreaterThan(0);
+    });
+});
+
+describe('ftsIndex — filename indexing', () => {
+    it('finds a file by a term that appears only in its filename', async () => {
+        await makeFile('DT_PurchasableRewardPools.json', '{"k":"v"}');
+        await ftsIndex({ dir: testDir });
+
+        const byCompound = ftsSearch({ query: 'PurchasableRewardPools' });
+        const bySub = ftsSearch({ query: 'Purchasable' });
+        const byFullName = ftsSearch({ query: 'DT_PurchasableRewardPools' });
+
+        expect(byCompound.results.length).toBeGreaterThan(0);
+        expect(bySub.results.length).toBeGreaterThan(0);
+        expect(byFullName.results.length).toBeGreaterThan(0);
+    });
+
+    it('finds a file by PascalCase term in filename even when content is inert', async () => {
+        await makeFile('SkinHierarchy.ts', 'export const x = 1;');
+        await ftsIndex({ dir: testDir });
+
+        const byCompound = ftsSearch({ query: 'SkinHierarchy' });
+        const byPart = ftsSearch({ query: 'Hierarchy' });
+
+        expect(byCompound.results.length).toBeGreaterThan(0);
+        expect(byPart.results.length).toBeGreaterThan(0);
+    });
+
+    it('deduplicates repeated sub-tokens within a single compound', () => {
+        // "FooFoo" splits into ["Foo", "Foo"] → without dedup, "foo" would be
+        // emitted twice for a single occurrence of the compound, inflating its
+        // term frequency for TF-IDF.
+        expect(_tokenize('FooFoo')).toEqual(['foofoo', 'foo']);
+        expect(_tokenize('getUserUser')).toEqual(['getuseruser', 'get', 'user']);
+    });
+
+    it('does not index file extensions as tokens', async () => {
+        // Three files with no overlap in content terms, all .ts extension.
+        // A search for "ts" must NOT return them — the extension is not a content token.
+        await makeFile('alpha.ts', 'export const apple = 1;');
+        await makeFile('bravo.ts', 'export const banana = 2;');
+        await makeFile('charlie.ts', 'export const cherry = 3;');
+        await ftsIndex({ dir: testDir });
+
+        const byExt = ftsSearch({ query: 'ts' });
+
+        expect(byExt.results).toHaveLength(0);
     });
 });
 
