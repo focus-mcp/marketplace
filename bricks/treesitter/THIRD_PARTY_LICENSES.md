@@ -54,7 +54,7 @@ The Unlicense grants any rights to use, copy, modify, distribute, and sell witho
 - **Publisher**: kaermorchen
 - **Version**: 0.8.2 (published 2026-04-03, compiled with tree-sitter-cli 0.26.8)
 - **Used for**: Twig template grammar.
-- **Distribution**: the prebuilt `.wasm` is **vendored** in this repo under `wasms/tree-sitter-twig.wasm` (with a REUSE `.license` sidecar). We do not depend on the `tree-sitter-twig` npm package because its `install` script (`node-gyp rebuild`) fails on every machine without a C/C++ toolchain — and the tarball doesn't even ship the `binding.gyp` the script would need. Since we only need the prebuilt `.wasm` (no native bindings), vendoring is both correct and resilient.
+- **Distribution**: the prebuilt `.wasm` is **vendored** in this repo under `wasms/tree-sitter-twig.wasm` (with a REUSE `.license` sidecar). We do not depend on the `tree-sitter-twig` npm package because its `install` script (`node-gyp rebuild`) fails on every machine — the tarball doesn't ship the `binding.gyp` the script would need, so the build fails regardless of whether a C/C++ toolchain is installed. Since we only need the prebuilt `.wasm` (no native bindings), vendoring is both correct and resilient.
 
 **Note on MPL-2.0**: The Mozilla Public License 2.0 is a weak copyleft license. It requires that modifications to the licensed file themselves be made available under MPL-2.0, but it does **not** require the larger work (this brick) to be licensed under MPL-2.0. We do not modify the `.wasm` — it is copied verbatim from the upstream npm tarball — so no additional obligations apply.
 
