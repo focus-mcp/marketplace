@@ -10,7 +10,7 @@ Since the brick only needs the prebuilt `.wasm` file (it never uses the native b
 
 - Copy `tree-sitter-twig.wasm` (compiled with tree-sitter-cli 0.26.8) into `bricks/treesitter/wasms/` with an MPL-2.0 REUSE `.license` sidecar.
 - Add `LICENSES/MPL-2.0.txt`.
-- `src/parsers/twig.ts` now resolves the `.wasm` from `bundled-wasm-path` via `import.meta.url` (no `require.resolve` on `tree-sitter-twig`).
+- `src/parsers/twig.ts` now resolves the `.wasm` via a filesystem path computed from `import.meta.url` pointing at the bundled `wasms/` directory (no `require.resolve` on `tree-sitter-twig`).
 - Remove `tree-sitter-twig` from `optionalDependencies` — no longer pulled at install time.
 - Add `wasms/` to `package.json` `files`.
 - Update `THIRD_PARTY_LICENSES.md` to document the vendoring rationale.
