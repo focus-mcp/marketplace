@@ -1,5 +1,35 @@
 # @focus-mcp/brick-treesitter
 
+## 1.3.3
+
+### Patch Changes
+
+- c79dd71: fix(treesitter): make tree-sitter-twig an optionalDependency to avoid node-gyp install failures
+
+  `tree-sitter-twig@0.8.2` ships with `"install": "node-gyp rebuild"` which compiles native Node bindings. On machines without a C/C++ build toolchain (or Python for node-gyp), this install step fails and breaks the entire `npm install @focus-mcp/brick-treesitter` — even though the brick only uses the bundled `.wasm` file from the same package, never the native bindings.
+
+  Two changes:
+
+  - `package.json`: move `tree-sitter-twig` from `dependencies` to `optionalDependencies`. npm/pnpm now tolerate install-script failures for this package.
+  - `src/parsers/twig.ts`: wrap `require.resolve('tree-sitter-twig/tree-sitter-twig.wasm')` in a try/catch. If the package isn't present (install skipped/failed), Twig support is silently disabled — `.twig` files are no longer registered, but the rest of the brick (TypeScript, Python, PHP, Go, Rust, etc.) still works.
+
+  Users on machines with a working build toolchain see no change; users without one can finally install the brick without errors.
+
+- c0acf7c: fix(treesitter): vendor tree-sitter-twig.wasm to remove the broken upstream install script
+
+  `tree-sitter-twig@0.8.2` declares `"install": "node-gyp rebuild"` in its `package.json` but ships no `binding.gyp` in its npm tarball. The install therefore fails on **every** machine (with or without a C/C++ toolchain — node-gyp has nothing to build), and previously broke `npm install @focus-mcp/brick-treesitter` outright. Marking the dependency `optional` (1.3.2) was not enough: depending on the npm/pnpm version, an `install`-script failure can still abort the whole brick install.
+
+  Since the brick only needs the prebuilt `.wasm` file (it never uses the native bindings), the fix is to vendor it. Changes:
+
+  - Copy `tree-sitter-twig.wasm` (compiled with tree-sitter-cli 0.26.8) into `bricks/treesitter/wasms/` with an MPL-2.0 REUSE `.license` sidecar.
+  - Add `LICENSES/MPL-2.0.txt`.
+  - `src/parsers/twig.ts` now resolves the `.wasm` via a filesystem path computed from `import.meta.url` pointing at the bundled `wasms/` directory (no `require.resolve` on `tree-sitter-twig`).
+  - Remove `tree-sitter-twig` from `optionalDependencies` — no longer pulled at install time.
+  - Add `wasms/` to `package.json` `files`.
+  - Update `THIRD_PARTY_LICENSES.md` to document the vendoring rationale.
+
+  Twig support continues to work end-to-end (12/12 integration tests, including the Twig block extraction test). Users who install this brick no longer trigger `node-gyp` at all.
+
 ## 1.3.1
 
 ### Patch Changes
