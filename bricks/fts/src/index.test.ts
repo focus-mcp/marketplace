@@ -275,6 +275,19 @@ describe('ftsIndex — filename indexing', () => {
         expect(byCompound.results.length).toBeGreaterThan(0);
         expect(byPart.results.length).toBeGreaterThan(0);
     });
+
+    it('does not index file extensions as tokens', async () => {
+        // Three files with no overlap in content terms, all .ts extension.
+        // A search for "ts" must NOT return them — the extension is not a content token.
+        await makeFile('alpha.ts', 'export const apple = 1;');
+        await makeFile('bravo.ts', 'export const banana = 2;');
+        await makeFile('charlie.ts', 'export const cherry = 3;');
+        await ftsIndex({ dir: testDir });
+
+        const byExt = ftsSearch({ query: 'ts' });
+
+        expect(byExt.results).toHaveLength(0);
+    });
 });
 
 describe('fts brick registration', () => {

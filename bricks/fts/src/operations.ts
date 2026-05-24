@@ -84,6 +84,8 @@ function tokenize(text: string): string[] {
         if (compound.length < 2) continue;
         const lower = compound.toLowerCase();
         tokens.push(lower);
+        // Skip case-split work for tokens that have no uppercase letters
+        if (lower === compound) continue;
         const parts = compound
             .replace(/([a-z0-9])([A-Z])/g, '$1\0$2')
             .replace(/([A-Z]+)([A-Z][a-z])/g, '$1\0$2')
@@ -213,7 +215,7 @@ export async function ftsIndex(input: FtsIndexInput): Promise<FtsIndexOutput> {
         } catch {
             continue;
         }
-        const tokens = [...tokenize(basename(fp)), ...tokenize(content)];
+        const tokens = [...tokenize(basename(fp, extname(fp))), ...tokenize(content)];
         if (tokens.length === 0) continue;
         indexDocument(fp, tokens);
     }
