@@ -20,18 +20,35 @@ import { registerLanguage } from './registry.ts';
 
 const _require = createRequire(import.meta.url);
 
+function errorCode(err: unknown): string | undefined {
+    return (err as { code?: string } | null)?.code;
+}
+
+function isModuleNotFound(err: unknown): boolean {
+    const code = errorCode(err);
+    return code === 'MODULE_NOT_FOUND' || code === 'ERR_MODULE_NOT_FOUND';
+}
+
 // optionalDependency: node-gyp fails on machines without a C++ toolchain;
 // skip Twig registration only when the package is genuinely absent.
-// Any other error (corrupt install, renamed .wasm path, etc.) re-throws.
+// If the package IS installed but the .wasm path is missing/renamed
+// (real packaging bug), surface the error instead of silently disabling.
 let TWIG_WASM_PATH: string | null = null;
 try {
     TWIG_WASM_PATH = _require.resolve('tree-sitter-twig/tree-sitter-twig.wasm');
 } catch (err: unknown) {
-    const code = (err as { code?: string } | null)?.code;
-    if (code === 'MODULE_NOT_FOUND' || code === 'ERR_MODULE_NOT_FOUND') {
-        TWIG_WASM_PATH = null;
-    } else {
+    if (!isModuleNotFound(err)) throw err;
+    // MODULE_NOT_FOUND could mean either (a) package absent or (b) .wasm
+    // missing inside an installed package. Disambiguate by resolving the
+    // package's main entry: if THAT also fails, the package is absent
+    // (acceptable). If the main entry resolves but the .wasm didn't, the
+    // package shipped broken and we should re-throw.
+    try {
+        _require.resolve('tree-sitter-twig');
         throw err;
+    } catch (innerErr: unknown) {
+        if (!isModuleNotFound(innerErr)) throw innerErr;
+        TWIG_WASM_PATH = null;
     }
 }
 
