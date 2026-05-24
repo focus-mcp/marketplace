@@ -91,10 +91,12 @@ function tokenize(text: string): string[] {
             .replace(/([A-Z]+)([A-Z][a-z])/g, '$1\0$2')
             .split('\0');
         if (parts.length > 1) {
+            const seen = new Set<string>();
             for (const part of parts) {
                 const partLower = part.toLowerCase();
-                if (partLower.length >= 2 && partLower !== lower) {
+                if (partLower.length >= 2 && partLower !== lower && !seen.has(partLower)) {
                     tokens.push(partLower);
+                    seen.add(partLower);
                 }
             }
         }
@@ -187,6 +189,11 @@ export function _resetFtsIndex(): void {
     invertedIndex.clear();
     documentLengths.clear();
     indexedFiles.clear();
+}
+
+/** Exposes the internal tokenizer for white-box testing. Not a public API. */
+export function _tokenize(text: string): string[] {
+    return tokenize(text);
 }
 
 // ─── ftsIndex ────────────────────────────────────────────────────────────────

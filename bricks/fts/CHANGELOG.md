@@ -6,7 +6,7 @@
 
 - 78cc06f: fix(fts): split camelCase/PascalCase identifiers and index filenames
 
-  `tokenize()` now splits compound identifiers (PascalCase, camelCase, ACRONYM+Word) at case transitions while preserving the lowercase compound for exact matches. `ftsIndex()` now also indexes filename tokens, so a file like `DT_PurchasableRewardPools.json` is discoverable by name even when the identifier is absent from its content.
+  `tokenize()` now splits compound identifiers (PascalCase, camelCase, ACRONYM+Word) at case transitions while preserving the lowercase compound for exact matches. `ftsIndex()` now also indexes filename tokens (stem only, extension stripped), so a file like `DT_PurchasableRewardPools.json` is discoverable by name even when the identifier is absent from its content. The tokenizer also deduplicates repeated sub-tokens within a single compound (e.g. `FooFoo` emits `foo` once, not twice) to avoid inflating TF-IDF scores.
 
 ## 1.1.1
 

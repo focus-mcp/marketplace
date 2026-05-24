@@ -5,7 +5,7 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ftsIndex, ftsRank, ftsSearch, ftsSuggest } from './operations.ts';
+import { _tokenize, ftsIndex, ftsRank, ftsSearch, ftsSuggest } from './operations.ts';
 
 let testDir: string;
 
@@ -274,6 +274,14 @@ describe('ftsIndex — filename indexing', () => {
 
         expect(byCompound.results.length).toBeGreaterThan(0);
         expect(byPart.results.length).toBeGreaterThan(0);
+    });
+
+    it('deduplicates repeated sub-tokens within a single compound', () => {
+        // "FooFoo" splits into ["Foo", "Foo"] → without dedup, "foo" would be
+        // emitted twice for a single occurrence of the compound, inflating its
+        // term frequency for TF-IDF.
+        expect(_tokenize('FooFoo')).toEqual(['foofoo', 'foo']);
+        expect(_tokenize('getUserUser')).toEqual(['getuseruser', 'get', 'user']);
     });
 
     it('does not index file extensions as tokens', async () => {
