@@ -7,7 +7,7 @@
     "url": "https://github.com/focus-mcp",
     "email": "contact@focusmcp.dev"
   },
-  "updated": "2026-04-27T11:33:49.687Z",
+  "updated": "2026-05-24T10:54:00.255Z",
   "bricks": [
     {
       "name": "agent",
@@ -18,6 +18,21 @@
         "registry",
         "capabilities",
         "ai"
+      ],
+      "keywords": [
+        "agent-registry",
+        "ai-agent",
+        "capabilities",
+        "multi-agent",
+        "register",
+        "discovery"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "multi-agent",
+        "backend",
+        "analysis"
       ],
       "dependencies": [],
       "tools": [
@@ -110,13 +125,29 @@
     },
     {
       "name": "aiteam",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "AI team coordination — loads dispatch, parallel, debate, review, agent for multi-agent orchestration.",
       "tags": [
         "aiteam",
         "composite",
         "orchestration",
         "multi-agent"
+      ],
+      "keywords": [
+        "multi-agent",
+        "orchestration",
+        "composite",
+        "team",
+        "dispatch",
+        "debate",
+        "parallel"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "multi-agent",
+        "backend",
+        "analysis"
       ],
       "dependencies": [
         "dispatch",
@@ -141,6 +172,22 @@
         "workflow",
         "autonomous",
         "planning"
+      ],
+      "keywords": [
+        "autopilot",
+        "autonomous",
+        "workflow",
+        "plan-execute",
+        "reasoning",
+        "task-automation"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "backend",
+        "analysis",
+        "devops"
       ],
       "dependencies": [
         "codebase",
@@ -226,6 +273,22 @@
         "sequential",
         "pipeline",
         "devtools"
+      ],
+      "keywords": [
+        "batch",
+        "parallel-execution",
+        "sequential",
+        "pipeline",
+        "multi-command",
+        "devtools"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "devops",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -365,6 +428,23 @@
         "performance",
         "io"
       ],
+      "keywords": [
+        "cache",
+        "in-memory",
+        "file-cache",
+        "mtime",
+        "invalidation",
+        "warmup",
+        "performance"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "performance",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -458,14 +538,32 @@
     },
     {
       "name": "callgraph",
-      "version": "1.1.1",
+      "version": "1.2.1",
       "description": "Call graph analysis — callers, callees, call chains.",
       "tags": [
         "callgraph",
         "code-intel",
         "analysis"
       ],
-      "dependencies": [],
+      "keywords": [
+        "call-graph",
+        "ast",
+        "code-intel",
+        "analysis",
+        "callers",
+        "callees",
+        "call-chain"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "rust"
+      ],
+      "dependencies": [
+        "treesitter"
+      ],
       "tools": [
         {
           "name": "callers",
@@ -587,12 +685,24 @@
     },
     {
       "name": "codebase",
-      "version": "1.1.0",
+      "version": "1.1.2",
       "description": "Complete codebase intelligence — loads treesitter, symbol, outline, callgraph, depgraph, refs.",
       "tags": [
         "codebase",
         "composite",
         "code-intelligence"
+      ],
+      "keywords": [
+        "project",
+        "codebase",
+        "navigation",
+        "overview",
+        "composite",
+        "code-intelligence",
+        "all-in-one"
+      ],
+      "recommendedFor": [
+        "any"
       ],
       "dependencies": [
         "treesitter",
@@ -611,7 +721,7 @@
     },
     {
       "name": "codeedit",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "Precise code editing — replace function bodies, insert before/after, safe delete with dependency check.",
       "tags": [
         "edit",
@@ -620,6 +730,24 @@
         "insert",
         "delete",
         "codemod"
+      ],
+      "keywords": [
+        "code-editing",
+        "refactoring",
+        "ast",
+        "insert",
+        "delete",
+        "replace",
+        "safe-delete"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "rust",
+        "php",
+        "refactoring"
       ],
       "dependencies": [],
       "tools": [
@@ -789,11 +917,26 @@
     },
     {
       "name": "codemod",
-      "version": "1.1.0",
+      "version": "1.1.2",
       "description": "Code modification toolkit — loads symbol, rename, codeedit, inline, textsearch for automated refactoring.",
       "tags": [
         "codemod",
         "composite",
+        "refactoring"
+      ],
+      "keywords": [
+        "codemod",
+        "refactoring",
+        "ast",
+        "transforms",
+        "rename",
+        "inline",
+        "composite"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
         "refactoring"
       ],
       "dependencies": [
@@ -812,13 +955,29 @@
     },
     {
       "name": "compress",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Compress text output to save tokens — strip comments, collapse whitespace, abbreviate patterns.",
       "tags": [
         "compress",
         "tokens",
         "output",
         "json"
+      ],
+      "keywords": [
+        "compression",
+        "token-saving",
+        "whitespace",
+        "strip-comments",
+        "terse",
+        "output"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "performance",
+        "analysis"
       ],
       "dependencies": [],
       "tools": [
@@ -898,6 +1057,22 @@
         "pack",
         "tokens",
         "compression"
+      ],
+      "keywords": [
+        "context-pack",
+        "token-budget",
+        "signatures",
+        "compression",
+        "prioritize",
+        "bundle"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "analysis",
+        "performance"
       ],
       "dependencies": [],
       "tools": [
@@ -1018,7 +1193,7 @@
     },
     {
       "name": "convert",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "Convert between formats and units — unit conversion, encoding, format transformation, naming conventions.",
       "tags": [
         "convert",
@@ -1026,6 +1201,23 @@
         "encoding",
         "format",
         "naming"
+      ],
+      "keywords": [
+        "unit-conversion",
+        "encoding",
+        "base64",
+        "format-transform",
+        "naming-convention",
+        "csv",
+        "yaml"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -1174,6 +1366,21 @@
         "analysis",
         "reasoning"
       ],
+      "keywords": [
+        "debate",
+        "multi-perspective",
+        "consensus",
+        "scoring",
+        "reasoning",
+        "positions"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "analysis",
+        "multi-agent",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -1318,6 +1525,21 @@
         "analysis",
         "recommendation",
         "adr"
+      ],
+      "keywords": [
+        "decision",
+        "tradeoff",
+        "adr",
+        "recommendation",
+        "weighted-score",
+        "options"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "analysis",
+        "backend",
+        "documentation"
       ],
       "dependencies": [],
       "tools": [
@@ -1485,7 +1707,7 @@
     },
     {
       "name": "depgraph",
-      "version": "1.1.1",
+      "version": "1.2.1",
       "description": "Dependency graph analysis — imports, exports, circular deps, fan-in/out.",
       "tags": [
         "depgraph",
@@ -1493,7 +1715,26 @@
         "analysis",
         "circular"
       ],
-      "dependencies": [],
+      "keywords": [
+        "dependency",
+        "graph",
+        "code-intel",
+        "analysis",
+        "imports",
+        "exports",
+        "circular-deps",
+        "fan-in",
+        "fan-out"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "monorepo"
+      ],
+      "dependencies": [
+        "treesitter"
+      ],
       "tools": [
         {
           "name": "imports",
@@ -1594,12 +1835,28 @@
     },
     {
       "name": "devtools",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Developer tools — loads shell, sandbox, batch for command execution and scripting.",
       "tags": [
         "devtools",
         "composite",
         "execution"
+      ],
+      "keywords": [
+        "devtools",
+        "composite",
+        "shell",
+        "sandbox",
+        "batch",
+        "scripting"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "devops",
+        "backend"
       ],
       "dependencies": [
         "shell",
@@ -1624,6 +1881,23 @@
         "dot",
         "ascii",
         "visualization"
+      ],
+      "keywords": [
+        "diagram",
+        "mermaid",
+        "graphviz",
+        "dot",
+        "ascii",
+        "visualization",
+        "flowchart"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "documentation",
+        "analysis",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -1823,6 +2097,22 @@
         "orchestration",
         "workflow"
       ],
+      "keywords": [
+        "dispatch",
+        "queue",
+        "task-queue",
+        "orchestration",
+        "workflow",
+        "cancel",
+        "priority"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "backend",
+        "multi-agent",
+        "devops"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -1908,12 +2198,26 @@
     },
     {
       "name": "echo",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Hello-world brick — returns the message it receives. Serves as a smoke test for the FocusMCP pipeline.",
       "tags": [
         "example",
         "smoke-test",
         "hello-world"
+      ],
+      "keywords": [
+        "echo",
+        "smoke-test",
+        "hello-world",
+        "canary",
+        "template",
+        "example"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "testing",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -1943,12 +2247,28 @@
     },
     {
       "name": "filediff",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "File comparison — diff, patch, delta between files or versions.",
       "tags": [
         "file",
         "diff",
         "patch"
+      ],
+      "keywords": [
+        "diff",
+        "patch",
+        "file-comparison",
+        "unified-diff",
+        "delta",
+        "version-comparison"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "refactoring",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -2025,12 +2345,28 @@
     },
     {
       "name": "filelist",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "List directory contents — entries, tree, glob, find.",
       "tags": [
         "file",
         "list",
         "directory"
+      ],
+      "keywords": [
+        "directory-listing",
+        "tree",
+        "glob",
+        "find",
+        "filesystem",
+        "file-discovery"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -2122,13 +2458,29 @@
     },
     {
       "name": "fileops",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "description": "File operations — move, copy, delete, rename. Call fileops:setRoot first with the absolute path to your workspace, otherwise tools will fail-fast on the first non-existent path.",
       "tags": [
         "file",
         "move",
         "copy",
         "delete"
+      ],
+      "keywords": [
+        "file-operations",
+        "move",
+        "copy",
+        "delete",
+        "rename",
+        "filesystem"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -2222,12 +2574,28 @@
     },
     {
       "name": "fileread",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Read files — full, head, tail, line range, encoding detection.",
       "tags": [
         "file",
         "read",
         "io"
+      ],
+      "keywords": [
+        "file-read",
+        "head",
+        "tail",
+        "line-range",
+        "encoding",
+        "io"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "analysis"
       ],
       "dependencies": [],
       "tools": [
@@ -2323,13 +2691,29 @@
     },
     {
       "name": "filesearch",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Search and replace in files — regex search, in-place replace.",
       "tags": [
         "file",
         "search",
         "replace",
         "regex"
+      ],
+      "keywords": [
+        "file-search",
+        "regex-search",
+        "replace",
+        "glob",
+        "in-place",
+        "pattern"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "refactoring",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -2395,11 +2779,27 @@
     },
     {
       "name": "filesystem",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Complete filesystem operations — loads fileread, filewrite, filelist, fileops, filesearch.",
       "tags": [
         "filesystem",
         "composite"
+      ],
+      "keywords": [
+        "filesystem",
+        "composite",
+        "file-read",
+        "file-write",
+        "file-ops",
+        "file-search"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "devops"
       ],
       "dependencies": [
         "fileread",
@@ -2423,6 +2823,22 @@
         "file",
         "write",
         "io"
+      ],
+      "keywords": [
+        "file-write",
+        "create",
+        "append",
+        "overwrite",
+        "io",
+        "filesystem"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -2510,7 +2926,7 @@
     },
     {
       "name": "format",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Format data into various output formats — pretty JSON, YAML, markdown, ASCII tables.",
       "tags": [
         "format",
@@ -2519,6 +2935,23 @@
         "markdown",
         "table",
         "output"
+      ],
+      "keywords": [
+        "format",
+        "json",
+        "yaml",
+        "markdown",
+        "ascii-table",
+        "pretty-print",
+        "output"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "documentation"
       ],
       "dependencies": [],
       "tools": [
@@ -2642,7 +3075,7 @@
     },
     {
       "name": "fts",
-      "version": "1.1.0",
+      "version": "1.1.2",
       "description": "Full-text search with TF-IDF ranking — index files, search with relevance scoring, suggest completions.",
       "tags": [
         "search",
@@ -2650,6 +3083,22 @@
         "tfidf",
         "index",
         "ranking"
+      ],
+      "keywords": [
+        "full-text-search",
+        "tfidf",
+        "inverted-index",
+        "ranking",
+        "autocomplete",
+        "suggest"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "documentation"
       ],
       "dependencies": [],
       "tools": [
@@ -2762,6 +3211,22 @@
         "quality",
         "security"
       ],
+      "keywords": [
+        "audit",
+        "code-quality",
+        "security",
+        "architecture",
+        "static-analysis",
+        "report"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "security",
+        "analysis"
+      ],
       "dependencies": [
         "codebase",
         "review",
@@ -2822,6 +3287,22 @@
         "knowledge",
         "codebase",
         "relationships"
+      ],
+      "keywords": [
+        "knowledge-graph",
+        "graph-builder",
+        "code-entities",
+        "relationships",
+        "imports",
+        "exports"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "refactoring"
       ],
       "dependencies": [],
       "tools": [
@@ -2947,6 +3428,21 @@
         "architecture",
         "analysis"
       ],
+      "keywords": [
+        "graph-clustering",
+        "community-detection",
+        "label-propagation",
+        "architecture-layers",
+        "analysis"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "refactoring",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -3021,6 +3517,23 @@
         "graphml",
         "cypher",
         "obsidian"
+      ],
+      "keywords": [
+        "graph-export",
+        "mermaid",
+        "graphml",
+        "cypher",
+        "neo4j",
+        "obsidian",
+        "visualization"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "documentation",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -3249,6 +3762,22 @@
         "path",
         "knowledge"
       ],
+      "keywords": [
+        "graph-query",
+        "traversal",
+        "shortest-path",
+        "bfs",
+        "subgraph",
+        "neighbors"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "refactoring"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -3386,6 +3915,22 @@
         "files",
         "analysis"
       ],
+      "keywords": [
+        "heatmap",
+        "file-access",
+        "hot-files",
+        "cold-files",
+        "access-patterns",
+        "tracking"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "performance",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -3479,6 +4024,21 @@
         "analysis",
         "refactoring"
       ],
+      "keywords": [
+        "impact-analysis",
+        "change-propagation",
+        "dependents",
+        "affected-files",
+        "dependency-graph"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "refactoring",
+        "analysis"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -3571,6 +4131,21 @@
         "move",
         "refactoring",
         "codemod"
+      ],
+      "keywords": [
+        "inline",
+        "extract-function",
+        "move-symbol",
+        "refactoring",
+        "codemod",
+        "variable-inline"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "refactoring",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -3684,6 +4259,22 @@
         "index",
         "documents",
         "knowledgebase"
+      ],
+      "keywords": [
+        "knowledge-base",
+        "document-index",
+        "search",
+        "rank",
+        "purge",
+        "retrieval"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "documentation",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -3820,13 +4411,29 @@
     },
     {
       "name": "knowledgebase",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Knowledge base — loads knowledge, fts, graphbuild, graphquery for document indexing and graph-powered search.",
       "tags": [
         "knowledgebase",
         "composite",
         "search",
         "graph"
+      ],
+      "keywords": [
+        "knowledgebase",
+        "composite",
+        "document-search",
+        "graph-powered",
+        "fts",
+        "knowledge"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "documentation",
+        "backend"
       ],
       "dependencies": [
         "knowledge",
@@ -3843,7 +4450,7 @@
     },
     {
       "name": "lastversion",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "description": "Package version intelligence — latest version, diff, changelog, audit across npm/pypi/github/gitlab.",
       "tags": [
         "version",
@@ -3854,6 +4461,23 @@
         "audit",
         "security",
         "updates"
+      ],
+      "keywords": [
+        "version-check",
+        "changelog",
+        "security-audit",
+        "semver",
+        "outdated",
+        "npm",
+        "pypi"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "security",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -4040,13 +4664,29 @@
     },
     {
       "name": "memory",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "description": "Persistent key-value memory — store and recall information across sessions as JSON files.",
       "tags": [
         "memory",
         "storage",
         "persistence",
         "key-value"
+      ],
+      "keywords": [
+        "memory",
+        "key-value",
+        "persistence",
+        "store",
+        "recall",
+        "sessions"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "multi-agent",
+        "backend",
+        "analysis"
       ],
       "dependencies": [],
       "tools": [
@@ -4161,7 +4801,7 @@
     },
     {
       "name": "metrics",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "description": "Session metrics tracking — token usage, costs, duration, and per-tool statistics.",
       "tags": [
         "metrics",
@@ -4170,6 +4810,22 @@
         "duration",
         "session",
         "observability"
+      ],
+      "keywords": [
+        "metrics",
+        "token-usage",
+        "cost-tracking",
+        "duration",
+        "session-stats",
+        "observability"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "performance"
       ],
       "dependencies": [],
       "tools": [
@@ -4259,13 +4915,29 @@
     },
     {
       "name": "multiread",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Batch file reading — multiple files in one call, deduplication.",
       "tags": [
         "file",
         "read",
         "batch",
         "tokens"
+      ],
+      "keywords": [
+        "multi-read",
+        "batch-read",
+        "deduplication",
+        "merge",
+        "file-io",
+        "token-saving"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "analysis"
       ],
       "dependencies": [],
       "tools": [
@@ -4340,13 +5012,29 @@
     },
     {
       "name": "onboarding",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Project onboarding workflow — auto-discover project structure, conventions, and key files for a new contributor or AI agent.",
       "tags": [
         "onboarding",
         "workflow",
         "project",
         "guide"
+      ],
+      "keywords": [
+        "onboarding",
+        "project-scan",
+        "conventions",
+        "contributor-guide",
+        "discovery",
+        "workflow"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "analysis",
+        "documentation"
       ],
       "dependencies": [
         "codebase",
@@ -4401,7 +5089,7 @@
     },
     {
       "name": "outline",
-      "version": "1.1.0",
+      "version": "1.2.1",
       "description": "File and repo structure outline — list exported symbols and directory trees without reading full content.",
       "tags": [
         "outline",
@@ -4409,7 +5097,25 @@
         "structure",
         "navigation"
       ],
-      "dependencies": [],
+      "keywords": [
+        "outline",
+        "structure",
+        "ast",
+        "navigation",
+        "symbols",
+        "file-structure",
+        "repo-overview"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "rust"
+      ],
+      "dependencies": [
+        "treesitter"
+      ],
       "tools": [
         {
           "name": "file",
@@ -4479,13 +5185,28 @@
     },
     {
       "name": "overview",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Project-level understanding without reading all files — detect framework, language, conventions, and architecture.",
       "tags": [
         "overview",
         "project",
         "architecture",
         "conventions"
+      ],
+      "keywords": [
+        "project-overview",
+        "framework-detection",
+        "conventions",
+        "architecture",
+        "dependencies"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "analysis",
+        "documentation"
       ],
       "dependencies": [],
       "tools": [
@@ -4570,13 +5291,29 @@
     },
     {
       "name": "parallel",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "description": "Parallel execution coordination — run tasks concurrently, collect results, merge outputs, handle timeouts.",
       "tags": [
         "parallel",
         "concurrent",
         "merge",
         "orchestration"
+      ],
+      "keywords": [
+        "parallel",
+        "concurrency",
+        "collect",
+        "merge",
+        "timeout",
+        "orchestration"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "devops"
       ],
       "dependencies": [],
       "tools": [
@@ -4753,6 +5490,22 @@
         "estimation",
         "workflow"
       ],
+      "keywords": [
+        "planning",
+        "steps",
+        "dependency-graph",
+        "time-estimate",
+        "project-management",
+        "workflow"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "backend",
+        "multi-agent"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -4869,7 +5622,7 @@
     },
     {
       "name": "refs",
-      "version": "1.1.0",
+      "version": "1.2.1",
       "description": "Cross-references — find who imports or uses a symbol, locate declarations, and trace inheritance chains.",
       "tags": [
         "references",
@@ -4877,7 +5630,26 @@
         "symbols",
         "navigation"
       ],
-      "dependencies": [],
+      "keywords": [
+        "code-navigation",
+        "references",
+        "symbols",
+        "code-intel",
+        "cross-references",
+        "declarations",
+        "inheritance"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "rust",
+        "java"
+      ],
+      "dependencies": [
+        "treesitter"
+      ],
       "tools": [
         {
           "name": "references",
@@ -4976,13 +5748,29 @@
     },
     {
       "name": "rename",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Rename refactoring — rename symbols across files, rename files with import updates, bulk rename with preview.",
       "tags": [
         "rename",
         "refactoring",
         "symbol",
         "codemod"
+      ],
+      "keywords": [
+        "rename",
+        "symbol-rename",
+        "bulk-rename",
+        "import-update",
+        "dry-run",
+        "refactoring"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "refactoring",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -5119,13 +5907,29 @@
     },
     {
       "name": "repos",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Multi-repo management — register, track, and get stats for multiple repositories.",
       "tags": [
         "repos",
         "multi-repo",
         "management",
         "stats"
+      ],
+      "keywords": [
+        "multi-repo",
+        "repository-management",
+        "register",
+        "stats",
+        "monorepo",
+        "workspace"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "devops",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -5203,7 +6007,7 @@
     },
     {
       "name": "research",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Multi-source research — collect info from multiple files/sources, synthesize findings, validate consistency.",
       "tags": [
         "research",
@@ -5211,6 +6015,22 @@
         "synthesize",
         "validate",
         "analysis"
+      ],
+      "keywords": [
+        "research",
+        "multi-source",
+        "synthesize",
+        "consistency-check",
+        "cross-file",
+        "analysis"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "refactoring"
       ],
       "dependencies": [],
       "tools": [
@@ -5366,6 +6186,22 @@
         "architecture",
         "diff"
       ],
+      "keywords": [
+        "code-review",
+        "security-scan",
+        "architecture-review",
+        "compare",
+        "quality",
+        "owasp"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "security",
+        "analysis"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -5459,6 +6295,23 @@
         "express",
         "web"
       ],
+      "keywords": [
+        "api-routes",
+        "endpoints",
+        "express",
+        "fastify",
+        "next.js",
+        "sveltekit",
+        "http"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "backend",
+        "frontend",
+        "next.js",
+        "express"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -5550,7 +6403,7 @@
     },
     {
       "name": "sandbox",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "description": "Sandboxed code execution — run JavaScript/TypeScript snippets in an isolated VM context.",
       "tags": [
         "sandbox",
@@ -5559,6 +6412,21 @@
         "javascript",
         "typescript",
         "devtools"
+      ],
+      "keywords": [
+        "sandbox",
+        "vm",
+        "isolated-execution",
+        "eval",
+        "code-runner",
+        "esbuild"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "testing",
+        "devops",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -5669,6 +6537,21 @@
         "metrics",
         "efficiency"
       ],
+      "keywords": [
+        "token-savings",
+        "roi",
+        "efficiency",
+        "benchmark",
+        "trend",
+        "cost-comparison"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "analysis",
+        "performance",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -5769,6 +6652,22 @@
         "tfidf",
         "vector",
         "intent"
+      ],
+      "keywords": [
+        "semantic-search",
+        "cosine-similarity",
+        "tfidf",
+        "intent-classification",
+        "vector-space",
+        "nlp"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "backend",
+        "documentation"
       ],
       "dependencies": [],
       "tools": [
@@ -5931,6 +6830,22 @@
         "persistence",
         "restore"
       ],
+      "keywords": [
+        "session",
+        "context-save",
+        "restore",
+        "persistence",
+        "history",
+        "checkpoint"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "multi-agent",
+        "backend",
+        "analysis"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -6022,6 +6937,21 @@
         "broadcast",
         "multi-agent",
         "state"
+      ],
+      "keywords": [
+        "shared-state",
+        "pub-sub",
+        "broadcast",
+        "multi-agent",
+        "context-sharing",
+        "coordination"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "multi-agent",
+        "backend",
+        "orchestration"
       ],
       "dependencies": [],
       "tools": [
@@ -6122,7 +7052,7 @@
     },
     {
       "name": "shell",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Shell command execution — run commands, background processes, kill, and compress output.",
       "tags": [
         "shell",
@@ -6130,6 +7060,22 @@
         "command",
         "process",
         "devtools"
+      ],
+      "keywords": [
+        "shell",
+        "exec",
+        "background-process",
+        "kill",
+        "command-line",
+        "devtools"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "devops",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -6249,6 +7195,22 @@
         "orchestration",
         "tokens"
       ],
+      "keywords": [
+        "smart-context",
+        "token-budget",
+        "auto-discover",
+        "composite",
+        "context-loading",
+        "cache"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "analysis",
+        "backend"
+      ],
       "dependencies": [
         "smartread",
         "cache",
@@ -6322,7 +7284,7 @@
     },
     {
       "name": "smartread",
-      "version": "1.1.0",
+      "version": "1.2.1",
       "description": "Intelligent file reading — multiple modes to minimize token usage.",
       "tags": [
         "file",
@@ -6330,7 +7292,24 @@
         "smart",
         "tokens"
       ],
-      "dependencies": [],
+      "keywords": [
+        "code-navigation",
+        "ast",
+        "smart-read",
+        "code-intel",
+        "token-efficient",
+        "file-reading"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "rust"
+      ],
+      "dependencies": [
+        "treesitter"
+      ],
       "tools": [
         {
           "name": "full",
@@ -6421,14 +7400,33 @@
     },
     {
       "name": "symbol",
-      "version": "1.1.1",
-      "description": "Symbol lookup in source files — find, get, bulk, body.",
+      "version": "1.2.1",
+      "description": "Symbol lookup in source files — find, get, bulk, body. Multi-language via treesitter (PHP, Python, Go, Rust, Java, TS/JS, etc.).",
       "tags": [
         "symbols",
         "code-intel",
         "search"
       ],
-      "dependencies": [],
+      "keywords": [
+        "symbols",
+        "ast",
+        "code-intel",
+        "navigation",
+        "lookup",
+        "multi-language"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "rust",
+        "php",
+        "java"
+      ],
+      "dependencies": [
+        "treesitter"
+      ],
       "tools": [
         {
           "name": "find",
@@ -6535,7 +7533,7 @@
     },
     {
       "name": "task",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Task management for multi-agent workflows — create tasks, assign to agents, track status, mark complete.",
       "tags": [
         "task",
@@ -6543,6 +7541,21 @@
         "agent",
         "orchestration",
         "multi-agent"
+      ],
+      "keywords": [
+        "task-management",
+        "assign",
+        "priority",
+        "multi-agent",
+        "workflow",
+        "tracking"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "multi-agent",
+        "backend",
+        "orchestration"
       ],
       "dependencies": [],
       "tools": [
@@ -6649,7 +7662,7 @@
     },
     {
       "name": "textsearch",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Text search and replace across files — regex search, multi-file replace, grouped results.",
       "tags": [
         "search",
@@ -6657,6 +7670,22 @@
         "regex",
         "replace",
         "refactoring"
+      ],
+      "keywords": [
+        "text-search",
+        "regex",
+        "multi-file-replace",
+        "grouped-results",
+        "dry-run",
+        "grep"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "go",
+        "refactoring",
+        "backend"
       ],
       "dependencies": [],
       "tools": [
@@ -6810,6 +7839,22 @@
         "chain-of-thought",
         "analysis"
       ],
+      "keywords": [
+        "reasoning-chain",
+        "chain-of-thought",
+        "branching",
+        "revise",
+        "summarize",
+        "structured-thinking"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "multi-agent",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -6925,6 +7970,22 @@
         "optimize",
         "estimate"
       ],
+      "keywords": [
+        "token-budget",
+        "estimate",
+        "optimize",
+        "fill",
+        "context-window",
+        "cost"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "analysis",
+        "performance",
+        "backend"
+      ],
       "dependencies": [],
       "tools": [
         {
@@ -7031,19 +8092,51 @@
     },
     {
       "name": "treesitter",
-      "version": "1.1.1",
-      "description": "Regex-based code indexer for TypeScript/JavaScript — parses symbols, imports, exports.",
+      "version": "1.3.1",
+      "description": "Tree-sitter based multi-language code indexer — supports TS, JS, PHP, Python, Go, Rust, Java.",
       "tags": [
         "ast",
         "parser",
         "symbols",
-        "typescript"
+        "typescript",
+        "javascript",
+        "php",
+        "python",
+        "go",
+        "rust",
+        "java",
+        "multi-language"
+      ],
+      "keywords": [
+        "typescript",
+        "javascript",
+        "ast",
+        "parser",
+        "code-intel",
+        "php",
+        "python",
+        "go",
+        "rust",
+        "java",
+        "multi-language"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "react",
+        "vue",
+        "next",
+        "python",
+        "rust",
+        "go",
+        "php",
+        "java"
       ],
       "dependencies": [],
       "tools": [
         {
           "name": "index",
-          "description": "Index a directory: parse all TS/JS files and store symbols in memory.",
+          "description": "Index a directory: parse all supported files (TS, JS, PHP, Python, Go, Rust, Java) and store symbols in memory.",
           "inputSchema": {
             "type": "object",
             "properties": {
@@ -7111,7 +8204,7 @@
     },
     {
       "name": "validate",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Validate data — JSON syntax, JSON Schema compliance, TypeScript type checking, lint rules.",
       "tags": [
         "validate",
@@ -7119,6 +8212,22 @@
         "schema",
         "types",
         "lint"
+      ],
+      "keywords": [
+        "validation",
+        "json-schema",
+        "type-check",
+        "lint",
+        "syntax",
+        "compliance"
+      ],
+      "recommendedFor": [
+        "typescript",
+        "javascript",
+        "python",
+        "testing",
+        "backend",
+        "analysis"
       ],
       "dependencies": [],
       "tools": [
