@@ -130,6 +130,48 @@ jobs:
           echo "--- Published bricks ---"
           cat /tmp/published-bricks.txt
 
+      # The catalog is regenerated above by `pnpm build:catalog`, deployed to
+      # gh-pages, AND served to users via raw.githubusercontent.com/.../main/
+      # publish/catalog.json (per AGENTS.md / README.md / docs/RELEASE.md).
+      # We need to commit the refreshed file back to main, otherwise the
+      # raw.githubusercontent URL stays stale forever after every release.
+      # [skip ci] in the commit message prevents this push from re-triggering
+      # the publish workflow (the `bricks/**` path filter would also miss
+      # publish/catalog.json, but [skip ci] is the standard guard for
+      # bot-pushed refresh commits).
+      # If the push fails (non-fast-forward when another merge lands on main
+      # while we run), we MUST roll back the local commit. Otherwise the
+      # subsequent `Create release tag` step would tag the local-only commit
+      # and `git push origin <tag>` would sneak that unreviewed commit onto
+      # main via the tag — bypassing branch protection. `set +e` + explicit
+      # reset is the safe pattern here.
+      - name: Commit refreshed catalog back to main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+
+          if git diff --quiet -- publish/catalog.json; then
+            echo "publish/catalog.json unchanged — nothing to commit."
+            exit 0
+          fi
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add publish/catalog.json
+          git commit -m "chore(catalog): auto-refresh after release [skip ci]"
+
+          set +e
+          git push origin HEAD:main
+          push_status=$?
+          set -e
+
+          if [ $push_status -ne 0 ]; then
+            echo "Push failed (likely non-fast-forward). Rolling back local commit so later tag/release steps don't tag a commit that's not on main."
+            git reset --hard HEAD~1
+            echo "Catalog auto-refresh skipped this run; the next release will pick it up."
+            exit 0
+          fi
+
       - name: Create release tag
         if: success()
         env:
