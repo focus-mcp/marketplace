@@ -30,7 +30,7 @@ workflow on every release.
 |---|---|
 | `focus-mcp/core` | TS monorepo lib — Registry + EventBus + Router + SDK + Validator + marketplace resolver. |
 | `focus-mcp/cli` | `@focus-mcp/cli` — stdio MCP, brick manager, published on npm. |
-| `focus-mcp/marketplace` (here) | Official catalog + `bricks/*` + `modules/*`. Catalog served via raw GitHub. |
+| `focus-mcp/marketplace` (here) | Official catalog + `bricks/*` + `modules/*`. Catalog served from `gh-pages` (auto-deployed on every release). |
 | `focus-mcp/client` | **archived** — former Tauri desktop app, Phase 2. |
 
 ## Stack
@@ -63,7 +63,7 @@ marketplace/
 │   ├── build-catalog.ts      # generator — writes dist/catalog.json
 │   └── build-catalog.test.ts
 ├── dist/catalog.json         # local generator output (not committed)
-└── publish/catalog.json      # assembled by CI, pushed to main (served via raw GitHub)
+└── publish/catalog.json      # assembled by CI; auto-deployed to gh-pages branch on every release
 ```
 
 **pnpm-workspace.yaml packages:**
@@ -182,9 +182,9 @@ bricks/<name>/
 1. PR merge to `develop`
 2. `dev-publish.yml` on `develop`: publishes bricks with `@dev` tag on npmjs.org
 3. Sync `develop → main` via PR
-4. `stable-publish.yml` on `main`: publishes bricks with `@latest` tag on npmjs.org, generates `publish/catalog.json`, commits the result to `main`
+4. `stable-publish.yml` on `main`: publishes bricks with `@latest` tag on npmjs.org, generates `publish/catalog.json`, and auto-deploys it to the `gh-pages` branch (the user-facing catalog URL).
 
-No Changesets release flow, no gh-pages deploy — the catalog is served directly from `main` via the raw GitHub URL.
+Changesets handles the version bumps in the develop→main sync PR. The catalog is served from `https://focus-mcp.github.io/marketplace/catalog.json` (auto-refreshed on every stable release).
 
 ## Git-flow
 

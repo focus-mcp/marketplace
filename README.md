@@ -25,7 +25,7 @@ npm install -g @focus-mcp/cli
 focus browse
 ```
 
-Or view the raw catalog:
+Or fetch the catalog directly:
 
 ```bash
 curl https://focus-mcp.github.io/marketplace/catalog.json
