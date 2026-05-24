@@ -55,6 +55,10 @@ jobs:
       - name: Publish all packages with dev tag
         if: steps.pending.outputs.count != '0'
         run: pnpm changeset publish --no-git-tag --tag dev
-        # NODE_AUTH_TOKEN fallback: kept for rollback if Trusted Publisher not yet configured on npmjs.com
+        # Auth: Trusted Publishers (OIDC) via id-token: write permission.
+        # NPM_CONFIG_PROVENANCE=true triggers npm to mint an OIDC token from GitHub
+        # Actions and exchange it for a publish token at the registry, so no static
+        # NPM_TOKEN secret is required. NODE_AUTH_TOKEN kept as fallback if needed.
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: 'true'
