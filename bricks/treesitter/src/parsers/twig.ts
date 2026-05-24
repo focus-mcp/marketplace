@@ -12,28 +12,23 @@
  * Extracts: block names, macro definitions, set variables.
  */
 
-import { createRequire } from 'node:module';
+import { existsSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { SymbolInfo } from '../operations.ts';
 import { endRow, firstLine, row } from './helpers.ts';
 import type { ParseResult, TsNode } from './registry.ts';
 import { registerLanguage } from './registry.ts';
 
-const _require = createRequire(import.meta.url);
-
-// optionalDependency: node-gyp fails on machines without a C++ toolchain;
-// skip Twig registration only when the package is genuinely absent.
-// Any other error (corrupt install, renamed .wasm path, etc.) re-throws.
-let TWIG_WASM_PATH: string | null = null;
-try {
-    TWIG_WASM_PATH = _require.resolve('tree-sitter-twig/tree-sitter-twig.wasm');
-} catch (err: unknown) {
-    const code = (err as { code?: string } | null)?.code;
-    if (code === 'MODULE_NOT_FOUND' || code === 'ERR_MODULE_NOT_FOUND') {
-        TWIG_WASM_PATH = null;
-    } else {
-        throw err;
-    }
-}
+// The Twig grammar `.wasm` is bundled with this brick under `wasms/` rather
+// than pulled from `tree-sitter-twig` on npm. That package ships an
+// `install: node-gyp rebuild` script with no `binding.gyp` in its tarball,
+// so installing it fails on every machine without a build toolchain (and
+// is broken upstream regardless). We only need the prebuilt `.wasm`, so we
+// vendor it directly. The grammar is MPL-2.0, see wasms/tree-sitter-twig.wasm.license.
+const _here = dirname(fileURLToPath(import.meta.url));
+const _bundledTwigWasm = join(_here, '..', '..', 'wasms', 'tree-sitter-twig.wasm');
+const TWIG_WASM_PATH: string | null = existsSync(_bundledTwigWasm) ? _bundledTwigWasm : null;
 
 function collectSymbols(root: TsNode, filePath: string): SymbolInfo[] {
     const symbols: SymbolInfo[] = [];
