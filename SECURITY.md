@@ -39,7 +39,7 @@ We commit to:
 
 Since this repository is a **catalog** (not a runtime), the main attack surfaces are:
 
-1. **The `catalog.json`** served via raw GitHub (`publish/catalog.json` on `main`) — JSON integrity, consistency of source references pointing to npm packages.
+1. **The `catalog.json`** served from gh-pages (`https://focus-mcp.github.io/marketplace/catalog.json`, auto-deployed from `publish/catalog.json` on every release) — JSON integrity, consistency of source references pointing to npm packages.
 2. **The JSON Schema `schemas/catalog/v1.json`** — a schema regression could let malicious entries through.
 3. **The bricks themselves** — a malicious or compromised brick can affect FocusMCP users.
 4. **The CI pipeline** — secret scanning, least-privilege workflow permissions.

@@ -28,7 +28,7 @@ focus-mcp/marketplace (this repo)
   ├─ schemas/
   │   └─ catalog/v1.json     ← JSON Schema, validates catalog output
   │
-  └─ publish/catalog.json    ← served via raw.githubusercontent.com
+  └─ publish/catalog.json    ← auto-deployed to gh-pages on every release
 ```
 
 ## Brick anatomy
