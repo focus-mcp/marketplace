@@ -136,8 +136,9 @@ jobs:
       # We need to commit the refreshed file back to main, otherwise the
       # raw.githubusercontent URL stays stale forever after every release.
       # [skip ci] in the commit message prevents this push from re-triggering
-      # the publish workflow (publish-on-bricks/** path filter would also miss,
-      # but [skip ci] is the standard guard for bot-pushed refresh commits).
+      # the publish workflow (the `bricks/**` path filter would also miss a
+      # push that only touches publish/catalog.json, but [skip ci] is the
+      # standard guard for bot-pushed refresh commits).
       # continue-on-error: a non-fast-forward push (if another merge lands on
       # main while we run) must NOT fail the job and prevent the subsequent
       # tag + GitHub Release steps. The next release will pick up the catalog
