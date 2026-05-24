@@ -28,7 +28,7 @@ focus browse
 Or view the raw catalog:
 
 ```bash
-curl https://raw.githubusercontent.com/focus-mcp/marketplace/main/publish/catalog.json
+curl https://focus-mcp.github.io/marketplace/catalog.json
 ```
 
 ## Categories

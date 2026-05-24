@@ -19,7 +19,10 @@ Read [VISION.md](./VISION.md) for the complete catalog vision (schema, distribut
 68 bricks published at v1.0.0 + `lastversion` added in v1.1.0. All bricks are published as `@focus-mcp/brick-<name>` on npmjs.org.
 
 Catalog is served at:
-`https://raw.githubusercontent.com/focus-mcp/marketplace/main/publish/catalog.json`
+`https://focus-mcp.github.io/marketplace/catalog.json`
+
+Served from the `gh-pages` branch — auto-refreshed by the `stable-publish`
+workflow on every release.
 
 ## Ecosystem
 

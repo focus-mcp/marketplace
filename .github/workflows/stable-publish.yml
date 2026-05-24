@@ -130,35 +130,12 @@ jobs:
           echo "--- Published bricks ---"
           cat /tmp/published-bricks.txt
 
-      # The catalog is regenerated above by `pnpm build:catalog`, deployed to
-      # gh-pages, AND served to users via raw.githubusercontent.com/.../main/
-      # publish/catalog.json (per AGENTS.md / README.md / docs/RELEASE.md).
-      # We need to commit the refreshed file back to main, otherwise the
-      # raw.githubusercontent URL stays stale forever after every release.
-      # [skip ci] in the commit message prevents this push from re-triggering
-      # the publish workflow (publish-on-bricks/** path filter would also miss,
-      # but [skip ci] is the standard guard for bot-pushed refresh commits).
-      # continue-on-error: a non-fast-forward push (if another merge lands on
-      # main while we run) must NOT fail the job and prevent the subsequent
-      # tag + GitHub Release steps. The next release will pick up the catalog
-      # diff anyway — losing one auto-refresh is benign.
-      - name: Commit refreshed catalog back to main
-        if: success() && github.ref == 'refs/heads/main'
-        continue-on-error: true
-        run: |
-          set -euo pipefail
-
-          if git diff --quiet -- publish/catalog.json; then
-            echo "publish/catalog.json unchanged — nothing to commit."
-            exit 0
-          fi
-
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add publish/catalog.json
-          git commit -m "chore(catalog): auto-refresh after release [skip ci]"
-          git push origin HEAD:main
-
+      # Note: we used to commit publish/catalog.json back to main here so the
+      # raw.githubusercontent URL would stay fresh, but main's branch protection
+      # rejects direct bot pushes. The canonical user-facing catalog URL is now
+      # https://focus-mcp.github.io/marketplace/catalog.json (gh-pages branch),
+      # which is auto-deployed by the `Deploy catalog.json to gh-pages` step
+      # above — no main-branch commit needed.
       - name: Create release tag
         if: success()
         env:

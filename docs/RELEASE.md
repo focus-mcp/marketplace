@@ -116,10 +116,10 @@ git tag --sort=-version:refname | head -5
 gh release list --repo focus-mcp/marketplace --limit 5
 ```
 
-The catalog should also be updated at:
+The catalog is auto-deployed (by `stable-publish` → `peaceiris/actions-gh-pages`) to:
 
 ```
-https://raw.githubusercontent.com/focus-mcp/marketplace/main/publish/catalog.json
+https://focus-mcp.github.io/marketplace/catalog.json
 ```
 
 ## npm OIDC Trusted Publishing
