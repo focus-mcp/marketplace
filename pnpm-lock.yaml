@@ -732,13 +732,14 @@ importers:
       '@vscode/tree-sitter-wasm':
         specifier: ^0.3.1
         version: 0.3.1
-      tree-sitter-twig:
-        specifier: ^0.8.2
-        version: 0.8.2
     devDependencies:
       '@focus-mcp/marketplace-testing':
         specifier: workspace:*
         version: link:../../packages/marketplace-testing
+    optionalDependencies:
+      tree-sitter-twig:
+        specifier: ^0.8.2
+        version: 0.8.2
 
   bricks/validate:
     dependencies:
@@ -6195,7 +6196,8 @@ snapshots:
 
   totalist@3.0.1: {}
 
-  tree-sitter-twig@0.8.2: {}
+  tree-sitter-twig@0.8.2:
+    optional: true
 
   ts-algebra@2.0.0: {}
 
