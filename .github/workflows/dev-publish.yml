@@ -35,8 +35,10 @@ jobs:
           registry-url: https://registry.npmjs.org
           scope: '@focus-mcp'
       # Trusted Publishing requires npm CLI >= 11.5.1. Node 22 ships with npm 10.x.
-      - name: Upgrade npm to v11+ (required for OIDC Trusted Publishing)
-        run: npm install -g npm@latest
+      # Pinned to ^11 (not @latest) so a future npm 12 cannot silently regress
+      # the OIDC token exchange without us noticing.
+      - name: Upgrade npm to v11 (required for OIDC Trusted Publishing)
+        run: npm install -g npm@^11
       - run: pnpm install --frozen-lockfile
       - name: Check for pending changesets
         id: pending
