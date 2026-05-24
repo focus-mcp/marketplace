@@ -4,7 +4,7 @@
 
 fix(treesitter): vendor tree-sitter-twig.wasm to remove the broken upstream install script
 
-`tree-sitter-twig@0.8.2` declares `"install": "node-gyp rebuild"` in its `package.json` but ships no `binding.gyp` in its npm tarball. The install therefore fails on every machine — even with a working C/C++ toolchain — and previously broke `npm install @focus-mcp/brick-treesitter` outright. Marking the dependency `optional` (1.3.2) was not enough: depending on the npm/pnpm version, an `install`-script failure can still abort the whole brick install.
+`tree-sitter-twig@0.8.2` declares `"install": "node-gyp rebuild"` in its `package.json` but ships no `binding.gyp` in its npm tarball. The install therefore fails on **every** machine (with or without a C/C++ toolchain — node-gyp has nothing to build), and previously broke `npm install @focus-mcp/brick-treesitter` outright. Marking the dependency `optional` (1.3.2) was not enough: depending on the npm/pnpm version, an `install`-script failure can still abort the whole brick install.
 
 Since the brick only needs the prebuilt `.wasm` file (it never uses the native bindings), the fix is to vendor it. Changes:
 

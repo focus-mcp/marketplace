@@ -22,13 +22,23 @@ import { registerLanguage } from './registry.ts';
 
 // The Twig grammar `.wasm` is bundled with this brick under `wasms/` rather
 // than pulled from `tree-sitter-twig` on npm. That package ships an
-// `install: node-gyp rebuild` script with no `binding.gyp` in its tarball,
-// so installing it fails on every machine without a build toolchain (and
-// is broken upstream regardless). We only need the prebuilt `.wasm`, so we
-// vendor it directly. The grammar is MPL-2.0, see wasms/tree-sitter-twig.wasm.license.
+// `install: node-gyp rebuild` script but its tarball contains no
+// `binding.gyp`, so installing it fails on every machine (with or without
+// a C/C++ toolchain — node-gyp has nothing to build). We only need the
+// prebuilt `.wasm`, so we vendor it directly. Grammar is MPL-2.0; see
+// wasms/tree-sitter-twig.wasm.license.
+//
+// The `.wasm` is now a REQUIRED artifact of the brick (listed in
+// package.json `files`). A missing file means a broken install, not an
+// expected optional miss — so we throw rather than silently disable Twig.
 const _here = dirname(fileURLToPath(import.meta.url));
-const _bundledTwigWasm = join(_here, '..', '..', 'wasms', 'tree-sitter-twig.wasm');
-const TWIG_WASM_PATH: string | null = existsSync(_bundledTwigWasm) ? _bundledTwigWasm : null;
+const TWIG_WASM_PATH = join(_here, '..', '..', 'wasms', 'tree-sitter-twig.wasm');
+if (!existsSync(TWIG_WASM_PATH)) {
+    throw new Error(
+        `bundled tree-sitter-twig.wasm not found at ${TWIG_WASM_PATH} — ` +
+            'the brick install is broken (the wasms/ directory must ship in the npm tarball)',
+    );
+}
 
 function collectSymbols(root: TsNode, filePath: string): SymbolInfo[] {
     const symbols: SymbolInfo[] = [];
@@ -109,6 +119,4 @@ function parseTwig(
     return { symbols, imports: [], exports: [] };
 }
 
-if (TWIG_WASM_PATH !== null) {
-    registerLanguage(['.twig'], TWIG_WASM_PATH, parseTwig);
-}
+registerLanguage(['.twig'], TWIG_WASM_PATH, parseTwig);
