@@ -736,10 +736,6 @@ importers:
       '@focus-mcp/marketplace-testing':
         specifier: workspace:*
         version: link:../../packages/marketplace-testing
-    optionalDependencies:
-      tree-sitter-twig:
-        specifier: ^0.8.2
-        version: 0.8.2
 
   bricks/validate:
     dependencies:
@@ -3497,9 +3493,6 @@ packages:
     resolution: {integrity: sha512-sf4i37nQ2LBx4m3wB74y+ubopq6W/dIzXg0FDGjsYnZHVa1Da8FH853wlL2gtUhg+xJXjfk3kUZS3BRoQeoQBQ==}
     engines: {node: '>=6'}
 
-  tree-sitter-twig@0.8.2:
-    resolution: {integrity: sha512-fjQR/8u9TI7uajV1WYP2yLaM5KFmwT0gFWMRc1fKtnMWdWxXeYOV1bSmmnD2VWvOhlzXzIbDllfQhgUamlxldQ==}
-
   ts-algebra@2.0.0:
     resolution: {integrity: sha512-FPAhNPFMrkwz76P7cdjdmiShwMynZYN6SgOujD1urY4oNm80Ou9oMdmbR45LotcKOXoy7wSmHkRFE6Mxbrhefw==}
 
@@ -6195,9 +6188,6 @@ snapshots:
   toidentifier@1.0.1: {}
 
   totalist@3.0.1: {}
-
-  tree-sitter-twig@0.8.2:
-    optional: true
 
   ts-algebra@2.0.0: {}
 

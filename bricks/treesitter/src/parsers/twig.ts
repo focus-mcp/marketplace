@@ -12,48 +12,32 @@
  * Extracts: block names, macro definitions, set variables.
  */
 
-import { createRequire } from 'node:module';
+import { existsSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { SymbolInfo } from '../operations.ts';
 import { endRow, firstLine, row } from './helpers.ts';
 import type { ParseResult, TsNode } from './registry.ts';
 import { registerLanguage } from './registry.ts';
 
-const _require = createRequire(import.meta.url);
-
-function errorCode(err: unknown): string | undefined {
-    return (err as { code?: string } | null)?.code;
-}
-
-function isModuleNotFound(err: unknown): boolean {
-    const code = errorCode(err);
-    return code === 'MODULE_NOT_FOUND' || code === 'ERR_MODULE_NOT_FOUND';
-}
-
-// optionalDependency: node-gyp fails on machines without a C++ toolchain;
-// skip Twig registration only when the package is genuinely absent.
-// If the package IS installed but the .wasm path is missing/renamed
-// (real packaging bug), surface the error instead of silently disabling.
-let TWIG_WASM_PATH: string | null = null;
-try {
-    TWIG_WASM_PATH = _require.resolve('tree-sitter-twig/tree-sitter-twig.wasm');
-} catch (err: unknown) {
-    if (!isModuleNotFound(err)) throw err;
-    // MODULE_NOT_FOUND could mean either (a) package absent or (b) .wasm
-    // missing inside an installed package. Disambiguate by resolving the
-    // package's main entry: if THAT also fails, the package is absent
-    // (acceptable). If the main entry resolves but the .wasm didn't, the
-    // package shipped broken and we should re-throw.
-    try {
-        _require.resolve('tree-sitter-twig');
-        throw err;
-    } catch (innerErr: unknown) {
-        // innerErr === err means our own `throw err` was caught above —
-        // i.e. the package resolved but the .wasm didn't (real packaging
-        // bug, re-throw). Otherwise it's a fresh MODULE_NOT_FOUND from the
-        // package-entry resolve (package genuinely absent, suppress).
-        if (innerErr === err || !isModuleNotFound(innerErr)) throw innerErr;
-        TWIG_WASM_PATH = null;
-    }
+// The Twig grammar `.wasm` is bundled with this brick under `wasms/` rather
+// than pulled from `tree-sitter-twig` on npm. That package ships an
+// `install: node-gyp rebuild` script but its tarball contains no
+// `binding.gyp`, so installing it fails on every machine (with or without
+// a C/C++ toolchain — node-gyp has nothing to build). We only need the
+// prebuilt `.wasm`, so we vendor it directly. Grammar is MPL-2.0; see
+// wasms/tree-sitter-twig.wasm.license.
+//
+// The `.wasm` is now a REQUIRED artifact of the brick (listed in
+// package.json `files`). A missing file means a broken install, not an
+// expected optional miss — so we throw rather than silently disable Twig.
+const _here = dirname(fileURLToPath(import.meta.url));
+const TWIG_WASM_PATH = join(_here, '..', '..', 'wasms', 'tree-sitter-twig.wasm');
+if (!existsSync(TWIG_WASM_PATH)) {
+    throw new Error(
+        `bundled tree-sitter-twig.wasm not found at ${TWIG_WASM_PATH} — ` +
+            'the brick install is broken (the wasms/ directory must ship in the npm tarball)',
+    );
 }
 
 function collectSymbols(root: TsNode, filePath: string): SymbolInfo[] {
@@ -135,6 +119,4 @@ function parseTwig(
     return { symbols, imports: [], exports: [] };
 }
 
-if (TWIG_WASM_PATH !== null) {
-    registerLanguage(['.twig'], TWIG_WASM_PATH, parseTwig);
-}
+registerLanguage(['.twig'], TWIG_WASM_PATH, parseTwig);
