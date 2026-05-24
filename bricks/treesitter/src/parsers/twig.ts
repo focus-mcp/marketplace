@@ -47,7 +47,11 @@ try {
         _require.resolve('tree-sitter-twig');
         throw err;
     } catch (innerErr: unknown) {
-        if (!isModuleNotFound(innerErr)) throw innerErr;
+        // innerErr === err means our own `throw err` was caught above —
+        // i.e. the package resolved but the .wasm didn't (real packaging
+        // bug, re-throw). Otherwise it's a fresh MODULE_NOT_FOUND from the
+        // package-entry resolve (package genuinely absent, suppress).
+        if (innerErr === err || !isModuleNotFound(innerErr)) throw innerErr;
         TWIG_WASM_PATH = null;
     }
 }
