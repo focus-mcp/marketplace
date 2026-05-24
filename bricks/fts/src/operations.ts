@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 import { readdir, readFile } from 'node:fs/promises';
-import { extname, join, resolve } from 'node:path';
+import { basename, extname, join, resolve } from 'node:path';
 
 // ─── In-memory index (module-level state) ────────────────────────────────────
 
@@ -75,12 +75,29 @@ export interface FtsSuggestOutput {
 
 const SUPPORTED_EXTS = new Set(['.ts', '.js', '.md', '.json']);
 
-/** Tokenize text into lowercase alphanumeric tokens of length >= 2. */
+/** Tokenize text into lowercase alphanumeric tokens of length >= 2.
+ *  Compound identifiers (camelCase, PascalCase, ACRONYM+Word) are also split at
+ *  case transitions; the original compound is preserved for exact matches. */
 function tokenize(text: string): string[] {
-    return text
-        .toLowerCase()
-        .split(/[^a-z0-9]+/)
-        .filter((t) => t.length >= 2);
+    const tokens: string[] = [];
+    for (const compound of text.split(/[^a-zA-Z0-9]+/)) {
+        if (compound.length < 2) continue;
+        const lower = compound.toLowerCase();
+        tokens.push(lower);
+        const parts = compound
+            .replace(/([a-z0-9])([A-Z])/g, '$1\0$2')
+            .replace(/([A-Z]+)([A-Z][a-z])/g, '$1\0$2')
+            .split('\0');
+        if (parts.length > 1) {
+            for (const part of parts) {
+                const partLower = part.toLowerCase();
+                if (partLower.length >= 2 && partLower !== lower) {
+                    tokens.push(partLower);
+                }
+            }
+        }
+    }
+    return tokens;
 }
 
 /** Parse glob string like "*.ts,*.js,*.md" into a set of extensions. */
@@ -196,7 +213,7 @@ export async function ftsIndex(input: FtsIndexInput): Promise<FtsIndexOutput> {
         } catch {
             continue;
         }
-        const tokens = tokenize(content);
+        const tokens = [...tokenize(basename(fp)), ...tokenize(content)];
         if (tokens.length === 0) continue;
         indexDocument(fp, tokens);
     }

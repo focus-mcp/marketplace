@@ -197,6 +197,86 @@ describe('ftsSuggest', () => {
     });
 });
 
+describe('tokenizer — camelCase / PascalCase splitting', () => {
+    it('finds files by sub-token of a PascalCase compound', async () => {
+        await makeFile('pool.ts', 'export class PurchasableRewardPool {}');
+        await ftsIndex({ dir: testDir });
+
+        const byCompound = ftsSearch({ query: 'PurchasableRewardPool' });
+        const bySuffix = ftsSearch({ query: 'RewardPool' });
+        const byPrefix = ftsSearch({ query: 'Purchasable' });
+        const byMid = ftsSearch({ query: 'Reward' });
+
+        expect(byCompound.results.length).toBeGreaterThan(0);
+        expect(bySuffix.results.length).toBeGreaterThan(0);
+        expect(byPrefix.results.length).toBeGreaterThan(0);
+        expect(byMid.results.length).toBeGreaterThan(0);
+    });
+
+    it('splits consecutive-caps acronyms before mixed-case suffix', async () => {
+        await makeFile('subsystem.ts', 'class UEMProfileImageSubsystem {}');
+        await ftsIndex({ dir: testDir });
+
+        const byAcronym = ftsSearch({ query: 'UEM' });
+        const bySuffix = ftsSearch({ query: 'Subsystem' });
+        const byMid = ftsSearch({ query: 'Profile' });
+
+        expect(byAcronym.results.length).toBeGreaterThan(0);
+        expect(bySuffix.results.length).toBeGreaterThan(0);
+        expect(byMid.results.length).toBeGreaterThan(0);
+    });
+
+    it('splits camelCase identifiers', async () => {
+        await makeFile('friends.ts', 'function getFriendsList() {}');
+        await ftsIndex({ dir: testDir });
+
+        const byPrefix = ftsSearch({ query: 'get' });
+        const byMid = ftsSearch({ query: 'Friends' });
+        const bySuffix = ftsSearch({ query: 'List' });
+
+        expect(byPrefix.results.length).toBeGreaterThan(0);
+        expect(byMid.results.length).toBeGreaterThan(0);
+        expect(bySuffix.results.length).toBeGreaterThan(0);
+    });
+
+    it('preserves existing underscore/space split behaviour (no regression)', async () => {
+        await makeFile('bundle.ts', 'const Department_Bundle = 1;');
+        await ftsIndex({ dir: testDir });
+
+        const byPart1 = ftsSearch({ query: 'Department' });
+        const byPart2 = ftsSearch({ query: 'Bundle' });
+
+        expect(byPart1.results.length).toBeGreaterThan(0);
+        expect(byPart2.results.length).toBeGreaterThan(0);
+    });
+});
+
+describe('ftsIndex — filename indexing', () => {
+    it('finds a file by a term that appears only in its filename', async () => {
+        await makeFile('DT_PurchasableRewardPools.json', '{"k":"v"}');
+        await ftsIndex({ dir: testDir });
+
+        const byCompound = ftsSearch({ query: 'PurchasableRewardPools' });
+        const bySub = ftsSearch({ query: 'Purchasable' });
+        const byFullName = ftsSearch({ query: 'DT_PurchasableRewardPools' });
+
+        expect(byCompound.results.length).toBeGreaterThan(0);
+        expect(bySub.results.length).toBeGreaterThan(0);
+        expect(byFullName.results.length).toBeGreaterThan(0);
+    });
+
+    it('finds a file by PascalCase term in filename even when content is inert', async () => {
+        await makeFile('SkinHierarchy.ts', 'export const x = 1;');
+        await ftsIndex({ dir: testDir });
+
+        const byCompound = ftsSearch({ query: 'SkinHierarchy' });
+        const byPart = ftsSearch({ query: 'Hierarchy' });
+
+        expect(byCompound.results.length).toBeGreaterThan(0);
+        expect(byPart.results.length).toBeGreaterThan(0);
+    });
+});
+
 describe('fts brick registration', () => {
     it('registers 4 handlers on start and unregisters on stop', async () => {
         const { default: brick } = await import('./index.ts');
