@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-06-03T10:59:57.301Z",
-  "generatedAt": "2026-06-03 10:59:57",
+  "timestamp": "2026-06-04T09:56:33.070Z",
+  "generatedAt": "2026-06-04 09:56:33",
   "packages": [
     {
       "name": "@focus-mcp/cli",
@@ -560,10 +560,10 @@
     {
       "repo": "marketplace",
       "branch": "main",
-      "total": 9,
-      "success": 8,
+      "total": 10,
+      "success": 9,
       "failure": 0,
-      "successRate": 89
+      "successRate": 90
     },
     {
       "repo": "marketplace",
