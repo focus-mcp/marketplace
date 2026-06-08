@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-06-07T08:56:08.216Z",
-  "generatedAt": "2026-06-07 08:56:08",
+  "timestamp": "2026-06-08T10:56:45.913Z",
+  "generatedAt": "2026-06-08 10:56:45",
   "packages": [
     {
       "name": "@focus-mcp/cli",
@@ -528,8 +528,8 @@
     {
       "repo": "cli",
       "branch": "main",
-      "total": 2,
-      "success": 2,
+      "total": 3,
+      "success": 3,
       "failure": 0,
       "successRate": 100
     },
@@ -544,8 +544,8 @@
     {
       "repo": "core",
       "branch": "main",
-      "total": 9,
-      "success": 9,
+      "total": 10,
+      "success": 10,
       "failure": 0,
       "successRate": 100
     },
@@ -560,10 +560,10 @@
     {
       "repo": "marketplace",
       "branch": "main",
-      "total": 9,
-      "success": 8,
+      "total": 11,
+      "success": 10,
       "failure": 0,
-      "successRate": 89
+      "successRate": 91
     },
     {
       "repo": "marketplace",
@@ -606,7 +606,18 @@
       "url": "https://github.com/focus-mcp/marketplace/releases/tag/release-2026-05-24"
     }
   ],
-  "openPrs": [],
+  "openPrs": [
+    {
+      "repo": "cli",
+      "number": 147,
+      "title": "fix: return zero for top-level help flag",
+      "author": "wowsofine",
+      "createdAt": "2026-06-07",
+      "ageDays": 0,
+      "url": "https://github.com/focus-mcp/cli/pull/147",
+      "ciStatus": "success"
+    }
+  ],
   "pendingChangesets": [
     {
       "repo": "cli",
