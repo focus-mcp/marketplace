@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-06-25T09:21:57.077Z",
-  "generatedAt": "2026-06-25 09:21:57",
+  "timestamp": "2026-06-26T09:27:34.912Z",
+  "generatedAt": "2026-06-26 09:27:34",
   "packages": [
     {
       "name": "@focus-mcp/cli",
@@ -613,7 +613,7 @@
       "title": "fix: return zero for top-level help flag",
       "author": "wowsofine",
       "createdAt": "2026-06-07",
-      "ageDays": 17,
+      "ageDays": 18,
       "url": "https://github.com/focus-mcp/cli/pull/147",
       "ciStatus": "success"
     }
