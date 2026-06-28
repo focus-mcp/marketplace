@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-06-27T08:36:02.576Z",
-  "generatedAt": "2026-06-27 08:36:02",
+  "timestamp": "2026-06-28T08:51:59.094Z",
+  "generatedAt": "2026-06-28 08:51:59",
   "packages": [
     {
       "name": "@focus-mcp/cli",
@@ -207,10 +207,10 @@
     },
     {
       "name": "@focus-mcp/brick-filewrite",
-      "npmLatest": "1.2.0",
-      "gitTag": "1.2.0",
-      "pkgJson": "1.2.0",
-      "status": "aligned"
+      "npmLatest": null,
+      "gitTag": null,
+      "pkgJson": null,
+      "status": "broken"
     },
     {
       "name": "@focus-mcp/brick-format",
@@ -613,7 +613,7 @@
       "title": "fix: return zero for top-level help flag",
       "author": "wowsofine",
       "createdAt": "2026-06-07",
-      "ageDays": 19,
+      "ageDays": 20,
       "url": "https://github.com/focus-mcp/cli/pull/147",
       "ciStatus": "success"
     }
