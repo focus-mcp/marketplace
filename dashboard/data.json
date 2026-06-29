@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-06-28T08:51:59.094Z",
-  "generatedAt": "2026-06-28 08:51:59",
+  "timestamp": "2026-06-29T11:00:11.551Z",
+  "generatedAt": "2026-06-29 11:00:11",
   "packages": [
     {
       "name": "@focus-mcp/cli",
@@ -207,10 +207,10 @@
     },
     {
       "name": "@focus-mcp/brick-filewrite",
-      "npmLatest": null,
-      "gitTag": null,
-      "pkgJson": null,
-      "status": "broken"
+      "npmLatest": "1.2.0",
+      "gitTag": "1.2.0",
+      "pkgJson": "1.2.0",
+      "status": "aligned"
     },
     {
       "name": "@focus-mcp/brick-format",
@@ -528,8 +528,8 @@
     {
       "repo": "cli",
       "branch": "main",
-      "total": 2,
-      "success": 2,
+      "total": 3,
+      "success": 3,
       "failure": 0,
       "successRate": 100
     },
@@ -544,8 +544,8 @@
     {
       "repo": "core",
       "branch": "main",
-      "total": 9,
-      "success": 9,
+      "total": 10,
+      "success": 10,
       "failure": 0,
       "successRate": 100
     },
@@ -560,10 +560,10 @@
     {
       "repo": "marketplace",
       "branch": "main",
-      "total": 10,
-      "success": 9,
+      "total": 11,
+      "success": 10,
       "failure": 0,
-      "successRate": 90
+      "successRate": 91
     },
     {
       "repo": "marketplace",
@@ -613,7 +613,7 @@
       "title": "fix: return zero for top-level help flag",
       "author": "wowsofine",
       "createdAt": "2026-06-07",
-      "ageDays": 20,
+      "ageDays": 21,
       "url": "https://github.com/focus-mcp/cli/pull/147",
       "ciStatus": "success"
     }
