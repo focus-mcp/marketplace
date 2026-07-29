@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-07-28T08:33:30.137Z",
-  "generatedAt": "2026-07-28 08:33:30",
+  "timestamp": "2026-07-29T08:40:12.794Z",
+  "generatedAt": "2026-07-29 08:40:12",
   "packages": [
     {
       "name": "@focus-mcp/cli",
@@ -544,8 +544,8 @@
     {
       "repo": "core",
       "branch": "main",
-      "total": 5,
-      "success": 5,
+      "total": 4,
+      "success": 4,
       "failure": 0,
       "successRate": 100
     },
@@ -613,7 +613,7 @@
       "title": "fix: return zero for top-level help flag",
       "author": "wowsofine",
       "createdAt": "2026-06-07",
-      "ageDays": 50,
+      "ageDays": 51,
       "url": "https://github.com/focus-mcp/cli/pull/147",
       "ciStatus": "success"
     }
